@@ -178,11 +178,6 @@ app.layout = html.Div(children=[
                 html.Footer(
                     dbc.Row([
                     dbc.Col(
-                        html.A(href="https://www.ibm.com", target="_blank",
-                            children=html.Img(alt="IBM Logo", src='/assets/IBM_logo.svg', width='120', height='79')),
-                        className="col-1"
-                    ),
-                    dbc.Col(
                         "This App is built using Watson NLP library. Please note that this content is made available \
                          to foster Embedded AI technology adoption. The content may include systems & methods pending \
                          patent with USPTO and protected under US Patent Laws. \
