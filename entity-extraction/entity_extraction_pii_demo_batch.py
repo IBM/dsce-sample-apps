@@ -315,5 +315,5 @@ def text_entity_callback(n_clicks, entity_input):
 # main -- runs on localhost. change the port to run multiple apps on your machine
 
 if __name__ == '__main__':
-    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8060")
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
     app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True, dev_tools_hot_reload=False)
