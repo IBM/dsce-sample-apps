@@ -243,7 +243,7 @@ def get_relation(text):
     State('relation-input', 'value')
 )
 
-def concept_extraction_callback(n_clicks, value):
+def relation_extraction_callback(n_clicks, value):
 
     # color of chart elements
     color_list = ['#1292E7','#005D5C','#FA4D56','#A01752','#520408']
@@ -274,8 +274,8 @@ def concept_extraction_callback(n_clicks, value):
             ))
     
     fig_relation.update_yaxes(rangemode="nonnegative")
-    fig_relation.update_layout(template=plotly_template,barmode='stack',title_text='Extracted concepts',
-                                xaxis_title="Extracted concepts", yaxis_title="Relevance Score", xaxis = dict(tickmode = 'linear',tick0 = 0,dtick = 1))
+    fig_relation.update_layout(template=plotly_template,barmode='stack',title_text='Extracted relations',
+                                xaxis_title="Extracted relations", yaxis_title="Relevance Score", xaxis = dict(tickmode = 'linear',tick0 = 0,dtick = 1))
    
     return fig_relation, df_relation.to_dict('records')
 
