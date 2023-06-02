@@ -173,18 +173,38 @@ import sys, traceback
 def batch_process(f):
 
 	try:
+		# create an output file to store masked records
+		fm = open("masked_data", "a")
+		fm.truncate(0)
+		
 		ent_list = []
 		lines = f.readlines()
 		i = 0
 		for line in lines:
 			print("processing record", i)
 			if len(line) > 10:
-				r = extract_entities(line)
-				v = r['Entities']
-				for j in range(0, len(v)):
-					v[j]['recordid'] = i
-					ent_list.append(v[j])
-				i=i+1
+                                # keep a copy to mask the line
+                                masked_line = line
+                                r = extract_entities(line)
+                                v = r['Entities']
+                                for j in range(0, len(v)):
+
+                                        # mask the line
+                                        masks = v[j]['ent_text'].split("$#$")
+                                        for k in range(0, len(masks)):
+                                                masked_line = masked_line.replace(masks[k], "XXXXX")
+
+                                        # fix the separator so that it does appear in UI
+                                        v[j]['ent_text'] = v[j]['ent_text'].replace("$#$", "  ")
+
+                                        v[j]['recordid'] = i
+                                        ent_list.append(v[j])
+
+                                i=i+1
+				# write the masked line to the file
+                                fm.write(masked_line)
+                                fm.write("\n")
+                fm.close()
 	except Exception as e:
 		print(traceback.format_exc())
 	return {'Entities': ent_list}      
@@ -205,7 +225,7 @@ def pii_filter(list):
                                 for f in flist:
                                         if e['ent_type'] in f['ent_type']:
                                                 found = True
-                                                t = f['ent_text'] + ', ' + e['ent_text']
+                                                t = f['ent_text'] + "$#$" + e['ent_text']
                                                 f['ent_text'] = t
                                 if(not found):
                                         flist.append(e)
