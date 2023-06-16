@@ -29,7 +29,7 @@ MODEL_RBR = 'entity-mentions_rbr_lang_multi_pii'
 
 # change this text if you want a different sample in the UI
 entity_sample_text = 'Hi I am Ravi Dube. I am writing to you to report an unauthorised transaction on my credit card. \
-On March 30th, 2023, I noticed a charge of $1,000 on my credit card statement that I did not authorise.\
+On March 30th, 2023, I noticed a charge of $1,000 on my credit card statement that I did not authorise. \
 The transaction was made at a restaurant in New York, while I was in California on that day. I am concerned about the \
 security of my account and I would appreciate if you could investigate this matter promptly. Please \
 contact me at my phone number (123)456-7890 or email me at ravi.dube@email.com to provide me with an update \
@@ -39,56 +39,25 @@ I look forward to hear from you soon.'
 
 # ---- UI code ----
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600&display=swap'])
 app.title = 'Watson NLP - Extract PII'
 
 navbar_main = dbc.Navbar(
         [
-            dbc.Col(
+            dbc.Row(
                 [
-                    dbc.Row(
-                        [   
-                            dbc.Col([]),
-                            dbc.Col([])
+                    dbc.Col([
+                            "Watson NLP (Extract Personal Identifiable Information)",
                         ],
-                        className='me-auto',
-                        align='center',
-                        justify='right',
+                        style={'fontSize': '0.875rem','fontWeight': '600'},
                     ),
-                ],
-                align = 'center'
-            ),
-            dbc.Col(
-                [
-                    dbc.Row(html.H2("Watson NLP", style={'textAlign': 'center'}),
-                        className="me-auto",
-                        align='center',
-                        justify='center',
-                    ),
-                    dbc.Row(html.H4("Extract Personal Identifiable Information", style={'textAlign': 'center'}),
-                        className="me-auto",
-                        align='center',
-                        justify='center'
-                    ),
-                ],
-                align = 'center'
-            ),
-            dbc.Col(
-                [
-                    dbc.Row(
-                        [   
-                            dbc.Col([]),
-                            dbc.Col([])
-                        ],
-                        className='me-auto',
-                        align='center',
-                        justify='right',
-                    ),  
-                ],
-                align = 'center'
-            ),
+                ]
+            )
         ],
-    className = "bg-dark text-light"
+    style={
+          'paddingLeft': '1rem', 'height': '3rem', 'paddingRight': '2rem',
+          'borderBottom': '1px solid #393939', 'color': '#fff'},
+    class_name = "bg-dark"
 )
 
 entity_sample_text = 'Hi I am Ravi Dube. I am writing to you to report an unauthorised transaction on my credit card. On March 30th, 2023, I noticed a charge of $1,000 on my credit card statement that I did not authorise. \
@@ -98,11 +67,13 @@ I look forward to hear from you soon.'
 
 entity_input = dbc.InputGroup(
     [
-        dbc.InputGroupText("Enter Text"),
+        # dbc.InputGroupText("Enter Text"),
         dbc.Textarea(id="entity-input", 
                      value=entity_sample_text,
-                     placeholder="Text for Entity Extraction",
-                     rows=7),
+                     placeholder="Text for entity extraction",
+                     rows=4,
+                     style={'borderRadius': '0', 'borderTop': 'none', 'borderLeft': 'none', 'borderRight': 'none', 'backgroundColor': '#f4f4f4','borderBottomColor': '#8d8d8d', 'resize': 'none'}
+                     )
     ],
     className="mb-3",
 )
@@ -110,7 +81,8 @@ entity_input = dbc.InputGroup(
 entity_button = html.Div(
     [
         dbc.Button(
-            "Get PII Entities", id="entity-button", className="me-2", n_clicks=0
+            "Get entities", id="entity-button", outline=True, color="primary", className="me-2", n_clicks=0,
+            style={'height': '2.5rem', 'width': 'min(250px, 100%)', 'borderRadius': 0, 'textAlign': 'left', 'paddingLeft': '1rem', 'paddingRight': '4rem', 'marginTop': '0.5rem'}
         ),
     ],
     className = "text-center"
@@ -118,34 +90,61 @@ entity_button = html.Div(
 
 entities_df = pd.DataFrame(columns=['Record Number', 'Entity Type', 'Entity Text', 'Score'])
 entity_output_table = dash_table.DataTable(
-    columns=[{"name": i, "id": i} for i in entities_df.columns],
+    columns=[
+        dict(id='Record Number', name='Record Number'),
+        dict(id='Entity Type', name='Entity Type'),
+        dict(id='Entity Text', name='Entity Text'),
+        dict(id='Score', name='Score (%)', type='numeric', format=dict(specifier='.0%', locale=dict(percent='')))
+    ],
+    style_header={
+        'border': 'none',
+        'backgroundColor': '#e0e0e0',
+        'fontSize': '0.875rem',
+        'fontWeight': '600'
+    },
     style_cell={
         'textAlign': 'left',
-        'font-family':'sans-serif'
+        'fontFamily': ['IBM Plex Sans', 'sans-serif'],
+        'fontSize': '0.875rem',
+        'fontWeight': '400',
+        'padding': '0 1rem',
+        'height': '2.5rem',
+        'backgroundColor': '#f4f4f4',
     },
     style_table={
         'overflowX': 'scroll', 
-        'overflowY': 'auto'
+        'overflowY': 'auto',
     },
     style_as_list_view=True,
-    sort_action='native',
-    sort_mode='multi',
+    cell_selectable=False,
     id='entity-output-table'
 )
 
 app.layout = html.Div(children=[
                     navbar_main,
                     html.Br(),
+                    html.Br(),
                     dbc.Row(
                         [
-                        dbc.Col(
-                            children=[
-                                html.Div(entity_input),
-                                html.Div(entity_button),
-                                html.Hr(),
-                                html.Div(entity_output_table),
-                            ],
-                        ),
+                            dbc.Col(className="col-2"),
+                            dbc.Col(
+                                children=[
+                                    html.Div(entity_input),
+                                    html.Div(entity_button),
+                                    html.Br(),
+                                    html.Hr(),
+                                    html.Div([ 
+                                          html.Div(
+                                                html.H5("PII labels suggested by custom ML model"),
+                                                    style={'backgroundColor': '#f4f4f4', 'padding': '1rem 1rem 1.5rem 1rem'}
+                                                ),
+                                          entity_output_table],
+                                        style={'padding': '2rem 5rem'}
+                                    ),
+                                ],
+                                className="col-8"
+                            ),
+                            dbc.Col(className="col-2"),
                         ],
                         className="px-3 pb-5"
                     ),
@@ -159,9 +158,11 @@ app.layout = html.Div(children=[
                                 Copyright - 2023 IBM Corporation",
                             className="p-3"
                         )]),
-                        className="bg-dark text-light position-fixed bottom-0"
+                        style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
+                        className="bg-dark position-fixed bottom-0"
                     )
-], className="bg-white")
+], className="bg-white", style={"fontFamily": "'IBM Plex Sans', sans-serif"}
+)
 
 
 # ---- end UI code ----
@@ -187,7 +188,7 @@ def batch_process(f):
 				i=i+1
 	except Exception as e:
 		print(traceback.format_exc())
-	return {'Entities': ent_list}      
+	return {'Entities': ent_list}
 
 # function that can filter the entities list to only show what is considered as PII
 # you can tweak the list to get other entities or block more
@@ -261,6 +262,7 @@ def extract_entities(data):
     if len(ent_list) > 0:
         # MODIFICATION: filter the list for only pii and dedup
         filtered_ent_list = pii_filter(ent_list)
+        filtered_ent_list.sort(key=lambda x: x["ent_confidence"], reverse=True)
         return {'Entities':filtered_ent_list}
     else:
         return {}
