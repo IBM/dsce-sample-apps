@@ -1,0 +1,8 @@
+dash
+dash_bootstrap_components
+dash_daq
+jproperties
+markdownify
+pandas
+python-dotenv
+requests
