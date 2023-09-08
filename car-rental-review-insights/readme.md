@@ -2,11 +2,11 @@
 
 ## data-assets
 
-This directory contains some sample input data that you can paste in the input box of the application. So that you can play around the app.
+This directory contains some sample input data that you can use in the input box of the application.
 
 ## prompts
 
-This directory contains the different different prompts that you can use in the app. You can edit payloads files inside the code-assets/payload to make changes.
+This directory contains different prompts that you can use in the application or in the watsonx Prompt Lab UI. For the sample application, You can edit payloads files inside the code-assets/payload to make changes.
 
 ## code-assets
 
