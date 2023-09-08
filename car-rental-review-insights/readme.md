@@ -1,8 +1,22 @@
-# Set up and launch application
+# Directory structure
+
+## data-assets
+
+This directory contains some sample input data that you can paste in the input box of the application. So that you can play around the app.
+
+## prompts
+
+This directory contains the different different prompts that you can use in the app. You can edit payloads files inside the code-assets/payload to make changes.
+
+## code-assets
+
+This directory contains the application code and required files.
+
+### Set up and launch application
 
 It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
 
-1. Go to the root directory and prepare your python environment.
+1. Go to the code-assets directory and prepare your python environment.
 
    ```sh
    python3 -m venv client-env
