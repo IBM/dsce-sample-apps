@@ -1,6 +1,6 @@
 # Set up and launch application
 
-Requires python3 development tools to already be installed.
+It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
 
 1. Go to the root directory and prepare your python environment.
 
@@ -49,7 +49,7 @@ Requires python3 development tools to already be installed.
 4. Add .env file to your application folder and add below env variable
 
    ```sh
-   WATSONX_API_KEY=<your IBM cloud API key>
+   WATSONX_API_KEY=<your IBM Cloud API key>
    ```
 
 5. Run the application.

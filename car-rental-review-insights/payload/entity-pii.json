@@ -1,1 +1,12 @@
-{ "model_id": "google/flan-ul2", "input": "Extract PII entities from the paragraph given\\n\\nInput:\\nI withdrew $100 from the bank in New York from my phone (345) 123-7867. Regards, Raj\\n\\nOutput:\\n$100: money,New York: location,(345) 123-7867: PhoneNumber,Raj: Person\\n\\nInput:", "parameters": {  "decoding_method": "greedy",  "max_new_tokens": 50,  "min_new_tokens": 1,  "stop_sequences": [],  "repetition_penalty": 1 }, "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"}
+{
+  "model_id": "google/flan-ul2",
+  "input": "Extract PII entities from the paragraph given\\n\\nInput:\\nI withdrew $100 from the bank in New York from my phone (345) 123-7867. Regards, Raj\\n\\nOutput:\\n$100: money,New York: location,(345) 123-7867: PhoneNumber,Raj: Person\\n\\nInput:",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 50,
+    "min_new_tokens": 1,
+    "stop_sequences": [],
+    "repetition_penalty": 1
+  },
+  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+}
