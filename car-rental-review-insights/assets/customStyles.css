@@ -1,0 +1,28 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif !important;
+}
+
+.upload-data {
+    float: right;
+    width: min(250px, 100%);
+}
+
+.carbon-btn {
+    height: 2.5rem;
+    width: min(250px, 100%);
+    border-radius: 0;
+    text-align: left;
+    padding-left: 1rem;
+    padding-right: 4rem;
+    margin-top: 0.5rem;
+    font-size: 14px;
+}
+
+#generate-output {
+    max-width: 100%;
+    overflow: scroll;
+}
+
+.output-div:not(:first-child) {
+    padding-top: 2rem;
+}
