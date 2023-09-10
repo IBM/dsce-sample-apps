@@ -60,7 +60,15 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    pip3 install -r requirements.txt
    ```
 
-4. Add .env file to your application folder and add below env variable
+4. Add .env file to your application folder and add env variable
+
+   ##### Steps to create IBM Cloud API key
+
+   4.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
+   4.2 Click **Create an IBM Cloud API key**
+   4.3 Enter a name and description for your API key
+   4.4 Click **Create**
+   4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
@@ -69,7 +77,7 @@ It is assumed that Python3+ is installed or download from https://www.python.org
 5. Run the application.
 
    ```sh
-   python3 <python file>
+   python3 template.py
    ```
 
 You can now access the application from your browser at the following URL.
