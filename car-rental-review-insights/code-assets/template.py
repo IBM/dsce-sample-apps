@@ -1,11 +1,10 @@
-import os
-import time
+import os, time
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import json
 import dash
 import plotly.express as px
 import dash_bootstrap_components as dbc
-from dash import dash_table, Input, Output, State, html, dcc
+from dash import Input, Output, State, html, dcc
 import pandas as pd
 import requests
 import json
@@ -13,7 +12,7 @@ import base64
 import io
 from jproperties import Properties
 from markdownify import markdownify as md
-from customApi import custom_api_fn
+from datetime import datetime
 import plotly.io as pio
 
 # Setting theme for plotly charts
@@ -32,7 +31,7 @@ for item in items_view:
 
 # For LLM call
 SERVER_URL = configs_dict['SERVER_URL']
-API_KEY = os.getenv("WATSONX_API_KEY", default="")
+API_KEY = os.getenv("WATSONX_API_KEY")
 HEADERS = {
         'accept': 'application/json',
         'content-type': 'application/json',
@@ -52,15 +51,34 @@ app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, 'https://fonts.googl
 app.title = configs_dict['tabtitle']
 
 navbar_main = dbc.Navbar([
-            dbc.Row([
                     dbc.Col(configs_dict['navbartitle'],
                         style={'fontSize': '0.875rem','fontWeight': '600'},
                     ),
-                ]
-            )
+                    dbc.DropdownMenu(
+                        children=[
+                            dbc.DropdownMenuItem("View payload", id="payload-button", n_clicks=0, class_name="dmi-class"),
+                        ],
+                        toggle_class_name="nav-dropdown-btn", caret=False,
+                        nav=True, in_navbar=True,
+                        label=html.Img(src="/assets/settings.svg", height="16px", width="16px", style={'filter': 'invert(1)'}),
+                        align_end=True,
+                    ),
         ],
-    style={'paddingLeft': '1rem', 'height': '3rem', 'paddingRight': '2rem', 'borderBottom': '1px solid #393939', 'color': '#fff'},
+    style={'paddingLeft': '1rem', 'height': '3rem', 'borderBottom': '1px solid #393939', 'color': '#fff'},
     class_name = "bg-dark"
+)
+
+payload_modal = dbc.Modal(
+    [
+        dbc.ModalHeader(dbc.ModalTitle("My Payloads")),
+        dbc.ModalBody([
+            dbc.Tabs(id="payload-modal-tb", active_tab="payload-tab-0")
+        ]),
+    ],
+    id="payload-modal",
+    size="xl",
+    scrollable=True,
+    is_open=False,
 )
 
 user_input = dbc.InputGroup([
@@ -80,7 +98,7 @@ generate_button = dbc.Button(
 
 upload_button = dcc.Upload(id="upload-data", className="upload-data",
     children=[
-        dbc.Button("Upload File", outline=True, color="primary", n_clicks=0, className="carbon-btn"),
+        dbc.Button("Upload from file", outline=True, color="primary", n_clicks=0, className="carbon-btn"),
     ]
 )
 
@@ -155,6 +173,7 @@ horizontal_layout = dbc.Row(
 app.layout = html.Div(children=[
                     dcc.Store(id='masked_content',data=mask_store),
                     dcc.Download(id="download-text"),
+                    html.Div(payload_modal),
                     navbar_main,
                     html.Br(),
                     html.Br(),
@@ -193,7 +212,6 @@ def get_payloads(text):
         )
     return payloads_output
 
-
 def parse_output(res, type):
     parseoutput = []
     if(type == 'text'):
@@ -215,48 +233,14 @@ def get_header_with_access_tkn(access_token):
     headers_with_access_tkn['Authorization'] = 'Bearer {}'.format(access_token)
     return headers_with_access_tkn
 
-
-# Summarization API call
-def summarization_fn(text, summary_payload_json, type, access_token):
-    REQ_URL = SERVER_URL+'/v1/generate'
-    summary_payload_json['input'] = [text]
-    print("calling LLM-Summary")
-    response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(summary_payload_json))
-    response_llm_json = response_llm.json()
-    return parse_output(response_llm_json['results'][0]['generated_text'], type)
-
-# Classification API call
-def classification_fn(text, classification_payload_json, type, access_token):
-    REQ_URL = SERVER_URL+'/v1/generate'
+# LLM API call
+def llm_fn(text, classification_payload_json, type, access_token):
+    REQ_URL = SERVER_URL
     classification_payload_json['input'] = classification_payload_json['input'] + text+"\n\nOutput:\n"
-    print("calling LLM-Classification")
-    print("input", classification_payload_json['input'])
+    print("calling LLM", datetime.now())
     response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(classification_payload_json))
     response_llm_json = response_llm.json()
-    print(response_llm_json)
     return parse_output(response_llm_json['results'][0]['generated_text'], type)
-
-# Entity API call
-def entity_extraction_fn(text, entity_payload_json, type,access_token):
-    REQ_URL = SERVER_URL+'/v1/generate'
-    entity_payload_json['input'] = [text]
-    print("calling LLM-Entity Extraction")
-    response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(entity_payload_json))
-    response_llm_json = response_llm.json()
-    print(response_llm_json['results'][0]['generated_text'])
-    print(type)
-    return parse_output(response_llm_json['results'][0]['generated_text'], type)
-
-# Entity API call
-def content_generation_fn(text, content_payload_json, type,access_token):
-    REQ_URL = SERVER_URL+'/v1/generate'
-    content_payload_json['input'] = [text]
-    print("calling LLM-Content Generation")
-    response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(content_payload_json))
-    response_llm_json = response_llm.json()
-    answer = "<html>" + response_llm_json['results'][0]['generated_text'] +"</html>"
-    print(type)
-    return parse_output(answer, type)
 
 # For Upload Data processing
 def parse_contents(contents, filename, date):
@@ -292,10 +276,6 @@ if configs_dict['show_upload'] in ["true", "True"]:
 )
 
 def generate_output_llm(n, text,masked_store):
-    #if(eval(configs_dict['app_locked']) and text not in [sample_from_file]):
-        #time.sleep(0.5)
-        #return dbc.Alert("Input tampered: Please try with the sample input only", color="danger")
-    
     output = []
     final_output = []
     actions = configs_dict['generate_btn_actions'].split(',')
@@ -308,49 +288,32 @@ def generate_output_llm(n, text,masked_store):
 
     lines = [i for i in lines if i]
 
-    print(lines)
-
-    print("Payloads : " , payloads)
     for line in lines:
         for action, label, payload_file, type in zip(actions, labels, payloads, types):
             try:
               with open('payload/{}.json'.format(payload_file)) as payload_f:
                 payload_f_json = json.load(payload_f)
-              if(action == "summary"):
-                output.append(html.Div([html.H5(label), summarization_fn(text, payload_f_json, type,access_token)], className="output-div"))
-              elif(action == "classify"):
-                output.append(classification_fn(line, payload_f_json, type,access_token))
-              elif(action == "entity"):
-                output.append(html.Div([html.H5(label), entity_extraction_fn(text, payload_f_json, type,access_token)], className="output-div"))
-              elif(action == "content"):
-                output.append(html.Div([html.H5(label), content_generation_fn(text, payload_f_json, type,access_token)], className="output-div"))
-              elif(action == "custom"):
-                output.append(html.Div([html.H5(label), custom_api_fn(text, payload_f_json, type)], className="output-div"))
+
+              if(action == "classify"):
+                output.append(llm_fn(line, payload_f_json, type,access_token))
             except Exception as e:
               print(action, e)
     df = pd.DataFrame(output)
     new_column_names = ['Sentiment', 'BusinessArea', 'Issues','NBO','Masked']
     df = pd.DataFrame(df.values.reshape(len(lines), 5), columns=new_column_names)
-    print(df)
     negative=df['Sentiment'].value_counts()['negative']/df.shape[0]*100
     positive=df['Sentiment'].value_counts()['positive']/df.shape[0]*100
-    #print(df['Masked'][3])
     #1 . Code for Summary, considers only negative sentiments
     df_filtered = df[df['Sentiment'] == "negative"]
     counts = df_filtered['Issues'].value_counts().head(3)
     top_3_counts_values = counts.index.to_list()
     top_3_counts_values = list(map(lambda x: x.lower(), top_3_counts_values))
-    print(top_3_counts_values)
     if negative > 50:
         gen_summary_text = "Majority respondents were unhappy."
     else:
         gen_summary_text = "Majority respondents were happy."
 
-    #final_output.append(html.Div([html.H5("Summary"), summary_text], className="output-div"))
-
     summary_text =" Those who are not happy were upset with - "
-    #final_output.append(html.Div([html.H5("Summary"), html.P([gen_summary_text, html.Br(), summary_text])], className="output-div"))
-    #html.P(['Why no', html.Br(), 'linebreak?'])
     
     #4 code for next best action for negative sentiments
     df_filtered_ba = df[df['Sentiment'] == "negative"]
@@ -359,10 +322,6 @@ def generate_output_llm(n, text,masked_store):
     top_3_nba_values_lower = [x.lower() for x in top_3_nba_values]
     nbo_summary_text = "The actions to be taken to address issues are - "
     final_output.append(html.Div([html.H5(html.B("Summary")), html.P([gen_summary_text, html.Br(), summary_text, html.B(", ".join(top_3_counts_values)), html.Br(), nbo_summary_text,html.B(", ".join(top_3_nba_values_lower))])], className="output-div"))
-    #final_output.append(html.Div([summary_text + ", ".join(top_3_nba_values_lower)+"."], className="output-div"))
-
-    #final_output.append(html.Div([html.H5("Summary"), summary_text + ", ".join(top_3_counts_values)], className="output-div"))
-    #final_output.append(summary_text + ", ".join(top_3_counts_values))
 
     #2 Code for Sentiment Classification
 
@@ -391,13 +350,11 @@ def generate_output_llm(n, text,masked_store):
     new_df_issues = df_filtered_issues['Issues'].value_counts()
     new_df_issues_final = pd.DataFrame({'Issues': new_df_issues.index, 'Occurrences': new_df_issues.values})
     new_df_issues_final["Issues"] = new_df_issues_final["Issues"].apply(str.lower)
-    print(new_df_issues_final)
 
     bar_chart_issues = px.bar(new_df_issues_final, x="Issues", y="Occurrences", height=300, width=550,template=plotly_template)
     bar_chart_issues.update_layout(margin={'t':0,'b':0},xaxis_title="Issues",yaxis_title="Negative Reviews")
     bar_graph_issues = dcc.Graph(figure=bar_chart_issues,config={"displayModeBar": False})
     final_output.append((html.Div([html.H5(html.B("Issues requiring attention")), bar_graph_issues], className="output-div")))
-    #final_output.append(summary_text + ", ".join(top_3_nba_values))
 
     #3 code for issue counts
     df_filtered_ba = df[df['Sentiment'] == "negative"]
@@ -415,17 +372,13 @@ def generate_output_llm(n, text,masked_store):
         ba_issues.append(value)
         business_area_wise_issue_string += f"{key}: {value}\n"
 
-    #final_output.append(html.Div([html.H5("Business Area-wise Issues "), business_area_wise_issue_string], className="output-div"))
     bar_chart = px.bar(x=buss_areas, y=ba_issues, height=300, width=550,template=plotly_template)
     bar_chart.update_layout(margin={'t':0,'b':0},xaxis_title="Business Area",yaxis_title="Negative Reviews")
     bar_graph = dcc.Graph(figure=bar_chart,config={"displayModeBar": False})
     final_output.append((html.Div([html.H5(html.B("Business areas requiring attention")), bar_graph], className="output-div")))
-    #final_output.append(business_area_wise_issue_string)
-
 
     # Adding another chart for next best actions
     nbo_counts = df_filtered['NBO'].value_counts()
-    print(nbo_counts)
     new_df_nbos = pd.DataFrame({'NBO': nbo_counts.index, 'Occurrences': nbo_counts.values})
     pie_chart_nbo = px.pie(
     new_df_nbos,
@@ -438,8 +391,6 @@ def generate_output_llm(n, text,masked_store):
     pie_chart_nbo.update_layout(legend=dict(orientation="h"))
     graph_nbo = dcc.Graph(figure=pie_chart_nbo,config={"displayModeBar": False})
     final_output.append((html.Div([html.H5(html.B("Actions to be taken")), graph_nbo], className="output-div")))
-    #final_output.append(html.Div([html.H5("Sentiments"), sentiment_string], className="output-div"))
-    #final_output.append(sentiment_string)
   
     #5 code for showing masked reviews (this needs to be put in file eventually)
     i=0
@@ -447,38 +398,28 @@ def generate_output_llm(n, text,masked_store):
     for review_line in lines:
         entities = df["Masked"][i]
         data_list = entities.split(',')
-        print(data_list)
         d = {}
         for line in data_list:
             if ":" in line:
                 value, key = line.split(':', 1)
-                print(value, key)
                 # Add the key-value pair to the dictionary
                 d[key.strip()] = value.strip()
-                print(key.strip())
-                print(d)
                 if key.strip() =="Person" or key.strip() =="phoneNumber":
-                    print(review_line)
                     masked_review = review_line.replace(d[key.strip()]," xxxxx ")
-                    print(masked_review)
                     masked_review_df.loc[i, "data"] = masked_review
                 else:
                     masked_review = review_line
-                    #print(masked_review)
                     masked_review_df.loc[i, "data"] = masked_review
-                #masked_review_df["masked_review"] = masked_review
-                #masked_review_df.loc[len(masked_review_df)] = masked_review
 
         i=i+1
 
     masked_column = df["Masked"]
-    #print(masked_review_df)
     download_btn = dbc.Button("Download", id="download-btn", outline=True, color="primary", n_clicks=0, className="carbon-btn")
     masked_store['masked_text']=masked_review_df.to_csv()
     final_output.append(html.Div([html.H5(html.B("Masked Reviews")),download_btn], className="output-div"))
 
-    #print(final_output)
     return final_output,masked_store
+
 # callback for downloading masked text file
 @app.callback(
     Output("download-text", "data"),
@@ -489,6 +430,7 @@ def generate_output_llm(n, text,masked_store):
 def download_masked_func(n_clicks,masked_store):
     if (n_clicks>0):
         return dict(content=masked_store['masked_text'], filename="masked_file.txt")
+
 # For loading spinner
 @app.callback(
     Output('generate-output', 'children', allow_duplicate=True),
@@ -499,7 +441,24 @@ def download_masked_func(n_clicks,masked_store):
 def generate_output_llm(n, text):
     return [dbc.Spinner(color="primary", size="sm"), " Please wait..."]
 
+# Open/Close payload modal
+@app.callback(
+    Output("payload-modal", "is_open"),
+    Output("payload-modal-tb", "children"),
+    [Input("payload-button", "n_clicks")],
+    [State("payload-modal", "is_open"), State('user-input', 'value')],
+    prevent_initial_call=True
+)
+def toggle_payload_modal(n1, is_open, text):
+    if n1:
+        op=[]
+        if(not is_open):
+            op=get_payloads(text)
+        return not is_open,op
+    return is_open, []
+
 # main -- runs on localhost. change the port to run multiple apps on your machine
 if __name__ == '__main__':
-    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8055")
-    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True, dev_tools_hot_reload=False)
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    DEBUG_MODE = eval(os.getenv("DEBUG_MODE", default="True"))
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=DEBUG_MODE, dev_tools_hot_reload=False)

@@ -1,12 +1,12 @@
-{ 
-    "model_id": "google/flan-t5-xxl", 
-    "input": "Classify the review as positive or negative given the following examples.\\nInput:Customer service was friendly and helpful.\\nOutput:positive\\nInput:Customer service was good at MSP airport and the process was very fast. From getting off of the plane to leaving with my rental car was less than 45 minutes.\\nOutput:positive\\nInput:I do not understand why I have to pay additional fee if vehicle is returned without a full tank.\\nOutput:negative\\nInput:Based on the customer service personnel I encountered most recently, I would say it is vastly preferable for the personnel to be able to at least pretend to care whether the customer ever actually receives a car rental that was reserved months in advance.\\nOutput:negative\\nInput:Customer service went out of their way to provide a car that would fit our needs\\nOutput:positive\\nInput:", 
-    "parameters": {  
-        "decoding_method": "greedy",  
-        "max_new_tokens": 10,  
-        "min_new_tokens": 1,  
-        "stop_sequences": [],  
-        "repetition_penalty": 1 
-        }, 
-        "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
-    }
+{
+  "model_id": "google/flan-t5-xxl",
+  "input": "Classify the review as positive or negative given the following examples.\\nInput:Customer service was friendly and helpful.\\nOutput:positive\\nInput:Customer service was good at MSP airport and the process was very fast. From getting off of the plane to leaving with my rental car was less than 45 minutes.\\nOutput:positive\\nInput:I do not understand why I have to pay additional fee if vehicle is returned without a full tank.\\nOutput:negative\\nInput:Based on the customer service personnel I encountered most recently, I would say it is vastly preferable for the personnel to be able to at least pretend to care whether the customer ever actually receives a car rental that was reserved months in advance.\\nOutput:negative\\nInput:Customer service went out of their way to provide a car that would fit our needs\\nOutput:positive\\nInput:",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 10,
+    "min_new_tokens": 1,
+    "stop_sequences": [],
+    "repetition_penalty": 1
+  },
+  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+}

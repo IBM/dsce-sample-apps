@@ -64,11 +64,11 @@ It is assumed that Python3+ is installed or download from https://www.python.org
 
    ##### Steps to create IBM Cloud API key
 
-   4.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
-   4.2 Click **Create an IBM Cloud API key**
-   4.3 Enter a name and description for your API key
-   4.4 Click **Create**
-   4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+   - 4.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
+   - 4.2 Click **Create an IBM Cloud API key**
+   - 4.3 Enter a name and description for your API key
+   - 4.4 Click **Create**
+   - 4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
