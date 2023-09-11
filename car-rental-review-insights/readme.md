@@ -16,13 +16,19 @@ This directory contains the application code and required files.
 
 It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
 
-1. Go to the code-assets directory and prepare your python environment.
+1. Go to the code-assets directory
+
+   ```sh
+   cd code-assets
+   ```
+
+2. Prepare your python environment.
 
    ```sh
    python3 -m venv client-env
    ```
 
-2. Activate the virtual environment:
+3. Activate the virtual environment:
 
    - MacOS, Linux, and WSL using bash/zsh
 
@@ -54,27 +60,27 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
-3. Install the required libraries.
+4. Install the required libraries.
 
    ```sh
    pip3 install -r requirements.txt
    ```
 
-4. Add .env file to your application folder and add env variable
+5. Add .env file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 
-   - 4.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
-   - 4.2 Click **Create an IBM Cloud API key**
-   - 4.3 Enter a name and description for your API key
-   - 4.4 Click **Create**
-   - 4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+   - 5.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
+   - 5.2 Click **Create an IBM Cloud API key**
+   - 5.3 Enter a name and description for your API key
+   - 5.4 Click **Create**
+   - 5.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
    ```
 
-5. Run the application.
+6. Run the application.
 
    ```sh
    python3 template.py
