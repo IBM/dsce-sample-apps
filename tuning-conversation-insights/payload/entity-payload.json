@@ -1,0 +1,12 @@
+{
+  "model_id": "ibm/mpt-7b-instruct2",
+  "input": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.\n\n",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 100,
+    "min_new_tokens": 1,
+    "stop_sequences": [],
+    "repetition_penalty": 1
+  },
+  "project_id": "<your watsonx instance project_id>"
+}

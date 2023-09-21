@@ -1,0 +1,11 @@
+Generate a marketing campaign brief for a product manager based on the following information.
+
+Write in a concise and professional tone
+
+Company - Lyka
+Feature - Sprint 2.0
+Product Info - Lykas running shoes are designed for sprint runners who demand top notch performance, speed, comfort and style.  The campaign will have a modern, slick, and aspirational feel.
+kick-off date - 11th July 2023 2:30 PM
+Target audience - 20-40 age limits
+Sales Objective - 30% increase in the next two months
+Creativity - high-quality images, bold typography and bright colors

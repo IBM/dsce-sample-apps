@@ -1,0 +1,38 @@
+Input:
+Customer: I want to know more about coverage and benefits of insurance policies you offer.
+
+Agent: We provide coverage for OPD, surgeries, and other services.
+
+Customer: Can I renew online ?
+
+Agent: Yes you can.
+
+Customer: Which hospitals are there in my zip code  560067?
+
+Agent: We have a network hospital in Aster General Hospital for cashless option.
+
+Customer: What is the claim process?
+
+Agent: You need to inform Mayfair Insurance Company within 1 week of hospitalisation for claims.
+Output:
+1. area: 560067, 2. hospital: Aster General Hospital, 3. insurance company: Mayfair Insurance Company
+
+
+Input:
+Customer: What insurance policies you do you offer.
+
+Agent: We provide various policies that cover OPD, surgeries, medicines and various home medical services.
+
+Customer: What is your renewal process ?
+
+Agent: You can renew online on our website.
+
+Customer: Do you have any hospitals in the Sommerville area  ?
+
+Agent: Sure! You can avail services at Sequoia Medical Center which will provide  cashless option.
+
+Customer: How do I claim at other non-network hospitals ?
+
+Agent: You need to inform AllState  Insurance Company within a week of hospitalisation for claim processing
+Output:
+1. area: Sommerville, 2. hospital: Sequoia Medical Center , 3. insurance company: AllState  Insurance Company
