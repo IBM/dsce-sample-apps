@@ -1,0 +1,18 @@
+Input:
+Customer: I want to know more about coverage and benefits of insurance policies you offer.
+
+Agent: We provide coverage for OPD, surgeries, and other services.
+
+Customer: Can I renew online ?
+
+Agent: Yes you can.
+
+Customer: Which hospitals are there in my zip code  560067 ?
+
+Agent: We have a network hospital in Aster General Hospital for cashless option.
+
+Customer: What is the claim process ?
+
+Agent: You need to inform Mayfair Insurance Company within 1 week of hospitalisation for claims.
+Output:
+The agent informs the customer about the details of insurance policies offered. It was clarified that OPD, surgeries and other services are covered and online premium payment for renewals was possible. The customer lives in 560067 and was informed that Aster General Hospital was the closest network hospital for cashless. The customer was also informed that he needs to contact MayFair Insurance Company within 1 week of hospitalisation for claims.

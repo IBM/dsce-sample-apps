@@ -8,5 +8,5 @@
     "stop_sequences": [],
     "repetition_penalty": 1
   },
-  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+  "project_id": "<your watsonx instance project_id>"
 }

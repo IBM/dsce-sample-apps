@@ -1,0 +1,9 @@
+dash
+dash_bootstrap_components
+dash_daq
+ibm-cloud-sdk-core
+jproperties
+markdownify
+pandas
+python-dotenv
+requests
