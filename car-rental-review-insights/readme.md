@@ -80,7 +80,17 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    WATSONX_API_KEY=<your IBM Cloud API key>
    ```
 
-6. Run the application.
+6. Add value of project_id key to all the payload files which are availalbe under /payload directory
+
+   ##### Steps to create project_id
+
+   - 6.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
+   - 6.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
+   - 6.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
+   - 6.4 Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 6.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+
+7. Run the application.
 
    ```sh
    python3 template.py
