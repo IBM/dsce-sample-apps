@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/mpt-7b-instruct2",
   "input": "Extract PII entities from the paragraph given\\n\\nInput:\\nVirtual agent: How much money to withdraw ?  Caller: 100$ Virtual agent: What's your email?  Caller: text@gmail.com\\n\\nNamed Entities:\\n1. 100$: amount;2. text@gmail.com: email\\n",
   "parameters": {
     "decoding_method": "greedy",
