@@ -1,12 +1,12 @@
 {
-  "model_id": "google/flan-t5-xxl",
+  "model_id": "ibm/mpt-7b-instruct2",
   "input": "Summarise the following conversation between Customer and the Agent with all necessary details.\n\n",
   "parameters": {
     "decoding_method": "greedy",
-    "max_new_tokens": 200,
-    "min_new_tokens": 1,
+    "max_new_tokens": 400,
+    "min_new_tokens": 30,
     "stop_sequences": [],
-    "repetition_penalty": 1.46
+    "repetition_penalty": 1
   },
   "project_id": "<your watsonx instance project_id>"
 }

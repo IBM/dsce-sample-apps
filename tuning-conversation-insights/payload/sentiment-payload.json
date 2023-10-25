@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/granite-13b-instruct-v1",
   "input": "Read the text and classify customer sentiment into one of the following options: positive, negative, neutral\n\n",
   "parameters": {
     "decoding_method": "greedy",

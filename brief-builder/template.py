@@ -229,9 +229,11 @@ def llm_fn(text, payload_json, type, access_token):
     print("calling LLM", datetime.now())
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()
+    brief = response_llm_json['results'][0]['generated_text']
+    brief = brief.replace("Input:","")
 
     try:
-        return parse_output(response_llm_json['results'][0]['generated_text'], type)
+        return parse_output(brief, type)
     except Exception as e:
         print("{} Error from LLM -->".format(datetime.now()),response_llm_json)
         return "Error occured. Status code: {}. Please try again.".format(response_llm_json['status_code'])

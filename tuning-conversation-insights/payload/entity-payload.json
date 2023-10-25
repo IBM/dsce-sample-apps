@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/mpt-7b-instruct2",
+  "model_id": "ibm/granite-13b-instruct-v1",
   "input": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.\n\n",
   "parameters": {
     "decoding_method": "greedy",

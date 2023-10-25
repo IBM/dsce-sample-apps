@@ -208,11 +208,20 @@ def parse_output(res, type):
     if(type == 'label'):
         return html.H5(dbc.Badge(res, color="#1192e8", style={'borderRadius': '12px','marginLeft':'8px','paddingLeft':'16px', 'paddingRight':'16px'}))
     elif(type == 'key-value'):
-        pairs = res.split(';')
-        for pair in pairs:
-            k, v = pair.split(':')
-            parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
-        return html.Div(parseoutput, className="key-value-div-parent")
+        try:
+            pairs = res.split('\n')
+            for pair in pairs:
+                if(pair.strip()!=""):
+                    if(len(pair.split(":"))>2):
+                        splitted = pair.split(':')
+                        k, v = splitted[-2:]
+                        k = splitted[0][0:2] + k
+                    else: 
+                        k, v = pair.split(':')
+                    parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
+            return html.Div(parseoutput, className="key-value-div-parent")
+        except:
+            return res
     elif(type == 'markdown'):
         return dcc.Markdown(md(res))
 
