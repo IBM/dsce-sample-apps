@@ -36,11 +36,11 @@ HEADERS = {
 
 # Read Sample text from file
 sample_from_file_1 = ""
-with open('ticket.txt', 'r') as sample_text_f:
+with open('contract1.txt', 'r') as sample_text_f:
     sample_from_file_1 = sample_text_f.read()
 
 sample_from_file_2 = ""
-with open('ticket2.txt', 'r') as sample_text_f:
+with open('contract2.txt', 'r') as sample_text_f:
     sample_from_file_2 = sample_text_f.read()
 
 with open('payload/missing-caluses-payload-examples.txt') as payload_f:
@@ -401,8 +401,8 @@ def toggle_payload_modal(n1, is_open, text):
 )
 def populate_sample_text(n_clicks):
     if(n_clicks>0):
-        files = {'file': open('data/SampleContract.pdf', 'rb')}
         try:
+            files = {'file': open('data/contract1.pdf', 'rb')}
             time.sleep(0.5)
             # here you can provide a function which can convert pdf to text for the "files" variable.
             res = sample_from_file_1
@@ -420,7 +420,7 @@ def populate_sample_text(n_clicks):
 def populate_sample_text(n_clicks):
     if(n_clicks>0):
         try:
-            files = {'file': open('data/SampleContract2.pdf', 'rb')}
+            files = {'file': open('data/contract2.pdf', 'rb')}
             time.sleep(0.5)
             # here you can provide a function which can convert pdf to text for the "files" variable.
             res = sample_from_file_2
@@ -436,7 +436,7 @@ def populate_sample_text(n_clicks):
     prevent_initial_call=True,
 )
 def download_file(n_clicks):
-    return dcc.send_file("data/SampleContract.pdf")
+    return dcc.send_file("data/contract1.pdf")
 
 # download sample contract 2 file
 @app.callback(
@@ -445,7 +445,7 @@ def download_file(n_clicks):
     prevent_initial_call=True,
 )
 def download_file(n_clicks):
-    return dcc.send_file("data/SampleContract2.pdf")
+    return dcc.send_file("data/contract2.pdf")
 
 # main -- runs on localhost. change the port to run multiple apps on your machine
 if __name__ == '__main__':
