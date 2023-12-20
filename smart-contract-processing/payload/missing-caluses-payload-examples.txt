@@ -1,0 +1,61 @@
+PROPERTY MANAGEMENT AGREEMENT
+
+PARTIES
+This Property Management Agreement (hereinafter referred to as the "Agreement") is entered into on 5/11/2021 (the "Effective Date"), by and between
+Jimmy Fallon, with an address of 67 ABC Avenue, NY 23411 (hereinafter referred to as the "Owner"), and Susan Parks, representing XYZ Services, with an address of 45, Kinston, GA 78322 (hereinafter referred to as the "Agent"), collectively referred to as the "Parties".
+
+GENERAL
+- Hereby, the Owner exclusively appoints the Agent to manage the property that is located at 34, Park Lane, NY, 23456. The Agent hereby accepts such responsibility and agrees to manage the property aforementioned.
+- The Owner agrees to pay the fees of USD 2300 per year associated with the services that the Agent will provide when managing the aforementioned property.
+
+TERM
+- This Agreement shall be effective on the date of signing this Agreement (hereinafter referred to as the "Effective Date") and the term will end on 12th Dec 2022.
+- The Agreement can be renewed for an additional 11 months at a maximum 5% increase in management fees. 
+
+THE RESPONSIBILITIES OF THE AGENT
+- To rent and lease as well as operate the property.
+- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.
+- To provide a monthly accounting of rents received and paid expenses as well as any other applicable incomes, monies or sums to the Owner.
+- To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed.
+- To inform the Owner of any improvements and repairs that exceed USD 1000 and to obtain consent from the Owner prior to paying such fees.
+
+Signed by:
+Jimmy Fallon
+Susan Parks
+
+Dated:
+4/11/2021
+
+This agreement is approved and has all the necessary clauses.
+END
+
+
+THE RESPONSIBILITIES OF THE AGENT
+- To rent and lease as well as operate the property.
+- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.
+- To provide a monthly accounting of rents received and paid expenses  as well as any other applicable incomes, monies or sums to the Owner."
+- To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed.
+
+Add the following clause as Responsibilities of the Agent: "To inform the Owner of any improvements and repairs that exceed USD <amount> and to obtain consent from the Owner prior to paying such fees."
+
+
+TERM
+- This Agreement shall be effective on the date of signing this Agreement (hereinafter referred to as the "Effective Date") and will end on 20/9/2022.
+
+Add a renewal clause in Term clauses. 
+
+
+GENERAL
+- Hereby, the Owner exclusively appoints the Agent to manage the property. The Agent hereby accepts such responsibility and agrees to manage the property aforementioned.
+- The Owner agrees to pay the fees of USD 1000 per year associated with the services that the Agent will provide when managing the aforementioneclproperly.
+
+Add the address of the property in the general clauses.
+
+
+THE RESPONSIBILITIES OF THE AGENT CLAUSES
+- To rent and lease as well as operate the property.
+- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.
+- To provide a monthly accounting of rents received and paid expenses as well as any other applicable incomes, monies or sums to the Owner.
+- To inform the Owner of any improvements and repairs that exceed USD 1000 and to obtain consent from the Owner prior to paying such fees.
+
+Add the following clause in Responsibilities of the Agent: "To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed."

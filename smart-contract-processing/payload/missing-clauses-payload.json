@@ -1,0 +1,12 @@
+{
+  "model_id": "meta-llama/llama-2-70b-chat",
+  "input": "Study the general, term and agent responsibility clauses in the property maintenance agreement below between 2 parties. All the clauses are mandatory and need to appear in an agreement. For the given agreement identify and clearly mention a list all the missing clauses in general, terms and responsibilities sections. Otherwise, if all clauses are present then say that \"The agreement is approved\".",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 500,
+    "min_new_tokens": 0,
+    "stop_sequences": ["END", "PROPERTY MANAGEMENT AGREEMENT"],
+    "repetition_penalty": 1
+  },
+  "project_id": "<your watsonx instance project_id>"
+}
