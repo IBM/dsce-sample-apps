@@ -1,9 +1,9 @@
-dash
-dash_bootstrap_components
-dash_daq
-pandas
-plotly
-numpy
+dash==2.11.1
+dash_bootstrap_components==1.4.1
+dash_daq==0.5.0
+pandas==2.0.3
+plotly==5.9.0
+numpy==1.23.5
 librosa
-matplotlib
+matplotlib==3.7.0
 pysoundfile
