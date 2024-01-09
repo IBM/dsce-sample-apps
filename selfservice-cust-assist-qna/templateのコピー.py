@@ -52,7 +52,7 @@ suggestions_options = []
 for input_suggestion in suggestions_list:
     suggestions_options.append(html.Option(input_suggestion))
 
-# model List
+# modified : model List
 models_string=configs_dict['models']
 models_list = models_string.split(',')
 global selectedmodel
@@ -224,6 +224,7 @@ horizontal_layout = dbc.Row(
                 )
 
 app.layout = html.Div(children=[
+                     # modified : dropdown for model selection
                     dcc.Dropdown(
                         id='my-dropdown',
                         options=models_list,
@@ -260,6 +261,8 @@ def get_payloads(text, doc_name):
         with open('payload/{}.json'.format(payload_file)) as payload_f:
             payload_f_json = json.load(payload_f)
         file_content = open('documents/{}'.format(doc_name), 'r')
+        # modified : set model 
+        #print("##### DEBUG1: selectedmodel #####\n", selectedmodel, end='\n') 
         payload_f_json['model_id'] = selectedmodel
         payload_f_json['input'] = construct_input(text,file_content.read())
         payload_f_json['project_id'] = "xxxxx"
@@ -285,8 +288,13 @@ def get_header_with_access_tkn(access_token):
 
 # Q&A API call
 def q_and_a_fn(text, file_content, access_token):
+    # modified : 
+    #print('DEBUG2:', selectedmodel, end="\n")
     q_and_a_payload_json['model_id'] = selectedmodel
     q_and_a_payload_json['input'] = construct_input(text,file_content)
+
+    # modified
+    #print("##### DEBUG3: prompt #####\n", q_and_a_payload_json, end='\n') 
     print("calling LLM-Q&A", datetime.now(), end='\n')
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(q_and_a_payload_json))
     response_llm_json = response_llm.json()
@@ -356,6 +364,8 @@ def toggle_payload_modal(n1, n2, is_open, text, doc_name):
         op=[]
         if(not is_open):
             op=get_payloads(text, doc_name)
+            # modified
+            #print("##### DEBUG4: prompt #####\n", op, end='\n') 
         return not is_open,op
     return is_open, []
 
@@ -374,6 +384,7 @@ def toggle_viewdoc_modal(n1, n2, is_open, doc_name):
         return not is_open,file_content.readlines()
     return is_open, []
 
+# modified : get model
 @app.callback(
     Output('output-container', 'children'),
     Input('my-dropdown', 'value'))

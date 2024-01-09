@@ -55,6 +55,7 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    - 4.3 Enter a name and description for your API key
    - 4.4 Click **Create**
    - 4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+   - 4.6 Finally, open .env file you have made in your application folder and set this variable like below
 
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
@@ -69,6 +70,11 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    - 5.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
    - 5.4 Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
    - 5.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+   - 5.6 Finally, open all files in your ./payload folder and set Project ID to designated area shown below
+
+   ```
+     "project_id": "<your watsonx instance project_id>"
+   ```
 
 6. Run the application.
 
