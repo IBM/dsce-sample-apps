@@ -210,9 +210,10 @@ def parse_output(res, type):
     elif(type == 'key-value'):
         res = res.replace("Named Entities:","")
         try:
-            pairs = res.split(',')
+            pairs = res.split('\n')
             for pair in pairs:
-                if(pair.strip()!=""):
+                pair = pair.strip()
+                if(pair!="" and ":" in pair and len(pair.split(":"))==2):
                     k, v = pair.split(':')
                     parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
             return html.Div(parseoutput, className="key-value-div-parent")
@@ -230,7 +231,7 @@ def get_header_with_access_tkn(access_token):
 # LLM API call
 def llm_fn(text, payload_json, type, access_token):
     REQ_URL = SERVER_URL+'/v1/generate'
-    payload_json['input'] = payload_json['input']+text
+    payload_json['input'] = payload_json['input']+text+"\nOutput:\n"
     print("calling LLM", datetime.now())
     response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()

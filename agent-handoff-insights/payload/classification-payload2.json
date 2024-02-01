@@ -1,6 +1,6 @@
 {
   "model_id": "ibm/granite-13b-instruct-v1",
-  "input": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\\n",
+  "input": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 100,

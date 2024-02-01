@@ -209,15 +209,11 @@ def parse_output(res, type):
         return html.H5(dbc.Badge(res, color="#1192e8", style={'borderRadius': '12px','marginLeft':'8px','paddingLeft':'16px', 'paddingRight':'16px'}))
     elif(type == 'key-value'):
         try:
-            pairs = res.split('\n')
+            res = res.replace("Input:","")
+            pairs = res.split(';')
             for pair in pairs:
-                if(pair.strip()!=""):
-                    if(len(pair.split(":"))>2):
-                        splitted = pair.split(':')
-                        k, v = splitted[-2:]
-                        k = splitted[0][0:2] + k
-                    else: 
-                        k, v = pair.split(':')
+                if(pair.strip()!="" and ":" in pair and len(pair.split(":"))==2):
+                    k, v = pair.split(':')
                     parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
             return html.Div(parseoutput, className="key-value-div-parent")
         except:
@@ -233,7 +229,7 @@ def get_header_with_access_tkn(access_token):
 
 # LLM API call
 def llm_fn(text, payload_json, type, access_token):
-    payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n"
+    payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n\n"
     print("calling LLM", datetime.now())
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()
