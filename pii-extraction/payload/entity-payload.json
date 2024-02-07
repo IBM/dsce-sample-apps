@@ -1,12 +1,22 @@
 {
-  "model_id": "ibm/mpt-7b-instruct2",
-  "input": "Extract PII entities from the paragraph given\n\nInput:\nI withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\n\nNamed Entities:\n1. $100: money,\n2. New York: location,\n3. (345) 123-7867: PhoneNumber,\n4. Raj: Person,\n5. raj@gmail.com: Email\n\n",
+  "model_id": "ibm/granite-13b-instruct-v2",
+  "input": "Extract PII entities from the paragraph given\n\nInput: I withdrew $100 from the bank in London from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\nOutput: $100: Amount,\nLondon: Location,\n(345) 123-7867: PhoneNumber,\nRaj: Person,\nraj@gmail.com: Email\n\nInput: I am not able to transact on my card 3572267594198019 since 20th March, 2023. Please check the issue. Thanks, Mary Smith\nOutput: Mary Smith: Person,\n3572267594198019: CardNumber,\n20th March, 2023: Date\n\nInput: Please send me the OTP at (123)1234567. Thanks, David\nOutput: David: Person,\n(123)1234567: PhoneNumber\n\nInput: I lost my card in London on 1st Jan, 2023. My card number is 3572267594198019.\nOutput: London: Location,\n1st Jan, 2023: Date,\n3572267594198019: CardNumber\n\nInput: ",
   "parameters": {
     "decoding_method": "greedy",
-    "max_new_tokens": 200,
-    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "min_new_tokens": 0,
     "stop_sequences": [],
     "repetition_penalty": 1
+  },
+  "moderations": {
+    "hap": {
+      "input": true,
+      "output": true,
+      "threshold": 0.5,
+      "mask": {
+        "remove_entity_value": true
+      }
+    }
   },
   "project_id": "<your watsonx instance project_id>"
 }

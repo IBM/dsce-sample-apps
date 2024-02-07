@@ -271,12 +271,13 @@ def parse_output(res, type):
             pairs = res.split(',')
             cnt=1
             for pair in pairs:
-                if(pair.strip()!="" and ":" in pair):
+                pair = pair.strip()
+                if(pair!="" and ":" in pair and len(pair.split(":"))==2):
                     k, v = pair.split(':')
-                    key_to_append = " ".join(k.strip().lower().split(" ")[1:])
+                    key_to_append = " ".join(k.strip().lower().split(" ")[1:] if len(k.strip().lower().split(" "))!=1 else k.strip().lower())
                     if(v.strip().lower() in allowed_entities and key_to_append not in fetched_entites_key and cnt<=10):
                         fetched_entites_key.append(key_to_append)
-                        parseoutput.append(html.Div([html.B(str(cnt)+'. '+" ".join(k.split(" ")[1:])+':'), v], className="key-value-div"))
+                        parseoutput.append(html.Div([html.B(str(cnt)+'. '+(" ".join(k.split(" ")[1:]) if len(k.split(" "))!=1 else k) +':'), v], className="key-value-div"))
                         cnt+=1
             return html.Div(parseoutput, className="key-value-div-parent")
         except:

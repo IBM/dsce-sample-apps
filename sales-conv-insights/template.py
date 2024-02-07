@@ -213,8 +213,10 @@ def parse_output(res, type):
         try:
             pairs = res.split(',')
             for pair in pairs:
-                k, v = pair.split(':')
-                parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
+                pair = pair.strip()
+                if(pair!="" and ":" in pair and len(pair.split(":"))==2):
+                    k, v = pair.split(':')
+                    parseoutput.append(html.Div([html.B(k+':'), v], className="key-value-div"))
             return html.Div(parseoutput, className="key-value-div-parent")
         except:
             return res
