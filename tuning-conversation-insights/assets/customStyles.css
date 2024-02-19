@@ -147,7 +147,7 @@ body {
 
 #generate-output {
   max-width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .output-div:not(:first-child) {
