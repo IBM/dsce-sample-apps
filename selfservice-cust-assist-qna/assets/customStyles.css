@@ -71,7 +71,7 @@ body {
 
 #generate-output {
   max-width: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .form-check-input:checked[type="radio"] {
