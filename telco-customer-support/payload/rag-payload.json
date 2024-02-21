@@ -1,0 +1,19 @@
+{
+  "model_id": "google/flan-ul2",
+  "input": "",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 1000,
+    "min_new_tokens": 10,
+    "stop_sequences": [],
+    "repetition_penalty": 1.5
+  },
+  "moderations": {
+    "hap": {
+      "top_k": 50,
+      "top_p": 0.5,
+      "temperature": 0.5
+    }
+  },
+  "project_id": "<your watsonx instance project_id>"
+}
