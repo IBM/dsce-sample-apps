@@ -61,7 +61,7 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    WML_INSTANCE_URL=https://us-south.ml.cloud.ibm.com
    ```
 
-5. Add value of project_id key to the payload files where project_id key is available which are availalbe under /payload directory
+5. Add value of `project_id` key of your watsonx.ai instance to the `payload/rag-payload.json` & `payload/summary-payload.json` files.
 
    ##### Steps to create project_id
 
@@ -71,7 +71,9 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    - 5.4 Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
    - 5.5 Click on **Manage** tab > Copy the **Project ID** from **General**
 
-6. Run the application.
+6. Source document is available in the `/data` folder. This `hybrid-cloud-mesh-documentation.pdf` file is chunked & stored into vectorstore upon server startup. Refer `init()` method in `rag.py` for more details.
+
+7. Run the application.
 
    ```sh
    python3 template.py

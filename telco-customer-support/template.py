@@ -1,22 +1,16 @@
-import os, time
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import os, time, requests, json, base64, io, re
 import dash
+from dash import Input, Output, State, html, dcc
 import dash_bootstrap_components as dbc
-from dash import dash_table, Input, Output, State, html, dcc
-import pandas as pd
-import requests
-import json
-import base64
-import io
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from jproperties import Properties
 from markdownify import markdownify as md
 from datetime import datetime
 from rag import init, generate_answer
-import re
 
 # instantiate config
 configs = Properties()
-# load properties into configs
+# load properties into configs from app-config.properties
 with open('app-config.properties', 'rb') as config_file:
     configs.load(config_file)
 # read into dictionary
@@ -41,7 +35,7 @@ with open('sample_transcript.txt', 'r') as sample_text_f:
 
 
 
-# init the process for storing pdf data into vectoredb
+# init the rag module for chunking pdf data into vectors
 init()
 
 # ---- UI code ----
@@ -139,11 +133,9 @@ qna_user_input = dbc.InputGroup(
     className="mb-3",
 )
 
-
 generate_button = dbc.Button(
     configs_dict['generate_btn_text'], id="generate-button", color="primary", n_clicks=0, className="carbon-btn"
 )
-
 
 upload_file_note = dbc.Row(dbc.Col(
                             html.Div(
@@ -275,7 +267,7 @@ app.layout = html.Div(children=[
 
 # ---- end UI code ----
 
-# Fetch payloads for viewing
+# Fetch payloads for viewing - View payload
 def get_payloads(text, question):
     payloads_output = []
     labels = configs_dict['generate_btn_output_labels'].split(',')
@@ -326,7 +318,7 @@ def get_header_with_access_tkn(access_token):
     headers_with_access_tkn['Authorization'] = 'Bearer {}'.format(access_token)
     return headers_with_access_tkn
 
-# LLM API call
+# Invoke LLM API
 def llm_fn(text, payload_json, type, access_token):
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n"
     print("calling LLM", datetime.now())
@@ -368,7 +360,6 @@ if configs_dict['show_upload'] in ["true", "True"]:
                 return current_input, dbc.Alert("Only .txt files are allowed and file size should not exceed 50Kb", color="danger")
             return parse_contents(list_of_contents, list_of_names, list_of_dates), html.P(configs_dict["helper_text"], style={"color": "#525252", "fontSize": "1rem", "fontStyle": "italic"})
 
-
 # To format llm generated response
 def format_answer(answer):
     splitted_answer = re.split(r'(\d+\.)', answer)
@@ -382,7 +373,7 @@ def format_answer(answer):
     formatted_answer = "".join(splitted_answer)
     return formatted_answer
 
-# LLM Call
+# LLM Call - on click of 'Get summary'
 @app.callback(
     Output('generate-output', 'children'),
     Input('generate-button', 'n_clicks'),
@@ -422,7 +413,7 @@ def generate_output_llm(n, text):
     return []
 
 
-# RAG call
+# RAG call - on click of search icon
 @app.callback(
     Output('qna-generate-output', 'children'),
     Output('source-modal-div', 'children'),
@@ -478,7 +469,7 @@ def toggle_payload_modal(n1, is_open, text, question):
         return not is_open,op
     return is_open, []
 
-# Open/Close source modal
+# Open/Close view source modal
 @app.callback(
         Output('source-modal', 'is_open'),
         Input('view-source-link', 'n_clicks'),
@@ -502,5 +493,5 @@ def download_file(n_clicks):
 # main -- runs on localhost. change the port to run multiple apps on your machine
 if __name__ == '__main__':
     SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
-    DEBUG_MODE = eval(os.getenv("DEBUG_MODE", default="True"))
+    DEBUG_MODE = eval(os.getenv("DEBUG_MODE", default="False"))
     app.run(host="0.0.0.0", port=SERVICE_PORT, debug=DEBUG_MODE, dev_tools_hot_reload=False)
