@@ -1,3 +1,5 @@
+# File to handle RAG pattern logic
+
 import os, json
 from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
@@ -6,7 +8,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.document_loaders import UnstructuredPDFLoader
 from langchain.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,6 +17,7 @@ WML_INSTANCE_URL = os.getenv("WML_INSTANCE_URL")
 
 chain = None
 
+# Read & chunk pdf file into vectorstore
 def init():
     global chain
     print('init started')
@@ -51,6 +53,7 @@ def init():
     top_k = payload_f_json['moderations']['hap']['top_k']
     top_p = payload_f_json['moderations']['hap']['top_p']
 
+    # watsonx ai parameters for rag pattern
     params = {
         GenParams.DECODING_METHOD:decoding_method,
         GenParams.MAX_NEW_TOKENS: maximum_new_tokens,
@@ -73,6 +76,7 @@ def init():
     chain = ConversationalRetrievalChain.from_llm(model.to_langchain(), retriever, return_source_documents=True)
     print("You can proceed")
 
+# Ask a question to LLM using rag pattern & get response
 def generate_answer(question):
     source_document = ""
     chat_history = []
