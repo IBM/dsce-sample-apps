@@ -1,0 +1,194 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  margin: 0;
+  overflow-y: hidden;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.carbon-label {
+  color: var(--cds-text-secondary, #525252);
+  display: inline-block;
+  font-size: var(--cds-label-01-font-size, 0.75rem);
+  font-weight: 400;
+  letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+  line-height: 1rem;
+  margin-bottom: 0.5rem;
+  vertical-align: baseline;
+}
+
+.div-toggle-parent {
+  display: none;
+  align-items: flex-end;
+  justify-content: flex-end;
+  background-color: #f4f4f4;
+  border: 1px solid;
+  border-radius: 3rem;
+  padding: 0rem 1rem 0.8rem 1rem;
+  .toggle-btn {
+    margin-right: 0.5rem;
+  }
+}
+
+.fixed-items {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  position: fixed;
+  bottom: 2rem;
+  z-index: 1;
+}
+
+.footer {
+  background-color: var(--cds-background);
+  bottom: 0;
+  color: var(--cds-text-secondary);
+  position: fixed;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+.header-logo {
+  height: 2.5rem;
+  background-color: white;
+  padding: 5px 8px;
+}
+
+#help-text-div {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  row-gap: 1rem;
+}
+
+.home-page-img {
+  width: 75%;
+  align-self: center;
+  background-color: #f7f7f7;
+}
+
+.like-ans {
+  display: none;
+}
+
+#login-btn {
+  display: block;
+  width: 170px;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    margin-right: 2rem;
+    max-height: calc(100vh - 48px - 85px);
+    overflow-y: scroll;
+  }
+}
+
+.other-input {
+  display: grid;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+p {
+  margin: 5px;
+  padding: 0px;
+}
+
+#params-area-parent-div {
+  display: none;
+  grid-template-columns: 0.8fr 1fr;
+  column-gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+#prompt-note {
+  position: fixed;
+  bottom: 2rem;
+  right: 5rem;
+  height: 3rem;
+  border-radius: 2.5rem;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prompt-text-area {
+  display: none;
+  margin-top: 0.5rem;
+}
+
+#source-content-pre {
+  background-color: var(--cds-field-01);
+  min-height: 17.8rem;
+  height: 17.8rem;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  white-space: normal;
+  font-family: "IBM Plex Mono", sans-serif;
+  font-size: 14px;
+  line-height: normal;
+  overflow-y: scroll;
+}
+
+#submit-prompt {
+  /* position: fixed;
+  padding: 1% 0 0 2.2%; */
+  display: none;
+}
+
+.submit-prompt-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 1rem;
+  padding-top: 2rem;
+}
+
+#txt-inpt-icon {
+  display: flex;
+  background-color: #1062fe;
+  color: white;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+#txt-inpt-icon:hover {
+  background-color: #0353e9;
+}
+
+#WACWidget {
+  position: fixed !important;
+  left: 2rem !important;
+}
+
+.WACLauncher__ButtonContainer.WACLauncher__ButtonContainer--round {
+  position: fixed !important;
+  left: 2rem !important;
+}
+
+#WACContainer.WACContainer
+  .WACLauncher__ButtonContainer.WACLauncher__ButtonContainer--round
+  .WACLauncher__Button {
+  position: fixed;
+  bottom: 2rem;
+}

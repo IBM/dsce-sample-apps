@@ -1,0 +1,12 @@
+{
+  "model_id": "bigcode/starcoder",
+  "input": "",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 100,
+    "min_new_tokens": 1,
+    "stop_sequences": [";", "Input:"],
+    "repetition_penalty": 1
+  },
+  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+}

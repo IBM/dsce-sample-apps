@@ -1,0 +1,312 @@
+Employee_Name # varchar(50) # employee name,EmpID # int # employee id,PerfScoreID # int # performance score,Salary # int # salary,Position # varchar(30) # position or role in company,State # varchar(10) # primary location as the state code,Sex # varchar(5) #  is employee male or female,MaritalDesc # varchar(20) # marital status e.g. single married divorced widowed,CitizenDesc # varchar(50) # citizenship status as US Citizen or Eligible NonCitizen or Non-Citizen,EmploymentStatus # varchar(25) # employment status,Department # varchar(50) # department,ManagerName # varchar(50) # managers name,RecruitmentSource # varchar(50) # recruitment source,EngagementSurvey # float # employee engagement score,EmpSatisfaction # int # employee satisfaction score,SpecialProjectsCount # int # number of special projects that the employee is part of,Absences # int # number of leaves taken this year
+"Adinolfi, Wilson  K",10026,4,62506,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Michael Albert,LinkedIn,4.6,5,0,1
+"Ait Sidi, Karthikeyan   ",10084,3,104437,Sr. DBA,MA,M ,Married,US Citizen,Voluntarily Terminated,IT/IS,Simon Roup,Indeed,4.96,3,6,17
+"Akinkuolie, Sarah",10196,3,64955,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,LinkedIn,3.02,3,0,3
+"Alagbe,Trina",10088,3,64991,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Elijiah Gray,Indeed,4.84,5,0,15
+"Anderson, Carol ",10069,3,50825,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Google Search,5,4,0,2
+"Anderson, Linda  ",10002,4,57568,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Amy Dunn,LinkedIn,5,5,0,15
+"Andreola, Colby",10194,3,95660,Software Engineer,MA,F,Single,US Citizen,Active,Software Engineering,Alex Sweetwater,LinkedIn,3.04,3,4,19
+"Athwal, Sam",10062,3,59365,Production Technician I,MA,M ,Widowed,US Citizen,Active,Production       ,Ketsia Liebig,Employee Referral,5,4,0,19
+"Bachiochi, Linda",10114,3,47837,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Brannon Miller,Diversity Job Fair,4.46,3,0,4
+"Bacong, Alejandro ",10250,3,50178,IT Support,MA,M ,Divorced,US Citizen,Active,IT/IS,Peter Monroe,Indeed,5,5,6,16
+"Baczenski, Rachael  ",10252,3,54670,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,David Stanley,Diversity Job Fair,4.2,4,0,12
+"Barbara, Thomas",10242,3,47211,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Diversity Job Fair,4.2,3,0,15
+"Barbossa, Hector",10012,4,92328,Data Analyst,TX,M ,Divorced,US Citizen,Active,IT/IS,Simon Roup,Diversity Job Fair,4.28,4,5,9
+"Barone, Francesco  A",10265,3,58709,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,Google Search,4.6,4,0,7
+"Barton, Nader",10066,3,52505,Production Technician I,MA,M ,Divorced,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,On-line Web application,5,5,0,1
+"Bates, Norman",10061,3,57834,Production Technician I,MA,M ,Single,US Citizen,Terminated for Cause,Production       ,Kelley Spirea,Google Search,5,4,0,20
+"Beak, Kimberly  ",10023,4,70131,Production Technician II,MA,F,Married,US Citizen,Active,Production       ,Kelley Spirea,Employee Referral,4.4,3,0,16
+"Beatrice, Courtney ",10055,3,59026,Production Technician I,MA,F,Single,Eligible NonCitizen,Active,Production       ,Elijiah Gray,Google Search,5,5,0,12
+"Becker, Renee",10245,3,110000,Database Administrator,MA,F,Single,US Citizen,Terminated for Cause,IT/IS,Simon Roup,Google Search,4.5,4,5,8
+"Becker, Scott",10277,3,53250,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Webster Butler,LinkedIn,4.2,4,0,13
+"Bernstein, Sean",10046,3,51044,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Amy Dunn,Google Search,5,3,0,13
+"Biden, Lowan  M",10226,3,64919,Production Technician I,MA,F,Divorced,US Citizen,Active,Production       ,Ketsia Liebig,Indeed,4.2,3,0,2
+"Billis, Helen",10003,4,62910,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Brannon Miller,Indeed,5,3,0,19
+"Blount, Dianna",10294,2,66441,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Michael Albert,CareerBuilder,2,3,0,3
+"Bondwell, Betsy",10267,3,57815,Production Technician II,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,Google Search,4.8,5,0,5
+"Booth, Frank",10199,3,103613,Enterprise Architect,CT,M ,Single,US Citizen,Terminated for Cause,IT/IS,Simon Roup,LinkedIn,3.5,5,7,2
+"Boutwell, Bonalyn",10081,3,106367,Sr. Accountant,MA,F,Married,US Citizen,Active,Admin Offices,Brandon R. LeBlanc,Diversity Job Fair,5,4,3,4
+"Bozzi, Charles",10175,3,74312,Production Manager,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Janet King,Indeed,3.39,3,0,14
+"Brill, Donna",10177,3,53492,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,David Stanley,Google Search,3.35,4,0,6
+"Brown, Mia",10238,3,63000,Accountant I,MA,F,Married,US Citizen,Active,Admin Offices,Brandon R. LeBlanc,Diversity Job Fair,4.5,2,6,14
+"Buccheri, Joseph  ",10184,3,65288,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Webster Butler,Google Search,3.19,3,0,9
+"Bugali, Josephine ",10203,3,64375,Production Technician I,MA,F,Separated,US Citizen,Active,Production       ,Kissy Sullivan,Diversity Job Fair,3.5,5,0,17
+"Bunbury, Jessica",10188,3,74326,Area Sales Manager,VA,F,Married,Eligible NonCitizen,Voluntarily Terminated,Sales,John Smith,Google Search,3.14,5,0,19
+"Burke, Joelle",10107,3,63763,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Amy Dunn,Employee Referral,4.51,4,0,3
+"Burkett, Benjamin ",10181,3,62162,Production Technician II,MA,M ,Married,US Citizen,Active,Production       ,Ketsia Liebig,Indeed,3.25,5,0,15
+"Cady, Max ",10150,3,77692,Software Engineering Manager,MA,M ,Single,US Citizen,Active,Software Engineering,Jennifer Zamora,Google Search,3.84,3,5,4
+"Candie, Calvin",10001,4,72640,Production Manager,MA,M ,Single,US Citizen,Active,Production       ,Janet King,Indeed,5,3,0,14
+"Carabbio, Judith",10085,3,93396,Software Engineer,MA,F,Single,US Citizen,Active,Software Engineering,Alex Sweetwater,Indeed,4.96,4,6,3
+"Carey, Michael  ",10115,3,52846,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,4.43,3,0,14
+"Carr, Claudia  N",10082,3,100031,Sr. DBA,MA,F,Single,US Citizen,Active,IT/IS,Simon Roup,LinkedIn,5,5,6,7
+"Carter, Michelle ",10040,3,71860,Area Sales Manager,VT,F,Single,US Citizen,Active,Sales,John Smith,Indeed,5,5,0,7
+"Chace, Beatrice ",10067,3,61656,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Michael Albert,Google Search,5,4,0,11
+"Champaigne, Brian",10108,3,110929,BI Director,MA,M ,Married,US Citizen,Active,IT/IS,Jennifer Zamora,Indeed,4.5,5,7,8
+"Chan, Lin",10210,3,54237,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Elijiah Gray,Indeed,3.3,4,0,11
+"Chang, Donovan  E",10154,3,60380,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Webster Butler,LinkedIn,3.8,5,0,4
+"Chigurh, Anton",10200,3,66808,Area Sales Manager,TX,M ,Single,Eligible NonCitizen,Active,Sales,Lynn Daneault,Employee Referral,3,5,0,17
+"Chivukula, Enola",10240,3,64786,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Indeed,4.3,4,0,3
+"Cierpiszewski, Caroline  ",10168,3,64816,Production Technician I,MA,F,Single,Non-Citizen,Active,Production       ,Ketsia Liebig,Indeed,3.58,5,0,3
+"Clayton, Rick",10220,3,68678,IT Support,MA,M ,Single,US Citizen,Active,IT/IS,Eric Dougall,Indeed,4.7,3,6,2
+"Cloninger, Jennifer",10275,3,64066,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,Google Search,4.2,5,0,9
+"Close, Phil",10269,3,59369,Production Technician II,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,David Stanley,Indeed,4.2,4,0,6
+"Clukey, Elijian",10029,4,50373,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Brannon Miller,Employee Referral,4.1,4,0,5
+"Cockel, James",10261,3,63108,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,David Stanley,Employee Referral,4.4,5,0,3
+"Cole, Spencer",10292,2,59144,Production Technician I,MA,M ,Single,US Citizen,Terminated for Cause,Production       ,Kissy Sullivan,LinkedIn,2,3,0,16
+"Corleone, Michael",10282,2,68051,Production Manager,MA,M ,Divorced,US Citizen,Active,Production       ,Janet King,CareerBuilder,4.13,2,0,3
+"Corleone, Vito",10019,4,170500,Director of Operations,MA,M ,Single,US Citizen,Active,Production       ,Janet King,Indeed,3.7,5,0,15
+"Cornett, Lisa ",10094,3,63381,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Kelley Spirea,Indeed,4.73,5,0,6
+"Costello, Frank",10193,3,83552,Data Analyst,MA,M ,Married,US Citizen,Active,IT/IS,Simon Roup,Indeed,3.04,3,6,2
+"Crimmings,   Jean",10132,3,56149,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Michael Albert,LinkedIn,4.12,5,0,15
+"Cross, Noah",10083,3,92329,Sr. Network Engineer,CT,M ,Single,US Citizen,Active,IT/IS,Peter Monroe,Employee Referral,5,3,4,5
+"Daneault, Lynn",10099,3,65729,Sales Manager,VT,F,Single,US Citizen,Active,Sales,Debra Houlihan,Indeed,4.62,4,0,8
+"Daniele, Ann  ",10212,3,85028,Sr. Network Engineer,CT,F,Married,US Citizen,Active,IT/IS,Peter Monroe,LinkedIn,3.1,5,8,19
+"Darson, Jene ya ",10056,3,57583,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Elijiah Gray,Indeed,5,3,0,1
+"Davis, Daniel",10143,3,56294,Production Technician II,MA,M ,Single,Eligible NonCitizen,Active,Production       ,Kissy Sullivan,LinkedIn,3.96,4,0,6
+"Dee, Randy",10311,1,56991,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Brannon Miller,Indeed,4.3,4,3,2
+"DeGweck,  James",10070,3,55722,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Indeed,5,4,0,14
+"Del Bosque, Keyla",10155,3,101199,Software Engineer,MA,F,Single,US Citizen,Active,Software Engineering,Alex Sweetwater,CareerBuilder,3.79,5,5,8
+"Delarge, Alex",10306,1,61568,Area Sales Manager,AL,M ,Single,US Citizen,Active,Sales,John Smith,Indeed,1.93,3,0,5
+"Demita, Carla",10100,3,58275,Production Technician II,MA,F,Separated,US Citizen,Voluntarily Terminated,Production       ,Kelley Spirea,Google Search,4.62,5,0,1
+"Desimone, Carl ",10310,1,53189,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Amy Dunn,Indeed,1.12,2,0,9
+"DeVito, Tommy",10197,3,96820,BI Developer,MA,M ,Single,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,3.01,5,7,15
+"Dickinson, Geoff ",10276,3,51259,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Ketsia Liebig,Indeed,4.3,4,0,1
+"Dietrich, Jenna  ",10304,1,59231,Area Sales Manager,WA,F,Single,US Citizen,Active,Sales,John Smith,Website,2.3,1,0,17
+"DiNocco, Lily ",10284,2,61584,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Brannon Miller,Indeed,3.88,4,0,6
+"Dobrin, Denisa  S",10207,3,46335,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,David Stanley,CareerBuilder,3.4,5,0,15
+"Dolan, Linda",10133,3,70621,IT Support,MA,F,Married,US Citizen,Active,IT/IS,Peter Monroe,Employee Referral,4.11,4,6,16
+"Dougall, Eric",10028,4,138888,IT Manager - Support,MA,M ,Single,US Citizen,Active,IT/IS,Jennifer Zamora,Indeed,4.3,5,5,4
+"Driver, Elle",10006,4,74241,Area Sales Manager,CA,F,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,4.77,5,0,14
+"Dunn, Amy  ",10105,3,75188,Production Manager,MA,F,Single,US Citizen,Active,Production       ,Janet King,Google Search,4.52,4,0,4
+"Dunne, Amy",10211,3,62514,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Ketsia Liebig,Google Search,2.9,3,0,6
+"Eaton, Marianne",10064,3,60070,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Google Search,5,3,0,7
+"Engdahl, Jean",10247,3,48888,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,4.7,5,0,8
+"England, Rex",10235,3,54285,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Kelley Spirea,Employee Referral,4.2,3,0,3
+"Erilus, Angela",10299,1,56847,Production Technician II,MA,F,Separated,US Citizen,Active,Production       ,Michael Albert,Indeed,3,1,0,5
+"Estremera, Miguel",10280,2,60340,Production Technician I,MA,M ,Single,US Citizen,Terminated for Cause,Production       ,Michael Albert,Google Search,5,4,0,16
+"Evensen, April",10296,2,59124,Production Technician I,MA,F,Single,US Citizen,Terminated for Cause,Production       ,Elijiah Gray,Google Search,2.3,3,0,19
+"Exantus, Susan",10290,2,99280,Software Engineer,MA,F,Married,US Citizen,Terminated for Cause,Software Engineering,Alex Sweetwater,Indeed,2.1,5,4,19
+"Faller, Megan ",10263,3,71776,Production Technician II,MA,F,Married,US Citizen,Active,Production       ,Elijiah Gray,LinkedIn,4.4,5,0,17
+"Fancett, Nicole",10136,3,65902,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Webster Butler,LinkedIn,4,4,0,7
+"Ferguson, Susan",10189,3,57748,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Google Search,3.13,3,0,16
+"Fernandes, Nilson  ",10308,1,64057,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Amy Dunn,Indeed,1.56,5,0,15
+"Fett, Boba",10309,1,53366,Network Engineer,MA,M ,Single,US Citizen,Active,IT/IS,Peter Monroe,LinkedIn,1.2,3,6,2
+"Fidelia,  Libby",10049,3,58530,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Brannon Miller,Google Search,5,5,0,19
+"Fitzpatrick, Michael  J",10093,3,72609,Production Technician II,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Google Search,4.76,5,0,20
+"Foreman, Tanya",10163,3,55965,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Ketsia Liebig,Google Search,3.66,3,0,6
+"Forrest, Alex",10305,3,70187,Area Sales Manager,MA,M ,Married,US Citizen,Terminated for Cause,Sales,Lynn Daneault,Employee Referral,2,5,0,7
+"Foss, Jason",10015,4,178000,IT Director,MA,M ,Single,US Citizen,Active,IT/IS,Jennifer Zamora,Indeed,5,5,5,15
+"Foster-Baker, Amy",10080,3,99351,Sr. Accountant,MA,F,Married,US Citizen,Active,Admin Offices,Board of Directors,Other,5,3,2,3
+"Fraval, Maruk ",10258,3,67251,Area Sales Manager,CT,M ,Single,US Citizen,Active,Sales,Lynn Daneault,CareerBuilder,4.3,3,0,7
+"Galia, Lisa",10273,3,65707,IT Support,CT,F,Single,US Citizen,Active,IT/IS,Eric Dougall,LinkedIn,4.7,4,5,1
+"Garcia, Raul",10111,3,52249,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,David Stanley,Employee Referral,4.5,3,0,5
+"Gaul, Barbara",10257,3,53171,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,4.2,4,0,12
+"Gentry, Mildred",10159,3,51337,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Michael Albert,LinkedIn,3.73,3,0,19
+"Gerke, Melisa",10122,3,51505,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,Diversity Job Fair,4.24,4,0,2
+"Gill, Whitney  ",10142,3,59370,Area Sales Manager,OH,F,Widowed,US Citizen,Terminated for Cause,Sales,John Smith,CareerBuilder,3.97,4,0,7
+"Gilles, Alex",10283,2,54933,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Diversity Job Fair,3.97,4,0,15
+"Girifalco, Evelyn",10018,4,57815,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Amy Dunn,Indeed,3.9,4,0,3
+"Givens, Myriam",10255,3,61555,Area Sales Manager,IN,F,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,4.5,5,0,20
+"Goble, Taisha",10246,3,114800,Database Administrator,MA,F,Single,US Citizen,Terminated for Cause,IT/IS,Simon Roup,Indeed,4.6,4,4,10
+"Goeth, Amon",10228,3,74679,IT Support,MA,M ,Married,US Citizen,Active,IT/IS,Peter Monroe,LinkedIn,4.3,5,7,20
+"Gold, Shenice  ",10243,3,53018,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Ketsia Liebig,Indeed,4.3,5,0,7
+"Gonzalez, Cayo",10031,4,59892,Production Technician I,MA,M ,Divorced,US Citizen,Active,Production       ,Brannon Miller,Diversity Job Fair,4.5,4,0,1
+"Gonzalez, Juan",10300,1,68898,Production Technician II,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,Diversity Job Fair,3,3,0,10
+"Gonzalez, Maria",10101,3,61242,IT Support,MA,F,Separated,US Citizen,Active,IT/IS,Peter Monroe,Employee Referral,4.61,4,5,11
+"Good, Susan",10237,3,66825,Production Technician II,MA,F,Married,US Citizen,Active,Production       ,David Stanley,LinkedIn,4.6,3,0,20
+"Gordon, David",10051,3,48285,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,David Stanley,LinkedIn,5,3,0,2
+"Gosciminski, Phylicia  ",10218,3,66149,Production Technician II,MA,F,Separated,US Citizen,Active,Production       ,Kissy Sullivan,Google Search,4.4,5,0,1
+"Goyal, Roxana",10256,3,49256,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Kissy Sullivan,LinkedIn,4.1,5,0,3
+"Gray, Elijiah  ",10098,3,62957,Production Manager,MA,M ,Divorced,US Citizen,Active,Production       ,Janet King,Employee Referral,4.63,3,0,2
+"Gross, Paula",10059,3,63813,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Kelley Spirea,CareerBuilder,5,5,0,17
+"Gruber, Hans",10234,3,99020,BI Developer,MA,M ,Married,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,4.2,5,5,8
+"Guilianno, Mike",10109,3,71707,Area Sales Manager,TN,M ,Single,US Citizen,Voluntarily Terminated,Sales,John Smith,LinkedIn,4.5,5,0,20
+"Handschiegl, Joanne",10125,3,54828,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Michael Albert,Google Search,4.2,4,0,13
+"Hankard, Earnest",10074,3,64246,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,5,3,0,20
+"Harrington, Christie ",10097,3,52177,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,CareerBuilder,4.64,4,0,8
+"Harrison, Kara",10007,4,62065,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Amy Dunn,CareerBuilder,4.76,4,0,5
+"Heitzman, Anthony",10129,3,46998,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Ketsia Liebig,Google Search,4.17,4,0,1
+"Hendrickson, Trina",10075,3,68099,Production Technician II,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Kelley Spirea,CareerBuilder,5,3,0,15
+"Hitchcock, Alfred",10167,3,70545,Area Sales Manager,NH,M ,Married,US Citizen,Active,Sales,John Smith,Indeed,3.6,5,0,9
+"Homberger, Adrienne  J",10195,3,63478,Production Technician II,MA,F,Married,Non-Citizen,Voluntarily Terminated,Production       ,Michael Albert,Indeed,3.03,5,0,16
+"Horton, Jayne",10112,3,97999,Database Administrator,MA,F,Single,US Citizen,Active,IT/IS,Simon Roup,Indeed,4.48,5,6,4
+"Houlihan, Debra",10272,3,180000,Director of Sales,RI,F,Married,US Citizen,Active,Sales,Janet King,LinkedIn,4.5,4,0,19
+"Howard, Estelle",10182,3,49920,Administrative Assistant,MA,F,Married,US Citizen,Terminated for Cause,Admin Offices,Brandon R. LeBlanc,Indeed,3.24,3,4,6
+"Hudson, Jane",10248,3,55425,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,4.8,4,0,4
+"Hunts, Julissa",10201,3,69340,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Elijiah Gray,LinkedIn,3,5,0,4
+"Hutter, Rosalie",10214,3,64995,Production Technician II,MA,F,Separated,US Citizen,Active,Production       ,Webster Butler,Indeed,4.5,3,0,6
+"Huynh, Ming",10160,3,68182,Production Technician II,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Google Search,3.72,3,0,18
+"Immediato, Walter",10289,2,83082,Production Manager,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Janet King,Indeed,2.34,2,0,4
+"Ivey, Rose ",10139,3,51908,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Brannon Miller,Indeed,3.99,3,0,14
+"Jackson, Maryellen",10227,3,61242,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,David Stanley,LinkedIn,4.1,3,0,7
+"Jacobi, Hannah  ",10236,3,45069,Production Technician I,MA,F,Divorced,US Citizen,Active,Production       ,Kissy Sullivan,Employee Referral,4.3,5,0,7
+"Jeannite, Tayana",10009,4,60724,Production Technician II,MA,F,Divorced,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,4.6,4,0,11
+"Jhaveri, Sneha  ",10060,3,60436,Production Technician I,MA,F,Separated,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,5,5,0,9
+"Johnson, George",10034,4,46837,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,CareerBuilder,4.7,4,0,9
+"Johnson, Noelle ",10156,3,105700,Database Administrator,MA,F,Married,US Citizen,Active,IT/IS,Simon Roup,Indeed,3.75,3,5,2
+"Johnston, Yen",10036,4,63322,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Brannon Miller,LinkedIn,4.3,3,0,1
+"Jung, Judy  ",10138,3,61154,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,CareerBuilder,4,4,0,4
+"Kampew, Donysha",10244,3,68999,Sales Manager,PA,F,Single,US Citizen,Voluntarily Terminated,Sales,Debra Houlihan,Google Search,4.5,5,0,2
+"Keatts, Kramer ",10192,3,50482,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Michael Albert,Indeed,3.07,4,0,10
+"Khemmich, Bartholemew",10231,3,65310,Area Sales Manager,CO,M ,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,4.3,5,0,13
+"King, Janet",10089,3,250000,President & CEO,MA,F,Married,US Citizen,Active,Executive Office,Board of Directors,Indeed,4.83,3,0,10
+"Kinsella, Kathleen  ",10166,3,54005,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Google Search,3.6,5,0,16
+"Kirill, Alexandra  ",10170,3,45433,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Google Search,3.49,4,0,6
+"Knapp, Bradley  J",10208,3,46654,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,3.1,3,0,3
+"Kretschmer, John",10176,3,63973,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Brannon Miller,Indeed,3.38,3,0,17
+"Kreuger, Freddy",10165,3,71339,Area Sales Manager,NY,M ,Single,US Citizen,Active,Sales,John Smith,Diversity Job Fair,3.65,5,0,20
+"Lajiri,  Jyoti",10113,3,93206,Sr. Network Engineer,MA,M ,Married,US Citizen,Active,IT/IS,Peter Monroe,Employee Referral,4.46,5,6,7
+"Landa, Hans",10092,3,82758,Production Manager,MA,M ,Married,US Citizen,Terminated for Cause,Production       ,Janet King,Employee Referral,4.78,4,0,9
+"Langford, Lindsey",10106,3,66074,Production Technician II,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,David Stanley,Indeed,4.52,3,0,20
+"Langton, Enrico",10052,3,46120,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,David Stanley,LinkedIn,5,5,0,13
+"LaRotonda, William  ",10038,3,64520,Accountant I,MA,M ,Divorced,US Citizen,Active,Admin Offices,Brandon R. LeBlanc,Website,5,4,4,3
+"Latif, Mohammed",10249,3,61962,Production Technician II,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Google Search,4.9,3,0,20
+"Le, Binh",10232,3,81584,Senior BI Developer,MA,F,Single,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,4.1,5,7,2
+"Leach, Dallas",10087,3,63676,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,CareerBuilder,4.88,3,0,17
+"LeBlanc, Brandon  R",10134,3,93046,Shared Services Manager,MA,M ,Married,US Citizen,Active,Admin Offices,Janet King,CareerBuilder,4.1,4,0,20
+"Lecter, Hannibal",10251,3,64738,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Elijiah Gray,Google Search,4.1,3,0,10
+"Leruth, Giovanni",10103,3,70468,Area Sales Manager,UT,M ,Separated,US Citizen,Active,Sales,John Smith,Website,4.53,3,0,16
+"Liebig, Ketsia",10017,4,77915,Production Manager,MA,F,Married,US Citizen,Active,Production       ,Janet King,Website,4.1,3,0,11
+"Linares, Marilyn ",10186,3,52624,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,Indeed,3.18,4,0,16
+"Linden, Mathew",10137,3,63450,Production Technician II,MA,M ,Married,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,4,3,0,7
+"Lindsay, Leonara ",10008,4,51777,IT Support,CT,F,Single,US Citizen,Active,IT/IS,Eric Dougall,Diversity Job Fair,4.64,4,5,14
+"Lundy, Susan",10096,3,67237,Production Technician II,MA,F,Widowed,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,LinkedIn,4.65,4,0,15
+"Lunquist, Lisa",10035,4,73330,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Elijiah Gray,Indeed,4.2,4,0,19
+"Lydon, Allison",10057,3,52057,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Elijiah Gray,Website,5,3,0,6
+"Lynch, Lindsay",10004,4,47434,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Diversity Job Fair,5,4,0,17
+"MacLennan, Samuel",10191,3,52788,Production Technician I,MA,M ,Widowed,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Indeed,3.08,4,0,18
+"Mahoney, Lauren  ",10219,3,45395,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,4.6,4,0,14
+"Manchester, Robyn",10077,3,62385,Production Technician II,MA,F,Married,US Citizen,Active,Production       ,Webster Butler,LinkedIn,5,3,0,4
+"Mancuso, Karen",10073,3,68407,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,LinkedIn,5,4,0,16
+"Mangal, Debbie",10279,3,61349,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Brannon Miller,LinkedIn,4.1,3,0,11
+"Martin, Sandra",10110,3,105688,Software Engineer,MA,F,Single,US Citizen,Active,Software Engineering,Alex Sweetwater,Google Search,4.5,5,4,14
+"Maurice, Shana",10053,3,54132,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,David Stanley,Indeed,5,4,0,8
+"Carthy, B rigit",10076,3,55315,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,5,5,0,16
+"Mckenna, Sandy",10145,3,62810,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Kissy Sullivan,CareerBuilder,3.93,3,0,20
+"McKinzie, Jac",10202,3,63291,Area Sales Manager,TX,M ,Married,US Citizen,Active,Sales,Lynn Daneault,Website,3.4,4,0,7
+"Meads, Elizabeth",10128,3,62659,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Kelley Spirea,Diversity Job Fair,4.18,4,0,17
+"Medeiros, Jennifer",10068,3,55688,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Michael Albert,CareerBuilder,5,4,0,10
+"Miller, Brannon",10116,3,83667,Production Manager,MA,M ,Single,US Citizen,Active,Production       ,Janet King,Indeed,4.37,3,0,2
+"Miller, Ned",10298,1,55800,Production Technician II,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,LinkedIn,3,2,0,6
+"Monkfish, Erasumus",10213,3,58207,Production Technician II,MA,M ,Married,US Citizen,Active,Production       ,David Stanley,LinkedIn,3.7,3,0,14
+"Monroe, Peter",10288,2,157000,IT Manager - Infra,MA,M ,Married,Eligible NonCitizen,Active,IT/IS,Jennifer Zamora,Diversity Job Fair,2.39,3,6,13
+"Monterro, Luisa",10025,4,72460,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Kissy Sullivan,Indeed,4.7,3,0,1
+"Moran, Patrick",10223,3,72106,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,Diversity Job Fair,4.1,4,0,12
+"Morway, Tanya",10151,3,52599,Network Engineer,MA,F,Married,US Citizen,Active,IT/IS,Peter Monroe,CareerBuilder,3.81,3,6,6
+"Motlagh,  Dawn",10254,3,63430,Production Technician I,MA,F,Divorced,US Citizen,Active,Production       ,Elijiah Gray,LinkedIn,4.4,4,0,18
+"Moumanil, Maliki ",10120,3,74417,Production Technician II,MA,M ,Separated,US Citizen,Active,Production       ,Michael Albert,LinkedIn,4.29,5,0,11
+"Myers, Michael",10216,3,57575,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Kissy Sullivan,LinkedIn,4.1,4,0,13
+"Navathe, Kurt",10079,3,87921,Senior BI Developer,MA,M ,Single,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,5,3,6,17
+"Ndzi, Colombui",10215,3,50470,Production Technician I,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Diversity Job Fair,4.3,3,0,19
+"Ndzi, Horia",10185,3,46664,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Employee Referral,3.18,3,0,10
+"Newman, Richard ",10063,3,48495,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Ketsia Liebig,LinkedIn,5,5,0,11
+"Ngodup, Shari ",10037,4,52984,Production Technician I,MA,F,Separated,US Citizen,Active,Production       ,Brannon Miller,Diversity Job Fair,4,3,0,12
+"Nguyen, Dheepa",10042,3,63695,Area Sales Manager,GA,F,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,5,5,0,2
+"Nguyen, Lei-Ming",10206,3,62061,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,David Stanley,LinkedIn,3.6,5,0,4
+"Nowlan, Kristie",10104,3,66738,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,Elijiah Gray,Indeed,4.53,5,0,5
+"O hare, Lynn",10303,1,52674,Production Technician I,MA,F,Single,US Citizen,Terminated for Cause,Production       ,Kissy Sullivan,LinkedIn,2.33,2,0,3
+"Oliver, Brooke ",10078,3,71966,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,LinkedIn,5,3,0,17
+"Onque, Jasmine",10121,3,63051,Area Sales Manager,FL,F,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,4.28,3,0,1
+"Osturnka, Adeel",10021,4,47414,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,5,3,0,13
+"Owad, Clinton",10281,2,53060,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Michael Albert,LinkedIn,4.25,3,0,6
+"Ozark, Travis",10041,3,68829,Area Sales Manager,NC,M ,Single,US Citizen,Active,Sales,John Smith,Website,5,5,0,18
+"Panjwani, Nina",10148,3,63515,Production Technician I,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,Google Search,3.89,4,0,7
+"Patronick, Lucas",10005,4,108987,Software Engineer,MA,M ,Single,US Citizen,Voluntarily Terminated,Software Engineering,Alex Sweetwater,Diversity Job Fair,5,5,3,13
+"Pearson, Randall",10259,3,93093,Data Analyst,MA,M ,Married,US Citizen,Voluntarily Terminated,IT/IS,Simon Roup,Employee Referral,4.7,4,5,19
+"Smith, Martin",10286,2,53564,Production Technician I,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Google Search,3.54,5,0,15
+"Pelletier, Ermine",10297,2,60270,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,CareerBuilder,2.4,5,0,2
+"Perry, Shakira",10171,3,45998,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,LinkedIn,3.45,4,0,5
+"Peters, Lauren",10032,4,57954,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Ketsia Liebig,Indeed,4.2,5,0,12
+"Peterson, Ebonee  ",10130,3,74669,Production Manager,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Janet King,Indeed,4.16,5,0,6
+"Petingill, Shana  ",10217,3,74226,Production Technician II,MA,F,Married,Eligible NonCitizen,Active,Production       ,Brannon Miller,LinkedIn,4.3,3,0,14
+"Petrowsky, Thelma",10016,4,93554,Data Analyst,MA,F,Married,US Citizen,Active,IT/IS,Simon Roup,Employee Referral,4.6,5,7,16
+"Pham, Hong",10050,3,64724,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,Google Search,5,3,0,13
+"Pitt, Brad ",10164,3,47001,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,David Stanley,Google Search,3.66,3,0,15
+"Potts, Xana",10124,3,61844,Area Sales Manager,KY,F,Married,US Citizen,Active,Sales,Lynn Daneault,Website,4.2,5,0,9
+"Power, Morissa",10187,3,46799,Production Technician I,MA,F,Divorced,Eligible NonCitizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Google Search,3.17,4,0,14
+"Punjabhi, Louis  ",10225,3,59472,Production Technician I,MA,M ,Single,US Citizen,Active,Production       ,Kelley Spirea,Employee Referral,4.8,3,0,14
+"Purinton, Janine",10262,3,46430,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Indeed,4.5,5,0,16
+"Quinn, Sean",10131,3,83363,Software Engineer,MA,M ,Married,Eligible NonCitizen,Voluntarily Terminated,Software Engineering,Janet King,Diversity Job Fair,4.15,4,0,4
+"Rachael, Maggie",10239,3,95920,BI Developer,MA,F,Married,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,4.4,4,6,10
+"Rarrick, Quinn",10152,3,61729,Production Technician I,MA,M ,Divorced,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,Indeed,3.8,5,0,19
+"Ren, Kylo",10140,3,61809,Area Sales Manager,ID,M ,Married,US Citizen,Active,Sales,John Smith,CareerBuilder,3.98,3,0,4
+"Rhoads, Thomas",10058,3,45115,Production Technician I,MA,M ,Divorced,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,LinkedIn,5,4,0,11
+"Rivera, Haley  ",10011,4,46738,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Webster Butler,Google Search,4.36,5,0,16
+"Roberson, May",10230,3,64971,Production Technician II,MA,F,Divorced,Eligible NonCitizen,Voluntarily Terminated,Production       ,David Stanley,Google Search,4.5,4,0,10
+"Robertson, Peter",10224,3,55578,Production Technician II,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Indeed,4.2,5,0,13
+"Robinson, Alain  ",10047,3,50428,Production Technician I,MA,M ,Married,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Indeed,5,3,0,11
+"Robinson, Cherly",10285,2,61422,Production Technician I,MA,F,Married,US Citizen,Terminated for Cause,Production       ,Ketsia Liebig,Indeed,3.6,3,0,16
+"Robinson, Elias",10020,4,63353,Production Technician I,MA,M ,Widowed,US Citizen,Active,Production       ,Brannon Miller,Employee Referral,3.6,5,0,4
+"Roby, Lori ",10162,3,89883,Data Analyst,MA,F,Married,US Citizen,Active,IT/IS,Simon Roup,Employee Referral,3.69,5,6,15
+"Roehrich, Bianca",10149,3,120000,Principal Data Architect,MA,F,Single,US Citizen,Voluntarily Terminated,IT/IS,Simon Roup,LinkedIn,3.88,3,7,12
+"Roper, Katie",10086,3,150290,Data Architect,MA,F,Single,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,4.94,3,5,17
+"Rose, Ashley  ",10054,3,60627,Production Technician I,MA,F,Separated,US Citizen,Active,Production       ,David Stanley,Website,5,4,0,8
+"Rossetti, Bruno",10065,3,53180,Production Technician I,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,Google Search,5,5,0,4
+"Roup,Simon",10198,3,140920,IT Manager - DB,MA,M ,Single,US Citizen,Active,IT/IS,Jennifer Zamora,Indeed,3.6,5,7,13
+"Ruiz, Ricardo",10222,3,148999,IT Manager - DB,MA,M ,Divorced,US Citizen,Voluntarily Terminated,IT/IS,Jennifer Zamora,Diversity Job Fair,4.3,4,6,8
+"Saada, Adell",10126,3,86214,Software Engineer,MA,F,Married,US Citizen,Active,Software Engineering,Alex Sweetwater,Indeed,4.2,3,6,2
+"Saar-Beckles, Melinda",10295,2,47750,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Kelley Spirea,Diversity Job Fair,2.6,4,0,4
+"Sadki, Nore  ",10260,3,46428,Production Technician I,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,Google Search,4.6,5,0,7
+"Sahoo, Adil",10233,3,57975,Production Technician II,MA,M ,Married,US Citizen,Active,Production       ,Kelley Spirea,CareerBuilder,4.1,3,0,13
+"Salter, Jason",10229,3,88527,Data Analyst ,MA,M ,Divorced,US Citizen,Voluntarily Terminated,IT/IS,Simon Roup,LinkedIn,4.2,3,5,2
+"Sander, Kamrin",10169,3,56147,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Elijiah Gray,LinkedIn,3.51,3,0,2
+"Sewkumar, Nori",10071,3,50923,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Webster Butler,Google Search,5,5,0,14
+"Shepard, Anita ",10179,3,50750,Network Engineer,MA,F,Married,US Citizen,Active,IT/IS,Peter Monroe,LinkedIn,3.31,3,6,7
+"Shields, Seffi",10091,3,52087,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Amy Dunn,LinkedIn,4.81,4,0,15
+"Simard, Kramer",10178,3,87826,Data Analyst,MA,M ,Married,US Citizen,Active,IT/IS,Simon Roup,Employee Referral,3.32,3,7,16
+"Singh, Nan ",10039,3,51920,Administrative Assistant,MA,F,Single,US Citizen,Active,Admin Offices,Brandon R. LeBlanc,Website,5,3,5,2
+"Sloan, Constance",10095,3,63878,Production Technician II,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Michael Albert,CareerBuilder,4.68,4,0,20
+"Smith, Joe",10027,4,60656,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Elijiah Gray,Indeed,4.3,3,0,4
+"Smith, John",10291,2,72992,Sales Manager,MA,M ,Divorced,US Citizen,Active,Sales,Debra Houlihan,Diversity Job Fair,2.4,4,0,16
+"Smith, Leigh Ann",10153,3,55000,Administrative Assistant,MA,F,Married,US Citizen,Voluntarily Terminated,Admin Offices,Brandon R. LeBlanc,Diversity Job Fair,3.8,4,4,17
+"Smith, Sade",10157,3,58939,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Ketsia Liebig,Employee Referral,3.73,3,0,16
+"Soto, Julia ",10119,3,66593,IT Support,MA,F,Married,US Citizen,Active,IT/IS,Eric Dougall,LinkedIn,4.3,3,5,19
+"Soze, Keyser",10180,3,87565,Sr. Network Engineer,MA,M ,Married,US Citizen,Active,IT/IS,Peter Monroe,LinkedIn,3.27,4,5,13
+"Sparks, Taylor  ",10302,1,64021,Production Technician I,MA,F,Married,US Citizen,Active,Production       ,Brannon Miller,Indeed,2.4,2,1,20
+"Spirea, Kelley",10090,3,65714,Production Manager,MA,F,Married,US Citizen,Active,Production       ,Janet King,LinkedIn,4.83,5,0,15
+"Squatrito, Kristen",10030,4,62425,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,David Stanley,LinkedIn,4.1,4,0,16
+"Stanford,Barbara  M",10278,3,47961,Production Technician I,MA,F,Divorced,US Citizen,Active,Production       ,Kissy Sullivan,Google Search,4.1,4,0,9
+"Stansfield, Norman",10307,1,58273,Area Sales Manager,NV,M ,Married,US Citizen,Active,Sales,Lynn Daneault,Website,1.81,2,0,5
+"Steans, Tyrone  ",10147,3,63003,Accountant I,MA,M ,Single,US Citizen,Active,Admin Offices,Brandon R. LeBlanc,Indeed,3.9,5,5,9
+"Stoica, Rick",10266,3,61355,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Kelley Spirea,LinkedIn,4.7,3,0,4
+"Strong, Caitrin",10241,3,60120,Area Sales Manager,MT,F,Married,US Citizen,Active,Sales,John Smith,Indeed,4.1,4,0,18
+"Sullivan, Kissy ",10158,3,63682,Production Manager,MA,F,Married,US Citizen,Active,Production       ,Janet King,Indeed,3.73,4,0,12
+"Sullivan, Timothy",10117,3,63025,Production Technician I,MA,M ,Married,US Citizen,Active,Production       ,Michael Albert,Google Search,4.36,5,0,10
+"Sutwell, Barbara",10209,3,59238,Production Technician I,MA,F,Single,Eligible NonCitizen,Active,Production       ,Elijiah Gray,Indeed,3.4,5,0,13
+"Szabo, Andrew",10024,4,92989,Software Engineer,MA,M ,Single,US Citizen,Active,Software Engineering,Alex Sweetwater,LinkedIn,4.5,5,5,1
+"Tannen, Biff",10173,3,90100,BI Developer,MA,M ,Married,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,3.4,3,6,14
+"Tavares, Desiree  ",10221,3,60754,Production Technician I,MA,F,Married,Non-Citizen,Voluntarily Terminated,Production       ,Webster Butler,Diversity Job Fair,4.5,5,0,11
+"Tejeda, Lenora ",10146,3,72202,Production Technician II,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,Google Search,3.93,3,0,3
+"Terry, Sharlene ",10161,3,58370,Area Sales Manager,OR,F,Single,US Citizen,Active,Sales,Lynn Daneault,Indeed,3.69,3,0,18
+"Theamstern, Sophia",10141,3,48413,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,Indeed,3.98,4,0,1
+"Thibaud, Kenneth",10268,3,67176,Production Technician II,MA,M ,Widowed,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,Other,4.1,4,0,15
+"Tippett, Jeanette",10123,3,56339,Production Technician I,MA,F,Divorced,US Citizen,Active,Production       ,Brannon Miller,Indeed,4.21,5,0,4
+"Torrence, Jack",10013,4,64397,Area Sales Manager,ND,M ,Separated,US Citizen,Active,Sales,Lynn Daneault,Indeed,4.1,3,0,6
+"Trang, Mei",10287,2,63025,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,David Stanley,LinkedIn,2.44,5,0,18
+"Tredinnick, Neville ",10044,3,75281,Network Engineer,MA,M ,Married,US Citizen,Voluntarily Terminated,IT/IS,Peter Monroe,CareerBuilder,5,3,5,11
+"True, Edward",10102,3,100416,Software Engineer,MA,M ,Single,Non-Citizen,Voluntarily Terminated,Software Engineering,Alex Sweetwater,Diversity Job Fair,4.6,3,4,9
+"Trzeciak, Cybil",10270,3,74813,Production Technician II,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Amy Dunn,LinkedIn,4.4,3,0,5
+"Turpin, Jumil",10045,3,76029,Network Engineer,MA,M ,Married,Eligible NonCitizen,Active,IT/IS,Peter Monroe,Employee Referral,5,4,7,8
+"Valentin,Jackie",10205,3,57859,Area Sales Manager,AZ,F,Married,US Citizen,Active,Sales,John Smith,Indeed,2.81,3,0,16
+"Veera, Abdellah ",10014,4,58523,Production Technician I,MA,M ,Divorced,US Citizen,Voluntarily Terminated,Production       ,Kissy Sullivan,LinkedIn,4.5,5,0,15
+"Vega, Vincent",10144,3,88976,Production Manager,MA,M ,Divorced,US Citizen,Active,Production       ,Janet King,Employee Referral,3.93,3,0,19
+"Villanueva, Noah",10253,3,55875,Area Sales Manager,ME,M ,Single,US Citizen,Active,Sales,John Smith,Website,4.5,4,0,11
+"Voldemort, Lord",10118,3,113999,Database Administrator,MA,M ,Married,US Citizen,Terminated for Cause,IT/IS,Simon Roup,Employee Referral,4.33,3,7,9
+"Volk, Colleen",10022,4,49773,Production Technician I,MA,F,Married,US Citizen,Terminated for Cause,Production       ,Kelley Spirea,Google Search,4.3,5,0,18
+"Von Massenbach, Anna",10183,3,62068,Production Technician I,MA,F,Single,US Citizen,Active,Production       ,Michael Albert,LinkedIn,3.21,3,0,7
+"Walker, Roger",10190,3,66541,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Ketsia Liebig,Employee Referral,3.11,5,0,4
+"Wallace, Courtney  E",10274,3,80512,Production Manager,MA,F,Married,US Citizen,Voluntarily Terminated,Production       ,Janet King,Diversity Job Fair,4.5,3,0,5
+"Wallace, Theresa",10293,2,50274,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Elijiah Gray,CareerBuilder,2.5,3,0,13
+"Wang, Charlie",10172,3,84903,Senior BI Developer,MA,M ,Single,US Citizen,Active,IT/IS,Brian Champaigne,Indeed,3.42,4,7,17
+"Warfield, Sarah",10127,3,107226,Sr. Network Engineer,MA,F,Widowed,US Citizen,Active,IT/IS,Peter Monroe,Employee Referral,4.2,4,8,7
+"Whittier, Scott",10072,3,58371,Production Technician I,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Webster Butler,LinkedIn,5,5,0,11
+"Wilber, Barry",10048,3,55140,Production Technician I,MA,M ,Married,Eligible NonCitizen,Voluntarily Terminated,Production       ,Amy Dunn,Website,5,3,0,7
+"Wilkes, Annie",10204,3,58062,Production Technician I,MA,F,Divorced,US Citizen,Voluntarily Terminated,Production       ,Ketsia Liebig,Google Search,3.6,5,0,9
+"Williams, Jacquelyn  ",10264,3,59728,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Ketsia Liebig,Diversity Job Fair,4.3,4,0,16
+"Winthrop, Jordan  ",10033,4,70507,Production Technician II,MA,M ,Single,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,LinkedIn,5,3,0,7
+"Wolk, Hang  T",10174,3,60446,Production Technician II,MA,F,Single,US Citizen,Active,Production       ,David Stanley,LinkedIn,3.4,4,0,14
+"Woodson, Jason",10135,3,65893,Production Technician II,MA,M ,Single,US Citizen,Active,Production       ,Kissy Sullivan,LinkedIn,4.07,4,0,13
+"Ybarra, Catherine ",10301,1,48513,Production Technician I,MA,F,Single,US Citizen,Voluntarily Terminated,Production       ,Brannon Miller,Google Search,3.2,2,0,4
+"Zamora, Jennifer",10010,4,220450,CIO,MA,F,Single,US Citizen,Active,IT/IS,Janet King,Employee Referral,4.6,5,6,16
+"Zhou, Julia",10043,3,89292,Data Analyst,MA,F,Single,US Citizen,Active,IT/IS,Simon Roup,Employee Referral,5,3,5,11
+"Zima, Colleen",10271,3,45046,Production Technician I,MA,F,Widowed,US Citizen,Active,Production       ,David Stanley,LinkedIn,4.5,5,0,2

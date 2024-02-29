@@ -1,0 +1,12 @@
+Instruction: You are a developer writing SQL queries given natural language questions. The database contains a table. The schema of the table with description of the attributes is given. Write the SQL query given a natural language statement.
+Here is the table.
+
+Database Table Name: DB_TABLE_NAME
+Table Schema:
+Column name # Meaning
+
+Input:
+what is average latency?
+
+Output:
+select avg(latency_ms) from DB_TABLE_NAME

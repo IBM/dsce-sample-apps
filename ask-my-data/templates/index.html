@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/plex.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+    <title>Ask my data</title>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/button.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/dropdown.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/ui-shell.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/text-input.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/textarea.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/toggle.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/tooltip.min.js"
+    ></script>
+    <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/notification.min.js"></script>
+    <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/modal.min.js"></script>
+    <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/accordion.min.js"></script>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='javascript.js') }}"
+    ></script>
+  </head>
+
+  <body onload="setUpChatbot(); loadHomePage();" class="cds-theme-zone-white">
+    <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
+      <cds-header-name>
+        Ask my data
+      </cds-header-name>
+    </cds-header>
+
+    <div class="main-container">
+      <div class="left"></div>
+
+      <div class="right" id="right">
+      
+        <cds-inline-notification
+            id="cdsInlineNotification"
+            style="display: none; min-width: 30rem; margin-left: 2rem;"
+            title="Error:"
+            kind="error"
+            low-contrast
+            >
+          </cds-inline-notification>
+
+
+
+        <div id="help-text-div">
+          <h2>Ask questions on your data</h2>
+          <ol style="list-style: decimal !important; padding-left: 2rem; line-height: normal;">
+            <li>Begin by entering your email in the chatbot to verify your identity.</li>
+            <li>Download these two samples for use in the demo: <a href="/static/default-files/resume-sample.pdf"  target="_blank">resume.pdf</a>, <a href="/static/default-files/hrdata.csv" target="_blank">hrdata.csv</a></li>
+            <li>Upload both files one by one through the chatbot, and then ask relevant sample questions provided below.</li>
+            <li>Improve answers by editing the task specific prompt.</li>
+          </ol>
+          <cds-accordion>
+            <cds-accordion-item title="Sample questions on the resume PDF">
+              <ul style="padding-left: 2rem; line-height: normal;">
+                <li>create a list of the skills that applicant has</li>
+                <li>extract key entities</li>
+                <li>Q:which colleges did the applicant attend ? (note the Q: prefix for RAG)</li>
+                <li>summarize the resume</li>
+                <li>create a job description from the resume</li>
+              </ul>
+              <br/>
+            </cds-accordion-item>
+            <cds-accordion-item title="Sample questions on the employee CSV data">
+              <ul style="padding-left: 2rem; line-height: normal;">
+                <li>which department and position has the most satisfaction score ?</li>
+                <li>what is the distribution of employees by their martial status ?</li>
+                <li>find the max, min and average salary of a software engineer</li>
+                <li>which position has the most absences ?</li>
+              </ul>
+            </cds-accordion-item>
+            <cds-accordion-item title="How does it work?">
+              <p>Your PDF and CSV files are stored in a vector DB index and a RDBMS table, respectively. Data and prompts are handled in a multi-tenant backend so that you can work in your private environment with watsonx.ai models and a watsonx Assistant chat interface.</p>
+                <p>A question on chat is automatically classified to an AI task, which maps to a private prompt that you can edit to improve answers.</p>
+                <p><strong>As a regular user</strong>, add examples as input/output pairs for your private prompt for an AI task. Editing the "instruction:" is optional with default being the question itself.</p>
+                <p><strong>As an expert user</strong>, you can pick the "label_classifier" AI task to improve question to AI task classification with more examples. Optionally edit advanced prompt parameters. A 'Q:' prefix to a question force maps the question to the RAG AI task that uses a vector DB. Try adding some examples to automatically detect RAG and remove the 'Q:' prefix. The source data for RAG and SQL generation tasks are also shown for transparency.</p>
+                <br/>
+              <a href="{{ url_for('static', filename='architecture-diagram-1.png') }}" target="_blank">View architecture diagram</a>
+              <img src="{{ url_for('static', filename='arc-opt.png') }}" style="width: 90%;">
+            </cds-accordion-item>
+          </cds-accordion>
+        </div>
+
+        <div id="prompt" class="prompt-text-area">
+          <cds-form-item style="width: 100%">
+            <cds-textarea
+              id="prmpt-txt-area"
+              placeholder="Instruction & examples"
+              rows="14"
+              label="Instruction & examples"
+            >
+            </cds-textarea>
+          </cds-form-item>
+        </div>
+
+        <div id="params-area-parent-div">
+          
+          <h5>Advanced</h5>
+          <div data-test="do not delete the div, this is for adjustment in grid"></div>
+
+          <div>
+          <div id="llm-call-params">
+            <div class="ai-task-selector">
+              <cds-dropdown
+                value="rag"
+                id="ai-task"
+                title-text="AI task"
+                style="width: 50%; padding-top: 1rem"
+                
+              >
+                <cds-dropdown-item value="label_classifier"> Label Classifier </cds-dropdown-item>
+                <cds-dropdown-item value="rag"> rag </cds-dropdown-item>
+                <cds-dropdown-item value="summarisation"
+                  >summarisation</cds-dropdown-item
+                >
+                <cds-dropdown-item value="PII_extraction"
+                  >PII_extraction</cds-dropdown-item
+                >
+                <cds-dropdown-item value="extraction">
+                  extraction
+                </cds-dropdown-item>
+                <cds-dropdown-item value="generation">
+                  generation
+                </cds-dropdown-item>
+                <cds-dropdown-item value="code_gen"> code_gen </cds-dropdown-item>
+                <cds-dropdown-item value="classification"
+                  >classification</cds-dropdown-item
+                >
+                <cds-dropdown-item value="sql_gen">sql_gen</cds-dropdown-item>
+              </cds-dropdown>
+            </div>
+            <div class="model-selection" style="padding-top: 1rem">
+              <!-- <label for="models">Select a model: </label> -->
+              <cds-dropdown
+                value="meta-llama/llama-2-13b-chat"
+                id="models"
+                title-text="Model"
+                style="width: 50%; padding-top: 1rem"
+              >
+                <cds-dropdown-item value="meta-llama/llama-2-13b-chat">
+                  meta-llama/llama-2-13b-chat
+                </cds-dropdown-item>
+                <cds-dropdown-item value="google/flan-ul2"
+                  >google/flan-ul2</cds-dropdown-item
+                ><cds-dropdown-item value="bigcode/starcoder"
+                  >bigcode/starcoder</cds-dropdown-item
+                >
+                <cds-dropdown-item value="google/flan-t5-xxl"
+                  >google/flan-t5-xxl</cds-dropdown-item
+                >
+                <cds-dropdown-item value="ibm/granite-13b-instruct-v1">
+                  ibm/granite-13b-instruct-v1
+                </cds-dropdown-item>
+                <cds-dropdown-item value="ibm/granite-13b-chat-v1">
+                  ibm/granite-13b-chat-v1
+                </cds-dropdown-item>
+                <cds-dropdown-item value="ibm/granite-13b-chat-v2">
+                  ibm/granite-13b-chat-v2
+                </cds-dropdown-item>
+                <cds-dropdown-item value="meta-llama/llama-2-70b-chat">
+                  meta-llama/llama-2-70b-chat
+                </cds-dropdown-item>
+                <cds-dropdown-item value="ibm/mpt-7b-instruct2"
+                  >ibm/mpt-7b-instruct2</cds-dropdown-item
+                >
+              </cds-dropdown>
+            </div>
+
+            <div class="other-input">
+              <cds-text-input label="Max token" id="max-token"> </cds-text-input>
+              <cds-text-input label="Stop sequences (csv)" id="stop-sequences">
+              </cds-text-input>
+            </div>
+          </div>
+
+          <div class="submit-prompt-section">
+            <div><cds-button id="submit-prompt" onclick="submitPrompt();"
+              >Submit</cds-button>
+            </div>
+            <div
+              id="prompt-status"
+              style=""
+            ></div>
+          </div>
+
+        </div>
+        <div id="view-source-div" style="display: none;">
+          <label class="carbon-label">View source</label>
+          <pre id="source-content-pre">Source will be displayed here after you ask a question in watsonx Assistant.</pre>
+        </div>
+
+        </div>
+      <div class="fixed-items">
+        <div id="like-ans" class="like-ans">
+          <cds-tooltip align="top-left" class="like-tooltip">
+            <div class="sb-tooltip-trigger" aria-labelledby="content">
+              <img src="{{ url_for('static', filename='thumbs-up.svg') }}" style="background-color: white;"></img>
+            </div>
+            <cds-tooltip-content id="content">
+              Click to provide a positive feedback to the last answer (work in progress).
+            </cds-tooltip-content>
+          </cds-tooltip>
+          
+        </div>
+        <div class="div-toggle-parent" id="div-toggle-parent">
+          <cds-toggle
+            label-a="Ask question on CSV"
+            label-b="Ask question on PDF"
+            size="sm"
+            class="toggle-btn"
+            id="question-type"
+            value="csv"
+          ></cds-toggle>
+          <cds-tooltip align="top-left" class="togglebtn-tooltip">
+            <div class="sb-tooltip-trigger" aria-labelledby="content">
+              <img src="{{ url_for('static', filename='information.svg') }}" height="16" width="16"></img>
+            </div>
+            <cds-tooltip-content id="content">
+              Turn On to ask questions on the uploaded CSV. Turn Off to ask questions on the uploaded PDF.
+            </cds-tooltip-content>
+          </cds-tooltip>
+        </div>
+        <div id="open-prompt-div" class="open-prompt" style="display: none;">
+          <cds-tooltip align="top-left" class="prompt-tooltip">
+            <div class="sb-tooltip-trigger" aria-labelledby="content">
+              <i
+            id="txt-inpt-icon"
+            class="bi bi-gear"
+            onclick="showHidePromptInput();"
+          ></i>
+            </div>
+            <cds-tooltip-content id="content">
+              Click to edit the task specific prompt.
+            </cds-tooltip-content>
+          </cds-tooltip>
+        </div>
+      </div>
+      </div>
+    </div>
+    <input
+      id="wa_integration_id"
+      style="display: none"
+      value="{{wa_integration_id}}"
+    />
+    <input id="wa_region" style="display: none" value="{{wa_region}}" />
+    <input
+      id="wa_service_instance_id"
+      style="display: none"
+      value="{{wa_service_instance_id}}"
+    />
+    <footer class="cds-theme-zone-g100 footer"></footer>
+  </body>
+</html>
