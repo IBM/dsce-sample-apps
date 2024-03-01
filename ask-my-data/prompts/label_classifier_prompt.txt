@@ -1,0 +1,21 @@
+Instruction:Read the following text and assign a classification label as one of the following - classification, PII extraction, extraction, generation, rag, summarisation, code gen.
+
+Input: Generate a job description doc from the given points.
+Output: label: generation
+
+Input: What is the weather today ?
+Output: label: rag
+
+Input: Summarize this text
+Output: label: summarisation
+
+Input: Extract entities from the text
+Output: label: extraction
+
+Input: Generate code for this question: What are the number of states in India?
+Output: label: code gen
+
+Input: Classify the text as one of these : good, bad, average
+Output: label: classification
+
+Input:

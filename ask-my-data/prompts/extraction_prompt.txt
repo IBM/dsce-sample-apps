@@ -1,0 +1,9 @@
+Instruction:
+
+Input:
+John knows about python, java, C++ and he has studied in USC.
+
+Output:
+{
+{languages: Python, Java, C++}{education: USC}
+}

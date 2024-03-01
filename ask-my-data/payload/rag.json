@@ -1,0 +1,12 @@
+{
+  "model_id": "meta-llama/llama-2-13b-chat",
+  "input": "",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 300,
+    "min_new_tokens": 10,
+    "stop_sequences": [],
+    "repetition_penalty": 1.5
+  },
+  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+}
