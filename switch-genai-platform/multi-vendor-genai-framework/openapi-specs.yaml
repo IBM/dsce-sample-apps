@@ -1,0 +1,262 @@
+---
+# basePath: "/"
+info:
+  # description: powered by Flasgger
+  title: Trifecta - Framework APIs
+  version: 1.0.0
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: APIAUTHCODE
+    in: header
+    description: Authorization code for invoking framework API.
+security:
+  - ApiKeyAuth: []
+paths:
+  "/get-providers/{aiTask}":
+    get:
+      summary: Get the list of providers
+      description: Get the list of providers based on 'ai_task'.
+      externalDocs:
+        # description: Project repository
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Search
+      operationId: get_providers
+      consumes:
+        - application/json
+      parameters:
+        - default: all
+          description: Give aiTask to list down all the supporting providers.
+          enum:
+            - all
+            - summarization
+            - entity-extraction
+          in: path
+          name: aiTask
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: AI task wise list of providers (filtered by aiTask)
+          schema:
+            type: object
+            properties:
+              ai_task_name:
+                type: array
+                items:
+                  type: string
+            example:
+              summarization:
+                - watsonx
+                - OpenAI
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
+  "/find-prompt":
+    post:
+      summary: Find the prompt based on input search parameters
+      description: The API searches the catalog of prompts in the backend based on the search tags attached to the prompts to find suitable matches.
+      externalDocs:
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Search
+      operationId: find_prompt
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Request body containing provider and search fields
+          required: true
+          schema:
+            type: object
+            properties:
+              provider:
+                type: string
+                example: "watsonx"
+                description: Provider name
+              search:
+                type: array
+                items:
+                  type: string
+                example: ["entity-extraction"]
+                description: Search parameters
+      produces:
+        - application/json
+      responses:
+        200:
+          description: List of prompt payloads (filtered by aiTask)
+          schema:
+            type: array
+            items:
+              type: object
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
+  "/get-examples":
+    post:
+      summary: Get the training examples in a prompt based on input search parameters
+      description: This is useful to only show the examples in the prompt so that the developer can present it in the solution UI for end users without exposing rest of the prompt details.
+      externalDocs:
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Search
+      operationId: get_example
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Request body containing provider and search fields
+          required: true
+          schema:
+            type: object
+            properties:
+              provider:
+                type: string
+                example: "watsonx"
+                description: Provider name
+              search:
+                type: array
+                items:
+                  type: string
+                example: ["entity-extraction"]
+                description: Search parameters
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Examples as a text
+          schema:
+            type: string
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
+  "/find-execute-prompt":
+    post:
+      summary: Find the prompt based on input search parameters, invoke the specific provider API call for inferencing and return results
+      description: The framework API will invoke provider inferencing API only if a single prompt is found based on search parameters provided. In case multiple prompts are found, the API will return an array of prompts for user to refine the search parameters.
+      externalDocs:
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Invoke GenAI
+      operationId: find_and_execute_prompt
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Request body containing provider, search fields, input_text
+          required: true
+          schema:
+            type: object
+            properties:
+              provider:
+                type: string
+                example: "watsonx"
+                description: Provider name
+              search:
+                type: array
+                items:
+                  type: string
+                example: ["entity-extraction"]
+                description: Search parameters
+              input_text:
+                type: string
+                example: "Agent: Hi there, this is Mary Clare with G2. How is it going today?\nClient: Hi Mary \nAgent: Currently, G2 is working on a new solution to help companies sell more software to their target audiences. Is that something that you would want more information on?\nClient: You can tell me more\nAgent: We have two different approaches to doing this. We either use buyer intent data to identify people who are viewing your profile on G2, or we sell our seasonal reports to businesses so they can use reviews to appeal to potential customers. Which one of those solutions interests you the most?\nClient: Seasonal reports sound like a good idea\nAgent: Great. Can I ask you a few questions before we move forward?\nClient: Sure\nAgent: Which industry segment is of most interest to you ?\nClient: Financial sector\nAgent: I will tell you more about the solution, and then we can make an appointment to explore your options before we wrap up today. Does that sound good?\nClient: Sure. You can send me an email with details.\nAgent: Can you please share your email address ?\nClient: user@abccorp.com"
+                description: User input text
+      produces:
+        - application/json
+      responses:
+        200:
+          description: If a single prompt is found based on search, response from GenAI api is returned, else list of prompt payloads.
+          schema:
+            type: object
+            items:
+              type: object
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
+  "/update-examples":
+    post:
+      summary: Set the examples in a prompt
+      description: This is useful for end users to provide training examples as domain experts without being exposed to the prompt details that are fixed by the solution developer.
+      externalDocs:
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Setters
+      operationId: set_examples
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Request body containing provider, search fields, input_text
+          required: true
+          schema:
+            type: object
+            properties:
+              provider:
+                type: string
+                example: "watsonx"
+                description: Provider name
+              search:
+                type: array
+                items:
+                  type: string
+                example: ["entity-extraction"]
+                description: Search parameters
+              text:
+                type: string
+                example: "Input:\nI withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\nOutput:\nCurrency - $100,\nLocation - New York,\nPhoneNumber - (345) 123-7867,\nPerson - Raj,\nEmail - raj@gmail.com\n"
+                description: User input prompt examples
+      produces:
+        - application/json
+      responses:
+        200:
+          description: If a single prompt is found based on search, examples will be set in the payload of that prompt.
+          schema:
+            type: string
+            example: Examples set successfully.
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
+swagger: "2.0"

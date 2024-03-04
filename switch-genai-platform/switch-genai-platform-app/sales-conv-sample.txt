@@ -1,0 +1,14 @@
+Agent: Hi there, this is Mary Clare with G2. How’s it going today?
+Client: Hi Mary 
+Agent: Currently, G2 is working on a new solution to help companies sell more software to their target audiences. Is that something that you would want more information on?
+Client: You can tell me more
+Agent: We have two different approaches to doing this. We either use buyer intent data to identify people who are viewing your profile on G2, or we sell our seasonal reports to businesses so they can use reviews to appeal to potential customers. Which one of those solutions interests you the most?
+Client: Seasonal reports sound like a good idea
+Agent: Great. Can I ask you a few questions before we move forward?
+Client: Sure
+Agent: Which industry segment is of most interest to you ?
+Client: Financial sector
+Agent: I’ll tell you more about the solution, and then we can make an appointment to explore your options before we wrap up today. Does that sound good?”
+Client: Sure. You can send me an email with details.
+Agent: Can you please share your email address ?
+Client: user@abccorp.com
