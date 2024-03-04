@@ -1,0 +1,5 @@
+ibm-cloud-sdk-core==3.16.7
+python-dotenv==1.0.0
+requests==2.31.0
+flask==3.0.2
+flasgger==0.9.7.1
