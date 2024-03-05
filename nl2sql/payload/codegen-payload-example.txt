@@ -1,0 +1,17 @@
+Input:
+Total number of savings accounts by gold customers
+
+Output:
+select count(*) from BANK_ACCOUNT where bank_account.account_type='savings' and bank_account.custid in (select customer_loyalty.custid from CUSTOMER_LOYALTY where customer_loyalty.customer_level='gold')
+
+Input:
+find total fixed deposit investment for customer 5467
+
+Output:
+select sum(investment_product.amount) from investment_product, customer where customer.custid=investment_product.custid and customer.custid='5467'
+
+Input:
+find total number of customers who live in New York
+
+Output:
+select count(customer.custid) from customer where customer.address like '%New York%'
