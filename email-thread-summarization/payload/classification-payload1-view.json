@@ -1,0 +1,17 @@
+{
+  "model_id": "ibm/granite-13b-instruct-v2",
+  "data": {
+    "instruction": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  }
+}
