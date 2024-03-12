@@ -1,6 +1,6 @@
 {
-  "model_id": "ibm/granite-13b-instruct-v1",
-  "input": "Read the text and classify into one of the following options: finance, manufacturing, automotive, no industry segment. \n\nInput:\n",
+  "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+  "input": "Read the below input text and classify overall text into one of the following options: finance, manufacturing, automotive, no industry segment.\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 100,
