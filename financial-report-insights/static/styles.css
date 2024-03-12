@@ -1,0 +1,46 @@
+body {
+  font-family: "IBM Plex Sans", "Arial";
+  margin: 0;
+  overflow-y: hidden;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+p {
+  margin: 5px;
+  padding: 0px;
+}
+
+.header-logo {
+  height: 2.5rem;
+  background-color: white;
+  padding: 5px 8px;
+}
+
+.username-text {
+  color: var(--cds-text-primary);
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  padding: 0 16px;
+}
+
+.source-modal {
+  display: flex;
+  justify-content: left;
+  padding-left: 28px;
+}
+
+.footer {
+  background-color: var(--cds-background);
+  bottom: 0;
+  color: var(--cds-text-secondary);
+  position: fixed;
+  padding: 8px 16px;
+  width: 100%;
+}

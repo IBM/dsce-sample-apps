@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+    <title>Financial report insights</title>
+
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/ui-shell.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/modal.min.js"
+    ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript.js') }}"></script>
+  </head>
+
+  <body onload="setUpChatbot();">
+    <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
+      <cds-header-name>
+        Financial report insights
+      </cds-header-name>
+      <cds-header-nav>
+        <cds-header-nav-item onclick="fnViewSource();">View source</cds-header-nav-item>
+      </cds-header-nav>
+
+      <div class="cds--header__global">
+        <div class="username-text">
+          <i class="bi bi-person-circle"></i>
+          <p>Welcome <b>Peter</b></p>
+        </div>
+      </div>
+    </cds-header>
+
+    <cds-modal id="source-modal" class="cds-theme-zone-white source-modal">
+      <cds-modal-header>
+        <!-- <cds-modal-close-button></cds-modal-close-button> -->
+        <cds-modal-heading>Source</cds-modal-heading>
+      </cds-modal-header>
+      <cds-modal-body><p id="source-p"><i>Source document will be displayed here after you ask a question to chatbot.</i></p></cds-modal-body>
+    </cds-modal>
+
+    <img src="{{ url_for('static', filename='Financial-WA-Background.png') }}" style="width: 100%;"></img>
+
+    <input
+      id="wa_integration_id"
+      style="display: none"
+      value="{{wa_integration_id}}"
+    />
+    <input id="wa_region" style="display: none" value="{{wa_region}}" />
+    <input
+      id="wa_service_instance_id"
+      style="display: none"
+      value="{{wa_service_instance_id}}"
+    />
+
+    <footer class="cds-theme-zone-g100 footer"></footer>
+  </body>
+</html>
