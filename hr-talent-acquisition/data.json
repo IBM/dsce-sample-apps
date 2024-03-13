@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Resume 1",
+    "id": "resume1",
+    "path": "/assets/data/resume1"
+  },
+  {
+    "name": "Resume 2",
+    "id": "resume2",
+    "path": "/assets/data/resume2"
+  },
+  {
+    "name": "Resume 3",
+    "id": "resume3",
+    "path": "/assets/data/resume3"
+  },
+  {
+    "name": "Resume 4",
+    "id": "resume4",
+    "path": "/assets/data/resume4"
+  },
+  {
+    "name": "Resume 5",
+    "id": "resume5",
+    "path": "/assets/data/resume5"
+  }
+]

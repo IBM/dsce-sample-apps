@@ -1,0 +1,29 @@
+Division : BestAICompany DeepAI products. Engineering organization, working on AI products
+Job role: Senior Software Engineer
+Area: Development
+Environment: develop with speed, agile and iterative, innovative, passionate problem solvers, creative
+Technology areas: Cloud, AI, machine learning
+Responsibilities: 
+- programming in python and Java
+- work closely with distributed engineering teams
+- creative innovative and efficient solutions using AI/ML models
+- Project focused, innovative, and team worker
+Locations: 
+- San Jose, CA, USA
+- Raleigh, NC, USA 
+
+Basic qualifications:
+- 6+ years programming experience
+- BTech in Computer Science or Math
+- Delivered enterprise products with Agile development methodologies
+
+Preferred qualifications:
+- MS in Computer Science or Math
+- Defining and maintaining architectural patterns 
+- Experience with front-end development and prototyping in HTML, JavaScript, CSS, Ajax
+
+Add a detailed paragraph on how BestAICompany is committed to a diverse and inclusive workplace as an equal opportunity employer. Use a reference link :  https://www.bestaicompany.com/able/contact/
+
+Compensation: 
+from $120,000/year in our lowest geographic market up to $250,000/year in our highest geographic market.
+Use a reference link on benefits: https://www.bestaicompany.com/downloads/cas/NVRQKBB1

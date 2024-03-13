@@ -1,0 +1,28 @@
+Name: Je We Kini
+Role: Entry-Level Web Developer
+Email: jewkin@email.com
+Phone: (123) 456-7890
+LinkedIn: linkedin.com/in/jew-kin
+Github: github.com/jwk-codes
+Location: Chicago, IL
+Degree: Certified Web Developer
+College: Maxim Online College
+Graduation: 2021
+Skills: HTML; CSS; JavaScript; Python; REST APIs; Node.js; Bootstrap; React.js
+Work Experience:
+[
+Company: TeamXchange
+Role: Web Developer Intern
+Date: June 2021 - present
+],
+[
+Company: Gemini Messenger
+Role: Creator
+Date: 
+],
+[
+Company: Food Frenzy
+Role: Creator
+Date: 
+]
+RESUME_END

@@ -1,0 +1,24 @@
+Name: Stephanie Smith
+Role: Web Developer
+Email: steph@email.com
+Phone: (123) 456-7890
+LinkedIn: NOT FOUND
+Github: NOT FOUND
+Location: Pittsburgh, PA
+Degree: B.S., Computer Science
+College: University of Pittsburgh
+Graduation: Oct 2023
+Skills: JavaScript (Angular); HTML/ CSS; Python (Django); SQL (PostgreSQL, Oracle);
+REST APIs (GraphQL); GitHub Education
+Work Experience:
+[
+Company: University of Pittsburgh
+Role: Technical support engineer
+Date: January 2018 - current
+],
+[
+Company: Pittsburgh Computer Science Institute
+Role: Research Assistant
+Date: April 2015 - January 2018
+]
+RESUME_END

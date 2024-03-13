@@ -1,0 +1,12 @@
+{
+  "model_id": "meta-llama/llama-2-13b-chat",
+  "input": "",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 100,
+    "min_new_tokens": 0,
+    "stop_sequences": [";"],
+    "repetition_penalty": 1
+  },
+  "project_id": "<your watsonx instance project_id>"
+}

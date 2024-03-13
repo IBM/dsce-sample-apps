@@ -1,0 +1,26 @@
+Name: Gary Rosenburg
+Role: Web Developer, Web Designer
+Email: garyrosen@email.com
+Phone: (123) 456-7890
+LinkedIn: NOT FOUND
+Github: NOT FOUND
+Location: New York, NY
+Degree: B.S. Computer Science
+College: New York College
+Graduation: June 2020
+Skills: JavaScript HTML CSS React.js Node.js Python PHP
+React.js; jQuery; Selenium
+Angular.js; Laravel
+MongoDB; Jest; Enymze; Mocha/Chai
+Work Experience:
+[
+Company: Geometrics
+Role: Web Developer
+Date: June 2021 - present
+],
+[
+Company: New York College
+Role: Web Designer
+Date: September 2017 - June 2020
+]
+RESUME_END
