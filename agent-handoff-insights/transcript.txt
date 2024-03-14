@@ -6,7 +6,7 @@ Virtual agent: Okay! How much would you like to transfer?
 Caller: what is my account balance
 Virtual agent: To check your account balance, please provide your email address
 Caller: mary@test.com
-Virtual agent: Great. What is your data of birth?
+Virtual agent: Great. What is your date of birth?
 Caller: 24-Nov-1983
 Virtual agent: what's your city of residence ?
 Caller: Denver
