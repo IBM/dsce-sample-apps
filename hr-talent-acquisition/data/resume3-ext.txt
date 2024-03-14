@@ -1,0 +1,30 @@
+Name: John Clairmont
+Role: Senior Web Developer
+Email: jclair@email.com
+Phone: (123) 456-7890
+LinkedIn: LinkedIn Github
+Location: Tampa, FL
+Degree: B.S., Computer Science
+College: University of Florida
+Graduation: June 2016
+Skills: Python; JavaScript; HTML; CSS; Java; PHP
+React.js; jQuery; Selenium
+Angular.js; Laravel
+MongoDB; Jest; Enymze; Mocha/Chai
+Work Experience:
+[
+Company: SquareRoot
+Role: Senior Web Developer
+Date: January 2020 - current
+],
+[
+Company: Florida State University
+Role: Web Designer
+Date: April 2017 - January 2021
+],
+[
+Company: Seeme.com
+Role: Front-End Developer Intern
+Date: June 2016 - April 2017
+]
+RESUME_END

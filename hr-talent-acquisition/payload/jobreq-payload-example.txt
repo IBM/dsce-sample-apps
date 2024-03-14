@@ -1,0 +1,84 @@
+Create a detail job description given the example given below.
+
+
+Input:
+Division : AWS Industry Products (AWS IP). Engineering organization, building industry-vertiical products, creating new business models and outcomes 
+Job role: Senior UX Designer, Industry Products
+Area: Design and Research
+Environment: fast-paced like startups, passionate team solving complex problems at scale, get-stuff-done, curious, fun
+Technology areas: machine learning, IoT to build new AWS products, digital transformation
+Responsibilities: 
+- work directly with product and engineering
+- collaborate with global automotive industry partner
+- turn technical and abstract concepts into great user experience that transforms automotive software development
+- Mission-driven, creative, and independent
+Locations: 
+- Arlington, VA, USA
+- San Jose, CA, USA 
+- Seattle, WA, USA
+
+
+Basic qualifications:
+- 7+ years experience
+- Online portfolio or samples of work 
+- Experience acquiring user data, journey maps, user research 
+- Experience in delivering large and complex design solutions
+
+Preferred qualifications:
+- Working with stakeholders to plan and execute strategic programs
+- Defining and maintaining design patterns and UX standards
+- Design tools such as Photoshop, Illustrator and InDesign and prototyping in HTML, JavaScript, CSS, Ajax
+- Experience designing in an agile development environment
+
+Amazon is committed to a diverse and inclusive workplace. Amazon is an equal opportunity employer and does not discriminate on the basis of race, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other legally protected status. For individuals with disabilities who would like to request an accommodation, please visit https://www.amazon.jobs/en/disability/us.
+
+Compensation: 
+from $113,000/year in our lowest geographic market up to $211,600/year in our highest geographic market.
+
+Output:
+DESCRIPTION 
+AWS Industry Products (AWS IP) is seeking a Senior UX Designer to join our growing design and research team. We are looking for candidates who thrive in a fast-paced startup-like environment and have a passion for solving complex problems at a massive scale.
+
+AWS IP is an AWS engineering organization chartered to build industry-specific products by diving deep with industry innovation leaders to unblock entire industries from new business models, step changes in efficiency, and transformative business outcomes. We are builders and innovators applying Amazon innovation mechanisms and AWS technologies, like machine learning and IoT, to build new AWS products that empower industry customers to achieve and sustain the game changing benefits of digital transformation at scale. We are curious, passionate, fun, and like to GSD (get stuff done).
+
+Key job responsibilities 
+The Senior UX Designer will work directly with product and engineering in collaboration with a global automotive industry partner. You will take technical and abstract concepts and turn them into a compelling and meaningful user experience that transforms automotive software development. You must be mission-driven, creative, and independently motivated to succeed.
+
+As a Senior UX Designer, you will:
+
+- Design developer experiences and cloud-based software management services for the automotive industry.
+- Contribute to strategic decisions around product definitions and roadmaps.
+- Brainstorm and prototype concepts, and specify designs according to use cases.
+- Create end-to-end user experiences that are useful, usable, and desirable.
+- Understand and advocate for customers and their needs through research and the design and development of solutions.
+- Integrate business requirements and market research to assist in developing use cases and high-level design requirements.
+- Design information architecture, user interface, and interaction flow of services and experiences.
+- Develop personas, customer journey maps, conceptual diagrams, wireframes, and prototypes.
+- Facilitate design processes, present to stakeholders, and iterate on designs based on feedback and user research.
+- Develop and maintain detailed user interface specifications for developer handoff.
+- Contribute to product management and engineering to instill UX best practices throughout a customer’s journey.
+- Chart a course for yourself in ambiguous situations.
+- Mentor and assist other designers.
+
+We are open to hiring candidates to work out of one of the following locations:
+
+Arlington, VA, USA | San Jose, CA, USA | Seattle, WA, USA
+
+BASIC QUALIFICATIONS 
+- 7+ years of UX designer or interaction designer experience
+- Have an online portfolio or samples of work on resume, demonstrating experience creating great end-to-end, user-centered design solutions and patterns, across desktop and mobile devices
+- Experience acquiring user data (e.g., conducting usability studies, performing user research) and creating personas and journey maps
+- Experience in delivering design solutions for projects of large scope and complexity
+
+PREFERRED QUALIFICATIONS 
+- Experience working with stakeholders to plan and execute programs that are strategic in nature
+- Experience defining and maintaining design patterns and UX standards
+- Experience with design tools such as Photoshop, Illustrator and InDesign and prototyping in HTML, JavaScript, CSS, Ajax
+- Experience designing in an agile development environment
+
+Amazon is committed to a diverse and inclusive workplace. Amazon is an equal opportunity employer and does not discriminate on the basis of race, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other legally protected status. For individuals with disabilities who would like to request an accommodation, please visit https://www.amazon.jobs/en/disability/us.
+
+Our compensation reflects the cost of labor across several US geographic markets. The base pay for this position ranges from $113,000/year in our lowest geographic market up to $211,600/year in our highest geographic market. Pay is based on a number of factors including market location and may vary depending on job-related knowledge, skills, and experience. Amazon is a total compensation company. Dependent on the position offered, equity, sign-on payments, and other forms of compensation may be provided as part of a total compensation package, in addition to a full range of medical, financial, and/or other benefits. For more information, please visit https://www.aboutamazon.com/workplace/employee-benefits. Applicants should apply via our internal or external career site.
+
+
+Input:

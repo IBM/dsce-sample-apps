@@ -1,0 +1,28 @@
+Name: Jeremy Grey
+Role: Senior Software Developer
+Email: jeremy.grey21@email.com
+Phone: (123) 456-7890
+LinkedIn: LinkedIn
+Github: Github
+Location: Riverside, CA
+Degree: Bachelor of Science in Computer Science
+College: Georgia Tech
+Graduation: 2012
+Skills: Python (Django), SQL (PostgreSQL, MySQL), Cloud (GCP, AWS), JavaScript (ES6, React, Redux, Node.js), Typescript, HTML/CSS, CI/CD
+Work Experience:
+[
+Company: Nero.pay
+Role: Software Developer
+Date: January 2017 - current
+],
+[
+Company: Vision Healthcare
+Role: Front End Developer
+Date: January 2014 - December 2016
+],
+[
+Company: Popular Play
+Role: Developer
+Date: NOT FOUND
+]
+RESUME_END

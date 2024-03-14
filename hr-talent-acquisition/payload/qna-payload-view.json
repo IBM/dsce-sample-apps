@@ -1,0 +1,42 @@
+{
+  "model_id": "meta-llama/llama-2-13b-chat",
+  "data": {
+    "instruction": "You are a developer writing SQL queries given natural language questions. The database contains one table. The schema of the table with description of the attributes is given. Write the SQL query given a natural language statement.\nHere is the table definition :\n\nDatabase Table Name: RESUMES\nTable Schema:\nColumn Name # Meaning\nName # Name of the candidate or applicant\nRole # the current role of the candidate\nEmail # email address of the candidate\nPhone # phone number of the candidate\nLinkedIn # linkedin profile of the candidate\nGithub # GitHub profile of the candidate\nLocation # current location city state of the candidate\nDegree # college degree of the candidate\nCollege # name of the college or university the candidate attended\nGraduation # the date of graduation of the candidate, e.g. July, 2019\nSkills # the skills the candidate has at this time\nWork Experience # the list if past work experience of the candidate",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "find the list of applicants who know java",
+        "output": "select name from resumes where skills like '%java%';"
+      },
+      {
+        "input": "find the list of applicants who have graduated before 2016",
+        "output": "select name from resumes where graduation < 2016;"
+      },
+      {
+        "input": "find the list of applicants who know java and python",
+        "output": "select name from resumes where skills like '%java%' and skills like '%python%';"
+      },
+      {
+        "input": "what is Mary's email ?",
+        "output": "select name, email from resumes where name like '%Mary%';"
+      },
+      {
+        "input": "what is the summary of Tim's resume ?",
+        "output": "select name, summary from resumes where name like '%Tim%';"
+      },
+      {
+        "input": "find a candidate with role as designer",
+        "output": "select name from resumes where role like '%designer%';"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [";"],
+    "min_new_tokens": 0,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  }
+}

@@ -1,0 +1,38 @@
+You are a developer writing SQL queries given natural language questions. The database contains one table. The schema of the table with description of the attributes is given. Write the SQL query given a natural language statement.
+Here is the table definition :
+
+Database Table Name: RESUMES
+Table Schema:
+Column Name # Meaning
+Name # Name of the candidate or applicant
+Role # the current role of the candidate
+Email # email address of the candidate
+Phone # phone number of the candidate
+LinkedIn # linkedin profile of the candidate
+Github # GitHub profile of the candidate
+Location # current location city state of the candidate
+Degree # college degree of the candidate
+College # name of the college or university the candidate attended
+Graduation # the date of graduation of the candidate, e.g. July, 2019
+Skills # the skills the candidate has at this time
+Work Experience # the list if past work experience of the candidate
+
+Input: find the list of applicants who know java
+Output: select name from resumes where skills like '%java%';
+
+Input: find the list of applicants who have graduated before 2016
+Output: select name from resumes where graduation < 2016;
+
+Input: find the list of applicants who know java and python
+Output: select name from resumes where skills like '%java%' and skills like '%python%';
+
+Input: what is Mary's email ?
+Output: select name, email from resumes where name like '%Mary%';
+
+Input: what is the summary of Tim's resume ?
+Output: select name, summary from resumes where name like '%Tim%';
+
+Input: find a candidate with role as designer
+Output: select name from resumes where role like '%designer%';
+
+Input:  
