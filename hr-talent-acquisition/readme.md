@@ -1,4 +1,4 @@
-# Financial report insights application
+# Talent acquisition application
 
 ## Pre-requisites
 
@@ -21,8 +21,6 @@
 4. It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 ## Set up and launch application
-
-It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
 
 1. Create MySQL table and insert data into it. Find the queries in `sql/db_scripts.sql` file.
 
@@ -70,43 +68,45 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    pip3 install -r requirements.txt
    ```
 
-5. Add .env file to your application folder and add env variable
+5. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
+
+6. Add .env file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 
-   - 5.1 In the IBM Cloud console, go to **Manage > Access (IAM) > API keys**
-   - 5.1 Click **Create an IBM Cloud API key**
-   - 5.1 Enter a name and description for your API key
-   - 5.1 Click **Create**
-   - 5.1 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+   - 6.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
+   - 6.2 Click **Create an IBM Cloud API key**
+   - 6.3 Enter a name and description for your API key
+   - 6.4 Click **Create**
+   - 6.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
-```sh
-WATSONX_API_KEY = <your IBM Cloud API key>
+   ```sh
+   WATSONX_API_KEY = <your IBM Cloud API key>
 
-# watsonx Assitant configs
-WAINTEGRATIONID = <watsonx assistant integration id>
-WAREGION = <region of watsonx assistant>
-WASERVICEINSTANCEID = <watsonx assistant instance id>
+   # watsonx Assitant configs
+   WAINTEGRATIONID = <watsonx assistant integration id>
+   WAREGION = <region of watsonx assistant>
+   WASERVICEINSTANCEID = <watsonx assistant instance id>
 
-# MySQL database connection details
-DB_HOST = <MySQL server hostname>
-DB_PORT = <port number>
-DB_NAME = <database name>
-DB_USER = <username>
-DB_PASS = <base64 encoded password>
-```
+   # MySQL database connection details
+   DB_HOST = <MySQL server hostname>
+   DB_PORT = <port number>
+   DB_NAME = <database name>
+   DB_USER = <username>
+   DB_PASS = <base64 encoded password>
+   ```
 
-6. Add value of `project_id` key of your watsonx.ai instance to the `payload/jobreq-payload.json` and `payload/qna-payload.json` files.
+7. Add value of `project_id` key of your watsonx.ai instance to the `payload/jobreq-payload.json` and `payload/qna-payload.json` files.
 
-   **Steps to create project_id**
+   **Steps to create project_id** (skip 7.1 to 7.3 for watsonx trial account)
 
-   - 6.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
-   - 6.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 6.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
-   - 6.4 Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
-   - 6.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+   - 7.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
+   - 7.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
+   - 7.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
+   - 7.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 7.5 Click on **Manage** tab > Copy the **Project ID** from **General**
 
-7. Run the application.
+8. Run the application.
 
    ```sh
    python3 template.py

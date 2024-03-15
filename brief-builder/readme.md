@@ -1,6 +1,6 @@
 ## Set up and launch application
 
-It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
+It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 1. Go to the root directory and prepare your python environment.
 
@@ -68,8 +68,8 @@ It is assumed that Python3+ is installed or download from https://www.python.org
 
    - 6.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
    - 6.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 6.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
-   - 6.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 6.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
+   - 6.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **admin** > Click **Add**
    - 6.5 Click on **Manage** tab > Copy the **Project ID** from **General**
 
 7. Run the application.
