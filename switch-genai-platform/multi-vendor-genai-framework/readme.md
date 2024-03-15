@@ -7,10 +7,19 @@ It is a framework allowing developers to easily configure and invoke GenAI model
 It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 1. Clone the repository on your machine.
-2. Create `.env` file in the project root directory and add below provided environment keys.
+2. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
+3. Create `.env` file in the project root directory and add below provided environment keys.
+
+   ##### Steps to create IBM Cloud API key
+
+   - 3.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
+   - 3.2 Click **Create an IBM Cloud API key**
+   - 3.3 Enter a name and description for your API key
+   - 3.4 Click **Create**
+   - 3.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
    ```sh
-   WATSONX_API_KEY=<Your watsonx.ai api key>
+   WATSONX_API_KEY=<your IBM Cloud API key>
    OPENAI_API_KEY=<Your openai api key>
    APIAUTHCODE=<generate a new uuid for api call authorization>
    #Server running mode. Permissible values True or False
@@ -19,15 +28,23 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
    > Reference Online uuid generator tool : <https://www.uuidgenerator.net/>
 
-3. Open `providers.json` file, update the value for 'projectid' key in 'watsonx' section with your projectid.
+4. Open `providers.json` file, update the value for 'projectid' key in 'watsonx' section with your projectid.
 
-4. Go to the root directory and prepare your python environment.
+   ##### Steps to create project_id (skip 4.1 to 4.3 for watsonx trial account)
+
+   - 4.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
+   - 4.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
+   - 4.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
+   - 4.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 4.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+
+5. Go to the root directory and prepare your python environment.
 
    ```sh
    python3 -m venv client-env
    ```
 
-5. Activate the virtual environment:
+6. Activate the virtual environment:
 
    - MacOS, Linux, and WSL using bash/zsh
 
@@ -59,13 +76,13 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
-6. Install the required libraries.
+7. Install the required libraries.
 
    ```sh
    pip3 install -r requirements.txt
    ```
 
-7. Start the framework application.
+8. Start the framework application.
 
    ```sh
    python3 main.py
