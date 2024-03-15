@@ -1,0 +1,22 @@
+{
+  "model_id": "meta-llama/llama-2-70b-chat",
+  "data": {
+    "instruction": "Extract PII entities from the paragraph given",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "I withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj",
+        "output": "1. $100: money,\n2. New York: location,\n3. (345) 123-7867: PhoneNumber,\n4. Raj: Person,\n5. raj@gmail.com: Email"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 200,
+    "repetition_penalty": 1
+  }
+}

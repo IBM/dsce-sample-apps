@@ -213,10 +213,15 @@ def get_payloads(text, all_payloads, all_examples):
     payloads = configs_dict['generate_btn_payload_files'].split(',')
     
     for label, payload_file, n in zip(labels, payloads, range(len(payloads))):
-        payload_f_json = all_payloads[payload_file]
+        with open('payload/{}-view.json'.format(payload_file)) as payload_f:
+            payload_f_json = json.load(payload_f)
+
         examples = all_examples[payload_file]
-        payload_f_json['input'] = '{}{}\n\nInput:\n{}\nOutput:\n'.format(payload_f_json['input'], examples, text)
-        payload_f_json['project_id'] = "xxxxx"
+        examples = examples.split('Input:')[1:]
+
+        for i in range(len(examples)):
+            payload_f_json['data']['examples'].append({"input": str(examples[i].split('Output:')[0][1:-1]) if examples != [] else "", "output": examples[i].split('Output:')[1][1:] if examples != [] else ""})
+        payload_f_json['data']['input'] = text
         payload_f_json = json.dumps(payload_f_json, indent=2)
         payloads_output.append(
             dbc.Tab([

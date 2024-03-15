@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/mpt-7b-instruct2",
+  "model_id": "ibm/granite-13b-chat-v2",
   "input": "Summarise the following conversation between Customer and the Agent with all necessary details.\n\n",
   "parameters": {
     "decoding_method": "greedy",

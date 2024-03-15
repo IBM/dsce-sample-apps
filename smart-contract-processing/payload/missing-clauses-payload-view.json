@@ -1,0 +1,26 @@
+{
+  "model_id": "meta-llama/llama-2-70b-chat",
+  "data": {
+    "instruction": "Study the general, term and agent responsibility clauses in the property maintenance agreement below between 2 parties. All the clauses are mandatory and need to appear in an agreement. For the given agreement identify and clearly mention a list all the missing clauses in general, terms and responsibilities sections. Otherwise, if all clauses are present then say that \"The agreement is approved\".",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "PROPERTY MANAGEMENT AGREEMENT\n\nPARTIES\nThis Property Management Agreement (hereinafter referred to as the \"Agreement\") is entered into on 5/11/2021 (the \"Effective Date\"), by and between\nJimmy Fallon, with an address of 67 ABC Avenue, NY 23411 (hereinafter referred to as the \"Owner\"), and Susan Parks, representing XYZ Services, with an address of 45, Kinston, GA 78322 (hereinafter referred to as the \"Agent\"), collectively referred to as the \"Parties\".\n\nGENERAL\n- Hereby, the Owner exclusively appoints the Agent to manage the property that is located at 34, Park Lane, NY, 23456. The Agent hereby accepts such responsibility and agrees to manage the property aforementioned.\n- The Owner agrees to pay the fees of USD 2300 per year associated with the services that the Agent will provide when managing the aforementioned property.\n\nTERM\n- This Agreement shall be effective on the date of signing this Agreement (hereinafter referred to as the \"Effective Date\") and the term will end on 12th Dec 2022.\n- The Agreement can be renewed for an additional 11 months at a maximum 5% increase in management fees. \n\nTHE RESPONSIBILITIES OF THE AGENT\n- To rent and lease as well as operate the property.\n- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.\n- To provide a monthly accounting of rents received and paid expenses as well as any other applicable incomes, monies or sums to the Owner.\n- To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed.\n- To inform the Owner of any improvements and repairs that exceed USD 1000 and to obtain consent from the Owner prior to paying such fees.\n\nSigned by:\nJimmy Fallon\nSusan Parks\n\nDated:\n4/11/2021",
+        "output": "This agreement is approved and has all the necessary clauses.\nEND"
+      },
+      {
+        "input": "THE RESPONSIBILITIES OF THE AGENT\n- To rent and lease as well as operate the property.\n- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.\n- To provide a monthly accounting of rents received and paid expenses  as well as any other applicable incomes, monies or sums to the Owner.\n- To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed.",
+        "output": "Add the following clause as Responsibilities of the Agent: \"To inform the Owner of any improvements and repairs that exceed USD <amount> and to obtain consent from the Owner prior to paying such fees.\"\n\n\nTERM\n- This Agreement shall be effective on the date of signing this Agreement (hereinafter referred to as the \"Effective Date\") and will end on 20/9/2022.\n\nAdd a renewal clause in Term clauses.\n\n\nGENERAL\n- Hereby, the Owner exclusively appoints the Agent to manage the property. The Agent hereby accepts such responsibility and agrees to manage the property aforementioned.\n- The Owner agrees to pay the fees of USD 1000 per year associated with the services that the Agent will provide when managing the aforementioneclproperly.\n\nAdd the address of the property in the general clauses.\n\n\nTHE RESPONSIBILITIES OF THE AGENT CLAUSES\n- To rent and lease as well as operate the property.\n- To collect rent and monies applicable from potential tenants in due time. However, the Agent will not bear the responsibilities of the potential tenants in case of refusal of payment or other.\n- To provide a monthly accounting of rents received and paid expenses as well as any other applicable incomes, monies or sums to the Owner.\n- To inform the Owner of any improvements and repairs that exceed USD 1000 and to obtain consent from the Owner prior to paying such fees.\n\nAdd the following clause in Responsibilities of the Agent: \"To decorate, improve, repair and maintain the property when needed. To hire as well as supervise employees (if any) when needed.\""
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": ["END", "PROPERTY MANAGEMENT AGREEMENT"],
+    "min_new_tokens": 0,
+    "max_new_tokens": 500,
+    "repetition_penalty": 1
+  }
+}
