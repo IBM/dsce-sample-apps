@@ -1,0 +1,22 @@
+{
+  "model_id": "google/flan-ul2",
+  "data": {
+    "instruction": "Extract PII entities from the paragraph given",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "I withdrew $100 from the bank in New York from my phone (345) 123-7867. Regards, Raj",
+        "output": "$100: money,New York: location,(345) 123-7867: PhoneNumber,Raj: Person"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 50,
+    "repetition_penalty": 1
+  }
+}

@@ -47,7 +47,7 @@ Also, it is presumed that you already have a setup/running multi-vendor-genai-fr
    pip3 install -r requirements.txt
    ```
 
-4. Add .env file to your application folder and add env variable
+4. Add `.env` file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 

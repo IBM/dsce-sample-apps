@@ -1,0 +1,50 @@
+{
+  "model_id": "google/flan-t5-xxl",
+  "data": {
+    "instruction": "For each of the unhappy customer's complaint below find out one of the next best offer for them from the list below : Voucher, Free Upgrade, On-demand pickup location, Premium features",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "Customer service is horrible. I reserved through on-line which did not indicate/state I had to provide proof of insurance during pickup. The manager denied the reservation and after long and rude argument he finally gave in.",
+        "output": "Voucher"
+      },
+      {
+        "input": "Having knowledgeable personnel is very important",
+        "output": "Voucher"
+      },
+      {
+        "input": "I do not  understand why I have to pay additional fee if vehicle is returned without a full tank.",
+        "output": "Premium features"
+      },
+      {
+        "input": "States have different rules and regulations pertaining to speed, radar detectors, even when light should be on.  Customer services reps should have a handout or be knowledgeable of a particular state's laws.",
+        "output": "Premium features"
+      },
+      {
+        "input": "They did not have the car I wanted.  upgraded me to a car I did not like and did not want.",
+        "output": "Free Upgrade"
+      },
+      {
+        "input": "Please lower the prices.",
+        "output": "Free Upgrade"
+      },
+      {
+        "input": "You need more staff to accommodate travelers who are in a hurry. Specifically, cut down the wait time to either retrieve or turn in a rental car.",
+        "output": "On-demand pickup location"
+      },
+      {
+        "input": "It took us almost three hours just to get a car! It was absurd.",
+        "output": "On-demand pickup location"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 50,
+    "repetition_penalty": 1
+  }
+}

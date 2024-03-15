@@ -194,10 +194,10 @@ def get_payloads(text):
     payloads = configs_dict['generate_btn_payload_files'].split(',')
     
     for label, payload_file, n in zip(labels, payloads, range(len(payloads))):
-        with open('payload/{}.json'.format(payload_file)) as payload_f:
+        with open('payload/{}-view.json'.format(payload_file)) as payload_f:
             payload_f_json = json.load(payload_f)
-        payload_f_json['input'] = payload_f_json['input']+text+"\n\nOutput:\n"
-        payload_f_json['project_id'] = "xxxxx"
+        lines = text.split("\n")
+        payload_f_json['data']['input'] = lines[0]
         payload_f_json = json.dumps(payload_f_json, indent=2)
         payloads_output.append(
             dbc.Tab([

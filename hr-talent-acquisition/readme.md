@@ -70,7 +70,7 @@
 
 5. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
-6. Add .env file to your application folder and add env variable
+6. Add `.env` file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 

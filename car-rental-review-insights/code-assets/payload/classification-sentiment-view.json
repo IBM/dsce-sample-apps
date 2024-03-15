@@ -1,0 +1,38 @@
+{
+  "model_id": "google/flan-t5-xxl",
+  "data": {
+    "instruction": "Classify the review as positive or negative given the following examples.",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "Customer service was friendly and helpful.",
+        "output": "positive"
+      },
+      {
+        "input": "Customer service was good at MSP airport and the process was very fast. From getting off of the plane to leaving with my rental car was less than 45 minutes.",
+        "output": "positive"
+      },
+      {
+        "input": "I do not understand why I have to pay additional fee if vehicle is returned without a full tank.",
+        "output": "negative"
+      },
+      {
+        "input": "Based on the customer service personnel I encountered most recently, I would say it is vastly preferable for the personnel to be able to at least pretend to care whether the customer ever actually receives a car rental that was reserved months in advance.",
+        "output": "negative"
+      },
+      {
+        "input": "Customer service went out of their way to provide a car that would fit our needs",
+        "output": "positive"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 10,
+    "repetition_penalty": 1
+  }
+}
