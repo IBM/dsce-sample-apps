@@ -1,0 +1,50 @@
+{
+  "model_id": "google/flan-t5-xxl",
+  "data": {
+    "instruction": "The following paragraph is a customer review for a car rental service. The complaint is about one of the business area: Product: Pricing and Billing, Service: Attitude, Service: Orders/Contracts, Service: Accessibility, Product: Functioning, Service: Knowledge, Product: Availability/Variety/Size, Product: Information\\n\\nRead the following paragraph and determine which business area the complaint is about.",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "They did not have the car I wanted.  upgraded me to a car I did not like and did not want.",
+        "output": "Product: Availability/Variety/Size"
+      },
+      {
+        "input": "Customer Service at Alamo was RUDE. We waited in line for over an hour to get our car. Car was bad. Had to change it few days later. Another family traveling with us was upgraded to a larger car as they were out of the type of car booked.",
+        "output": "Product: Functioning"
+      },
+      {
+        "input": "It would be nice if they included maps to the airport drop off with the car, last time we got lost returning the car and almost missed the flight.  There was nothing on the exit that indicated rental returns.  Actually the one I really liked, was when we",
+        "output": "Product: Information"
+      },
+      {
+        "input": "price too high and location off premise too far",
+        "output": "Product: Pricing and Billing"
+      },
+      {
+        "input": "Did not have some problems. My car was not ready on time.",
+        "output": "Service: Accessibility"
+      },
+      {
+        "input": "I would like the personnel to pretend they care about customer, at least.",
+        "output": "Service: Attitude"
+      },
+      {
+        "input": "Having knowledgeable personnel is very important",
+        "output": "Service: Knowledge"
+      },
+      {
+        "input": "They had problem to find reservation number, so whole process took too long time.",
+        "output": "Service: Orders/Contracts"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 50,
+    "repetition_penalty": 1
+  }
+}

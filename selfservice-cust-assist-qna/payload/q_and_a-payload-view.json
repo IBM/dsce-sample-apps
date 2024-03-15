@@ -1,0 +1,17 @@
+{
+  "model_id": "google/flan-ul2",
+  "data": {
+    "instruction": "Read the following document and answer the following question. If the answer is not in the document then respond \"I don't know\".",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 300,
+    "repetition_penalty": 1
+  }
+}

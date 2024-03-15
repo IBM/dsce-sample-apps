@@ -48,7 +48,7 @@ It is assumed that Python3+ is installed or download from https://www.python.org
 
 4. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
-5. Add .env file to your application folder and add env variable
+5. Add `.env` file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 
@@ -62,7 +62,7 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    WATSONX_API_KEY=<your IBM Cloud API key>
    ```
 
-6. Add value of project_id key to all the payload files which are availalbe under /payload directory
+6. Add value of project_id key to all the payload files availalbe under /payload directory except `*-view.json` files.
 
    ##### Steps to create project_id (skip 6.1 to 6.3 for watsonx trial account)
 

@@ -48,7 +48,7 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
 4. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
-5. Add .env file to your application folder and add env variable
+5. Add `.env` file to your application folder and add env variable
 
    ##### Steps to create IBM Cloud API key
 

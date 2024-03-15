@@ -244,11 +244,10 @@ def get_payloads(text, doc_name):
     payloads = ["q_and_a-payload"]
     
     for label, payload_file, n in zip(labels, payloads, range(len(payloads))):
-        with open('payload/{}.json'.format(payload_file)) as payload_f:
+        with open('payload/{}-view.json'.format(payload_file)) as payload_f:
             payload_f_json = json.load(payload_f)
         file_content = open('documents/{}'.format(doc_name), 'r')
-        payload_f_json['input'] = construct_input(text,file_content.read())
-        payload_f_json['project_id'] = "xxxxx"
+        payload_f_json['data']['input'] = f"{text}\n\n{file_content.read()}\n\n"
         payload_f_json = json.dumps(payload_f_json, indent=2)
         payloads_output.append(
             dbc.Tab([

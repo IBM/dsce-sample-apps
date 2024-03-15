@@ -1,0 +1,40 @@
+{
+  "model_id": "ibm/granite-13b-instruct-v2",
+  "data": {
+    "instruction": "Extract PII entities from the paragraph given",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "I withdrew $100 from the bank in London from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj",
+        "output": "$100: Amount,\nLondon: Location,\n(345) 123-7867: PhoneNumber,\nRaj: Person,\nraj@gmail.com: Email"
+      },
+      {
+        "input": "I am not able to transact on my card 3572267594198019 since 20th March, 2023. Please check the issue. Thanks, Mary Smith",
+        "output": "Mary Smith: Person,\n3572267594198019: CardNumber,\n20th March, 2023: Date"
+      },
+      {
+        "input": "Please send me the OTP at (123)1234567. Thanks, David",
+        "output": "David: Person,\n(123)1234567: PhoneNumber"
+      },
+      {
+        "input": "I lost my card in London on 1st Jan, 2023. My card number is 3572267594198019.",
+        "output": "London: Location,\n1st Jan, 2023: Date,\n3572267594198019: CardNumber"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 0,
+    "max_new_tokens": 100
+  },
+  "moderations": {
+    "hap": {
+      "input": true,
+      "threshold": 0.5,
+      "output": true
+    }
+  }
+}
