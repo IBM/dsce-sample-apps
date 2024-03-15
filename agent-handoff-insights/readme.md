@@ -1,6 +1,6 @@
 ## Set up and launch application
 
-It is assumed that Python3+ is installed or download from https://www.python.org/downloads/.
+It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 1. Go to the root directory and prepare your python environment.
 
@@ -40,13 +40,13 @@ It is assumed that Python3+ is installed or download from https://www.python.org
    PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
-3. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
-
-4. Install the required libraries.
+3. Install the required libraries.
 
    ```sh
    pip3 install -r requirements.txt
    ```
+
+4. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
 5. Add .env file to your application folder and add env variable
 
