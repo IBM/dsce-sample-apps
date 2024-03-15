@@ -1,0 +1,17 @@
+{
+  "model_id": "ibm/granite-13b-instruct-v2",
+  "data": {
+    "instruction": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  }
+}

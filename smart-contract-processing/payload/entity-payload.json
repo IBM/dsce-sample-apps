@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/mpt-7b-instruct2",
+  "model_id": "meta-llama/llama-2-70b-chat",
   "input": "Extract PII entities from the paragraph given\n\nInput:\nI withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\n\nNamed Entities:\n1. $100: money,\n2. New York: location,\n3. (345) 123-7867: PhoneNumber,\n4. Raj: Person,\n5. raj@gmail.com: Email\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",

@@ -1,0 +1,17 @@
+{
+  "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+  "data": {
+    "instruction": "Read the input and classify overall sentiment into one of the following options: positive, negative, neutral",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  }
+}

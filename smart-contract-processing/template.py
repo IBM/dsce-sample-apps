@@ -231,13 +231,9 @@ def get_payloads(text, examples, instruction):
     payloads = configs_dict['generate_btn_payload_files'].split(',')
     
     for label, payload_file, n in zip(labels, payloads, range(len(payloads))):
-        with open('payload/{}.json'.format(payload_file)) as payload_f:
+        with open('payload/{}-view.json'.format(payload_file)) as payload_f:
             payload_f_json = json.load(payload_f)
-        if(label=="Approval status"):
-            payload_f_json['input'] = instruction + "\n\n" + examples +"\n\n"+ text +"\n"
-        else:
-            payload_f_json['input'] = payload_f_json['input']+text+"\n\nNamed entities:\n"
-        payload_f_json['project_id'] = "xxxxx"
+        payload_f_json['data']['input'] = text
         payload_f_json = json.dumps(payload_f_json, indent=2)
         payloads_output.append(
             dbc.Tab([
@@ -298,7 +294,7 @@ def llm_fn(text, payload_json, type, access_token, label, examples, instruction)
     if(label=="Approval status"):
         payload_json['input'] = instruction + "\n\n" + examples +"\n\n"+ text +"\n"
     else:
-        payload_json['input'] = payload_json['input']+text+"\n\nNamed entities:\n"
+        payload_json['input'] = payload_json['input']+text+"\n\nNamed Entities:\n"
     print("calling LLM",datetime.now())
     response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()
