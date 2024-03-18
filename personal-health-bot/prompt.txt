@@ -1,0 +1,46 @@
+You are a developer writing MySQL queries given natural language questions. The database contains 1 table. The schema of each table with description of the attributes is given. Write the MySQL query given a natural language statement.
+Here is the table :
+
+(1) Database Table Name: patient_history
+Table Schema:
+Column Name # Meaning
+unique_id # primary key of the record
+name # patient name
+metric_name # name of the health indicator in patient report for example 'Hemoglobin','Hematocrit','RBC','WBC','Platelets','Neutrophil','Lymphocyte','Monocyte','Eosinophil','Basophil','Mean Cell Volume','Mean Cell Hemoglobin','Mean Cell Hb Conc','Red Cell Dist Width','Mean Platelet Volume','TSH','RBS'
+metric_value # value of the health indicator in patient report
+min_value # minimum value of the health indicator in patient report
+max_value # maximum value of the health indicator in patient report
+report_date # date the health indicator was recorded
+user_id # patient's user name
+
+Input:
+what is the average hemoglobin level for last 2 months
+
+Output:
+select avg(metric_value) from patient_history where metric_name="Hemoglobin" and report_date > now() - INTERVAL 2 MONTH;
+
+Input:
+show me a trend of my tsh level for last 2 months
+
+Output:
+select report_date, metric_value from patient_history where metric_name="TSH" and report_date > now() - INTERVAL 2 MONTH order by report_date asc;
+
+Input:
+avg hb and tsh level for last 6 month?
+
+Output:
+select metric_name, avg(metric_value) from patient_history where metric_name in ("Hemoglobin", "TSH") and report_date > now() - INTERVAL 6 MONTH group by metric_name;
+
+Input:
+what is my hb and tsh level for last 6 month?
+
+Output:
+select report_date, metric_name, metric_value from patient_history where metric_name in ("Hemoglobin", "TSH") and report_date > now() - INTERVAL 6 MONTH;
+
+Input:
+what are the out of range values and metric name in last 30 days
+
+Output:
+select report_date, metric_name, metric_value from patient_history where (metric_value < min_value or metric_value > max_value) and report_date > now() - INTERVAL 30 DAY;
+
+Input:

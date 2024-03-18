@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Healthcare Backend APIs",
+    "version": "1.0.0",
+    "description": "API documentation for your Express.js app"
+  },
+  "servers": [
+    {
+      "url": "https://dsce-test-ce-wtx-airlines-wa-backend-internal.116gubn6cuvw.us-east.codeengine.appdomain.cloud"
+    }
+  ],
+  "paths": {
+    "/suggest": {
+      "post": {
+        "summary": "Get suggestions on anomalies",
+        "description": "This api will take input anomalised metrics and ask to LLM for suggestions.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Alerts": {
+                    "type": "array",
+                    "description": "An array of alerts.",
+                    "example": ["Hemoglobin", "RBS"]
+                  }
+                },
+                "required": ["Alerts"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "The answer to your question is..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid input data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request format"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "An unexpected error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gensql": {
+      "post": {
+        "summary": "Generate SQL from NL",
+        "description": "This api will take input user query and ask to LLM for SQL.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "description": "User's question on the report.",
+                    "example": "What is my result..."
+                  }
+                },
+                "required": ["question"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "The answer to your question is..."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid input data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid request format"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "An unexpected error occurred"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}
