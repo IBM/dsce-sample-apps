@@ -1,4 +1,4 @@
-# Personal health bot application
+# Customer care portal application
 
 ## Pre-requisites
 
