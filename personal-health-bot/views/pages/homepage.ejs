@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>Healthcare portal</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+
+    <script type="text/javascript" src="javascript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/ui-shell.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/modal.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/button.min.js"
+    ></script>
+
+    <script>
+      function openSqlModal() {
+        document.getElementById("sql-modal").open = true;
+        document.getElementById("sql-modal").style.visibility = "visible";
+      }
+
+      function closeSqlModal() {
+        document.getElementById("sql-modal").open = false;
+        document.getElementById("sql-modal").style.visibility = "hidden";
+      }
+    </script>
+  </head>
+  <body onload="setUpChatbot();">
+    <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
+      <cds-header-name>
+        Healthcare portal
+      </cds-header-name>
+
+      <div class="cds--header__global">
+        <cds-header-menu menu-label="Settings" trigger-content="Settings">
+          <cds-header-menu-item id="show-sql-modal" onclick="openSqlModal();"
+            >Recent generated SQL</cds-header-menu-item
+          >
+        </cds-header-menu>
+        <div class="username-text">
+          <i class="bi bi-person-circle"></i>
+          <p>Welcome <b>John</b></p>
+        </div>
+      </div>
+    </cds-header>
+
+    <cds-modal
+      class="cds-theme-zone-white"
+      id="sql-modal"
+      style="
+        visibility: hidden;
+        display: flex;
+        justify-content: left;
+        padding-left: 28px;
+      "
+      prevent-close-on-click-outside="true"
+    >
+      <cds-modal-header>
+        <cds-modal-close-button
+          onclick="closeSqlModal();"
+        ></cds-modal-close-button>
+        <cds-modal-heading>Generated SQL</cds-modal-heading>
+      </cds-modal-header>
+      <cds-modal-body
+        ><p id="sql">Generated SQL will be displayed here</p></cds-modal-body
+      >
+    </cds-modal>
+    <img src="/background-healthcare.png" style="width: 100%;"></img>
+    <input
+      id="wa_integration_id"
+      style="display: none"
+      value="<%= wa_integration_id %>"
+    />
+    <input id="wa_region" style="display: none" value="<%= wa_region %>" />
+    <input
+      id="wa_service_instance_id"
+      style="display: none"
+      value="<%= wa_service_instance_id %>"
+    />
+    <footer class="cds-theme-zone-g100 footer"></footer>
+  </body>
+</html>

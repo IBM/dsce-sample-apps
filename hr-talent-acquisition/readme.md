@@ -22,7 +22,7 @@
 
 ## Set up and launch application
 
-1. Create MySQL table and insert data into it. Find the queries in `sql/db_scripts.sql` file.
+1. Create MySQL table and load data into it using `sql/db_scripts.sql` file.
 
 2. Go to the root directory and prepare your python environment.
 
