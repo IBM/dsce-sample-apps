@@ -1,7 +1,7 @@
 window.watsonAssistantChatOptions = {
-  integrationID: "2d2e9b3f-c146-436d-9aeb-44c6aa23431a", // The ID of this integration.
-  region: "us-south", // The region your integration is hosted in.
-  serviceInstanceID: "732f341e-d93c-4241-bc6f-2f29658395b6", // The ID of your service instance.
+  integrationID: "", // The ID of this integration.
+  region: "", // The region your integration is hosted in.
+  serviceInstanceID: "", // The ID of your service instance.
   showRestartButton: true,
   onLoad: function (instance) {
     instance.render();

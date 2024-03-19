@@ -12,7 +12,7 @@
    - 1.4 Follow steps **Create New > provide Assistant name > Create assistant**
    - 1.5 In this repo, we have provided `customer-care-prtl-WA.zip` file which will be used in next step.
    - 1.6 From left hand side panel, go to **Assistant settings > Download/Upload files > Upload > upload the customer-care-prtl-WA.zip > Upload and replace**
-   - 1.7 Once upload is complete, the watsonx Assistant is ready & you can find actions & dialogs under left hand side panel **Actions > Set by assistant > Created by you** and **Dialog > Dialog**
+   - 1.7 Once upload is complete, the watsonx Assistant is ready & you can find actions & dialogs under left hand side panel **Actions > Created by you** and **Dialog > Dialog**
    - 1.8 Turn off default Home screen. Go to left hand side panel **Environments > Draft > Web chat > Home screen** and turn off the toggle button. Click Save and exit button.
    - 1.9 Note down the assistant keys `integrationID`, `region` & `serviceInstanceID`, which will be used in setting the Environment file in next section. Go to left hand side panel **Environments > Draft > Web chat > Embed**
 
