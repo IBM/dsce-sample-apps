@@ -22,7 +22,7 @@
 
 1. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
-2. Add watson assistant's `integrationID`, `region` & `serviceInstanceID ` in the `scripts/watson_assistant.js` file.
+2. Add watson assistant's `integrationID`, `region` & `serviceInstanceID` in the `scripts/watson_assistant.js` file.
 
 3. Add extension to watsonx Assistant
 
@@ -66,6 +66,6 @@
    ##### Steps to add project id
 
    - From watsonx Assistant left hand side select **Actions > Create by you**
-   - Repeat this step for **all 3 actions**, go inside an action > Select step 1 of Conversation steps from left side > scroll down and click on Edit extension > add project id to `project_id` key.
+   - Repeat this step for **all 3 actions**, go inside an action > select step 1 of `Conversation steps` from left side > scroll down and click on `Edit extension` > add project id to `project_id` key.
 
 6. To run the app, open `index.html` file directly in the browser.
