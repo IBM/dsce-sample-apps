@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Customer care portal</title>
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+  </head>
+  <script
+    type="module"
+    src="https://1.www.s81c.com/common/carbon/web-components/tag/v2/latest/button.min.js"
+  ></script>
+  <script
+    type="module"
+    src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/ui-shell.min.js"
+  ></script>
+<script>
+  function toggleSideNav(){
+    if(document.getElementById("side-nav").checkVisibility())
+    {
+      document.getElementById("side-nav").style.display="none"
+    }
+    else{
+      document.getElementById("side-nav").style.display="block"
+    }
+  }
+</script>
+  <body>
+    <div class="wrapper">
+      <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
+      <cds-header-menu-button
+        button-label-active="Close menu"
+        button-label-inactive="Open menu">
+      </cds-header-menu-button>
+        <cds-header-name> 
+          Customer care portal
+        </cds-header-name>
+        <div class="cds--header__global">
+          <cds-header-nav menu-bar-label="Customer care portal">
+            <cds-header-nav-item href="javascript:void 0"
+              ><i class="bi bi-bell"></i
+            ></cds-header-nav-item>
+            <cds-header-nav-item onclick="toggleSideNav()"
+                >History</cds-header-nav-item
+              >
+          </cds-header-nav>
+
+          <div class="username-text">
+            <i class="bi bi-person-circle"></i>
+            <p>Welcome <b>John</b></p>
+          </div>
+        </div>
+    </cds-header>
+
+    <cds-side-nav aria-label="Side navigation" id="side-nav" class="cds-theme-zone-g100">
+      <cds-side-nav-items>
+        <cds-side-nav-link href="javascript:void(0)" active>Sara &nbsp;&nbsp; [9:01am 10 Sep]</cds-side-nav-link>
+        <cds-side-nav-link href="javascript:void(0)">Jason [2:10pm 08 Sep]</cds-side-nav-link>
+      </cds-side-nav-items>
+    </cds-side-nav>
+
+      <div class="main-container">
+        <img src="background.png" id="background" style="height: 89%;width: 100%;object-fit: fill;">
+        <div id="wa-output">
+          <div id="wa-output-summ-title"></div>
+          <div id="wa-output-summ"></div>
+          <div id="wa-output-sentiment-title"></div>
+          <div id="wa-output-sentiment"></div>
+          <div id="wa-output-entities-title"></div>
+          <div id="wa-output-entities"></div>
+        </div>
+        <cds-button href="https://aedcbf8495.dsceapp.buildlab.cloud/" target="_blank" id="link-out-btn"> Agent assist </cds-button>
+      </div>
+    </div>
+      <script src="scripts/watson_assistant.js"></script>
+      <footer class="cds-theme-zone-g100 footer">
+          This App is built using watsonx. Please note that this content is made
+          available to foster Embedded AI technology adoption. The content may
+          include systems & methods pending patent with USPTO and protected
+          under US Patent Laws. Copyright - 2022 IBM Corporation
+      </footer>
+    </div>
+  </body>
+</html>
