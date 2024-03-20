@@ -66,6 +66,6 @@
    ##### Steps to add project id
 
    - From watsonx Assistant left hand side select **Actions > Create by you**
-   - Repeat this step for **all 3 actions**, go inside an action > select step 1 of `Conversation steps` from left side > scroll down and click on `Edit extension` > add project id to `project_id` key.
+   - Go inside the first action > select step 1 of `Conversation steps` from left side > scroll down to end and click on `Edit extension` > add project id to `project_id` key. Follow this step for all the 3 actions.
 
 6. To run the app, open `index.html` file directly in the browser.
