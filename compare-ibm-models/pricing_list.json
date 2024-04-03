@@ -1,0 +1,16 @@
+{
+  "bigcode/starcoder": 0.0018,
+  "bigscience/mt0-xxl": 0.0018,
+  "codellama/codellama-34b-instruct-hf": 0.0018,
+  "google/flan-t5-xl": 0.0006,
+  "google/flan-t5-xxl": 0.0018,
+  "google/flan-ul2": 0.005,
+  "ibm-mistralai/mixtral-8x7b-instruct-v01-q": 0.0006,
+  "ibm/granite-13b-chat-v1": 0.0006,
+  "ibm/granite-13b-chat-v2": 0.0006,
+  "ibm/granite-13b-instruct-v1": 0.0006,
+  "ibm/granite-13b-instruct-v2": 0.0006,
+  "ibm/granite-20b-multilingual": 0.0006,
+  "meta-llama/llama-2-13b-chat": 0.0006,
+  "meta-llama/llama-2-70b-chat": 0.0018
+}
