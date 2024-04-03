@@ -386,7 +386,7 @@ def generateOutput(n, text, selected_app_index):
                             # html.Br(), 
                             resp,
                             ], className="output-div"), 
-            html.Div(children=[html.Span(f"Tokens consumed: {total_token} | *Cost per 1,000 API calls: ${cost} | Response time: {api_resp_time}s", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")],id="api-info-btm", className="api-info-btm")], [html.Div(
+            html.Div(children=[html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: ${cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")],id="api-info-btm", className="api-info-btm")], [html.Div(
             [
             html.Div(children=[html.H5(label), 
                                 html.Div(children=
@@ -420,7 +420,7 @@ def model_change(model, selected_app_index, text):
     type = call["type"]
     payload["model_id"] = model
     resp, total_token, cost, api_resp_time = llm_fn(text, payload, type, access_token)
-    return [resp], [html.Span(f"Tokens consumed: {total_token} | *Cost per 1,000 API calls: ${cost} | Response time: {api_resp_time}s", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")]
+    return [resp], [html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: ${cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")]
 
 @app.callback(
     Output("div-part-b-res", "children", allow_duplicate=True),
