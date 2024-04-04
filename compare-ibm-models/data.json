@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Conversation summary",
+    "llm_calls": [
+      {
+        "call": "Summary",
+        "payload": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "input": "Summarise the following paragraph in 2 sentences\n\nInput:\nAgent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com\n\nOutput:\nThe Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address. \n\nInput:\nOn XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court\n\nOutput:\nI viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law.\n\nInput:\nCash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.\n\nOutput:\nA debt has been incorrectly put in my credit report and this has been done multiple times.\n\nInput:\nI have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.\n\nOutput:\nI applied for a home loan and a late payment on a previous loan is incorrectly  there in my credit report.\n\nInput:\n",
+          "parameters": {
+            "decoding_method": "greedy",
+            "max_new_tokens": 300,
+            "min_new_tokens": 40,
+            "stop_sequences": [],
+            "repetition_penalty": 1
+          },
+          "project_id": ""
+        },
+        "payload-view": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "data": {
+            "instruction": "Summarise the following paragraph in 2 sentences",
+            "input": "",
+            "input_prefix": "Input:",
+            "output_prefix": "Output:",
+            "examples": [
+              {
+                "input": "Agent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com",
+                "output": "The Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address."
+              },
+              {
+                "input": "On XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court",
+                "output": "I viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law."
+              },
+              {
+                "input": "Cash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.",
+                "output": "A debt has been incorrectly put in my credit report and this has been done multiple times."
+              },
+              {
+                "input": "I have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.",
+                "output": "I applied for a home loan and a late payment on a previous loan is incorrectly  there in my credit report."
+              }
+            ]
+          },
+          "parameters": {
+            "decoding_method": "greedy",
+            "stop_sequences": [],
+            "min_new_tokens": 40,
+            "max_new_tokens": 300
+          },
+          "moderations": {
+            "hap": {
+              "input": true,
+              "threshold": 0.75,
+              "output": true
+            }
+          }
+        },
+        "type": "text",
+        "model_1": "ibm/granite-13b-chat-v2",
+        "model_2": "meta-llama/llama-2-70b-chat",
+        "button_text": "Generate summary"
+      }
+    ],
+    "input_text": "Agent: Hi there, this is Mary Clare with G2. How’s it going today?\nClient: Hi Mary \nAgent: Currently, G2 is working on a new solution to help companies sell more software to their target audiences. Is that something that you would want more information on?\nClient: You can tell me more\nAgent: We have two different approaches to doing this. We either use buyer intent data to identify people who are viewing your profile on G2, or we sell our seasonal reports to businesses so they can use reviews to appeal to potential customers. Which one of those solutions interests you the most?\nClient: Seasonal reports sound like a good idea\nAgent: Great. Can I ask you a few questions before we move forward?\nClient: Sure\nAgent: Which industry segment is of most interest to you ?\nClient: Financial sector\nAgent: I’ll tell you more about the solution, and then we can make an appointment to explore your options before we wrap up today. Does that sound good?”\nClient: Sure. You can send me an email with details.\nAgent: Can you please share your email address ?\nClient: user@abccorp.com"
+  },
+  {
+    "name": "Conversation sentiment",
+    "llm_calls": [
+      {
+        "call": "Caller sentiment",
+        "payload": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "input": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\n",
+          "parameters": {
+            "decoding_method": "greedy",
+            "max_new_tokens": 2,
+            "min_new_tokens": 1,
+            "stop_sequences": [],
+            "repetition_penalty": 1
+          },
+          "project_id": ""
+        },
+        "payload-view": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "data": {
+            "instruction": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\n",
+            "input": "",
+            "input_prefix": "Input:",
+            "output_prefix": "Output:",
+            "examples": []
+          },
+          "parameters": {
+            "decoding_method": "greedy",
+            "stop_sequences": [],
+            "repetition_penalty": 1,
+            "min_new_tokens": 1,
+            "max_new_tokens": 2
+          },
+          "moderations": {
+            "hap": {
+              "input": true,
+              "threshold": 0.75,
+              "output": true
+            }
+          }
+        },
+        "type": "text",
+        "model_1": "ibm/granite-13b-chat-v2",
+        "model_2": "meta-llama/llama-2-70b-chat",
+        "button_text": "Generate sentiment"
+      }
+    ],
+    "input_text": "Virtual agent: Welcome, how can I assist you?\nCaller: transfer funds\nVirtual agent: Before we can transfer any funds, please confirm where you'd like to transfer funds from.\nChecking accountSavings account\nCaller: Checking account\nVirtual agent: Okay! How much would you like to transfer?\nCaller: what is my account balance\nVirtual agent: To check your account balance, please provide your email address\nCaller: test@ibm.com\nVirtual agent: Great. What is your data of birth?\nCaller: 24-Nov-1983\nVirtual agent: One moment while I retrieve your records.\nVirtual agent: Your current balance is one hundred dollars\nVirtual agent: Okay! How much would you like to transfer?\nCaller: 50$\nVirtual agent: Alright. When would you like to make the transfer?\nCaller: today\nVirtual agent: Thanks. Please enter your four-digit authentication or PIN code\nCaller: 1234\nVirtual agent: Great, I found you in our system! Provide the last four digits of your account to transfer to.\nCaller: 5678\nVirtual agent: Sounds good. Just to confirm - you'd like to transfer 50.00 dollars from your checking account into account ending with5678 on Jun 28, 2023.\nIs that correct?\nCaller: yes\nVirtual agent: Great! Let me process this for you.\nVirtual agent: You will receive a confirmation email in the next 2-3 minutes once the transfer is complete.\nIs there anything else that I can help you with?\nCaller: no thanks\nVirtual agent: Have a good day!"
+  },
+  {
+    "name": "Email topic classification",
+    "llm_calls": [
+      {
+        "call": "Topic",
+        "payload": {
+          "model_id": "ibm/granite-13b-instruct-v2",
+          "input": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates\\n\\nInput:\\n",
+          "parameters": {
+            "decoding_method": "greedy",
+            "max_new_tokens": 100,
+            "min_new_tokens": 1,
+            "stop_sequences": [],
+            "repetition_penalty": 1
+          },
+          "project_id": ""
+        },
+        "payload-view": {
+          "model_id": "ibm/granite-13b-instruct-v2",
+          "data": {
+            "instruction": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates",
+            "input": "",
+            "input_prefix": "Input:",
+            "output_prefix": "Output:",
+            "examples": []
+          },
+          "parameters": {
+            "decoding_method": "greedy",
+            "stop_sequences": [],
+            "repetition_penalty": 1,
+            "min_new_tokens": 1,
+            "max_new_tokens": 100
+          },
+          "moderations": {
+            "hap": {
+              "input": true,
+              "threshold": 0.75,
+              "output": true
+            }
+          }
+        },
+        "type": "text",
+        "model_1": "ibm/granite-13b-instruct-v2",
+        "model_2": "meta-llama/llama-2-70b-chat",
+        "button_text": "Extract email topic"
+      }
+    ],
+    "input_text": "Hi Leslie, \nYes, once the final deliverable is determined, we will share it with Ravi. However, Milestone 1 is not going to be our Beta release deliverable. We are still implementing the new APIs we want to have for Beta. So, I am guessing this is just to get Ravi started with product runtime container? We expect it will change a lot in next few weeks.\n\nBest Regards,\nKrista\n\nHi Krista and Scott, I understand we have very minor work left for milestone 1 features. Could you please share the final milestone 1 containers with Ravi so that he can build the beta/demo/preview environment for us? We’re doing it this way instead of a regular beta. Thanks! Ravi,  moving forward shall we have a weekly chat to touch base?\n\nLeslie C. Chen\nSr. Product Manager, The AI Company\nEmail: l.chen@theaico.com"
+  },
+  {
+    "name": "Conversation entities",
+    "llm_calls": [
+      {
+        "call": "Key entities",
+        "payload": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "input": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.\n\nInput:\nCustomer: I want to know more about coverage and benefits of insurance policies you offer.\n\nAgent: We provide coverage for OPD, surgeries, and other services.\n\nCustomer: Can I renew online ?\n\nAgent: Yes you can.\n\nCustomer: Which hospitals are there in my zip code  560067?\n\nAgent: We have a network hospital in Aster General Hospital for cashless option.\n\nCustomer: What is the claim process?\n\nAgent: You need to inform Mayfair Insurance Company within 1 week of hospitalisation for claims.\n\nOutput:\n1. area: 560067\n2. hospital: Aster General Hospital\n3. insurance company: Mayfair Insurance Company\n\nInput:\nCustomer: What insurance policies you do you offer.\n\nAgent: We provide various policies that cover OPD, surgeries, medicines and various home medical services.\n\nCustomer: What is your renewal process ?\n\nAgent: You can renew online on our website.\n\nCustomer: Do you have any hospitals in the Sommerville area  ?\n\nAgent: Sure! You can avail services at Sequoia Medical Center which will provide  cashless option.\n\nCustomer: How do I claim at other non-network hospitals ?\n\nAgent: You need to inform AllState Insurance Company within a week of hospitalisation for claim processing\n\nOutput:\n1. area: Sommerville\n2. hospital: Sequoia Medical Center\n3. insurance company: AllState Insurance Company\n\nInput:\n",
+          "parameters": {
+            "decoding_method": "greedy",
+            "max_new_tokens": 100,
+            "min_new_tokens": 1,
+            "stop_sequences": [],
+            "repetition_penalty": 1
+          },
+          "project_id": ""
+        },
+        "payload-view": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "data": {
+            "instruction": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.",
+            "input": "",
+            "input_prefix": "Input:",
+            "output_prefix": "Output:",
+            "examples": [
+              {
+                "input": "Customer: I want to know more about coverage and benefits of insurance policies you offer.\n\nAgent: We provide coverage for OPD, surgeries, and other services.\n\nCustomer: Can I renew online ?\n\nAgent: Yes you can.\n\nCustomer: Which hospitals are there in my zip code  560067?\n\nAgent: We have a network hospital in Aster General Hospital for cashless option.\n\nCustomer: What is the claim process?\n\nAgent: You need to inform Mayfair Insurance Company within 1 week of hospitalisation for claims.",
+                "output": "1. area: 560067\n2. hospital: Aster General Hospital\n3. insurance company: Mayfair Insurance Company"
+              },
+              {
+                "input": "Customer: What insurance policies you do you offer.\n\nAgent: We provide various policies that cover OPD, surgeries, medicines and various home medical services.\n\nCustomer: What is your renewal process ?\n\nAgent: You can renew online on our website.\n\nCustomer: Do you have any hospitals in the Sommerville area  ?\n\nAgent: Sure! You can avail services at Sequoia Medical Center which will provide  cashless option.\n\nCustomer: How do I claim at other non-network hospitals ?\n\nAgent: You need to inform AllState Insurance Company within a week of hospitalisation for claim processing",
+                "output": "1. area: Sommerville\n2. hospital: Sequoia Medical Center\n3. insurance company: AllState Insurance Company"
+              }
+            ]
+          },
+          "parameters": {
+            "decoding_method": "greedy",
+            "stop_sequences": [],
+            "repetition_penalty": 1,
+            "min_new_tokens": 1,
+            "max_new_tokens": 100
+          },
+          "moderations": {
+            "hap": {
+              "input": true,
+              "threshold": 0.75,
+              "output": true
+            }
+          }
+        },
+        "type": "markdown",
+        "model_1": "ibm/granite-13b-chat-v2",
+        "model_2": "meta-llama/llama-2-70b-chat",
+        "button_text": "Generate entities"
+      }
+    ],
+    "input_text": "Customer: Hello, I'm interested in learning more about the insurance policy you offer. Could you please tell me about the coverage and benefits it provides?\n\nAgent: Of course! Our policy provides coverage for inpatient hospitalization, which means it covers medical expenses incurred during your stay in a hospital. This includes treatments, surgeries, and other necessary medical services.\n\nCustomer: That sounds good. Now, is there a copayment involved in this policy?\n\nAgent: Yes, there is a copayment requirement. A copayment is a fixed amount that you would need to pay out of pocket for each medical service or treatment covered by the policy. The specific copayment amount will be mentioned in your policy documents.\n\nCustomer: I see. One more thing, does this policy cover dental treatment?\n\nAgent: I'm sorry, but dental treatment is not covered under this particular policy. It focuses on inpatient hospitalization expenses only. If you're interested in dental coverage, we can discuss other policy options that might suit your needs.\n\nCustomer: Alright, thanks for clarifying that. Could you tell me about the policy renewal period?\n\nAgent: Certainly! The policy renewal period for this plan is one year. Once the policy term is over, you'll need to renew it to continue enjoying the benefits provided under the policy.\n\nCustomer: That's clear. Now, let's say I need to make a claim. What are the steps involved in processing a claim?\n\nAgent: If you need to make a claim, it's important to notify AllBright Insurance Company within one week of hospitalization or treatment. You can contact our claims department, and they will guide you through the claim submission process. You'll need to provide relevant medical documents and invoices for the expenses incurred during the treatment.\n\nCustomer: Got it, I'll keep that in mind. Also, I live in the 77001 area. Can you tell me which hospitals are part of your network in that area?\n\nAgent: Certainly! In the 77001 area, we have TEXAS HEALTHCARE CENTER as one of the network hospitals where you can avail cashless treatment as per the terms of your policy.\n\nCustomer: That's great to know. One last question, does this policy cover international hospitalization?\n\nAgent: I'm afraid not. This policy provides coverage only for inpatient hospitalization within the country. If you require coverage for international hospitalization, we can explore other insurance options that cater to such needs.\n\nCustomer: I understand. Thank you for all the information. If I decide to get this policy but later change my mind, can I terminate it if required?\n\nAgent: Yes, you can certainly terminate the policy if required. However, it's essential to review the policy documents for specific details about the termination process and any applicable terms or conditions.\n\nCustomer: Okay, I'll make sure to check that. Thank you for your help and for answering all my questions.\n\nAgent: You're welcome! If you have any more questions or need further assistance, feel free to reach out at any time. We're here to help you make the best decision for your insurance needs."
+  },
+  {
+    "name": "Marketing content generation",
+    "llm_calls": [
+      {
+        "call": "Marketing brief",
+        "payload": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "input": "Generate a marketing campaign brief for a product manager based on the following information. Write in a concise and professional tone.\n\nInput:\nCompany - Timbers\nFeature - Marathon\nProduct Info - Timbers running shoes are designed for serious marathon runners who demand top notch performance, comfort and style. The campaign will have a modern, slick, and aspirational feel.\nkick-off date - 11th July 2023 2:30 PM\\nTarget audience - 25-40 age limits\nSales Objective - 20% increase in the next six months\nCreativity - high-quality images, bold typography and vibrant colors\n\nOutput:\n- Objective:\nIncrease sales of Timbers running shoes among marathon runners by 20% in the next six months\n\n- Target audience:\nMarathon runners aged 25-40 who prioritise performance, comfort and style in their running shoes. They are active on social media and follow fitness influencers\n\n- Key message:\nTimbers running shoes are designed for serious runners who demand top notch performance, comfort and style. Our shoes feature cutting-edge technology and cushioning that will help you go the distance and look good doing it.\n\n- Creative direction:\nThe campaign will have a modern, slick, and aspirational feel. We will use high-quality images of runners in action, showcasing the features of our shoes. We will use bold typography and vibrant colors to communicate energy and excitement.\n\nInput:\nCompany - Luma\nFeature - Summer Collection\nProduct Info - Lumas shirts are designed for fashionable mens who likes top notch comfort and style. The campaign will have a modern, and aspirational feel.\nkick-off date - 14th July 2023 2:30 PM\\nTarget audience - 35-55 age limits\nSales Objective - 15% increase in the next three months\nCreativity - high resolution images, and bright colors\n\nOutput:\n- Objective:\nIncrease sales of Lumas shirts among mens by 15% in the next three months\n\n- Target audience:\nProfessional Mens aged 35-55 who prioritise fashion, comfort, and style in their summer collection shirts. They are active on social media and follow fashion influencers\n\n- Key message:\nLumas shirts are designed for fashionable mens who likes top notch comfort and style. Our shirts features modern style, fashion andcomfort that will help you enjoy the summer with style\n\n- Creative direction:\nThe campaign will have a modern, and aspirational feel. We will use high-resolution images of mens in action, showcasing the features of our shirts. We will use bright colors to communicate energy and excitement.\n\nInput:\n",
+          "parameters": {
+            "decoding_method": "sample",
+            "max_new_tokens": 500,
+            "min_new_tokens": 50,
+            "random_seed": null,
+            "stop_sequences": ["END.\n", "Input:"],
+            "temperature": 0.7,
+            "top_k": 50,
+            "top_p": 1,
+            "repetition_penalty": 1
+          },
+          "project_id": ""
+        },
+        "payload-view": {
+          "model_id": "ibm/granite-13b-chat-v2",
+          "data": {
+            "instruction": "Generate a marketing campaign brief for a product manager based on the following information. Write in a concise and professional tone.",
+            "input_prefix": "Input:",
+            "output_prefix": "Output:",
+            "examples": [
+              {
+                "input": "Company - Timbers\nFeature - Marathon\nProduct Info - Timbers running shoes are designed for serious marathon runners who demand top notch performance, comfort and style. The campaign will have a modern, slick, and aspirational feel.\nkick-off date - 11th July 2023 2:30 PM\\nTarget audience - 25-40 age limits\nSales Objective - 20% increase in the next six months\nCreativity - high-quality images, bold typography and vibrant colors",
+                "output": "- Objective:\nIncrease sales of Timbers running shoes among marathon runners by 20% in the next six months\n\n- Target audience:\nMarathon runners aged 25-40 who prioritise performance, comfort and style in their running shoes. They are active on social media and follow fitness influencers\n\n- Key message:\nTimbers running shoes are designed for serious runners who demand top notch performance, comfort and style. Our shoes feature cutting-edge technology and cushioning that will help you go the distance and look good doing it.\n\n- Creative direction:\nThe campaign will have a modern, slick, and aspirational feel. We will use high-quality images of runners in action, showcasing the features of our shoes. We will use bold typography and vibrant colors to communicate energy and excitement."
+              },
+              {
+                "input": "Company - Luma\nFeature - Summer Collection\nProduct Info - Lumas shirts are designed for fashionable mens who likes top notch comfort and style. The campaign will have a modern, and aspirational feel.\nkick-off date - 14th July 2023 2:30 PM\\nTarget audience - 35-55 age limits\nSales Objective - 15% increase in the next three months\nCreativity - high resolution images, and bright colors",
+                "output": "- Objective:\nIncrease sales of Lumas shirts among mens by 15% in the next three months\n\n- Target audience:\nProfessional Mens aged 35-55 who prioritise fashion, comfort, and style in their summer collection shirts. They are active on social media and follow fashion influencers\n\n- Key message:\nLumas shirts are designed for fashionable mens who likes top notch comfort and style. Our shirts features modern style, fashion andcomfort that will help you enjoy the summer with style\n\n- Creative direction:\nThe campaign will have a modern, and aspirational feel. We will use high-resolution images of mens in action, showcasing the features of our shirts. We will use bright colors to communicate energy and excitement."
+              }
+            ]
+          },
+          "input": "",
+          "parameters": {
+            "decoding_method": "sample",
+            "stop_sequences": ["END.\n", "Input:"],
+            "min_new_tokens": 50,
+            "max_new_tokens": 500,
+            "random_seed": null,
+            "temperature": 0.7,
+            "top_k": 50,
+            "top_p": 1,
+            "repetition_penalty": 1
+          }
+        },
+        "type": "markdown",
+        "model_1": "ibm/granite-13b-chat-v2",
+        "model_2": "meta-llama/llama-2-70b-chat",
+        "button_text": "Generate brief"
+      }
+    ],
+    "input_text": "Company - Lyka\nFeature - Sprint 2.0\nProduct Info - Lykas running shoes are designed for sprint runners who demand top notch performance, speed, comfort and style.  The campaign will have a modern, slick, and aspirational feel.\nkick-off date - 11th July 2023 2:30 PM\nTarget audience - 20-40 age limits\nSales Objective - 30% increase in the next two months\nCreativity - high-quality images, bold typography and bright colors"
+  }
+]
