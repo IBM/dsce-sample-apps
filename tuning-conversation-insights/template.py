@@ -110,7 +110,7 @@ user_input = dbc.InputGroup([
 )
 
 generate_button = dbc.Button(
-    configs_dict['generate_btn_text'], id="generate-button", outline=True, color="primary", n_clicks=0, className="carbon-btn",style={"overflow": "hidden","whiteSpace": "nowrap","display": "block","textOverflow": "ellipsis"}
+    configs_dict['generate_btn_text'], id="generate-button", color="primary", n_clicks=0, className="carbon-btn",style={"overflow": "hidden","whiteSpace": "nowrap","display": "block","textOverflow": "ellipsis"}
 )
 
 upload_button = dcc.Upload(id="upload-data", className="upload-data",

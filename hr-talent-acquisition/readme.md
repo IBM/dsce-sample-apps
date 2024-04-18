@@ -10,7 +10,7 @@
    - 1.2 Fill up the necessary details and click **Create** to create an instance.
    - 1.3 Once instance is created, go to the insatance & click **Launch watsonx Assistant**
    - 1.4 Follow steps **Create New > provide Assistant name > Create assistant**
-   - 1.5 In this repo, we have provided `hr-telant-WA.zip` file which will be used in next step.
+   - 1.5 In this repo, we have provided `hr-talent-WA.zip` file which will be used in next step.
    - 1.6 From left hand side panel, go to **Assistant settings > Download/Upload files > Upload > upload the hr-telant-WA.zip > Upload and replace**
    - 1.7 Once upload is complete, the watsonx Assistant is ready & you can find four default actions under left hand side panel **Actions > Set by assistant > Greet customer & No action matches**
    - 1.8 Turn off default Home screen. Go to left hand side panel **Environments > Draft > Web chat > Home screen** and turn off the toggle button. Click Save and exit button.
