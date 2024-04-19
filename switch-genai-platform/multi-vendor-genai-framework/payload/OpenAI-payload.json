@@ -1,6 +1,6 @@
 [
   {
-    "search_tags": ["s1", "summarization", "sales-conversation"],
+    "search_tags": ["uid-s1", "summarization", "sales-conversation"],
     "ai_task": "summarization",
     "payload": {
       "model": "gpt-3.5-turbo-instruct",
@@ -10,7 +10,7 @@
     }
   },
   {
-    "search_tags": ["e1", "entity-extraction", "sales-conversation"],
+    "search_tags": ["uid-e1", "entity-extraction", "sales-conversation"],
     "ai_task": "entity-extraction",
     "payload": {
       "model": "gpt-3.5-turbo-instruct",

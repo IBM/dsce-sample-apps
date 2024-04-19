@@ -71,15 +71,26 @@
 
    **Steps to create IBM Cloud API key**
 
-   - 5.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
-   - 5.2 Click **Create an IBM Cloud API key**
-   - 5.3 Enter a name and description for your API key
-   - 5.4 Click **Create**
-   - 5.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+   - 5.1.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
+   - 5.1.2 Click **Create an IBM Cloud API key**
+   - 5.1.3 Enter a name and description for your API key
+   - 5.1.4 Click **Create**
+   - 5.1.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
+
+   **Steps to create project_id (skip 5.2.1 to 5.2.3 for watsonx trial account)**
+
+   - 5.2.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
+   - 5.2.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
+   - 5.2.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
+   - 5.2.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 5.2.5 Click on **Manage** tab > Copy the **Project ID** from **General**
 
    ```sh
-   WATSONX_API_KEY=<your IBM Cloud API key>
-   WML_SERVER_URL=https://us-south.ml.cloud.ibm.com
+   # watsonx.ai api server url
+   SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+   WATSONX_PROJECT_ID = <your watsonx.ai project_id>
+   WATSONX_API_KEY = <your IBM Cloud API key>
+   WML_SERVER_URL = https://us-south.ml.cloud.ibm.com
 
    # True/False. To enable/disable user to allow any file to be uploaded.
    FILE_LOCK_ENABLED = True
@@ -89,8 +100,8 @@
    WAREGION = <your watsonx Assitant region>
    WASERVICEINSTANCEID = <your watsonx Assitant service instance id>
 
-   # watsonx.ai api server url
-   SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29
+   FOUNDATION_MODELS_URL = https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2024-04-01
+   APIAUTHCODE=<generate a new uuid for api call authorization>
 
    # MySQL database connection details
    DB_HOST = <MySQL server hostname>
@@ -100,21 +111,13 @@
    DB_PASS = <base64 encoded password>
    ```
 
-6. Add value of `project_id` key of your watsonx.ai instance to the `payload/*.json` files.
+   > Reference Online uuid generator tool : <https://www.uuidgenerator.net>
 
-   ##### Steps to create project_id (skip 6.1 to 6.3 for watsonx trial account)
+6. Source document is available in the `/static/default-files` folder. These files are hashed via the function `hash_file()` inorder to restrict user to upload just these specific files. Change this logic as per your requirement in `mt_rag.py`.
 
-   - 6.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
-   - 6.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 6.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
-   - 6.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
-   - 6.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+7. `/prompts` folder holds default prompts for all ai tasks. One can modify these default prompts.
 
-7. Source document is available in the `/static/default-files` folder. These files are hashed via the function `hash_file()` inorder to restrict user to upload just these specific files. Change this logic as per your requirement in `mt_rag.py`.
-
-8. `/prompts` folder holds default prompts for all ai tasks. One can modify these default prompts.
-
-9. Run the application.
+8. Run the application.
 
    ```sh
    python3 mt_rag.py

@@ -1,5 +1,6 @@
-import os, requests, json, time, copy
+import os, requests, json, time, copy, jmespath, re
 from flask import g
+from functools import reduce
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from datetime import datetime
 from core.payloadParser import parsePayload, defaultExampleParser, defaultInstructionParser
@@ -40,6 +41,17 @@ def find_providers(aiTask):
 	if aiTask == 'all':
 		return provider_task_master["task_wise_providers"]
 	return {aiTask: provider_task_master["task_wise_providers"].get(aiTask)}
+
+# List all search tags based on provider and aiTask.
+def find_search_tags(provider, aiTask):
+	providerFullConfigFile = provider_json_master[provider]
+	providerFullConfigFileCopy = copy.deepcopy(providerFullConfigFile)
+
+	result = jmespath.search(f"[?ai_task == '{aiTask}'].search_tags", providerFullConfigFileCopy)
+	tags = list(set(reduce(lambda x,y: x+y, result)))
+	tags = list(filter(lambda t: not re.match('^uid-', t), tags))
+	tags.sort()
+	return tags
 
 # Search examples from payload based on the search criteria.
 # This method uses 'defaultExampleParser' to parse payload and extract example string.

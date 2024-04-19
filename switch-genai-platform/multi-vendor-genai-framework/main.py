@@ -21,6 +21,26 @@ def get_providers(aiTask):
 
     return find_providers(aiTask)
 
+# Get all tags based on provider and aiTask
+# Sample request body :
+# {
+#    "provider": "",
+#    "aiTask": ""
+# }
+@app.route('/get-tags', methods=["POST"])
+def get_search_tags():
+
+    # Authorize request
+    auth_code = request.headers.get('APIAUTHCODE')
+    if(not isVerified(auth_code)):
+        return Response("Forbidden", status=403)
+
+    body = request.json
+    providerName = body.get("provider")
+    aiTask = body.get("aiTask")
+
+    return find_search_tags(providerName, aiTask)
+
 # Get examples from the payload
 # Sample request body :
 # {

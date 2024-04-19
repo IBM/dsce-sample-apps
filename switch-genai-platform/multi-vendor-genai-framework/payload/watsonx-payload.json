@@ -1,10 +1,10 @@
 [
   {
     "search_tags": [
-      "s1",
+      "uid-s1",
       "summarization",
       "sales-conversation",
-      "granite-chat-v2"
+      "granite-13b-chat-v2"
     ],
     "ai_task": "summarization",
     "payload": {
@@ -17,12 +17,18 @@
         "stop_sequences": [],
         "repetition_penalty": 1
       },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
       "project_id": "taken from providers.json, but do not remove this key."
     }
   },
   {
     "search_tags": [
-      "s2",
+      "uid-s2",
       "summarization",
       "sales-conversation",
       "granite-instruct-v2"
@@ -38,12 +44,18 @@
         "stop_sequences": [],
         "repetition_penalty": 1
       },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
       "project_id": "taken from providers.json, but do not remove this key."
     }
   },
   {
     "search_tags": [
-      "e1",
+      "uid-e1",
       "entity-extraction",
       "sales-conversation",
       "flan-ul2"
@@ -59,7 +71,882 @@
         "stop_sequences": [],
         "repetition_penalty": 1
       },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
       "project_id": "taken from providers.json, but do not remove this key."
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c1",
+      "agent-handoff",
+      "classification",
+      "topic",
+      "seamless-agent-transition",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Read the text and classify into one of the following options: account transfer, credit cards, balance issues\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c2",
+      "agent-handoff",
+      "classification",
+      "caller-sentiment",
+      "seamless-agent-transition",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "Read the input and classify overall sentiment into one of the following options: positive, negative, neutral\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e2",
+      "agent-handoff",
+      "entity-extraction",
+      "pii-entities",
+      "seamless-agent-transition",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Extract PII entities from the conversation given below.\n\nInput:\nSam: How much money to withdraw ?\nMary: 100$ from savings account ending 7865\nSam: What's your email?\nMary: text@gmail.com\nSam: What's the authentication code ?\nMary: 3412\n\nOutput:\n1. 100$: amount; 2. text@gmail.com: email; 3. 3412: pin; 4. 7865: account; 5. savings: account type\n\nInput: Mary: Good morning, how can I help ?\nSam: I want to unlock my account ending with 4567\nMary: Can you verify your email?\nSam: samg@email.com\nMary: What's your date of birth ?\nSam: 13 May 2001\nMary: What's the city in your account address?\nSam: Boston\nMary: What's the auth code ?\nSam: 8907\nMary: Done ! Anything else ?\nSam: No, thank you\n\nOutput:\n1. 4567: account; 2. samg@email.com: email; 3. 13 May 2001: date of birth; 4. Boston: location; 5: 8907: pin\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": ["Input:"],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s3",
+      "agent-handoff",
+      "summarization",
+      "seamless-agent-transition",
+      "flan-ul2"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "google/flan-ul2",
+      "input": "Summarise the following paragraph in 2 sentences\n\nInput:\nAgent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com\n\nOutput:\nThe Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address. \n\nInput:\nOn XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court\n\nOutput:\nI viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law.\n\nInput:\nCash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.\n\nOutput:\nA debt has been incorrectly put in my credit report and this has been done multiple times.\n\nInput:\nI have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.\n\nOutput:\nI applied for a home loan and a late payment on a previous loan is incorrectly there in my credit report.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 300,
+        "min_new_tokens": 50,
+        "stop_sequences": [],
+        "repetition_penalty": 1.5
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c3",
+      "classification",
+      "topic",
+      "email-thread-summarization",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates\\n\\nInput:\\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s4",
+      "summarization",
+      "email-thread-summarization",
+      "flan-ul2"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "google/flan-ul2",
+      "input": "Summarise the following paragraph in 2 sentences\\n\\nInput:\\nHi Josh,\\n\\nI would suggest a 1-hour call which will cover overview of the product features, which Andy can deliver. Please schedule the initial call, keeping in mind east coast time. We will discuss regular connects for feedback and/or queries after the initial meeting.\\n\\nKind regards,\\nPeter Joseph\\nDirector, Product Engineering ABCLabs\\n7th Floor, Block A, Golf Links,\\nBangalore -560021, Karnataka, INDIA\\nMobile: 91-9831117436\\nE-mail: peter@abclabs.com\\n\\nFrom: Josh Jenson <josh@pte.com>\\nSent: 07 June 2023 21:40\\nTo: peter@abclabs.com; H Hasan <hasan@abc.com>; Jerry Soch  <soch@pte.com>\\nSubject: Re: Product pitch\\n \\nThanks Peter,\\n \\nThanks for quick comeback. Are you going to schedule the initial call or do you want us to schedule it. Who should be invited ?\\n \\nDo you plan to have a weekly/bi weekly call for feedback?\\n \\n \\nRegards,\\nJosh\\n\\n\\nOutput:\\nJosh wants to know who should be on the call, who will schedule it and at what frequency. Peter responded saying that we should have a 1 hour call with Ravi and we can have a regular connect.\\n\\nInput:\\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 300,
+        "min_new_tokens": 50,
+        "stop_sequences": [],
+        "repetition_penalty": 1.5
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g1",
+      "content-generation",
+      "generate-marketing-brief",
+      "brief-builder",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "content-generation",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "Input:\nGenerate a marketing campaign brief for a product manager based on the following information.\n\nWrite in a concise and professional tone\n\nCompany - Timbers\nFeature - Marathon\nProduct Info - Timbers running shoes are designed for serious marathon runners who demand top notch performance, comfort and style. The campaign will have a modern, slick, and aspirational feel.\nkick-off date - 11th July 2023 2:30 PM\nTarget audience - 25-40 age limits\nSales Objective - 20% increase in the next six months\nCreativity - high-quality images, bold typography and vibrant colors\n\nOutput:\n### Objective:\nIncrease sales of Timbers running shoes among marathon runners by 20% in the next six months\n\n### Target audience:\nMarathon runners aged 25-40 who prioritise performance, durability, and style in their running shoes. They are active on social media and follow fitness influencers\n\n### Key message:\nTimbers running shoes are designed for serious runners who demand top notch performance, comfort and style. Our shoes feature cutting-edge technology and cushioning that will help you go the distance and look good doing it.\n\n### Creative direction:\nThe campaign will have a modern, slick, and aspirational feel. We will use high-quality images of runners in action, showcasing the features of our shoes. We will use bold typography and vibrant colors to communicate energy and excitement.\n\nInput:\nGenerate a marketing campaign brief for a campaign manager based on the following information.\n\nWrite in a concise and professional tone\n\nCompany - Luma\nFeature - Summer Collection\nProduct Info - Lumas shirts are designed for fashionable mens who likes top notch comfort and style. The campaign will have a modern, and aspirational feel.\nkick-off date - 14th July 2023 2:30 PM\nTarget audience - 35-55 age limits\nSales Objective - 15% increase in the next three months\nCreativity - high resolution images, and bright colors\n\nOutput:\n### Objective:\nIncrease sales of Lumas shirts among mens by 15% in the next three months\n\n### Target audience:\nProfessional Mens aged 35-55 who prioritise fashion, comfort, and style in their summer collection shirts. They are active on social media and follow fashion influencers\n\n### Key message:\nLumas shirts are designed for fashionable mens who likes top notch comfort and style. Our shirts features modern style, fashion andcomfort that will help you enjoy the summer with style\n\n### Creative direction:\nThe campaign will have a modern, and aspirational feel. We will use high-resolution images of mens in action, showcasing the features of our shirts. We will use bright colors to communicate energy and excitement.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "sample",
+        "max_new_tokens": 500,
+        "min_new_tokens": 50,
+        "random_seed": null,
+        "stop_sequences": ["END.\n", "Input:"],
+        "temperature": 0.7,
+        "top_k": 50,
+        "top_p": 1,
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s5",
+      "model-comparison",
+      "summarization",
+      "conversation-summary-usecase",
+      "compare-ibm-models",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Summarise the following paragraph in 2 sentences\n\nInput:\nAgent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com\n\nOutput:\nThe Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address. \n\nInput:\nOn XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court\n\nOutput:\nI viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law.\n\nInput:\nCash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.\n\nOutput:\nA debt has been incorrectly put in my credit report and this has been done multiple times.\n\nInput:\nI have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.\n\nOutput:\nI applied for a home loan and a late payment on a previous loan is incorrectly  there in my credit report.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 300,
+        "min_new_tokens": 40,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c4",
+      "model-comparison",
+      "classification",
+      "conversation-sentiment-usecase",
+      "compare-ibm-models",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 2,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c5",
+      "model-comparison",
+      "classification",
+      "email-topic-usecase",
+      "compare-ibm-models",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates\\n\\nInput:\\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e3",
+      "model-comparison",
+      "entity-extraction",
+      "conversation-entities-usecase",
+      "compare-ibm-models",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.\n\nInput:\nCustomer: I want to know more about coverage and benefits of insurance policies you offer.\n\nAgent: We provide coverage for OPD, surgeries, and other services.\n\nCustomer: Can I renew online ?\n\nAgent: Yes you can.\n\nCustomer: Which hospitals are there in my zip code  560067?\n\nAgent: We have a network hospital in Aster General Hospital for cashless option.\n\nCustomer: What is the claim process?\n\nAgent: You need to inform Mayfair Insurance Company within 1 week of hospitalisation for claims.\n\nOutput:\n1. area: 560067\n2. hospital: Aster General Hospital\n3. insurance company: Mayfair Insurance Company\n\nInput:\nCustomer: What insurance policies you do you offer.\n\nAgent: We provide various policies that cover OPD, surgeries, medicines and various home medical services.\n\nCustomer: What is your renewal process ?\n\nAgent: You can renew online on our website.\n\nCustomer: Do you have any hospitals in the Sommerville area  ?\n\nAgent: Sure! You can avail services at Sequoia Medical Center which will provide  cashless option.\n\nCustomer: How do I claim at other non-network hospitals ?\n\nAgent: You need to inform AllState Insurance Company within a week of hospitalisation for claim processing\n\nOutput:\n1. area: Sommerville\n2. hospital: Sequoia Medical Center\n3. insurance company: AllState Insurance Company\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g2",
+      "model-comparison",
+      "content-generation",
+      "marketing-content-usecase",
+      "compare-ibm-models",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "content-generation",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Generate a marketing campaign brief for a product manager based on the following information. Write in a concise and professional tone.\n\nInput:\nCompany - Timbers\nFeature - Marathon\nProduct Info - Timbers running shoes are designed for serious marathon runners who demand top notch performance, comfort and style. The campaign will have a modern, slick, and aspirational feel.\nkick-off date - 11th July 2023 2:30 PM\\nTarget audience - 25-40 age limits\nSales Objective - 20% increase in the next six months\nCreativity - high-quality images, bold typography and vibrant colors\n\nOutput:\n- Objective:\nIncrease sales of Timbers running shoes among marathon runners by 20% in the next six months\n\n- Target audience:\nMarathon runners aged 25-40 who prioritise performance, comfort and style in their running shoes. They are active on social media and follow fitness influencers\n\n- Key message:\nTimbers running shoes are designed for serious runners who demand top notch performance, comfort and style. Our shoes feature cutting-edge technology and cushioning that will help you go the distance and look good doing it.\n\n- Creative direction:\nThe campaign will have a modern, slick, and aspirational feel. We will use high-quality images of runners in action, showcasing the features of our shoes. We will use bold typography and vibrant colors to communicate energy and excitement.\n\nInput:\nCompany - Luma\nFeature - Summer Collection\nProduct Info - Lumas shirts are designed for fashionable mens who likes top notch comfort and style. The campaign will have a modern, and aspirational feel.\nkick-off date - 14th July 2023 2:30 PM\\nTarget audience - 35-55 age limits\nSales Objective - 15% increase in the next three months\nCreativity - high resolution images, and bright colors\n\nOutput:\n- Objective:\nIncrease sales of Lumas shirts among mens by 15% in the next three months\n\n- Target audience:\nProfessional Mens aged 35-55 who prioritise fashion, comfort, and style in their summer collection shirts. They are active on social media and follow fashion influencers\n\n- Key message:\nLumas shirts are designed for fashionable mens who likes top notch comfort and style. Our shirts features modern style, fashion andcomfort that will help you enjoy the summer with style\n\n- Creative direction:\nThe campaign will have a modern, and aspirational feel. We will use high-resolution images of mens in action, showcasing the features of our shirts. We will use bright colors to communicate energy and excitement.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "sample",
+        "max_new_tokens": 500,
+        "min_new_tokens": 50,
+        "random_seed": null,
+        "stop_sequences": ["END.\n", "Input:"],
+        "temperature": 0.7,
+        "top_k": 50,
+        "top_p": 1,
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s6",
+      "summarization",
+      "agent-convsersation-summarization",
+      "multi-lingual-app",
+      "japanese",
+      "granite-8b-japanese"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "ibm/granite-8b-japanese",
+      "input": "通話の記録を要約します。エージェントとサブスクライバを特定します。購読者が言及した特定の問題を追加します。エージェントの指示に従って実行された修正措置を追加します。問題が解決したかどうかをお知らせください。フォローアップのアクションとスケジュールについても言及します。\n\nInput:\nサラ: (カスタマー ケアにダイヤルする) こんにちは、サラです。ブロードバンド接続にいくつか問題があります。インターネットがかなり遅くなり、頻繁に切断されてしまいました。\n\nマイク: こんにちはサラ、私はカスタマーケアエージェントのマイクです。ブロードバンドで問題が発生しているとのこと、残念に思います。それを確認させてください。あなたのアカウント番号またはアカウントに関連付けられている電話番号を教えていただけますか?\n\nサラ: はい、555-1234 です。\n\nマイク: ありがとう、サラ。あなたのアカウントを調べさせてください。そうしているうちに、これらの問題に最初に気づき始めたのはいつだったか教えていただけますか?\n\nサラ：それは約1週間前に始まりました。インターネットの速度が不安定で、完全に切断されてしまうこともあります。\n\nマイク: それがどれほどイライラするかはわかります。ご理解のほどよろしくお願いいたします。信号に問題がある可能性があるようです。モデムとルーターを再起動してみましたか?\n\nサラ: はい、何度か試しましたが、問題は解決しません。\n\nマイク: 分かった、試してくれてありがとう。今から接続の診断を実行します。問題が発生している間、これらの問題が頻繁に発生する特定の時間帯があれば教えていただけますか?\n\nサラ: 夕方、特にビデオのストリーミングやビデオ通話をしているときに症状が悪化するようです。\n\nマイク：分かった。ピーク時のネットワークの混雑が関係している可能性があります。お住まいの地域の電波強度を確認させていただきます。私がそうしている間、あなたの隣人も同様の問題を経験しているかどうか気づいていますか?\n\nサラ: 彼らに確認する機会はありませんでしたが、確認することはできます。ちょっと待ってください。\n\n(マイクはネットワークのステータスを確認する間、サラを少し保留します)\n\nマイク: お待たせしました、サラ。お住まいの地域で複数の顧客に影響を及ぼす問題が発生している可能性があります。当社の技術者はすでに問題の解決に取り組んでいます。ご迷惑をおかけし申し訳ございません。\n\nサラ：ああ、分かった。更新に感謝します。修正されるまでの推定時間はありますか?\n\nマイク: 正確な時期はわかりませんが、私たちのチームは積極的に取り組んでおり、できるだけ早く解決するよう努めます。それまでの間、さらに問題が発生した場合、またはアップデートがある場合は、お気軽にお問い合わせください。\n\nサラ：分かった、ありがとう、マイク。すぐに解決されることを願っています。\n\nマイク: どういたしまして、サラ。信頼できるインターネット接続の重要性を理解しています。他にご質問やご不明な点がございましたら、お気軽にお問い合わせください。\n\nサラ：そうします。ご協力いただきありがとうございます。\n\nマイク： 良い一日を過ごしてね、サラ！\n\nOutput:\nエージェント: マイク (カスタマーサービス)\n購読者: サラ\n\n購読者によって提起された問題:\nインターネット速度が遅い\n特に夜間に接続が頻繁に切れます。\n過去 1 週間、サービスに一貫性がありませんでした。\n\nエージェントが講じた修正手順:\nアカウントの詳細はサラの電話番号を使用して確認されました。\n彼はモデムとルーターを再起動することを提案し、サラはすでにそれを試しました。\n沙羅の縁を診断してみました。\nピーク時間帯の潜在的なネットワーク輻輳が調査されました。\n彼女は、より広範な問題を特定するために、サラの隣人の経験について尋ねました。\n\n結果：\nエージェントは、サラ地域の複数の顧客に影響を与えるネットワークの問題を特定しました。\n技術者は問題の解決に積極的に取り組んでいました。\n解決までの具体的なスケジュールは示されていません。\n\nフォローアップアクション:\n更新について、またはさらに問題が発生した場合は、加入者はカスタマー サポートに連絡することをお勧めします。\n即時の解決スケジュールは提供されていません。技術チームの継続的な作業。\n\n結論：\n加入者は情報を提供してくれたエージェントに感謝し、迅速な解決への期待を表明した。\nエージェントは継続的なサポートを保証し、加入者に懸念がある場合は連絡するよう促した。\n\n注: この電話会議では最終的な解決スケジュールは示されず、技術チームがまだ問題に取り組んでいることがわかりました。加入者には、更新を確認するか、必要に応じてさらなる問題を報告することが推奨されました。\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 500,
+        "min_new_tokens": 0,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s7",
+      "summarization",
+      "agent-convsersation-summarization",
+      "multi-lingual-app",
+      "german",
+      "granite-20b-multilingual"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "ibm/granite-20b-multilingual",
+      "input": "Fassen Sie das Protokoll des Anrufs zusammen. Identifizieren Sie den Agenten und den Abonnenten. Fügen Sie alle vom Abonnenten erwähnten spezifischen Probleme hinzu. Fügen Sie alle Korrekturmaßnahmen hinzu, die gemäß den Anweisungen des Agenten ergriffen wurden. Bitte geben Sie an, ob das Problem behoben ist. Erwähnen Sie etwaige Folgemaßnahmen und Zeitpläne.\n\nInput:\nSara: (ruft den Kundendienst an) Hallo, hier ist Sara und ich habe Probleme mit meiner Breitbandverbindung. Das Internet war ziemlich langsam und ich habe häufig Verbindungsabbrüche erlebt.\n\nMike: Hallo Sara, ich bin Mike, ein Kundendienstmitarbeiter. Es tut mir leid, von den Problemen zu hören, die Sie mit Ihrem Breitbandanschluss haben. Lass mich das für dich überprüfen. Können Sie mir bitte Ihre Kontonummer oder die mit Ihrem Konto verknüpfte Telefonnummer mitteilen?\n\nSara: Klar, es ist 555-1234.\n\nMike: Danke, Sara. Lassen Sie mich Ihr Konto aufrufen. Während ich das mache, kannst du mir sagen, wann dir diese Probleme zum ersten Mal aufgefallen sind?\n\nSara: Es begann vor etwa einer Woche. Die Internetgeschwindigkeit war inkonsistent und es gibt Zeiten, in denen sie einfach komplett ausfällt.\n\nMike: Ich verstehe, wie frustrierend das sein kann. Vielen Dank für Ihre Geduld. Es sieht so aus, als ob es einige Signalprobleme geben könnte. Haben Sie versucht, Ihr Modem und Ihren Router neu zu starten?\n\nSara: Ja, das habe ich ein paar Mal versucht, aber die Probleme bestehen weiterhin.\n\nMike: Alles klar, danke, dass Sie das versucht haben. Ich führe jetzt eine Diagnose Ihrer Verbindung durch. Könnten Sie mir währenddessen mitteilen, ob es bestimmte Tageszeiten gibt, zu denen Sie diese Probleme häufiger bemerken?\n\nSara: Abends scheint es schlimmer zu sein, insbesondere wenn ich versuche, Videos zu streamen oder Videos zu streamen Videoanrufe.\n\nMike: Verstanden. Dies könnte mit einer Netzwerküberlastung während der Hauptverkehrszeiten zusammenhängen. Lassen Sie mich die Signalstärke in Ihrer Nähe überprüfen. Ist Ihnen dabei aufgefallen, dass Ihre Nachbarn ähnliche Probleme haben?\n\nSara: Ich hatte noch keine Gelegenheit, mich bei ihnen zu erkundigen, aber ich kann das tun. Warten Sie einen Moment.\n\n(Mike hält Sara kurz in der Warteschleife, während er den Netzwerkstatus überprüft.)\n\nMike: Danke fürs Warten, Sara. Es scheint, dass in Ihrer Region ein Problem vorliegt, das mehrere Kunden betrifft. Unsere Techniker arbeiten bereits an der Lösung. Ich entschuldige mich für die Unannehmlichkeiten.\n\nSara: Oh, okay. Ich schätze das Update. Können Sie ungefähr sagen, wann das Problem behoben sein wird?\n\nMike: Ich habe keinen genauen Zeitpunkt, aber unser Team arbeitet aktiv daran und wir werden uns bemühen, das Problem so schnell wie möglich zu lösen. Wenn Sie in der Zwischenzeit auf weitere Probleme stoßen oder Aktualisierungen vorliegen, können Sie sich gerne an uns wenden.\n\nSara: Alles klar, danke, Mike. Ich hoffe, dass es bald gelöst wird.\n\nMike: Gern geschehen, Sara. Ich weiß, wie wichtig eine zuverlässige Internetverbindung ist. Wenn Sie weitere Fragen oder Bedenken haben, zögern Sie bitte nicht, uns zu kontaktieren.\n\nSara: Das werde ich tun. Danke für deine Hilfe.\n\nMike: Ich wünsche dir einen schönen Tag, Sara!\n\nOutput:\nAgent: Mike (Kundendienst)\nAbonnent: Sara\n\nVom Abonnenten angesprochene Probleme:\nLangsame Internetgeschwindigkeit\nHäufige Verbindungsabbrüche, insbesondere nachts.\nInkonsistenter Service in der letzten Woche.\n\nKorrekturmaßnahmen vom Agenten:\nKonto Details wurden anhand von Saras Telefonnummer überprüft.\nEr schlug vor, das Modem und den Router neu zu starten, was Sara bereits versucht hatte.\nIch stellte eine Diagnose von Saras Verbindung.\nMögliche Netzwerküberlastung während der Hauptverkehrszeiten wurde untersucht.\nSie fragte nach den Erfahrungen von Saras Nachbarn um ein umfassenderes Problem zu identifizieren.\n\nErgebnis:\nDer Agent hat ein Netzwerkproblem identifiziert, das mehrere Kunden im Raum Sara betrifft.\nTechniker arbeiteten aktiv an der Lösung des Problems.\nEs wird kein spezifischer Zeitplan für die Lösung angegeben.\n\nFolgen Sie Up-Aktionen:\nAbonnenten wird empfohlen, sich für Updates oder weitere Probleme an den Kundendienst zu wenden.\nEs wurde kein Zeitplan für eine sofortige Lösung angegeben. Kontinuierliche Arbeit des technischen Teams.\n\nFazit:\nDer Abonnent dankte dem Agenten für die Informationen und äußerte die Hoffnung auf eine schnelle Lösung.\nDer Agent versicherte weiterhin Unterstützung und forderte den Abonnenten dringend auf, sich bei Bedenken zu melden.\n \nHinweis: Der Anruf endete nicht mit einem endgültigen Zeitplan für die Lösung, was darauf hindeutet, dass das technische Team sich noch mit dem Problem befasste. Der Abonnent wurde aufgefordert, nach Aktualisierungen zu suchen oder bei Bedarf weitere Probleme zu melden.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 500,
+        "min_new_tokens": 0,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g3",
+      "code-generation",
+      "nl-to-sql",
+      "sql-code-generation",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "code-generation",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "You are a developer writing SQL queries given natural language questions. The database contains a set of 5 tables. The schema of each table with description of the attributes is given. Write the SQL query given a natural language statement.\nHere are the 5 tables :\n\n(1) Database Table Name: CUSTOMER\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\nlast_name # last name of the customer\nfirst_name # first name of the customer\ndob # date of birth of the customer\nemail # email address of the customer\nphone # mobile number of the customer\naddress # mailing address of the customer\n\n2) Database Table Name: BANK_ACCOUNT\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\naccount_type # type of account is 'savings', 'current'\naccountid # unique number of an account\nbalance # current balance available in the account\ndate_opened # date the account was opened\ndate_closed # date the account was closed if it is not active\nstatus # status of the account as 'active', 'suspended', 'closed'\ndebit_card_type # the type of debit card issued, e.g. 'basic', 'premier'\n\n(3) Database Table Name: INVESTMENT_PRODUCT\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\nproduct_type # type of investment product, e.g. 'mutual funds', 'equity', 'bond', 'fixed deposit'\naccountid # account id of the customer for the specific investment product\ninvest_amount # total investment of the customer in the specific investment product\n\n(4) Database Table Name: LOAN\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\naccountid # account number of the customer for the loan\nloan_type # type of loan, e.g. 'home', 'car'\nloan_amount # total amount of loan taken\n\n(5) Database Table Name: CREDIT_CARD\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\ncard_num # credit card number of the customer\ncard_type # type of credit card, 'premium', 'advantage', 'supreme'\ncard_balance # balance payable in current cycle\ncard_limit # spending limit on the credit card\ndefault_count # number of times in last year the customer has defaulted in monthly payment\n\n(6) Database Table Name: CUSTOMER_LOYALTY\nTable Schema:\nColumn Name # Meaning\ncustid # unique identifier of the customer\ncustomer_level # customer is 'regular', 'gold', 'silver', 'platinum'\npoints # reward points earned",
+      "parameters": {
+        "decoding_method": "greedy",
+        "stop_sequences": ["Input:"],
+        "min_new_tokens": 1,
+        "max_new_tokens": 200
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e4",
+      "entity-extraction",
+      "pii-extraction",
+      "pii",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Extract PII entities from the paragraph given\n\nInput: I withdrew $100 from the bank in London from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\nOutput: $100: Amount,\nLondon: Location,\n(345) 123-7867: PhoneNumber,\nRaj: Person,\nraj@gmail.com: Email\n\nInput: I am not able to transact on my card 3572267594198019 since 20th March, 2023. Please check the issue. Thanks, Mary Smith\nOutput: Mary Smith: Person,\n3572267594198019: CardNumber,\n20th March, 2023: Date\n\nInput: Please send me the OTP at (123)1234567. Thanks, David\nOutput: David: Person,\n(123)1234567: PhoneNumber\n\nInput: I lost my card in London on 1st Jan, 2023. My card number is 3572267594198019.\nOutput: London: Location,\n1st Jan, 2023: Date,\n3572267594198019: CardNumber\n\nInput: ",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 0,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": {
+            "enabled": true,
+            "threshold": 0.5,
+            "mask": {
+              "remove_entity_value": true
+            }
+          },
+          "output": {
+            "enabled": true,
+            "threshold": 0.5,
+            "mask": {
+              "remove_entity_value": true
+            }
+          }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g4",
+      "code-generation",
+      "nl-to-sql",
+      "query-tuning",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "code-generation",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "Write an SQL query given a natural language statement. You are given 3 tables : (1) Items(sku, description, storeid, supplierid, avg_rating, qty_per_day) (2) Supplier(supplierid, name, location, diversity, preapproved) (3) Stores(storeid, location) (4) CompanyInfo(compid, name, description, type, rating, women_owned, minority_owned, Ssi, Ser, zip)\n\nInput:\nWhat are the details for item with SKU 1234\n\nOutput:\nSELECT Items.description, Items.avg_rating, Supplier.name, Items.storeid, Stores.location from Items, Supplier, Store where Stores.storeid = Items.storeid and Supplier.supplierid = Items.supplierid and Items.sku = \"1234\"\n\nInput:\nTop minority owned suppliers with risk score < 3 for area 123445 and item \"green salad\"\n\nOutput:\nSELECT name from CompanyInfo where risk_score < 3 and minority_owned = true and zip LIKE \"%123445%\" and description like \"%green salad%\" order by rating DESC\n\nInput:\nTop women owned suppliers with risk < 1 for 123445 and item \"green salad\"\n\nOutput:\nSELEC name from CompanyInfo where risk_score < 1 and women_owned=true and zip like \"%123445%\" and description like \"%green salad%\" order by rating DESC\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 200,
+        "min_new_tokens": 1,
+        "stop_sequences": ["Input:"]
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c6",
+      "classification",
+      "call-to-action",
+      "sales-conversation",
+      "conversation-intelligence",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "Read the below input text and classify overall text into one of the following types: send email to client, call back client, setup a meeting, send email with details.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c7",
+      "classification",
+      "industry-focus",
+      "sales-conversation",
+      "conversation-intelligence",
+      "mixtral-8x7b-instruct-v01-q"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+      "input": "Read the below input text and classify overall text into one of the following options: finance, manufacturing, automotive, no industry segment.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e5",
+      "entity-extraction",
+      "sales-conversation",
+      "conversation-intelligence",
+      "flan-ul2"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "google/flan-ul2",
+      "input": "Extract PII entities from the paragraph given\n\nInput:\nI withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\nOutput:\n1. $100: money,\n2. New York: location,\n3. (345) 123-7867: PhoneNumber,\n4. Raj: Person,\n5. raj@gmail.com: Email\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s8",
+      "summarization",
+      "sales-conversation",
+      "conversation-intelligence",
+      "llama-3-70b-instruct"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "meta-llama/llama-3-70b-instruct",
+      "input": "Summarise the following paragraph in 2 sentences\n\nInput:\nAgent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com\n\nOutput:\nThe Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address. \n\nInput:\nOn XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court\n\nOutput:\nI viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law.\n\nInput:\nCash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.\n\nOutput:\nA debt has been incorrectly put in my credit report and this has been done multiple times.\n\nInput:\nI have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.\n\nOutput:\nI applied for a home loan and a late payment on a previous loan is incorrectly  there in my credit report.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 300,
+        "min_new_tokens": 40,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e6",
+      "entity-extraction",
+      "pii",
+      "smart-contract-processing",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "Extract PII entities from the paragraph given\n\nInput:\nI withdrew $100 from the bank in New York from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj\n\nNamed Entities:\n1. $100: money,\n2. New York: location,\n3. (345) 123-7867: PhoneNumber,\n4. Raj: Person,\n5. raj@gmail.com: Email\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 200,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g5",
+      "content-generation",
+      "generate-missing-clause",
+      "smart-contract-processing",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "content-generation",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "Study the general, term and agent responsibility clauses in the property maintenance agreement below between 2 parties. All the clauses are mandatory and need to appear in an agreement. For the given agreement identify and clearly mention a list all the missing clauses in general, terms and responsibilities sections. Otherwise, if all clauses are present then say that \"The agreement is approved\".",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 500,
+        "min_new_tokens": 0,
+        "stop_sequences": ["END", "PROPERTY MANAGEMENT AGREEMENT"],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s9",
+      "summarization",
+      "telco-customer-support",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Summarize the transcript of the call. Identify the agent and the subscriber. Add any specific issues mentioned by the subscriber. Add any corrective actions taken as directed by the agent. Please mention if the issue is resolved only if all actions are already taken. Mention any follow-up actions and timelines. If some actions are pending then add them as follow-up and not as resolved. Identify any PII information, e.g. phone number, email, postal address in the transcript.\n\nInput:\nSara: (Dialing customer care) Hello, this is Sara, and I'm having some issues with my broadband connection. The internet has been quite slow, and I've been experiencing frequent disconnections.\nMike: Hi Sara, I'm Mike, a customer care agent. I'm sorry to hear about the trouble you're facing with your broadband. Let me check that for you. Can you please provide me with your account number or the phone number associated with your account?\nSara: Sure, it's 555-1234.\nMike: Thank you, Sara. Let me pull up your account. While I'm doing that, can you tell me when you first started noticing these issues?\nSara: It started about a week ago. The internet speed has been inconsistent, and there are times when it just goes out completely.\nMike: I understand how frustrating that can be. I appreciate your patience. It looks like there might be some signal issues.Have you tried restarting your modem and router?\nSara: Yes, I've tried that a couple of times, but the problems persist.\nMike: Alright, thanks for trying that. I'll run a diagnostic on your connection now. While that's happening, could you let me know if there are specific times of the day when you notice these problems more frequently?\nSara: It seems to be worse during the evenings, especially when I'm trying to stream videos or have video calls.\nMike: Got it. It could be related to network congestion during peak hours. Let me check the signal strength in your area.While I'm doing that, have you noticed if your neighbors are experiencing similar issues?\nSara: I haven't had a chance to check with them, but I can do that. Hold on a moment.\n\n(Mike puts Sara on a brief hold while he checks the network status)\n\nMike: Thank you for waiting, Sara. It appears there might be an issue in your area affecting multiple customers. Our technicians are already working to resolve it. I apologize for the inconvenience.\nSara: Oh, okay. I appreciate the update. Do you have an estimated time for when it will be fixed?\nMike: I don't have an exact time, but our team is actively working on it, and we'll strive to resolve it as soon as possible. In the meantime, if you experience any further issues or if there are updates, feel free to reach out to us.\nSara: Alright, thank you, Mike. I hope it gets resolved soon.\nMike: You're welcome, Sara. I understand the importance of a reliable internet connection. If you have any other questions or concerns, please don't hesitate to contact us.\nSara: I will. Thanks for your help.\nMike: Have a great day, Sara!\n\nOutput:\nAgent: Mike (Customer Service)\nSubscriber: Sara\n\n(555-1234: phone)\n\nIssues raised by subscriber:\n- Slow internet speed\n- Frequent disconnections and sometimes complete outage especially in evenings with video.\n- Inconsistent service over the past week.\n\nCorrective steps taken by agent:\n- Account details verified using Sara's phone number.\n-He suggested restarting the modem and router, which Sara had already tried.\n- He made a diagnosis of Sara's connection as potential network issue impacting multiple customers in the area.\n- Mentioned that the team is actively working on it.\n\nResult:\n- The agent identified a network issue affecting several customers in the Sara area.\n- Technicians were actively working to resolve the issue.\n- No specific timeline for resolution is provided.\n\nFollow-up actions:\n- Subscriber is advised to contact customer support for updates or if further issues arise.\n- No immediate resolution timeline has been provided. The technical team is working on it.\n\nConclusion:\n- The subscriber thanked the agent for the information and expressed hope for a quick resolution.\n- The agent assured continued support and urged the subscriber to reach out if they had any concerns.\n- The call did not conclude with a definitive resolution timeline, indicating that the technical team was still addressing the issue. The subscriber was encouraged to check for updates or report further issues as necessary.\n\nInput:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 500,
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.5 },
+          "output": { "enabled": true, "threshold": 0.5 },
+          "mask": {
+            "remove_entity_value": true
+          }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e7",
+      "entity-extraction",
+      "tuning-conversation-insights",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "entity-extraction",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.\n\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-c8",
+      "classification",
+      "customer-sentiment",
+      "tuning-conversation-insights",
+      "granite-13b-instruct-v2"
+    ],
+    "ai_task": "classification",
+    "payload": {
+      "model_id": "ibm/granite-13b-instruct-v2",
+      "input": "Read the text and classify customer sentiment into one of the following options: positive, negative, neutral\n\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 100,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-s10",
+      "summarization",
+      "tuning-conversation-insights",
+      "granite-13b-chat-v2"
+    ],
+    "ai_task": "summarization",
+    "payload": {
+      "model_id": "ibm/granite-13b-chat-v2",
+      "input": "Summarise the following conversation between Customer and the Agent with all necessary details.\n\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 400,
+        "min_new_tokens": 30,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-g6",
+      "content-generation",
+      "review-results",
+      "legal-document-processing",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "content-generation",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "[INST]<<SYS>> You are an insurance underwriter.\nYour job is to review the given indemnification clause and the provided guidance.\nIdentify the differences between the given Indemnification clause and the given guidance.Dont highlight anything that is semantically same.\nFor each difference, provide the following information in format:\n\nItem No: A unique identifier (randomly generated or sequential number).\nReview Item: Describe the parameter on which the difference is being measured.\nWhat the clause says: The value specified in the termination clause.\nWhat is in the guidance: The value specified in the guidance.\nRecommendation: Suggest a change or alignment based on the guidance.\nRisk: Compare the details and guidance derived. Output false, if they match, otherwise Output true\n\nPlease make sure to extract all differences and provide clear recommendations but don't create any record where there is no difference found between guidance and clause\nAlso, restrict review items to five.\nEach review item should be delimited by new line.\n\n<</SYS>>\nIndemnification Clause:\nCONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against:\n\nA. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement. Such indemnification includes any damage to the person(s), or property(ies) of CONSULTANT and third persons.\n\nB. Any and all Federal, State and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding).\nGuidance:CONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against: A. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement. Such indemnification includes any damage to the person(s) or property(ies) of CONSULTANT and third persons. B. Any and all Federal, State, and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding). Notwithstanding the foregoing, CONSULTANT's indemnification obligations for claims arising out of its gross negligence or willful misconduct shall be unlimited.[/INST]\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 1500,
+        "min_new_tokens": 1,
+        "stop_sequences": [],
+        "repetition_penalty": 1
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e8",
+      "content-extraction",
+      "extracted-clause",
+      "legal-document-processing",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "content-extraction",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "[INST]<<SYS>> Extract the indemnity clause from the section titled 'Indemnity' or 'Indemnification' in the provided contract text.\nFocus on the content within the section related to indemnity, and please provide the extracted indemnity clause for further analysis.\nPlease make sure your answer is concise and technical.\n<</SYS>>\n[/INST]\nText:\nFor personnel subject to prevailing wage rates as described in the California Labor Code, all salary\nincreases, which are the direct result of changes in the prevailing wage rates are reimbursable.\n\n3.\n\nTERM. This Agreement shall take effect on (DATE); contingent upon prior approval by the\nCOMMISSION governing board, and the CONSULTANT shall commence work after notification to\nproceed by the COMMISSION’S Contract Manager. The Agreement shall end on (DATE), unless earlier\nterminated or extended by contract amendment. The CONSULTANT is advised that this Agreement is not\nbinding and enforceable until it is fully executed and approved by the COMMISSION's board.\n\n4.\n\nEARLY TERMINATION.\nA. COMMISSION may terminate this Agreement for its convenience any time, in whole or part, by giving\nCONSULTANT thirty-day (30-day) written notice thereof. Within thirty days of the COMMISSION's\nreceipt of CONSULTANT's final billing, COMMISSION shall pay CONSULTANT its allowable costs\nincurred to date of termination and those allowable costs determined by COMMISSION to be\nreasonably necessary to effect such termination. Thereafter, CONSULTANT shall have no further\nclaims against COMMISSION under this Agreement.\nB. COMMISSION may terminate this Agreement for CONSULTANT's default if a federal or state\nproceeding for the relief of debtors is undertaken by or against CONSULTANT, or CONSULTANT's\n\nPage 2\n\ncprincipal, or if CONSULTANT or CONSULTANT's principal makes an assignment for the benefit of\ncreditors, or if CONSULTANT breaches any term(s) or violates any provision(s) of this Agreement and\ndoes not cure such breach or violation within ten (10) days after written notice thereof by\nCOMMISSION. CONSULTANT shall be liable for any and all reasonable costs incurred by\nCOMMISSION as a result of such default, including but not limited to reprocurement costs of the same\nor similar services defaulted by CONSULTANT under this Agreement.\nC. CONSULTANT may terminate this Agreement by giving the COMMISSION at least one hundred and\ntwenty (120) days advance written notice. CONSULTANT shall be liable for any and all reasonable\ncosts incurred by COMMISSION as a result of such default, including but not limited to reprocurement\ncosts of the same or similar services defaulted or not provided by CONSULTANT under this\nAgreement.\n5.\n\nINDEMNIFICATION FOR DAMAGES, TAXES AND CONTRIBUTIONS.\nCONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the\npurpose of this Agreement shall include, without limitation, its officers, agents, employees and volunteers)\nfrom and against:\nA. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which\nCOMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons,\nor damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence,\nrecklessness, or willful misconduct under the terms of this Agreement. Such indemnification includes\nany damage to the person(s), or property(ies) of CONSULTANT and third persons.\nB. Any and all Federal, State and Local taxes, charges, fees, or contributions required to be paid with\nrespect to CONSULTANT and CONSULTANT’S officers, employees and agents engaged in the\nperformance of this Agreement (including, without limitation, unemployment insurance, social security\nand payroll tax withholding).\nClause:",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 500,
+        "min_new_tokens": 0
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-e9",
+      "content-extraction",
+      "extracted-clause-closest-to",
+      "legal-document-processing",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "content-extraction",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "[INST] <<SYS>>\nGiven below is a clause and its 3 variations based on the scope of liabilities covered.\nPlease review the given clause against all the variations, and check with variation is the given clause closest to.\nOutput just the name of the variation.\n<</SYS>>\nOriginal Clause:CONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against:\n\nA. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement. Such indemnification includes any damage to the person(s), or property(ies) of CONSULTANT and third persons.\n\nB. Any and all Federal, State and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding).\n\nGuidance 1: Limited Liability\nCONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against: A. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement, up to a maximum limit of [insert specific amount or percentage of the contract value]. Such indemnification includes any damage to the person(s) or property(ies) of CONSULTANT and third persons. B. Any and all Federal, State, and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding).\n\nGuidance 2: Enhanced Liability for Gross Negligence or Willful Misconduct\nCONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against: A. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement. Such indemnification includes any damage to the person(s) or property(ies) of CONSULTANT and third persons. B. Any and all Federal, State, and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding). Notwithstanding the foregoing, CONSULTANT's indemnification obligations for claims arising out of its gross negligence or willful misconduct shall be unlimited.\n\nGuidance 3: No Liability for Indirect or Consequential Damages\nCONSULTANT shall exonerate, indemnify, defend, and hold harmless the COMMISSION (which for the purpose of this Agreement shall include, without limitation, its officers, agents, employees, and volunteers) from and against: A. Any and all claims, demands, losses, damages, defense costs, or liability of any kind or nature which COMMISSION may sustain or incur or which may be imposed upon it for injury to or death of persons, or damage to property which arise out of, pertain to, or relate to CONSULTANT’S negligence, recklessness, or willful misconduct under the terms of this Agreement, excluding any claims for indirect or consequential damages. Such indemnification includes any damage to the person(s) or property(ies) of CONSULTANT and third persons. B. Any and all Federal, State, and Local taxes, charges, fees, or contributions required to be paid with respect to CONSULTANT and CONSULTANT’S officers, employees, and agents engaged in the performance of this Agreement (including, without limitation, unemployment insurance, social security, and payroll tax withholding).\n\nThe original clause is closest to the following variation:\n",
+      "parameters": {
+        "decoding_method": "greedy",
+        "max_new_tokens": 200,
+        "min_new_tokens": 1
+      },
+      "project_id": ""
+    }
+  },
+  {
+    "search_tags": [
+      "uid-r1",
+      "rag",
+      "stock-analysis-with-ssdb",
+      "event-stock-analysis",
+      "llama-2-70b-chat"
+    ],
+    "ai_task": "rag",
+    "payload": {
+      "model_id": "meta-llama/llama-2-70b-chat",
+      "input": "Find the top 3 economic categories and their subcategories for a geographic region or country, and find the ticker symbols for the top companies in those economic categories and return answer in JSON format.\n\nInput: How are companies in Paris doing?\nOutput: {\"geolocation\":\"Paris\",\"data\":[{\"Economic Category\":\"Services\",\"Subcategories\":[{\"Subcategory\":\"Banking\",\"Companies\":[{\"Company\":\"BNP Paribas\",\"Stock Ticker\":\"BNP\"}]},{\"Subcategory\":\"Insurance\",\"Companies\":[{\"Company\":\"AXA\",\"Stock Ticker\":\"CS\"}]},{\"Subcategory\":\"Telecommunications\",\"Companies\":[{\"Company\":\"Orange\",\"Stock Ticker\":\"ORA\"}]}]},{\"Economic Category\":\"Tourism\",\"Subcategories\":[{\"Subcategory\":\"Hotels\",\"Companies\":[{\"Company\":\"Hotel de Crillon\",\"Stock Ticker\":\"HDC\"}]},{\"Subcategory\":\"Restaurants\",\"Companies\":[{\"Company\":\"Le Grand Véfour\",\"Stock Ticker\":\"LVF\"}]},{\"Subcategory\":\"Tourism\",\"Companies\":[{\"Company\":\"Paris Tourism\",\"Stock Ticker\":\"PTT\"}]}]},{\"Economic Category\":\"Transportation\",\"Subcategories\":[{\"Subcategory\":\"Banking\",\"Companies\":[{\"Company\":\"Air France\",\"Stock Ticker\":\"AIRF\"}]},{\"Subcategory\":\"Railways\",\"Companies\":[{\"Company\":\"SNCF\",\"Stock Ticker\":\"SNCF\"}]},{\"Subcategory\":\"Roads\",\"Companies\":[{\"Company\":\"RATP\",\"Stock Ticker\":\"RATP\"}]}]}]}",
+      "parameters": {
+          "decoding_method": "greedy",
+          "max_new_tokens": 500,
+          "min_new_tokens": 1,
+          "stop_sequences": [
+              "}]}]}]}"
+          ],
+          "repetition_penalty": 1
+      },
+      "project_id": ""
     }
   }
 ]

@@ -8,5 +8,11 @@
     "stop_sequences": [],
     "repetition_penalty": 1.5
   },
-  "project_id": "3822acf1-dde7-4c93-b506-872d3f476127"
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
+  },
+  "project_id": ""
 }

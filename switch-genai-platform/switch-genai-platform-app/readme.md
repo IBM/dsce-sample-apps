@@ -49,21 +49,12 @@ Also, it is presumed that you already have a setup/running multi-vendor-genai-fr
 
 4. Add `.env` file to your application folder and add env variable
 
-   ##### Steps to create IBM Cloud API key
-
-   - 4.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
-   - 4.2 Click **Create an IBM Cloud API key**
-   - 4.3 Enter a name and description for your API key
-   - 4.4 Click **Create**
-   - 4.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
-
    ```sh
-   APIAUTHCODE=<your api auth code for calling your framework>
+   SERVER_URL=<your multi-vendor-genai-framework server url>
+   APIAUTHCODE=<your api auth code for calling your framework apis>
    ```
 
-5. In `app-config.properties`, set the framework server url value in `SERVER_URL` key.
-
-6. Run the application.
+5. Run the application.
 
    ```sh
    python3 template.py
