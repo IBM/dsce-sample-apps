@@ -20,7 +20,8 @@ for item in items_view:
     configs_dict[item[0]] = item[1].data
 
 # For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
 HEADERS = {
         'accept': 'application/json',
@@ -164,7 +165,7 @@ buttonsPanel = dbc.Row([
 
 footer = html.Footer(
     dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
     style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
     className="bg-dark position-fixed bottom-0"
 )
@@ -216,7 +217,7 @@ horizontal_layout = dbc.Row(
                                         # html.H5(configs.get('Output_title')),
                                         html.Div(children=[html.P(configs_dict["helper_text"], style={"color": "#525252", "fontSize": "1rem", "fontStyle": "italic"})],id='generate-output')
                                     ],
-                                    style={'padding': '1rem 3rem'}
+                                    style={'padding': '1rem'}
                                 ),
                             ],
                             className="col-6"
@@ -320,6 +321,7 @@ def get_header_with_access_tkn(access_token):
 
 # Invoke LLM API
 def llm_fn(text, payload_json, type, access_token):
+    payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n"
     print("calling LLM", datetime.now())
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))

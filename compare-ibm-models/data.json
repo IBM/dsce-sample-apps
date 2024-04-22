@@ -14,10 +14,16 @@
             "stop_sequences": [],
             "repetition_penalty": 1
           },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
+          },
           "project_id": ""
         },
         "payload-view": {
-          "model_id": "ibm/granite-13b-chat-v2",
+          "model_id": "<model-id>",
           "data": {
             "instruction": "Summarise the following paragraph in 2 sentences",
             "input": "",
@@ -50,9 +56,8 @@
           },
           "moderations": {
             "hap": {
-              "input": true,
-              "threshold": 0.75,
-              "output": true
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
             }
           }
         },
@@ -79,10 +84,16 @@
             "stop_sequences": [],
             "repetition_penalty": 1
           },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
+          },
           "project_id": ""
         },
         "payload-view": {
-          "model_id": "ibm/granite-13b-chat-v2",
+          "model_id": "<model-id>",
           "data": {
             "instruction": "Read the text and classify caller sentiment into one of the following options: positive, negative, neutral\n",
             "input": "",
@@ -99,9 +110,8 @@
           },
           "moderations": {
             "hap": {
-              "input": true,
-              "threshold": 0.75,
-              "output": true
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
             }
           }
         },
@@ -128,10 +138,16 @@
             "stop_sequences": [],
             "repetition_penalty": 1
           },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
+          },
           "project_id": ""
         },
         "payload-view": {
-          "model_id": "ibm/granite-13b-instruct-v2",
+          "model_id": "<model-id>",
           "data": {
             "instruction": "Read the text and classify into one of the following options: personal conversation, product development, product deployment, product support, schedule updates",
             "input": "",
@@ -148,9 +164,8 @@
           },
           "moderations": {
             "hap": {
-              "input": true,
-              "threshold": 0.75,
-              "output": true
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
             }
           }
         },
@@ -177,10 +192,16 @@
             "stop_sequences": [],
             "repetition_penalty": 1
           },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
+          },
           "project_id": ""
         },
         "payload-view": {
-          "model_id": "ibm/granite-13b-chat-v2",
+          "model_id": "<model-id>",
           "data": {
             "instruction": "Perform entity extraction from the conversation below between Customer and Agent and output as key value pairs.",
             "input": "",
@@ -206,9 +227,8 @@
           },
           "moderations": {
             "hap": {
-              "input": true,
-              "threshold": 0.75,
-              "output": true
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
             }
           }
         },
@@ -239,10 +259,16 @@
             "top_p": 1,
             "repetition_penalty": 1
           },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
+          },
           "project_id": ""
         },
         "payload-view": {
-          "model_id": "ibm/granite-13b-chat-v2",
+          "model_id": "<model-id>",
           "data": {
             "instruction": "Generate a marketing campaign brief for a product manager based on the following information. Write in a concise and professional tone.",
             "input_prefix": "Input:",
@@ -269,6 +295,12 @@
             "top_k": 50,
             "top_p": 1,
             "repetition_penalty": 1
+          },
+          "moderations": {
+            "hap": {
+              "input": { "enabled": true, "threshold": 0.75 },
+              "output": { "enabled": true, "threshold": 0.75 }
+            }
           }
         },
         "type": "markdown",

@@ -14,6 +14,7 @@ load_dotenv()
 
 WATSONX_API_KEY = os.getenv("WATSONX_API_KEY")
 WML_INSTANCE_URL = os.getenv("WML_INSTANCE_URL")
+PROJECT_ID = os.getenv("WATSONX_PROJECT_ID")
 
 chain = None
 
@@ -25,7 +26,6 @@ def init():
         payload_f_json = json.load(payload_f)
 
     AI_MODEL_ID = payload_f_json["model_id"]
-    PROJECT_ID = payload_f_json["project_id"]
 
     pdf_file_path=("data/hybrid-cloud-mesh-documentation.pdf")
     loader = UnstructuredPDFLoader(pdf_file_path)

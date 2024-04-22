@@ -26,5 +26,11 @@
     "top_k": 50,
     "top_p": 1,
     "repetition_penalty": 1
+  },
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
   }
 }

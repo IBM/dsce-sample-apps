@@ -33,7 +33,7 @@
     }
   ],
   "paths": {
-    "/ml/v1-beta/generation/text": {
+    "/ml/v1/text/generation": {
       "post": {
         "description": "Generation",
         "parameters": [

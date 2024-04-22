@@ -15,5 +15,5 @@
       "temperature": 0.5
     }
   },
-  "project_id": "<your watsonx instance project_id>"
+  "project_id": ""
 }
