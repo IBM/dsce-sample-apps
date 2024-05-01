@@ -9,10 +9,9 @@
   },
   "moderations": {
     "hap": {
-      "input": true,
-      "threshold": 0.75,
-      "output": true
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
     }
   },
-  "project_id": "<your watsonx instance project_id>"
+  "project_id": ""
 }

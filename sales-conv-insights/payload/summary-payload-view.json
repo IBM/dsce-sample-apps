@@ -30,5 +30,11 @@
     "min_new_tokens": 40,
     "max_new_tokens": 300,
     "repetition_penalty": 1
+  },
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
   }
 }

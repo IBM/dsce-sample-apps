@@ -11,6 +11,9 @@ import traceback
 from jproperties import Properties
 from markdownify import markdownify as md
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # instantiate config
 configs = Properties()
@@ -24,7 +27,8 @@ for item in items_view:
     configs_dict[item[0]] = item[1].data
 
 # For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
 HEADERS = {
         'accept': 'application/json',
@@ -85,7 +89,7 @@ user_input = dbc.InputGroup([
 )
 
 generate_button = dbc.Button(
-    configs_dict['generate_btn_text'], id="generate-button", outline=True, color="primary", n_clicks=0, className="carbon-btn"
+    configs_dict['generate_btn_text'], id="generate-button", color="primary", n_clicks=0, className="carbon-btn"
 )
 
 upload_button = dcc.Upload(id="upload-data", className="upload-data",
@@ -103,7 +107,7 @@ buttonsPanel = dbc.Row([
 
 footer = html.Footer(
     dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
     style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
     className="bg-dark position-fixed bottom-0"
 )
@@ -228,6 +232,7 @@ def get_header_with_access_tkn(access_token):
 
 # LLM API call
 def llm_fn(text, payload_json, type, access_token):
+    payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n\n"
     print("calling LLM", datetime.now())
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))

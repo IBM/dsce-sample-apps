@@ -7,6 +7,9 @@ import requests
 import json
 from jproperties import Properties
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # instantiate config
 configs = Properties()
@@ -20,7 +23,8 @@ for item in items_view:
     configs_dict[item[0]] = item[1].data
 
 #For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
 HEADERS = {
         'accept': 'application/json',
@@ -149,11 +153,11 @@ buttonsPanel = dbc.Row([
                 ], style=dict(display="none"))
 
 footer = html.Footer(
-        dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
-        style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
-        className="bg-dark position-fixed bottom-0"
-    )
+    dbc.Row([
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
+    style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
+    className="bg-dark position-fixed bottom-0"
+)
 
 footer_imp_links = html.Div(children=[
     dbc.Button("View payload", id="payload-button-f", n_clicks=0, outline=True, class_name="carbon-link"),
@@ -270,6 +274,7 @@ def get_header_with_access_tkn(access_token):
 
 # Q&A API call
 def q_and_a_fn(text, file_content, access_token):
+    q_and_a_payload_json['project_id'] = WATSONX_PROJECT_ID
     q_and_a_payload_json['input'] = construct_input(text,file_content)
 
     print("calling LLM-Q&A", datetime.now())

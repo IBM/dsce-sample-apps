@@ -68,7 +68,9 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
-   PROJECT_ID=<your watsonx.ai project_id>
+   WATSONX_PROJECT_ID=<your watsonx.ai project_id>
+   SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29
+   MODEL_LIST_URL = https://us-south.ml.cloud.ibm.com/ml/v1/foundation_model_specs?version=2023-05-29
    ```
 
 6. Run the application.

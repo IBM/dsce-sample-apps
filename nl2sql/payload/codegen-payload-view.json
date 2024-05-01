@@ -12,5 +12,11 @@
     "stop_sequences": ["Input:"],
     "min_new_tokens": 1,
     "max_new_tokens": 200
+  },
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
   }
 }

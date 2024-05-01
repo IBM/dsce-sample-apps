@@ -25,9 +25,10 @@ async function makeQuestionCallHandler(e, query) {
         let data = answer.replace("\nAnswer:", "").replaceAll("\n", "<br/>");
         messageChatbot(data, true);
 
-        document.getElementById(
-          "source-p"
-        ).innerHTML = source_document !== "" ? source_document : "<i>Source document will be displayed here after you ask a question to chatbot.</i>";
+        document.getElementById("source-p").innerHTML =
+          source_document !== ""
+            ? source_document
+            : "<i>Source document will be displayed here after you ask a question to chatbot.</i>";
 
         return;
       }

@@ -32,9 +32,20 @@
   },
   "moderations": {
     "hap": {
-      "input": true,
-      "threshold": 0.5,
-      "output": true
+      "input": {
+        "enabled": true,
+        "threshold": 0.5,
+        "mask": {
+          "remove_entity_value": true
+        }
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.5,
+        "mask": {
+          "remove_entity_value": true
+        }
+      }
     }
   }
 }

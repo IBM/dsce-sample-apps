@@ -5,12 +5,17 @@
   "google/flan-t5-xl": 0.0006,
   "google/flan-t5-xxl": 0.0018,
   "google/flan-ul2": 0.005,
+  "ibm-mistralai/merlinite-7b": 0.0006,
   "ibm-mistralai/mixtral-8x7b-instruct-v01-q": 0.0006,
+  "mistralai/mixtral-8x7b-instruct-v01": 0.0006,
+  "ibm/granite-7b-lab": 0.0006,
   "ibm/granite-13b-chat-v1": 0.0006,
   "ibm/granite-13b-chat-v2": 0.0006,
   "ibm/granite-13b-instruct-v1": 0.0006,
   "ibm/granite-13b-instruct-v2": 0.0006,
   "ibm/granite-20b-multilingual": 0.0006,
   "meta-llama/llama-2-13b-chat": 0.0006,
-  "meta-llama/llama-2-70b-chat": 0.0018
+  "meta-llama/llama-2-70b-chat": 0.0018,
+  "meta-llama/llama-3-8b-instruct": 0.0006,
+  "meta-llama/llama-3-70b-instruct": 0.0018
 }

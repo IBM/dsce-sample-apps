@@ -2,6 +2,9 @@ import os
 from flask import Flask, Response, g, request
 from flasgger import Swagger
 from core.framework import *
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 

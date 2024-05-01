@@ -10,6 +10,9 @@ import base64
 import io, time
 from jproperties import Properties
 from markdownify import markdownify as md
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # instantiate config
 configs = Properties()
@@ -23,7 +26,8 @@ for item in items_view:
     configs_dict[item[0]] = item[1].data
 
 # For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
 HEADERS = {
         'accept': 'application/json',
@@ -128,7 +132,7 @@ buttonsPanel = dbc.Row([
 
 footer = html.Footer(
     dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
     style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
     className="bg-dark position-fixed bottom-0"
 )
@@ -322,10 +326,10 @@ def get_header_with_access_tkn(access_token):
 
 # LLM API call
 def llm_fn(text, payload_json, type, examples, access_token):
-    REQ_URL = SERVER_URL+'/v1/generate'
+    payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = '{}{}\n\nInput:\n{}\nOutput:\n'.format(payload_json['input'], examples, text)
     print("calling LLM")
-    response_llm = requests.post(REQ_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
+    response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()
     try:
         return parse_output(response_llm_json['results'][0]['generated_text'], type)

@@ -17,6 +17,12 @@
         "stop_sequences": [],
         "repetition_penalty": 1
       },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
       "project_id": "taken from providers.json, but do not remove this key."
     }
   },
@@ -38,6 +44,12 @@
         "stop_sequences": [],
         "repetition_penalty": 1
       },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
+      },
       "project_id": "taken from providers.json, but do not remove this key."
     }
   },
@@ -58,6 +70,12 @@
         "min_new_tokens": 1,
         "stop_sequences": [],
         "repetition_penalty": 1
+      },
+      "moderations": {
+        "hap": {
+          "input": { "enabled": true, "threshold": 0.75 },
+          "output": { "enabled": true, "threshold": 0.75 }
+        }
       },
       "project_id": "taken from providers.json, but do not remove this key."
     }

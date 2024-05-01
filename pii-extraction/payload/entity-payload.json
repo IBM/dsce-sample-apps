@@ -10,13 +10,21 @@
   },
   "moderations": {
     "hap": {
-      "input": true,
-      "output": true,
-      "threshold": 0.5,
-      "mask": {
-        "remove_entity_value": true
+      "input": {
+        "enabled": true,
+        "threshold": 0.5,
+        "mask": {
+          "remove_entity_value": true
+        }
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.5,
+        "mask": {
+          "remove_entity_value": true
+        }
       }
     }
   },
-  "project_id": "<your watsonx instance project_id>"
+  "project_id": ""
 }

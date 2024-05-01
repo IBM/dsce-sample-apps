@@ -8,6 +8,9 @@ from sql_formatter.core import format_sql
 from jproperties import Properties
 from markdownify import markdownify as md
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # instantiate config
 configs = Properties()
@@ -31,12 +34,12 @@ with open('pricing_list.json') as pricing_data:
     model_pricing = json.load(pricing_data)
 
 # to get the list of models
-model_list_url = configs_dict["MODEL_LIST_URL"]
+model_list_url = os.getenv("MODEL_LIST_URL")
 
 # For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
-PROJECT_ID = os.getenv("PROJECT_ID", default="")
 HEADERS = {
         'accept': 'application/json',
         'content-type': 'application/json',
@@ -101,7 +104,7 @@ for usecase in data_f_json:
 
 footer = html.Footer(
     dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
     style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
     className="bg-dark position-fixed bottom-0"
 )
@@ -214,8 +217,9 @@ def get_models(access_token):
     models = []
     for r in response_json["resources"]:
         models.append(r["model_id"])
-    models.remove("ibm/granite-13b-chat-v2")
-    models.remove("ibm/granite-13b-instruct-v2")
+    models_to_remove = ["ibm/granite-13b-chat-v2", "ibm/granite-13b-instruct-v2", "ibm/slate-125m-english-rtrvr", "ibm/slate-30m-english-rtrvr"]
+    for model in models_to_remove:
+        models.remove(model)
     return models
 
 # Fetch payloads for viewing
@@ -274,8 +278,8 @@ def get_header_with_access_tkn(access_token):
 
 # LLM API call
 def llm_fn(text, payload_json, type, access_token):
+    payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n"
-    payload_json['project_id'] = PROJECT_ID
     print("calling LLM", datetime.now())
     
     start_time = time.perf_counter()
@@ -287,9 +291,13 @@ def llm_fn(text, payload_json, type, access_token):
     resp = response_llm_json['results'][0]['generated_text']
     total_token = response_llm_json['results'][0]['input_token_count'] + response_llm_json['results'][0]['generated_token_count']
     formatted_total_token = ('{:,}'.format(total_token)) # to add comman in the tokens
-    cost = model_pricing[payload_json["model_id"]]*total_token
     try:
-        return parse_output(resp, type), formatted_total_token, round(cost, 2), round(api_resp_time, 2)
+        cost = model_pricing[payload_json["model_id"]]*total_token
+        cost = "${}".format(round(cost, 2))
+    except:
+        cost = "N/A"
+    try:
+        return parse_output(resp, type), formatted_total_token, cost, round(api_resp_time, 2)
     except Exception as e:
         print("{} Error from LLM -->".format(datetime.now()),response_llm_json)
         return "Error occured. Status code: {}. Please try again.".format(response_llm_json['status_code'])
@@ -386,13 +394,13 @@ def generateOutput(n, text, selected_app_index):
                             # html.Br(), 
                             resp,
                             ], className="output-div"), 
-            html.Div(children=[html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: ${cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")],id="api-info-btm", className="api-info-btm")], [html.Div(
+            html.Div(children=[html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: {cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")],id="api-info-btm", className="api-info-btm")], [html.Div(
             [
             html.Div(children=[html.H5(label), 
                                 html.Div(children=
                                     [
                                         html.Span(f"Model: ", style={"borderBottom": "1px solid black", "marginTop": "10px"}), 
-                                        dcc.Dropdown(options=get_models(access_token), value=model2, searchable=False, clearable=False, 
+                                        dcc.Dropdown(options=get_models(access_token), value=model2, searchable=False, clearable=False, optionHeight=45,
                                         id="model-drpdown", style={"width": "16rem", "borderTop": "none", "borderRight": "none", "borderLeft": "none", "borderRadius": "unset"}),
                                     ], style={"display": "flex", "flexDirection": "row", "gap":"1rem"}
                                 )
@@ -420,7 +428,7 @@ def model_change(model, selected_app_index, text):
     type = call["type"]
     payload["model_id"] = model
     resp, total_token, cost, api_resp_time = llm_fn(text, payload, type, access_token)
-    return [resp], [html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: ${cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")]
+    return [resp], [html.Span(f"Tokens consumed: {total_token} | Response time: {api_resp_time}s | *Cost per 1,000 similar sized sessions: {cost}", style={"fontStyle": "normal", "fontWeight": "bold"}), html.Br(), dcc.Markdown("*Cost provided is an estimate and is subject to change. It is for model runtime usage only, excluding additional services. For current pricing, visit [this page.](https://www.ibm.com/products/watsonx-ai/foundation-models)", link_target="_blank")]
 
 @app.callback(
     Output("div-part-b-res", "children", allow_duplicate=True),

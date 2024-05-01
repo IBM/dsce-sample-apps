@@ -12,5 +12,11 @@
     "top_p": 1,
     "repetition_penalty": 1
   },
-  "project_id": "<your watsonx instance project_id>"
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
+  },
+  "project_id": ""
 }
