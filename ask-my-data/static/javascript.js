@@ -11,6 +11,36 @@ function loadHomePage() {
   });
 }
 
+function getModelsList() {
+  fetch("./models-list", {
+    headers: {
+      APIAUTHCODE: document.getElementById("api_a_code").value,
+    },
+  }).then(async (res) => {
+    if (!res.ok) {
+      throw new Error("response was not ok");
+    }
+    const models = await res.json();
+
+    const items = models.map(
+      (m) =>
+        `<cds-dropdown-item value="${m.id}">
+      ${m.label}
+      </cds-dropdown-item>`
+    );
+
+    const modelSelector = `<cds-dropdown
+      value="meta-llama/llama-2-13b-chat"
+      id="models"
+      title-text="Model"
+      style="width: 50%; padding-top: 1rem"
+    >
+    ${items.join("")}
+    </cds-dropdown>`;
+    document.getElementById("model-selection").innerHTML = modelSelector;
+  });
+}
+
 function getPrompt(userId, aiTask) {
   document.getElementById("prompt-status").innerText = "";
   if (!userId) {
@@ -23,7 +53,7 @@ function getPrompt(userId, aiTask) {
     if (aiTask === "sql_gen" && data === "No data available") {
       data = {
         prompt: "Upload a csv to generate the sql prompt",
-        model_id: "bigcode/startcoder",
+        model_id: "bigcode/starcoder",
         max_new_tokens: "100",
         stop_sequences: ";",
       };
@@ -316,9 +346,9 @@ function fileUploadCustomResponseHandler(event, instance) {
   const { element, message } = event.data;
 
   element.innerHTML = `
-    <div>
+    <div style="padding-top: 1rem;">
         <input type="file" id="uploadInput" style="display: none;">
-        <button id="uploadButton-report" class="WAC__button--primary"> Upload File </button>
+        <button id="uploadButton-report" class="WAC__button--primary cds--btn cds--btn--primary"> Upload File </button>
     </div>`;
 
   const uploadInput = element.querySelector("#uploadInput");
@@ -388,8 +418,7 @@ function setUpChatbot() {
       instance.updateCSSVariables({
         "BASE-max-height": "90%",
         "BASE-width": "47%",
-        "BASE-font-size-med":
-          "var(--WatsonAssistantChat-BASE-font-size-large)",
+        "BASE-font-size-med": "var(--WatsonAssistantChat-BASE-font-size-large)",
         "BASE-line-height-med":
           "var(--WatsonAssistantChat-BASE-line-height-large)",
       });

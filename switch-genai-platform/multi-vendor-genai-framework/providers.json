@@ -1,6 +1,6 @@
 {
   "watsonx": {
-    "url": "https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29",
+    "url": "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29",
     "authtype": "token",
     "apikey": "WATSONX_API_KEY",
     "projectid": "<put-watsonx-instance-projectid-here>",

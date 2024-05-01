@@ -62,7 +62,7 @@
     ></script>
   </head>
 
-  <body onload="setUpChatbot(); loadHomePage();" class="cds-theme-zone-white">
+  <body onload="setUpChatbot(); loadHomePage(); getModelsList();" class="cds-theme-zone-white">
     <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
       <cds-header-name>
         Ask my data
@@ -82,8 +82,6 @@
             low-contrast
             >
           </cds-inline-notification>
-
-
 
         <div id="help-text-div">
           <h2>Ask questions on your data</h2>
@@ -172,41 +170,9 @@
                 <cds-dropdown-item value="sql_gen">sql_gen</cds-dropdown-item>
               </cds-dropdown>
             </div>
-            <div class="model-selection" style="padding-top: 1rem">
+            <div id="model-selection" class="model-selection" style="padding-top: 1rem">
               <!-- <label for="models">Select a model: </label> -->
-              <cds-dropdown
-                value="meta-llama/llama-2-13b-chat"
-                id="models"
-                title-text="Model"
-                style="width: 50%; padding-top: 1rem"
-              >
-                <cds-dropdown-item value="meta-llama/llama-2-13b-chat">
-                  meta-llama/llama-2-13b-chat
-                </cds-dropdown-item>
-                <cds-dropdown-item value="google/flan-ul2"
-                  >google/flan-ul2</cds-dropdown-item
-                ><cds-dropdown-item value="bigcode/starcoder"
-                  >bigcode/starcoder</cds-dropdown-item
-                >
-                <cds-dropdown-item value="google/flan-t5-xxl"
-                  >google/flan-t5-xxl</cds-dropdown-item
-                >
-                <cds-dropdown-item value="ibm/granite-13b-instruct-v1">
-                  ibm/granite-13b-instruct-v1
-                </cds-dropdown-item>
-                <cds-dropdown-item value="ibm/granite-13b-chat-v1">
-                  ibm/granite-13b-chat-v1
-                </cds-dropdown-item>
-                <cds-dropdown-item value="ibm/granite-13b-chat-v2">
-                  ibm/granite-13b-chat-v2
-                </cds-dropdown-item>
-                <cds-dropdown-item value="meta-llama/llama-2-70b-chat">
-                  meta-llama/llama-2-70b-chat
-                </cds-dropdown-item>
-                <cds-dropdown-item value="ibm/mpt-7b-instruct2"
-                  >ibm/mpt-7b-instruct2</cds-dropdown-item
-                >
-              </cds-dropdown>
+              <cds-dropdown-skeleton></cds-dropdown-skeleton>
             </div>
 
             <div class="other-input">
@@ -222,7 +188,6 @@
             </div>
             <div
               id="prompt-status"
-              style=""
             ></div>
           </div>
 
@@ -291,6 +256,7 @@
       style="display: none"
       value="{{wa_service_instance_id}}"
     />
+    <input type="password" id="api_a_code" value="{{api_a_code}}" hidden/>
     <footer class="cds-theme-zone-g100 footer"></footer>
   </body>
 </html>

@@ -20,7 +20,7 @@ for item in items_view:
     configs_dict[item[0]] = item[1].data
 
 # For LLM call
-SERVER_URL = configs_dict['SERVER_URL']
+SERVER_URL = os.getenv('SERVER_URL')
 HEADERS = {'APIAUTHCODE': os.getenv("APIAUTHCODE")}
 
 # multigenai framework endpoints to fetch or set example, payloads etc
@@ -182,7 +182,7 @@ buttonsPanel = dbc.Row([
 
 footer = html.Footer(
     dbc.Row([
-        dbc.Col(configs_dict['footer_text'],className="p-3")]),
+        dbc.Col(children=[dcc.Markdown(configs_dict['footer_text'])],className="p-3 pb-0")]),
     style={'paddingLeft': '1rem', 'paddingRight': '5rem', 'color': '#c6c6c6', 'lineHeight': '22px'},
     className="bg-dark position-fixed bottom-0"
 )

@@ -62,6 +62,55 @@ paths:
       #   - https
       # security:
       #   - ApiKey
+  "/get-tags":
+    post:
+      summary: Get all the available search tags
+      description: Find all search tags based on provider & aiTask. This tags will help user to find the appropriate prompt from prompt library.
+      externalDocs:
+        url: https://github.ibm.com/isv-dce/sample-apps/tree/main/multi-vendor-genai-framework/readme.md
+      tags:
+        - Search
+      operationId: get_search_tags
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: requestBody
+          description: Request body containing provider and aiTask
+          required: true
+          schema:
+            type: object
+            properties:
+              provider:
+                type: string
+                example: "watsonx"
+                description: Provider name
+              aiTask:
+                type: string
+                example: "summarization"
+                description: AI task name
+      produces:
+        - application/json
+      responses:
+        200:
+          description: List of tags
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - summarization
+              - granite-13b-chat-v2
+        403:
+          description: Request header is missing APIAUTHCODE or incorrect value is provided.
+          schema:
+            type: string
+            example: Forbidden
+      # schemes:
+      #   - http
+      #   - https
+      # security:
+      #   - ApiKey
   "/find-prompt":
     post:
       summary: Find the prompt based on input search parameters

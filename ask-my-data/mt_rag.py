@@ -1,15 +1,15 @@
-import os, time, base64, decimal, json, uuid, requests, hashlib
-from flask import Flask, request, render_template
+import os, base64, bcrypt, decimal, hashlib, json, requests, time, uuid
+from flask import Flask, request, render_template, Response
 from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.document_loaders import UnstructuredPDFLoader
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 # vector store used for all tenants
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 import pandas as pd
 import mysql.connector
 from mysql.connector import pooling
@@ -20,13 +20,25 @@ load_dotenv()
 
 # initialization 
 
-genai_api_url=os.getenv("WML_SERVER_URL", default="https://us-south.ml.cloud.ibm.com")
-genai_api_key=os.getenv("WATSONX_API_KEY", default="")
+WML_SERVER_URL=os.getenv("WML_SERVER_URL", default="https://us-south.ml.cloud.ibm.com")
 
 # embedding model used for all tenants
 embeddings = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-MiniLM-L6-v2")
 
-# variables for watson assistant
+# For LLM call
+SERVER_URL = os.getenv('SERVER_URL')
+FOUNDATION_MODELS_URL = os.getenv('FOUNDATION_MODELS_URL')
+WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
+API_KEY = os.getenv("WATSONX_API_KEY", default="")
+HEADERS = {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'Authorization': 'Bearer {}'.format(API_KEY)
+    }
+
+APIAUTHCODE = os.getenv('APIAUTHCODE', default="wv29efrtsx95")
+
+# env variable for watson assistant
 WAINTEGRATIONID = os.getenv("WAINTEGRATIONID")
 WAREGION = os.getenv("WAREGION")
 WASERVICEINSTANCEID = os.getenv("WASERVICEINSTANCEID")
@@ -64,7 +76,6 @@ stop_sequences = payload_f_json["parameters"]["stop_sequences"]
 temperature = 0.5
 top_k=50
 top_p=0.5
-project_id = payload_f_json["project_id"]
 
 rag_params = {
         GenParams.DECODING_METHOD:decoding_method,
@@ -79,13 +90,12 @@ rag_params = {
 model = Model(
     model_id=model_id,
     credentials={
-        "apikey": genai_api_key,
-        "url": genai_api_url
+        "apikey": API_KEY,
+        "url": WML_SERVER_URL
     },
-    project_id=project_id,
+    project_id=WATSONX_PROJECT_ID,
     params=rag_params
     )
-# creds = Credentials(api_key=genai_api_key, api_endpoint=genai_api_url)
 if(len(stop_sequences)>0):
 	rag_params[GenParams.STOP_SEQUENCES] = stop_sequences
 
@@ -340,14 +350,6 @@ def load_files(id):
 		os.remove(file_path)
 	return {"ok": True, "file": split_tup[1], "errMsg": str(msg)}
 
-SERVER_URL = os.getenv('SERVER_URL', default="")
-API_KEY = os.getenv("WATSONX_API_KEY", default="")
-HEADERS = {
-        'accept': 'application/json',
-        'content-type': 'application/json',
-        'Authorization': 'Bearer {}'.format(API_KEY)
-    }
-
 # Get IBM access token and return headers
 def get_header_with_access_tkn(access_token):
     headers_with_access_tkn = HEADERS.copy()
@@ -360,6 +362,7 @@ def find_label(text, id):
 	access_token = authenticator.token_manager.get_token()
 	with open('payload/label_classifier.json') as payload_f:
 		payload_f_json = json.load(payload_f)
+	payload_f_json['project_id'] = WATSONX_PROJECT_ID
 	payload_f_json['input'] = users_data[id]["label_classifier"]["prompt"]+text+"\nOutput:"
 	response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_f_json))
 	response_llm_json = response_llm.json()
@@ -403,6 +406,7 @@ def llm_call(id,q,type):
 	
 	input_prompt = instruction if len(instruction)!=0 else q
 	print("Input_prompt : ",input_prompt)
+	payload_f_json["project_id"] = WATSONX_PROJECT_ID
 	payload_f_json["model_id"] = users_data[id][type]["model_id"]
 	payload_f_json["parameters"]["max_new_tokens"] = int(users_data[id][type]["max_new_tokens"])
 	payload_f_json["parameters"]["stop_sequences"] = users_data[id][type]["stop_sequences"]
@@ -423,7 +427,7 @@ def llm_call(id,q,type):
 # Server the webapp on / endpoint
 @app.route('/')
 def serve_index_page():
-	return render_template('index.html', wa_integration_id=WAINTEGRATIONID, wa_region=WAREGION, wa_service_instance_id=WASERVICEINSTANCEID)
+	return render_template('index.html', wa_integration_id=WAINTEGRATIONID, wa_region=WAREGION, wa_service_instance_id=WASERVICEINSTANCEID, api_a_code=APIAUTHCODE)
 
 # User authentication based on email-id
 @app.route('/verify_user', methods=["POST"])
@@ -472,10 +476,10 @@ def update_prompt(id):
 		model = Model(
 			model_id=data["model_id"],
 			credentials={
-				"apikey": genai_api_key,
-				"url": genai_api_url
+				"apikey": API_KEY,
+				"url": WML_SERVER_URL
 			},
-			project_id=project_id,
+			project_id=WATSONX_PROJECT_ID,
 			params=rag_params
 		)
 
@@ -523,10 +527,26 @@ def get_answer():
 	except Exception as error:
 		return {"ok":False, "ans":error, "source": None}
 
+# Get all models avaialble in watsonx GA - dallas.
+@app.route('/models-list', methods=["GET"])
+def get_foundation_models():
+	# Authorize request
+	auth_code = request.headers.get('APIAUTHCODE')
+	if(not isVerified(auth_code)):
+		return Response("Forbidden", status=403)
+
+	response = requests.get(FOUNDATION_MODELS_URL)
+	models_dict = response.json()
+	models = map(lambda r: dict(id=r["model_id"], label=r["label"]) ,models_dict["resources"])
+	return list(models)
+
 # Dummy endpoint to verify in-memory data
 @app.route('/check-data/<id>')
 def get_data(id):
 	return dict(users_data = users_data, file_type=file_type, chains = list(chains.keys()), stores = list(stores.keys()))
+
+def isVerified(auth_code):
+    return auth_code==APIAUTHCODE
 
 if __name__ == '__main__':
 	SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
