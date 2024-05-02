@@ -1,7 +1,7 @@
 {
-  "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
   "data": {
-    "instruction": "Read the input and classify overall sentiment into one of the following options: positive, negative, neutral",
+    "instruction": "Read the below input text and classify overall text into one of the following options: finance, manufacturing, automotive, no industry segment.",
     "input": "",
     "input_prefix": "Input:",
     "output_prefix": "Output:",

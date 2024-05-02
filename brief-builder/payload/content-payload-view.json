@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
   "data": {
     "instruction": "",
     "input": "",

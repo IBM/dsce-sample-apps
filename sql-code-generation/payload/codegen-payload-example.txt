@@ -8,7 +8,7 @@ Input:
 find total fixed deposit investment for customer 5467
 
 Output:
-select sum(investment_product.amount) from investment_product, customer where customer.custid=investment_product.custid and customer.custid='5467'
+select sum(investment_product.invest_amount) from investment_product, customer where customer.custid=investment_product.custid and customer.custid='5467'
 
 Input:
 find total number of customers who live in New York
