@@ -1,0 +1,37 @@
+John (Teltop-Kundendienstmitarbeiter): Hallo, hier ist John vom Teltop-Kundendienst. Wie kann ich Ihnen heute helfen?
+
+Marie Müller (enttäuschte Kundin): Hallo John, ich bin es wieder Frau Marie Müller. Ich bin sehr entäuscht und unzufrieden mit den von Teltop bereitgestellte Services. Mein WLAN zu Hause funktioniert nicht mehr und die TV-Dienste über Glasfaser habe eine sehr schlechte Qualität.
+
+John: Es tut mir leid, von den Problemen zu hören, mit denen Sie zu Hause konfrontiert sind, Frau  Müller. Lassen Sie uns diese Probleme angehen. Können Sie mir weitere Einzelheiten zu den WLAN-Problemen und der Qualität des TV-Dienstes mitteilen?
+
+Marie Müller: Das WLAN bricht immer ab und das Bild der Filme ist sehr verpixelt und fehlerhaft, obwohl die Verbindung des TV-Dienstes über Glasfaser zu meinem Router erfolgt. Es macht es unmöglich, eine Show oder einen Film zu genießen.
+
+John: Ich verstehe, wie frustrierend das sein kann, Frau Müller. Lassen Sie mich unser System überprüfen, um festzustellen, ob in Ihrer Region Probleme gemeldet wurden.
+
+(John überprüft das System und findet keine gemeldeten Probleme in der Region in Frau Müller ihren Anschluss hat.)
+
+John: Frau Müller, es scheint, dass in Ihrer Gegend derzeit keine Probleme gemeldet wurden. Es könnte sich um ein spezifisches Problem mit Ihrem Router, Glasfaseranschluss oder der Verbindung über die Glasfaserleitung handeln. Können Sie bitte überprüfen, ob alle Kabel richtig angeschlossen sind und ob frei Router steht, weil seine Sendeleistung von durch Möbel oder andere Gegenstände gestört werden könnte?
+
+Marie Müller: Ich habe es überprüft und alles scheint in Ordnung zu sein. Das ist so frustrierend!
+
+John: Es tut mir leid, das zu hören, Frau Müller. Am besten führen Sie eine Ferndiagnoseprüfung Ihres Routers durch. Ich kann Sie durch den Prozess begleiten.
+
+(John führt Marie Müller durch die Diagnoseprüfung und dabei werden einige Probleme mit dem Router festgestellt.)
+
+John: Frau Müller, es scheint, dass es ein paar Probleme mit deinem Router gibt. Wir können einen Techniker beauftragen, er wird das Gerät für Sie auszutauschen. Darüber hinaus gehe ich auf die Qualität der TV-Dienste ein. Möglicherweise liegt ein Signalproblem oder eine Gerätestörung vor.
+
+Marie Müller: Endlich ein paar Antworten! Wann kann der Techniker kommen und wie schnell können Sie die Probleme mit den TV-Services beheben?
+
+John: Ich werde einen Techniker vereinbaren, der innerhalb der nächsten zwei Werktage zu Ihnen kommt, um Ihren Router auszutauschen. Was die TV-Dienste betrifft, wird unser Team sofort daran arbeiten und Sie sollten innerhalb der nächsten 24 Stunden Verbesserungen sehen.
+
+Marie Müller: Ich bin froh, dass wir nun einen Ansatz zu Problemlösung gefunden haben und hoffe, das Problem wird schnell behoben.
+
+John: Ich schätze Ihre Geduld, Frau Müller. Um die Ihnen entstandenen Unannehmlichkeiten auszugleichen, möchte ich Ihnen eine dreimonatige kostenlose Nutzung der Teltop TV-Dienste anbieten, sobald das Problem behoben ist. Finden Sie dies ist eine angebrachte Entschädigung?
+
+Marie Müller: Ich bedanke mich für das Angebot der Entschädigung und hoffe das die bestehenden Probleme schnell behoben werden.
+
+John: Danke für dein Verständnis, Frau Müller. Wir sind bestrebt, Ihnen ein optimales Erlebnis bei der Nutzung unserer Internet- und TV-Services zu bieten. Wenn Sie weitere Bedenken oder Fragen haben, können Sie sich gerne an uns wenden.
+
+Marie Müller: Danke, John. Ich nehme das Angebot für drei Monate kostenlose Nutzung der TV-Dienste an und hoffe, dass die Probleme bald behoben sind.
+
+John: Auf jeden Fall, Frau Müller. Wir wissen Ihre Treue zu schätzen und sind hier, um die Probleme mit unseren Services schnell und einfach zu Lösen. Wenn Sie noch etwas anderes haben, zögern Sie nicht, uns zu kontaktieren. Ich wünsche Ihnen einen wunderbaren Tag!
