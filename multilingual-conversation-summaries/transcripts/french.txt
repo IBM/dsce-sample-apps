@@ -1,0 +1,19 @@
+John (agent du service client Teltop) : Bonjour, voici John du service client Teltop. Comment puis-je vous aider aujourd'hui ?
+Mary (abonnée déçue) : Salut John, c'est encore Mary. J'ai fait un cauchemar avec votre service. Le Wi-Fi de ma maison est en panne et le service de télévision sur fibre optique est épouvantable.
+John : Je suis désolé d'apprendre les problèmes auxquels vous faites face à la maison, Mary. Abordons ces problèmes. Pouvez-vous me fournir plus de détails sur les problèmes de Wi-Fi et la qualité du service TV ?
+Mary : Le Wi-Fi ne cesse de baisser et le service de télévision sur fibre optique est pixelisé et défectueux. Cela rend impossible de profiter d’une émission ou d’un film.
+John : Je comprends à quel point cela peut être frustrant, Mary. Laissez-moi vérifier notre système pour voir si des problèmes ont été signalés dans votre région.
+John vérifie le système et ne trouve aucun problème signalé dans la région de Mary.
+John : Mary, il semble qu'aucun problème n'ait été signalé dans votre région. Il peut s'agir d'un problème spécifique lié à votre équipement ou à votre connexion. Pouvez-vous vérifier si tous les câbles sont correctement connectés et s'il y a des problèmes de connections au routeur ?
+Mary : J'ai vérifié et tout semble bien. C'est tellement frustrant !
+John : Je suis désolé d'entendre ça, Mary. Il peut être préférable d'effectuer un diagnostic à distance sur votre routeur. Je peux vous guider tout au long du processus.
+John guide Mary à travers la vérification de diagnostic, qui révèle certains problèmes avec le routeur.
+John : Mary, il semble qu'il y ait des problèmes avec votre routeur. Nous pouvons faire appel à un technicien pour le remplacer pour vous. De plus, j'aborderai la qualité du service TV. Il peut y avoir un problème de signal ou un dysfonctionnement de l'équipement.
+Mary : Enfin des réponses ! Quand le technicien peut-il venir et dans combien de temps pouvez-vous réparer le service TV ?
+John : Je planifierai qu'un technicien vienne chez vous dans les deux prochains jours ouvrables pour remplacer votre routeur. Quant au service TV, notre équipe y travaillera immédiatement et vous devriez constater des améliorations dans les prochaines 24 heures.
+Mary : Eh bien, il était temps ! J'espère que cela sera réglé.
+John : J'apprécie votre patience, Mary. Pour compenser ce désagrément, j'aimerais vous offrir trois mois de service TV gratuit une fois que tout sera résolu. Est-ce que cette compensation vous conviens ?
+Mary : C'est plutôt ça, John. J'apprécie l'offre. Espérons que le technicien et votre équipe pourront résoudre ces problèmes une fois pour toutes.
+John : Merci de votre compréhension, Mary. Nous nous engageons à vous offrir une expérience agréable. Si vous avez d'autres préoccupations ou questions, n'hésitez pas à nous contacter.
+Marie : Merci, John. J'accepterai l'offre du service de télévision gratuit et espérons que les choses s'amélioreront bientôt.
+John : Absolument, Mary. Nous apprécions votre fidélité et nous sommes là pourrésoudre les problémes. S'il y a autre chose, n'hésitez pas à nous contacter. Passe une bonne journée!
