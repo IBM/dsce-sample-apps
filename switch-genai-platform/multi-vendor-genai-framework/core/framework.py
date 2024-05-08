@@ -119,7 +119,7 @@ def _prepare_payload_and_header(providerTuple, text):
 	payload_json[input_var] = payload_json[input_var] + "Input:" + text + "\n\nOutput:\n"
 
 	if 'project_id' in payload_json:
-		payload_json['project_id'] = provider_details['projectid'] or os.getenv('WATSONX_PROJECT_ID')
+		payload_json['project_id'] = os.getenv(provider_details['projectid'])
 	
 	header = {}
 	if 'apikey' in provider_details:

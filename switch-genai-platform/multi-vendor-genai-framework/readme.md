@@ -18,8 +18,17 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    - 3.4 Click **Create**
    - 3.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
+   ##### Steps to create project_id (skip 3.1 to 3.3 for watsonx trial account)
+
+   - 3.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
+   - 3.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
+   - 3.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
+   - 3.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 3.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+
    ```sh
    WATSONX_API_KEY=<your IBM Cloud API key>
+   WATSONX_PROJECT_ID=<your watsonx instance projectid>
    OPENAI_API_KEY=<Your openai api key>
    APIAUTHCODE=<generate a new uuid for api call authorization>
    #Server running mode. Permissible values True or False
@@ -28,23 +37,13 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
    > Reference Online uuid generator tool : <https://www.uuidgenerator.net/>
 
-4. Open `providers.json` file, update the value for 'projectid' key in 'watsonx' section with your projectid.
-
-   ##### Steps to create project_id (skip 4.1 to 4.3 for watsonx trial account)
-
-   - 4.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
-   - 4.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 4.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
-   - 4.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
-   - 4.5 Click on **Manage** tab > Copy the **Project ID** from **General**
-
-5. Go to the root directory and prepare your python environment.
+4. Go to the root directory and prepare your python environment.
 
    ```sh
    python3 -m venv client-env
    ```
 
-6. Activate the virtual environment:
+5. Activate the virtual environment:
 
    - MacOS, Linux, and WSL using bash/zsh
 
@@ -76,13 +75,13 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
-7. Install the required libraries.
+6. Install the required libraries.
 
    ```sh
    pip3 install -r requirements.txt
    ```
 
-8. Start the framework application.
+7. Start the framework application.
 
    ```sh
    python3 main.py
