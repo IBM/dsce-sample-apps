@@ -42,13 +42,15 @@ provider_by_tasks = requests.get(GET_ALL_PROVIDERS, headers=HEADERS)
 provider_by_tasks = provider_by_tasks.json()
 all_ai_task = list(provider_by_tasks.keys())
 
+filtered_ai_task = list(filter(lambda a: a in ["summarization", "entity-extraction"], all_ai_task))
+
 # this will only keep the unique providers
 all_unique_providers = list({x for l in provider_by_tasks.values() for x in l})
 
 preffered_provider = {}
 
 # setting watsonx as a default provider
-for i in all_ai_task:
+for i in filtered_ai_task:
     preffered_provider[i] = "watsonx"
 
 # setting api key for all providers empty
@@ -61,12 +63,12 @@ examples = {}
 
 # get examples
 def fetch_examples():
-    for ai_task in all_ai_task:
+    for ai_task in filtered_ai_task:
         examples[ai_task] = {}
         for provider in all_unique_providers:
             payload = {
                 "provider": provider,
-                "search": [ai_task, "s1" if ai_task=="summarization" else "e1"]
+                "search": [ai_task, "uid-s1" if ai_task=="summarization" else "uid-e1"]
             }
             HEADERS['Content-Type'] = 'application/json'
             example_res = requests.post(GET_EXAMPLES, headers=HEADERS, data=json.dumps(payload))
@@ -118,7 +120,7 @@ provider_modal = dbc.Modal(
     [
         dbc.ModalHeader(dbc.ModalTitle("Change provider")),
         dbc.ModalBody([
-            dbc.Tabs(id="provider-modal-tb", active_tab=f"provider-tab-{all_ai_task[0]}", children=[
+            dbc.Tabs(id="provider-modal-tb", active_tab=f"provider-tab-{filtered_ai_task[0]}", children=[
                 dbc.Tab([
                         html.Div(id=f"{ai_task}-provider-div", children=[
                                 dbc.Label(children=[html.B("Select Provider")], style={"margin-top": "0.5rem"}),
@@ -136,7 +138,7 @@ provider_modal = dbc.Modal(
                         ], style={"display":"flex", "flex-direction": "row", "gap": "1rem"}),
                         dbc.Alert(f"{ai_task} updated", color="success", id=f"{ai_task}-save-msg", style={"margin-top": "1rem", "display": "none"})
                     ], 
-                    tab_id=f'provider-tab-{ai_task}', label=ai_task, label_style={'borderRadius': 0}, style={"background-color": "white",  "padding-left": "1rem", "padding-right": "1rem"}) for ai_task in all_ai_task]) 
+                    tab_id=f'provider-tab-{ai_task}', label=ai_task, label_style={'borderRadius': 0}, style={"background-color": "white",  "padding-left": "1rem", "padding-right": "1rem"}) for ai_task in filtered_ai_task]) 
         ]),
     ],
     id="provider-modal",
@@ -149,7 +151,7 @@ edit_example_modal = dbc.Modal(
     [
         dbc.ModalHeader(dbc.ModalTitle("Edit examples")),
         dbc.ModalBody([
-            dbc.Tabs(id="example-modal-tb", active_tab=f"example-tab-{all_ai_task[0]}") 
+            dbc.Tabs(id="example-modal-tb", active_tab=f"example-tab-{filtered_ai_task[0]}") 
         ]),
     ],
     id="example-modal",
@@ -266,10 +268,10 @@ app.layout = html.Div(children=[
 def get_payloads(text, preffered_provider, examples):
     payloads_output = []
     
-    for ai_task, n in zip(all_ai_task, range(len(all_ai_task))):
+    for ai_task, n in zip(filtered_ai_task, range(len(filtered_ai_task))):
         # example = examples[ai_task][preffered_provider[ai_task]]
         HEADERS['Content-Type'] = 'application/json'
-        payloads = requests.post(GET_PAYLOAD, headers=HEADERS, data=json.dumps({"provider": preffered_provider[ai_task], "search": [ai_task, "sales-conversation", "s1" if ai_task=="summarization" else "e1"]}))
+        payloads = requests.post(GET_PAYLOAD, headers=HEADERS, data=json.dumps({"provider": preffered_provider[ai_task], "search": ["sales-conversation", "uid-s1" if ai_task=="summarization" else "uid-e1"]}))
         payload_f_json = payloads.json()
         payload_f_json = payload_f_json[0]
         if(preffered_provider[ai_task]=="watsonx"):
@@ -295,7 +297,7 @@ def get_payloads(text, preffered_provider, examples):
 # Fetch examples for editing
 def get_examples(examples):
     examples_ui = []
-    for ai_task in all_ai_task:
+    for ai_task in filtered_ai_task:
         examples_ui.append(
                     dbc.Tab(
                         [
@@ -346,7 +348,7 @@ def llm_fn(provider, ai_task, api, text, type, examples):
     print("calling LLM", datetime.now())
     payload_json = {
         "provider": provider,
-        "search": [ai_task, "sales-conversation", "s1" if ai_task=="summarization" else "e1"],
+        "search": [ai_task, "sales-conversation", "uid-s1" if ai_task=="summarization" else "uid-e1"],
         "OPENAI_API_KEY": api,
         "input_text": text
         }
@@ -453,7 +455,7 @@ def toggle_payload_modal(n1, is_open, api_key_store):
         return not is_open #,op
     return is_open #, []
 
-for ai_task in all_ai_task:
+for ai_task in filtered_ai_task:
     # save provider selection & custom api key
     @app.callback(
             Output('preffered-provider-store', 'data', allow_duplicate=True),
