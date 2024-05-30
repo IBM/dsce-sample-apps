@@ -58,18 +58,21 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    - 5.1.4 Click **Create**
    - 5.1.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
 
-   ##### Steps to create project_id (skip 5.2.1 to 5.2.3 for watsonx trial account)
+   ##### Steps to create project_id (skip 5.2.1 to 5.2.4 for watsonx trial account)
 
    - 5.2.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
    - 5.2.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 5.2.3 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx
-   - 5.2.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
-   - 5.2.5 Click on **Manage** tab > Copy the **Project ID** from **General**
+   - 5.2.3 Additionally, set up the Watson Studio and Watson Machine Learning services in jp-tok region. (this will be needed for summarization of Japanese language)
+   - 5.2.4 Create a Project from IBM watsonx console - https://dataplatform.cloud.ibm.com/projects/?context=wx in both the regions.
+   - 5.2.5 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **Admin** > Click **Add**
+   - 5.2.6 Click on **Manage** tab > Copy the **Project ID** from **General**
 
    ```sh
    SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+   SERVER_URL_JAPAN = https://jp-tok.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
    WATSONX_API_KEY=<your IBM Cloud API key>
    WATSONX_PROJECT_ID=<your watsonx.ai project_id>
+   WATSONX_PROJECT_ID_JAPAN=<your watsonx.ai project_id of jp-tok region>
    ```
 
 6. Run the application.
