@@ -1,0 +1,377 @@
+[
+    {
+      "text": "advocacy",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "agreement",
+      "value": 11,
+      "group": "All"
+    },
+    {
+      "text": "amusement",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "anger",
+      "value": 105,
+      "group": "All"
+    },
+    {
+      "text": "anger,",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "annoy",
+      "value": 61,
+      "group": "All"
+    },
+    {
+      "text": "anticipation",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "anxiety",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "apologetic",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "apology",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "appreciation",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "assertive",
+      "value": 21,
+      "group": "All"
+    },
+    {
+      "text": "betray",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "bored",
+      "value": 7,
+      "group": "All"
+    },
+    {
+      "text": "calm",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "caution",
+      "value": 9,
+      "group": "All"
+    },
+    {
+      "text": "commiser",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "comparison",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "concern",
+      "value": 681,
+      "group": "All"
+    },
+    {
+      "text": "confidence",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "confusion",
+      "value": 217,
+      "group": "All"
+    },
+    {
+      "text": "curiosity",
+      "value": 151,
+      "group": "All"
+    },
+    {
+      "text": "defensive",
+      "value": 9,
+      "group": "All"
+    },
+    {
+      "text": "desper",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "determination",
+      "value": 13,
+      "group": "All"
+    },
+    {
+      "text": "disappointment",
+      "value": 195,
+      "group": "All"
+    },
+    {
+      "text": "disbel",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "embarrass",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "empath",
+      "value": 15,
+      "group": "All"
+    },
+    {
+      "text": "excitement",
+      "value": 5063,
+      "group": "All"
+    },
+    {
+      "text": "exctiment",
+      "value": 1539,
+      "group": "All"
+    },
+    {
+      "text": "explan",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "frustration",
+      "value": 8051,
+      "group": "All"
+    },
+    {
+      "text": "gratitude",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "help",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "helpful",
+      "value": 95,
+      "group": "All"
+    },
+    {
+      "text": "hope",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "indifference",
+      "value": 7,
+      "group": "All"
+    },
+    {
+      "text": "informative",
+      "value": 87,
+      "group": "All"
+    },
+    {
+      "text": "jealous",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "mysterious",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "neutral",
+      "value": 101,
+      "group": "All"
+    },
+    {
+      "text": "none",
+      "value": 13,
+      "group": "All"
+    },
+    {
+      "text": "nostalg",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "offensive",
+      "value": 1991,
+      "group": "All"
+    },
+    {
+      "text": "panic",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "patience",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "playful",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "polite",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "politeness",
+      "value": 51,
+      "group": "All"
+    },
+    {
+      "text": "positive",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "positivity",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "professional",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "question",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "regret",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "relief",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "request",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "sadness",
+      "value": 51,
+      "group": "All"
+    },
+    {
+      "text": "sales",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "sar",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "sarcasm",
+      "value": 927,
+      "group": "All"
+    },
+    {
+      "text": "serious",
+      "value": 3,
+      "group": "All"
+    },
+    {
+      "text": "silence",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "spam",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "support",
+      "value": 5,
+      "group": "All"
+    },
+    {
+      "text": "surprise",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "suspicion",
+      "value": 15,
+      "group": "All"
+    },
+    {
+      "text": "suspicious",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "threat",
+      "value": 9,
+      "group": "All"
+    },
+    {
+      "text": "threatening",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "toxic",
+      "value": 2989,
+      "group": "All"
+    },
+    {
+      "text": "uncertainty",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "upset",
+      "value": 1,
+      "group": "All"
+    },
+    {
+      "text": "urgency",
+      "value": 273,
+      "group": "All"
+    },
+    {
+      "text": "warning",
+      "value": 13,
+      "group": "All"
+    }
+  ]

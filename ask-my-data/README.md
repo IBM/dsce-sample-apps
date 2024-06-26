@@ -15,7 +15,7 @@
    - 1.7 Once upload is complete, the watsonx Assistant is ready & you can find two actions `upload-file & ask-question` under left hand side panel **Actions > Created by you**
    - 1.8 Note down the assistant keys `integrationID`, `region` & `serviceInstanceID`, which will be used in setting the Environment file in next section. Go to left hand side panel **Environments > Draft > Web chat > Embed**
 
-2. A watsonx.ai instance on IBM cloud.
+2. A watsonx.ai instance on IBM cloud ([get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx)).
 3. A MySQL server database service.
 4. It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 

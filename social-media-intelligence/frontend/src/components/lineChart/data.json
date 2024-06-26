@@ -1,0 +1,107 @@
+[
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 5,
+      "Date": "20-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 8,
+      "Date": "21-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 5,
+      "Date": "22-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 8,
+      "Date": "23-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 5,
+      "Date": "24-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 5,
+      "Date": "25-Feb-24"
+    },
+    {
+      "carrier": "TelcoA",
+      "repeat_user_messages": 5,
+      "Date": "26-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 4,
+      "Date": "20-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 3,
+      "Date": "21-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 10,
+      "Date": "22-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 3,
+      "Date": "23-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 6,
+      "Date": "24-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 9,
+      "Date": "25-Feb-24"
+    },
+    {
+      "carrier": "TelcoB",
+      "repeat_user_messages": 8,
+      "Date": "26-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 5,
+      "Date": "20-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 4,
+      "Date": "21-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 9,
+      "Date": "22-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 14,
+      "Date": "23-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 23,
+      "Date": "24-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 14,
+      "Date": "25-Feb-24"
+    },
+    {
+      "carrier": "TelcoC",
+      "repeat_user_messages": 13,
+      "Date": "26-Feb-24"
+    }
+  ]

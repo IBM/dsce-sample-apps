@@ -1,0 +1,217 @@
+:root{
+    font-family: "IBM Plex Sans";
+}
+#cssportal-grid {
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0px 40px;
+	width: 100%;
+	height: 100%;
+    padding-top: 20px;
+}
+
+.cardDiv{
+    border: 1px solid lightgray;
+    padding: 0rem;
+    height: 740px;
+    overflow-y:scroll;
+    border-radius: 4px;
+
+    // padding-right: 1000px;
+}
+
+.analysisDiv{
+    border: 1px solid lightgray;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.campaignTile{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.trouble-ticket-container{
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 4px;
+}
+.Content{
+    font-size: larger;
+}
+.active-blue {
+    color: white;
+    background: #1a56c4;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 1.5rem;
+
+    margin-top: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: larger;
+    
+    
+}
+    
+.inactive-grey {
+background-color: #f4f4f4 !important; /* Override Carbon's default styles */
+color: rgb(84, 84, 84);
+padding: 1rem;
+margin: 0.5rem;
+
+border: 1px solid lightgray;
+border-radius: 4px;
+margin-bottom: 0.75rem;
+font-size: larger;
+}
+.trouble-ticket-container{
+
+  background-color: #f4f4f4;
+}
+.analysisDiv-2{
+ 
+    padding: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+
+.Watsonx-Heading{
+    margin-top: 0.5rem;
+    font-family: 700;
+}
+.some-class{
+    font-size: 0.8rem;
+    padding: 0.5rem 14px;
+    width: fit-content;
+    text-align: center;
+
+}
+/* App.css */
+#button{
+    align-content: center;
+    text-align: center; 
+    width:145px;
+}
+  
+  .submit-button {
+    
+    font-size: 14px;
+    border: none;
+    background-color: #1a56c4;
+    color: white;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    border: 1px solid #f4f4f4;
+    border-radius: 0.25rem;
+    
+  }
+  
+  .submit-button:hover {
+    background-color: #f4f4f4;
+    border: 1px solid #1a56c4;
+    border-radius: 0.25rem;
+
+  }
+  
+   .submitted {
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 0.25rem;
+  }
+  
+  .submit-button.submitted:hover {
+    background-color: green;
+    border: 1px solid green !important;
+    border-radius: 0.25rem;
+  }
+  
+  .submit-button.submitted::after {
+    
+    color: white;
+  //  content: '\2705'; /* Unicode for checkmark */
+    content: "Copied!";
+//    position: absolute;
+    //top: 80%;
+  //  left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    
+  }
+  
+  
+  .submit-button.submitted::after {
+    opacity: 1;
+  }
+  
+.tickets{
+  font-family: 'IBM Plex Sans' !important;
+  color: #545454;
+}
+
+
+#button{
+  align-content: center;
+  text-align: center; 
+  width:165px;
+}
+
+.submit-button1 {
+  
+  font-size: 14px;
+  border: none;
+  background-color: #1a56c4;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  border: 1px solid #f4f4f4;
+  border-radius: 0.5rem;
+  
+}
+
+.submit-button1:hover {
+  background-color: #f4f4f4;
+  border: 1px solid #1a56c4;
+  border-radius: 0.25rem;
+
+}
+
+ .submitted1 {
+  background-color: green;
+  border: 1px solid green;
+  border-radius: 0.25rem;
+}
+
+.submit-button1.submitted1:hover {
+  background-color: green;
+  border: 1px solid green !important;
+  border-radius: 0.25rem;
+}
+
+.submit-button1.submitted1::after {
+  
+  color: white;
+//  content: '\2705'; /* Unicode for checkmark */
+    content: "Sent!";
+//    position: absolute;
+  //top: 80%;
+//  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  
+}
+
+
+.submit-button1.submitted1::after {
+  opacity: 1;
+}
+
+
