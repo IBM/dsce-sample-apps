@@ -1,0 +1,69 @@
+          env:
+            - name: RAG_APP_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: RAG_APP_API_KEY
+            - name: IBM_CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: IBM_CLOUD_API_KEY
+            - name: WX_URL
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WX_URL
+            - name: WX_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WX_PROJECT_ID
+            - name: COS_INSTANCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: COS_INSTANCE_ID
+            - name: COS_IBM_CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: COS_IBM_CLOUD_API_KEY
+            - name: COS_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: COS_ENDPOINT_URL
+            - name: WXD_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WXD_USERNAME
+            - name: WXD_URL
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WXD_URL
+            - name: WXD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WXD_PASSWORD
+            - name: WD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WD_API_KEY
+            - name: WD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: <wxd-secret>
+                  key: WD_API_KEY
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault

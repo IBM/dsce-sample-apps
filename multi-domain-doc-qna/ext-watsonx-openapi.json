@@ -1,0 +1,374 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0",
+    "description": "WxD & WD Rag application with wx.ai"
+  },
+  "servers": [
+    {
+      "url": "put your backend server public URL here",
+      "description": "RAG backend server"
+    }
+  ],
+  "paths": {
+    "/queryLLM": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/queryLLMResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/queryLLMRequest"
+              }
+            }
+          }
+        },
+        "description": "Query WxD and wxai.",
+        "summary": "Queryllm",
+        "operationId": "queryLLM_queryLLM_post",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/queryWDLLM": {
+      "post": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/queryWDLLMResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/queryWDLLMRequest"
+              }
+            }
+          }
+        },
+        "summary": "QueryWDllm",
+        "operationId": "queryLLM_queryWDLLM_post",
+        "description": "Query WD and wxai.",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "RAG-APP-API-Key"
+      }
+    },
+    "schemas": {
+      "HTTPValidationError": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail"
+          }
+        },
+        "title": "HTTPValidationError"
+      },
+      "LLMParams": {
+        "type": "object",
+        "properties": {
+          "model_id": {
+            "type": "string",
+            "title": "Model Id",
+            "default": "meta-llama/llama-3-70b-instruct"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Inputs",
+            "default": []
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "decoding_method": {
+                "type": "string",
+                "title": "Decoding Method",
+                "default": "greedy"
+              },
+              "min_new_tokens": {
+                "type": "integer",
+                "title": "Min New Tokens",
+                "default": 1
+              },
+              "max_new_tokens": {
+                "type": "integer",
+                "title": "Max New Tokens",
+                "default": 500
+              },
+              "repetition_penalty": {
+                "type": "number",
+                "title": "Repetition Penalty",
+                "default": 1.1
+              },
+              "temperature": {
+                "type": "number",
+                "title": "Temperature",
+                "default": 0.7
+              },
+              "top_k": {
+                "type": "integer",
+                "title": "Top K",
+                "default": 50
+              },
+              "top_p": {
+                "type": "integer",
+                "title": "Top P",
+                "default": 1
+              },
+              "moderations": {
+                "type": "object",
+                "properties": {
+                  "hap_input": {
+                    "type": "string",
+                    "title": "Hap Input",
+                    "default": "true"
+                  },
+                  "threshold": {
+                    "type": "number",
+                    "title": "Threshold",
+                    "default": 0.75
+                  },
+                  "hap_output": {
+                    "type": "string",
+                    "title": "Hap Output",
+                    "default": "true"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "title": "LLMParams"
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "loc": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      },
+      "queryLLMRequest": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "es_index_name": {
+            "type": "string",
+            "title": "Es Index Name"
+          },
+          "es_index_text_field": {
+            "type": "string",
+            "title": "Es Index Text Field",
+            "default": "body_content_field"
+          },
+          "es_model_name": {
+            "type": "string",
+            "title": "Es Model Name",
+            "default": ".elser_model_1"
+          },
+          "num_results": {
+            "type": "string",
+            "title": "Num Results",
+            "default": "5"
+          },
+          "es_model_text_field": {
+            "type": "string",
+            "title": "Es Model Text Field",
+            "default": "ml.tokens"
+          },
+          "llm_instructions": {
+            "type": "string",
+            "description": "Instructions for LLM",
+            "title": "LLM Instructions"
+          },
+          "llm_params": {
+            "$ref": "#/components/schemas/LLMParams"
+          },
+          "filters": {
+            "type": "object",
+            "example": {
+              "date": "2022-01-01",
+              "file_name": "test.pdf"
+            },
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Filters"
+          }
+        },
+        "required": ["question", "es_index_name"],
+        "title": "queryLLMRequest"
+      },
+      "queryLLMResponse": {
+        "type": "object",
+        "properties": {
+          "llm_response": {
+            "type": "string",
+            "title": "Llm Response"
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "title": "References"
+          }
+        },
+        "required": ["llm_response", "references"],
+        "title": "queryLLMResponse"
+      },
+      "queryWDLLMRequest": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "project_id": {
+            "type": "string",
+            "title": "Project Id"
+          },
+          "collection_id": {
+            "type": "string",
+            "title": "Collection Id"
+          },
+          "wd_version": {
+            "type": "string",
+            "title": "Wd Version",
+            "default": "2020-08-30"
+          },
+          "wd_return_params": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Params to pull from WD. Defaults Title and Text.",
+            "title": "Wd Return Params",
+            "default": ["Title", "Text"]
+          },
+          "llm_instructions": {
+            "type": "string",
+            "description": "Instructions for LLM",
+            "title": "LLM Instructions",
+            "default": "[INST]<<SYS>>You are a helpful, respectful, and honest assistant. Always answer as helpfully as possible, while being safe. Be brief in your answers. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don\\'''t know the answer to a question, please do not share false information. <</SYS>>\nGenerate the next agent response by answering the question. You are provided several documents with titles. If the answer comes from different documents please mention all possibilities and use the tiles of documents to separate between topics or domains. Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer.\n{context_str}<</SYS>>\n\n{query_str} Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer. [/INST]"
+          },
+          "num_results": {
+            "type": "string",
+            "title": "Num Results",
+            "default": "5"
+          },
+          "llm_params": {
+            "$ref": "#/components/schemas/LLMParams"
+          },
+          "wd_document_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["acme.pdf", "test.docx"],
+            "title": "Wd Document Names"
+          }
+        },
+        "required": ["question", "project_id", "collection_id"],
+        "title": "queryWDLLMRequest"
+      },
+      "queryWDLLMResponse": {
+        "type": "object",
+        "properties": {
+          "llm_response": {
+            "type": "string",
+            "title": "Llm Response"
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "title": "References"
+          }
+        },
+        "required": ["llm_response", "references"],
+        "title": "queryWDLLMResponse"
+      }
+    }
+  }
+}

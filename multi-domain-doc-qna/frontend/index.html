@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Multi-domain documents Q&A</title>
+  <link rel="icon" type="image/x-icon" href="./images/icon.png">
+  <link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/modal.min.js"></script>
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon/web-components/version/v2.9.0/ui-shell.min.js"></script>
+  <script src="scripts/javascript.js"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name" style="width: 100%;">
+      <cds-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu">
+      </cds-header-menu-button>
+      <cds-header-name>
+        Multi-domain documents Q&A
+      </cds-header-name>
+      <cds-header-nav menu-bar-label="watsonx Discovery">
+        <cds-header-nav-item style="cursor: pointer;" onclick="operateModal('resource-modal', true);">
+          View answer source
+        </cds-header-nav-item>
+        <cds-header-nav-item style="cursor: pointer;" onclick="operateModal('question-modal', true);">
+          Example questions
+        </cds-header-nav-item>
+        <cds-header-menu menu-label="Settings" trigger-content="Settings">
+          <cds-header-menu-item onclick="operateModal('payload-modal', true);">View payload</cds-header-menu-item>
+          <cds-header-menu-item>
+            <a href="assets/source-documents.zip" style="color: unset; text-decoration: none;">Download
+              documents</a></cds-header-menu-item>
+        </cds-header-menu>
+      </cds-header-nav>
+    </cds-header>
+
+    <cds-side-nav is-not-persistent="true">
+      <cds-side-nav-items>
+        <cds-side-nav-menu-item onclick="operateModal('resource-modal', true);">
+          View answer source
+        </cds-side-nav-menu-item>
+        <cds-side-nav-menu-item onclick="operateModal('question-modal', true);">
+          Example questions
+        </cds-side-nav-menu-item>
+        <cds-side-nav-menu-item onclick="operateModal('payload-modal', true);">
+          View payload
+        </cds-side-nav-menu-item>
+        <cds-side-nav-menu-item>
+          <a href="assets/source-documents.zip" style="color: unset; text-decoration: none;">Download documents</a>
+        </cds-side-nav-menu-item>
+      </cds-side-nav-items>
+    </cds-side-nav>
+
+    <cds-modal class="cds-theme-zone-white" id="resource-modal" style="
+        visibility: hidden;
+        display: flex;
+        justify-content: left;
+        padding-left: 28px;
+      " prevent-close-on-click-outside="true">
+      <cds-modal-header>
+        <cds-modal-close-button onclick="operateModal('resource-modal', false);"></cds-modal-close-button>
+        <cds-modal-heading>Answer source</cds-modal-heading>
+      </cds-modal-header>
+      <cds-modal-body>
+        <p id="resources">Answer source will be displayed here</p>
+      </cds-modal-body>
+    </cds-modal>
+
+
+    <cds-modal class="cds-theme-zone-white" id="payload-modal" style="
+        visibility: hidden;
+        display: flex;
+        justify-content: left;
+        padding-left: 28px;
+      " prevent-close-on-click-outside="true">
+      <cds-modal-header>
+        <cds-modal-close-button onclick="operateModal('payload-modal', false);"></cds-modal-close-button>
+        <cds-modal-heading>Payload</cds-modal-heading>
+      </cds-modal-header>
+      <cds-modal-body>
+        <pre style="text-wrap: wrap;">
+          {
+            "model_id": "meta-llama/llama-3-70b-instruct",
+            "data": {
+              "instruction": "[INST]<<SYS>>You are a helpful, respectful, and honest assistant. Always answer as helpfully as possible, while being safe. Be brief in your answers. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don\\'''t know the answer to a question, please do not share false information. <</SYS>>\nGenerate the next agent response by answering the question. You are provided several documents with titles. If the answer comes from different documents please mention all possibilities and use the tiles of documents to separate between topics or domains. Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer.\n{context_str}<</SYS>>\n\n{query_str} Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer. [/INST]",
+              "input_prefix": "Input:",
+              "output_prefix": "Output:",
+              "examples": []
+            },
+            "parameters": {
+              "decoding_method": "greedy",
+              "max_new_tokens": 500,
+              "min_new_tokens": 1,
+              "moderations": {
+                "hap_input": "true",
+                "hap_output": "true",
+                "threshold": 0.75
+              },
+              "repetition_penalty": 1.1,
+              "temperature": 0.7,
+              "top_k": 50,
+              "top_p": 1
+            }
+          }
+          
+        </pre>
+      </cds-modal-body>
+    </cds-modal>
+
+    <cds-modal class="cds-theme-zone-white" id="question-modal" style="
+        visibility: hidden;
+        display: flex;
+        justify-content: left;
+        padding-left: 28px;
+      " prevent-close-on-click-outside="true">
+      <cds-modal-header>
+        <cds-modal-close-button onclick="operateModal('question-modal', false);"></cds-modal-close-button>
+        <cds-modal-heading>Example questions</cds-modal-heading>
+      </cds-modal-header>
+      <cds-modal-body>
+        <p style="text-wrap: wrap;">
+          <b>File: CSCO_2020_10K.pdf</b><br />
+        <ul>
+          <li>What are the main competitive factors for Cisco in the market?</li>
+          <li>How much has Cisco spent on R&D until July 2020? Only state facts in the document.</li>
+          <li>Who is the COO of Cisco?</li>
+          <li>How many employees does Cisco have in the USA?</li>
+          <li>What were the total assets declared by Cisco in 2020?</li>
+        </ul>
+        <br />
+        <b>File: owners-manual-w11580822-revC.pdf</b><br />
+        <ul>
+          <li>What are the steps for condenser cleaning?</li>
+          <li>What is the sensitivity of lettuce to ethylene?</li>
+          <li>How many styles does the door handle of the fridge have?</li>
+          <li>What should be the ideal water pressure in the fridge? Also, mention the document name and page number of
+            the source.</li>
+          <li>What is the maximum permissible concentration of chlorobenzene?</li>
+        </ul>
+        <br />
+        <b>File: ibm-consulting-and-palo-alto-networks-security-for-devsecops.pdf</b><br />
+        <ul>
+          <li>What are the differences between cloud and traditional systems for workload provisioning?</li>
+          <li>What are the differences between cloud and traditional systems for workload provisioning? Mention the page
+            number and document name of the source.</li>
+        </ul>
+        <br />
+        <b>File: verizon-and-panw-security-and-private-5g-network-white-paper.pdf</b><br />
+        <ul>
+          <li>What is SEPP?</li>
+          <li>How does network exposure function compare between 5G and 4G LTE?</li>
+          <li>Why is device security very important for network security?</li>
+        </ul>
+        </p>
+      </cds-modal-body>
+    </cds-modal>
+  </div>
+  <img src="./images/background.png" width="90%" alt="Multi-domain documents Q&A"></img>
+  <footer class="cds-theme-zone-g100 footer">
+    Do not input personal data, or data that is sensitive or confidential into demo app. This app is built using the
+    watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws.
+    &#169; Copyright IBM Corporation
+  </footer>
+  </div>
+</body>
+
+</html>

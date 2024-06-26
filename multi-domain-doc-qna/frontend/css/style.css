@@ -1,0 +1,114 @@
+body {
+  font-family: "IBM Plex Sans", "Arial";
+  margin: 0;
+  overflow-y: hidden;
+}
+
+#link-out-btn {
+  position: fixed;
+  bottom: 9%;
+  padding-left: 2%;
+}
+
+#side-nav {
+  position: relative;
+  z-index: 2;
+  display: none;
+}
+
+.wrapper {
+  height: 100%;
+}
+
+.username-text {
+  color: var(--cds-text-primary);
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  padding: 0 16px;
+}
+
+.main-container {
+  height: 100vh;
+  padding-top: 4vh;
+}
+
+#wa-output {
+  padding: 2% 2% 2% 2%;
+  width: 50%;
+}
+
+#wa-output-summ {
+  padding-left: 2%;
+  padding-top: 1%;
+}
+
+#wa-output-sentiment {
+  padding-left: 2%;
+  padding-top: 1%;
+}
+
+#wa-output-entities {
+  padding-left: 2%;
+  padding-top: 1%;
+}
+#wa-output-entities-title {
+  padding-top: 2%;
+}
+
+#wa-output-sentiment-title {
+  padding-top: 2%;
+}
+
+.footer {
+  background-color: var(--cds-background);
+  bottom: 0;
+  color: var(--cds-text-secondary);
+  position: fixed;
+  padding: 8px 16px;
+  z-index: 3;
+}
+
+.WACLauncher__ButtonContainer.WACLauncher__ButtonContainer--round {
+  margin-bottom: 2.6% !important;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+
+.WACWidget.WACLocale-en.WACWidget--rounded.WACWidget--defaultElement.WACWidget--launched {
+  margin-bottom: 3% !important;
+}
+
+.loader {
+  border: 3px solid #e0e0e0;
+  border-radius: 50%;
+  border-top: 3px solid #0f62fe;
+  border-right: 3px solid #0f62fe;
+  width: 12px;
+  height: 12px;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
