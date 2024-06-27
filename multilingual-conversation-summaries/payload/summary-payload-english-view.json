@@ -1,5 +1,5 @@
 {
-  "model_id": "meta-llama/llama-2-13b-chat",
+  "model_id": "ibm/granite-20b-multilingual",
   "data": {
     "instruction": "Summarize the transcript of the call. Identify the agent and the subscriber. Add any specific issues mentioned by the subscriber. Add any corrective actions taken as directed by the agent. Please mention if the issue is resolved. Mention any follow-up actions and timelines.",
     "input": "",
