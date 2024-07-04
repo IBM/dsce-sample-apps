@@ -1,0 +1,33 @@
+.metricTile{
+    background-color: white;
+    margin-top: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #78a9ff;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    width: 95%;
+    min-width:1450px;
+
+    margin-left: 2rem;
+    max-width:1500px;
+  }
+
+.layout {
+    width: 100%;
+  
+    display: flex;
+    gap: 16px;
+  }
+  
+  .grow1 { flex-grow: 1; }
+
+  .metricValue{
+    font-weight: 600;
+  }
+
+  .metricLink{
+    text-decoration: none;
+    font-size: large;
+  }

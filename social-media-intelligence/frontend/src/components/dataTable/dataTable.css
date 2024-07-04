@@ -1,0 +1,11 @@
+tableContainer{
+    width: 100% !important;
+    overflow-x: scroll; 
+}
+thead, tbody { display: block; }
+
+tbody {
+    height: 200px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    /* overflow-x: hidden;  Hide the horizontal scroll */
+}

@@ -1,0 +1,135 @@
+@use "@carbon/react";
+:root{
+   font-family: "IBM Plex Sans";
+}
+
+.Title{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-weight: bolder;
+}
+.Title p{
+    font-weight: bolder;
+}
+
+.Upload-File{
+    max-width: 200px;
+    font-size: xx-large;
+}
+.Selector-Box{
+    display: flex;
+    width: auto;
+    max-width: 20%;
+    justify-content: flex-start;
+    font-weight: bolder;
+    border-radius: 0rem;
+}
+.Selector-Item{
+    border: 1px solid black;
+    padding: 1rem;
+}
+.Selector-Item:hover{
+    border: 1px solid black;
+    padding: 1rem;
+    
+}
+.Options{
+    display: flex;
+    color: aliceblue;
+    flex-direction: column;
+}
+
+.Download-bttn{
+    align-self:flex-end;
+    background-color: #e0e0e0;
+}
+
+.cds--snippet--multi{
+    max-inline-size: 70rem;
+}
+
+
+.File-Upload-Bttn{
+    width: 30%;
+    padding: 0rem;
+    margin: 0rem;
+    height: min-content;
+}
+.Active-Option{
+    background-color: #0f62fe;
+    color: #e0e0e0;
+}
+.active{
+    background-color: #0f62fe;
+    color: #e0e0e0;
+}
+.active:hover{
+    background-color: #0059ff;
+    color: #e0e0e0;
+    font-weight: 400;
+}
+.CSV{
+    overflow-y: scroll;
+    height: 700px;
+    margin: 2rem;
+    margin-top: 0.5rem;
+}
+.st-emotion-cache-1dp5vir{
+   background-image: none;
+}
+.ezrtsby1{
+    background-image: none;
+}
+.st-emotion-cache-1dp5vir 
+{
+    background-image: none !important;
+}
+
+.map-container{
+    width: 50% !important;
+    
+}
+.Issues-Flex-Box{
+    padding: 1rem 4rem ;
+    display: flex;
+}
+
+
+#select-telco{
+    font-size: 20px;
+    line-height: 36px;
+    width: 20vw;
+}
+
+.angry-grid {
+    display: grid; 
+ 
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    
+    gap: 0px;
+    height: 100%;
+    
+ }
+ canvas{
+    height: 400px;
+ }
+ 
+/* styles.css */
+// .container1{
+//     padding: 20px; /* Adjust container padding */
+//     z-index: 2;
+//     position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: red;
+//   /* Higher z-index, will be positioned in front */
+//   }
+  
+//   .inset-border{
+//     border: 20px solid #000; /* Set border properties */
+//     padding: 10px; /* Adjust padding to make border go into the element */
+//   }

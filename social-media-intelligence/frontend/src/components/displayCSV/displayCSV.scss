@@ -1,0 +1,28 @@
+.tableDiv{
+    margin: 1rem;
+            padding: 2rem;
+            background-color: white;
+            width: 72%;
+            height: 80vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align: justify;
+}
+
+
+.dataButton{
+    background-color: white;
+    border: 1px solid gray;
+    color: gray;
+    padding: 20px 15px;
+    font-size: 16px;
+    // align-items: flex-end;
+    margin-top: 20px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+th {
+    padding: 1rem;
+}

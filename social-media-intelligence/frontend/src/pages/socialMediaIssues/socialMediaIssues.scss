@@ -1,0 +1,198 @@
+:root{
+    background-color: #ffffff;
+
+}
+#cssportal-grid{
+    margin-top: 0rem;
+    padding-top: 0rem;
+}
+.Flex-Box{
+    font-size: 64;
+    font-family: "IBM Plex Sans";
+    font-weight: 200;
+    line-height: 40px;
+    word-wrap: break-word;
+    align-items: center;
+    text-align: left;
+    display: flex;
+    margin: 1rem;
+    padding: 2rem;
+}
+.Issue-Card-Social-Media{
+    width: 50%;
+    font-weight: bold;
+}
+
+.Tweets{
+    overflow-y: scroll;
+    height: 700px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+.Card{
+    padding: 1rem;
+    border: 0.5px solid lightgray;
+    border-radius: 4px;
+    margin: 0.4rem;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    color: #c4c4c4;
+}
+.Card:hover {
+    background-color: rgb(229, 229, 229); /* Off-white color on hover */
+    color: darkgray;
+  }
+.Active {
+    background-color: #18469c;
+    padding: 1rem;
+    border: 0.5px solid lightgray;
+    border-radius: 0rem;
+    margin: 0.4rem;
+    cursor: pointer;
+    color: #f4f4f4 ;
+}
+
+.Post-Analysis-Content{
+    height: 750px;
+    margin: 0rem;
+    padding: 1rem;
+
+}
+.Post-Analysis{
+    position: relative;
+    bottom: 0rem;
+    width: 50%;
+    font-weight: bold;
+    overflow-y: visible;
+}
+.Information{
+    height: 40%;
+}
+.Tools{
+    height: 11%;
+    
+}
+.Suggested-Responses{
+    height: 50%;
+}
+.Watsonx-Heading{
+    position: relative;
+    top: 5rem;
+    
+}
+.Tweet-Info{
+    display: flex;
+    width: 100%;
+    justify-content:space-between;
+    text-align: center;
+}
+.Tweet-User{
+    border-radius: 1rem;
+    border: 1.5px solid #c4c4c4;
+    padding: 0.4rem;
+    //width: 10%;
+    justify-content: center;
+    text-align: center;
+    background-color: #f4f4f4;
+    color: gray;
+}
+.Tweet-Date{
+    border-radius: 1rem;
+    border: 1.5px solid #f4f4f4;
+    padding: 0.4rem;
+    
+    justify-content: center;
+    text-align: center;
+    background-color: #ffffff;
+    color: gray;
+}
+.Tool-Tittle{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.2rem;
+}
+.Suggested-Responses{
+    overflow-y: scroll;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    margin-top: 3rem;
+    border: 5px solid gray ;
+    border-radius: 4px;
+}
+.buttons{
+    width: 50%;
+}
+.Information-Box1{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: bolder;
+}
+.Infomation-Box3-Flex{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.Infomation-Box3-Flex-2{
+    display: flex;
+    justify-content:center;
+    width: 10%;
+    flex-direction: column;
+}
+.Information{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 1rem;
+}
+.Llm-Response{
+    padding: 1rem;
+    border: 0.5px solid grey;
+    border-radius: 0.5rem;
+    margin: 0.4rem;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    color: rgb(67, 67, 67);
+}
+.Llm-Response:hover {
+    background-color: rgb(229, 229, 229); /* Off-white color on hover */
+    color: black;
+    font-weight: bold;
+  }
+.sentiment_bttn{
+    font-size: large;
+    border: 2px solid black;
+    font-weight: bold;
+    border-radius: 1rem;
+}
+.clickable-div {
+    cursor: pointer;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 4px;
+  }
+  
+.active-blue {
+color: white;
+background: #18469c !important;
+padding: 2rem;
+}
+
+.inactive-grey {
+background-color: grey !important; /* Override Carbon's default styles */
+color: #7e7e7e;
+padding: 2rem;
+font-weight: 700;
+}
+.analysisDiv{
+    margin: 0.5rem;
+    border-radius: 4px;
+}
+.active-blue{
+    border-radius: 0rem !important;
+    
+}
+
+  

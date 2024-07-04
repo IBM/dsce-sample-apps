@@ -1,0 +1,107 @@
+
+:root{
+    font-family: "IBM Plex Sans";
+}
+#cssportal-grid {
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0px 40px;
+	width: 100%;
+	height: 100%;
+    padding-top: 20px;
+}
+
+.cardDiv{
+    border: 1px solid lightgray;
+    padding: 10px;
+    height: 730px;
+    overflow-y:scroll;
+
+}
+
+.analysisDiv{
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    padding: 10px 20px;
+    color: rgb(84, 84, 84);
+    margin-top: 0.5rem;
+}
+
+.campaignTile{
+    height: 620px;
+    overflow-y: scroll;
+}
+.Card{
+    border: 1px solid lightgray;
+    border-radius: 0.1px;
+    border-radius: 4px;
+
+}
+.cds--tile{
+    font-size: larger;
+    border: 1px solid lightgray;
+    border-radius: 4px !important;
+
+}
+.active-blue {
+    color: white;
+    background: #1a56c4;
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    padding: 1.5rem;
+    margin: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: larger;
+  
+    
+    }
+    
+.inactive-grey {
+background-color: #f4f4f4 !important; /* Override Carbon's default styles */
+color: rgb(84, 84, 84);
+padding: 1.5rem;
+ margin: 0.5rem;
+border: 1px solid lightgray;
+border-radius: 4px;
+margin-bottom: 0.75rem;
+font-size: larger;
+}
+.active-blue:hover{
+    background-color: #1a56c4;
+    color: white;
+}
+.inactive-grey:hover{
+    background-color: #6a6a6a;
+    color: black;
+
+}
+.cardDiv{
+    border-radius: 1px;
+    border: 1px solid lightgray;
+    font-weight: bolder;
+}
+.bx--radio-button__appearance::before {
+    border-color: #1a56c4; /* Change the border color of the checkmark */
+    background-color: #1a56c4;
+
+}
+.result-container{
+    height: 600px;
+    
+}
+.Watsonx-Heading{
+    position: relative;
+    top: 0.5rem;
+    
+}
+.cds--slider__range-label{
+    visibility: hidden !important
+}
+.cds--label{
+    padding-left: 1rem !important;
+    position: relative;
+    top:0.3rem;
+}
+
