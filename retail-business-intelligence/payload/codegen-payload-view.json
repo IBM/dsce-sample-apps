@@ -1,0 +1,22 @@
+{
+  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+  "data": {
+    "input": "",
+    "instruction": "You are a developer writing SQL queries given natural language questions. The database contains a set of 4 tables. The schema of each table with description of the attributes is given. Write the SQL query given a natural language statement.\nHere are the 4 tables :\n\n(1) Database Table Name: postgresql.public.product\nTable Schema:\nColumn Name # Meaning\nProductID # unique identifier of the product and primary key of table postgresql.public.product\nProductName # name of the product\nPrice # price of the single product\nQuantityInStock # number of quantity available in the stock of the product\n\n2) Database Table Name: postgresql.public.customer\nTable Schema:\nColumn Name # Meaning\nCustomerID # unique identifier of the customer and primary key of the table postgresql.public.customer\nName # name of the customer\nEmail # email address of the customer\nPhone # phone number of the customer\n\n(3) Database Table Name: cos.retail.Orders\nTable Schema:\nColumn Name # Meaning\nOrderID # unique identifier of the order and primary key of the table cos.retail.Orders\nCustomerID # unique identifier of the customer who has placed the order, foreign key referring to table postgresql.public.customer\nOrderDate # date when the order is placed\nTotalAmount # the total amount of the order\ninvest_amount # total investment of the customer in the specific investment product\n\n(4) Database Table Name: cos.retail.OrderDetails\nTable Schema:\nColumn Name # Meaning\nOrderDetailID # unique identifier of the order detail, primary key of the table cos.retail.OrderDetails\nOrderID # unique identifier of the order of which the details are, foreign key referring to table cos.retail.Orders\nProductId # unique identifier of the product of for which order details are and foreign key referring to table postgresql.public.product\nUnitPrice # price of the single product for which order is placed",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": ["Input:"],
+    "min_new_tokens": 1,
+    "max_new_tokens": 200
+  },
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
+  }
+}
