@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
+  <link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/themes.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous" />
+  <title>Smart catalog search</title>
+
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/ui-shell.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.1/modal.min.js"></script>
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/version/v2.10.0/lightbox-media-viewer.min.js"></script>
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/version/v2.10.0/card-group.min.js"></script>
+  <script type="module" src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/version/v2.10.0/image.min.js"></script>
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/version/v2.10.0/search-with-typeahead.min.js"></script>
+  <script type="module"
+    src="https://1.www.s81c.com/common/carbon/web-components/version/v2.10.0/inline-loading.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='javascript.js') }}"></script>
+</head>
+
+<body>
+  <cds-header class="cds-theme-zone-g100" aria-label="IBM Platform Name">
+    <cds-header-name>
+      Smart catalog search
+    </cds-header-name>
+  </cds-header>
+
+  <c4d-expressive-modal id="my-lightbox" hidden class="cds-theme-zone-white" mode="lightbox"
+    expressive-size="full-width">
+    <c4d-expressive-modal-header>
+      <c4d-expressive-modal-close-button role="button"></c4d-expressive-modal-close-button>
+      <c4d-expressive-modal-heading>Choose a product image to search in our catalog</c4d-expressive-modal-heading>
+    </c4d-expressive-modal-header>
+
+    <c4d-card-group>
+      <c4d-card-group-item link cta-type="local" href="#" onclick="search_image('laptop1.jpeg');">
+        <c4d-card-heading>Expressive laptops</c4d-card-heading>
+        <c4d-card-eyebrow>Electronics</c4d-card-eyebrow>
+        <c4d-image slot="image" alt="laptop" default-src="./static/laptop1.jpeg"></c4d-image>
+        Find the exclusive range of powerful laptops available on our store.
+        <c4d-card-footer>Search laptops</c4d-card-footer>
+      </c4d-card-group-item>
+      <c4d-card-group-item link cta-type="local" href="#" onclick="search_image('phone2.jpeg');">
+        <c4d-card-heading>Smart mobile phones</c4d-card-heading>
+        <c4d-card-eyebrow>Electronics</c4d-card-eyebrow>
+        <c4d-image slot="image" alt="mobile-phone" default-src="./static/phone2.jpeg"></c4d-image>
+        Find the exclusive range of smart mobile phones available on our store.
+        <c4d-card-footer>Search mobile phones</c4d-card-footer>
+      </c4d-card-group-item>
+      <c4d-card-group-item link cta-type="local" href="#" onclick="search_image('headphone1.jpeg');">
+        <c4d-card-heading>Attractive headphones</c4d-card-heading>
+        <c4d-card-eyebrow>Electronics</c4d-card-eyebrow>
+        <c4d-image slot="image" alt="headphone" default-src="./static/headphone1.jpeg"></c4d-image>
+        Find the exclusive range of sleek design headphones available on our store.
+        <c4d-card-footer>Search headphones</c4d-card-footer>
+      </c4d-card-group-item>
+    </c4d-card-group>
+  </c4d-expressive-modal>
+
+  <div class="search-div">
+    <p class="heading-txt">Electronics Marketplace</p>
+    <c4d-search-with-typeahead onclick="clickToSearch()" class="search-box" active should-remain-open
+      search-open-on-load placeholder="Click here and choose a sample image"
+      redirect-url="#"></c4d-search-with-typeahead>
+  </div>
+  <div id="search-results">
+  </div>
+
+  <img id="bg-image" src="{{ url_for('static', filename='Smart-app-bg.png') }}" style="width: 100%;"></img>
+
+  <footer class="cds-theme-zone-g100 footer"></footer>
+</body>
+
+</html>
