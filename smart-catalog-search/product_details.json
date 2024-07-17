@@ -1,0 +1,77 @@
+{
+  "/train/laptop/laptop5.jpeg": {
+    "title": "GIGABYTE (AERO 5 XE4-73IN614SO) 15.6-inch UHD+OLED i7 (8GBx2-1TB) Win11 Home+Office 365 Laptop",
+    "price": "6600 BluePoints",
+    "productid": "Z6503710"
+  },
+  "/train/laptop/laptop4.jpeg": {
+    "title": "ASUS ROG STRIX G713RC-HX108W (R76800H / RTX3050- 4GB / 16GB DDR5 (2 x 8GB) / 1TB PCIE G4 SSD / 17.3 FHD-144hz / Backlit KB- 4 zone RGB / 56Whr / WIN 11 / McAfee(1 year) / 2F-ECLIPSE GRAY)",
+    "price": "5627 BluePoints",
+    "productid": "Z6519244"
+  },
+  "/train/laptop/laptop3.jpeg": {
+    "title": "APPLE 13 inch MacBook Air M2 Chip 8-core CPU 10-core GPU 8GB-512GB",
+    "price": "6950 BluePoints",
+    "productid": "Z6263146"
+  },
+  "/train/laptop/laptop2.jpeg": {
+    "title": "ASUS VIVOBOOK X1504ZA-NJ322WS(i3-1215U /8GB DDR4 /512GB PCle® 3.0 SSD /15.6-inch /FHD (1920 x 1080) 16:9 /Cool Silver /Backlit KB /Win 11 Home /MS Office",
+    "price": "2533 BluePoints",
+    "productid": "26447728"
+  },
+  "/train/laptop/laptop1.jpeg": {
+    "title": "LENOVO IDEAPAD SLIM 5 82XF0078IN (i7-13700H /16GB /1TB SSD /WINDOWS 11 HOME 64 SL/OFFICE H&S 2021/Integrated Intel® Iris® Xe Graphics/16\" 2.5K(2560x1600) IPS 350nits /Cloud Grey /1 Year",
+    "price": "5767 BluePoints",
+    "productid": "Z6519231"
+  },
+  "/train/phone/phone2.jpeg": {
+    "title": "SAMSUNG S24 (8GB_512GB)",
+    "price": "5245 BluePoints",
+    "productid": "Z6507458"
+  },
+  "/train/phone/phone4.jpeg": {
+    "title": "OnePlus Nord CE 4 8GB 256GB Dark Chrome",
+    "price": "1689 BluePoints",
+    "productid": "B0048409"
+  },
+  "/train/phone/phone1.jpeg": {
+    "title": "APPLE IPHONE 13 512GB 5G MOBILE",
+    "price": "5605 BluePoints",
+    "productid": "Z5902827"
+  },
+  "/train/phone/phone5.jpeg": {
+    "title": "OnePlus 12R 8GB 128GB Cool Blue",
+    "price": "2492 BluePoints",
+    "productid": "B0048388"
+  },
+  "/train/phone/phone3.jpeg": {
+    "title": "VIVO X100 (12GB RAM, 256GB Storage)",
+    "price": "3780 BluePoints",
+    "productid": "Z6491804"
+  },
+  "/train/headphone/headphone1.jpeg": {
+    "title": "INFINITY Glide 500, 20 Hrs Playtime with Quick Charge, Wireless On Ear Headphone with Mic",
+    "price": "66 BluePoints",
+    "productid": "Z6352548"
+  },
+  "/train/headphone/headphone2.jpeg": {
+    "title": "SKULLCANDY Bluetooth Headphone with 34 Hrs Backup -S5PRW-P740",
+    "price": "300 BluePoints",
+    "productid": "Z6438012"
+  },
+  "/train/headphone/headphone3.jpeg": {
+    "title": "SENNHEISER HD 400s Wired Over The Ear Headphone with Mic (Black)",
+    "price": "298 BluePoints",
+    "productid": "Z6491989"
+  },
+  "/train/headphone/headphone4.jpeg": {
+    "title": "SENNHEISER Momentum 4 Wireless Headphones - Designed in Germany - Bluetooth Adaptive Noise Cancelling-ANC & customizable sound, 4 digital Mics for crystal-clear calls, 60h Battery, 2 Yr WARRANTY, White",
+    "price": "1592 BluePoints",
+    "productid": "Z6491980"
+  },
+  "/train/headphone/headphone5.jpeg": {
+    "title": "PORTRONICS POR 1882_Muffs M2, Black",
+    "price": "65 BluePoints",
+    "productid": "Z6325467"
+  }
+}
