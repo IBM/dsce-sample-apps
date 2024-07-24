@@ -1,0 +1,38 @@
+.app {
+    text-align: center;
+  }
+  
+  .header {
+    background-color: #4caf50;
+    padding: 1rem;
+    color: white;
+  }
+  
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .search-bar {
+    padding: 20px;
+  }
+  
+  .order-section {
+    text-align: left;
+  }
+  
+  .order-tile {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .order-icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  

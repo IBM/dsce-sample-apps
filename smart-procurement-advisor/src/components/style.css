@@ -1,0 +1,106 @@
+/* article */
+
+article,
+article address,
+table {
+  margin: 0 0 3em;
+}
+article h1 {
+  clip: rect(0 0 0 0);
+  position: absolute;
+}
+article address {
+  float: left;
+  font-size: 125%;
+  font-weight: bold;
+}
+article address h3 {
+  float: left;
+  font-size: 125%;
+  font-weight: bold;
+}
+
+article:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+/* table */
+
+table {
+  font-size: 75%;
+  table-layout: auto;
+  width: 100%;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+th,
+td {
+  border-width: 1px;
+  padding: 1em;
+  position: relative;
+  text-align: left;
+}
+th,
+td {
+  border-radius: 0.25em;
+  border-style: solid;
+}
+th {
+  background: #eee;
+  border-color: #bbb;
+}
+td {
+  border-color: #ddd;
+}
+
+/* table firstTable */
+
+table.firstTable {
+  float: right;
+  width: 36%;
+  height: 50%;
+}
+table.firstTable:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+
+table.firstTable th {
+  width: 40%;
+}
+table.firstTable td {
+  width: 60%;
+}
+
+orderCards {
+  width: "10rem";
+  cursor: "pointer";
+  border: "1px solid #ddd";
+  box-shadow: "10px 10px 20px #0e62fe";
+  border-radius: "10px";
+}
+
+@media print {
+  footer,
+  #printIcon {
+    display: none !important;
+  }
+}
+
+.WebChatContainer {
+  position: fixed;
+  left: 65%;
+  right: 2.5%;
+  top: 25%;
+  bottom: 5%;
+}
+
+#WACContainer.WACContainer .HideWebChat {
+  display: none;
+}
