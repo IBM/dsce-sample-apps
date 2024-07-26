@@ -1,0 +1,17 @@
+Input:
+Top 5 customer based on amount spent
+
+Output:
+SELECT c.CustomerID, c.Name AS CustomerName, SUM(ot.TotalAmount) AS TotalAmountSpent FROM postgresql.public.customer c LEFT JOIN cos.retail.Orders ot ON c.CustomerID = ot.CustomerID GROUP BY c.CustomerID, c.Name ORDER BY TotalAmountSpent DESC LIMIT 5
+
+Input:
+Top 5 products sold to each customer, along with the total quantity of each product sold
+
+Output:
+WITH RankedProducts AS (SELECT od.OrderID, od.ProductID, p.ProductName, od.Quantity, ROW_NUMBER() OVER (PARTITION BY od.OrderID ORDER BY od.Quantity DESC) AS ProductRank FROM cos.retail.OrderDetails od JOIN postgresql.public.product p ON od.ProductID = p.ProductID) SELECT c.CustomerID, c.Name AS CustomerName, rp.ProductID, rp.ProductName, SUM(rp.Quantity) AS TotalQuantitySold FROM RankedProducts rp JOIN cos.retail.Orders o ON rp.OrderID = o.OrderID JOIN postgresql.public.customer c ON o.CustomerID = c.CustomerID WHERE rp.ProductRank <= 5 GROUP BY c.CustomerID, c.Name, rp.ProductID, rp.ProductName
+
+Input:
+Top 5 products sold in each month
+
+Output:
+WITH MonthlySales AS (SELECT EXTRACT(YEAR FROM ot.OrderDate) AS Year, EXTRACT(MONTH FROM ot.OrderDate) AS Month, od.ProductID, p.ProductName, SUM(od.Quantity) AS TotalQuantitySold, ROW_NUMBER() OVER (PARTITION BY EXTRACT(YEAR FROM ot.OrderDate), EXTRACT(MONTH FROM ot.OrderDate) ORDER BY SUM(od.Quantity) DESC) AS ProductRank FROM cos.retail.Orders ot JOIN cos.retail.OrderDetails od ON ot.OrderID = od.OrderID JOIN postgresql.public.product p ON od.ProductID = p.ProductID GROUP BY EXTRACT(YEAR FROM ot.OrderDate),EXTRACT(MONTH FROM ot.OrderDate),od.ProductID,p.ProductName) SELECT Year,Month,ProductID,ProductName,TotalQuantitySold FROM MonthlySales WHERE ProductRank <= 5 ORDER BY Year DESC, Month DESC

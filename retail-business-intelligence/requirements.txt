@@ -1,0 +1,12 @@
+setuptools
+dash==2.11.1
+dash_bootstrap_components==1.4.1
+ibm-cloud-sdk-core==3.16.7
+dash_daq==0.5.0
+jproperties==2.1.1
+markdownify==0.11.6
+pandas==2.0.3
+python-dotenv==1.0.0
+requests==2.31.0
+sql-formatter==0.6.2
+numpy==1.26.4
