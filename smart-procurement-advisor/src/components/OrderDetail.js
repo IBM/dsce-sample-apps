@@ -139,8 +139,8 @@ function Footer() {
         fontSize:'14px'
     }}>
         {/* Powered by&nbsp; <a href="https://www.ibm.com/watsonx" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>watsonx</a> */}
-        Do not input personal data, or data that is sensitive or confidential into demo app. This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws. © Copyright IBM Corporation        
-</footer>
+        Do not input personal data, or data that is sensitive or confidential into demo app. This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws. © Copyright IBM Corporation
+    </footer>
   );
 }
 

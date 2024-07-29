@@ -97,10 +97,17 @@ orderCards {
   position: fixed;
   left: 65%;
   right: 2.5%;
-  top: 25%;
+  top: 7.5%;
   bottom: 5%;
 }
 
 #WACContainer.WACContainer .HideWebChat {
   display: none;
+}
+
+#WACLauncher__Button.WAC__button--base.WAC__button--primary{
+    position: fixed;
+    bottom: 8%; /* Adjust the distance from the bottom as needed */
+    right: 1%; /* Adjust the distance from the right as needed */
+    z-index: 1001;
 }
