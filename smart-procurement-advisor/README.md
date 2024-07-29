@@ -12,7 +12,7 @@
 - 1.2 Create a new instance and launch the application.
 - 1.3.	Create a new project, give a suitable name for project and collection.
 - 1.4.	Choose document retrieval as the method from drop down list.
-- 1.5.	Upload the pdf file which is available in the files directory.
+- 1.5.	Upload the `Pumpdetails.pdf` file which is available in the files directory.
 - 1.6.	Wait for some time until the document is processed.
 - 1.7.	In the enrichment tab, under table understanding select table and table contents for entities V2 select table, table understanding and text. In keywords select table and table understanding.
 - 1.8.	From the left pane select API integration tab and copy the project ID.
@@ -36,7 +36,7 @@ The processing will automatically start and the discovery is now setup
    - 3.3 Once instance is created, go to the insatance & click **Launch watsonx Assistant**
    - 3.4 Follow steps **Create New > provide Assistant name > Create assistant**
    - 3.5 In this repo, we have provided `dsce-procurement-action_revised.json` file which will be used in next step.
-   - 3.6 From left hand side panel, go to **Assistant settings > Download/Upload files > Upload > upload the dsce-procurement-action_revised.json> Upload and replace**
+   - 3.6 From left hand side panel, go to **Actions > Global settings > Switch to Upload/Download tab > from Files directory, Select `dsce-procurement-action_revised.json` > Upload and replace**
    - 3.7 Click on integrations tab and then click on “Build custom Extension“
    - 3.8 Name the first extension as Watson Discovery, upload the **watsonx-openapi.json** file for discovery and then click Next and then Finish.
    - 3.9 Click on Add for same extension and in authentication section select username password. In username type “apikey” and in password paste the key saved in Watson Discovery step.

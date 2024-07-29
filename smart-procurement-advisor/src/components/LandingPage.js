@@ -3,6 +3,7 @@ import { IoIosNotifications } from 'react-icons/io';
 import { CiCamera } from "react-icons/ci";
 import { IoCartSharp } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
+import { IoDocumentTextSharp } from "react-icons/io5";
 import Card from 'react-bootstrap/Card';
 import { useLocation } from 'react-router-dom';
 import './style.css';
@@ -42,15 +43,16 @@ function Footer() {
             alignItems: 'center',
             fontFamily: 'IBM Plex Sans, sans-serif',
             marginTop: 'auto',
-            position: 'fixed',
+            position: 'sticky',
             bottom: 0,
             width: '100%',
             color: 'white',
-            fontSize: '14px'
+            fontSize: '12px',
+            zIndex: '1000 !important', // Set a higher value than the chatbot icon's z-index
         }}>
             {/* Powered by&nbsp; <a href="https://www.ibm.com/watsonx" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}>watsonx</a> */}
-           Do not input personal data, or data that is sensitive or confidential into demo app. This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws. © Copyright IBM Corporation 
-</footer>
+            Do not input personal data, or data that is sensitive or confidential into demo app. This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws. © Copyright IBM Corporation
+        </footer>
     );
 }
 
@@ -138,10 +140,9 @@ function LandingPage() {
         let chatInstance = window.watsonAssistantChatInstance;
 
 
-    if (chatInstance) {
-        chatInstance.destroy();
-        console.log("Destroyed");
-    }
+        if (chatInstance) {
+            chatInstance.destroy();
+        }
         window.watsonAssistantChatOptions = {
             integrationID: watsonxIntegrationID,
             region: watsonxRegion,
@@ -155,7 +156,6 @@ function LandingPage() {
                 //if (location.pathname === "/" && location.pathname !== "/ChargerCatlog" && location.pathname !== "/OrderDetail") {
                 if (window.count === 0 && location.pathname === "/" && location.pathname !== "/ChargerCatlog" && location.pathname !== "/OrderDetail") {
                     instance.render().then(function () {
-                        console.log('It worked!')
                     }).catch(function (e) {
                         console.error(e);
                     });
@@ -178,7 +178,7 @@ function LandingPage() {
             t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
             document.head.appendChild(t);
         });
-        
+
     }, [location.pathname]);
 
 
@@ -194,7 +194,7 @@ function LandingPage() {
 
 
     const handleSearch = () => {
-        if (searchInput.includes("Charger") || searchInput.includes("charger") || searchInput.includes("CHARGER")) {
+        if (searchInput.includes("Charger") || searchInput.includes("charger") || searchInput.includes("CHARGER") || searchInput.includes("Cable") || searchInput.includes("cable") || searchInput.includes("CABLE")) {
             navigate('/ChargerCatalog');
         }
         else if (searchInput.includes("Pump") || searchInput.includes("pump") || searchInput.includes("PUMP")) {
@@ -245,7 +245,7 @@ function LandingPage() {
 
 
             {/* This header content for DSCE */}
-            <header style={{ backgroundColor: '#212529', height: '3rem', top: '0%', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', position: 'fixed' }}>
+            <header style={{ backgroundColor: '#212529', height: '3rem', top: '0%', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                 {/* <div >
                     <SiIbm style={{ fontSize: '14px', marginLeft: '20px', cursor: 'pointer', color: 'black' }} onClick={handleRedirectToIBM} />
                 </div> */}
@@ -266,36 +266,50 @@ function LandingPage() {
                     <div>
                         <IoCartSharp style={{ fontSize: '16px', marginRight: '40px', color: 'white' }} />
                     </div>
-                    <div>
-                        {/* <IoHelpCircle onClick={() => onHowtoUse()} placeholder="Help" onc  style={{ fontSize: '24px', cursor:'pointer', marginRight: '40px', color: 'black' }}/> */}
+                    {/* <div>
                         <p onClick={() => onHowtoUse()} style={{ fontSize: '16px', fontFamily: 'IBM Plex Sans, sans-serif', cursor: 'pointer', marginRight: '40px', color: 'white' }}>Help ?</p>
-                    </div>
+                    </div>  */}
                 </div>
             </header>
-            <div style={{ marginTop: '50px' }}>
-                <div style={{ padding: '20px' }}>
-                    <div style={{
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
-                    }}>
-                        <div style={{ position: 'relative', display: 'flex', boxShadow: '0.5px 0.5px 10px #808080', borderRadius: '5px' }}>
-                            <input
-                                type="text"
-                                placeholder="Search for Pump/ Charger/ Refrigerators..."
-                                value={searchInput}
-                                onChange={(e) => setSearchInput(e.target.value)} onKeyUp={onEnter}
-                                style={{ width: '500px', padding: '10px', marginRight: '10px', border: '3px solid #ddd', borderRadius: '5px', fontFamily: 'IBM Plex Sans, sans-serif' }}
-                            />
-                            <button
-                                onClick={handleSearch}
-                                style={{ position: 'absolute', right: 0, top: 0, bottom: 0, padding: '10px', cursor: 'pointer', border: 'none', backgroundColor: '#0e62fe', color: 'white', borderRadius: '0 5px 5px 0' }}
-                            >
-                                <IoIosSearch style={{ fontSize: '20px' }} />
+            <div style={{ marginTop: '2%' }}>
 
-                                {/* <span role="img" aria-label="Search Icon" style={{ fontSize: '20px' }}>🔍</span> */}
-                            </button>
-                        </div>
+                <div style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* <div style={{ marginRight: 'auto' }}>
+                        <IoDocumentTextSharp  onClick={() => onHowtoUse()} style={{ fontSize: '16px', fontFamily: 'IBM Plex Sans, sans-serif', cursor: 'pointer', color: 'white', border: 'none', backgroundColor: '#0e62fe' }}>Guide </IoDocumentTextSharp>
+                    </div> */}
+
+                    <div style={{ marginRight: 'auto' }}>
+                        <button onClick={() => onHowtoUse()} style={{ fontSize: '16px',width:'auto', fontFamily: 'IBM Plex Sans, sans-serif', cursor: 'pointer', color: 'white', border: 'none', backgroundColor: '#0e62fe', display: 'flex', alignItems: 'center' }}>
+                        Demo Guide
+            <IoDocumentTextSharp style={{ marginLeft: '30px' }} /> {/* Added margin-right */}
+            
+        </button>
                     </div>
+
+
+                    <div style={{ position: 'relative', display: 'flex', boxShadow: '0.5px 0.5px 10px #808080', borderRadius: '5px' }}>
+                        <input
+                            type="text"
+                            placeholder="Search for Pump/ Charger/ Refrigerators..."
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)} onKeyUp={onEnter}
+                            style={{ width: '500px', padding: '10px', marginRight: '10px', border: '3px solid #ddd', borderRadius: '5px', fontFamily: 'IBM Plex Sans, sans-serif' }}
+                        />
+                        <button
+                            onClick={handleSearch}
+                            style={{ position: 'absolute', right: 0, top: 0, bottom: 0, padding: '10px', cursor: 'pointer', border: 'none', backgroundColor: '#0e62fe', color: 'white', borderRadius: '0 5px 5px 0' }}
+                        >
+                            <IoIosSearch style={{ fontSize: '20px' }} />
+                        </button>
+                    </div>
+
+                    <div style={{ marginLeft: 'auto' }}></div>
                 </div>
+
+
+
+
+
 
 
                 {/* watsonx assistant positioning: */}
@@ -343,10 +357,10 @@ function LandingPage() {
                                     e.currentTarget.style.boxShadow = 'none';
                                 }}
                             >
-                                <Card.Img variant="top" src="images/ibm-watson--orders.svg" style={{ height: '5rem', marginTop: '10px' }} />
+                                <Card.Img variant="top" src="images/ibm-watson--orders.svg" style={{ height: '5rem', marginTop: '5px' }} />
                                 <Card.Body>
                                     <Card.Title style={{ textAlign: 'center', fontFamily: 'IBM Plex Sans, sans-serif' }}><h3>watsonx (2)</h3>
-                                        <Card.Subtitle style={{ textAlign: 'center', marginBottom: '15px' }} >Ordered by watsonx chatbot</Card.Subtitle>
+                                        <Card.Subtitle style={{ textAlign: 'center', marginBottom: '15px' }} >Ordered via webchat</Card.Subtitle>
                                     </Card.Title>
                                 </Card.Body>
                             </Card>
@@ -494,7 +508,6 @@ function LandingPage() {
                                     }
                                 }
                             };
-                            debugger
                             window.watsonAssistantChatInstance.openWindow(event);
                         }
 
