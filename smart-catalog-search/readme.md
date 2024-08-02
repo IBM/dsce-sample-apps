@@ -48,8 +48,16 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
 4. [Get a watsonx.data trial account](https://cloud.ibm.com/registration?target=/lakehouse&uucid=0b526df2f9c41d5f&utm_content=WXDWW).
 
-   4.1. Create a Milvus service.
+   4.1. Create a Milvus service.<br/>
+      - 4.1.1. Navigate to section `infrastructure Manager` page.<br/>
+      - 4.1.2. Go to `Add component` -> `Add Service` option available on Top Right corner.<br/>
+      - 4.1.3. Provide details `Display Name`, `Size`, `Add Storage Bucket` as needed; keep `IBM-managed bucket` if unsure.<br/>
+      - 4.1.4. Click on `Provision`.<br/>
+      - 4.1.5 Wait for milvus service to be created. Once milvus service is up and running, click on milvus and find GRPC host for the future reference.
+   
    4.2. Ingest the images in your Milvus service.
+   - 4.2.1 Download the `Milvus_Image_Insert.zip` file and extract it.
+   - 4.2.2 Run the build_image_insert.ipynb notebook.
 
 5. Add `.env` file to your application folder and add env variable
 
