@@ -127,7 +127,13 @@
 
    > Reference Online uuid generator tool : <https://www.uuidgenerator.net>
 
-6. Run the backend server.
+6. Run this command to prepare required data.
+
+   ```sh
+   python3 prereqs.py
+   ```
+
+7. Run the backend server.
 
    ```sh
    python3 app.py
@@ -149,8 +155,9 @@ Note: After successful setup in local, for deployment on OpenShift/ Code Engine,
 2. Run the following curl command to start the document ingestion process to your watsonx Discovery instance (this will take couple of minutes based on number/size of your documents, wait till ingestion is completed.):
 
    ```sh
-   curl --location --request POST 'https://<localhost/port>/ingestDocs' \
+   curl --request POST 'https://<localhost/port>/ingestDocs' \
     --header 'Content-Type: application/json' \
+    --header 'RAG-APP-API-Key: <your rag app api key>' \
     --data-raw '{
       "bucket_name": "documents",
       "es_index_name": "docs-prod-rag-index",

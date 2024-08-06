@@ -243,7 +243,7 @@
           "es_model_name": {
             "type": "string",
             "title": "Es Model Name",
-            "default": ".elser_model_1"
+            "default": ".elser_model_2"
           },
           "num_results": {
             "type": "string",
