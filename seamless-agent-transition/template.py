@@ -41,6 +41,8 @@ sample_from_file = ""
 with open('transcript.txt', 'r') as sample_text_f:
     sample_from_file = sample_text_f.read()
 
+color_code = ["#6929c4", "#009d9a"]
+
 # ---- UI code ----
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, 'https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600&display=swap'])
@@ -204,12 +206,12 @@ def get_payloads(text):
         )
     return payloads_output
 
-def parse_output(res, type):
+def parse_output(res, type, index):
     parseoutput = []
     if(type == 'text'):
         return res
     if(type == 'label'):
-        return html.H5(dbc.Badge(res, color="#1192e8", style={'borderRadius': '12px','marginLeft':'8px','paddingLeft':'16px', 'paddingRight':'16px'}))
+        return html.H5(dbc.Badge(res, color=color_code[index%2], style={'borderRadius': '12px','marginLeft':'8px','paddingLeft':'16px', 'paddingRight':'16px'}))
     elif(type == 'key-value'):
         try:
             res = res.replace("Input:","")
@@ -231,15 +233,14 @@ def get_header_with_access_tkn(access_token):
     return headers_with_access_tkn
 
 # LLM API call
-def llm_fn(text, payload_json, type, access_token):
+def llm_fn(text, payload_json, type, access_token, index):
     payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n\n"
     print("calling LLM", datetime.now())
     response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json))
     response_llm_json = response_llm.json()
-
     try:
-        return parse_output(response_llm_json['results'][0]['generated_text'], type)
+        return parse_output(response_llm_json['results'][0]['generated_text'], type, index)
     except Exception as e:
         print("{} Error from LLM -->".format(datetime.now()),response_llm_json)
         return "Error occured. Status code: {}. Please try again.".format(response_llm_json['status_code'])
@@ -287,17 +288,18 @@ def generate_output_llm(n, text):
     authenticator = IAMAuthenticator(API_KEY)
     access_token = authenticator.token_manager.get_token()
     
-    for action, label, payload_file, type in zip(actions, labels, payloads, types):
+    for action, label, payload_file, type, i in zip(actions, labels, payloads, types, range(len(types))):
         try:
           with open('payload/{}.json'.format(payload_file)) as payload_f:
             payload_f_json = json.load(payload_f)
 
           if(action == "llm"):
-            output.append(html.Div([html.H5(label), llm_fn(text, payload_f_json, type, access_token)], className="output-div"))
+            output.append(html.Div([html.H5(label, style={'marginBottom': '0rem', 'fontWeight':'bold'}), html.Hr(style={'marginTop':'0.4rem'}), llm_fn(text, payload_f_json, type, access_token, i)], className="output-div"))
         except Exception as e:
           print(action, traceback.format_exc(e))
         time.sleep(1)
-    return output
+    output = html.Div([html.Div([output[0], output[1]], style={"display": "flex", "flexDirection": "row", "justifyContent": "space-between", "marginBottom": "1.5rem"}), output[2], output[3]], style={"margin":"1rem"})
+    return html.Div(output, style={'border': '1px solid grey', 'padding': '1rem', 'border-radius': '1rem'})
 
 # For loading spinner
 @app.callback(
