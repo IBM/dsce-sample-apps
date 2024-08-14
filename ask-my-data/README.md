@@ -13,7 +13,8 @@
    - 1.5 In this repo, we have provided `Ask-WA-3de5a-V13.zip` file which will be used in next step.
    - 1.6 From left hand side panel, go to **Assistant settings > Download/Upload files > Upload > upload the Ask-WA-3de5a-V13.zip > Upload and replace**
    - 1.7 Once upload is complete, the watsonx Assistant is ready & you can find two actions `upload-file & ask-question` under left hand side panel **Actions > Created by you**
-   - 1.8 Note down the assistant keys `integrationID`, `region` & `serviceInstanceID`, which will be used in setting the Environment file in next section. Go to left hand side panel **Environments > Draft > Web chat > Embed**
+   - 1.8 Turn off default Home screen. Go to left hand side panel **Environments > Draft > Web chat > Home screen** and turn off the toggle button. Click Save and exit button.
+   - 1.9 Note down the assistant keys `integrationID`, `region` & `serviceInstanceID`, which will be used in setting the Environment file in next section. Go to left hand side panel **Environments > Draft > Web chat > Embed**
 
 2. A watsonx.ai instance on IBM cloud ([get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx)).
 3. A MySQL server database service.
