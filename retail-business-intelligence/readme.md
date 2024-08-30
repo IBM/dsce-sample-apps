@@ -40,24 +40,40 @@ Here are steps to implement Data federation using watsonx.data
 ### Section 3 Provision IBM Object storage
 
 1. Logon to https://cloud.ibm.com/
-2. Search for `object storage` and click on `Cloud Object Storage` service.
+2. Search for `object storage` and click on `Object Storage` service.
 3. Choose an infrastructure as relevant.
-4. Select `Lite` plan.
-5. Mention `Service Name`, `Tags` (optional) as needed.
+4. Select `Standard` plan.
+5. Mention `Service Name`, `Resource Group`, `Tags` (optional) as needed.
 6. Click on `Create`.
 7. Home page of cloud storage appear.
 8. Click on `Create Bucket` on top right corner then click on `Create a Custom Bucket`
-9. Provide bucket name `wxddemo` and other relavant details and click `Create Bucket`. New bucket wxddemo would be created.
-10. Create Service credentials -> `New credentials`
-11. Provide name `wxddemo` -> Role `manager` -> Select Service ID `Auto Generated` -> Include HMAC credentials `On`
-12. Service credentials would be created. `access_key_id` and `secret_access_key` would be used later in this document.
-13. Click on Bucket `wxddemo`
-14. Navigate to `Configuration` tab
-15. Search for `Endpoints` -> select `Public` endpoint
+9. Provide bucket name `wxddemo` and other relavant details like `Resiliency`, `Location`, `Storage class`, `Object versioning`, `Retention policy`, and `Object Lock` etc..
+10. Click `Create Bucket` and new bucket wxddemo would be created.
+11. Create Service credentials tab -> `New credentials`
+12. Provide name `wxddemo` -> Role `manager` -> Select Service ID `Auto Generated` -> Include HMAC credentials `On`
+13. Service credentials would be created. `access_key_id` and `secret_access_key` would be used later in this document.
+14. Click on Bucket `wxddemo`
+15. Navigate to `Configuration` tab
+16. Search for `Endpoints` -> select `Public` endpoint
 
 ### Section 4 Provision PostgreSQL Instance
 
-##### Note: In IBM cloud, PostgreSQL is not available for free. You can provision PostgreSQL at your end & store the connection details for the future references. If you want to provision it in IBM cloud then paid service is available.
+##### Note: In IBM Cloud, PostgreSQL is not available for free. You can provision PostgreSQL on your end and store the connection details for future reference. If you want to provision it in IBM Cloud, a paid service is available by following the steps below.
+
+1. Logon to https://cloud.ibm.com/
+2. From the dashboard, click on "Catalog" in the top-right menu.
+3. In the search bar within the Catalog, type “PostgreSQL.” Select “Databases for PostgreSQL” from the search results.
+4. In Platform select `IBM Cloud`
+5. In Service Details provide `Service name`, `Resource group`, `Location`, and `Tags`.
+6. Select your hosting model as `Shared`
+7. Resource Allocation you may have configuration options such as selecting storage size, CPU, and memory.
+8. Configuring the necessary options, click the “Create” button.
+9. IBM Cloud will start provisioning your PostgreSQL instance, which may take a few minutes.
+10. After the service is created, navigate to the "Resource List" by clicking on the hamburger menu (three horizontal lines) on the top-left and selecting “Resource List.”
+11. Under the “Databases” section, find and click on your newly created PostgreSQL service.
+12. You will be taken to the service details page, where you can manage and configure your PostgreSQL instance.
+13. Here, you’ll find important information like the connection strings Endpoint, Hostname, Port, Database, TLS certificate name, TLS certificate String by clicking on download button, service credentials, and monitoring tools in Endpoint tab.
+
 
 ### Section 5 Navigate to watsonx.data instance
 
@@ -76,15 +92,15 @@ Here are steps to implement Data federation using watsonx.data
 
 1. Navigate to `Infrastructure Manager` in watsonx.data UI. (Continuation of step 10 of `Navigate to watsonx.data instance` section)
 2. Click on `Add Component` on top right corner.
-3. Select `Add Storage`
-4. Provide below information  
-   Storage Type: IBM Cloud Object Storage
-   Region : <as applicable> (Dallas by default)
-   Endpoint: <public endpoint derived in Step 4>
+3. Select `IBM Cloud Object Storage` uder storage catalog and goto Next.
+4. Provide below General information in configuration:
+   Display name: wxddemo
    Bucket Name : wxddemo
-   Display Name: wxddemo
-   User name: <access_key_id generated in Step 4>
-   Password: <secret_access_key generated in step 4>
+   Region : <as applicable> (Dallas by default)
+   Endpoint: <public endpoint derived in [section 3](#section-3-provision-ibm-object-storage)>
+   Access key: <access_key_id generated in [section 3](#section-3-provision-ibm-object-storage)>
+   Secret key: <secret_access_key generated in [section 3](#section-3-provision-ibm-object-storage)>
+   Storage Type: IBM Cloud Object Storage
 5. Click on `Test Connection` which should show `Successful` status
 6. Tick `Associate Catalog` and `Activate Now`
 7. Catalog Type `Apache Iceberg`
@@ -94,28 +110,29 @@ Here are steps to implement Data federation using watsonx.data
 11. Hover over catalog `cos` -> click on `manage associations` and connect to `presto` engine. Check the presto and click on `Save and restart engine`.
 12. Navigate to `Data Manager` page.
 13. Click on `Create` -> `Create schema`
-14. Select Catalog `cos` and Name `retail`
-15. Navigate to `SQL` page.
-16. Execute attached queries in SQL page. <CoS_Queries.sql>
+14. Navigate to `Query workspace` page from left side hamburger button in watsonx.data UI.
+15. You will have SQL query editor window/tab open.
+16. Execute attached queries in SQL editor page. This query is written with catalog and schema name aliases, so you can execute it as is.[CoS_Queries.sql](./CoS_Queries.sql)
+17. Additionally if you want to run any other select statements other schema then in editor menubar select Catalog `cos` and Name `retail` from dropdown.
 
 ### Section 7 Setup PostgreSQL for data federation in watsonx.data
 
 1. Navigate to `Infrastructure Manager` in watsonx.data UI. (Continuation of step 10 of `Navigate to watsonx.data instance` section)
 2. Click on `Add Component` on top right corner.
-3. Select `Add database`
-4. Provide below information  
-   Database type: `IBM PostgreSQL`
-   Database Name:
-   Display Name :
-   Hostname:
-   Port:
-   Username:
-   Password:
-5. Toggle button to `Post is SSL enabled` and add/upload your certificate file.
-6. Test Connection
-7. Add Catalog Name `postgresql`.
-8. Click on `Register`.
-9. Hover over catalog `postgresql` -> click on `manage associations` and connect to `presto` engine.
+3. Search with `PostgreSQL` in Add Component
+4. Provide below in general information  
+   - Display Name : `Example: Your Database 01`
+   - Database Name: `Example: your_db_01` derived from [section 4](#section-4-provision-postgresql-instance)
+   - Hostname: `Example: your.hn.com, 1.23.456.789` derived from [section 4](#section-4-provision-postgresql-instance)
+   - Port: `Example: 1234` derived from [section 4](#section-4-provision-postgresql-instance)
+   - Username: `Enter your database username` derived from [section 4](#section-4-provision-postgresql-instance)
+   - Password: `Enter your database password` derived from [section 4](#section-4-provision-postgresql-instance)
+5. Toggle button to `Port is SSL enabled`,`Validate certificate`
+6. Click on add/upload button to upload your SSL certificate file which derived from [section 4](#section-4-provision-postgresql-instance)
+7. Click on `Test Connection` to check database connectivity.
+8. Add Catalog Name `postgresql`.
+9. Click on `Create`.
+10. Hover over catalog `postgresql` -> click on `manage associations` and connect to `presto` engine.
 
 ## Set up and launch application
 
@@ -188,7 +205,7 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    #### Presto host and engine id
    - Navigate to `Infrastructure Manager` in watsonx.data UI.
    - Click on Presto engine.
-   - Get the `Host` and `Presto Engine` details.
+   - Get the `Host` and `Presto Engine ID` details.
 
    ```sh
    SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
