@@ -77,7 +77,7 @@ const Selector = ({chart, selectColumn, allColumns, forecast, sampleData}) => {
           </CheckboxGroup>
         )}
         <br/>
-        <NumberInput min={1} max={96} value={forecastLength} label="Forecast horizon (in hours)" invalidText="value must in between 1-96" onChange={updateForecastLength}/>
+        <NumberInput min={1} max={96} value={forecastLength} label="Forecast horizon (in 1-96 hours)" invalidText="value must in between 1-96" onChange={updateForecastLength}/>
         <br/>
         <br/>
         <Button onClick={forecastData} disabled={btnDisable}>Forecast</Button>
