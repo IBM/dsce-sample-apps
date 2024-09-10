@@ -15,7 +15,7 @@ const AppHeader = ({iconClick}) => {
   }
   return (
         <Header aria-label="IBM Platform Name" className={styles.uiShellHeader}>
-          <HeaderName prefix="Forecasting timeseries data" theme>
+          <HeaderName prefix="Energy Forecasting using granite TTM">
           </HeaderName>
           <HeaderGlobalBar>
             <HeaderGlobalAction aria-label="Search" onClick={iconClickHandler}>
