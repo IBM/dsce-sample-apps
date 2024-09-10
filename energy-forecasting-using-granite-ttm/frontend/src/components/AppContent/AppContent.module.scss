@@ -1,0 +1,22 @@
+.container{
+    margin-top: 47px;
+    height: inherit;
+    gap: 2rem;
+    max-height: calc(100vh - 30px);
+}
+
+.leftChild{
+    margin-top: 1rem;
+}
+
+.rightChild{
+  max-height: inherit;
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 400px) {
+    .container {
+      margin-bottom: 160px;
+    }
+  }
+  
