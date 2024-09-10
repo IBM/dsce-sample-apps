@@ -1,0 +1,9 @@
+.linkText{
+    font-size: small;
+    cursor: pointer;
+}
+
+.container{
+    max-height: calc(100vh - 47px - 90px);
+    overflow-y: auto;
+}

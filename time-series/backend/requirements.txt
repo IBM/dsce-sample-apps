@@ -1,0 +1,5 @@
+pandas
+flask
+flask_cors
+python-dotenv
+requests
