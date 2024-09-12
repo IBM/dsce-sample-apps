@@ -6,6 +6,7 @@ import styles from './Chart.module.scss';
 
 const Chart = ({data, thresholdVal, chartTitle}) => {
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [newChartData, setNewChartData] = useState([data])
   const options = {
     title: chartTitle,
     axes: {
@@ -40,13 +41,20 @@ const Chart = ({data, thresholdVal, chartTitle}) => {
 
   useEffect(()=>{
     if(data.length){
+      const finalData =  data.map((innerData)=>{
+        if(innerData.group !== chartTitle){
+            return {...innerData, group: 'TTM ZS Forecast'}
+        }
+        return {...innerData, group: 'Ground truth'}
+      })
+      setNewChartData(finalData)
       setDataLoaded(true)
     }
-  }, [data])
+  }, [data, chartTitle])
 
     return (
         <LineChart
-        data={data}
+        data={newChartData}
         options={options}
       ></ LineChart>
     )
