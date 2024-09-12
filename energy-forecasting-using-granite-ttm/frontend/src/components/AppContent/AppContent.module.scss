@@ -12,6 +12,7 @@
 .rightChild{
   max-height: inherit;
   overflow-y: auto;
+  padding-left: 0.5rem;
 }
 
 @media only screen and (max-width: 400px) {
