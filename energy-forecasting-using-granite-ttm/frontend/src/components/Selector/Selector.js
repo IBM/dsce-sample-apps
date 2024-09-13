@@ -1,15 +1,14 @@
-import { Button, NumberInput, RadioTile, TileGroup, Checkbox, CheckboxGroup } from '@carbon/react'
+import { Button, NumberInput, RadioTile, TileGroup, Checkbox, CheckboxGroup, Modal } from '@carbon/react'
 import React, { useEffect, useState } from 'react'
-import SideModal from '../SideModal/SideModal'
 import styles from './Selector.module.scss'
 
 const sampleCSV = ["Energy dataset"]
-const listOfColumns = {"Energy dataset": ["total load actual", "generation solar", "price actual"]}
+const listOfColumns = {"Energy dataset": ["total load actual", "generation solar"]}
 
-const Selector = ({chart, selectColumn, allColumns, forecast, sampleData}) => {
+const Selector = ({chart, selectColumn, allColumns, forecast}) => {
   const [dataset, setSDataset] = useState('Energy dataset')
   const [targetedColumns, setTargetedColumns] = useState(['total load actual'])
-  const [openSidePanel, setOpenSidePanel] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
   const [forecastLength, setForecastLength] = useState(96)
   const [btnDisable, setBtnDisable] = useState(false)
 
@@ -53,22 +52,19 @@ const Selector = ({chart, selectColumn, allColumns, forecast, sampleData}) => {
     }
   }
 
-  const openSideModal = () =>{
-    setOpenSidePanel(true)
+  const openModalHandler = () =>{
+    setOpenModal(true)
   }
   return (
     <div className={styles.container}>
-        <SideModal
-        open={openSidePanel}
-        setOpenSidePanel={setOpenSidePanel}
-        sampleData={sampleData}
-        title={dataset}
-        ></SideModal>
+        <Modal open={openModal} onRequestClose={() => setOpenModal(false)} passiveModal modalHeading="Data source" size='md'>
+            Source: <a href='https://www.kaggle.com/datasets/nicholasjhana/energy-consumption-generation-prices-and-weather' target='_blank'>https://www.kaggle.com/datasets/nicholasjhana/energy-consumption-generation-prices-and-weather</a>
+      </Modal>
           <TileGroup legend="Dataset" defaultSelected={sampleCSV[0]} onChange={selectDataset}>
             {sampleCSV.map((item, i)=><RadioTile id={item} value={item}>{item}</RadioTile>)}
           </TileGroup>
         <br/>
-        {dataset && <a onClick={openSideModal} className={styles.linkText}>View dataset (hourly)</a>}
+        {dataset && <a onClick={openModalHandler} className={styles.linkText}>View dataset (hourly)</a>}
         <br/>
         <br/>
         {dataset && (

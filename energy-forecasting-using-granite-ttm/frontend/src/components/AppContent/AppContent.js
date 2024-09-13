@@ -16,7 +16,6 @@ const AppContent = ({selectedColumn}) => {
     const [allColumns, setAllColumns] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [actualData, setActualData] = useState([])
-    const [sampleData, setSampleData] = useState([[]])
     const [threshold, setThreshold] = useState()
     
     useEffect(()=>
@@ -29,7 +28,6 @@ const AppContent = ({selectedColumn}) => {
                      header: true,
                      skipEmptyLines: true,
                      complete: (resp) => {
-                        setSampleData(resp.data.slice(-10))
                         setAllColumns(resp.meta.fields)
                             const parsedData = columnsSelected.map((column)=>{
                                 return resp.data.map((row) => ({
@@ -83,7 +81,7 @@ const AppContent = ({selectedColumn}) => {
         <Grid className={styles.container}>
             <Column lg={4} md={2} sm={4} className={styles.leftChild}>
                 <div>
-                    <Selector chart={chartSelectionHandler} selectColumn={selectColumn} allColumns={allColumns} forecast={getData} sampleData={sampleData}/>
+                    <Selector chart={chartSelectionHandler} selectColumn={selectColumn} allColumns={allColumns} forecast={getData}/>
                 </div>
             </Column>
             <Column lg={12} md={6} sm={4} className={styles.rightChild}>
