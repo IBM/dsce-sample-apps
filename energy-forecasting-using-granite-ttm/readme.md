@@ -60,7 +60,14 @@
    DEFAULT_URL=<application url where the granite-tsfm service is running>
    ```
 
-5. Run the application.
+
+5. Download Energy dataset from below url and store it in the `data` folder with the name `energy_dataset.csv`.
+   
+   ```sh
+   URL = https://www.kaggle.com/datasets/nicholasjhana/energy-consumption-generation-prices-and-weather
+   ```
+
+6. Run the application.
 
    ```sh
    python3 app.py
@@ -85,11 +92,7 @@ http://localhost:8000
    REACT_APP_BACKEND_URL=http://localhost:8000  #backend server url
    ```
 
-3. Download Energy dataset from below url and store it in the `public` folder with the name `Energy dataset.csv`.
-   
-   ```sh
-   URL = https://www.kaggle.com/datasets/nicholasjhana/energy-consumption-generation-prices-and-weather
-   ```
+3. Copy downloaded `energy_dataset.csv` file and paste it in the `public` folder with the name `Energy dataset.csv`.
 
 4. Run the application.
 
