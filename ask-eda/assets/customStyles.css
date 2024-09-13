@@ -1,0 +1,225 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif !important;
+}
+
+.upload-data {
+  float: right;
+  width: min(250px, 100%);
+}
+
+.carbon-input {
+  background-color: #f4f4f4 !important;
+  border-radius: 0;
+  border-bottom-color: #8d8d8d;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 0.6875rem 1rem;
+  resize: none;
+
+  &:disabled {
+    border-bottom: 1px solid transparent;
+    cursor: not-allowed;
+    outline: none;
+  }
+
+  &:active,
+  &:focus {
+    box-shadow: none;
+    outline: 2px solid #0f62fe;
+    outline-offset: -2px;
+  }
+}
+
+.carbon-btn {
+  height: 2.5rem;
+  width: min(250px, 100%);
+  border-radius: 0;
+  text-align: left;
+  padding-left: 1rem;
+  padding-right: 4rem;
+  margin-top: 0.5rem;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.nav-dropdown-btn {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  padding-top: 0.7rem;
+
+  &:hover {
+    background-color: #6c757d;
+  }
+}
+
+/* For DropDown */
+.dropdown-menu[data-bs-popper] {
+  border-radius: 0;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+  padding: unset;
+  border: none;
+  background-color: #f4f4f4;
+  max-height: 13.75rem;
+  transition: max-height 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+  min-width: 12rem;
+}
+
+.dmi-class {
+  color: #525252;
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  border-top-color: #c6c6c6;
+  padding: 11px 24px 11px 16px;
+  height: 2.5rem;
+  letter-spacing: 0.16px;
+  line-height: 1rem;
+
+  &:first-of-type {
+    border-top-color: transparent;
+  }
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+}
+
+.nav.nav-tabs {
+  border-bottom: none;
+}
+
+/* For payload modal */
+.modal-content {
+  border-radius: 0;
+  min-height: 550px !important;
+  max-height: 550px !important;
+
+  .nav-tabs {
+    padding-bottom: 1rem;
+  }
+
+  .nav-item > a {
+    background: none;
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    color: #525252;
+    font-size: 0.875rem;
+    font-weight: 400;
+    height: 2.5rem;
+    margin-left: 1px;
+    padding: 0.5rem 1rem;
+
+    &:focus {
+      outline: 2px solid #0f62fe;
+      outline-offset: -2px;
+    }
+
+    &.active {
+      background: none;
+      border: none;
+      border-bottom: 2px solid #0f62fe;
+      color: #161616;
+      font-weight: 600;
+    }
+  }
+}
+
+/* hljs is for markdown */
+#payload-modal {
+  .hljs {
+    background-color: #343a3f;
+    color: #78a9ff;
+    font-family: "IBM Plex Mono", sans-serif !important;
+  }
+  .hljs-string {
+    color: #9ef0f0;
+    font-family: "IBM Plex Mono", sans-serif !important;
+  }
+}
+
+#view-source-modal {
+  .hljs {
+    font-family: "IBM Plex Mono", sans-serif !important;
+  }
+  .hljs-string {
+    font-family: "IBM Plex Mono", sans-serif !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+}
+
+.tab-content {
+  background-color: #343a3f;
+}
+
+#generate-output {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.output-div:not(:first-child) {
+  padding-top: 2rem;
+}
+
+.input-active {
+  text-align: left !important;
+}
+
+.remove-btn {
+  border-radius: 0;
+  border: none;
+  margin-left: 2.5rem;
+  margin-top: 2rem;
+}
+
+.modal-content {
+  min-height: 308px !important;
+}
+
+#example-modal {
+  .modal-content {
+    height: 840px !important;
+    min-height: 840px !important;
+    max-height: 840px !important;
+  }
+}
+
+.btn-info {
+  color: "#525252";
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  width: 70%;
+}
+
+.btn-info p {
+  margin-bottom: 0.2rem;
+}
+
+.btn-info-save {
+  color: "#525252";
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  width: 40%;
+}
+
+.btn-info-save p {
+  margin-bottom: 0.2rem;
+}
+
+.search-btn {
+  background-color: #f4f4f4;
+  border-radius: 0;
+  border-bottom-color: #8d8d8d;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
