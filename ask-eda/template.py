@@ -15,16 +15,6 @@ items_view = configs.items()
 for item in items_view:
     configs_dict[item[0]] = item[1].data
 
-# For LLM call
-SERVER_URL = os.getenv('SERVER_URL')
-WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
-API_KEY = os.getenv('WATSONX_API_KEY')
-HEADERS = {
-        'accept': 'application/json',
-        'content-type': 'application/json',
-        'Authorization': 'Bearer {}'.format(API_KEY)
-    }
-
 # For Flow engine call
 FLOW_ENGINE_URL = os.getenv('FLOW_ENGINE_URL')
 FLOW_ENGINE_API_KEY = os.getenv('FLOW_ENGINE_API_KEY')
@@ -193,13 +183,6 @@ def parse_output(res, type):
         return html.Div(parseoutput, className="key-value-div-parent")
     elif(type == 'markdown'):
         return dcc.Markdown(md(html=res, code_language="sql"))
-
-
-# Get IBM access token and return headers
-def get_header_with_access_tkn(access_token):
-    headers_with_access_tkn = HEADERS.copy()
-    headers_with_access_tkn['Authorization'] = 'Bearer {}'.format(access_token)
-    return headers_with_access_tkn
 
 # Call flow engine
 def flow_eng_fn(text):
