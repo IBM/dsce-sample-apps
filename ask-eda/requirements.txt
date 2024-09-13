@@ -1,0 +1,7 @@
+dash==2.11.1
+dash_bootstrap_components==1.4.1
+dash_daq==0.5.0
+jproperties==2.1.1
+markdownify==0.11.6
+python-dotenv==1.0.0
+requests==2.31.0
