@@ -43,7 +43,7 @@ const Chart = ({data, thresholdVal, chartTitle}) => {
     if(data.length){
       const finalData =  data.map((innerData)=>{
         if(innerData.group !== chartTitle){
-            return {...innerData, group: 'TTM ZS Forecast'}
+            return {...innerData, group: 'Granite TTM zero-shot forecast'}
         }
         return {...innerData, group: 'Ground truth'}
       })

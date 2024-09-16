@@ -145,7 +145,7 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
     wxflows collection deploy
     ```
 
-9. Modify flow by removing `//` (comment) from the `myRagWithGuardrails` inside the flow in the `wxflows.toml` file.
+9. Modify flow by removing `//` (comment) from the `myRagWithGuardrails` inside the `flows` variable of the `wxflows.toml`  file.
 
 10. Deploy the flows
 

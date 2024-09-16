@@ -1,4 +1,4 @@
-# Time series
+# Energy forecasting using Granite TTM
 
 ## Prerequisites
 
