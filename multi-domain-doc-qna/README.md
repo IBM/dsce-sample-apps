@@ -27,7 +27,7 @@
      There are two database edition `Enterprise` and `Platinum`. Machine learning (ML Model ELSER) is only available in `Platinum` edition so choose the approciate edition. For more informaiton read the document - <https://cloud.ibm.com/docs/databases-for-elasticsearch?topic=databases-for-elasticsearch-es-ml-ai>.
 
    - 3.5 Once instance is created, go to the database & **Launch it**.
-   - 3.6 Go to Serice Credentials & click **New credential**, give name & click **Add**.
+   - 3.6 Go to Service Credentials & click **New credential**, give name & click **Add**.
    - 3.7 Expand the newly created service credentail & find below information and save it somewhere for connecting the database:
      username, password, hostname, port.
 
