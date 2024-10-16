@@ -1,0 +1,7 @@
+ibm-generative-ai==0.2.5
+langchain==0.0.340
+flask==2.3.3
+ibm-watson-machine-learning==1.0.327
+flask-cors==4.0.0
+pypdf==3.15.2
+python-dotenv

@@ -1,0 +1,27 @@
+@use "@carbon/type";
+@use "@carbon/colors";
+
+.helper-text{
+	@include type.type-style("helper-text-01");
+}
+
+.helper-box{
+  background-color: colors.$gray-20;
+}
+
+.landing-page__illo {
+  max-width: 100%;
+}
+
+.image-container {
+  display: flex;
+  align-items: right;
+  justify-content: flex-end;
+  height: 40vh; /* Adjust this to control the vertical centering */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px; /* Adjust the margin as needed */
+}
