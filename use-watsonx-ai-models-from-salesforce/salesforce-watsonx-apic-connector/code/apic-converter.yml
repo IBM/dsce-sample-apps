@@ -1,0 +1,1025 @@
+openapi: 3.0.0
+info:
+  title: SF LLM Open Connector API
+  description: >-
+    The LLM Open Connector API allows Salesforce customers and partners to
+    provide access to LLMs in a standard way so that they can be consumed by the
+    Einstein 1 platform. This API is based on OpenAI's API with significant
+    modifications to accommodate Salesforce use cases.
+  version: v1
+  termsOfService: tos
+  contact:
+    name: Einstein Foundations
+    url: https://www.salesforce.com/artificial-intelligence/
+  license:
+    name: MIT
+    url: >-
+      https://github.com/salesforce/generic-llm-connector-openapi/blob/master/LICENSE
+  x-ibm-name: sf-llm-open-connector-api
+servers:
+  - url: /
+tags:
+  - name: Chat
+    description: >-
+      Given a list of messages comprising a conversation, the model will return
+      a response.
+  - name: Completions
+    description: >-
+      Given a prompt, the model will return one or more predicted completions,
+      and can also return the probabilities of alternative tokens at each
+      position.
+  - name: Embeddings
+    description: >-
+      Get a vector representation of a given input that can be easily consumed
+      by machine learning models and algorithms.
+paths:
+  /completions:
+    post:
+      operationId: createCompletion
+      tags:
+        - Completions
+      summary: Creates a completion for the provided prompt and parameters.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompletionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompletionResponse'
+    parameters:
+      - $ref: '#/components/parameters/projectid'
+      - $ref: '#/components/parameters/region'
+  /embeddings:
+    post:
+      operationId: createEmbedding
+      tags:
+        - Embeddings
+      summary: Creates an embedding vector representing the input text.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmbeddingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEmbeddingResponse'
+    parameters:
+      - $ref: '#/components/parameters/projectid'
+      - $ref: '#/components/parameters/region'
+  /chat/completions:
+    post:
+      operationId: createChatCompletion
+      tags:
+        - Chat
+      summary: Creates a model response for the given chat conversation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChatCompletionRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateChatCompletionResponse'
+    parameters:
+      - $ref: '#/components/parameters/projectid'
+      - $ref: '#/components/parameters/region'
+components:
+  securitySchemes: {}
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: false
+        param:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: false
+      required:
+        - type
+        - message
+        - param
+        - code
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      required:
+        - error
+    CreateCompletionRequest:
+      type: object
+      properties:
+        model:
+          description: >
+            ID of the model to use. This will be typically determined by the
+            list of models you as a Provider will support.
+          type: string
+        prompt:
+          description: >
+            The prompt(s) to generate completions for, encoded as a string,
+            array of strings, array of tokens, or array of token arrays.
+          nullable: false
+          type: string
+          default: ''
+          example: This is a test.
+        max_tokens:
+          type: integer
+          minimum: 0
+          default: 16
+          example: 16
+          nullable: true
+          description: >
+            The maximum number of [tokens](/tokenizer) that can be generated in
+            the completion.
+
+
+            The token count of your prompt plus `max_tokens` cannot exceed the
+            model's context length.
+        'n':
+          type: integer
+          minimum: 1
+          maximum: 128
+          default: 1
+          example: 1
+          nullable: true
+          description: |
+            How many completions to generate for each prompt.
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+          description: >
+            What sampling temperature to use, between 0 and 2. Higher values
+            like 0.8 will make the output more random, while lower values like
+            0.2 will make it more focused and deterministic.
+
+
+            We generally recommend altering this or `top_p` but not both.
+        parameters:
+          description: >-
+            Dictionary of any other parameters that are required by the
+            provider. Values are passed as is to the provider so that the
+            request can include parameters that are unique to a provider.
+          type: object
+          additionalProperties: true
+          example:
+            top_p: 0.5
+      required:
+        - model
+        - prompt
+    CreateCompletionResponse:
+      type: object
+      description: >
+        Represents a completion response from the API. Note: both the streamed
+        and non-streamed response objects share the same shape (unlike the chat
+        endpoint).
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the completion.
+        choices:
+          type: array
+          description: >-
+            The list of completion choices the model generated for the input
+            prompt.
+          items:
+            type: object
+            required:
+              - finish_reason
+              - index
+              - text
+            properties:
+              finish_reason:
+                type: string
+                description: >
+                  The reason the model stopped generating tokens. This will be
+                  `stop` if the model hit a natural stop point or a provided
+                  stop sequence,
+
+                  `length` if the maximum number of tokens specified in the
+                  request was reached,
+
+                  or `content_filter` if content was omitted due to a flag from
+                  our content filters.
+                enum:
+                  - stop
+                  - length
+                  - content_filter
+              index:
+                type: integer
+              text:
+                type: string
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) of when the completion was created.
+        model:
+          type: string
+          description: The model used for completion.
+        object:
+          type: string
+          description: The object type, which is always "text_completion"
+          enum:
+            - text_completion
+        usage:
+          $ref: '#/components/schemas/CompletionUsage'
+      required:
+        - id
+        - object
+        - created
+        - model
+        - choices
+    CompletionUsage:
+      type: object
+      description: Usage statistics for the completion request.
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the generated completion.
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        total_tokens:
+          type: integer
+          description: Total number of tokens used in the request (prompt + completion).
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+    CreateEmbeddingRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        input:
+          description: |
+            The array of strings that will be turned into an embedding.
+          example: The quick brown fox jumped over the lazy dog
+          type: array
+          title: array
+          minItems: 1
+          maxItems: 2048
+          items:
+            type: string
+            default: ''
+            example: '[''This is a test.'']'
+        model:
+          description: >
+            ID of the model to use. This will be typically determined by the
+            list of models you as a Provider will support.
+          example: text-embedding-3-small
+          type: string
+        encoding_format:
+          description: >-
+            The format to return the embeddings in. Can be either `float` or
+            [`base64`](https://pypi.org/project/pybase64/).
+          example: float
+          default: float
+          type: string
+          enum:
+            - float
+            - base64
+        dimensions:
+          description: >
+            The number of dimensions the resulting output embeddings should
+            have. Only supported in `text-embedding-3` and later models.
+          type: integer
+          minimum: 1
+      required:
+        - model
+        - input
+    CreateEmbeddingResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The list of embeddings generated by the model.
+          items:
+            $ref: '#/components/schemas/Embedding'
+        model:
+          type: string
+          description: The name of the model used to generate the embedding.
+        object:
+          type: string
+          description: The object type, which is always "list".
+          enum:
+            - list
+        usage:
+          type: object
+          description: The usage information for the request.
+          properties:
+            prompt_tokens:
+              type: integer
+              description: The number of tokens used by the prompt.
+            total_tokens:
+              type: integer
+              description: The total number of tokens used by the request.
+          required:
+            - prompt_tokens
+            - total_tokens
+      required:
+        - object
+        - model
+        - data
+        - usage
+    Embedding:
+      type: object
+      description: |
+        Represents an embedding vector returned by embedding endpoint.
+      properties:
+        index:
+          type: integer
+          description: The index of the embedding in the list of embeddings.
+        embedding:
+          type: array
+          description: >
+            The embedding vector, which is a list of floats. The length of
+            vector depends on the model as listed in the [embedding
+            guide](/docs/guides/embeddings).
+          items:
+            type: number
+        object:
+          type: string
+          description: The object type, which is always "embedding".
+          enum:
+            - embedding
+      required:
+        - index
+        - object
+        - embedding
+    CreateChatCompletionRequest:
+      type: object
+      properties:
+        messages:
+          description: A list of messages comprising the conversation so far.
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ChatCompletionRequestMessage'
+        model:
+          description: ID of the model to use.
+          example: gpt-4-turbo
+          type: string
+        max_tokens:
+          description: >
+            The maximum number of [tokens](/tokenizer) that can be generated in
+            the chat completion.
+
+
+            The total length of input tokens and generated tokens is limited by
+            the model's context length.
+          type: integer
+          nullable: true
+        'n':
+          type: integer
+          minimum: 1
+          maximum: 128
+          default: 1
+          example: 1
+          nullable: true
+          description: >-
+            How many chat completion choices to generate for each input message.
+            Note that you will be charged based on the number of generated
+            tokens across all of the choices. Keep `n` as `1` to minimize costs.
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 2
+          default: 1
+          example: 1
+          nullable: true
+          description: >
+            What sampling temperature to use, between 0 and 2. Higher values
+            like 0.8 will make the output more random, while lower values like
+            0.2 will make it more focused and deterministic.
+
+
+            We generally recommend altering this or `top_p` but not both.
+        parameters:
+          description: >-
+            Dictionary of any other parameters that are required by the
+            provider. Values are passed as is to the provider so that the
+            request can include parameters that are unique to a provider.
+          type: object
+          additionalProperties: true
+          example:
+            top_p: 0.5
+      required:
+        - model
+        - messages
+    CreateChatCompletionResponse:
+      type: object
+      description: >-
+        Represents a chat completion response returned by model, based on the
+        provided input.
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat completion.
+        choices:
+          type: array
+          description: >-
+            A list of chat completion choices. Can be more than one if `n` is
+            greater than 1.
+          items:
+            type: object
+            required:
+              - finish_reason
+              - index
+              - message
+            properties:
+              finish_reason:
+                type: string
+                description: >
+                  The reason the model stopped generating tokens. This will be
+                  `stop` if the model hit a natural stop point or a provided
+                  stop sequence,
+
+                  `length` if the maximum number of tokens specified in the
+                  request was reached,
+
+                  `content_filter` if content was omitted due to a flag from our
+                  content filters,
+
+                  `tool_calls` if the model called a tool, or `function_call`
+                  (deprecated) if the model called a function.
+                enum:
+                  - stop
+                  - length
+                  - tool_calls
+                  - content_filter
+                  - function_call
+              index:
+                type: integer
+                description: The index of the choice in the list of choices.
+              message:
+                $ref: '#/components/schemas/ChatCompletionResponseMessage'
+        created:
+          type: integer
+          description: >-
+            The Unix timestamp (in seconds) of when the chat completion was
+            created.
+        model:
+          type: string
+          description: The model used for the chat completion.
+        object:
+          type: string
+          description: The object type, which is always `chat.completion`.
+          enum:
+            - chat.completion
+        usage:
+          $ref: '#/components/schemas/CompletionUsage'
+      required:
+        - choices
+        - created
+        - id
+        - model
+        - object
+    ChatCompletionRequestMessage:
+      type: object
+      title: Chat Completion Message
+      properties:
+        content:
+          description: The contents of the message.
+          type: string
+        role:
+          type: string
+          enum:
+            - system
+            - user
+            - assistant
+          description: The role of the messages author.
+        name:
+          type: string
+          description: >-
+            An optional name for the participant. Provides the model information
+            to differentiate between participants of the same role.
+      required:
+        - content
+        - role
+    ChatCompletionResponseMessage:
+      type: object
+      title: A chat completion message generated by the model.
+      properties:
+        content:
+          type: string
+          description: The contents of the message.
+          nullable: true
+        role:
+          type: string
+          enum:
+            - assistant
+          description: The role of the author of this message.
+      required:
+        - role
+        - content
+  parameters:
+    projectid:
+      name: projectid
+      in: query
+      required: false
+      schema:
+        type: string
+      example: f7970029-0db4-4c79-9855-90dbaff6537e
+    region:
+      name: region
+      in: query
+      required: false
+      schema:
+        type: string
+      example: us-south
+x-ibm-configuration:
+  type: rest
+  phase: realized
+  enforced: true
+  testable: true
+  gateway: datapower-api-gateway
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - parse:
+          version: 2.2.0
+          title: Parse request payload
+          parse-settings-reference:
+            parse-settings:
+              document_type: json
+              max_value_length: 5368709121
+          output: ''
+          description: >-
+            To parse the incoming payload. Also, use custom parse settings to
+            allow long values.
+          use-content-type: true
+      - gatewayscript:
+          version: 2.0.0
+          title: Configure wx params
+          source: >
+            const qs = require("querystring");
+
+
+            var parsedqs = qs.parse(context.request.querystring);
+
+
+            console.error(
+              "=================================================================="
+            );
+
+
+            var region = context.get("api.properties.wx-endpoint-us-south");
+
+            if (parsedqs["region"] === "eu-gb")
+              region = context.get("api.properties.wx-endpoint-eu-gb");
+            else if (parsedqs["region"] === "eu-de")
+              region = context.get("api.properties.wx-endpoint-eu-de");
+            else if (parsedqs["region"] === "jp-tok")
+              region = context.get("api.properties.wx-endpoint-jp-tok");
+
+            var default_projectid =
+            context.get("api.properties.default-project-id");
+
+            context.set("wx.projectid", parsedqs["projectid"] ||
+            default_projectid);
+
+            context.set("wx.endpoint", region);
+
+            context.set(
+              "wx.apikey",
+              context.request.headers["X-IBM-API-KEY"] ||
+                context.request.headers["x-ibm-api-key"]
+            );
+          description: Create wx object from headers & query params.
+      - set-variable:
+          version: 2.0.0
+          title: Configure IAM parameters
+          actions:
+            - set: message.body
+              value: >-
+                grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=$(wx.apikey)
+              type: string
+            - set: message.headers.content-type
+              value: application/x-www-form-urlencoded
+              type: string
+          description: For cloud authentication
+      - invoke:
+          version: 2.3.0
+          title: Authenticate IBM Cloud IAM
+          backend-type: json
+          header-control:
+            type: blocklist
+            values: []
+          parameter-control:
+            type: allowlist
+            values: []
+          http-version: HTTP/1.1
+          timeout: 60
+          verb: POST
+          chunked-uploads: true
+          persistent-connection: true
+          cache-response: no-cache
+          cache-ttl: 900
+          stop-on-error: []
+          websocket-upgrade: false
+          target-url: https://iam.cloud.ibm.com/identity/token
+          otherwise: []
+          output: iamResponse
+      - parse:
+          version: 2.2.0
+          title: parse IAM auth response
+          parse-settings-reference:
+            default: apic-default-parsesettings
+          input: iamResponse
+          output: iamResponseParsed
+      - set-variable:
+          version: 2.0.0
+          title: Set watsonx inputs
+          actions:
+            - set: message.headers.authorization
+              value: Bearer $(iamResponseParsed.body.access_token)
+              type: string
+            - set: message.headers.content-type
+              value: application/json
+              type: string
+            - set: message.body
+              value: ''
+              type: any
+      - operation-switch:
+          version: 2.0.0
+          title: operation-switch
+          case:
+            - operations:
+                - createCompletion
+              execute:
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform request body for Completions
+                    source: |
+                      const util = require("util");
+
+                      context.request.body.readAsJSON(function (error, json) {
+                          if (error) {
+                              console.error("Completions readAsJSON request error: " + error);
+                          } else {
+                              console.error("Completions readAsJSON request json: ", json);
+                          
+                              const { prompt, model, max_tokens, n, temperature, parameters } = json;
+                              var rprompt = "";
+                              if (util.isString(prompt)) {
+                                  rprompt = prompt;
+                              } else if (util.isArray(prompt) && prompt.every(util.isString)) {
+                                  rprompt = prompt.join("\n");
+                              }
+                              
+                              // Initialize the new request body format
+                              var transformedRequestBody = {
+                                  project_id: context.get("wx.projectid"),
+                                  model_id: model,
+                                  input: rprompt,
+                                  parameters: {
+                                    decoding_method: "greedy",
+                                    stop_sequences: [],
+                                    repetition_penalty: 1,
+                                    min_new_tokens: 1,
+                                    max_new_tokens: max_tokens || 500,
+                                    ...(temperature ? { temperature } : {}),
+                                    ...parameters,
+                                  },
+                              };
+
+                              context.message.body.write(transformedRequestBody);
+                          }
+                      });
+                    description: Transform the input request body
+                - invoke:
+                    version: 2.3.0
+                    title: wx ai invoke
+                    backend-type: json
+                    header-control:
+                      type: blocklist
+                      values: []
+                    parameter-control:
+                      type: allowlist
+                      values: []
+                    follow-redirects: false
+                    tls-profile: ''
+                    timeout: 60
+                    verb: POST
+                    http-version: HTTP/1.1
+                    websocket-upgrade: false
+                    use-http-10: false
+                    inject-proxy-headers: false
+                    decode-request-params: false
+                    encode-plus-char: false
+                    keep-payload: false
+                    chunked-uploads: true
+                    persistent-connection: true
+                    cache-response: protocol
+                    cache-ttl: 900
+                    target-url: $(wx.endpoint)$(text-gen)
+                    description: For Completions
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform response for Completions
+                    source: |
+                      context.message.body.readAsJSON(function (error, json) {
+                          if (error) {
+                            console.error("Completions readAsJSON response error: " + error);
+                          } else {
+                            console.error("Completions readAsJSON response json: ", json);
+                          
+                            var ts = Math.floor(new Date(json.created_at).getTime() / 1000);
+                            var results = json["results"][0];
+                            // Initialize the new response body format
+                            var transformedResponseBody = {
+                              id: "cmpl-default-" + ts,
+                              object: "text_completion",
+                              created: ts,
+                              model: json.model_id,
+                              choices: [
+                                {
+                                  finish_reason: "stop",
+                                  index: 0,
+                                  text: results.generated_text,
+                                },
+                              ],
+                              usage: {
+                                completion_tokens: results.generated_token_count,
+                                prompt_tokens: results.input_token_count,
+                                total_tokens:
+                                  results.generated_token_count + results.input_token_count,
+                              },
+                            };
+                          
+                            session.output.write(transformedResponseBody);
+                          }
+                      });
+                      // session.output.write(context.message.body)
+                    description: Transform the response body
+            - operations:
+                - createChatCompletion
+              execute:
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform request body for Chat Completions
+                    source: |
+                      const util = require("util");
+
+                      function format_messages(messages) {
+                        var formatted_input = "";
+                        for (let message of messages) {
+                          var role = message.role;
+                          var content = message.content;
+
+                          if (role === "system") {
+                            formatted_input += content + "\n";
+                          } else if (role === "user" && util.isString(content)) {
+                            formatted_input += "user: " + content + "\n";
+                          } else if (role === "user" && util.isArray(content)) {
+                            for (let cont of content) {
+                              let cont_type = cont.type;
+                              if (cont_type === "text") {
+                                formatted_input += "user:" + cont.text + "\n";
+                              }
+                            }
+                          } else if (role === "assistant") {
+                            formatted_input += "assistant: " + content + "\n";
+                          }
+                        }
+
+                        return formatted_input.trim();
+                      }
+
+                      context.request.body.readAsJSON(function (error, json) {
+                          if (error) {
+                            console.error("Chat Completions readAsJSON request error: " + error);
+                          } else {
+                            console.error("Chat Completions readAsJSON request json: ", json);
+
+                            const { messages, model, max_tokens, n, temperature, parameters } = json;
+                            // Initialize the new request body format
+                            var transformedRequestBody = {
+                              project_id: context.get("wx.projectid"),
+                              model_id: model,
+                              input: format_messages(messages),
+                              parameters: {
+                                decoding_method: "greedy",
+                                stop_sequences: [],
+                                repetition_penalty: 1,
+                                min_new_tokens: 1,
+                                max_new_tokens: max_tokens || 500,
+                                ...(temperature ? { temperature } : {}),
+                                ...parameters,
+                              },
+                            };
+
+                            context.message.body.write(transformedRequestBody);
+                          }
+                      });
+                    description: Transform the input request body
+                - invoke:
+                    version: 2.3.0
+                    title: wx ai invoke
+                    backend-type: json
+                    header-control:
+                      type: blocklist
+                      values: []
+                    parameter-control:
+                      type: allowlist
+                      values: []
+                    follow-redirects: false
+                    tls-profile: ''
+                    timeout: 60
+                    verb: POST
+                    http-version: HTTP/1.1
+                    websocket-upgrade: false
+                    use-http-10: false
+                    inject-proxy-headers: false
+                    decode-request-params: false
+                    encode-plus-char: false
+                    keep-payload: false
+                    chunked-uploads: true
+                    persistent-connection: true
+                    cache-response: protocol
+                    cache-ttl: 900
+                    target-url: $(wx.endpoint)$(text-gen)
+                    description: For Chat Completions
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform response for Chat Completions
+                    source: |
+                      context.message.body.readAsJSON(function (error, json) {
+                          if (error) {
+                            console.error("Chat Completions readAsJSON response error: " + error);
+                          } else {
+                            console.error("Chat Completions readAsJSON response json: ", json);
+
+                            var ts = Math.floor(new Date(json.created_at).getTime() / 1000);
+                            var results = json["results"][0];
+                            // Initialize the new response body format
+                            var transformedResponseBody = {
+                              id: "chatcmpl-default-" + ts,
+                              object: "chat.completion",
+                              created: ts,
+                              model: json.model_id,
+                              choices: [
+                                {
+                                  finish_reason: "stop",
+                                  index: 0,
+                                  message: {
+                                    role: "assistant",
+                                    content: results.generated_text,
+                                  }
+                                },
+                              ],
+                              usage: {
+                                completion_tokens: results.generated_token_count,
+                                prompt_tokens: results.input_token_count,
+                                total_tokens:
+                                  results.generated_token_count + results.input_token_count,
+                              },
+                            };
+                            
+                            session.output.write(transformedResponseBody);
+                          }
+                      });
+                      // session.output.write(context.message.body)
+                    description: Transform the response body
+            - operations:
+                - createEmbedding
+              execute:
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform request for Embeddings
+                    source: |
+                      const util = require("util");
+
+
+                      context.request.body.readAsJSON(function (error, json) {
+                          if (error) {
+                            console.error("Embeddings readAsJSON request error: " + error);
+                          } else {
+                            console.error("Embeddings readAsJSON request json: ", json);
+                          
+                            var wx_inputs = [];
+                            if (util.isString(json.input)) {
+                              wx_inputs.push(json.input);
+                            } else if (util.isArray(json.input) && json.input.every(util.isString)) {
+                              wx_inputs = json.input;
+                            }
+                          
+                            // Initialize the new request body format
+                            var transformedRequestBody = {
+                              project_id: context.get("wx.projectid"),
+                              model_id: json.model,
+                              inputs: wx_inputs,
+                            };
+                          
+                            context.message.body.write(transformedRequestBody);
+                          }
+                      });
+                - invoke:
+                    version: 2.3.0
+                    title: wx ai invoke
+                    backend-type: json
+                    header-control:
+                      type: blocklist
+                      values: []
+                    parameter-control:
+                      type: allowlist
+                      values: []
+                    follow-redirects: false
+                    tls-profile: ''
+                    timeout: 60
+                    verb: POST
+                    http-version: HTTP/1.1
+                    websocket-upgrade: false
+                    use-http-10: false
+                    inject-proxy-headers: false
+                    decode-request-params: false
+                    encode-plus-char: false
+                    keep-payload: false
+                    chunked-uploads: true
+                    persistent-connection: true
+                    cache-response: protocol
+                    cache-ttl: 900
+                    target-url: $(wx.endpoint)$(text-embd)
+                    description: For Embeddings
+                - gatewayscript:
+                    version: 2.0.0
+                    title: Transform response for Embeddings
+                    source: |
+
+                      context.message.body.readAsJSON(function (error, json) {
+                          if (error) {
+                            console.error("Embeddings readAsJSON response error: " + error);
+                          } else {
+                            console.error("Embeddings readAsJSON response json: ", json);
+                          
+                            var data = json.results.map(({ embedding }, i) => ({
+                              index: i,
+                              object: "embedding",
+                              embedding,
+                            }));
+                            
+                            // Initialize the new response body format
+                            var transformedResponseBody = {
+                              object: "list",
+                              model: json.model_id,
+                              data,
+                              usage: {
+                                prompt_tokens: json.input_token_count,
+                                total_tokens: json.input_token_count,
+                              },
+                            };
+                          
+                            session.output.write(transformedResponseBody);
+                          }
+                      });
+
+                        // session.output.write(context.message.body)
+    finally: []
+    catch:
+      - default: []
+  properties:
+    text-gen:
+      value: /text/generation?version=2023-05-29
+    text-embd:
+      value: /text/embeddings?version=2023-05-29
+    wx-endpoint-us-south:
+      value: https://us-south.ml.cloud.ibm.com/ml/v1
+    wx-endpoint-eu-de:
+      value: https://eu-de.ml.cloud.ibm.com/ml/v1
+    wx-endpoint-eu-gb:
+      value: https://eu-gb.ml.cloud.ibm.com/ml/v1
+    wx-endpoint-jp-tok:
+      value: https://jp-tok.ml.cloud.ibm.com/ml/v1
+    default-project-id:
+      value: a7970029-0db4-4c79-9855-90dbaff6537e
+  activity-log:
+    enabled: true
+    success-content: activity
+    error-content: payload
+  catalogs: {}
