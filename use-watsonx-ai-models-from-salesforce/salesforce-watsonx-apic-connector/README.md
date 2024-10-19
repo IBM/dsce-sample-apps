@@ -85,4 +85,4 @@ This repository contains instructions on how to setup or connect to an IBM API C
 
    ![image](./images/10%20Default%20properties.png)
 
-10. Create a new connection to watsonx.ai model from your Salesforce Einstein Studio using a [recipe](https://opensource.salesforce.com/einstein-platform).
+10. Create a new connection to watsonx.ai model from your Salesforce Einstein Studio using a [recipe](https://opensource.salesforce.com/einstein-platform/ibm).
