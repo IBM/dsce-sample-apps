@@ -12,7 +12,7 @@ endpoint = os.getenv('ENDPOINT')
 project_id = os.getenv('PROJECT_ID')
 url = os.getenv('URL')
 
-model_id = "meta-llama/llama-2-70b-chat"
+model_id = "meta-llama/llama-3-1-70b-instruct"
 gen_parms   = {"decoding_method":"greedy", 
             "max_new_tokens":500,
             "random_seed":1024, 
@@ -92,9 +92,14 @@ def sentimentGenerator(prompt, token):
         "project_id": project_id,
         "moderations": {
             "hap": {
-                "input": True,
-                "output": True,
-                "threshold": 0.5,
+                "input": {
+                          "enabled": True,
+                          "threshold": 0.5,
+                          },
+                "output": {
+                     "enabled": True,
+                          "threshold": 0.5,
+                    },
                 "mask": {
                     "remove_entity_value": True
                 }
@@ -147,9 +152,14 @@ def toneGenerator(prompt, token):
         "project_id": project_id,
         "moderations": {
             "hap": {
-                "input": True,
-                "output": True,
-                "threshold": 0.5,
+                "input": {
+                          "enabled": True,
+                          "threshold": 0.5,
+                          },
+                "output": {
+                     "enabled": True,
+                          "threshold": 0.5,
+                    },
                 "mask": {
                     "remove_entity_value": True
                 }
@@ -207,9 +217,14 @@ def entityExtractor(prompt, token):
         "project_id": project_id,
         "moderations": {
             "hap": {
-                "input": True,
-                "output": True,
-                "threshold": 0.5,
+                "input": {
+                          "enabled": True,
+                          "threshold": 0.5,
+                          },
+                "output": {
+                     "enabled": True,
+                          "threshold": 0.5,
+                    },
                 "mask": {
                     "remove_entity_value": True
                 }

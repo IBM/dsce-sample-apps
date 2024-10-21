@@ -16,8 +16,14 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           },
           "project_id": ""
@@ -56,14 +62,20 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           }
         },
         "type": "text",
         "model_1": "ibm/granite-13b-chat-v2",
-        "model_2": "meta-llama/llama-2-70b-chat",
+        "model_2": "meta-llama/llama-3-1-70b-instruct",
         "button_text": "Generate summary"
       }
     ],
@@ -86,8 +98,14 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           },
           "project_id": ""
@@ -110,14 +128,20 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           }
         },
         "type": "text",
         "model_1": "ibm/granite-13b-chat-v2",
-        "model_2": "meta-llama/llama-2-70b-chat",
+        "model_2": "meta-llama/llama-3-1-70b-instruct",
         "button_text": "Generate sentiment"
       }
     ],
@@ -140,8 +164,14 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           },
           "project_id": ""
@@ -164,14 +194,20 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           }
         },
         "type": "text",
         "model_1": "ibm/granite-13b-instruct-v2",
-        "model_2": "meta-llama/llama-2-70b-chat",
+        "model_2": "meta-llama/llama-3-1-70b-instruct",
         "button_text": "Extract email topic"
       }
     ],
@@ -194,8 +230,14 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           },
           "project_id": ""
@@ -227,14 +269,20 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           }
         },
         "type": "markdown",
         "model_1": "ibm/granite-13b-chat-v2",
-        "model_2": "meta-llama/llama-2-70b-chat",
+        "model_2": "meta-llama/llama-3-1-70b-instruct",
         "button_text": "Generate entities"
       }
     ],
@@ -253,7 +301,10 @@
             "max_new_tokens": 500,
             "min_new_tokens": 50,
             "random_seed": null,
-            "stop_sequences": ["END.\n", "Input:"],
+            "stop_sequences": [
+              "END.\n",
+              "Input:"
+            ],
             "temperature": 0.7,
             "top_k": 50,
             "top_p": 1,
@@ -261,8 +312,14 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           },
           "project_id": ""
@@ -287,7 +344,10 @@
           "input": "",
           "parameters": {
             "decoding_method": "sample",
-            "stop_sequences": ["END.\n", "Input:"],
+            "stop_sequences": [
+              "END.\n",
+              "Input:"
+            ],
             "min_new_tokens": 50,
             "max_new_tokens": 500,
             "random_seed": null,
@@ -298,14 +358,20 @@
           },
           "moderations": {
             "hap": {
-              "input": { "enabled": true, "threshold": 0.75 },
-              "output": { "enabled": true, "threshold": 0.75 }
+              "input": {
+                "enabled": true,
+                "threshold": 0.75
+              },
+              "output": {
+                "enabled": true,
+                "threshold": 0.75
+              }
             }
           }
         },
         "type": "markdown",
         "model_1": "ibm/granite-13b-chat-v2",
-        "model_2": "meta-llama/llama-2-70b-chat",
+        "model_2": "meta-llama/llama-3-1-70b-instruct",
         "button_text": "Generate brief"
       }
     ],
