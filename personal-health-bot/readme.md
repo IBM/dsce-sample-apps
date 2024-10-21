@@ -54,7 +54,7 @@
    WATSONX_API_KEY = <your IBM Cloud API key>
    WATSONX_ENDPOINT = https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29
    LLM_MODEL_ID_SQL = mistralai/mixtral-8x7b-instruct-v01 (<you can provide any other mnodel as well>)
-   LLM_MODEL_ID = meta-llama/llama-2-70b-chat (<you can provide any other mnodel as well>)
+   LLM_MODEL_ID = meta-llama/llama-3-1-70b-instruct (<you can provide any other mnodel as well>)
    WATSONX_PROJECT_ID = <your watsonx.ai project_id>
 
    # watsonx Assitant configs
