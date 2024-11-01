@@ -11,7 +11,7 @@ This repository contains instructions on how to setup or connect to an IBM API C
    Use the following URL to connect to the hosted service. Substitute the `projectid` and `region` parameters based on your watsonx.ai instance.
 
    ```sh
-   https://apic-gw-gateway-integration.apps.66ba4b07545446001ef6af7d.ocp.techzone.ibm.com/apic-org/sandbox?projectid=<your-wx-project-id>&region=<your-wx-region>
+   https://dsce-apico-12e7a051-gateway-dsce-apiconnect.dsce-ocp-us-south-1-bx2-1-8516f8a0a0d756a8a5eb1ab83a990b56-0000.us-south.containers.appdomain.cloud/dsce-apic/sandbox?projectid=<your-wx-project-id>&region=<your-wx-region>
    ```
 
    > Note: The hosted connector link may change over time. Please check for the latest URL on this page.
