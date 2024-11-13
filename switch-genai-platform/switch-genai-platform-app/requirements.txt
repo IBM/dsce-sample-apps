@@ -5,6 +5,7 @@ ibm-cloud-sdk-core==3.16.7
 jproperties==2.1.1
 markdownify==0.11.6
 pandas==2.0.3
+numpy==1.23.5
 python-dotenv==1.0.0
 requests==2.31.0
 furl==2.1.3

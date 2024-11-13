@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-13b-chat-v2",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "Summarize the transcript of the call. Identify the agent and the subscriber. Add any specific issues mentioned by the subscriber. Add any corrective actions taken as directed by the agent. Please mention if the issue is resolved only if all actions are already taken. Mention any follow-up actions and timelines. If some actions are pending then add them as follow-up and not as resolved. Identify any PII information, e.g. phone number, email, postal address in the transcript.",
     "input": "",
@@ -19,8 +19,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.5 },
-      "output": { "enabled": true, "threshold": 0.5 },
+      "input": {
+        "enabled": true,
+        "threshold": 0.5
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.5
+      },
       "mask": {
         "remove_entity_value": true
       }

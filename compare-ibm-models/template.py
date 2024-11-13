@@ -277,7 +277,7 @@ def get_header_with_access_tkn(access_token):
     return headers_with_access_tkn
 
 # LLM API call
-def llm_fn(text, payload_json, type, access_token):
+def llm_fn(text, payload_json, res_type, access_token):
     payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input']+text+"\n\nOutput:\n"
     print("calling LLM", datetime.now())
@@ -289,15 +289,18 @@ def llm_fn(text, payload_json, type, access_token):
     
     response_llm_json = response_llm.json()
     resp = response_llm_json['results'][0]['generated_text']
-    total_token = response_llm_json['results'][0]['input_token_count'] + response_llm_json['results'][0]['generated_token_count']
+    intput_token = response_llm_json['results'][0]['input_token_count']
+    output_token = response_llm_json['results'][0]['generated_token_count']
+    total_token = intput_token + output_token
     formatted_total_token = ('{:,}'.format(total_token)) # to add comman in the tokens
     try:
-        cost = model_pricing[payload_json["model_id"]]*total_token
+        cost = model_pricing[payload_json["model_id"]]*total_token if type(model_pricing[payload_json["model_id"]])==float else (model_pricing[payload_json["model_id"]]["input"]*intput_token + model_pricing[payload_json["model_id"]]["output"]*output_token)
         cost = "${}".format(round(cost, 2))
-    except:
+    except Exception as e:
+        print(e)
         cost = "N/A"
     try:
-        return parse_output(resp, type), formatted_total_token, cost, round(api_resp_time, 2)
+        return parse_output(resp, res_type), formatted_total_token, cost, round(api_resp_time, 2)
     except Exception as e:
         print("{} Error from LLM -->".format(datetime.now()),response_llm_json)
         return "Error occured. Status code: {}. Please try again.".format(response_llm_json['status_code'])
