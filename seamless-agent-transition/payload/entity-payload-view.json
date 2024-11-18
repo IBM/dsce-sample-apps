@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-13b-instruct-v2",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "Extract PII entities from the conversation given below.",
     "input": "",
@@ -25,8 +25,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-13b-chat-v2",
+  "model_id": "ibm/granite-3-8b-instruct",
   "input": "Summarise the following conversation between Customer and the Agent with all necessary details.\n\n",
   "parameters": {
     "decoding_method": "greedy",
@@ -10,8 +10,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   },
   "project_id": ""

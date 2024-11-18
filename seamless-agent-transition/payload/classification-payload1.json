@@ -1,6 +1,6 @@
 {
-  "model_id": "ibm/granite-13b-instruct-v2",
-  "input": "Read the text and classify into one of the following options: account transfer, credit cards, balance issues\n\nInput:\n",
+  "model_id": "ibm/granite-3-8b-instruct",
+  "input": "Read the text and classify into one of the following options. Do not generate any information: account transfer, credit cards, balance issues\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 100,
@@ -10,8 +10,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   },
   "project_id": ""

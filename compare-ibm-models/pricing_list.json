@@ -8,14 +8,37 @@
   "ibm-mistralai/merlinite-7b": 0.0006,
   "ibm-mistralai/mixtral-8x7b-instruct-v01-q": 0.0006,
   "mistralai/mixtral-8x7b-instruct-v01": 0.0006,
+  "ibm/granite-3-8b-instruct": 0.0002,
   "ibm/granite-7b-lab": 0.0006,
   "ibm/granite-13b-chat-v1": 0.0006,
   "ibm/granite-13b-chat-v2": 0.0006,
   "ibm/granite-13b-instruct-v1": 0.0006,
   "ibm/granite-13b-instruct-v2": 0.0006,
   "ibm/granite-20b-multilingual": 0.0006,
+  "ibm/granite-20b-code-instruct": 0.0006,
+  "ibm/granite-3-2b-instruct": 0.0001,
+  "ibm/granite-34b-code-instruct": 0.0006,
+  "ibm/granite-3b-code-instruct": 0.0006,
+  "ibm/granite-8b-code-instruct": 0.0006,
+  "ibm/granite-guardian-3-2b": 0.0001,
+  "ibm/granite-guardian-3-8b": 0.0002,
   "meta-llama/llama-2-13b-chat": 0.0006,
   "meta-llama/llama-2-70b-chat": 0.0018,
   "meta-llama/llama-3-8b-instruct": 0.0006,
-  "meta-llama/llama-3-1-70b-instruct": 0.0018
+  "meta-llama/llama-3-1-70b-instruct": 0.0018,
+  "meta-llama/llama-3-1-8b-instruct": 0.0006,
+  "meta-llama/llama-3-2-11b-vision-instruct": 0.00035,
+  "meta-llama/llama-3-2-1b-instruct": 0.0001,
+  "meta-llama/llama-3-2-3b-instruct": 0.00015,
+  "meta-llama/llama-3-2-90b-vision-instruct": 0.002,
+  "meta-llama/llama-3-405b-instruct": {
+    "input": 0.005,
+    "output": 0.016
+  },
+  "meta-llama/llama-3-70b-instruct": 0.0018,
+  "meta-llama/llama-guard-3-11b-vision": 0.00035,
+  "mistralai/mistral-large": {
+    "input": 0.003,
+    "output": 0.010
+  }
 }

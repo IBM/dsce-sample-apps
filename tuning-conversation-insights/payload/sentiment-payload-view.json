@@ -1,7 +1,7 @@
 {
-  "model_id": "ibm/granite-13b-instruct-v2",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
-    "instruction": "Read the text and classify customer sentiment into one of the following options: positive, negative, neutral",
+    "instruction": "Read the text and classify customer sentiment into one of the following options without explanation: positive, negative, neutral",
     "input": "",
     "input_prefix": "Input:",
     "output_prefix": "Output:",
@@ -16,8 +16,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }
