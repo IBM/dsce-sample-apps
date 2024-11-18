@@ -1,5 +1,5 @@
 {
-  "model": "ibm/granite-13b-instruct-v2",
+  "model": "ibm/granite-3-8b-instruct",
   "prompt": "What is the capital of USA?",
   "max_tokens": 500,
   "temperature": 1.0,

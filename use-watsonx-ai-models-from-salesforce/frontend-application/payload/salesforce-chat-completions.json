@@ -1,12 +1,12 @@
 {
-    "model": "ibm/granite-13b-instruct-v2",
-    "messages": [
-      {
-        "role": "user",
-        "content": "How many faces cube has?"
-      }
-    ],
-    "max_tokens": 500,
-    "temperature": 1.0,
-    "n": 1
+  "model": "ibm/granite-3-8b-instruct",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How many faces cube has?"
+    }
+  ],
+  "max_tokens": 500,
+  "temperature": 1.0,
+  "n": 1
 }

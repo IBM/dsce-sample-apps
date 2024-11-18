@@ -59,7 +59,7 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    ```sh
    SERVER_URL = https://apic-gw-gateway-integration.apps.66ba4b07545446001ef6af7d.ocp.techzone.ibm.com/apic-org/sandbox
    API_KEY = <your IBM Cloud API key>
-   MODEL_ID = ibm/granite-13b-instruct-v2
+   MODEL_ID = ibm/granite-3-8b-instruct
    ```
 
 5. Run the application.
