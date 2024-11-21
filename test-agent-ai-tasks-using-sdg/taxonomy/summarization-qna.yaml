@@ -1,0 +1,73 @@
+version: 3
+task_description: 'Generate salesforce opporunity record and then summarize it.'
+created_by: gt
+seed_examples:
+  - question: Generate and summarise salesforce opportunity record.
+              Salesforce Record -
+             {\n \"id\":\"006RZ000001KRgIYAW\",\n
+              \"apiName\":"\Opportunity\",\n \"recordTypeId\":\"012000000000000AAA\",\n \"fields":[ {\n
+              \"name\":\"Amount\",\n
+              \"value\":20000.0,\n \"displayValue\":\"USD 20,000.00\"\n }, {\n \"name\":\"CloseDate\",\n
+              \"value\" :1656633600000,\n
+              \"displayValue\" :\"7/1/2022\"\n }, {\n \"name\" :\"CurrencyIsoCode\",\n \"value\" :\"USD\",\n
+              \"displayValue\" :null\n },
+              {\n \"name\" :\"Id\",\n \"value\" :\"006RZ000001KRgIYAW\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Name\",\n
+              \"value\" :\"Acme - 200 Widgets\",\n \"displayValue\" :null\n }, {\n \"name\" :\"StageName\",\n
+               \"value\" :\"Prospecting\",\n
+              \"displayValue\" :\"Prospecting\"\n } ]\n }
+    answer: Opportunity 006RZ000001KRgIYAW for Acme - 200 Widgets of amount USD 20000 with close date \
+            7/1/2022 is in Prospecting stage.
+  - question: Generate and summarise salesforce opportunity record.
+              Salesforce Record -
+                {\n \"id\" :\"006RZ000001KRgIYAB\",\n
+              \"apiName\" :\"Opportunity\",\n \"recordTypeId\" :\"012000000000000AAB\",\n
+              \"fields\" :[ {\n \"name\" :\"Amount\",\n \"value\" :40000.0,\n \"displayValue\" :\"USD 40,000.00\"\n },
+              {\n \"name\" :\"CloseDate\",\n \"value\" :1256633600000,\n \"displayValue\" :\"7/1/2025\"\n },
+              {\n \"name\" :\"CurrencyIsoCode\",\n \"value\" :\"USD\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Id\",\n \"value\" :\"006RZ000001KRgIYAB\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Name\",\n \"value\" :\"Abcd - 500 Widgets\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"StageName\",\n \"value\" :\"Design\",\n \"displayValue\" :\"Design\"\n } ]\n }
+    answer: Opportunity 006RZ000001KRgIYAB for Abcd - 200 Widgets of amount USD 40000 with close date
+            7/1/2025 is in Design stage.
+  - question: Generate and summarise salesforce opportunity record.
+              Salesforce Record -
+                  {\n \"id\" :\"006RZ000001KRgIYAC\",\n
+              \"apiName\" :\"Opportunity\",\n \"recordTypeId\" :\"012000000000000BBB\",\n
+              \"fields\" :[ {\n \"name\" :\"Amount\",\n \"value\" :1000000.0,\n
+              \"displayValue\" :\"USD 1,000,000.00\"\n }, {\n \"name\" :\"CloseDate\",\n
+              \"value\" :1646633600000,\n \"displayValue\" :\"7/12/2024\"\n },
+              {\n \"name\" :\"CurrencyIsoCode\",\n \"value\" :\"USD\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Id\",\n \"value\" :\"006RZ000001KRgIYAC\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Name\",\n \"value\" :\"Walmat abc call\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"StageName\",\n \"value\" :\"Closing\",\n \"displayValue\" :\"Closing\"\n } ]\n }
+    answer: Opportunity 006RZ000001KRgIYAC for Walmat abc call of amount USD 1000000 with close
+            date 7/12/2024 is in Closing stage.
+  - question: Generate and summarise salesforce opportunity record.
+              Salesforce Record -
+                {\n \"id\" :\"006RZ000001KRgGYAW\",\n
+              \"apiName\" :\"Opportunity\",\n \"recordTypeId\" :\"011000000000000AAC\",\n
+              \"fields\" :[ {\n \"name\" :\"Amount\",\n \"value\" :140000.0,\n \"displayValue\" :\"USD 140,000.00\"\n },
+              {\n \"name\" :\"CloseDate\",\n \"value\" :1646234200000,\n \"displayValue\" :\"3/2/2022\"\n },
+              {\n \"name\" :\"CurrencyIsoCode\",\n \"value\" :\"USD\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Id\",\n \"value\" :\"006RZ000001KRgGYAW\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"Name\",\n \"value\" :\"Bee - 1,200 Widgets\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"StageName\",\n \"value\" :\"Value Proposition\",\n
+              \"displayValue\" :\"Value Proposition\"\n } ]\n }
+    answer: Opportunity 006RZ000001KRgGYAW for Bee - 1,200 Widgets of amount USD 140000 with close date
+            3/2/2022 is in Value Proposition stage.
+  - question: Generate and summarise salesforce opportunity record.
+              Salesforce Record -
+                {\n \"id\" :\"006RZ000001KRgHYAW\",\n
+              \"apiName\" :\"Opportunity\",\n
+              \"recordTypeId\" :\"022000000000000ZZZ\",\n \"fields\" :[ {\n \"name\" :\"Amount\",\n
+              \"value\" :70000.0,\n
+              \"displayValue\" :\"USD 70,000.00\"\n }, {\n \"name\" :\"CloseDate\",\n \"value\" :1651104000000,\n
+              \"displayValue\" :\"4/28/2022\"\n }, {\n \"name\" :\"CurrencyIsoCode\",\n \"value\" :\"USD\",\n
+              \"displayValue\" :null\n }, {\n \"name\" :\"Id\",\n \"value\" :\"006RZ000001KRgHYAW\",\n
+              \"displayValue\" :null\n },
+              {\n \"name\" :\"Name\",\n \"value\" :\"Lion - 600 Widgets\",\n \"displayValue\" :null\n },
+              {\n \"name\" :\"StageName\",\n \"value\" :\"Needs Analysis\",\n
+              \"displayValue\" :\"Needs Analysis\"\n } ]\n }
+    answer: Opportunity 006RZ000001KRgHYAW for Lion - 600 Widgets of amount USD 70000 with close date
+            3/2/2022 is in Need Analysis stage.

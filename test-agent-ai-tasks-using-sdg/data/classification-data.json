@@ -1,0 +1,659 @@
+[
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: What is the process for resetting a password?\n",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you tell me how to reset my account password?\n",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you help me create a sales close plan?\"\n",
+        "response1": "Create Close Plan",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Generate a plan to close Q3 sales opportunity.\n",
+        "response1": "Create Close Plan",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Draft an email for the upcoming meeting.\n",
+        "response1": "Draft or Revise Email",
+        "response2": "Draft or Revise Email",
+        "generated_token_count": 7,
+        "input_token_count": 151,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Write an email requesting a meeting with the client.\n",
+        "response1": "Draft or Revise Email",
+        "response2": "Draft or Revise Email",
+        "generated_token_count": 7,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Find opportunities similar to Acme Corp.\n",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 151,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Are there any opportunities like the one with Acme Corp?\n",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the case details for #12345.\n",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you give me a brief summary of case number 12345?\n",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the company's policies regarding remote work?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the latest trends in the e-commerce industry?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the latest advancements in artificial intelligence?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the company's approach to diversity and inclusion?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you help me find similar research papers on the topic of climate change?",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the company's data privacy practices?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the company's supply chain management?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide me with the latest economic forecasts for the upcoming year?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you give me a summary of the latest research on renewable energy?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you help me understand the current market trends in the renewable energy sector?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you help me understand the benefits of cloud computing for businesses?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you help me understand the impact of AI on the healthcare industry?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Draft an email to follow up on the recent meeting with the potential client.",
+        "response1": "Draft or Revise Email",
+        "response2": "Draft or Revise Email",
+        "generated_token_count": 6,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Identify potential opportunities with similar characteristics to our current project.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Identify potential clients in the technology sector.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 150,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the client proposal.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the market analysis report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the financial analysis report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the operational analysis report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Find opportunities that are similar to the one we closed last month.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Find opportunities that have a similar profile to our successful clients.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Find opportunities that have a high potential for conversion.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 151,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the proposal that we will be presenting to the client.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 159,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Find opportunities in the healthcare sector.",
+        "response1": "Find Similar Opportunities",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 148,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the annual report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key findings of the market research.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the business proposal.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the product roadmap.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the strategic plan.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the R&D report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Query the database for all contracts expiring in the next 3 months.",
+        "response1": "Query Records",
+        "response2": "Query Records",
+        "generated_token_count": 3,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the main points of the client proposal.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the main points of the market research report.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the main points of the product development plan.",
+        "response1": "Summarize Record",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide me with the details of the company's employee training programs?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 156,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you give me a summary of the latest advancements in the field of renewable energy and sustainability?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 161,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you give me a summary of the latest trends in the field of cybersecurity and data privacy?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 161,
+        "stop_reason": "eos_token",
+        "result": "pass"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: What was the tone of the customer's response?\n",
+        "response1": "Explore Conversation",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Analyze the sentiment of the call on August 1st.\n",
+        "response1": "Explore Conversation",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Show me the top 10 accounts based on revenue.\n",
+        "response1": "Query Records",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of the these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: List the highest revenue-generating accounts.\n",
+        "response1": "Query Records",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you summarize the key points from the last quarter's financial report?",
+        "response1": "The key points from the last quarter's financial report include:\n\n1. A 12% increase in revenue compared to the previous quarter, driven by strong sales in the technology and healthcare sectors.\n2. Gross profit margin remained stable at 35%, with a slight improvement in operating expenses.\n3. The company invested in research and development, leading to the launch of several new products.\n4. There was a 10% increase in the workforce to support business growth and expansion.\n5. The company's cash position remained strong, with a significant increase in cash reserves compared to the previous quarter.",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide information about the company's sales performance in the previous fiscal year?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 157,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Provide a comparison between our product and our main competitor's.",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Prepare a list of the top performing sales representatives for the quarter.",
+        "response1": "Query Records",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explain the benefits of our product to the potential client.",
+        "response1": "Explore Conversation is the appropriate category for the sentence \"Explain the benefits of our product to the potential client.\" This category is used when the task involves engaging in a conversation to explore a topic, answer questions, or provide information. In this case, explaining the benefits of a product is a conversational activity aimed at providing information to a potential client.",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Revise the presentation to include the new product features.",
+        "response1": "Draft or Revise Document",
+        "response2": "Draft or Revise Email",
+        "generated_token_count": 6,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Revise the budget proposal to include the new cost estimates.",
+        "response1": "Draft or Revise Document",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Prepare a report on the customer satisfaction levels for the past year.",
+        "response1": "Query Records",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explain the benefits of our service to the potential client.",
+        "response1": "Explore Conversation is the appropriate category for the sentence \"Explain the benefits of our service to the potential client.\" This category is used when the task involves engaging in a conversation to explore a topic, answer questions, or provide information. In this case, the sentence suggests a conversation aimed at explaining the benefits of a service to a potential client, making Explore Conversation the most suitable category.",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide a list of all the company's upcoming events?",
+        "response1": "Query Records",
+        "response2": "Answer Questions with Knowledge",
+        "generated_token_count": 5,
+        "input_token_count": 154,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Revise the marketing strategy for the upcoming product launch.",
+        "response1": "Draft or Revise Email",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explore opportunities in the renewable energy sector.",
+        "response1": "Explore Conversation",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 150,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explore opportunities in the AI sector.",
+        "response1": "Explore Conversation",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 149,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explore opportunities in the blockchain sector.",
+        "response1": "Explore Conversation",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 149,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explore opportunities in the cybersecurity sector.",
+        "response1": "Explore Conversation",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 150,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Explore opportunities in the IoT sector.",
+        "response1": "Explore Conversation",
+        "response2": "Find Similar Opportunities",
+        "generated_token_count": 6,
+        "input_token_count": 149,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide a summary of the latest market trends?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 152,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the recent board meeting.",
+        "response1": "The sentence \"Summarize the key points of the recent board meeting\" can be classified as \"Summarize Record\". This category involves creating a concise and accurate summary of a given record or set of information, in this case, the key points of a recent board meeting.",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the new marketing strategy.",
+        "response1": "The sentence \"Summarize the key points of the new marketing strategy\" can be classified as \"Summarize Record\". This is because the user is asking for a summary or a condensed version of information, in this case, the key points of a new marketing strategy. This category involves providing a concise and accurate summary of a given record or set of information.",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Summarize the key points of the new sales strategy.",
+        "response1": "The sentence \"Summarize the key points of the new sales strategy\" can be classified as \"Summarize Record\". This is because the user is asking for a summary of the main points or elements of a new sales strategy, which falls under the category of summarizing records or information.",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 153,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you provide me with the details of the new product launch plan?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Create Close Plan",
+        "generated_token_count": 4,
+        "input_token_count": 155,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    },
+    {
+        "question": "Classify the following sentence into one of these categories:\n- Answer Questions with Knowledge\n- Create Close Plan\n- Draft or Revise Email\n- Explore Conversation\n- Find Similar Opportunities\n- Query Records\n- Summarize Record\nSentence: Can you give me a summary of the latest research in the field of renewable energy?",
+        "response1": "Answer Questions with Knowledge",
+        "response2": "Summarize Record",
+        "generated_token_count": 5,
+        "input_token_count": 158,
+        "stop_reason": "eos_token",
+        "result": "fail"
+    }
+]

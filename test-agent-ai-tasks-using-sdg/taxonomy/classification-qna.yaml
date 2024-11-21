@@ -1,0 +1,187 @@
+created_by: AN
+version: 3
+seed_examples:
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: What is the process for resetting a password?
+    answer: |
+      Answer Questions with Knowledge
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Can you tell me how to reset my account password?
+    answer: |
+      Answer Questions with Knowledge
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Can you help me create a sales close plan?"
+    answer: |
+      Create Close Plan
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Generate a plan to close Q3 sales opportunity.
+    answer: |
+      Create Close Plan
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Draft an email for the upcoming meeting.
+    answer: |
+      Draft or Revise Email
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Write an email requesting a meeting with the client.
+    answer: |
+      Draft or Revise Email
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: What was the tone of the customer's response?
+    answer: |
+      Explore Conversation
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Analyze the sentiment of the call on August 1st.
+    answer: |
+      Explore Conversation
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Find opportunities similar to Acme Corp.
+    answer: |
+      Find Similar Opportunities
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Are there any opportunities like the one with Acme Corp?
+    answer: |
+      Find Similar Opportunities
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Show me the top 10 accounts based on revenue.
+    answer: |
+      Query Records
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: List the highest revenue-generating accounts.
+    answer: |
+      Query Records
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Summarize the case details for #12345.
+    answer: |
+      Summarize Record
+
+  - question: |
+      Classify the following sentence into one of the these categories:
+      - Answer Questions with Knowledge
+      - Create Close Plan
+      - Draft or Revise Email
+      - Explore Conversation
+      - Find Similar Opportunities
+      - Query Records
+      - Summarize Record
+      Sentence: Can you give me a brief summary of case number 12345?
+    answer: |
+      Summarize Record
+
+task_description: |
+  Classifying sentences into one of the given categories
