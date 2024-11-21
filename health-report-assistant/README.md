@@ -14,8 +14,8 @@
 - 3.5 In the `frontend` directory, we have provided `healthcare-qna-WA.zip` file which will be used in next step.
 - 3.6 From left hand side panel, go to **Assistant settings > Download/Upload files > Upload > upload the social-media-intelligence-WA.zip > Upload and replace**
 - 3.7 Once upload is complete, the watsonx Assistant is ready & you can find all the actions under left hand side panel **Actions > Create by you**
-- 3.8 Customize your chat UI. Go to left hand side panel **Environments > Draft > Web chat > Style** and change the Assistant's name as known by customers to 'Network Troubleshooting Assistant'. Click Save and exit button.
-- 3.9 Edit the default Home screen. Go to left hand side panel **Environments > Draft > Web chat > Home screen** and change the Conversation starter to 'Check for service tickets'. Click Save and exit button.
+- 3.8 Customize your chat UI. Go to left hand side panel **Environments > Draft > Web chat > Style** and change the Assistant's name as 'Healthcare'. Click Save and exit button.
+- 3.9 Edit the default Home screen. Go to left hand side panel **Environments > Draft > Web chat > Home screen** and disable home screen.
 - 4.0 Note down the assistant keys `integrationID`, `region` & `serviceInstanceID`, which will be used in setting the Environment file in next section. Go to left hand side panel **Environments > Draft > Web chat > Embed**
 
 4. A watsonx.ai instance on IBM cloud ([get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx)).
