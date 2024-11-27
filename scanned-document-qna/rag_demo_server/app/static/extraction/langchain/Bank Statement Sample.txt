@@ -1,0 +1,43 @@
+OCO Technologies
+
+OCO Technologies Bank Statement Sample
+
+John Doe 81 Brown Street Bellefontaine, OH 45237
+
+For July 1 to July 31, 2023 Account Number
+
+00-071023
+
+Branch Transit Number
+
+240
+
+Summary
+
+Opening Balance: Total Credit Amount: Total Debit Amount: Closing Balance: Account Type: Number of Transactions:
+
+175,800.64
+
+510,000.28
+
+94,000.88
+
+591,800.28
+
+Current Account
+
+7
+
+Transaction Details for July 2023
+
+Date Details 07.05.2023 07.14.2023 07.17.2023 07.17.2023 07.21.2023 07.29.2023 07.30.2023 Deposit Payment - Credit Card Payment - Insurance Account Transfer In Payment - Water Utility Payment - Car Loan Account Transfer Out Withdrawals 500,000.79 Deposits 5,400.13 3,000.76 1,500.54 600.99 3,500.00 80,000.43 Balance 170,400.54 167,400.33 667,400.75 675,900.23 675,300.72 671,800.66 591,800.28
+
+--- End of Transactions ---
+
+Customer Service Information Web site: Service Center: http://www.oco-tech.com 1-800-972-7318
+
+Hearing Impaired: International Calls:
+
+1-800-972-7313
+
+1-713-262-1542

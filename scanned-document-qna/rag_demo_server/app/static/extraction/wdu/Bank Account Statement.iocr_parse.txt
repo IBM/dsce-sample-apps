@@ -1,0 +1,107 @@
+rawford
+Technologies
+
+CrawfordTech Bank Statement Sample
+
+For Mar 15, 2010 to Apr 18, 2010
+Account Number
+00-123456
+Branch Transit Number
+098765
+
+Mary Jane Smith
+100 Pine Street
+Metro, AA 09371
+
+Account Summary
+
+Contact Information
+
+Opening Balance
+Withdrawals
+Deposits
+
+$5,234.09
+$2,395.67
+$2,872.45
+
+1-800-222-0123
+
+Contact us by phone for questions, on this
+
+statement, change of personal information, and
+
+general inquiries, 24 hours a day, 7 days a week
+
+Closing Balance on Apr 18, 2010
+
+$5,710.87
+
+TTY for the hearing impaired:
+
+You are eligible for a $100 bonus
+
+1-800-123-0007
+Outside North America:
++1-123-4567
+
+DiNO
+
+Scan this QR code with your Smartphone
+
+To find out more about a High Interest
+
+|
+
+L
+Map
+
+Your branch
+Main and Elm
+100 Main Street
+Metropolis, AA
+01234
+
+Savings Account - with the first $100
+Deposit on us!
+
+You may need to get a QR Code® reader from your SmartPhone App Store
+
+Your Transaction Details
+
+Table with the following rows:
+Date = Apr 8, Details = Opening Balance, Withdrawals = N/A, Deposits = N/A, Balance = 5,234.09
+Date = Apr 8, Details = Insurance, Withdrawals = N/A, Deposits = 272.45, Balance = 5,506.54
+Date = Apr 10, Details = ATM, Withdrawals = 200.00, Deposits = N/A, Balance = 5,306.54
+Date = Apr 12, Details = Internet Transfer, Withdrawals = N/A, Deposits = 250.00, Balance = 5,556.54
+Date = Apr 12, Details = Payroll, Withdrawals = N/A, Deposits = 2100.00, Balance = 7,656.54
+Date = Apr 13, Details = Bill payment, Withdrawals = 135.07, Deposits = N/A, Balance = 7,521.47
+Date = Apr 14, Details = Direct debit, Withdrawals = 200.00, Deposits = N/A, Balance = 7,321.47
+Date = Apr 14, Details = Deposit, Withdrawals = N/A, Deposits = 250.00, Balance = 7.567.87
+Date = Apr 15, Details = Bill payment, Withdrawals = 525.72, Deposits = N/A, Balance = 7,042.15
+Date = Apr 17, Details = Bill payment, Withdrawals = 327.63, Deposits = N/A, Balance = 6,714.52
+Date = Apr 17, Details = Bill payment, Withdrawals = 729.96, Deposits = N/A, Balance = 5,984.56
+Date = Apr 18, Details = Bill payment, Withdrawals = 223.69, Deposits = N/A, Balance = 5,710.87
+
+Closing Balance
+
+$5,710.87
+
+Scan the QR Code below with your
+SmartPhone to sign up now!
+
+Are you Get your statements
+delivered directly to
+ready your email account
+to go
+Avoid the monthly
+paperless? $2 paper statement
+print fee!
+
+Of
+
+You may need to get a QR Code reader
+from your SmartPhone App Store
+
+QR Code is a Resistered trademark of Denso Wave Corporation
+

@@ -1,0 +1,4 @@
+Following are text blocks from a document.
+The text blocks are sorted by the (top,left) of the block's bounding box.
+
+1. Understand the list of text blocks

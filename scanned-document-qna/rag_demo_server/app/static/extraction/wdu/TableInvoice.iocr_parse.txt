@@ -1,0 +1,49 @@
+INVOICE
+
+July 20, 2015
+
+Invoice #: INV048572
+
+Bill To:
+Level Path Chemicals Inc
+
+Table with the following rows:
+Item Number = FX-0835, Description = Phenolphthalein solution, Price = $9.87, Quantity = 125, Amount = $1,233.75
+Item Number = TD-9827, Description = Silver Nitrate, Price = $7.08, Quantity = 105, Amount = $743.40
+Item Number = XZ-4578, Description = Lead Nitrate, Price = $8.95, Quantity = 95, Amount = $850.50
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = Subtotal, Amount = $2,827.40
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = N/A
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $ 141.37
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $ 150.00
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = $2,818.77
+Item Number = N/A, Description = N/A, Price = N/A, Quantity = N/A, Amount = N/A
+
+2203 Ward Road
+
+Long Island City, New York
+11101 US
+914-931-0919
+Ship To:
+Cygen Core Laboratories
+3736 Brand Road
+
+Saskatoon, Saskatchewan
+S7K 1W8 CA
+
+Make all checks payable to:
+Level Path Chemicals Inc
+
+If you have any questions
+concerning this invoice,
+contact:
+
+Helen S Smith (Manager) Level Path Chemicals Inc
+815-324-3611 2203 Ward Road www. ipci.com
+HelenSSmith@superrito.com Long Island City, New York lpci01@agerchems.com
+
+Thank you for your business!
+

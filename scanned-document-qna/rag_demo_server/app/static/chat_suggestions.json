@@ -1,0 +1,14 @@
+{
+    "Bank Statement Sample.png" : {
+        "name": "Bank Statement Sample.png",
+        "questions": ["What is the closing balance?", "What is the total sum of the transactions done on 17 July 2023?"]
+    },
+    "FormWithHandwritten.jpg" : {
+        "name": "FormWithHandwritten.jpg",
+        "questions": ["What is the social security number?"]
+    },
+    "Scanned Invoice.png" : {
+        "name": "Scanned Invoice.png",
+        "questions": ["What is the port of discharge?"]
+    }
+}

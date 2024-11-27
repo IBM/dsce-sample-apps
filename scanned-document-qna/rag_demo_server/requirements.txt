@@ -1,0 +1,17 @@
+ibm-watsonx-ai==1.1.24
+pyyaml==6.0.1
+unstructured==0.14.7
+pdf2image==1.17.0
+pdfminer==20191125
+pdfminer.six==20231228
+unstructured_inference==0.7.35
+pytesseract==0.3.10
+pypdf==4.2.0
+pymupdf==1.24.5
+ipython==8.25.0
+sentence_transformers==3.0.1
+langchain[docarray]==0.2.5
+chromadb==0.5.3
+flask==3.0.3
+requests==2.32.3
+flask_cors==4.0.1
