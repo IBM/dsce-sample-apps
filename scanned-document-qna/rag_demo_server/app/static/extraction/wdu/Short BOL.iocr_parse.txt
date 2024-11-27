@@ -1,0 +1,81 @@
+Short
+
+Form of Bill of
+
+Lading
+
+Carrier: Bechtelar LLC
+
+Date: June 22, 2015
+
+Bill of Lading #: 91159375
+
+PO #: PO98390263
+
+Order #: 71539874
+
+Shipper/Consignor: Tribe Chemicals Inc.
+
+2734 Calico Drive Spokane, Washington 99201 US
+
+Consignee: Fix Detox Laboratories
+
+743 Bay Street, Toronto, Ontario M5J 2R8 CA
+
+Instructions: This is to Certitfy that the above name material
+
+are properly
+
+describe, package, marked and labeled
+
+are in proper condition according to proper transportation.
+
+Table with the following rows:
+Item Code = TX0942, Details = Hydrochloric Acid, Quantity = 100, Weight (Unit) = 23KG
+Item Code = XL5672, Details = Sodium Hydroxide, Quantity = 125, Weight (Unit) = 27KG
+Item Code = GY223, Details = Potassium Permanganate, Quantity = 115, Weight (Unit) = 19KG
+Item Code = N/A, Details = Total, Quantity = 340, Weight (Unit) = 66KG
+
+Terms Prepaid
+
+$2,325.75
+
+Other
+
+Collect
+
+Shipper: Pick . Up Date: June 22, 2015
+| hip
+Signature:
+
+Carrier: Pick Up Date: June 30, 2015
+| f*
+Signature:
+
+This section
+
+is to make it sure that all materials are properly classified,
+
+Carrier acknowledges receipt ofpackages and that they are
+
+described, packaged, marked and labeled and are in good condition to
+be transported and according to the applicable regulations of
+
+properly described as above and are in good order except as
+
+noted.
+
+transporting department.
+
+Received
+
+in Apparent Good Order
+
+*y
+Received By:
+Print Name Here: Daryl L. Beam
+
+(Signatures)
+
+Date: July 05, 2015
+

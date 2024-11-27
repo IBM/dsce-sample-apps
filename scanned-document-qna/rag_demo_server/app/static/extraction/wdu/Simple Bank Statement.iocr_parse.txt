@@ -1,0 +1,52 @@
+ING Sod
+|
+How banking can be
+
+Savings Accelerator
+statement
+
+050
+
+Client number: 1111111
+BSB number: 444 555
+Savings Accelerator number: 801111111
+Statement number: 2
+Statement from: 01/07/2020 to 31/12/2020
+
+4294967197
+Mr Douglas Dolittle
+15 Lee Avenue
+ADELAIDE, SA 5000
+
+Need to update
+
+your details?
+
+You can update your address, phone
+
+number or email easily by giving us
+a call on 133 464 or log in at ing.com.au
+
+Balance
+Opening balance Total money in Totalr noney out Closing balance
+$138,064.28 $26,700.43 $-165,173.69 $0.00
+
+Transactions
+
+Account name: House
+
+Table with the following rows:
+Date = 07/07/2020, Details = Internal Transfer Receipt 000487 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 2,000.06, Balance $ = 140,064.34
+Date = 14/07/2020, Details = Internal Transfer - Receipt 124656 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 2,000.00, Balance $ = 142,064.34
+Date = 25/07/2020, Details = Internal Transfer Receipt 462734 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 2,000.00, Balance $ = 144,064.34
+Date = 30/07/2020, Details = Internal Transfer - Receipt 028075 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 1,500.00, Balance $ = 145,564.34
+Date = 31/07/2020, Details = Interest Credit - Receipt 939564, Money out $ = N/A, Money in $ = 60.04, Balance $ = 145,624.38
+Date = 05/08/2020, Details = Internal Transfer - Receipt 273095 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 5,600.15, Balance $ = 151,224.53
+Date = 11/08/2020, Details = Internal Transfer - Receipt 507063 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 1,000.00, Balance $ = 152,224.53
+Date = 20/08/2020, Details = Internal Transfer - Receipt 174576 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 1,000.00, Balance $ = 153,224.53
+Date = 26/08/2020, Details = Internal Transfer - Receipt 447364 From Savings Maximiser 87384133, Money out $ = N/A, Money in $ = 2,000.00, Balance $ = 155,224.53
+
+T
+
+Page 1 of 3 | Statement continued over
+
