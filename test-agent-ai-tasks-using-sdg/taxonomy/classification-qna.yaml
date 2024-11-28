@@ -1,4 +1,3 @@
-created_by: AN
 version: 3
 seed_examples:
   - question: |
@@ -182,6 +181,4 @@ seed_examples:
       Sentence: Can you give me a brief summary of case number 12345?
     answer: |
       Summarize Record
-
-task_description: |
-  Classifying sentences into one of the given categories
+created_by: user1

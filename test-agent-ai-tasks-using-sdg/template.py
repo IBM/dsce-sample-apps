@@ -1,9 +1,10 @@
-import os, dash, json, time
+import os, dash, pandas, requests, json, base64, io, time, random,re
 import dash_bootstrap_components as dbc
 from dash import dash_table, Input, Output, State, html, dcc, ctx, ALL
 import pandas as pd
 from jproperties import Properties
 from markdownify import markdownify as md
+from datetime import datetime
 import pandas as pd
 
 # instantiate config
@@ -20,17 +21,18 @@ for item in items_view:
 data = {}
 taxonomy = {}
 no_of_sample_data = 14
-
-with open('data/classification-data.json') as json_data:
-    data['classification'] = json.load(json_data)
-
-
-with open('data/summarization-data.json') as json_data:
-    data['summarization'] = json.load(json_data)
+models = ['granite-13b-instruct-v2', 'granite-3-8b-instruct']
+for model in models:
+    with open(f'data/{model}-classification-data.json') as json_data:
+        data[f'{model}-classification'] = json.load(json_data)
 
 
-with open('data/rag-data.json') as json_data:
-    data['rag'] = json.load(json_data)
+    with open(f'data/{model}-summarization-data.json') as json_data:
+        data[f'{model}-summarization'] = json.load(json_data)
+
+
+    with open(f'data/{model}-rag-data.json') as json_data:
+        data[f'{model}-rag'] = json.load(json_data)
 
 with open('taxonomy/classification-qna.yaml') as qna_data:
     taxonomy['classification'] = qna_data.read()
@@ -113,17 +115,19 @@ navbar_main = dbc.Navbar([
                                 html.Div(
                                 dbc.RadioItems(
                                     options=[
-                                        {"label": "ibm/granite-13b-instruct-v2", "value": 'ibm/granite-13b-instruct-v2'},
+                                        {"label": "ibm/granite-3-8b-instruct", "value": 'ibm/granite-3-8b-instruct'},
+                                        {"label": "ibm/granite-13b-instruct-v2", "value": 'ibm/granite-13b-instruct-v2'}
                                     ],
-                                    value='ibm/granite-13b-instruct-v2',
+                                    value='ibm/granite-3-8b-instruct',
                                     id="model-selector-radio"
                                 ), style={'padding': '0.2rem 0rem 0rem 0.2rem', 'minHeight': '2.5rem'})
                             ],
                             nav=True, in_navbar=True,
                             class_name="dmi-class",
-                            direction="start",
-                            style={'display':'none'}
+                            direction="start"
                         ),
+                            
+                            # dbc.DropdownMenuItem("View payload", id="view-payload", n_clicks=0, class_name="dmi-class"),
                             dbc.DropdownMenuItem("View qna files", id="taxonomy-payload", n_clicks=0, class_name="dmi-class"),
                         ],
                         toggle_class_name="nav-dropdown-btn", caret=False,
@@ -211,22 +215,16 @@ layout_main_page = dbc.Col([dbc.Row([
             html.Li([html.B('Step 4:'),' Test model with ground truth data'])
         ], style={'listStyleType': 'none'}),
         html.Div([
-            "Latest result summary: (model: ibm/granite-13b-instruct-v2) No result found"
+            "Latest result summary: No result found"
             ],id='model-result'),
         html.Br(),
         dbc.Button('Start', id='start-app-btn', className='carbon-btn', color='primary')
     ]), className='col-10'),
         dbc.Col(className='col-1')
     ], style={'marginTop': '4rem'}),
-                            
-        # dbc.Row([
-        #     dbc.Col(class_name='col-10'),
-        #     dbc.Col(
-        html.Div([
+    html.Div([
             html.P(["Powered by ", html.A('InstructLab', href="https://instructlab.ai", target='_blank'), html.Img(src="/assets/logo.png", height="40", width="40"),])
             ], style={'position': 'fixed', 'bottom': '5rem', 'right': '2rem'})
-                
-        # ])
         ])
 
 app.layout = html.Div(children=[
@@ -254,12 +252,14 @@ app.layout = html.Div(children=[
     Output('data-table', 'children'),
     Input('load-button', 'n_clicks'),
     State('ai-task-selector', 'value'),
+    State('model-selector-radio', 'value'),
     prevent_initial_call=True
 )
-def display_sample_data(n, ai_task):
+def display_sample_data(n, ai_task, model):
+    model = model.split('/')[1]
     if(n>0):
         time.sleep(2)
-        df = pd.DataFrame(data[ai_task.lower()])
+        df = pd.DataFrame(data[f'{model}-{ai_task.lower()}'])
         df = df.head(no_of_sample_data)
         df['Input-tt'] = df['question']
         if (ai_task.lower()=='classification'):
@@ -268,7 +268,6 @@ def display_sample_data(n, ai_task):
             df['Input'] = df['question'].map(lambda q: q.split('\n\n')[-1])
         else:
             df['Input'] = df['question']
-        # df['Input'] = df['question'].map(lambda q: q.split('Sentence:')[1]) if (ai_task.lower()=='classification') elif df['question'].map(lambda q: q.split('Sentence:')[1]) else df['question']
         
         df['Expected response'] = df['response1']
         df['Result'] = ''
@@ -289,12 +288,14 @@ def display_sample_data(n, ai_task):
     Input('generate-button', 'n_clicks'),
     State('data-table', 'children'),
     State('ai-task-selector', 'value'),
+    State('model-selector-radio', 'value'),
     prevent_initial_call=True
 )
-def generate(n, table, ai_task):
+def generate(n, table, ai_task, model):
+    model = model.split('/')[1]
     if(n>0):
         time.sleep(2)
-        df = pd.DataFrame(data[ai_task.lower()])
+        df = pd.DataFrame(data[f'{model}-{ai_task.lower()}'])
         df['Input-tt'] = df['question']
         if (ai_task.lower()=='classification'):
             df['Input'] = df['question'].map(lambda q: q.split('Sentence:')[1])
@@ -318,12 +319,14 @@ def generate(n, table, ai_task):
     State('data-table', 'children'),
     State('passing-percentage', 'children'),
     State('result-store', 'data'),
+    State('model-selector-radio', 'value'),
     prevent_initial_call=True
 )
-def show_test_result(n, ai_task, table, pass_percentage, result_store):
+def show_test_result(n, ai_task, table, pass_percentage, result_store, model):
+    model = model.split('/')[1]
     if(n>0):
         time.sleep(2)
-        df = pd.DataFrame(data[ai_task.lower()])
+        df = pd.DataFrame(data[f'{model}-{ai_task.lower()}'])
         df['Input-tt'] = df['question']
         if (ai_task.lower()=='classification'):
             df['Input'] = df['question'].map(lambda q: q.split('Sentence:')[1])
@@ -346,7 +349,10 @@ def show_test_result(n, ai_task, table, pass_percentage, result_store):
             df['Result-tt'] = ('- Generated token count: ' + df['generated_token_count'].astype(str) + "\n- " + 'Input token count: ' + df['input_token_count'].astype(str) + '\n- ' + 'Stop reason: ' + df['stop_reason'])
         table_columns = ['Input', 'Expected response', 'Model response', 'Result']
         table = create_table(df, table_columns)
-        result_store[ai_task] = f'{pass_percentage}%'
+        try:
+            result_store[model][ai_task] = f'{pass_percentage}%'
+        except Exception as e:
+            result_store[model] = {ai_task: f'{pass_percentage}%'}
         return table, [html.B(f'Pass: {pass_percentage}%')], result_store
     return table, pass_percentage, result_store
 
@@ -364,9 +370,10 @@ def show_test_result(n, ai_task, table, pass_percentage, result_store):
     Output('data-table', 'children', allow_duplicate=True),
     Output('passing-percentage', 'children', allow_duplicate=True),
     Input('ai-task-selector', 'value'),
+    Input('model-selector-radio', 'value'),
     prevent_initial_call=True
 )
-def change_ai_task(val):
+def change_ai_task(val, model):
     return False, False, 'primary', True, True, 'secondary', True, True, 'secondary', [], []
 
 
@@ -406,18 +413,23 @@ def update_layout(n):
     Output('main-page-layout', 'style', allow_duplicate=True),
     Output('model-result', 'children', allow_duplicate=True),
     Input('home-button', 'n_clicks'),
-    State('model-selector-radio', 'value'),
+    # State('model-selector-radio', 'value'),
     State('result-store', 'data'),
     prevent_initial_call = True
 )
-def update_layout_home(n, selected_model, result_store):
+def update_layout_home(n, result_store):
     if(n>0):
-        op = [
-            f'Latest result summary: (model: {selected_model})',
-            html.Ol([
-             html.Li(f'{i}: {result_store[i]}') for i in result_store.keys() 
-            ])
-        ]
+        op = []
+        for model in result_store.keys():
+            model_summary = [
+                html.Li(f'{i}: {result_store[model][i]}') for i in result_store[model].keys()
+            ]
+            op.append(
+                html.Div([
+                    f'Latest result summary: (model: {model})',
+                    html.Ol(model_summary) 
+                ])
+            )
         return {'display': 'none'}, {'display': 'block'}, op
 
 
