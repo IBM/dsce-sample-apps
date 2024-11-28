@@ -1,6 +1,4 @@
 version: 3
-created_by: gnthaker
-domain: salesforce
 seed_examples:
   - context: |
       Find out how to connect your ZapPay account to your bank account to send money, pay bills,
@@ -21,10 +19,10 @@ seed_examples:
         answer: |
           Yes, you can send money, pay billes using ZapPay Account.
   - context: |
-        To create an opportunity in Salesforce, navigate to the Opportunities tab and click "New." Fill in the required
-        fields such as opportunity name, account, stage, close date, and expected revenue. You can
-        also add additional details like description, products, and contacts. Once you've entered all
-        the necessary information, click "Save" to create the opportunity.
+      To create an opportunity in Salesforce, navigate to the Opportunities tab and click "New." Fill in the required
+      fields such as opportunity name, account, stage, close date, and expected revenue. You can
+      also add additional details like description, products, and contacts. Once you've entered all
+      the necessary information, click "Save" to create the opportunity.
     questions_and_answers:
       - question: |
           Where do I find the "Opportunities" tab in Salesforce?
@@ -45,11 +43,11 @@ seed_examples:
           of the opportunity. Products: The specific products or services involved. Contacts: The individuals
           associated with the opportunity.
   - context: |
-        To create a new customer in Salesforce CRM, navigate to the "Contacts" tab and click "New."
-        Fill in the required fields such as first name, last name, company name, job title, and
-        email address. You can also add additional information like phone number, mailing address,
-        and any relevant notes. Once you've entered all the necessary details, click "Save" to create
-        the new customer record.
+      To create a new customer in Salesforce CRM, navigate to the "Contacts" tab and click "New."
+      Fill in the required fields such as first name, last name, company name, job title, and
+      email address. You can also add additional information like phone number, mailing address,
+      and any relevant notes. Once you've entered all the necessary details, click "Save" to create
+      the new customer record.
     questions_and_answers:
       - question: |
           What are the essential fields to fill out when creating a new customer?
@@ -65,11 +63,11 @@ seed_examples:
         answer: |
           Navigate to the "Contacts" tab and click "New.".
   - context: |
-        To create a new address in Salesforce CRM, navigate to the "Addresses" related list on the
-        relevant record (e.g., Contact, Account). Click "New" to create a new address record. Fill in
-        the required fields such as street, city, state, country, and postal code. You can also add additional
-        details like address type (e.g., billing, shipping) and is primary. Once you've entered all the
-        necessary information, click "Save" to create the new address record.
+      To create a new address in Salesforce CRM, navigate to the "Addresses" related list on the
+      relevant record (e.g., Contact, Account). Click "New" to create a new address record. Fill in
+      the required fields such as street, city, state, country, and postal code. You can also add additional
+      details like address type (e.g., billing, shipping) and is primary. Once you've entered all the
+      necessary information, click "Save" to create the new address record.
     questions_and_answers:
       - question: |
           Where can I find the "Addresses" related list in Salesforce CRM?
@@ -89,10 +87,10 @@ seed_examples:
           types include billing, shipping, and home. You can also indicate whether the address is the
           primary address for the record.
   - context: |
-        Once you've completed these disconnection steps, your bank account will be disconnected from your
-        ZapPay account. Please note that there might be additional steps or requirements depending on
-        your specific ZapPay account and region. It's always recommended to consult ZapPay's official
-        help center or customer support for the most accurate and up-to-date instructions.
+      Once you've completed these disconnection steps, your bank account will be disconnected from your
+      ZapPay account. Please note that there might be additional steps or requirements depending on
+      your specific ZapPay account and region. It's always recommended to consult ZapPay's official
+      help center or customer support for the most accurate and up-to-date instructions.
     questions_and_answers:
       - question: |
           Is there a specific process to follow to disconnect my bank account from ZapPay?
@@ -112,10 +110,11 @@ seed_examples:
           their customer support team. They can provide you with the most up-to-date information and assist
           you with any questions you may have.
 document_outline: |
-     Salesforce knowledge article which contains information about connect and disconnect your ZapPay
-     account to your bank account.
+  Salesforce knowledge article which contains information about connect and disconnect your ZapPay
+  account to your bank account.
 document:
   repo: https://github.com/gnthaker/knowledge-article
   commit: f8b339a34d8060673673de2ba876add9433705bb
   patterns:
     - ConnectYourBankAccounttoYourZapPayAccount.md
+created_by: user1
