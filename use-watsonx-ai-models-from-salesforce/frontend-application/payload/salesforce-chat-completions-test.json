@@ -1,0 +1,12 @@
+{
+  "model": "ibm/granite-3b-instruct",
+  "messages": [
+    {
+      "role": "user",
+      "content": "How many faces cube has?"
+    }
+  ],
+  "max_tokens": 500,
+  "temperature": 1.0,
+  "n": 1
+}

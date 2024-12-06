@@ -1,0 +1,13 @@
+Read the text and classify into one of the following options. Do not give explanation: personal conversation, product development, product deployment, product support, schedule updates
+
+Hi Leslie, 
+Yes, once the final deliverable is determined, we will share it with Ravi. However, Milestone 1 is not going to be our Beta release deliverable. We are still implementing the new APIs we want to have for Beta. So, I am guessing this is just to get Ravi started with product runtime container? We expect it will change a lot in next few weeks.
+
+Best Regards,
+Krista
+
+Hi Krista and Scott, I understand we have very minor work left for milestone 1 features. Could you please share the final milestone 1 containers with Ravi so that he can build the beta/demo/preview environment for us? We’re doing it this way instead of a regular beta. Thanks! Ravi,  moving forward shall we have a weekly chat to touch base?
+
+Leslie C. Chen
+Sr. Product Manager, The AI Company
+Email: l.chen@theaico.com

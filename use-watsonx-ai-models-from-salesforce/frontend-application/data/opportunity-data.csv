@@ -1,0 +1,4 @@
+opportunity_id,amount,close_date,currency_iso_code,name,stage_name
+006RZ000001KRgIYAW,20000.0,7/1/2022,USD,Acme - 200 Widgets,Prospecting
+006RZ000001KRgHYAW,70000.0,4/28/2022,USD,Acme - 600 Widgets,Needs Analysis
+006RZ000001KRgGYAW,140000.0,3/2/2022,USD,Acme - 1200 Widgets,Value Proposition

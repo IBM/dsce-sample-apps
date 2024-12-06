@@ -1,0 +1,4 @@
+contact_id,currency_iso_code,email,name,phone,title
+003RZ00000117DRYAY,USD,info@salesforce.com,Howard Jones,(212) 555-5555,Buyer
+003RZ00000117DQYAY,USD,info@salesforce.com,Edward Stamos,(212) 555-5555,President and CEO
+003RZ00000117DSYAY,USD,info@salesforce.com,Leanne Tomlin,(212) 555-5555,VP Customer Support
