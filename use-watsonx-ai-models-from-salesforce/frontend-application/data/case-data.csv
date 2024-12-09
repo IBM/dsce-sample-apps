@@ -1,0 +1,4 @@
+case_id,case_number,contact_id,currency_iso_code,owner_id,owner_name,priority,status,subject
+500RZ000003bxc6YAA,00001003,null,USD,005RZ000000nNt9YAE,OrgFarm Epic,Medium,New,Big Problems
+500RZ000003THZLYA4,00001001,003RZ00000117DQYAY,USD,005RZ000000nNt9YAE,OrgFarm Epic,High,New,Sample Case 2: The widgets we received are the wrong size.
+500RZ000003THZMYA4,00001002,003RZ00000117DQYAY,USD,005RZ000000nNt9YAE,OrgFarm Epic,Low,On Hold,Sample Case 3: Cannot track our order.
