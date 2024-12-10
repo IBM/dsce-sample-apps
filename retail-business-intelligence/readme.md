@@ -133,6 +133,11 @@ Here are steps to implement Data federation using watsonx.data
 8. Add Catalog Name `postgresql`.
 9. Click on `Create`.
 10. Hover over catalog `postgresql` -> click on `manage associations` and connect to `presto` engine.
+11. Navigate to `Query workspace` page from left side hamburger button in watsonx.data UI.
+12. You will have SQL query editor window/tab open.
+13. Execute attached queries in SQL editor page. This query is written with catalog and schema name aliases, so you can execute it as is.[Postgresql_Queries.sql](./Postgresql_Queries.sql)
+14. Additionally if you want to run any other select statements other schema then in editor menubar select Catalog `postgresql` and Name `public` from dropdown.
+
 
 ## Set up and launch application
 
