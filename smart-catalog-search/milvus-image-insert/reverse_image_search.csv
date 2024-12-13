@@ -1,0 +1,16 @@
+id,path,label
+0,./train/phone/phone1.jpeg,phone
+1,./train/phone/phone2.jpeg,phone
+2,./train/phone/phone3.jpeg,phone
+3,./train/phone/phone4.jpeg,phone
+4,./train/phone/phone5.jpeg,phone
+8,./train/laptop/laptop1.jpeg,laptop
+9,./train/laptop/laptop2.jpeg,laptop
+10,./train/laptop/laptop3.jpeg,laptop
+11,./train/laptop/laptop4.jpeg,laptop
+12,./train/laptop/laptop5.jpeg,laptop
+13,./train/headphone/headphone1.jpeg,headphone
+14,./train/headphone/headphone2.jpeg,headphone
+15,./train/headphone/headphone3.jpeg,headphone
+16,./train/headphone/headphone4.jpeg,headphone
+17,./train/headphone/headphone5.jpeg,headphone
