@@ -151,18 +151,6 @@ const NormalPlugins: PluginMappings = {
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },
-  [PluginID.GRANITE_13b_chat_v2_wdu]: {
-    id: PluginID.GRANITE_13b_chat_v2_wdu,
-    name: PluginName.GRANITE_13b_chat_v2_wdu,
-    extractionEngine: 'WDU',
-    requiredKeys: [],
-  },
-  [PluginID.GRANITE_13b_chat_v2_langchain]: {
-    id: PluginID.GRANITE_13b_chat_v2_langchain,
-    name: PluginName.GRANITE_13b_chat_v2_langchain,
-    extractionEngine: 'LangChain',
-    requiredKeys: [],
-  },
   [PluginID.LLAMA3_1_70B_WDU]: {
     id: PluginID.LLAMA3_1_70B_WDU,
     name: PluginName.LLAMA3_1_70B_WDU,
