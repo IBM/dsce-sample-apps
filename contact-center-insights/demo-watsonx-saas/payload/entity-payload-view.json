@@ -1,0 +1,38 @@
+{
+  "model_id": "ibm/granite-3-8b-instruct",
+  "data": {
+    "instruction": "Extract PII entities from the conversation given below.",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "Sam: How much money to withdraw ?\nMary: 100$ from savings account ending 7865\nSam: What's your email?\nMary: text@gmail.com\nSam: What's the authentication code ?\nMary: 3412\nSam: What's your phone number ?\nMary: (304)1647854",
+        "output": "100$: amount; text@gmail.com: email; 3412: pin; 7865: account; savings: account type; (304)1647854: phone"
+      },
+      {
+        "input": "Mary: Good morning, how can I help ?\nSam: I want to unlock my account ending with 4567\nMary: Can you verify your email?\nSam: samg@email.com\nMary: What's your date of birth ?\nSam: 13 May 2001\nMary: What's the city in your account address?\nSam: Boston\nMary: What's the auth code ?\nSam: 8907\nMary: Done ! Anything else ?\nSam: No thanks.",
+        "output": "4567: account; samg@email.com: email; 13 May 2001: date of birth; Boston: location; 8907: pin"
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  },
+  "moderations": {
+    "hap": {
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
+    }
+  }
+}
