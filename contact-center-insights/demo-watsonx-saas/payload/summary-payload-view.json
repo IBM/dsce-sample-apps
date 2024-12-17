@@ -1,0 +1,40 @@
+{
+  "model_id": "google/flan-ul2",
+  "data": {
+    "instruction": "Summarise the following paragraph in 2 sentences",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": [
+      {
+        "input": "Input:\nAgent: This is John working with F9 Solutions. \nClient: good morning John\nAgent: F9 is working on a pathbreaking solution that will be useful for you.\nClient: Will be glad to head more about it.\nAgent: Which industry sector are you in ?\nClient: Manufacturing\nAgent: Do you want me to email some of the details or have someone call you back.\nClient: Please have someone call back.\nAgent: Can you provide me your email address ?\nClient: x@y.com",
+        "output": "The Agent, John, from the company F9 solutions talked about a new solution for the Client working in the Manufacturing sector. The Client is expecting a call back and has shared his email address."
+      },
+      {
+        "input": "On XX/XX/2022, I viewed my Consumer report and I noticed that the information from my auto loan from Prestige Financial is reporting across the Credit Reporting Agencies is inaccurate. Under the FCRA the law states the following. 623 - 15 U.S. Code 1681s2 - Responsibilities of furnishers of information to consumer reporting agencies ( B ) Reporting information after notice and confirmation of errors. A person shall not furnish information relating to a consumer to any consumer reporting agency if ( i ) the person has been notified by the consumer, at the address specified by the person for such notices, that specific information is inaccurate; and ( ii ) the information is, in fact, inaccurate. 616. Civil liability for willful noncompliance [ 15 U.S.C. 1681n ] ( a ) In general. Any person who willfully fails to comply with any requirement imposed under this title with respect to any consumer is liable to that consumer in an amount equal to the sum of ( 1 ) ( A ) any actual damages sustained by the consumer as a result of the failure or damages of not less than {$100.00} and not more than {$1000.00} ; or ( B ) in the case of liability of a natural person for obtaining a consumer report under false pretenses or knowingly without a permissible purpose, actual damages sustained by the consumer as a result of the failure or {$1000.00}, whichever is greater ; ( 2 ) such amount of punitive damages as the court may allow ; and ( 3 ) in the case of any successful action to enforce any liability under this section, the costs of the action together with reasonable attorneys fees as determined by the court",
+        "output": "I viewed my consumer report and the credit reporting is not accurate because it violates the FCRA law."
+      },
+      {
+        "input": "Cash central has put this debt on my credit multiple times. I found the last complaint with the CFPB involving XXXX XXXX that resulted in the removal. Complaint ending in XXXX. At that time Cash Central did not supply XXXX XXXX with documentation confirming the debt and it was removed due to the debt being erroneously put on my report. You can find this compliant that was submitted to the CFPB on XX/XX/2018. Cash central has a history of putting incorrect information on peoples credit reports which can be found at this link XXXX XXXX XXXX At this point, Nothing further should be needed from me. This debt has been proven countless times to not be mine. Again, when a debt is found to be erroneous, it is illegal to re report that same debt to the credit bureaus. I received a letter from XXXX XXXX that they did not see the account reported any longer. Cash Central, if you have re reported again, please comply with the law and remove effective immediately.",
+        "output": "A debt has been incorrectly put in my credit report and this has been done multiple times."
+      },
+      {
+        "input": "I have applied for a home loan to purchase a new home. The lender pulled my credit and it showed I had a late payment XX/XX/XXXX for a previous mortgage. I paid off my home loan in XX/XX/XXXX. I do not owe this company any money. I called them and they said it would  take 10 days just to look at the file. I am very upset with their process. I would like help to get this erroneous error off my credit report. The error is showing dated XX/XX/XXXX. I spoke with the company XX/XX/XXXX and they said they did not report this and it would take 10 days to have their team look into it. I will be losing the house that I have put a down payment on and I will lose my down if this does not get resolved in a timely manner. I have filed a complaint with this company previously and you helped with a positive outcome but again they are messing with my credit.",
+        "output": "I applied for a home loan and a late payment on a previous loan is incorrectly there in my credit report."
+      }
+    ]
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 50,
+    "max_new_tokens": 300,
+    "repetition_penalty": 1.5
+  },
+  "moderations": {
+    "hap": {
+      "input": { "enabled": true, "threshold": 0.75 },
+      "output": { "enabled": true, "threshold": 0.75 }
+    }
+  }
+}

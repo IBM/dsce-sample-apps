@@ -1,0 +1,29 @@
+{
+  "model_id": "ibm/granite-3-8b-instruct",
+  "data": {
+    "instruction": "Read the text and classify into one of the following options. Do not generate any information: account transfer, credit cards, balance issues",
+    "input": "",
+    "input_prefix": "Input:",
+    "output_prefix": "Output:",
+    "examples": []
+  },
+  "parameters": {
+    "decoding_method": "greedy",
+    "stop_sequences": [],
+    "min_new_tokens": 1,
+    "max_new_tokens": 100,
+    "repetition_penalty": 1
+  },
+  "moderations": {
+    "hap": {
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
+    }
+  }
+}

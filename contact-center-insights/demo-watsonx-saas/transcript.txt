@@ -1,0 +1,28 @@
+Virtual agent: Welcome, how can I assist you?
+Caller: transfer funds
+Virtual agent: Before we can transfer any funds, please confirm where you'd like to transfer funds from. Checking account or Savings account
+Caller: Checking account
+Virtual agent: Okay! How much would you like to transfer?
+Caller: what is my account balance
+Virtual agent: To check your account balance, please provide your email address
+Caller: mary@test.com
+Virtual agent: Great. What is your date of birth?
+Caller: 24-Nov-1983
+Virtual agent: what's your city of residence ?
+Caller: Denver
+Virtual agent: One moment while I retrieve your records.
+Virtual agent: Your current balance is one hundred dollars
+Virtual agent: How much would you like to transfer?
+Caller: 50$
+Virtual agent: Alright. When would you like to make the transfer?
+Caller: June 28th
+Virtual agent: Thanks. Please enter your four-digit authentication or PIN code
+Caller: 1234
+Virtual agent: Great, I found you in our system! Provide the last four digits of your account to transfer to.
+Caller: 5678
+Virtual agent: Sounds good. Just to confirm - you'd like to transfer 50.00 dollars from your checking account into account ending with 5678 on Jun 28, 2023. Is that correct?
+Caller: yes
+Virtual agent: Great! Let me process this for you.
+Virtual agent: You will receive a confirmation email in the next 2-3 minutes once the transfer is complete. Is there anything else that I can help you with?
+Caller: no thanks
+Virtual agent: Have a good day!
