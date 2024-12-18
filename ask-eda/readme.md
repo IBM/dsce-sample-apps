@@ -6,31 +6,32 @@
 
 2. Login with IBM ID or Github
 
-    - After login you will see `Environment name`, `Domain`, `API key` and `Admin key`. Save these values as we will need it in upcoming steps.
+   - After login you will see `Environment name`, `Domain`, `API key` and `Admin key`. Save these values as we will need it in upcoming steps.
 
 3. Now on the left side pannel click on the 3rd option that it `Documentation`
 4. Go to `Installation` and follow the steps to install the CLI
-
 
 ## Authenticate yourself from CLI
 
 1. Go to your root directry of this project repository.
 2. Run the below command to login to watsonx flows engine through CLI.
-    
-    ```sh
-    wxflows login
-    ```
 
-    - CLI will ask you for the values of `Environment name`, `Domain`, `Admin key`. Provide those details as we have it from step 2 of above section.
+   ```sh
+   wxflows login
+   ```
+
+   - CLI will ask you for the values of `Environment name`, `Domain`, `Admin key`. Provide those details as we have it from step 2 of above section.
 
 3. Verify you are authenticated by running the below command.
-    ```sh
-    wxflows whoami
-    ```
 
-    - Your account details will be printed in the terminal.
+   ```sh
+   wxflows whoami
+   ```
+
+   - Your account details will be printed in the terminal.
 
 ## Set up and launch application
+
 It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 1. Go to the root directory and prepare your python environment.
@@ -77,31 +78,30 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    pip3 install -r requirements.txt
    ```
 
-
 4. Run the below command to initializes a new watsonx.ai flows engine project for you.
 
-    ```sh
-    wxflows init --interactive
-    ```
+   ```sh
+   wxflows init --interactive
+   ```
 
-    - In the interactive mode, provide the following information:
-        ```
-        - Do you wish to use retrieval-augmented generation (RAG)?: yes
-        - Choose the document collection for context retrieval: create from local data
-        - Path to the data: ./source
-        - File types to include: all supported file types
-        - Chunk size (in tokens): 500
-        - Chunk overlap (in tokens): 50
-        - Collection name: wxflows-eda
-        - Endpoint name: wxflows-genai/wxflows-eda
-        ```
+   - In the interactive mode, provide the following information:
+
+    ```sh
+     - Do you wish to use retrieval-augmented generation (RAG)?: yes
+     - Choose the document collection for context retrieval: create from local data
+     - Path to the data: ./source
+     - File types to include: all supported file types
+     - Chunk size (in tokens): 500
+     - Chunk overlap (in tokens): 50
+     - Collection name: wxflows-eda
+     - Endpoint name: wxflows-genai/wxflows-eda
+     ```
 
 5. Above `step 4` creates a couple of files:
 
-    - wxflows.toml with your project configuration
-    - .env.sample with the possible environment variables
-    - watsonx.docs.tsv that includes your chunked dataset
-
+   - wxflows.toml with your project configuration
+   - .env.sample with the possible environment variables
+   - watsonx.docs.tsv that includes your chunked dataset
 
 6. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
 
@@ -129,23 +129,22 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    STEPZEN_WATSONX_AI_TOKEN=<your IBM Cloud API key>
    STEPZEN_WATSONX_PROJECTID=<your watsonx.ai project_id>
    STEPZEN_WATSONX_HOST=us-south.ml.cloud.ibm.com
-   
+
    FLOW_ENGINE_API_KEY=<wxflows API key>
    FLOW_ENGINE_URL=https://<Environment name>.<Domain>/wxflows-genai/wxflows-eda/graphql
-   MODEL = ibm/granite-13b-chat-v2
-   
+   MODEL = ibm/granite-3-8b-instruct
+
    COLLECTION_NAME = wxflows-eda
    DEBUG_MODE=True
    ```
 
-
 8. Upload your chunked data set to the vector database
 
-    ```sh
-    wxflows collection deploy
-    ```
+   ```sh
+   wxflows collection deploy
+   ```
 
-9. Modify flow by removing `//` (comment) from the `myRagWithGuardrails` inside the `flows` variable of the `wxflows.toml`  file.
+9. Modify flow by removing `//` (comment) from the `myRagWithGuardrails` inside the `flows` variable of the `wxflows.toml` file.
 
 10. Deploy the flows
 
@@ -155,9 +154,9 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
 11. Run the application.
 
-   ```sh
-   python3 template.py
-   ```
+```sh
+python3 template.py
+```
 
 You can now access the application from your browser at the following URL.
 
