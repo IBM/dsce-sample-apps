@@ -1,0 +1,58 @@
+{
+  "tools": [
+    {
+      "name": "WikipediaTool",
+      "description": "A tool for retrieving information from Wikipedia."
+    },
+    {
+      "name": "DuckDuckGoTool",
+      "description": "A tool for searching the web using DuckDuckGo."
+    },
+    {
+      "name": "ArXivTool",
+      "description": "A tool for retrieving academic papers from ArXiv."
+    },
+    {
+      "name": "WebCrawlerTool",
+      "description": "A tool for crawling the web and extracting data."
+    },
+    {
+      "name": "OpenMeteoTool",
+      "description": "A tool for retrieving weather data from OpenMeteo."
+    }
+  ],
+  "memory": [
+    {
+      "name": "Chat history memory",
+      "description": "Stores the entire conversation history for context."
+    },
+    {
+      "name": "Conversation buffer memory",
+      "description": "Maintains a buffer of recent messages for limited context."
+    }
+  ],
+  "llm_providers": [
+    {
+      "name": "watsonx.ai",
+      "description": "A framework for developing applications powered by language models, providing tools for agents, chains, and memory management.",
+      "config": [
+            {
+              "ibm_cloud_api_key": "IBM Cloud API Key",
+              "model_id": "meta-llama/llama-3-70b-instruct",
+              "parameters": {
+                "max_new_tokens": "10",
+                "min_new_tokens": "10",
+                "decoding_method": "greedy"
+              },
+              "wx_project_id": "watsonx.ai project ID"
+            }
+          ]
+        }
+  ],
+  "additional_config": [
+    {
+      "name": "session management",
+      "description": "Enable or disable session management."
+    }
+  ]
+}
