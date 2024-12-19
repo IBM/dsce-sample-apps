@@ -1,0 +1,39 @@
+
+
+@keyframes toast-entry {
+    0% {
+      transform: rotateY(90deg);
+      opacity: 0.5;
+    }
+    50% {
+      transform: rotateY(0deg);
+      opacity: 1;
+    }
+  }
+
+.cds--toast-notification--success{
+    position: fixed;
+    right: 0;
+    top: 4rem;
+    animation: toast-entry 0.5s ease-in;
+    transition: opacity 0.5s linear;
+    z-index: 90001;
+}
+
+.cds--toast-notification--error{
+    position: fixed;
+    right: 0;
+    top: 4rem;
+    animation: toast-entry 0.5s ease-in;
+    transition: opacity 0.5s linear;
+    z-index: 90001;
+}
+
+.cds--toast-notification--warning{
+    position: fixed;
+    right: 0;
+    top: 4rem;
+    animation: toast-entry 0.5s ease-in;
+    transition: opacity 0.5s linear;
+    z-index: 90001;
+}

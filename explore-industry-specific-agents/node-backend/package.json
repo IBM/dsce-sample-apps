@@ -1,0 +1,22 @@
+{
+  "name": "node-backend",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "exec tsx main.js"
+  },
+  "dependencies": {
+    "@ibm-generative-ai/node-sdk": "^3.2.3",
+    "bee-agent-framework": "^0.0.53",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "markdown": "^0.5.0",
+    "openai": "^4.76.3",
+    "openai-chat-tokens": "^0.2.8",
+    "react-markdown": "^9.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "tsx": "^4.19.2"
+  }
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "industry": "travel",
+    "input_prompt": "I am planning a trip to New York next week. Can you get me information about the tourist attractions, weather forecast, and social events in the city?",
+    "model": "meta-llama/llama-3-3-70b-instruct"
+  },
+  {
+    "industry": "finance",
+    "input_prompt": "What's the recent trend in tech stocks?",
+    "model": "mistralai/mistral-large"
+  },
+  {
+    "industry": "research",
+    "input_prompt": "Can you help me gather recent studies on machine learning applications in healthcare?",
+    "model": "meta-llama/llama-3-3-70b-instruct"
+  },
+  {
+    "industry": "strategy",
+    "input_prompt": "I am planning to present to a company on a new product. List their sales statistics.",
+    "model": "meta-llama/llama-3-3-70b-instruct"
+  },
+  {
+    "industry": "disaster",
+    "input_prompt": "How do I plan for a disaster? Help me decide",
+    "model": "meta-llama/llama-3-3-70b-instruct"
+  }
+]

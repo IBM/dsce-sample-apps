@@ -1,0 +1,99 @@
+{
+  "tools": [
+    {
+      "name": "WikipediaTool",
+      "description": "A tool for retrieving information from Wikipedia."
+    },
+    {
+      "name": "DuckDuckGoTool",
+      "description": "A tool for searching the web using DuckDuckGo."
+    },
+    {
+      "name": "ArXivTool",
+      "description": "A tool for retrieving academic papers from ArXiv."
+    },
+    {
+      "name": "WebCrawlerTool",
+      "description": "A tool for crawling the web and extracting data."
+    },
+    {
+      "name": "OpenMeteoTool",
+      "description": "A tool for retrieving weather data from OpenMeteo."
+    }
+  ],
+  "memory": [
+    {
+      "name": "Unconstrained Memory",
+      "description": "Unlimited size. It is suitable if your context window is huge."
+    },
+    {
+      "name": "Sliding Window Memory",
+      "description": "Keeps last k messages in the memory. The oldest ones are deleted."
+    },
+    {
+      "name": "Token Memory",
+      "description": "Ensures that the number of tokens of all messages is below the given threshold. The oldest are removed."
+    },
+    {
+      "name": "Summarize Memory",
+      "description": "Only a single summarization of the conversation is preserved. Summarization is updated with every new message."
+    }
+  ],
+  "llm_providers": [
+    {
+      "name": "OpenAI",
+      "description": "OpenAI's foundation models",
+      "config": [
+        {
+          "model_id": "gpt-4o",
+          "parameters": {
+            "max_new_tokens": "10",
+            "stop": [
+              "post"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "watsonx.ai",
+      "description": "IBM's watsonx.ai foundation models",
+      "config": [
+        {
+          "ibm_cloud_api_key": "IBM Cloud API Key",
+          "model_id": "meta-llama/llama-3-70b-instruct",
+          "parameters": {
+            "max_new_tokens": "10",
+            "min_new_tokens": "10",
+            "decoding_method": "greedy"
+          },
+          "wx_project_id": "watsonx.ai project ID"
+        }
+      ]
+    }
+  ],
+  "additional_config": [
+    {
+      "name": "cache",
+      "description": "Caching is a process used to temporarily store copies of data or computations in a cache (a storage location) to facilitate faster access upon future requests.",
+      "config": [
+        {
+          "description": "Unlimited size.",
+          "name": "Unconstrained Cache"
+        },
+        {
+          "description": "Saves/Loads entries to/from a file",
+          "name": "File Cache"
+        },
+        {
+          "description": "Keeps last k entries in the memory. The oldest ones are deleted.",
+          "name": "Sliding Cache"
+        },
+        {
+          "description": "Disables caching.",
+          "name": "Null Cache"
+        }
+      ]
+    }
+  ]
+}

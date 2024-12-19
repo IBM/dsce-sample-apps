@@ -1,0 +1,121 @@
+[
+  {
+    "industry": "travel",
+    "config": {
+      "framework": "LangChain",
+      "tools": [
+        "WikipediaTool",
+        "OpenMeteoTool"
+      ],
+      "memory": "Chat history memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "mistralai/mistral-large",
+            "parameters": {
+              "max_new_tokens": "500",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "finance",
+    "config": {
+      "framework": "LangChain",
+      "tools": [
+        "WikipediaTool",
+        "WebCrawlerTool"
+      ],
+      "memory": "Chat history memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "500",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "research",
+    "config": {
+      "framework": "LangChain",
+      "tools": [
+        "WikipediaTool"
+      ],
+      "memory": "Chat history memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "500",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "strategy",
+    "config": {
+      "framework": "LangChain",
+      "tools": [
+        "WikipediaTool",
+        "WebCrawlerTool"
+      ],
+      "memory": "Chat history memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "500",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "disaster",
+    "config": {
+      "framework": "LangChain",
+      "tools": [
+        "WikipediaTool",
+        "WebCrawlerTool"
+      ],
+      "memory": "Conversation buffer memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "500",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

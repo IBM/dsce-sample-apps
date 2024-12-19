@@ -1,0 +1,121 @@
+[
+  {
+    "industry": "travel",
+    "config": {
+      "framework": "Bee Agent Framework",
+      "tools": [
+        "WikipediaTool",
+        "OpenMeteoTool",
+        "DuckDuckGoTool"
+      ],
+      "memory": "Token Memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "1024",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "finance",
+    "config": {
+      "framework": "Bee Agent Framework",
+      "tools": [
+        "WebCrawlerTool"
+      ],
+      "memory": "Unconstrained Memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "mistralai/mistral-large",
+            "parameters": {
+              "max_new_tokens": "1024",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "research",
+    "config": {
+      "framework": "Bee Agent Framework",
+      "tools": [
+        "ArXivTool"
+      ],
+      "memory": "Token Memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "1024",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "strategy",
+    "config": {
+      "framework": "Bee Agent Framework",
+      "tools": [
+        "DuckDuckGoTool",
+        "WebCrawlerTool"
+      ],
+      "memory": "Token Memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "1024",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "industry": "disaster",
+    "config": {
+      "framework": "Bee Agent Framework",
+      "tools": [
+        "WikipediaTool",
+        "WebCrawlerTool"
+      ],
+      "memory": "Unconstrained Memory",
+      "llm_providers": {
+        "name": "watsonx.ai",
+        "config": [
+          {
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
+            "parameters": {
+              "max_new_tokens": "1024",
+              "min_new_tokens": "10",
+              "decoding_method": "greedy"
+            }
+          }
+        ]
+      }
+    }
+  }
+]
