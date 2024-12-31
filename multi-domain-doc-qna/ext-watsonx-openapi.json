@@ -129,7 +129,7 @@
           "model_id": {
             "type": "string",
             "title": "Model Id",
-            "default": "meta-llama/llama-3-70b-instruct"
+            "default": "meta-llama/llama-3-1-70b-instruct"
           },
           "inputs": {
             "type": "array",
@@ -221,7 +221,11 @@
             "title": "Error Type"
           }
         },
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "title": "ValidationError"
       },
       "queryLLMRequest": {
@@ -275,7 +279,10 @@
             "title": "Filters"
           }
         },
-        "required": ["question", "es_index_name"],
+        "required": [
+          "question",
+          "es_index_name"
+        ],
         "title": "queryLLMRequest"
       },
       "queryLLMResponse": {
@@ -293,7 +300,10 @@
             "title": "References"
           }
         },
-        "required": ["llm_response", "references"],
+        "required": [
+          "llm_response",
+          "references"
+        ],
         "title": "queryLLMResponse"
       },
       "queryWDLLMRequest": {
@@ -323,7 +333,10 @@
             },
             "description": "Params to pull from WD. Defaults Title and Text.",
             "title": "Wd Return Params",
-            "default": ["Title", "Text"]
+            "default": [
+              "Title",
+              "Text"
+            ]
           },
           "llm_instructions": {
             "type": "string",
@@ -344,11 +357,18 @@
             "items": {
               "type": "string"
             },
-            "example": ["acme.pdf", "test.docx"],
+            "example": [
+              "acme.pdf",
+              "test.docx"
+            ],
             "title": "Wd Document Names"
           }
         },
-        "required": ["question", "project_id", "collection_id"],
+        "required": [
+          "question",
+          "project_id",
+          "collection_id"
+        ],
         "title": "queryWDLLMRequest"
       },
       "queryWDLLMResponse": {
@@ -366,7 +386,10 @@
             "title": "References"
           }
         },
-        "required": ["llm_response", "references"],
+        "required": [
+          "llm_response",
+          "references"
+        ],
         "title": "queryWDLLMResponse"
       }
     }
