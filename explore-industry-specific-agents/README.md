@@ -3,6 +3,7 @@
 ## Pre-requisites
 
 1. A watsonx.ai instance on IBM Cloud ([get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx)).
+2. Download Node.JS(version 18.20.5) from the [official website](https://nodejs.org/en/download).
 
 ## Steps to Run the Backend Application Locally
 
