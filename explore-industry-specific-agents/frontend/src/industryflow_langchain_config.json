@@ -36,7 +36,7 @@
         "name": "watsonx.ai",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-70b-instruct",
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
               "max_new_tokens": "500",
               "min_new_tokens": "10",
@@ -59,7 +59,7 @@
         "name": "watsonx.ai",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-70b-instruct",
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
               "max_new_tokens": "500",
               "min_new_tokens": "10",
@@ -83,7 +83,7 @@
         "name": "watsonx.ai",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-70b-instruct",
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
               "max_new_tokens": "500",
               "min_new_tokens": "10",
@@ -107,7 +107,7 @@
         "name": "watsonx.ai",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-70b-instruct",
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
               "max_new_tokens": "500",
               "min_new_tokens": "10",

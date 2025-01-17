@@ -295,6 +295,8 @@ function App() {
           )}
         </div>
       </div>
+
+      <footer><div class="footer">This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO, protected under US Patent Laws. © Copyright IBM Corporation</div></footer>
     </>
   );
 }

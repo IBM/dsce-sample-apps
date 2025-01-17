@@ -188,7 +188,7 @@ router.get("/v1/bee-agent-framework/get_config_params", async (req, res) => {
         "description": "IBM's watsonx.ai foundation models",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-70b-instruct",
+            "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
               "max_new_tokens": "500",
               "min_new_tokens": "10",

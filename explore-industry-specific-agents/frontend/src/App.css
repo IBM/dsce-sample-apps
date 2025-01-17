@@ -159,3 +159,16 @@
   border-radius: 4px;
   font-size: 12px;
 }
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background-color: rgb(34,37,41);
+  color: rgb(198,198,198);
+  padding-top: 20px;
+  padding-bottom: 40px;
+  text-align: center
+}

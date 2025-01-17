@@ -169,7 +169,7 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
         config: [
           {
             ibm_cloud_api_key: "IBM Cloud API Key",
-            model_id: "meta-llama/llama-3-70b-instruct",
+            model_id: "meta-llama/llama-3-3-70b-instruct",
             parameters: {
               max_new_tokens: "10",
               min_new_tokens: "10",
