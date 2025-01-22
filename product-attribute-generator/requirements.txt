@@ -1,0 +1,12 @@
+streamlit
+python-dotenv
+ibm_watsonx_ai
+pandas
+requests
+bs4
+xlsxwriter
+jproperties==2.1.1
+dash==2.11.1
+dash_bootstrap_components==1.4.1
+dash_uploader
+cloudscraper

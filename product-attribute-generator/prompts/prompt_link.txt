@@ -1,0 +1,19 @@
+Analyze the provided Product Details and extract all possible specifications of the product. Format the extracted data exclusively as JSON metadata, adhering to the following strict guidelines:
+
+Output strictly in JSON format:
+
+Do not include any additional text, comments, or explanations outside the JSON output.
+JSON structure rules:
+
+Represent each specification as a single key-value pair at the top level of the JSON object.
+Ensure that all keys have their first letter in capital case and contain no underscores (e.g., Product Name instead of product_name or Product_name).
+Use only strings for both keys and values.
+If multiple values exist for the same specification, consolidate them under a single key as a comma-separated string.
+Avoid creating duplicate keys.
+Formatting and consistency:
+
+Exclude escape characters in the response (e.g., no \" or \\).
+Ensure the output is valid JSON and strictly adheres to the defined key formatting.
+Product Details: {{content}}
+
+Specifications (JSON format):
