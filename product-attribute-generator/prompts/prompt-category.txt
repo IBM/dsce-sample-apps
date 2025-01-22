@@ -1,0 +1,13 @@
+Analyze the provided image and determine the category of the product depicted, adhering to the following guidelines:
+
+1. Exclude any Personal Identifiable Information (PII) from the analysis.
+2. Focus solely on the main product in the image:
+    - Ignore any side or partially visible products.
+    - Exclude any focus on people, humans, or non-product elements.
+3. Identify a single product category rather than a group of categories.
+4. make sure to see the product rather than human being.
+5. Use a structured hierarchy format of maximum level 3 like Main Category>Sub Category>Category.
+
+Ensure the response strictly contains the product category in the specified format with no additional text or explanation.
+
+Category:
