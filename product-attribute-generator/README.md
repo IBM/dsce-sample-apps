@@ -67,7 +67,7 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    - 5.2.5 Click on **Manage** tab > Copy the **Project ID** from **General**
 
    ```sh
-   SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+   SERVER_URL = https://us-south.ml.cloud.ibm.com
    WATSONX_API_KEY=<your IBM Cloud API key>
    WATSONX_PROJECT_ID=<your watsonx.ai project_id>
    GRANITE_MODEL=ibm/granite-3-8b-instruct
