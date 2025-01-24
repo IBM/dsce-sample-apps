@@ -1,17 +1,25 @@
 {
-  "model_id": "ibm/granite-20b-multilingual",
+  "model_id": "ibm/granite-3-8b-instruct",
   "input": "Summarize the transcript of the call. Identify the agent and the subscriber. Add any specific issues mentioned by the subscriber. Add any corrective actions taken as directed by the agent. Please mention if the issue is resolved. Mention any follow-up actions and timelines.\n\nInput:\nSara: (Dialing customer care) Hello, this is Sara, and I'm having some issues with my broadband connection. The internet has been quite slow, and I've been experiencing frequent disconnections.\n\nMike: Hi Sara, I'm Mike, a customer care agent. I'm sorry to hear about the trouble you're facing with your broadband. Let me check that for you. Can you please provide me with your account number or the phone number associated with your account?\n\nSara: Sure, it's 555-1234.\n\nMike: Thank you, Sara. Let me pull up your account. While I'm doing that, can you tell me when you first started noticing these issues?\n\nSara: It started about a week ago. The internet speed has been inconsistent, and there are times when it just goes out completely.\n\nMike: I understand how frustrating that can be. I appreciate your patience. It looks like there might be some signal issues. Have you tried restarting your modem and router?\n\nSara: Yes, I've tried that a couple of times, but the problems persist.\n\nMike: Alright, thanks for trying that. I'll run a diagnostic on your connection now. While that's happening, could you let me know if there are specific times of the day when you notice these problems more frequently?\n\nSara: It seems to be worse during the evenings, especially when I'm trying to stream videos or have video calls.\n\nMike: Got it. It could be related to network congestion during peak hours. Let me check the signal strength in your area. While I'm doing that, have you noticed if your neighbors are experiencing similar issues?\n\nSara: I haven't had a chance to check with them, but I can do that. Hold on a moment.\n\n(Mike puts Sara on a brief hold while he checks the network status)\n\nMike: Thank you for waiting, Sara. It appears there might be an issue in your area affecting multiple customers. Our technicians are already working to resolve it. I apologize for the inconvenience.\n\nSara: Oh, okay. I appreciate the update. Do you have an estimated time for when it will be fixed?\n\nMike: I don't have an exact time, but our team is actively working on it, and we'll strive to resolve it as soon as possible. In the meantime, if you experience any further issues or if there are updates, feel free to reach out to us.\n\nSara: Alright, thank you, Mike. I hope it gets resolved soon.\n\nMike: You're welcome, Sara. I understand the importance of a reliable internet connection. If you have any other questions or concerns, please don't hesitate to contact us.\n\nSara: I will. Thanks for your help.\n\nMike: Have a great day, Sara!\n\nOutput:\nAgent: Mike (Customer Service)\nSubscriber: Sara\n\nIssues raised by subscriber:\nSlow internet speed\nFrequent disconnections, especially at night.\nInconsistent service over the past week.\n\nCorrective steps taken by agent:\nAccount details verified using Sara's phone number.\nHe suggested restarting the modem and router, which Sara had already tried.\nI made a diagnosis of Sara's connection.\nPotential network congestion during peak hours was investigated.\nShe asked about the experience of Sara's neighbors to identify a broader issue.\n\nResult:\nThe agent identified a network issue affecting several customers in the Sara area.\nTechnicians were actively working to resolve the issue.\nNo specific timeline for resolution is provided.\n\nFollow-up actions:\nSubscriber is advised to contact customer support for updates or if further issues arise.\nNo immediate resolution timeline has been provided; Continuous work of the technical team.\n\nConclusion:\nThe subscriber thanked the agent for the information and expressed hope for a quick resolution.\nThe agent assured continued support and urged the subscriber to reach out if they had any concerns.\n\nNote: The call did not conclude with a definitive resolution timeline, indicating that the technical team was still addressing the issue. The subscriber was encouraged to check for updates or report further issues as necessary.\n\nInput:\n{{input_text}}\n\nOutput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 500,
     "min_new_tokens": 0,
-    "stop_sequences": ["Input:"],
+    "stop_sequences": [
+      "Input:"
+    ],
     "repetition_penalty": 1
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   },
   "project_id": ""

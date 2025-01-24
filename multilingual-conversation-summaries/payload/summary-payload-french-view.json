@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-20b-multilingual",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "Résumez la transcription de l’appel fournit en input en suivant les règles suivantes.\nIdentifiez l'agent et l'abonné. \nListez tous les problèmes spécifiques mentionnés par l’abonné. \nListez toutes les mesures correctives prises selon les instructions de l'agent. \nVeuillez mentionner si le problème est résolu. \nEn conclusion, mentionnez toutes les actions de suivi et les délais.\nMentionnez toute remarque supplémentaire  si besoin.",
     "input": "",
