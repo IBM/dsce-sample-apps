@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-20b-multilingual",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "Summarize the transcript of the call. Identify the agent and the subscriber. Add any specific issues mentioned by the subscriber. Add any corrective actions taken as directed by the agent. Please mention if the issue is resolved. Mention any follow-up actions and timelines.",
     "input": "",
@@ -14,15 +14,23 @@
   },
   "parameters": {
     "decoding_method": "greedy",
-    "stop_sequences": ["Input:"],
+    "stop_sequences": [
+      "Input:"
+    ],
     "min_new_tokens": 0,
     "max_new_tokens": 500,
     "repetition_penalty": 1
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }

@@ -26,9 +26,7 @@ for item in items_view:
 
 # For LLM call
 SERVER_URL = os.getenv('SERVER_URL')
-SERVER_URL_JAPAN = os.getenv('SERVER_URL_JAPAN')
 WATSONX_PROJECT_ID = os.getenv('WATSONX_PROJECT_ID')
-WATSONX_PROJECT_ID_JAPAN = os.getenv('WATSONX_PROJECT_ID_JAPAN')
 API_KEY = os.getenv("WATSONX_API_KEY", default="")
 HEADERS = {
         'accept': 'application/json',
@@ -258,12 +256,12 @@ def get_header_with_access_tkn(access_token):
 
 # LLM API call
 def llm_fn(text, payload_json, type, access_token, lang):
-    payload_json['project_id'] = WATSONX_PROJECT_ID_JAPAN if lang=="japanese" else WATSONX_PROJECT_ID
+    payload_json['project_id'] = WATSONX_PROJECT_ID
     payload_json['input'] = payload_json['input'].replace("{{input_text}}",text)
     print("calling LLM", datetime.now())
     
     try:
-        response_llm = requests.post(SERVER_URL_JAPAN if lang=="japanese" else SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json, ensure_ascii=False).encode())
+        response_llm = requests.post(SERVER_URL, headers=get_header_with_access_tkn(access_token), data=json.dumps(payload_json, ensure_ascii=False).encode())
         response_llm_json = response_llm.json()
     except Exception as e:
         print("Error: ", e)

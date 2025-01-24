@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-8b-japanese",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "「Input:」に続く通話記録を「Output:」の後に要約してください。担当者と加入者を特定します。加入者が言及した固有の問題を記載します。担当者の指示で行われた是正措置を記載します。問題が解決したかどうか記載します。今後の対応と予定について記載します。",
     "input": "",
@@ -14,15 +14,24 @@
   },
   "parameters": {
     "decoding_method": "greedy",
-    "stop_sequences": [],
+    "stop_sequences": [
+      "カスタマーサービス: こんにちは"
+    ],
+    "include_stop_sequence": false,
     "min_new_tokens": 0,
     "max_new_tokens": 500,
     "repetition_penalty": 1
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }
