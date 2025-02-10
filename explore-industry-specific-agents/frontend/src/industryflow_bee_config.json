@@ -2,7 +2,7 @@
   {
     "industry": "travel",
     "config": {
-      "framework": "Bee Agent Framework",
+      "framework": "LangGraph",
       "tools": [
         "WikipediaTool",
         "OpenMeteoTool",
@@ -13,9 +13,9 @@
         "name": "watsonx.ai",
         "config": [
           {
-            "model_id": "meta-llama/llama-3-3-70b-instruct",
+            "model_id": "ibm/granite-3-8b-instruct",
             "parameters": {
-              "max_new_tokens": "1024",
+              "max_new_tokens": "1000",
               "min_new_tokens": "10",
               "decoding_method": "greedy"
             }
@@ -25,9 +25,9 @@
     }
   },
   {
-    "industry": "finance",
+    "industry": "financial",
     "config": {
-      "framework": "Bee Agent Framework",
+      "framework": "LangGraph",
       "tools": [
         "WebCrawlerTool"
       ],
@@ -38,7 +38,7 @@
           {
             "model_id": "mistralai/mistral-large",
             "parameters": {
-              "max_new_tokens": "1024",
+              "max_new_tokens": "1000",
               "min_new_tokens": "10",
               "decoding_method": "greedy"
             }
@@ -50,7 +50,7 @@
   {
     "industry": "research",
     "config": {
-      "framework": "Bee Agent Framework",
+      "framework": "LangGraph",
       "tools": [
         "ArXivTool"
       ],
@@ -61,7 +61,7 @@
           {
             "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
-              "max_new_tokens": "1024",
+              "max_new_tokens": "1000",
               "min_new_tokens": "10",
               "decoding_method": "greedy"
             }
@@ -73,7 +73,7 @@
   {
     "industry": "strategy",
     "config": {
-      "framework": "Bee Agent Framework",
+      "framework": "LangGraph",
       "tools": [
         "DuckDuckGoTool",
         "WebCrawlerTool"
@@ -85,7 +85,7 @@
           {
             "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
-              "max_new_tokens": "1024",
+              "max_new_tokens": "1000",
               "min_new_tokens": "10",
               "decoding_method": "greedy"
             }
@@ -97,7 +97,7 @@
   {
     "industry": "disaster",
     "config": {
-      "framework": "Bee Agent Framework",
+      "framework": "LangGraph",
       "tools": [
         "WikipediaTool",
         "WebCrawlerTool"
@@ -109,7 +109,7 @@
           {
             "model_id": "meta-llama/llama-3-3-70b-instruct",
             "parameters": {
-              "max_new_tokens": "1024",
+              "max_new_tokens": "1000",
               "min_new_tokens": "10",
               "decoding_method": "greedy"
             }
