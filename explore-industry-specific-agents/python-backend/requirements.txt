@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pyarrow
+langchain_community
+duckduckgo-search
+wikipedia
+ibm_watsonx_ai
+langchain_ibm
+langgraph
+langchain
+pyowm
+arxiv

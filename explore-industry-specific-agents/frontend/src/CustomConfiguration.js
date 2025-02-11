@@ -26,6 +26,7 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
   const [notifstatus, setnotifstatus] = useState(false);
   const [notifmsg, setnotifmsg] = useState('');
   const [notiftype, setnotiftype] = useState('');
+  const [wxprojectid, setwxprojectid] = useState('');
 
   useEffect(() => {
    getConfigParams();
@@ -178,7 +179,16 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
   return (
     <div style={{ padding: '20px' }}>
       <br />
-      <h5><strong>Configure your Agentic Framework!</strong></h5>
+
+      <h5><strong>Enter your watsonx.ai project ID to open Agent Lab</strong></h5>
+      <br/>
+      <TextInput id="wx-project-id" value={wxprojectid} onChange={(event) => { setwxprojectid(event.target.value)}} placeholder="watsonx.ai project ID" size="md" type="text"/>
+
+          <Button kind="primary" style={{ marginBottom: '20px', marginTop: '20px' }} onClick={()=>{window.location.href = `https://dataplatform.cloud.ibm.com/wx/agents?context=wx&project_id=${wxprojectid}`;}}>
+          Goto Agent Lab on watsonx.ai
+          </Button>
+
+      {/* <h5><strong>Configure your Agentic Framework!</strong></h5>
       <br />
       <div style={{ marginBottom: '20px' }}>
         <Dropdown
@@ -189,7 +199,7 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
           itemToString={item => item ? item.text : ''}
           onChange={handleDropdownChange}
         />
-      </div>
+      </div> */}
 
       <Loading active={isLoading} description="Loading" withOverlay />
       {notifstatus &&
@@ -203,7 +213,7 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
                 />
              } 
 
-      {frameworkSelected && (
+      {/* {frameworkSelected && (
         <>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div style={{ flex: 1, marginRight: '10px' }}>
@@ -225,9 +235,9 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
                   </div>
                 ))}
               </CheckboxGroup>
-            </div>
+            </div> */}
 
-            <div style={{ flex: 1, marginLeft: '10px' }}>
+            {/* <div style={{ flex: 1, marginLeft: '10px' }}>
               <h6>Memory</h6>
               <legend class="cds--label">Select Memory</legend>
               {configparams.memory.map((mem) => (
@@ -310,7 +320,7 @@ function CustomConfiguration({customFrameworkselected, setcustomFrameworkselecte
             )}
           </div>
         </>
-      )}
+      )}*/}
     </div>
   );
 }

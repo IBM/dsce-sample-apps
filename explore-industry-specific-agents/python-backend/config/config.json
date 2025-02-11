@@ -1,0 +1,9 @@
+{
+    "title": "AI Agents langgraph starter kit",
+    "description": "APIs to interact with ai agents.",
+    "version": "1.0.0",
+    "license_info": {
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT"
+    }
+}

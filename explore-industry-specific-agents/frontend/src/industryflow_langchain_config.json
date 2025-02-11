@@ -24,7 +24,7 @@
     }
   },
   {
-    "industry": "finance",
+    "industry": "financial",
     "config": {
       "framework": "LangChain",
       "tools": [

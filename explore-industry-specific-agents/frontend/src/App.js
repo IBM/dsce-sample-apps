@@ -60,32 +60,34 @@ function App() {
 
   const handleSaveConfiguration = async (industryconfigdata) => {
     const savedConfig = industryconfigdata;
-    setLoading(true);
 
-    try {
-      const reqOpts = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': 'test' },
-        body: JSON.stringify(savedConfig),
-      };
+    // Use for dynamic configuration from user
+    // setLoading(true);
 
-      let response;
-      if (industryFrameworkselected === "Langchain") {
-        response = await fetch(`${process.env.REACT_APP_LANGCHAIN_BACKEND}/langchain/save_config`, reqOpts);
-      } else { // Framework selected is Bee Agent
-        response = await fetch(`${process.env.REACT_APP_BEE_BACKEND}/bee-agent-framework/save_config`, reqOpts);
-      }
+    // try {
+    //   const reqOpts = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json', 'X-API-Key': 'test' },
+    //     body: JSON.stringify(savedConfig),
+    //   };
 
-      if (response.ok) {
-        console.log("Configuration saved")
-      } else {
-        console.error('Response status issue');
-      }
-    } catch (error) {
-      console.error('Error fetching response:', error);
-    } finally {
-      setLoading(false);
-    }
+    //   let response;
+    //   if (industryFrameworkselected === "Langchain") {
+    //     response = await fetch(`${process.env.REACT_APP_LANGCHAIN_BACKEND}/langchain/save_config`, reqOpts);
+    //   } else { // Framework selected is Bee Agent
+    //     response = await fetch(`${process.env.REACT_APP_BEE_BACKEND}/bee-agent-framework/save_config`, reqOpts);
+    //   }
+
+    //   if (response.ok) {
+    //     console.log("Configuration saved")
+    //   } else {
+    //     console.error('Response status issue');
+    //   }
+    // } catch (error) {
+    //   console.error('Error fetching response:', error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleCustomSwitchChange = useCallback((event) => {
@@ -141,7 +143,7 @@ function App() {
     {
       icon: <Finance size={32} />,
       description: "Financial Market Analysis and Forecasting",
-      industry: "finance",
+      industry: "financial",
       detail: "Create an agent that autonomously tracks financial news, analyzes historical data, and forecasts future trends. The agent could also compare weather conditions with market trends for agriculture stocks or commodities."
     }
   ];
@@ -274,7 +276,10 @@ function App() {
           
           {customFlow && (
             <>
-              <ContentSwitcher onChange={handleCustomSwitchChange}>
+        {selectedCustomconfigurecomp && <CustomConfiguration customFrameworkselected={customFrameworkselected} setcustomFrameworkselected={setcustomFrameworkselected} />}
+
+            {/* If you intend to let users customize agents within your app*/}
+              {/* <ContentSwitcher onChange={handleCustomSwitchChange}>
                 <Switch name="configure-agent" text="Configure Agent" />
                 <Switch name="agent-workflow" text="Agent Workflow" />
               </ContentSwitcher>
@@ -282,7 +287,7 @@ function App() {
               <div ref={customFlowRef} style={{ padding: '20px' }}>
                 {selectedCustomconfigurecomp && <CustomConfiguration customFrameworkselected={customFrameworkselected} setcustomFrameworkselected={setcustomFrameworkselected} />}
                 {selectedCustomagentcomp && <CustomAgentFlow customFrameworkselected={customFrameworkselected} />}
-              </div>
+              </div> */}
             </>
           )}
 

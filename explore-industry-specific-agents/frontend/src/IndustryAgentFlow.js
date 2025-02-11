@@ -206,9 +206,8 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
     setLoading(true);
     try {
       const reqOpts = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': 'test' },
-        body: JSON.stringify({ "input_data": inputPrompt }),
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'X-API-Key': 'test' }
       };
       
       let response;
@@ -217,19 +216,23 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
         response = await fetch(`${process.env.REACT_APP_LANGCHAIN_BACKEND}/langchain/generate`, reqOpts);
       }
 
-      else { // Framework selected is Bee Agent
-        response = await fetch(`${process.env.REACT_APP_BEE_BACKEND}/bee-agent-framework/generate`, reqOpts);
+      // else { // Framework selected is Bee Agent
+      //   response = await fetch(`${process.env.REACT_APP_BEE_BACKEND}/bee-agent-framework/generate`, reqOpts);
+      // }
+      else { // Framework selected is LangGraph
+        response = await fetch(`${process.env.REACT_APP_LANGGRAPH_BACKEND}/ai-agent?agent=${userchoice}_agent`, reqOpts);
       }
 
       if (response.ok) {
         const respdata = await response.json();
-        setagentOutput(respdata["output"]["output"])
-        setagentreasondata(respdata["output"]["intermediate_steps"])
-        setllmOutput(respdata["output"]["llm_answer"])
-        setexecution_time(respdata["output"]["execution_time"])
+        setagentOutput(respdata["llm_response"])
+        setagentreasondata(respdata["llm_reasoning"])
+        setllmOutput(respdata["standalone_llm_response"])
+        setexecution_time(respdata["exec_time"])
       } else {
         console.error('Response status issue');
       }
+
     } catch (error) {
       console.error('Error fetching response:', error);
     } finally {
@@ -283,14 +286,17 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
           </div>
           {agentreasondata && <div style={{ flex: 2, backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', padding: '20px' }}>
             <h6>Agent reasoning steps</h6>
-            {agentreasondata && <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: '16px', padding: '16px', backgroundColor: '#f4f6f9', border: '1px solid #dcdcdc', maxHeight: '1255px', borderRadius: '4px', overflowY: 'auto' }}>
+            <div style={{ borderRadius: '4px', borderColor: '#dcdcdc', marginBottom: '20px', backgroundColor: '#f4f4f4', padding: '2rem', maxHeight: '1800px', overflowY: 'auto' }}>
+            <Markdown>{agentreasondata}</Markdown>
+            </div>
+            {/* {agentreasondata && <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: '16px', padding: '16px', backgroundColor: '#f4f6f9', border: '1px solid #dcdcdc', maxHeight: '1255px', borderRadius: '4px', overflowY: 'auto' }}>
               {agentreasondata.split('\n').map((line, index) => {
-                const keywords = ['THOUGHT', 'ACTION', 'OBSERVATION', 'FINAL ANSWER'];
+                const keywords = ['User', 'Tool Call', 'Arguments', 'AI Agent'];
                 const colors = {
-                  'THOUGHT': 'purple',
-                  'ACTION': 'blue',
-                  'OBSERVATION': 'red',
-                  'FINAL ANSWER': 'green'
+                 'User': 'purple',
+                  'Tool Call': 'blue',
+                  'Arguments': 'red',
+                  'AI Agent': 'green'
                 };
 
                 let formattedLine = line;
@@ -303,7 +309,7 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
 
                 return <span key={index} dangerouslySetInnerHTML={{ __html: formattedLine }}></span>;
               })}
-            </pre>}
+            </pre>} */}
           </div>}
         </div>
 
@@ -326,7 +332,7 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
 
             <div style={{ flex: 1, marginRight: '10px', userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
               <h6>MAX NEW TOKENS</h6>
-              <p>1024</p>
+              <p>1000</p>
             </div>
 
             <div style={{ flex: 1, marginLeft: '10px', userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
@@ -335,36 +341,37 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
             </div>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <h6 style={{ flex: 2, marginBottom: '10px' }}>Agent Framework</h6>
-            <p>{selectedFramework}</p>
-          </div>
-
-
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div style={{ flex: 1, marginRight: '10px', userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
-              <h6>Tools</h6>
-              <CheckboxGroup legendText="Selected Tools" readOnly={true}>
-                {configparams.tools && configparams.tools.map((tool) => (
-                  <div key={tool.name} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <Checkbox
-                      id={tool.name}
-                      labelText={
-                        <div style={{ pointerEvents: 'auto' }}>
-                          {tool.name}
-                          <Tooltip align="right" label={tool.description}>
-                            <Information style={{ marginLeft: '8px', cursor: 'pointer' }} />
-                          </Tooltip>
-                        </div>
-                      }
-                      checked={selectedTools.includes(tool.name)}
-                    />
-                  </div>
-                ))}
-              </CheckboxGroup>
-            </div>
+              <div style={{ flex: 1, marginRight: '0' }}>
+                <h6 style={{ marginBottom: '10px' }}>Agent Framework</h6>
+                <p>{selectedFramework}</p>
+              </div>
 
-            <div style={{ flex: 1, marginLeft: '10px', userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
+              <div style={{ flex: 1, userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
+                <h6>Tools</h6>
+                <CheckboxGroup legendText="Selected Tools" readOnly={true}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                    {configparams.tools && configparams.tools.map((tool) => (
+                      <div key={tool.name} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Checkbox
+                          id={tool.name}
+                          labelText={
+                            <div style={{ pointerEvents: 'auto' }}>
+                              {tool.name}
+                              <Tooltip align="right" label={tool.description}>
+                                <Information style={{ marginLeft: '8px', cursor: 'pointer' }} />
+                              </Tooltip>
+                            </div>
+                          }
+                          checked={selectedTools.includes(tool.name)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </CheckboxGroup>
+              </div>
+
+            {/* <div style={{ flex: 1, marginLeft: '10px', userSelect: 'none', pointerEvents: 'none', opacity: 0.9 }}>
               <h6>Memory</h6>
               <RadioButtonGroup name="memory" legendText="Selected Memory Type" orientation="vertical" readOnly={true}>
                 {configparams.memory && configparams.memory.map((mem) => (
@@ -385,7 +392,7 @@ function IndustryAgentFlow({ userchoice, industryFrameworkselected, setindustryF
                   </div>
                 ))}
               </RadioButtonGroup>
-            </div>
+            </div> */}
           </div>
 
         </div>

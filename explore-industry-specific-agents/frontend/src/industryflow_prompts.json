@@ -1,17 +1,17 @@
 [
   {
     "industry": "travel",
-    "input_prompt": "I am planning a trip to New York next week. Can you get me information about the tourist attractions, weather forecast, and social events in the city?",
-    "model": "meta-llama/llama-3-3-70b-instruct"
+    "input_prompt": "I am planning a trip to New York city next week. Can you get me information about the tourist attractions, weather forecast and social events?",
+    "model": "ibm/granite-3-8b-instruct"
   },
   {
-    "industry": "finance",
-    "input_prompt": "What's the recent trend in tech stocks?",
+    "industry": "financial",
+    "input_prompt": "Summarize the recent trends in tech stocks?",
     "model": "mistralai/mistral-large"
   },
   {
     "industry": "research",
-    "input_prompt": "Can you help me gather recent studies on machine learning applications in healthcare?",
+    "input_prompt": "What are some advancements in machine learning applications in healthcare?",
     "model": "meta-llama/llama-3-3-70b-instruct"
   },
   {
