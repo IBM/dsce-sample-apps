@@ -122,7 +122,7 @@ http://localhost:5000
  REACT_APP_WA_INT_ID = <watsonx assistant integration id>
  REACT_APP_SVC_INST_ID = <watsonx assistant instance id>
  WX_PROJECT_ID = <your watsonx.ai project_id>
- WX_ENDPOINT = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
+ WX_ENDPOINT = https://us-south.ml.cloud.ibm.com
 ```
 
 4. Run the frontend app
