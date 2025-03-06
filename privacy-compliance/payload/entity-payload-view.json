@@ -5,6 +5,10 @@
     "input": "",
     "input_prefix": "Input:",
     "output_prefix": "Output:",
+    "stop_sequences": [
+      "Input:"
+    ],
+    "include_stop_sequence": false,
     "examples": [
       {
         "input": "I withdrew $100 from the bank in London from my phone (345) 123-7867 and email raj@gmail.com. Regards, Raj",

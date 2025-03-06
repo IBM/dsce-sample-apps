@@ -5,7 +5,10 @@
     "decoding_method": "greedy",
     "max_new_tokens": 100,
     "min_new_tokens": 0,
-    "stop_sequences": [],
+    "stop_sequences": [
+      "Input:"
+    ],
+    "include_stop_sequence": false,
     "repetition_penalty": 1
   },
   "moderations": {
