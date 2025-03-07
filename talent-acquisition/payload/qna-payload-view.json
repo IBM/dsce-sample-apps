@@ -1,5 +1,5 @@
 {
-  "model_id": "meta-llama/llama-2-13b-chat",
+  "model_id": "ibm/granite-20b-code-instruct",
   "data": {
     "instruction": "You are a developer writing SQL queries given natural language questions. The database contains one table. The schema of the table with description of the attributes is given. Write the SQL query given a natural language statement.\nHere is the table definition :\n\nDatabase Table Name: RESUMES\nTable Schema:\nColumn Name # Meaning\nName # Name of the candidate or applicant\nRole # the current role of the candidate\nEmail # email address of the candidate\nPhone # phone number of the candidate\nLinkedIn # linkedin profile of the candidate\nGithub # GitHub profile of the candidate\nLocation # current location city state of the candidate\nDegree # college degree of the candidate\nCollege # name of the college or university the candidate attended\nGraduation # the date of graduation of the candidate, e.g. July, 2019\nSkills # the skills the candidate has at this time\nWork Experience # the list if past work experience of the candidate",
     "input": "",
@@ -34,15 +34,23 @@
   },
   "parameters": {
     "decoding_method": "greedy",
-    "stop_sequences": [";"],
+    "stop_sequences": [
+      ";"
+    ],
     "min_new_tokens": 0,
     "max_new_tokens": 100,
     "repetition_penalty": 1
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "model_id": "meta-llama/llama-2-13b-chat",
+  "model_id": "meta-llama/llama-3-1-70b-instruct",
   "data": {
     "instruction": "Create a detail job description given the example given below.",
     "input": "",
@@ -21,8 +21,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }
