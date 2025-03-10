@@ -314,8 +314,8 @@ def show_table(risk):
     questions = question_list[risk]['examples']
     if(risk=="RAG"):
         table_header = [
-            html.Thead(html.Tr([html.Th("Context text", style={'width': '35%'}), 
-                                html.Th("Response text", style={'width': '35%'}),
+            html.Thead(html.Tr([html.Th("Context text", style={'width': '25%'}), 
+                                html.Th("Response text", style={'width': '25%'}),
                                 html.Th("Action button", style={'textAlign':'center', 'width': '10%'}), 
                                 html.Th('Groundedness', style={'textAlign':'center', 'width': '10%'}),
                                  html.Th('Risk probability', style={'textAlign':'center', 'width': '10%'})
@@ -324,7 +324,7 @@ def show_table(risk):
                     )]
     else:
         table_header = [
-            html.Thead(html.Tr([html.Th("Input prompt", style={'width': '70%'}), 
+            html.Thead(html.Tr([html.Th("Input prompt", style={'width': '53%'}), 
                                 html.Th("Action button", style={'textAlign':'center', 'width': '10%'}), 
                                 html.Th(configs_dict['generate_btn_output_labels'], style={'textAlign':'center', 'width': '10%'}),
                                  html.Th('Risk probability', style={'textAlign':'center', 'width': '10%'})
