@@ -1,6 +1,10 @@
+## Prerequisites
+
+1. A watsonx.ai(watsonx.ai Studio, watsonx.ai Runtime, Cloud Object Storage) resources on IBM Cloud.
+2. Python3.9 is installed or download from https://www.python.org/downloads/release/python-3910/.
+
 ## Set up and launch application
 
-It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
 
 1. Go to the root directory and prepare your python environment.
 

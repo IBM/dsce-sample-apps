@@ -1,15 +1,16 @@
 ## Prerequisites
 
-### Download CLI for watsonx flows engine
+1. A watsonx.ai(watsonx.ai Studio, watsonx.ai Runtime) instance on IBM Cloud.
+2. Python3+ is installed or download from https://www.python.org/downloads/.
+3. Download CLI for watsonx flows engine
+   1. Go to `https://wxflows.ibm.stepzen.com/`
 
-1. Go to `https://wxflows.ibm.stepzen.com/`
+   2. Login with IBM ID or Github
 
-2. Login with IBM ID or Github
+      - After login you will see `Environment name`, `Domain`, `API key` and `Admin key`. Save these values as we will need it in upcoming steps.
 
-   - After login you will see `Environment name`, `Domain`, `API key` and `Admin key`. Save these values as we will need it in upcoming steps.
-
-3. Now on the left side pannel click on the 3rd option that it `Documentation`
-4. Go to `Installation` and follow the steps to install the CLI
+   3. Now on the left side pannel click on the 3rd option that it `Documentation`
+   4. Go to `Installation` and follow the steps to install the CLI
 
 ## Authenticate yourself from CLI
 
