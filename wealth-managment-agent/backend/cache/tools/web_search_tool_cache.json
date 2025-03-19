@@ -1,0 +1,706 @@
+{
+    "S&P 500 performance": {
+        "query": "S&P 500 performance",
+        "follow_up_questions": null,
+        "answer": "As of February 24, 2025, the S&P 500 index was at 6,143.50, up by 8.25 points or 0.13%. The top nine companies by weighting in the S&P 500 include Apple, Microsoft, Nvidia, Amazon.com, Meta Platforms, Alphabet, Berkshire Hathaway, Broadcom, and Tesla.",
+        "images": [],
+        "results": [
+            {
+                "title": "S&P 500 Price, Real-time Quote & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/.INX:INDEXSP",
+                "content": "Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq slide as inflation, tariff fears push stocks to another losing week 7 hours ago Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq retreat on weak consumer sentiment 12 hours ago MarketWatch Stock Market on Feb. 7, 2025: Dow, S&P 500, Nasdaq close lower after Trump says reciprocal tariffs are coming 8 hours ago As of September 30, 2024, the nine largest companies on the list of S&P 500 companies accounted for 34.6% of the market capitalization of the index and were, in order of highest to lowest weighting: Apple, Microsoft, Nvidia, Amazon.com, Meta Platforms, Alphabet, Berkshire Hathaway, Broadcom, and Tesla. Index S&P 500 6,025.99 0.95% Index S&P 400 3,206.60 1.26%",
+                "score": 0.5357549,
+                "raw_content": null
+            },
+            {
+                "title": "S&P 500 Index Performance Report - Barchart.com",
+                "url": "https://www.barchart.com/stocks/quotes/$SPX/performance",
+                "content": "Stock Market Overview Market Momentum Market Performance Top 100 Stocks Today's Price Surprises New Highs & Lows Economic Overview Earnings Within 7 Days Earnings & Dividends Stock Screener Futures Market Overview Long Term Trends Today's Price Surprises Highs & Lows Futures Market Map Performance Leaders Most Active Futures Prices by Exchange Euro Futures Overview Long Term Trends Today's Price Surprises Highs & Lows Futures Market Map Performance Leaders Most Active Futures Andrew Hecht Angie Setzer Austin Schroeder Darin Newsom Don Dawson Gavin McMaster Jim Van Meerten Josh Enomoto Mark Hake Oleksandr Pylypenko Rich Asplund Rick Orford All Authors My Watchlist My Portfolio Investor Portfolio Dashboard Symbol Notes Alert Center Alert Templates Barchart Screeners My Charts Custom Views Chart Templates Barchart Chart Templates Compare Stocks Daily Prices Download Historical Data Download",
+                "score": 0.52232456,
+                "raw_content": null
+            },
+            {
+                "title": "S&P 500 (^GSPC) Interactive Stock Chart - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/^GSPC/chart/",
+                "content": "S&P 500 (^GSPC) Interactive Stock Chart - Yahoo Finance Health Health Health Health news Stock Market Stocks: Most Actives Stocks: Gainers Stocks: Losers Stock Comparison Investment Ideas Trending Stocks Trade This Way Fantasy Fantasy Stock Market Stocks: Most Actives Stocks: Gainers Stocks: Losers Stock Comparison Investment Ideas Trending Stocks Trade This Way Corporate Events Colored Line Colored Mountain Colored Step (BROS) Went Up on Thursday Here Are the 6 Best Types of Investments 000001.SS SSE Composite Index ^NZ50 S&P/NZX 50 INDEX GROSS ( GROSS ^KS11 KOSPI Composite Index ^TWII TWSE Capitalization Weighted Stock Index ^GSPTSE S&P/TSX Composite index S&P 500 S&P Futures 6,143.50 +8.25 (+0.13%) Sign in to access your portfolio NVDA NVIDIA Corporation 135.29 +4.15 (+3.16%) Ad Terms Feedback",
+                "score": 0.43237552,
+                "raw_content": null
+            },
+            {
+                "title": "SPX | S&P 500 Index Overview | MarketWatch",
+                "url": "https://www.marketwatch.com/investing/index/spx",
+                "content": "SPX | A complete S&P 500 Index index overview by MarketWatch. View stock market news, stock market data and trading information.",
+                "score": 0.38331863,
+                "raw_content": null
+            },
+            {
+                "title": "SPX | S&P 500 Index Stock Prices and Charts - WSJ",
+                "url": "https://www.wsj.com/market-data/quotes/index/SPX/",
+                "content": "View the full S&P 500 Index (SPX) index overview including the latest stock market news, data and trading information.",
+                "score": 0.33306974,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.23
+    },
+    "MSCI AC World performance": {
+        "query": "MSCI AC World performance",
+        "follow_up_questions": null,
+        "answer": "The MSCI AC World performance from January 2010 to January 2025 shows cumulative index performance with net returns in USD. The annual performance data indicates significant growth, with the index reaching 453.10 by January 2025. This index includes stocks from both developed and emerging markets, contributing to its robust performance.",
+        "images": [],
+        "results": [
+            {
+                "title": "MSCI ACWI Index",
+                "url": "https://www.msci.com/documents/10199/a71b65b5-d0ea-4b5c-a709-24b1213bc3c5",
+                "content": "For a complete description of the index methodology, please see Index methodology - MSCI. CUMULATIVE INDEX PERFORMANCE \u2014 NET RETURNS (USD) (JAN 2010 - JAN 2025) Jan 10 Apr 11 Jul 12 Oct 13 Jan 15 Apr 16 Jul 17 Oct 18 Jan 20 Apr 21 Jul 22 Oct 23 Jan 25 50 200 400 MSCI ACWI MSCI World MSCI Emerging Markets 453.10 405.09 168.28 ANNUAL",
+                "score": 0.6937432,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI World vs MSCI ACWI (Updated 2023) - Thoughtful Finance",
+                "url": "https://thoughtfulfinance.com/msci-world-vs-msci-acwi/",
+                "content": "The main difference between the MSCI World Index and the MSCI ACWI index is that MSCI World only includes stocks of developed markets, while the MSCI ACWI Index includes stocks in both developed and emerging markets. Since emerging markets have bounced around between 10-15% of global market cap in the past decade or two (and were much smaller prior to that), the risk and returns of the MSCI World and MSCI ACWI indices have been nearly identical (as shown in the below chart of historical performance). The MSCI World and MSCI ACWI indices have nearly identical sector exposures. Investors who want to compare a non-MSCI global index that has slightly different exposures from the the above indices, may want to evaluate the FTSE Global All-Cap Index vs MSCI ACWI Index.",
+                "score": 0.57437146,
+                "raw_content": null
+            },
+            {
+                "title": "C WorldWide",
+                "url": "https://performance.cworldwide.com/",
+                "content": "We use cookies to collect statistics. By clicking OK you accept the use of statistic cookies. You can decline the use of statistic cookies by clicking here. Find out more about our cookie policy here.OK Investment Returns MSCI AC World Global Equities Ethical 1A MSCI AC World MSCI AC World MSCI AC World Min. Volatility Emerging Markets 1A MSCI Emerging Markets Asia 1A MSCI AC Asia ex Japan USD India 1A MSCI India Net Total Return Nordic 1A MSCI Nordic Countries Sweden 1A SIX Portfolio Return Index Carnegie Small Cap Net Return Index MSCI World Healthcare The return may vary due to currency fluctuations. The Sub-Fund\u2019s portfolio allocation is not defined by the composition of the benchmark. Cookie Policy DK-2100 Copenhagen",
+                "score": 0.47168615,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI All-Country World Equity Index (MIWD00000PUS) - Investing.com",
+                "url": "https://www.investing.com/indices/msci-world-stock-historical-data",
+                "content": "MSCI All-Country World Equity Index Historical Rates (MIWD00000PUS) - Investing.com Indices Futures S&P 500 Futures Stocks ETC/USD Currency Futures ETC/USD Stock Markets Stock Markets Futures Chart Stocks Chart Interactive Futures Chart Interactive Stocks Chart Stock Brokers Futures Brokers Top Stocks Indices Futures Currency in USD MSCI All-Country World Equity Index Historical Data Get free historical data for MSCI All-Country World Equity Index. Stocks The data and prices on the website are not\u00a0necessarily\u00a0provided by any market or exchange, but may be provided by\u00a0market makers, and so prices may not be accurate and may differ from the actual price at any given market, meaning prices are indicative and not appropriate for trading purposes.",
+                "score": 0.37031704,
+                "raw_content": null
+            },
+            {
+                "title": "iShares MSCI ACWI ETF (ACWI): Historical Returns - Lazy Portfolio ETF",
+                "url": "https://www.lazyportfolioetf.com/etf/ishares-msci-acwi/",
+                "content": "Investment Metrics as of Jan 31, 2025. Metrics of iShares MSCI ACWI ETF (ACWI) ETF, updated as of 31 January 2025, provide a comprehensive overview of the portfolio's performance and risk characteristics.. These metrics include detailed data on returns, volatility, drawdowns and other key performance indicators. By examining them, you can gain insights into how the portfolio has performed over",
+                "score": 0.2799569,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.25
+    },
+    "TOPIX performance": {
+        "query": "TOPIX performance",
+        "follow_up_questions": null,
+        "answer": "As of February 24, 2025, the TOPIX live stock price is 2,765.59. The TOPIX, or Tokyo Stock Price Index, is a key stock market index for the Japanese market, calculated by the Tokyo Stock Exchange and includes all companies listed on the exchange based on their free-float adjusted market capitalization. Investing in the TOPIX can be done through individual stocks or ETFs that track the index. Recent changes include adjustments related to shares of companies like Tobishima Holdings Inc., Melco Holdings Inc., and Samty Holdings Co., Ltd.",
+        "images": [],
+        "results": [
+            {
+                "title": "TOPIX - Summary | Stock Quote & Key Indicators - Kabutan",
+                "url": "https://en.kabutan.com/jp/indices/^TOPIX",
+                "content": "The TOPIX (Tokyo Stock Price Index) is a key stock market index for the Japanese market. It is calculated by the Tokyo Stock Exchange. This capitalization-weighted index includes all companies listed on the Tokyo Stock Exchange, based on their free-float adjusted market capitalization. The official name of this index is the Tokyo Stock Price Index.",
+                "score": 0.5479727,
+                "raw_content": null
+            },
+            {
+                "title": "TOPIX Price, Real-time Quote & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/TOPIX:INDEXTOPIX",
+                "content": "The Tokyo Stock Price Index, commonly known as the TOPIX, is an important stock market index for the Tokyo Stock Exchange in Japan, along with the Nikkei 225. Although the change is a technicality, it had a significant effect on the weighting of many companies in the index, because many companies in Japan hold a significant number of shares of their business partners as a part of intricate business alliances, and such shares are no longer included in calculating the weight of companies in the index. Index S&P 500 6,068.50 0.00% Index Nasdaq Composite 19,643.86 0.36% Index Nikkei 225 38,963.70 0.42% Index S&P 500 6,068.50 0.00% Index NIFTY 50 23,045.25 0.12% Index KOSPI 2,548.39 0.37% Index Nasdaq-100 21,693.52 0.29% Close search",
+                "score": 0.54724693,
+                "raw_content": null
+            },
+            {
+                "title": "TOPIX Index Today (TOPX) - Investing.com",
+                "url": "https://www.investing.com/indices/topix",
+                "content": "Stocks Currency Futures Stock Markets Stock Markets Stocks Chart Interactive Stocks Chart Stock Brokers Top Stocks The TOPIX live stock price is 2,765.59. Is TOPIX a Good Stock Market Index to Invest In? Investing in the index can be done through various methods such as purchasing individual stocks within the index or investing in exchange-traded funds (ETFs) that track the index. Citi weighs inInvesting.com-- Citi analysts noted that Japanese stock markets sold off sharply on Monday amid concerns over increased trade tariffs under U.S. President Donald Trump, but saw... Stocks in this Strategy Stocks Stocks in this Strategy Stocks in this Strategy Stocks in this Strategy Stocks in this Strategy Stocks in this Strategy Stocks in this Strategy",
+                "score": 0.46949652,
+                "raw_content": null
+            },
+            {
+                "title": "TOPIX | Japan Exchange Group - \u65e5\u672c\u53d6\u5f15\u6240\u30b0\u30eb\u30fc\u30d7",
+                "url": "https://www.jpx.co.jp/english/markets/indices/topix/",
+                "content": "Index Name  TOPIX 2024/9/4    Calculation of TOPIX in relation to shares of TOBISHIMA HOLDINGS Inc. 2024/8/27   Index Calculation in Relation to Shares of MELCO HOLDINGS INC. 2024/5/7    Calculation of TOPIX in relation to shares of SAMTY HOLDINGS Co.,Ltd. 2024/3/5    Calculation of TOPIX in relation to shares of Ryoyo Ryosan Holdings,Inc. 2023/10/6   Constituent Change in TOPIX New Index Series 2023/9/5    Calculation of TOPIX in relation to shares of MIGALO HOLDINGS Inc., etc. 2023/7/14   Calculation of TOPIX in relation to shares of Confidence Inc. 2023/6/5    Calculation of TOPIX in relation to shares of Integrated Design & Engineering Holdings Co.,Ltd. 2023/3/3    Calculation of TOPIX in relation to shares of NIPPON KANZAI Holdings Co.,Ltd. 2022/10/7   Constituent Change in TOPIX New Index Series",
+                "score": 0.45101276,
+                "raw_content": null
+            },
+            {
+                "title": "(.TOPX) | Stock Price & Latest News | Reuters",
+                "url": "https://www.reuters.com/markets/quote/.TOPX/",
+                "content": "Get TOPIX PRICE INDEX (.TOPX) real-time stock quotes, news, price and financial information from Reuters to inform your trading and investments ... Markets Performance. Official Data Partner",
+                "score": 0.4395795,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.44
+    },
+    "MSCI AP ex-Japan performance": {
+        "query": "MSCI AP ex-Japan performance",
+        "follow_up_questions": null,
+        "answer": "The MSCI AC Pacific Ex Japan Index currently stands at 547.00, offering exposure to a diversified basket of stocks across main Asian Pacific markets excluding Japan. The index captures large and mid-cap representation across developed and emerging markets in the region. Investors can gain exposure through various methods such as purchasing individual stocks within the index or investing in exchange-traded funds (ETFs) that track the index. The most recent performance data indicates the index is designed to minimize tracking error while aiming for long-term capital growth.",
+        "images": [],
+        "results": [
+            {
+                "title": "MSCI AC Pacific Ex Japan (MIPFJ0000PUS) - Investing.com",
+                "url": "https://www.investing.com/indices/msci-ac-pacific-ex-japan",
+                "content": "MSCI AC Pacific Ex Japan Index Today (MIPFJ0000PUS) - Investing.com Indices Futures Stocks ETC/USD Currency Futures ETC/USD Stock Markets Stock Markets Futures Chart Stocks Chart Interactive Stocks Chart Top Stocks Indices Futures Assess the MSCI AC Pacific Ex Japan stock price and overall performance. The MSCI AC Pacific Ex Japan live stock price is 547.00. Is MSCI AC Pacific Ex Japan a Good Stock Market Index to Invest In? MSCI AC Pacific Ex Japan offers exposure to a diversified basket of stocks, which can be appealing for investors seeking broad market exposure. Investing in the index can be done through various methods such as purchasing individual stocks within the index or investing in exchange-traded funds (ETFs) that track the index. Stocks",
+                "score": 0.68723184,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI AC Asia Pacific EX Japan Index FAM Fund Class I EUR Accumulation",
+                "url": "https://markets.ft.com/data/funds/tearsheet/summary?s=IE00BH42ZS33:EUR",
+                "content": "The investment objective of the Fund is to achieve long term capital growth. The Fund seeks to achieve its investment objective by tracking the performance of the MSCI AC Asia Pacific Ex Japan (USD) Index (the \u201cIndex\u201d) while minimising as far as possible the tracking error between the Fund\u2019s performance and that of the Index. The performance data shown in tables and graphs on this page is calculated in GBX of the fund/index/average (as applicable), on a Bid To Bid / Nav to Nav basis, with gross dividends re-invested on ex-dividend date. The videos and white papers displayed on this page have not been devised by The Financial Times Limited (\"FT\"). All managed funds data located on FT.com is subject to the FT Terms & Conditions",
+                "score": 0.6829338,
+                "raw_content": null
+            },
+            {
+                "title": "Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (USD) - Morningstar",
+                "url": "https://www.morningstar.co.uk/uk/etf/snapshot/snapshot.aspx?id=0P0001GYAT",
+                "content": "Investment Objective:\u00a0Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (USD) | AEJThe investment objective of the Sub-Fund is to track both the upward and the downward evolution of the MSCI Pacific ex Japan Index \u2013 Net Total Return (the \"Index\") denominated in US Dollars and representative of the overall performance of large-cap and mid-cap stocks across main Asian Pacific excluding Japan, while minimising the volatility of the difference between the return of the Sub-Fund and the return of the Index (the \u201cTracking Error\u201d). The Morningstar Star Rating for Stocks is assigned based on an analyst's estimate of a stocks fair value. Morningstar assigns star ratings based on an analyst\u2019s estimate of a stock's fair value.",
+                "score": 0.66699636,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI AC Asia Pacific ex Japan Index",
+                "url": "https://www.msci.com/documents/10199/0df2ed3c-5fea-4414-b875-55dcd31705ad",
+                "content": "MSCI AC Asia Pacific ex Japan Index (USD) MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  The MSCI AC Asia Pacific ex Japan Index captures large and mid cap representation across 4 of 5 Developed Markets countries (excluding Japan) and 8 Emerging Markets countries in the Asia Pacific region. The MSCI AC Asia Pacific ex Japan Index was launched on Dec 31, 1987. MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  MSCI FaCS consists of Factor Groups (e.g. Value, Size, Momentum, Quality, Yield, and Volatility) that have been extensively documented in academic literature and validated by MSCI Research as key drivers of risk and return in equity portfolios.",
+                "score": 0.657561,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI AC Asia Pacific ex Japan Index",
+                "url": "https://www.msci.com/indexes/index/899903",
+                "content": "Indexes MSCI AC Asia Pacific ex Japan Index The MSCI AC Asia Pacific ex Japan Index captures large and mid cap representation across Developed Markets countries (excluding Japan) and Emerging Markets countries in the Asia Pacific region. Index Market Cap MSCI AC Asia Pacific ex Japan Index MSCI AC Asia Pacific ex Japan Index ESG Score ESG Score MSCI ESG and climate ratings, research and data are produced by MSCI ESG Research LLC, a subsidiary of MSCI Inc. MSCI ESG Indexes, Analytics, Real Assets, and Private Capital Solutions are products of MSCI Inc. that utilize information from MSCI ESG Research LLC. MSCI Indexes are administered by MSCI Limited and MSCI Deutschland GmbH. Want to learn more about MSCI indexes? Index regulation",
+                "score": 0.6222074,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.43
+    },
+    "STOXX 600 performance": {
+        "query": "STOXX 600 performance",
+        "follow_up_questions": null,
+        "answer": "The STOXX 600 index closed at an all-time high on February 23, 2025, driven by gains in energy stocks, marking its 10th advance in the past 12 sessions. The index rose by 0.9%, with Germany's blue-chip index also reaching a new peak. The latest available data indicates the STOXX 600 at 551.59, reflecting a positive trend in European markets.",
+        "images": [],
+        "results": [
+            {
+                "title": "STOXX Europe 600 Price, Real-time Quote & News - Google",
+                "url": "https://www.google.com/finance/quote/SXXP:INDEXSTOXX",
+                "content": "STOXX Europe 600 Price, Real-time Quote & News - Google Finance FTSE 100 Index DAX PERFORMANCE-INDEX FTSE 250 Index Sharecast News 1 day ago Europe midday: Stoxx sets new record as earnings drive sentiment The STOXX Europe 600, also called STOXX 600, SXXP, is a stock index of European stocks designed by STOXX Ltd. This index has a fixed number of 600 components representing large, mid and small capitalization companies among 17 European countries, covering approximately 90% of the free-float market capitalization of the European stock market. Index S&P 500 6,115.07 1.04% Index VIX 15.12 4.85% Index EURO STOXX 50 5,519.26 0.34% Index S&P 500 6,115.07 1.04% Index CAC 40 8,208.78 0.55% Index Nikkei 225 39,149.43 0.79% Index BEL 20 4,421.13 0.27% Index IBEX 35 12,930.70 0.043% Index VIX 15.12 4.85%",
+                "score": 0.6917478,
+                "raw_content": null
+            },
+            {
+                "title": "Europe's STOXX 600 closes at record high after ECB cuts interest rates",
+                "url": "https://www.reuters.com/markets/europe/stoxx-600-jumps-record-high-ahead-ecb-rate-decision-2025-01-30/",
+                "content": "The pan-European STOXX 600 , opens new tab closed 0.9% higher, logging its 10th advance in the past 12 sessions. Germany's blue-chip index (.GDAXI) , opens new tab rose 0.4%, also to touch an all",
+                "score": 0.60610276,
+                "raw_content": null
+            },
+            {
+                "title": "(.STOXX) | Stock Price & Latest News | Reuters",
+                "url": "https://www.reuters.com/markets/quote/.STOXX/",
+                "content": "Get STXE 600 PR INDEX (.STOXX) real-time stock quotes, news, price and financial information from Reuters to inform your trading and investments ... Markets Performance. Official Data Partner",
+                "score": 0.51076555,
+                "raw_content": null
+            },
+            {
+                "title": "STOXX Europe 600 Index Overview (SXXP) - Barron's",
+                "url": "https://www.barrons.com/market-data/indexes/sxxp?countrycode=xx",
+                "content": "A Complete STOXX Europe 600 Index overview by Barron's. View stock market news, stock market data and trading information. ... STOXX. 0.00. SXXP. Delayed quote. Open. 551.59. Previous Close-YTD",
+                "score": 0.4429021,
+                "raw_content": null
+            },
+            {
+                "title": "STOXX 600 Index Today (STOXX) - Investing.com",
+                "url": "https://www.investing.com/indices/stoxx-600",
+                "content": "Stocks Stock Markets Stock Markets Stocks Chart Top Stocks Is STOXX 600 a Good Stock Market Index to Invest In? Investing in the index can be done through various methods such as purchasing individual stocks within the index or investing in exchange-traded funds (ETFs) that track the index. European shares close at record high on energy boost; US tariffs eyedBy Nikhil Sharma and Johann M Cherian (Reuters) -Europe's benchmark index settled at an all-time high on Monday, boosted by energy stocks, while markets weighed U.S. President... European shares close at record high on energy boost; US tariffs eyedBy Nikhil Sharma and Johann M Cherian (Reuters) -Europe's benchmark index settled at an all-time high on Monday, boosted by energy stocks, while markets weighed U.S. President... Stocks",
+                "score": 0.4272061,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.4
+    },
+    "MSCI EM performance": {
+        "query": "MSCI EM performance",
+        "follow_up_questions": null,
+        "answer": "The MSCI Emerging Markets Index experienced a decline of -1.2% over the past day and a gain of 1.5% over the past week as of October 13, 2023. The iShares MSCI Emerging Markets ETF (EEM) also reflects similar trends in its performance history.",
+        "images": [],
+        "results": [
+            {
+                "title": "iShares MSCI Emerging Markets ETF EEM Performance",
+                "url": "https://www.morningstar.com/etfs/arcx/eem/performance",
+                "content": "EEM \u2013 Performance \u2013 iShares MSCI Emerging Markets ETF | Morningstar Morningstar brands and products Products for Investors All Products and Services iShares MSCI Emerging Markets ETF EEM Performance And we have unwavering standards for how we keep that integrity intact, from our research and data to our policies on content and your personal data. We sell different types of products and services to both investment professionals and individual investors. How we use your information depends on the product and service that you use and your relationship with us. Provide specific products and services to you, such as portfolio management or data aggregation. Morningstar Investment Conference Dow Jones Industrial Average, S&P 500, Nasdaq, and Morningstar Index (Market Barometer) quotes are real-time.",
+                "score": 0.7587435,
+                "raw_content": null
+            },
+            {
+                "title": "Factor Performance Heatmap - MSCI",
+                "url": "https://www.msci.com/factor-index-scorecard/-/print/EM/asOfDate/20231013",
+                "content": "MSCI provides factor indexes like quality index, minimum volatility index, momentum index, dividend yield index, low size index, enhanced value index. ... MSCI Factor Performance Heat Map - EM. Gross Performance as of 10/13/2023 in USD; Index Name 1D 1W 1M 3M YTD 1Y 3Y 5Y 10Y; MSCI Emerging Markets Index -1.2% 1.5%",
+                "score": 0.75723875,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI EM (Emerging Markets) Index",
+                "url": "https://www.msci.com/indexes/index/891800",
+                "content": "Indexes MSCI EM (Emerging Markets) Index The MSCI Emerging Markets Index captures large and mid cap representation across Emerging Markets countries. Index code P/E Index Market Cap Data as of Dec. 31, 2024\u00a0View disclosures MSCI EM (Emerging Markets) Index MSCI ACWI IMI Index MSCI EM (Emerging Markets) Index ESG Score MSCI ACWI IMI Index ESG Score MSCI ESG and climate ratings, research and data are produced by MSCI ESG Research LLC, a subsidiary of MSCI Inc. MSCI ESG Indexes, Analytics, Real Assets, and Private Capital Solutions are products of MSCI Inc. that utilize information from MSCI ESG Research LLC. MSCI Indexes are administered by MSCI Limited and MSCI Deutschland GmbH. Want to learn more about MSCI indexes? Index regulation",
+                "score": 0.5900477,
+                "raw_content": null
+            },
+            {
+                "title": "iShares MSCI Emerging Markets ETF (EEM) - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/EEM/performance/",
+                "content": "iShares MSCI Emerging Markets ETF (EEM) Performance History - Yahoo Finance Health news Top ETFs ETF Report Top ETFs ETF Report iShares MSCI Emerging Markets ETF (EEM) ETF Summary VCR Vanguard Consumer Discretionary Index Fund ETF Shares VAW Vanguard Materials Index Fund ETF Shares VPL Vanguard FTSE Pacific Index Fund ETF Shares VGT Vanguard Information Technology Index Fund ETF Shares IJR iShares Core S&P Small-Cap ETF IVW iShares S&P 500 Growth ETF VOOG Vanguard S&P 500 Growth Index Fund ETF Shares VEA Vanguard FTSE Developed Markets Index Fund ETF Shares TLH iShares 10-20 Year Treasury Bond ETF SPYG SPDR Portfolio S&P 500 Growth ETF VUG Vanguard Growth Index Fund ETF Shares SPLB SPDR Portfolio Long Term Corporate Bond ETF",
+                "score": 0.5769478,
+                "raw_content": null
+            },
+            {
+                "title": "MSCI Emerging Market INDEX TODAY - Markets Insider",
+                "url": "https://markets.businessinsider.com/index/msci-emerging-markets?op=1",
+                "content": "MSCI Emerging Market INDEX TODAY | 891800 LIVE TICKER | MSCI Emerging Market QUOTE & CHART | Markets Insider Markets Stocks Indices Commodities Cryptocurrencies Currencies ETFs News Markets Stocks MSCI Emerging Market MSCI Emerging Markets Index Index , 891800 Day Low Day High Historical Prices for MSCI Emerging Market | Date | Open | Close | Daily High | Daily Low | | High | 1,113.25 | 1,114.04 | 1,187.97 | | S&P 500 | 54,853,183.04 USD | | Dow Jones | 19,744,501.50 USD | | FTSE 100 | 2,962,893.15 USD | | DAX | 2,154,764.97 USD | Stock Indices Dow Jones Market Movers Gold Price Oil Price Copper Price Bitcoin Price Stocks Dow-Stock Stock Market News",
+                "score": 0.477238,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.12
+    },
+    "S&P 500 news": {
+        "query": "S&P 500 news",
+        "follow_up_questions": "None",
+        "answer": "The S&P 500 reached a new all-time high closing at 6,129.58 on Tuesday, surpassing the previous record of 6,118.71 set on January 23. This milestone was driven by U.S.-brokered peace talks aimed at ending the war between Russia and Ukraine, as well as President Trump'ss push for lower interest rates and cheaper oil prices. The market's performance also reflects investor anticipation of Federal Reserve meeting minutes and economic data releases.",
+        "images": [],
+        "results": [
+            {
+                "title": "S&P 500 Hits Second Record High of 2025 - Money",
+                "url": "https://money.com/sp-500-2025-second-record-high/",
+                "content": "The S&P 500 hit a new all-time high on Tuesday amid news of U.S.-brokered peace talks aimed at ending the war between Russia and Ukraine.. The benchmark index flirted with the record throughout the day, ultimately rallying into the close and setting a new high of 6,129.58. That breaks the previous closing record of 6,118.71 set on Jan. 23 and marks the second all-time high since President",
+                "score": 0.7722049,
+                "raw_content": "None"
+            },
+            {
+                "title": "Stock Market News, Feb. 18, 2025: S&P 500 scores record close; Dow ...",
+                "url": "https://www.marketwatch.com/livecoverage/stock-market-today-s-p-targets-fresh-record-dow-and-nasdaq-to-gain-as-traders-return-from-break",
+                "content": "The S&P 500 notched its first record close since Jan. 23 as U.S. stock-market investors returned from a three-day weekend, awaiting minutes from the Federal Reserve's January meeting and data due",
+                "score": 0.72768575,
+                "raw_content": "None"
+            },
+            {
+                "title": "S&P 500 INDEX (^SPX) Latest Stock News & Headlines - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/^SPX/news/",
+                "content": "Following the widespread tech sell-off driven by the unveiling of DeepSeek's latest AI model, Yahoo Finance host Julie Hyman reviews the stock market's (^DJI, ^IXIC, ^GSPC) reliance on the artificial intelligence trade over the past year. Yahoo Finance senior markets reporter Josh Schafer joins Catalysts host Seana Smith to discuss the potential for S&P 500 (^GSPC) gains following President-elect Donald Trump's inauguration this Monday, January 20. ### S&P 500's CAPE Ratio: What it's signaling about a 2025 tech bubble In today's Chart of the Day, Yahoo Finance anchor Madison Mills analyzes Deutsche Bank's latest assessment of the S&P 500 (^GSPC) CAPE ratio \u2014 or its Cyclically-Adjusted Price-to-Earnings Ratio \u2014 examining parallels between the early 2000s tech bubble and current market conditions following the last two years of a bull market run.",
+                "score": 0.7197191,
+                "raw_content": "None"
+            },
+            {
+                "title": "S&P 500 closes at a record, Dow jumps 400 points as Trump ... - NBC News",
+                "url": "https://www.nbcnews.com/business/markets/sp-500-closes-new-record-dow-jumps-400-points-trump-pushes-low-rates-o-rcna189040",
+                "content": "S&P 500 closes at a record, Dow jumps 400 points as Trump pushes for low rates, oil NBC OUT NBC News Now More From NBC Stocks took a step up after Trump said in a virtual address to the World Economic Forum that he would \u201cdemand that interest rates drop immediately.\u201d The S&P 500 rallied to record highs on Thursday after President Donald Trump called for lower interest rates and cheaper oil prices. Stocks took a leg up after Trump said Thursday in a virtual address to the World Economic Forum that he would \u201cdemand that interest rates drop immediately.\u201d The president also said he would ask Saudi Arabia to lower the price of oil, which pulled crude into the red.",
+                "score": 0.7144891,
+                "raw_content": "None"
+            },
+            {
+                "title": "S&P 500 Price, Real-time Quote & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/.INX:INDEXSP",
+                "content": "Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq slide as inflation, tariff fears push stocks to another losing week 7 hours ago Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq retreat on weak consumer sentiment 12 hours ago MarketWatch Stock Market on Feb. 7, 2025: Dow, S&P 500, Nasdaq close lower after Trump says reciprocal tariffs are coming 8 hours ago As of September 30, 2024, the nine largest companies on the list of S&P 500 companies accounted for 34.6% of the market capitalization of the index and were, in order of highest to lowest weighting: Apple, Microsoft, Nvidia, Amazon.com, Meta Platforms, Alphabet, Berkshire Hathaway, Broadcom, and Tesla. Index S&P 500 6,025.99 0.95% Index S&P 400 3,206.60 1.26%",
+                "score": 0.7004242,
+                "raw_content": "None"
+            }
+        ],
+        "response_time": 2.25
+    },
+    "MSCI AC World news": {
+        "query": "MSCI AC World news",
+        "follow_up_questions": "None",
+        "answer": "UBS sees about 7% upside in the MSCI AC World Index, forecasting it to reach 900 by the end of 2025, driven by risk appetite, interest rate cuts by the U.S. Federal Reserve, and generative artificial intelligence. The forecast represents an upside of nearly 7% to the index's recent close of 845.51. UBS also raised its year-end 2024 forecast for the MSCI AC World Index to 830 from 800, citing improving equity risk appetite, optimism around artificial intelligence, and potential slowing of U.S. wage growth.",
+        "images": [],
+        "results": [
+            {
+                "title": "UBS sees about 7% upside in MSCI AC World Index \u2014 TradingView News",
+                "url": "https://www.tradingview.com/news/reuters.com,2024:newsml_L4N3LF0UB:0-ubs-sees-about-7-upside-in-msci-ac-world-index/",
+                "content": "UBS sees about 7% upside in MSCI AC World Index \u2014 TradingView News /UBS sees about 7% upside in MSCI AC World Index UBS sees about 7% upside in MSCI AC World Index UBS Global Research forecast the MSCI All Country (AC) World index EURONEXT:IACWI to hit 900 by 2025 year-end on Thursday, citing risk appetite, interest rate cuts by the U.S. Federal Reserve and generative artificial intelligence(AI). The brokerage's forecast represents an upside of nearly 7% to the benchmark index's Wednesday close of 845.51, which is used to gauge the broader global equity market performance. Garthwaite expects earnings to perform lower than consensus in 2025 and forecasts global earnings-per-share growth of 5% in 2025 for the MSCI AC index versus a consensus of 13%.",
+                "score": 0.85624856,
+                "raw_content": "None"
+            },
+            {
+                "title": "UBS lifts MSCI AC World index's end-2024 forecast to 830 - Yahoo Finance",
+                "url": "https://finance.yahoo.com/news/ubs-lifts-msci-ac-world-044733712.html",
+                "content": "Finance New on Yahoo Yahoo Finance UBS lifts MSCI AC World index's end-2024 forecast to 830 (Reuters) - UBS raised its year-end 2024 forecast for the MSCI All Country (AC) World index to 830 from 800 on Tuesday, citing improving equity risk appetite, optimism around artificial intelligence and a potential slowing of U.S. wage growth. Expectations of monetary policy easing by major central banks, weaker global economic data and euphoria around AI has supported global equities this year. On the AI front, UBS added, If GenAI pushes up productivity growth by 1% from 2028, then the equity risk premium is 4.7%. UBS also sees factors like earnings revisions, a pause in interest rates by the U.S. Federal Reserve also boosting the global equity market.",
+                "score": 0.83710164,
+                "raw_content": "None"
+            },
+            {
+                "title": "UBS lifts MSCI AC World index's end-2024 forecast to 830",
+                "url": "https://www.reuters.com/business/finance/ubs-lifts-msci-ac-world-indexs-end-2024-forecast-830-2024-06-04/",
+                "content": "UBS raised its year-end 2024 forecast for the MSCI All Country (AC) World index to 830 from 800 on Tuesday, citing improving equity risk appetite, optimism around artificial intelligence and a",
+                "score": 0.8033131,
+                "raw_content": "None"
+            },
+            {
+                "title": "The charts showing what happened to global stocks in each ... - Trustnet",
+                "url": "https://www.trustnet.com/news/13434362/the-charts-showing-what-happened-to-global-stocks-in-each-quarter-of-2024",
+                "content": "The charts showing what happened to global stocks in each quarter of 2024 | Trustnet [Skip to the content](https://www.trustnet.com/news/13434362/the-charts-showing-what-happened-to-global-stocks-in-each-quarter-of-2024#main-content) Trustnet / News & research / The charts showing what happened to global stocks in each quarter of 2024 Global equities made close to 20% in 2024 and posted a positive return in each of its four quarters, according to FE Analytics. But the year was far from uneventful, so below we take a look at each quarter of 2024 to find out what was happening in each part of the global stock market. This marked a slowdown in the stock market, with the MSCI AC World returning 2.8% in a noticeable deceleration from the first quarter.",
+                "score": 0.6222074,
+                "raw_content": "None"
+            },
+            {
+                "title": "MSCI AC WORLD INDEX ex USA LARGE CAP (GDTR) Stock",
+                "url": "https://www.marketscreener.com/quote/index/MSCI-AC-WORLD-INDEX-EX-US-121757689/",
+                "content": "MSCI AC WORLD INDEX ex USA LARGE CAP (GDTR) (ZB_121757689.): Stock quote, stock chart, quotes, analysis, advice, financials and news for Index MSCI AC WORLD INDEX ex USA LARGE CAP (GDTR) | MSCI: | MSCI",
+                "score": 0.5611433,
+                "raw_content": "None"
+            }
+        ],
+        "response_time": 2.5
+    },
+    "MSCI AP ex-Japan news": {
+        "query": "MSCI AP ex-Japan news",
+        "follow_up_questions": "None",
+        "answer": "The MSCI AC Asia Pacific ex Japan Index captures large and mid cap representation across four of five Developed Markets countries and eight Emerging Markets countries in the Asia Pacific region, excluding Japan. It was launched on December 31, 1987. The index includes factors like value, size, momentum, quality, yield, and volatility, which are key drivers of risk and return in equity portfolios. Recent news highlights record inflows into China-focused ETFs, reaching $38.7 billion in the week ending October 9, 2024.",
+        "images": [],
+        "results": [
+            {
+                "title": "MSCI All Country Asia Pacific ex Japan (MIAPJ0000PUS)",
+                "url": "https://in.investing.com/indices/ac-asia-p-xjp",
+                "content": "MSCI All Country Asia Pacific ex Japan News & Analysis China ETF inflows break record as Japan registers largest-ever weekly outflow Investing.com -- In the week ending October 9, 2024, inflows into China-focused exchange-traded funds (ETFs) broke records, reaching an unprecedented $38.7 billion, Citi said in a",
+                "score": 0.7520312,
+                "raw_content": "None"
+            },
+            {
+                "title": "MSCI AC Asia Pacific ex Japan Index",
+                "url": "https://www.msci.com/documents/10199/0df2ed3c-5fea-4414-b875-55dcd31705ad",
+                "content": "MSCI AC Asia Pacific ex Japan Index (USD) MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  The MSCI AC Asia Pacific ex Japan Index captures large and mid cap representation across 4 of 5 Developed Markets countries (excluding Japan) and 8 Emerging Markets countries in the Asia Pacific region. The MSCI AC Asia Pacific ex Japan Index was launched on Dec 31, 1987. MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  MSCI AC Asia Pacific ex Japan Index (USD) | msci.com  MSCI FaCS consists of Factor Groups (e.g. Value, Size, Momentum, Quality, Yield, and Volatility) that have been extensively documented in academic literature and validated by MSCI Research as key drivers of risk and return in equity portfolios.",
+                "score": 0.6296157,
+                "raw_content": "None"
+            },
+            {
+                "title": "Ignore the markets and disregard the indices, says this stocks winner",
+                "url": "https://www.telegraph.co.uk/money/investing/funds/schroder-asian-total-investment-strategy-ignore-markets/",
+                "content": "UK News Website of the Year 2024. News ... Eugene Hoshiko/AP ... An investment in a product that tracked the MSCI All Countries Asia Pacific ex Japan Index would have lost you money over the past",
+                "score": 0.62000114,
+                "raw_content": "None"
+            },
+            {
+                "title": "Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (AEJ.PA) - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/AEJ.PA/",
+                "content": "Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (AEJ.PA) Stock Price, News, Quote & History - Yahoo Finance Top ETFs Top ETFs Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (AEJ.PA) LEM.PA Amundi MSCI Emerging Markets III UCITS ETF EUR Acc INR.PA Amundi MSCI India II UCITS ETF EUR Acc MEU.PA Amundi MSCI Europe II UCITS ETF RIO.PA Amundi MSCI Brazil UCITS ETF Acc WLD.PA Amundi MSCI World II UCITS ETF Dist TUR.PA Amundi MSCI Turkey UCITS ETF Acc DJE.PA Amundi Dow Jones Industrial Average UCITS ETF Dist USA.PA Amundi MSCI USA ESG Climate Net Zero Ambition CTB UCITS ETF Dis MMS.PA Amundi MSCI EMU Small Cap ESG CTB Net Zero Ambition UCITS ETF D",
+                "score": 0.58123237,
+                "raw_content": "None"
+            },
+            {
+                "title": "Amundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (USD) - Morningstar",
+                "url": "https://www.morningstar.co.uk/uk/etf/snapshot/snapshot.aspx?id=0P0001GYAT",
+                "content": "Investment Objective: mundi MSCI AC Asia Pacific Ex Japan UCITS ETF Acc (USD) | AEJThe investment objective of the Sub-Fund is to track both the upward and the downward evolution of the MSCI Pacific ex Japan Index - Net Total Return (the 'Index') denominated in US Dollars and representative of the overall performance of large-cap and mid-cap stocks across main Asian Pacific excluding Japan, while minimising the volatility of the difference between the return of the Sub-Fund and the return of the Index (the \u201cTracking Error\u201d). The Morningstar Star Rating for Stocks is assigned based on an analyst's estimate of a stocks fair value. Morningstar assigns star ratings based on an analyst's estimate of a stock's fair value.",
+                "score": 0.54855317,
+                "raw_content": "None"
+            }
+        ],
+        "response_time": 2.55
+    },
+    "US equity market comparison to the rest of the world": {
+        "query": "US equity market comparison to the rest of the world",
+        "follow_up_questions": "None",
+        "answer": "The U.S. equity market holds a dominant position globally, accounting for nearly half of the total global stock market value. China\"s emerging market is the largest among emerging markets, valued at $6.32 trillion. Established European markets contribute only 1%-3% to the global stock market value. The U.S. stock market\"s outperformance since 2010 is attributed to its higher exposure to innovation-driven sectors like technology and communication services, compared to the 'old-economy' sectors that drive international markets. In 2024, U.S. stocks dominated global markets, but there is a likelihood that this dominance may wane in 2025 due to varying performance trends in different regions.",
+        "images": [],
+        "results": [
+            {
+                "title": "How Massive is the U.S. Stock Market Compared to the World?",
+                "url": "https://howmuch.net/articles/all-stocks-capitalization-around-the-world",
+                "content": "Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World China makes up the largest emerging stock market with $6.32 trillion. The U.S. accounts for nearly half of all the stock market value globally. Our visualization lays out the equity value for each stock market by country. It's astonishing that many established European markets only make up 1%-3% of the global stock market value. Based on the visualization, we know that the U.S. stock market drives other markets.",
+                "score": 0.7515939,
+                "raw_content": "None"
+            },
+            {
+                "title": "Why U.S. Equities Have Beaten International Equities Since 2010",
+                "url": "https://www.morningstar.com/funds/why-us-equities-have-beaten-international-equities-since-2010",
+                "content": "Given the critical role that equities play in many investors' portfolios, the U.S. stock market's dramatic outperformance warrants a closer look. A new paper, \u201cExplaining America's Stock Market Dominance Since 2010,\u201d explores the reasons why U.S. stocks have led for more than a decade, examines whether that trend can continue, and highlights what some fund managers Morningstar covers think will happen and why. This confluence of factors contributes to the Morningstar US Market Index having far more exposure to areas of innovation like technology and communication services, while \u201cold-economy\u201d sectors like financial services, basic materials, and industrials tend to drive the Morningstar Global ex-U.S. Index. That comes as no surprise: As U.S. stocks rose, so did their weightings in the Morningstar Global Markets Index and actively managed funds.",
+                "score": 0.6917478,
+                "raw_content": "None"
+            },
+            {
+                "title": "US Stocks vs. The World - Updated Chart - Longtermtrends",
+                "url": "https://www.longtermtrends.net/msci-usa-vs-the-world/",
+                "content": "The chart above compares the performance of the MSCI USA index to the MSCI World index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI World Index over time. The ratio in the chart above divides the MSCI USA by the MSCI All Country World Index (ACWI) index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI All Country World Index (ACWI) over time. The chart above displays the 1-year rolling correlation coefficient between the MSCI USA Index and the MSCI World Index.",
+                "score": 0.5677694,
+                "raw_content": "None"
+            },
+            {
+                "title": "U.S. stocks dominated global markets in 2024 - Morningstar",
+                "url": "https://www.morningstar.com/news/marketwatch/2025010736/us-stocks-dominated-global-markets-in-2024-why-they-likely-wont-in-2025",
+                "content": "U.S. stocks dominated global markets in 2024 - why they likely won't in 2025 | Morningstar The iShares MSCI Japan ETF EWJ eked out a modest gain of 4.6%, and the iShares Europe ETF IEV fell 1.5% for the year, according to FactSet. That outperformance made U.S. stocks dominate the global equity market when it came to size. U.S.-listed companies also accounted for more than 50% of the global market's value by the end of last year, while Europe, mainland China and Hong Kong combined made up only 25%, according to Dow Jones Market Data (see chart below).",
+                "score": 0.50388235,
+                "raw_content": "None"
+            },
+            {
+                "title": "US Stocks Have Outperformed the World. History Shows That Success Can ...",
+                "url": "https://www.morningstar.com/stocks/us-stocks-have-outperformed-world-history-shows-that-success-can-be-fleeting",
+                "content": "A question I get asked about a lot goes something like this: Given that US economic growth has been faster than in the rest of the developed world, and US stocks have far outperformed since 2008, why should we continue to invest internationally? Unfortunately, being subject to recency bias, many investors tend to buy what has performed best in the most recent period (at higher valuations and thus lower expected returns) and sell what has underperformed (at lower valuations and thus higher expected returns)\u2014the exact opposite of the Investing 101 motto of \u201cbuy low, sell high.\u201d #### What Stock Analysts and Investors Are Getting Wrong About the Market Larry Swedroe Oct 24, 2024",
+                "score": 0.4813325,
+                "raw_content": "None"
+            }
+        ],
+        "response_time": 2.83
+    },
+    "IBM stock price": {
+        "query": "IBM stock price",
+        "follow_up_questions": null,
+        "answer": "As of February 20, 2025, IBM stock price is experiencing a notable increase, driven by strong fourth-quarter results and impressive growth in artificial intelligence. The stock has seen a significant surge, jumping nearly 13% in premarket trading following the release of its fourth-quarter earnings report, which exceeded analysts' expectations. This upward trend reflects the company's robust performance and its strategic focus on AI-enabled business solutions.",
+        "images": [],
+        "results": [
+            {
+                "title": "IBM Stock Price | IBM Stock Quote, News, and History - Markets Insider",
+                "url": "https://markets.businessinsider.com/stocks/ibm-stock?op=1",
+                "content": "IBM Corp. Stock , IBM  IBM Stock Snapshot IBM News Historical Prices for IBM IBM Analyst Data IBM Estimates* in USD IBM Calendar IBM Profile             IBM Stock Price History by Markets Insider International Business Machines Corp, or IBM, traces its history back over a century to the 1880s, when the Tabulating Machine Company, the International Time Recording Company, and the Computing Scale Company were consolidated into a single entity. Five years later, in 1916, the Computing Tabulating Recording Corporation would make its debut on Wall Street at the New York Stock Exchange: NYSE IBM. In 1932, IBM stock price sunk to $9.125, adjusted for subsequent splits. IBM stock price reached its all-time record price on March 15, 2013, when the stock hit $215.90 during trading. IBM Shareholder IBM Management",
+                "score": 0.8898454,
+                "raw_content": null
+            },
+            {
+                "title": "International Business Machines Corporation (IBM) - Stock Analysis",
+                "url": "https://stockanalysis.com/stocks/ibm/",
+                "content": "International Business Machines Corporation (IBM) Stock Price, Quote & News - Stock Analysis Watch These IBM Price Levels as Stock Soars After AI Drives Strong Earnings IBM stock jumps 12% after strong Q4 results, fueled by AI growth IBM saw a remarkable 12% surge in its stock price on Thursday, driven by a strong fourth-quarter performance that showcased the company's impressive growth in artificial intelligence (AI). IBM (IBM) shares\u00a0jumped 13% to lead S&P 500 gainers Thursday, a day after the company posted fourth-quarter results that topped analysts' estimates as its artificial intelligence (AI)-enabled business... IBM (IBM) shares are jumping nearly 8% in premarket trading Thursday, a day after the company posted fourth-quarter results that topped analysts' estimates as its artificial intelligence (AI)-enabled ...",
+                "score": 0.82117355,
+                "raw_content": null
+            },
+            {
+                "title": "International Business Machines Corp. (IBM) Stock Price Today - WSJ",
+                "url": "https://www.wsj.com/market-data/quotes/IBM",
+                "content": "1 Day IBM 0.69% DJIA 0.02% S&P 500 0.24% Business/Consumer Services 2.00% The Price to Earnings (P/E) ratio, a key valuation measure, is calculated by dividing the stock's most recent closing",
+                "score": 0.7036111,
+                "raw_content": null
+            },
+            {
+                "title": "IBM Stock Price - International Business Machines - NYSE: IBM - Morningstar",
+                "url": "https://www.morningstar.com/stocks/xnys/ibm/quote",
+                "content": "IBM Stock Price - International Business Machines - NYSE: IBM | Morningstar IBM, one of the world's largest IT services companies, remains the dominant provider of mainframes and has built out consulting and software businesses focused on digital transformation projects and hybrid cloud infrastructure. IBM's software offerings are being used in hybrid cloud focused projects, in addition to the consulting work to implement and service these projects. ### IBM Up Over 12%, on Track for Record High Close \u2014 Data Talk  Global News Select Jan 30, 2025 3:09pm ### Stocks to Watch: Tesla, IBM, Microsoft, Lam Research, Cargo Therapeutics  Global News Select Jan 30, 2025 12:15am We sell different types of products and services to both investment professionals and individual investors.",
+                "score": 0.67321366,
+                "raw_content": null
+            },
+            {
+                "title": "IBM Common Stock (IBM) Stock Price & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/IBM:NYSE",
+                "content": "IBM Common Stock (IBM) Stock Price & News - Google Finance Yahoo Finance 2 days ago Stifel Maintains Buy on International Business Machines Corporation (IBM), Sets $290 Target on AI & Cash Flow Growth MarketBeat 2 days ago International Business Machines (NYSE:IBM) Stock Price Down 2% - What's Next? Jomfruland.net 1 day ago IBM Share Price Poised for Quantum Leap? Represents the company's profit divided by the outstanding shares of its common stock. Net cash used or generated in investing activities such as purchasing assets A valuation method that multiplies the price of a company's stock by the total number of outstanding shares. The ratio of annual dividend to current share price that estimates the dividend return of a stock",
+                "score": 0.67243975,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.27
+    },
+    "Apple stock price": {
+        "query": "Apple stock price",
+        "follow_up_questions": null,
+        "answer": "As of February 20, 2025, Apple Inc. (AAPL) stock price is available on the Nasdaq platform. Recent reports indicate that Apple's stock has experienced fluctuations, notably declining following news of a potential antitrust probe into its App Store practices by Chinese regulators. This scrutiny adds to the pressures faced by Apple in its crucial Chinese market.",
+        "images": [],
+        "results": [
+            {
+                "title": "Stock Price - Apple",
+                "url": "https://investor.apple.com/stock-price/default.aspx",
+                "content": "Stock Price - Apple Apple TV & Home Investor Relations Stock Price Historical Stock Price Lookup Stock Quote: NASDAQ: AAPL Loading historical data... Apple Investor Relations Apple Footer Shop and Learn Shop and Learn TV Apple Card Apple Store Apple Store Today at Apple Apple Camp Apple Store App Apple Trade In Shopping Help Apple and Education Shop for College Apple and Business Shop for Business Apple in Healthcare Health on Apple Watch Manage Your Apple ID Apple Store Account Apple Values Apple Values Privacy Shop for Government About Apple About Apple Apple Leadership Investors Contact Apple More ways to shop: Visit an Apple Store, call 1-800-MY-APPLE, or find a reseller. Copyright \u00a9 2025 Apple Inc. All rights reserved Privacy Policy",
+                "score": 0.5455042,
+                "raw_content": null
+            },
+            {
+                "title": "Apple Inc (AAPL) Stock Price & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/AAPL:NASDAQ",
+                "content": "Apple Inc (AAPL) Stock Price & News - Google Finance Barron's Apple, Amazon, Microsoft, and More Big Tech Earnings Takeaways 17 hours ago Yahoo Finance Apple supplier Skyworks stock plummets as iPhone maker turns to competitor 1 day ago WSJ Skyworks Stock Crashes on Warning Apple Supplier Will Lose Some iPhone Business 1 day ago CNBC Apple shares slide after China reportedly considers probe into App Store practices 3 days ago Yahoo Finance Apple stock falls after report says China exploring antitrust probe into app store policies 2 days ago Yahoo Finance Why Investors Shouldn\u2019t Take Apple\u2019s Q4 Earnings Bait 2 days ago A valuation method that multiplies the price of a company's stock by the total number of outstanding shares.",
+                "score": 0.5342973,
+                "raw_content": null
+            },
+            {
+                "title": "Apple Inc. (AAPL) Stock Price, Quote & News - Stock Analysis",
+                "url": "https://stockanalysis.com/stocks/aapl/",
+                "content": "The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, ... China reportedly considers probe into Apple's App Store practices China is considering whether to open a formal probe into Apple's App Store practices in the country, according to a Bloomberg report. Apple faces China scrutiny, adding pressure to US stocks. Apple's stock declined on Wednesday following reports that Chinese regulators are considering a formal investigation into the company's App Store practices. Apple is reportedly facing another regulatory probe, this time in China's crucial market. Apple Stock Falls.",
+                "score": 0.49904844,
+                "raw_content": null
+            },
+            {
+                "title": "Apple (AAPL) Stock Price, Quote, News & History | Nasdaq",
+                "url": "https://www.nasdaq.com/market-activity/stocks/aapl",
+                "content": "Apple (AAPL) Stock Price, Quote, News & History | Nasdaq Nasdaq+ *   Nasdaq-100 Nasdaq U.S. Data Nasdaq Index Solutions *   Nasdaq Data Link *   Nasdaq-100 Index *   Nasdaq Market Infrastructure Technology Real-time bid and ask information is powered by Nasdaq Basic, a premier market data solution. Data Link's cloud-based technology platform allows you to search, discover and access data and analytics for seamless integration via cloud APIs. Register for your free account today at\u00a0data.nasdaq.com. Add symbols now or see the quotes that matter to you, anywhere on Nasdaq.com. Add instruments now or see the quotes that matter to you, anywhere on Nasdaq.com. You'll now be able to see real-time price and activity for your symbols on the My Quotes of Nasdaq.com.",
+                "score": 0.491725,
+                "raw_content": null
+            },
+            {
+                "title": "Apple Inc. (AAPL) Stock Price, News, Quote & History - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/AAPL/",
+                "content": "The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts, as well as advertising services include third-party licensing arrangements and its own advertising platforms. In addition, the company offers various subscription-based services, such as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property.",
+                "score": 0.44985238,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.45
+    },
+    "Nvidia stock price": {
+        "query": "Nvidia stock price",
+        "follow_up_questions": null,
+        "answer": "As of 20/02/2025 09:47:15, the stock price for NVIDIA Corporation (NVDA) is $129.84, reflecting a 0.90% increase. This information is based on the most recent data available from reliable financial sources.",
+        "images": [],
+        "results": [
+            {
+                "title": "NVIDIA Corporation (NVDA) Stock Price, News, Quote & History - Yahoo ...",
+                "url": "https://finance.yahoo.com/quote/NVDA/",
+                "content": "NVIDIA Corporation (NVDA) Stock Price, News, Quote & History - Yahoo Finance NVIDIA Corporation (NVDA) NVIDIA Corporation Overview Semiconductors / Technology The Graphics segment offers GeForce GPUs for gaming and PCs, the GeForce NOW game streaming service and related infrastructure, and solutions for gaming platforms; Quadro/NVIDIA RTX GPUs for enterprise workstation graphics; virtual GPU or vGPU software for cloud-based visual and virtual computing; automotive platforms for infotainment systems; and Omniverse software for building and operating metaverse and 3D internet applications. The Compute & Networking segment comprises Data Center computing platforms and end-to-end networking platforms, including Quantum for InfiniBand and Spectrum for Ethernet; NVIDIA DRIVE automated-driving platform and automotive development agreements; Jetson robotics and other embedded platforms; NVIDIA AI Enterprise and other software; and DGX Cloud software and services. NVDA NVIDIA Corporation NVDA NVIDIA Corporation 129.84 +1.16 (+0.90%)",
+                "score": 0.8458536,
+                "raw_content": null
+            },
+            {
+                "title": "NVIDIA Corporation (NVDA) Stock Price, Quote & News - Stock Analysis",
+                "url": "https://stockanalysis.com/stocks/nvda/",
+                "content": "NVIDIA Corporation (NVDA) Stock Price, Quote & News - Stock Analysis In today's video, I discuss Nvidia (NVDA 3.08%) and recent updates impacting the AI market. Nvidia Stock Investors Just Got the Best News of 2025 So Far Nvidia Stock Remains Analyst's Top Pick: 'DeepSeek Selloff Is A Buying Opportunity' NVIDIA Corporation NVDA was one of several technology stocks hit by the emergence of Chinese AI competitor DeepSeek. Nvidia's (NVDA 5.21%) stock has been beaten down over the past two weeks thanks to the release of DeepSeek's efficient generative AI model. Nvidia Stock Rises. Nvidia (NVDA) shares surged Wednesday, after Google parent Alphabet (GOOGL), a buyer of Nvidia's chips, said it plans to ramp up spending on artificial intelligence (AI).",
+                "score": 0.8131201,
+                "raw_content": null
+            },
+            {
+                "title": "NVIDIA Corporation Common Stock (NVDA) Stock Price, Quote, News ...",
+                "url": "https://www.nasdaq.com/market-activity/stocks/nvda",
+                "content": "NVIDIA Corporation Common Stock (NVDA) Stock Price, Quote, News & History | Nasdaq Nasdaq+ *   Nasdaq-100 Nasdaq U.S. Data Nasdaq Index Solutions *   Nasdaq Data Link *   Nasdaq-100 Index *   Nasdaq Market Infrastructure Technology Real-time bid and ask information is powered by Nasdaq Basic, a premier market data solution. Data Link's cloud-based technology platform allows you to search, discover and access data and analytics for seamless integration via cloud APIs. Register for your free account today at\u00a0data.nasdaq.com. Add symbols now or see the quotes that matter to you, anywhere on Nasdaq.com. Add instruments now or see the quotes that matter to you, anywhere on Nasdaq.com. You'll now be able to see real-time price and activity for your symbols on the My Quotes of Nasdaq.com.",
+                "score": 0.6369636,
+                "raw_content": null
+            },
+            {
+                "title": "NVIDIA Corp (NVDA) Stock Price & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/NVDA:NASDAQ",
+                "content": "NVIDIA Corp (NVDA) Stock Price & News - Google Finance Investor's Business Daily Nvidia, AI Chip Stocks Rise On Capex Plans 3 hours ago USA Today Here's the worst case scenario for Nvidia stock 5 hours ago Yahoo Finance Nvidia Remains a Top Analyst Pick Ahead of Q4 Earnings 3 days ago Investing.com Nvidia target cut at Citi as focus shifts to earnings 2 days ago Investopedia Nvidia CEO Huang Heads to White House After Wild Week for Chipmaker's Stock 1 week ago Financial Times Nvidia boss Jensen Huang meets Donald Trump at White House 6 days ago A valuation method that multiplies the price of a company's stock by the total number of outstanding shares.",
+                "score": 0.629889,
+                "raw_content": null
+            },
+            {
+                "title": "NVDA Stock Price | NVIDIA Corp. Stock Quote (U.S.: Nasdaq) - MarketWatch",
+                "url": "https://www.marketwatch.com/investing/stock/NVDA",
+                "content": "NVDA | Complete NVIDIA Corp. stock news by MarketWatch. View real-time stock prices and stock quotes for a full financial overview.",
+                "score": 0.59880555,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.46
+    },
+    "US equity market trends comparison": {
+        "query": "US equity market trends comparison",
+        "follow_up_questions": null,
+        "answer": "As of February 8, 2025, the US equity market trends indicate a mixed performance. Value stocks have shown a strong start to 2025, while growth stocks retain their long-term advantage. Consumer cyclicals have turned lower, causing a 0.3% decline in stocks for the week. Vanguard's fee cuts, although small, benefit investors. The Federal Reserve has paused its rate hikes, anticipating further rate cuts as inflation is expected to fall. The MSCI USA index has outperformed the MSCI World index, reflecting strong domestic performance compared to global markets.",
+        "images": [],
+        "results": [
+            {
+                "title": "US Markets, Company Earnings, Stock Market Trends, Market News ...",
+                "url": "https://www.morningstar.com/markets",
+                "content": "### Smart Investor: Undervalued Stocks That Raised Dividends, What\u2019s Next for Growth Stocks As Value Starts 2025 Strong Tom Lauricella Feb 8, 2025 ### Weekly Market Update: Stocks Down 0.3%, As Consumer Cyclicals Turn Lower Frank Lee Feb 7, 2025 ### What\u2019s Happening in the Markets This Week Frank Lee Feb 7, 2025 ### Vanguard Fee Cuts May Be Small, but They\u2019re a Win for Investors Daniel Sotiroff, Susan Dziubinski, David Sekera, CFA, and Ivanna Hampton Feb 7, 2025 ### Value Stocks Lead to Start 2025, but Growth Retains Its Long-Term Advantage Bella Albrecht Feb 7, 2025 With new drug development, a significant increase in sales, and high potential with Mounjaro and Zepbound, here\u2019s what we think of Eli Lilly\u2019s stock Karen Andersen, CFA Jan 30, 2025 ### Fed Hits the Pause Button, Awaits Further Data Amid Policy Uncertainty With inflation likely to fall further, we continue to expect more rate cuts than the market.",
+                "score": 0.49553296,
+                "raw_content": null
+            },
+            {
+                "title": "US Stocks vs. The World - Updated Chart - Longtermtrends",
+                "url": "https://www.longtermtrends.net/msci-usa-vs-the-world/",
+                "content": "The chart above compares the performance of the MSCI USA index to the MSCI World index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI World Index over time. The ratio in the chart above divides the MSCI USA by the MSCI All Country World Index (ACWI) index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI All Country World Index (ACWI) over time. The chart above displays the 1-year rolling correlation coefficient between the MSCI USA Index and the MSCI World Index.",
+                "score": 0.4581311,
+                "raw_content": null
+            },
+            {
+                "title": "U.S. Market Data - MarketWatch",
+                "url": "https://www.marketwatch.com/market-data/us",
+                "content": "View the MarketWatch summary of the U.S. stock market with current status of DJIA, NASDAQ, S&P, DOW, NYSE and more.",
+                "score": 0.26214045,
+                "raw_content": null
+            },
+            {
+                "title": "US Markets: US Stock Market Data - Dow Jones, NASDAQ, S&P 500, US ...",
+                "url": "https://www.moneycontrol.com/us-markets",
+                "content": "US Markets: Get the complete US Stock Markets coverage with latest news, analysis & research on Market Map, Charts, Key Statistics, Sector Performance, Economic Calendar for Dow Jones Industrial",
+                "score": 0.2265615,
+                "raw_content": null
+            },
+            {
+                "title": "Market Activity Data Visualizations - SEC.gov",
+                "url": "https://www.sec.gov/securities-topics/market-structure-analytics/market-activity-data-visualizations",
+                "content": "SEC.gov | Market Activity Data Visualizations Official websites use .gov A .gov website belongs to an official government organization in the United States. Secure .gov websites use HTTPS Search SEC.gov & EDGAR Search Search Filings Search Filings SEC & Markets Data Rules, Enforcement, & Compliance Search SEC.gov & EDGAR Search Market Activity Data Visualizations Market Activity Data Visualizations Create your own charts, compare and contrast data sets according to a variety of equity security characteristics, zoom to specific date periods, and view data distributions down to the level of one-millionth of a second. Market Activity Data Series View summary data for stocks and ETPs including Trade to Order Volume, Cancel to Trade Ratio, Odd Lot Rate, Odd Lot Volume, Hidden Rate, and Hidden Volume.",
+                "score": 0.21663275,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.92
+    },
+    "US equity market vs rest of world": {
+        "query": "US equity market vs rest of world",
+        "follow_up_questions": null,
+        "answer": "The U.S. equity market accounts for nearly half of the global stock market value, with China holding the largest emerging stock market at $6.32 trillion. The U.S. attracts over 70 percent of global private investment flows, significantly more than its 27 percent share of the global economy. Since 2010, U.S. equities have outperformed international equities due to greater exposure to innovation-driven sectors like technology and communication services, while international markets focus more on traditional sectors. The MSCI USA Index has shown stronger performance compared to the MSCI World Index and the MSCI All Country World Index (ACWI).",
+        "images": [],
+        "results": [
+            {
+                "title": "How Massive is the U.S. Stock Market Compared to the World?",
+                "url": "https://howmuch.net/articles/all-stocks-capitalization-around-the-world",
+                "content": "Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World Visualizing the Size of U.S. Stock Market When Compared to the Rest of the World China makes up the largest emerging stock market with $6.32 trillion. The U.S. accounts for nearly half of all the stock market value globally. Our visualization lays out the equity value for each stock market by country. It\u2019s astonishing that many established European markets only make up 1%-3% of the global stock market value. Based on the visualization, we know that the U.S. stock market drives other markets.",
+                "score": 0.72675586,
+                "raw_content": null
+            },
+            {
+                "title": "U.S. Markets Are Swallowing the Rest of the World",
+                "url": "https://awealthofcommonsense.com/2024/12/u-s-markets-are-swallowing-the-rest-of-the-world/",
+                "content": "The US now attracts more than 70 per cent of the flows into the $13tn global market for private investments, which include equity and credit. America's share of global stock markets is far greater than its 27 per cent share of the global economy. There are reasons for the tidal wave of money pouring into the United States.",
+                "score": 0.6829338,
+                "raw_content": null
+            },
+            {
+                "title": "Why U.S. Equities Have Beaten International Equities Since 2010",
+                "url": "https://www.morningstar.com/funds/why-us-equities-have-beaten-international-equities-since-2010",
+                "content": "Given the critical role that equities play in many investors\u2019 portfolios, the U.S. stock market\u2019s dramatic outperformance warrants a closer look. A new paper, \u201cExplaining America\u2019s Stock Market Dominance Since 2010,\u201d explores the reasons why U.S. stocks have led for more than a decade, examines whether that trend can continue, and highlights what some fund managers Morningstar covers think will happen and why. This confluence of factors contributes to the Morningstar US Market Index having far more exposure to areas of innovation like technology and communication services, while \u201cold-economy\u201d sectors like financial services, basic materials, and industrials tend to drive the Morningstar Global ex-U.S. Index. That comes as no surprise: As U.S. stocks rose, so did their weightings in the Morningstar Global Markets Index and actively managed funds.",
+                "score": 0.6493346,
+                "raw_content": null
+            },
+            {
+                "title": "US Stocks vs. The World - Updated Chart - Longtermtrends",
+                "url": "https://www.longtermtrends.net/msci-usa-vs-the-world/",
+                "content": "The chart above compares the performance of the MSCI USA index to the MSCI World index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI World Index over time. The ratio in the chart above divides the MSCI USA by the MSCI All Country World Index (ACWI) index. This chart gives a different view of the data from the chart above, comparing the percentage change between the MSCI USA Index and the MSCI All Country World Index (ACWI) over time. The chart above displays the 1-year rolling correlation coefficient between the MSCI USA Index and the MSCI World Index.",
+                "score": 0.50915486,
+                "raw_content": null
+            },
+            {
+                "title": "U.S. stocks dominated global markets in 2024 - Morningstar",
+                "url": "https://www.morningstar.com/news/marketwatch/2025010736/us-stocks-dominated-global-markets-in-2024-why-they-likely-wont-in-2025",
+                "content": "U.S. stocks dominated global markets in 2024 - why they likely won't in 2025 | Morningstar The iShares MSCI Japan ETF EWJ eked out a modest gain of 4.6%, and the iShares Europe ETF IEV fell 1.5% for the year, according to FactSet. That outperformance made U.S. stocks dominate the global equity market when it came to size. U.S.-listed companies also accounted for more than 50% of the global market's value by the end of last year, while Europe, mainland China and Hong Kong combined made up only 25%, according to Dow Jones Market Data (see chart below).",
+                "score": 0.5010992,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.46
+    },
+    "S&P 500 current performance": {
+        "query": "S&P 500 current performance",
+        "follow_up_questions": null,
+        "answer": "As of February 26, 2025, the current price of the S&P 500 index is 5934.70, which is 2.55% below its all-time high of 6090.27. The index is currently up 26.34% year-on-year and is 6.69% above its 200-day simple moving average, while it is slightly below its 50-day simple moving average by 0.23%.",
+        "images": [],
+        "results": [
+            {
+                "title": "S&P 500 Index Price History & Chart since 1974",
+                "url": "https://wallstreetnumbers.com/indexes/spx/price",
+                "content": "S&P 500 Index Price History & Chart since 1974 Price S&P 500 Index Price Price Price SPX price is now -2.55% below its all-time high of 6090.27. SPX price is up +26.34% year-on-year SPX price is currently -2.55% below its historical high of 6090.27 SPX price is currently +6.69% above its 200-day simple moving average SPX price is currently -0.23% below its 50-day simple moving average SPX Price Chart SPX Price Performance SPX Price High & Low What is the price of S&P 500 index today? What is the all time high price for S&P 500 index? The current price of SPX is 5934.70 What is the all time high price for S&P 500 index? S&P 500 index all-time high price is 6090.27",
+                "score": 0.72559077,
+                "raw_content": null
+            },
+            {
+                "title": "S&P 500 Price, Real-time Quote & News - Google Finance",
+                "url": "https://www.google.com/finance/quote/.INX:INDEXSP",
+                "content": "Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq slide as inflation, tariff fears push stocks to another losing week 7 hours ago Yahoo Finance Stock market today: Dow, S&P 500, Nasdaq retreat on weak consumer sentiment 12 hours ago MarketWatch Stock Market on Feb. 7, 2025: Dow, S&P 500, Nasdaq close lower after Trump says reciprocal tariffs are coming 8 hours ago As of September 30, 2024, the nine largest companies on the list of S&P 500 companies accounted for 34.6% of the market capitalization of the index and were, in order of highest to lowest weighting: Apple, Microsoft, Nvidia, Amazon.com, Meta Platforms, Alphabet, Berkshire Hathaway, Broadcom, and Tesla. Index S&P 500 6,025.99 0.95% Index S&P 400 3,206.60 1.26%",
+                "score": 0.6063825,
+                "raw_content": null
+            },
+            {
+                "title": "S&P 500 INDEX TODAY | INX LIVE TICKER - Markets Insider",
+                "url": "https://markets.businessinsider.com/index/s&p_500?op=1",
+                "content": "Markets Stocks Indices Commodities Cryptocurrencies Currencies ETFs News Higher egg prices and more tariffs: What betting markets see for inflation and trade policy Realtime Prices for S&P 500 Stocks | 2/7/2025 | RBC Capital Markets | Zimmer Biomet | Maintained Buy |  | 2/7/2025 | RBC Capital Markets | UDR Inc | Maintained Hold |  | 2/7/2025 | RBC Capital Markets | O Reilly Automotive Inc | Maintained Buy |  | 2/7/2025 | RBC Capital Markets | Honeywell | Maintained Hold |  | 2/7/2025 | RBC Capital Markets | Fortinet Inc | Maintained Hold |  | 2/7/2025 | RBC Capital Markets | Corteva Inc Registered Shs When Issued | Maintained Buy |  | 2/7/2025 | RBC Capital Markets | Aptiv (ex Delphi Automotive) | Maintained Buy | ",
+                "score": 0.4352539,
+                "raw_content": null
+            },
+            {
+                "title": "S&P 500 INDEX (^SPX) Stock Price, News, Quote & History - Yahoo Finance",
+                "url": "https://finance.yahoo.com/quote/^SPX/",
+                "content": "S&P 500 INDEX (^SPX) Stock Price, News, Quote & History - Yahoo Finance News Health news News Stock Market Stocks: Gainers Investment Ideas Trending Stocks Fantasy News News News News News News News More news News News News Fantasy News Stock Market Stocks: Gainers Investment Ideas Trending Stocks News S&P 500 INDEX (^SPX) ^XAX NYSE AMEX COMPOSITE INDEX ^XAX NYSE AMEX COMPOSITE INDEX 000001.SS SSE Composite Index ^NZ50 S&P/NZX 50 INDEX GROSS ( GROSS ^KS11 KOSPI Composite Index ^TWII TWSE Capitalization Weighted Stock Index ^GSPTSE S&P/TSX Composite index ^JN0U.JO Top 40 USD Net TRI Index DAX Index Sign in to access your portfolio ELF e.l.f. Beauty, Inc. 71.13 -17.36 (-19.62%) NVDA NVIDIA Corporation 129.84 +1.16 (+0.90%) Ad Terms Feedback",
+                "score": 0.36269882,
+                "raw_content": null
+            },
+            {
+                "title": "SPX | S&P 500 Index Overview - MarketWatch",
+                "url": "https://www.marketwatch.com/investing/index/spx",
+                "content": "SPX | A complete S&P 500 Index index overview by MarketWatch. View stock market news, stock market data and trading information.",
+                "score": 0.31890973,
+                "raw_content": null
+            }
+        ],
+        "response_time": 2.84
+    }
+}

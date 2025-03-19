@@ -1,0 +1,68 @@
+.competitive {
+    background-image: url("https://w3.s81c.com/w3publisher/user-image-cache/d45f6910-ea96-11ed-9617-1f022beae758/box/1267213794831?etag=0");
+    width: 100%;
+    /* Set width to 100% */
+    height: 100%;
+    /* Set height according to your needs */
+    // background-size: cover; /* Scale the image to cover entire div */
+
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    align-content: center;
+    color: white // color: black;
+
+}
+
+.hero__title {
+    font-size: 40px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: normal;
+    line-height: 1.15;
+    margin-bottom: .5rem;
+    padding-top: .6rem;
+}
+
+// spinner classes
+.loading-overlay {
+    position: fixed;
+    /* Ensures it stays in one position relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Creates a translucent dark background */
+    display: flex;
+    justify-content: center;
+    /* Centers the spinner horizontally */
+    align-items: center;
+    /* Centers the spinner vertically */
+    z-index: 1000;
+    /* Ensures it is above other elements */
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    /* Stacks spinner and text vertically */
+    align-items: center;
+    /* Centers both items horizontally */
+    text-align: center;
+    gap: 10px;
+    /* Adjust the gap between spinner and text */
+}
+
+.loading-content span {
+    color: white;
+    /* Makes the text color stand out on the translucent background */
+    font-family: 'IBM Plex Sans', sans-serif;
+    /* Keeps consistent typography */
+    font-size: 20px;
+    /* Adjust the size as needed */
+    font-weight: 500;
+    /* Slightly bold for better visibility */
+}

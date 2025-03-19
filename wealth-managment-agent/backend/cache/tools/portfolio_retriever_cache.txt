@@ -1,0 +1,8 @@
+|   ID | Security Name    |   Market Value (USD) |   Y2Y % | Industry Sector   |
+|-----:|:-----------------|---------------------:|--------:|:------------------|
+|    1 | S&P 500          |              8500000 |      15 | Index Fund        |
+|    2 | MSCI AC World    |              6000000 |      12 | Index Fund        |
+|    3 | TOPIX            |              4200000 |      13 | Index Fund        |
+|    4 | MSCI AP ex-Japan |              5700000 |       9 | Index Fund        |
+|    5 | STOXX 600        |              3500000 |       5 | Index Fund        |
+|    6 | MSCI EM          |              2800000 |       3 | Index Fund        |

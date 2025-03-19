@@ -1,0 +1,25 @@
+// @import "https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:400,600&display=swap";
+// @import '@carbon/themes/scss/themes';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme' with (
+  $theme: themes.$g100,
+);
+@use '@carbon/react';
+@use '@carbon/grid';
+
+// Emit the flex-grid styles
+@include grid.flex-grid();
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background-color: rgb(34,37,41);
+  color: rgb(198,198,198);
+  padding-top: 20px;
+  padding-bottom: 40px;
+  text-align: center
+}
+
