@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+langchain
+langchain-core
+langchain_community
+langchain_ibm
+langchain_huggingface
+ibm_watsonx_ai
+pymupdf
+pymilvus
+pyarrow
+tavily-python
+langchain-experimental
+mistletoe
+python-docx
+git+https://github.com/PyFPDF/fpdf2.git@master

@@ -1,0 +1,9 @@
+{
+    "title": "Wealth manager agent",
+    "description": "APIs for wealth manager agent",
+    "version": "0.0.1",
+    "license_info": {
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT"
+    }
+}

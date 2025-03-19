@@ -1,0 +1,92 @@
+.bg-div-meeting {
+  width: 100%;
+  /* Set width to 100% */
+  // height: 100%; /* Set height according to your needs */
+  background-image: url('https://cloud.ibm.com/partner-center/sell/static/banner-MOPADUZ4.jpeg');
+  // background-size: cover; /* Scale the image to cover entire div */
+  background-position: right;
+  /* Position the image at the center */
+  background-repeat: no-repeat;
+  /* Prevent image from repeating */
+  // color: black;
+  padding: 1rem;
+  background-size: 100% 100%;
+  align-content: center;
+
+}
+
+
+.chat-bubble {
+  padding: .75rem 1rem;
+  border-radius: .5rem 0 .5rem .5rem;
+  background: var(--cds-layer-accent-01, #262626);
+  width: fit-content;
+
+}
+
+// var(--cds-layer-accent-01, #e0e0e0);
+.chat-message-details {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .25rem;
+  padding-bottom: 1rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.receiver {
+  // display: grid;
+  // grid-template-columns: 2rem minmax(0, 1fr);
+  // grid-template-rows: 2rem 1fr;
+  // column-gap: .5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 0 1rem 0;
+
+}
+
+.text-area-wrapper {
+  position: relative;
+  width: 100%;
+  color: black;
+  padding: 4rem 8rem 2rem;
+
+}
+
+.cds--contained-list--on-page .cds--contained-list__header {
+  visibility: hidden;
+}
+
+.cds--side-nav__divider {
+  margin: 0
+}
+
+.sales-bg-div {
+  margin-top: -2rem;
+}
+
+.cds--contained-list-item--clickable .cds--contained-list-item__content {
+  font-size: 16px;
+}
+
+._w3--watsonx-avatar_18pme_1 {
+  padding: .125rem;
+  width: 100%;
+}
+
+body {
+  color: white;
+}
+
+.reason {
+  margin-top: 1rem;
+}
+
+pre {
+  text-wrap: balance;
+}
+
+code {
+  text-wrap: balance;
+}
