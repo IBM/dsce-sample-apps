@@ -1,0 +1,7 @@
+{
+    "greetings": ["hello", "hi", "hey", "hiya", "greetings", "howdy", "what's up", "sup", "yo"],
+    "gratitude": ["thank you", "thanks", "thx", "ty", "appreciate", "grateful", "cheers"],
+    "farewell": ["bye", "goodbye", "see you", "later", "take care", "good night"],
+    "acknowledgment": ["ok", "okay", "got it", "sure", "alright", "yes", "yeah", "yep"],
+    "apology": ["sorry", "apologies", "my bad", "oops", "pardon me", "excuse me"]
+}

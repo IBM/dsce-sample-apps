@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0c4b33, #1d3557);
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: white;
+      color: #333;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 400px;
+    }
+
+    .login-container h1 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #4caf50;
+    }
+
+    .login-container select {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .login-container input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .login-container button {
+      width: calc(100% - 20px);
+      padding: 12px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      display: none;
+    }
+
+    /* Chatbot styles */
+    .chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: #4caf50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-size: 24px;
+    }
+
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      background: #ffffff;
+    }
+
+    .chat-header {
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .sample-questions {
+      padding: 10px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .sample-questions select {
+      width: 100%;
+      padding: 8px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: #f1f1f1;
+      font-size: 12px;
+    }
+
+    .chat-messages .message {
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 20px;
+      display: inline-block;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .chat-messages .bot-message {
+      background: #e8f5e9;
+      color: #333;
+      align-self: flex-start;
+    }
+
+    .chat-messages .user-message {
+      background: #4caf50;
+      color: white;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .chat-messages .typing {
+      color: black;
+      font-style: italic;
+      margin: 10px 0;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      background: #f1f1f1;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+
+    .chat-input button {
+      padding: 8px 15px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .chat-input button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="login-form" method="POST">
+      <select id="customer_id" name="customer_id" required>
+        <option value="">Select Customer ID</option>
+        <option value="CUST0001">CUST0001</option>
+        <option value="CUST0002">CUST0002</option>
+        <option value="CUST0003">CUST0003</option>
+        <option value="CUST0004">CUST0004</option>
+        <option value="CUST0005">CUST0005</option>
+      </select>
+      <button type="submit">Login</button>
+    </form>
+    <p id="error-message" class="error-message">Invalid Customer ID</p>
+  </div>
+
+  <div class="chat-icon" id="chat-icon">💬</div>
+  <div class="chatbot-container" id="chatbot">
+    <div class="chat-header" id="chat-header">Finance Assistant</div>
+    <div class="sample-questions">
+      <select id="sample-questions-dropdown">
+        <option value="">Select a sample question</option>
+        <option value="How can I start investing in stocks?">How can I start investing in stocks?</option>
+        <option value="How can I open a new bank account?">How can I open a new bank account?</option>
+        <option value="What is the interest rate for personal loan?">What is the interest rate for personal loan?</option>
+        <option value="What are my spending insights?">What are my spending insights?</option>
+      </select>
+    </div>
+    <div class="chat-messages" id="messages">
+      <div class="message bot-message">Hi, how can I assist you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userMessage" placeholder="Type your question..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const chatIcon = document.getElementById("chat-icon");
+      const chatbot = document.getElementById("chatbot");
+      const chatHeader = document.getElementById("chat-header");
+      const messages = document.getElementById("messages");
+      const userMessageInput = document.getElementById("userMessage");
+      const sendBtn = document.getElementById("send-btn");
+      const sampleDropdown = document.getElementById("sample-questions-dropdown");
+
+      chatIcon.addEventListener("click", () => {
+        chatbot.style.display = "flex";
+        chatIcon.style.display = "none";
+      });
+
+      chatHeader.addEventListener("click", () => {
+        chatbot.style.display = "none";
+        chatIcon.style.display = "flex";
+      });
+
+      sampleDropdown.addEventListener("change", () => {
+        const selectedQuestion = sampleDropdown.value;
+        if (selectedQuestion) {
+          userMessageInput.value = selectedQuestion;
+        }
+      });
+
+      const addMessage = (message, type = "bot") => {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", type === "user" ? "user-message" : "bot-message");
+        messageElement.textContent = message;
+        messages.appendChild(messageElement);
+        messages.scrollTop = messages.scrollHeight;
+      };
+
+      const showTyping = () => {
+        const typingElement = document.createElement("div");
+        typingElement.id = "typing";
+        typingElement.classList.add("typing");
+        typingElement.textContent = "Typing...";
+        messages.appendChild(typingElement);
+        messages.scrollTop = messages.scrollHeight;
+      };
+
+      const hideTyping = () => {
+        const typingElement = document.getElementById("typing");
+        if (typingElement) messages.removeChild(typingElement);
+      };
+
+      const sendMessage = async () => {
+        const userMessage = userMessageInput.value.trim();
+        if (!userMessage) return;
+
+        addMessage(userMessage, "user");
+        userMessageInput.value = "";
+
+        showTyping();
+
+        try {
+          const response = await fetch("/api/query", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: userMessage })
+          });
+          const data = await response.json();
+          hideTyping();
+          addMessage(data.response, "bot");
+        } catch (error) {
+          hideTyping();
+          addMessage("Sorry, I couldn't process your request. Please try again.", "bot");
+        }
+      };
+
+      sendBtn.addEventListener("click", sendMessage);
+      userMessageInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+    });
+  </script>
+</body>
+</html>
