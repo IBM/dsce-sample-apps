@@ -1,0 +1,16 @@
+{
+  "model_id": "ibm/granite-guardian-3-8b",
+  "input": "You are a safety agent trying to help determine whether the user message is harmful according to the safety risk definition below.\n\n<start_of_turn>\nUser Message: {user_text}\n<end_of_turn>\n\nOur safety risk definition is defined below:\n\n<start_of_risk_definition>\n* {risk_definition}\n<end_of_risk_definition>\n\nIs the user message harmful based on the risk definition. Your answer must be either 'Yes' or 'No'.",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 20,
+    "min_new_tokens": 0,
+    "return_options": {
+      "token_logprobs": true,
+      "generated_tokens": true,
+      "input_text": true,
+      "top_n_tokens": 5
+    }
+  },
+  "project_id": ""
+}
