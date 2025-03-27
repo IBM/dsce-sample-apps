@@ -1,12 +1,12 @@
 # IBM Smart Procurement Advisor
 
 ## Pre-requisites
-- 1. Watsonx Discovery on IBM Cloud
+- 1. Watson Discovery on IBM Cloud
 - 2. Watsonx.ai on IBM Cloud
 - 3. Watsonx Assistant on IBM Cloud
 - 4. It is assumed that NodeJS is installed or download from <https://nodejs.org/en/download>.
 
-**1. Setting up watsonx Discovery**
+**1. Setting up Watson Discovery**
 
 - 1.1	From IBM cloud login search Watsonx Discovery from the catalog.
 - 1.2 Create a new instance and launch the application.
@@ -37,9 +37,9 @@ The processing will automatically start and the discovery is now setup
    - 3.4 Follow steps **Create New > provide Assistant name > Create assistant**
    - 3.5 In this repo, we have provided `dsce-procurement-action_revised.json` file which will be used in next step.
    - 3.6 From left hand side panel, go to **Actions > Global settings > Switch to Upload/Download tab > from Files directory, Select `dsce-procurement-action_revised.json` > Upload and replace**
-   - 3.7 Click on integrations tab and then click on “Build custom Extension“
+   - 3.7 Click on integrations tab and then click on "Build custom Extension"
    - 3.8 Name the first extension as Watson Discovery, upload the **watsonx-openapi.json** file for discovery and then click Next and then Finish.
-   - 3.9 Click on Add for same extension and in authentication section select username password. In username type “apikey” and in password paste the key saved in Watson Discovery step.
+   - 3.9 Click on Add for same extension and in authentication section select username password. In username type "apikey" and in password paste the key saved in Watson Discovery step.
    - 3.10 In the variables section paste the Watson discovery URL saved in the Watson discovery step.
    - 3.11 Create another extension with name Watsonx.ai by uploading open api spec file for watsonx.ai and click Next and then finish.
    - 3.12 Click on Add for watsonx.ai extension and choose OAuth 2.0 as authentication mechanism. 
