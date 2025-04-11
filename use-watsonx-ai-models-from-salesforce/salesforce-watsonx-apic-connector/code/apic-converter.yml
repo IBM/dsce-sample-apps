@@ -740,6 +740,17 @@ x-ibm-configuration:
                     cache-ttl: 900
                     target-url: $(wx.endpoint)$(text-gen)
                     description: For Completions
+                - parse:
+                    version: 2.2.0
+                    title: Parse response payload
+                    parse-settings-reference:
+                      parse-settings:
+                        document_type: json
+                        max_value_length: 5368709121
+                    description: >-
+                      To parse the generated response payload. Also, use custom
+                      parse settings to allow long values.
+                    use-content-type: true
                 - gatewayscript:
                     version: 2.0.0
                     title: Transform response for Completions
@@ -866,6 +877,17 @@ x-ibm-configuration:
                     cache-ttl: 900
                     target-url: $(wx.endpoint)$(text-gen)
                     description: For Chat Completions
+                - parse:
+                    version: 2.2.0
+                    title: Parse response payload
+                    parse-settings-reference:
+                      parse-settings:
+                        document_type: json
+                        max_value_length: 5368709121
+                    description: >-
+                      To parse the generated response payload. Also, use custom
+                      parse settings to allow long values.
+                    use-content-type: true
                 - gatewayscript:
                     version: 2.0.0
                     title: Transform response for Chat Completions
@@ -967,6 +989,17 @@ x-ibm-configuration:
                     cache-ttl: 900
                     target-url: $(wx.endpoint)$(text-embd)
                     description: For Embeddings
+                - parse:
+                    version: 2.2.0
+                    title: Parse response payload
+                    parse-settings-reference:
+                      parse-settings:
+                        document_type: json
+                        max_value_length: 5368709121
+                    description: >-
+                      To parse the generated response payload. Also, use custom
+                      parse settings to allow long values.
+                    use-content-type: true
                 - gatewayscript:
                     version: 2.0.0
                     title: Transform response for Embeddings
