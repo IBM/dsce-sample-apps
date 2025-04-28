@@ -32,8 +32,8 @@ export type PluginMappings = {
 const myExtractionEngine: ExtractionEngine = 'WDU';
 
 export enum PluginID {
-  LLAMA3_1_70B_WDU = 'llama-3-1-70b-instruct@wdu',
-  LLAMA3_1_70B_LANGCHAIN = 'llama-3-1-70b-instruct@langchain',
+  LLAMA3_3_70B_WDU = 'llama-3-3-70b-instruct@wdu',
+  LLAMA3_3_70B_LANGCHAIN = 'llama-3-3-70b-instruct@langchain',
   LLAMA3_2_1B_WDU = 'llama-3-2-1b-instruct@wdu',
   LLAMA3_2_1B_LANGCHAIN = 'llama-3-2-1b-instruct@langchain',
   GRANITE_13b_chat_v2_wdu = 'granite-13b-chat-v2@wdu',
@@ -45,8 +45,8 @@ export enum PluginID {
 }
 
 export enum PluginName {
-  LLAMA3_1_70B_WDU = 'llama-3-1-70b-instruct@wdu',
-  LLAMA3_1_70B_LANGCHAIN = 'llama-3-1-70b-instruct@langchain',
+  LLAMA3_3_70B_WDU = 'llama-3-3-70b-instruct@wdu',
+  LLAMA3_3_70B_LANGCHAIN = 'llama-3-3-70b-instruct@langchain',
   LLAMA3_2_1B_WDU = 'llama-3-2-1b-instruct@wdu',
   LLAMA3_2_1B_LANGCHAIN = 'llama-3-2-1b-instruct@langchain',
   GRANITE_13b_chat_v2_wdu = 'ibm/granite-13b-chat-v2@wdu',
@@ -151,15 +151,15 @@ const NormalPlugins: PluginMappings = {
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },
-  [PluginID.LLAMA3_1_70B_WDU]: {
-    id: PluginID.LLAMA3_1_70B_WDU,
-    name: PluginName.LLAMA3_1_70B_WDU,
+  [PluginID.LLAMA3_3_70B_WDU]: {
+    id: PluginID.LLAMA3_3_70B_WDU,
+    name: PluginName.LLAMA3_3_70B_WDU,
     extractionEngine: 'WDU',
     requiredKeys: [],
   },
-  [PluginID.LLAMA3_1_70B_LANGCHAIN]: {
-    id: PluginID.LLAMA3_1_70B_LANGCHAIN,
-    name: PluginName.LLAMA3_1_70B_LANGCHAIN,
+  [PluginID.LLAMA3_3_70B_LANGCHAIN]: {
+    id: PluginID.LLAMA3_3_70B_LANGCHAIN,
+    name: PluginName.LLAMA3_3_70B_LANGCHAIN,
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },

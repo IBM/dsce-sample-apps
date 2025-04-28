@@ -1,4 +1,4 @@
-Create a detail job description given the example given below.
+Create a detail job description given the example given below. Give only precise anyswer and do not generate any other things.
 
 
 Input:

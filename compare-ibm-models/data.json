@@ -75,7 +75,7 @@
         },
         "type": "text",
         "model_1": "ibm/granite-3-8b-instruct",
-        "model_2": "meta-llama/llama-3-1-70b-instruct",
+        "model_2": "meta-llama/llama-3-3-70b-instruct",
         "button_text": "Generate summary"
       }
     ],
@@ -141,7 +141,7 @@
         },
         "type": "text",
         "model_1": "ibm/granite-3-8b-instruct",
-        "model_2": "meta-llama/llama-3-1-70b-instruct",
+        "model_2": "meta-llama/llama-3-3-70b-instruct",
         "button_text": "Generate sentiment"
       }
     ],
@@ -207,7 +207,7 @@
         },
         "type": "text",
         "model_1": "ibm/granite-3-8b-instruct",
-        "model_2": "meta-llama/llama-3-1-70b-instruct",
+        "model_2": "meta-llama/llama-3-3-70b-instruct",
         "button_text": "Extract email topic"
       }
     ],
@@ -282,7 +282,7 @@
         },
         "type": "markdown",
         "model_1": "ibm/granite-3-8b-instruct",
-        "model_2": "meta-llama/llama-3-1-70b-instruct",
+        "model_2": "meta-llama/llama-3-3-70b-instruct",
         "button_text": "Generate entities"
       }
     ],
@@ -371,7 +371,7 @@
         },
         "type": "markdown",
         "model_1": "ibm/granite-3-8b-instruct",
-        "model_2": "meta-llama/llama-3-1-70b-instruct",
+        "model_2": "meta-llama/llama-3-3-70b-instruct",
         "button_text": "Generate brief"
       }
     ],

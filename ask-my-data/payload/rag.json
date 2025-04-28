@@ -1,17 +1,27 @@
 {
-  "model_id": "meta-llama/llama-2-13b-chat",
+  "model_id": "meta-llama/llama-3-3-70b-instruct",
   "input": "",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 300,
     "min_new_tokens": 10,
-    "stop_sequences": [],
+    "stop_sequences": [
+      "[\\inst]",
+      "[\\USER]"
+    ],
+    "include_stop_sequence": false,
     "repetition_penalty": 1.5
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   },
   "project_id": ""

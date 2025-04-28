@@ -1,4 +1,4 @@
-Instruction:
+Instruction: extract only entities, do not generate other information or details
 
 Input:
 John knows about python, java, C++ and he has studied in USC.

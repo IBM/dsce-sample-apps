@@ -174,7 +174,8 @@ export const ChatMessage: FC<Props> = memo(({message, messageIndex, onEdit, curr
 
                     ) : (
                         <div
-                            className={`prose dark:prose-invert flex-1  ${NEXT_PUBLIC_DISABLE_TESSERACT ? "container mx-auto px-4 py-2" : "max-w-md text-sm whitespace-normal break-words"} `}>
+                            className={`prose dark:prose-invert flex-1  ${NEXT_PUBLIC_DISABLE_TESSERACT ? "container mx-auto px-4 py-2" : "max-w-md text-sm whitespace-normal break-words"} `}
+                            style={{ overflow: 'auto' }}>
                             <MemoizedReactMarkdown
                                 className={`prose  dark:prose-invert flex-1 ${NEXT_PUBLIC_DISABLE_TESSERACT ? "ml-5 max-w-full lg:max-w-4xl" : "max-w-md text-sm whitespace-normal break-words"} `}
                                 remarkPlugins={[remarkGfm, remarkMath]}

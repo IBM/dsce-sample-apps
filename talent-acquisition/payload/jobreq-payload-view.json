@@ -1,5 +1,5 @@
 {
-  "model_id": "meta-llama/llama-3-1-70b-instruct",
+  "model_id": "meta-llama/llama-3-3-70b-instruct",
   "data": {
     "instruction": "Create a detail job description given the example given below.",
     "input": "",
@@ -14,7 +14,10 @@
   },
   "parameters": {
     "decoding_method": "greedy",
-    "stop_sequences": [],
+    "stop_sequences": [
+      "Input:"
+    ],
+    "include_stop_sequence": false,
     "min_new_tokens": 0,
     "max_new_tokens": 2000,
     "repetition_penalty": 1
