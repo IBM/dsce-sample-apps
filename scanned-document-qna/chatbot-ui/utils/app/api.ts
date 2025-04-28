@@ -28,12 +28,12 @@ const MODEL_MAPPING = {
     model: 'ibm/granite-3-8b-instruct',
     extraction: 'langchain',
   },
-  [PluginID.LLAMA3_1_70B_WDU]: {
-    model: 'meta-llama/llama-3-1-70b-instruct',
+  [PluginID.LLAMA3_3_70B_WDU]: {
+    model: 'meta-llama/llama-3-3-70b-instruct',
     extraction: 'wdu',
   },
-  [PluginID.LLAMA3_1_70B_LANGCHAIN]: {
-    model: 'meta-llama/llama-3-1-70b-instruct',
+  [PluginID.LLAMA3_3_70B_LANGCHAIN]: {
+    model: 'meta-llama/llama-3-3-70b-instruct',
     extraction: 'langchain',
   },
   [PluginID.LLAMA3_2_1B_WDU]: {
