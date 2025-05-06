@@ -1,0 +1,17 @@
+// @import "~carbon-components/scss/globals/scss/typography";
+// @import "~carbon-components/scss/globals/scss/spacing";
+
+@import "@carbon/layout";
+@import "@carbon/type";
+
+// .error_page {
+// 	// background-image: url(./assets/media/error/bg1.jpg);
+// 	height: 100%;
+// }
+
+.error-page {
+	padding-left: 3rem;
+	// background-image: url('./assets/media/error/bg1.jpg');
+	// background: url('./assets/media/error/bg1.jpg') no-repeat center center fixed;
+    // background-size: cover;
+}

@@ -1,0 +1,283 @@
+
+<div class="aa-chat-widget" cdsGrid>
+	<div class="closed" *ngIf="!isOpen" >
+		<svg icon cdsIcon="chat" (click)="openChat()" size="16"></svg>
+	</div>
+
+	<div class="opened" *ngIf="isOpen" cdsRow >
+		<div class="content" cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+			<div class="chat-header">
+				<!-- <div class="title"> {{title}} </div> -->
+				<div class="title">  </div>
+
+				<!-- <input type="checkbox" [(ngModel)]="enableDetection" > -->
+				<!-- <cds-checkbox
+					indeterminate="false"
+					[(ngModel)]="enableDetection">
+
+				</cds-checkbox> -->
+
+				<ng-template #template let-tooltip="tooltip">
+					<p>This is some tooltip text. This box shows the maximum amount of text that should appear inside.
+						If more room is needed please use a modal instead.</p>
+					<div class="bx--tooltip__footer">
+					</div>
+				</ng-template>
+
+				<cds-icon-button
+					size="sm"
+					iconOnly="true"
+					description="Refresh"
+					align="top"
+					(click)="restartChat()" >
+					<svg icon cdsIcon="restart" size="16" class="cds--btn__icon"></svg>
+				</cds-icon-button>
+				<!-- <button
+					cdsButton="tertiary"
+					size="sm"
+					[iconOnly]="true"
+					assistiveTextPlacement="top"
+					assistiveTextAlignment="center"
+					(click)="closeChat()" >
+					<svg icon cdsIcon="close" size="16"></svg>
+					<span class="bx--assistive-text">Close</span>
+				</button> -->
+
+			</div>
+
+			<div #chatContent class="chat-content" >
+				<div *ngFor="let conversation of conversations" >
+					<div class="media-area">
+						<div class="media" *ngFor="let dialog of conversation.replies">
+
+							<a class="float-left" href="javascript:void(0);"
+								*ngIf="dialog.input && dialog.input.text && dialog.input.text != ''">
+								<div class="avatar">
+									<img class="media-object" src="assets/images/avatars/profile.jpg" alt="..." />
+								</div>
+							</a>
+
+							<div class="media-body">
+
+								<div *ngIf="dialog.input && dialog.input.text">
+									<!-- <h4 *ngIf="loggedInUser && loggedInUser.firstName" class="media-heading">
+									  {{loggedInUser.firstName}} <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4>
+									<h4 *ngIf="!loggedInUser || !loggedInUser.firstName" class="media-heading">You <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4> -->
+									<h4 class="media-heading">You <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4>
+									<h6 class="text-muted"></h6>
+
+									<p *ngIf="dialog.input && dialog.input.text">{{dialog.input.text}}</p>
+
+								</div>
+
+								<div class="media media-post" *ngIf="dialog.output && dialog.output.generic && dialog.output.generic.length > 0" >
+									<a class="float-left" href="javascript:void(0);">
+										<div class="avatar watson">
+											<img class="media-object" src="assets/images/avatars/watson-avatar.png"
+											alt="..." />
+										</div>
+									</a>
+
+									<div class="media-body">
+										<h4 class="media-heading">Watson <small>&middot;
+											{{dialog.output.timestamp | amTimeAgo}}</small></h4>
+										<h6 class="text-muted"></h6>
+
+										<div *ngFor="let reply of dialog.output.generic">
+											<div *ngIf="reply.response_type == 'text' && reply.text">
+												<p *ngIf="reply.text.constructor.toString().indexOf('String') > -1">
+												  <span class="small" [innerHtml]="reply.text | markdown"></span>
+												</p>
+												<div *ngIf="reply.text.constructor.toString().indexOf('Array') > -1">
+												  <ul  *ngFor="let textVal of reply.text">
+													<li><span class="small" [innerHtml]="textVal | markdown"></span></li>
+												  </ul>
+												</div>
+											  </div>
+
+											<div *ngIf="reply.response_type == 'image' && reply.source">
+												<img src="{{reply.source}}" class="img-fit" alt="{{reply.title}}" />
+											</div>
+
+											<div *ngIf="reply.response_type == 'option'">
+												<p><span [innerHtml]="reply.title" *ngIf="reply.title"></span></p>
+												<p><span [innerHtml]="reply.description" *ngIf="reply.description"></span></p>
+												<div *ngFor="let option of reply.options">
+												  <div class="video-content" *ngIf="option.label == 'video' && option.value.input && option.value.input.text">
+													<vg-player>
+													  <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+														  <source src="{{option.value.input.text}}" type="video/mp4">
+													  </video>
+													</vg-player>
+												  </div>
+												  <div *ngIf="option.label == 'link' && option.value.input && option.value.input.text">
+													<a href="{{option.value.input.text}}" target="_blank">Click here for more details.</a>
+												  </div>
+												  <div *ngIf="option.label != 'video' && option.label != 'link' && option.value.input && option.value.input.text">
+													<cds-tag type="blue" (click)="optionSelected(option)">{{option.label}}</cds-tag>
+												  </div>
+												</div>
+											</div>
+
+											<div *ngIf="reply.response_type == 'search'">
+												<h5 *ngIf="!reply.header">Here are some search results from Discovery: </h5>
+												<h5 *ngIf="reply.header">{{reply.header}} </h5>
+												<div class="result"
+												  *ngFor="let searchResult of reply.results; index as i">
+													<div *ngIf="i < 3">
+														<div class="result-title">
+															<h5><a href="javascript:void(0)" (click)="openPDF(searchResult)">{{searchResult.title}}</a></h5>
+														</div>
+														<div class="result-preview" *ngIf="searchResult.bodySnippet">
+															<p>{{searchResult.bodySnippet}}</p>
+														</div>
+														<div [innerHTML] *ngIf="searchResult.body">
+															<p>{{searchResult.body | slice: 0:100}}</p>
+														</div>
+														<!-- <div [innerHTML] *ngIf="searchResult.text">
+															<p>{{searchResult.text | slice: 0:100}}</p>
+														</div> -->
+														<div [innerHTML]="searchResult.highlight.body[0] | safe: 'html'" *ngIf="searchResult.highlight && searchResult.highlight.body">
+														</div>
+														<div class="result-preview" *ngIf="searchResult.level">
+															<label>Level: </label> {{searchResult.level}}
+														</div>
+														<div class="result-preview" *ngIf="searchResult.category">
+															<label>Category: </label> {{searchResult.category}}
+														</div>
+														<div class="result-link" *ngIf="searchResult.demo">
+															<cds-tag type="blue">
+																<a href="{{searchResult.demo}}" target="_blank"> Demo
+																</a>
+															</cds-tag>
+														</div>
+														<div class="result-link" *ngIf="searchResult.tutorial">
+															<cds-tag type="blue">
+																<a href="{{searchResult.tutorial}}" target="_blank"> Tutorial
+																</a>
+															</cds-tag>
+														</div>
+														<div class="result-link" *ngIf="searchResult.seismic">
+															<cds-tag type="blue">
+																<a href="{{searchResult.seismic}}" target="_blank"> Seismic
+																</a>
+															</cds-tag>
+														</div>
+														<div class="result-link" *ngIf="searchResult.documentation">
+															<cds-tag type="blue">
+																<a href="{{searchResult.documentation}}" target="_blank"> Documentation
+																</a>
+															</cds-tag>
+														</div>
+														<div class="result-link" *ngIf="searchResult.url">
+															<cds-tag type="blue">
+																<a href="javascript:void(0)" (click)="openPDF(searchResult)"> More details..
+																</a>
+															</cds-tag>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+
+											<div *ngIf="reply.response_type == 'suggestion'">
+												<p><span [innerHtml]="reply.title" *ngIf="reply.title"></span></p>
+												<p><span [innerHtml]="reply.description" *ngIf="reply.description"></span></p>
+												<div *ngFor="let suggestion of reply.suggestions">
+												  <div *ngIf="suggestion.label && suggestion.value.input.suggestion_id">
+													<cds-tag type="blue" (click)="suggestionSelected(suggestion)">{{suggestion.label}}</cds-tag>
+												  </div>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div
+					cdsRow
+					gutter="true"
+					leftGutter="true"
+					rightGutter="true"
+					condensed="false">
+              		<div cdsCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}"></div>
+					<div cdsCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+						<cds-loading [isActive]="loading.active" [size]="loading.size" [overlay]="loading.overlay"></cds-loading>
+					</div>
+            	</div>
+			</div>
+
+			<div class="chat-footer" >
+					<div *ngIf="hasAudioDevice && token">
+						<button
+							cdsButton="primary"
+							size="sm"
+							[iconOnly]="true"
+							assistiveTextPlacement="top"
+							assistiveTextAlignment="center"
+							(click)="startStream()"
+							*ngIf="!isStreaming" >
+							<svg icon cdsIcon="microphone" size="16"></svg>
+							<span class="bx--assistive-text">Speak</span>
+						</button>
+
+						<button
+							cdsButton="primary"
+							size="sm"
+							[iconOnly]="true"
+							assistiveTextPlacement="top"
+							assistiveTextAlignment="center"
+							(click)="stopStream()"
+							*ngIf="isStreaming" >
+							<svg icon cdsIcon="microphone--filled" size="16" class="cds--btn__icon"></svg>
+							<!-- <span class="bx--assistive-text">Stop</span> -->
+						</button>
+
+					</div>
+
+					<div class="chat-input">
+						<input
+						cdsText
+						size="md"
+						placeholder="Enter message"
+						name="userInput"
+						[(ngModel)]="userInput.text"
+						placeholder="Enter text here..."
+						(keyup.enter)="sendMessage()">
+					</div>
+
+					<button
+						cdsButton="primary"
+						size="sm"
+						[iconOnly]="true"
+						assistiveTextPlacement="top"
+						assistiveTextAlignment="center"
+						(click)="sendMessage()" >
+						<svg icon cdsIcon="send" size="16" class="cds--btn__icon"></svg>
+						<!-- <span class="bx--assistive-text">Send</span> -->
+					</button>
+
+			</div>
+
+		</div>
+
+	<!-- <div cdsRow >
+		<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+
+			Chat Content
+
+		</div>
+	</div>		 -->
+	</div>
+</div>

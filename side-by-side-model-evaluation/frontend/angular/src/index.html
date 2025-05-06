@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+	<meta charset="utf-8">
+	<title>IBM Watsonx Demo</title>
+	<base href="/">
+
+	<!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png"> -->
+	<link rel="manifest" href="manifest.json">
+	<link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="shortcut icon" href="https://carbondesignsystem.com/icons/icon-48x48.png">
+	<meta name="msapplication-config" content="assets/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffff00">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_xN3mG2LL27jctSXHC4eiroRvOI454SE&v=3&libraries=drawing"></script> -->
+
+	<!-- <script>
+		var global = global || window;
+		var Buffer = Buffer || [];
+		var process = process || {
+		  env: { DEBUG: undefined },
+		  version: []
+		};
+	  </script> -->
+
+	<!-- <script>
+		if (global === undefined) {
+			var global = window;
+		}
+	</script> -->
+
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+ <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+ <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+</head>
+<body>
+	<app-root>Loading...</app-root>
+
+	<script>
+		// Uncomment the following lines to activate the service worker
+		// if (navigator.serviceWorker) {
+		//   navigator.serviceWorker.register("sw.js").then(() => {
+		//     console.log("Service worker installed");
+		//   }, err => {
+		//     console.error("Service worker error:", err);
+		//   });
+		// }
+	</script>
+
+<script>
+	parent.postMessage(location.href, location.origin)
+</script>
+
+<!-- <script>
+	window.watsonAssistantChatOptions = {
+		integrationID: "d1e873b2-9c0a-462b-89de-3ccb4b15b228", // The ID of this integration.
+		region: "us-south", // The region your integration is hosted in.
+		serviceInstanceID: "f00a3cc1-5d55-45d6-8f6b-c326dcab8aee", // The ID of your service instance.
+		onLoad: function(instance) {
+			function onReceiveHandler(event) {
+				console.log(event.type, event.data);
+				// router.navigate(['/devices']);
+				if(event.data && event.data.context){
+					const context = event.data.context;
+					if(context['skills'] && context['skills']['main skill']
+						&& context['skills']['main skill']['user_defined']
+						&& context['skills']['main skill']['user_defined']['next_action']
+						&& context['skills']['main skill']['user_defined']['next_action']['action']
+						&& context['skills']['main skill']['user_defined']['next_action']['action'] == 'goto-page'){
+							// console.log('next-action: >> ', context['skills']['main skill']['user_defined']['next_action']['action']);
+							// if(context['skills']['main skill']['user_defined']['next_action']['page'] == 'home'){
+							// 	window.location.href = './external/index.html';
+							// }
+							const loadPage = "#/"+ context['skills']['main skill']['user_defined']['next_action']['page'];
+							console.log('loadPage: >> ', loadPage);
+							window.location.href = loadPage;
+
+					}
+				}
+
+			}
+
+			function refreshChat(event) {
+				console.log('In refreshChat:  >>');
+				instance.destroySession();
+			}
+
+			instance.on({ type: "receive", handler: onReceiveHandler });
+			instance.on({ type: "window:close", handler: refreshChat });
+			instance.on({ type: "customPanel:close", handler: refreshChat });
+
+			instance.render();
+		}
+	  };
+	setTimeout(function(){
+	  const t=document.createElement('script');
+	  t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js"
+	  document.head.appendChild(t);
+	});
+  </script> -->
+
+</body>
+</html>

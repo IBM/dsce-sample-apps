@@ -1,0 +1,26 @@
+// @import "~carbon-components/scss/globals/scss/typography";
+// @import "~carbon-components/scss/globals/scss/spacing";
+@import "../../../../assets/scss/scss-utils.scss";
+// @import '@carbon/charts-angular/styles.min.css';
+// @import '@carbon/charts/styles.css';
+
+.cds--content {
+
+	// background-image: url('../../../../assets/images/bg3.png');
+	// background-repeat: no-repeat;
+  	// background-size: contain;
+
+
+	min-height:100vh;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	padding-bottom: 20rem;
+}
+
+
+.cds--grid {
+	margin-inline:inherit;
+	// max-inline-size: 99rem;
+	padding-inline: 0rem;
+  }

@@ -1,0 +1,203 @@
+
+// // Custom Theming for Angular Material
+// // For more information: https://material.angular.io/guide/theming
+// @use '@angular/material' as mat;
+// // Plus imports for other components in your app.
+
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
+// @include mat.core();
+
+// // Define the palettes for your theme using the Material Design palettes available in palette.scss
+// // (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// // hue. Available color palettes: https://material.io/design/color/
+// $carbon-ui-primary: mat.define-palette(mat.$indigo-palette);
+// $carbon-ui-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// // The warn palette is optional (defaults to red).
+// $carbon-ui-warn: mat.define-palette(mat.$red-palette);
+
+// // Create the theme object. A theme consists of configurations for individual
+// // theming systems such as "color" or "typography".
+// $carbon-ui-theme: mat.define-light-theme((
+//   color: (
+//     primary: $carbon-ui-primary,
+//     accent: $carbon-ui-accent,
+//     warn: $carbon-ui-warn,
+//   )
+// ));
+
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// @include mat.all-component-themes($carbon-ui-theme);
+
+$font-path: '~carbon-components/src/globals/fonts';
+
+// @use "@carbon/styles";
+
+@use "@carbon/styles/scss/config" with (
+	// Use flexbox for grid - stick to CSS Grid or Flexbox
+	// CSS Grid has become the default grid system in v11
+	$use-flexbox-grid: true
+);
+
+@use "@carbon/styles";
+
+.white {
+	@include styles.theme(styles.$white);
+}
+
+.g10 {
+	@include styles.theme(styles.$g10);
+}
+
+.g90 {
+	@include styles.theme(styles.$g90);
+}
+
+.g100 {
+	@include styles.theme(styles.$g100);
+}
+
+
+// Want to use only one theme? Add the css variables directly in root
+
+body {
+	@include styles.theme(styles.$white);
+	font-size: small;
+}
+
+html, body {
+	// background-color: #ffffff;
+	min-height:100vh;
+	height: auto;
+}
+
+.cds--grid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 99rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.cds--breadcrumb {
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 0.29;
+    letter-spacing: 0.16px;
+    display: inline;
+	margin-left: 25px !important;
+    padding-top: 10px !important;
+}
+
+.cds--breadcrumb-item {
+    display: inline;
+	margin: 10px;
+	padding-left: 5px;
+}
+
+a:link {
+	text-decoration: none;
+	font-weight: 400;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:active {
+	text-decoration: underline;
+}
+
+.cds--side-nav__link-text {
+	font-size: small;
+	font-weight: 400;
+}
+
+.cds--side-nav__item--active .cds--side-nav__link-text {
+	font-weight: 600;
+}
+
+.dashboard{
+	.cds--header ~ .cds--content {
+		margin-top: 0rem;
+	}
+}
+
+p {
+	font-size: small !important;
+}
+
+.cds--number--sm.cds--number input[type="number"]{
+	padding-inline-end: 4rem !important;
+	min-inline-size: 6.375rem;
+}
+
+// //// _theme-tokens.scss
+// // White theme tokens
+// $interactive-01: #0062ff !default;
+// $interactive-02: #171717 !default;
+// $interactive-03: #0062ff !default;
+// $interactive-04: #0062ff !default;
+// $ui-background: #ffffff !default;
+// $ui-01: #f3f3f3 !default;
+// $ui-02: #ffffff !default;
+// $ui-03: #dcdcdc !default;
+// $ui-04: #8c8c8c !default;
+// $ui-05: #171717 !default;
+// $text-01: #171717 !default;
+// $text-02: #565656 !default;
+// $text-03: #8c8c8c !default;
+// $text-04: #ffffff !default;
+// $icon-01: #171717 !default;
+// $icon-02: #565656 !default;
+// $icon-03: #ffffff !default;
+// $link-01: #0062ff !default;
+// $link-02: #0043ce !default;
+// $field-01: #f3f3f3 !default;
+// $field-02: #ffffff !default;
+// $inverse-01: #ffffff !default;
+// $inverse-02: #3d3d3d !default;
+// $support-01: #da1e28 !default;
+// $support-02: #24a148 !default;
+// $support-03: #fdd13a !default;
+// $support-04: #054ada !default;
+// $overlay-01: rgba(23, 23, 23, 0.5) !default;
+// $focus: #0062ff !default;
+// $hover-primary: #0353e9 !default;
+// $active-primary: #0530ad !default;
+// $hover-primary-text: #054ada !default;
+// $hover-secondary: #4c4c4c !default;
+// $active-secondary: #6f6f6f !default;
+// $hover-tertiary: #0353e9 !default;
+// $active-tertiary: #0530ad !default;
+// $hover-ui: #e5e5e5 !default;
+// $active-ui: #bebebe !default;
+// $selected-ui: #dcdcdc !default;
+// $hover-selected-ui: #cacaca !default;
+// $hover-danger: #ba1b23 !default;
+// $active-danger: #750e13 !default;
+// $hover-row: #e5e5e5 !default;
+// $visited-link: #8a3ffc !default;
+// $disabled-01: #f3f3f3 !default;
+// $disabled-02: #bebebe !default;
+// $disabled-03: #8c8c8c !default;
+// $highlight: #c9deff !default;
+// $brand-01: #0062ff !default;
+// $brand-02: #171717 !default;
+// $brand-03: #0062ff !default;
+// $active-01: #bebebe !default;
+// $hover-field: #e5e5e5 !default;
+
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

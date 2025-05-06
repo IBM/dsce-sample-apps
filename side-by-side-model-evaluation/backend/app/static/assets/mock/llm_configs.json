@@ -1,0 +1,91 @@
+{
+	"Banking": {
+		"wa_logs_config": {
+			"from_date": "2024-03-25T12:56:47.162Z",
+			"to_date": "2024-03-26T14:56:47.162Z",
+			"customerId": "",
+			"pageLimit": 50,
+			"assistantId": "",
+			"sort": "request_timestamp"
+		},
+		"ss_chat_summary": {
+			"model_id": "ibm/granite-13b-chat-v2",
+			"input_prefix": "<|system|>\nYou are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions. You\nare helpful and harmless and you follow ethical guidelines and promote positive behavior.\n\n<|user|>\nYou are a bank advisor. When generating responses, prioritize correctness, i.e., ensure that your response is correct given the context and user query, and that it is grounded in the context. Furthermore, make sure that the response is supported by the given document or context.  Always make sure that your response is relevant to the question.  Read the given call transcript document carefully and generate a detailed summary with the following instructions:\n1: Restrict your summary to the text available within the document.\n2: Include all the points discussed from the call transcript in detail.\n3: If the call was transferred to an advisor then clarify the reason behind transferring the call to an advisor.\n4: Do not repeat the same information in your response.\n5: Do not make up a false response.\n6: Your response should be in proper English and grammatically correct.\n7: Mention in summary if the sentiment of call was positive, negative or neutral.\n\n[Document]\n",
+			"output_prefix": "\n\n[End]\n\n<|assistant|>",
+			"parameters": {
+				"decoding_method": "greedy",
+				"max_new_tokens": 300,
+				"min_new_tokens": 100,
+				"stop_sequences": [
+					"****",
+					"###"
+				],
+			"repetition_penalty": 1.13
+			},
+			"project_id": "fe569080-aa4f-4a50-b3ef-a8e6fb268e23"
+		},
+		"aa_chat_summary": {
+			"model_id": "ibm/granite-13b-chat-v2",
+			"input_prefix": "<|system|>\nYou are Granite Chat, an AI language model developed by IBM. You are a cautious assistant. You carefully follow instructions. You\nare helpful and harmless and you follow ethical guidelines and promote positive behavior.\n\n<|user|>\nYou are a bank advisor. When generating responses, prioritize correctness, i.e., ensure that your response is correct given the context and user query, and that it is grounded in the context. Furthermore, make sure that the response is supported by the given document or context.  Always make sure that your response is relevant to the question.  Read the given call transcript document carefully and generate a detailed summary with the following instructions:\n1: Restrict your summary to the text available within the document.\n2: Include all the points discussed from the call transcript in detail.\n3: If the call was transferred to an advisor then clarify the reason behind transferring the call to an advisor.\n4: Do not repeat the same information in your response.\n5: Do not make up a false response.\n6: Your response should be in proper English and grammatically correct.\n7: Mention in summary if the sentiment of call was positive, negative or neutral.\n\n[Document]\n",
+			"output_prefix": "\n\n[End]\n\n<|assistant|>",
+			"input": "\n[Agent] Hello John I had the opportunity to check on your interest in the master card plus it's great that you are considering this option in order to customize the offer to your needs can you please tell me your desired credit limit and any specific features you're looking for. \n\n\n[Customer] I would like a credit limit of  &euro;5000 and I'm interested in features like apple pay and worldwide acceptance. \n\n\n[Agent] Perfect thank you FOR specifying in order to tailor the master card plus to your needs we can certainly consider a credit limit of  &euro;5000 additionally I want to confirm that your requested features such as apple pay and worldwide acceptance are included however before finalizing let me make a quick assessment to ensure that this limit is in line with your financial profile may I ask you about your average monthly expenses to check if the proposed limit is suitable for your needs. \n\n\n[Customer] My average monthly expenditures are around  &euro;2000. \n\n\n[Agent] Thank you John based on your financial profile a credit limit of 5000 euro seems appropriate and aligns well with your monthly expenses we can proceed with the desired credit limit I'll start a recording to capture your confirmation for the customized MasterCard plus offer including the  &euro;39 annual fee and the approved credit limit of  &euro;5000 do you agree with that. \n\n\n[Customer] Yes that sounds good let's proceed with that. \n\n\n[Agent] Excellent John to get the process started I'll need your verbal approval I will start a recording to capture your confirmation for the customized MasterCard plus offer do you agree with that. \n\n\n[Customer] Yes I agree. \n\n\n[Agent] Before I mention the contract details please tell me your full name and date of birth. \n\n\n[Customer] I'm John Smith born on 12/31/1990. \n\n\n[Agent] Thank you John based on your request I will initiate the master card plus application process for you with a credit limit of  &euro;5000 and an annual fee of  &euro;39 please go ahead and verbally confirm your agreement to proceed with the provided terms. \n\n\n[Customer] I confirm my agreement with the credit card offer discussed. \n\n\n[Agent] Perfect thank you for your confirmation you will shortly receive an email with the final agreement for your records the card will be dispatched as soon as the application is processed and you can activate it online starting from tomorrow is there anything else I can help you with. \n\n\n[Customer] That sounds great I appreciate the quick turnaround I don't need anything else thank you. \n\n\n[Agent] It's been a pleasure John in the meantime if you have any questions please feel free to contact us at any time have a great day. \n\n",
+			"parameters": {
+				"decoding_method": "greedy",
+				"max_new_tokens": 300,
+				"min_new_tokens": 80,
+				"stop_sequences": [
+					"****",
+					"###"
+				],
+			"repetition_penalty": 1
+			},
+			"project_id": "fe569080-aa4f-4a50-b3ef-a8e6fb268e23"
+		}
+	},
+	"TechSupport":{
+		"wa_logs_config": {
+			"from_date": "2024-04-16T03:06:46.002Z",
+			"to_date": "2024-04-17T03:06:46.002Z",
+			"customerId": "",
+			"pageLimit": 50,
+			"assistantId": "",
+			"sort": "request_timestamp"
+		},
+		"ss_chat_summary": {
+			"model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+			"input_prefix": "CALL TRANSCRIPT:\n###\n",
+			"output_prefix": "\n###\n\nINSTRUCTION: You are a customer care quality check representative.  Your tasks are as follows:\n1: Write a short summary from the above given call transcript with important details.  \n2: Only use the information from the given call transcript.\n3: Include all the points from the transcript in detail.\n4: Do not repeat your answer.\n5: Do not make up your response on something which is not in the given call transcript.\nOutput:\n",
+			"parameters": {
+				"decoding_method": "greedy",
+				"max_new_tokens": 250,
+				"min_new_tokens": 50,
+				"stop_sequences": [
+					"\"\"",
+					"\"\"\""
+				],
+				"repetition_penalty": 1
+			},
+			"project_id": "fe569080-aa4f-4a50-b3ef-a8e6fb268e23"
+		},
+		"aa_chat_summary": {
+			"model_id": "ibm-mistralai/mixtral-8x7b-instruct-v01-q",
+			"input_prefix": "CALL TRANSCRIPT:\n###\n",
+    		"output_prefix": "\n###\n\nINSTRUCTION: You are a customer care quality check representative.  Your tasks are as follows:\n1: Write a short summary from the above given call transcript with important details.  \n2: Only use the information from the given call transcript.\n3: Include all the points from the transcript in detail.\n4: Do not repeat your answer.\n5: Do not make up your response on something which is not in the given call transcript.\nOutput:\n",
+			"input": "1\n[Alex] Thank you for calling ABC tech support. I'm Alex, can I please have your contact number.\n\n2\n[Customer] 987-654-3210.\n\n3\n[Alex] Thank you very much Mr Smith for the verification I see from your previous contact history that you were facing some issues with internet connectivity on your modem router are you still facing the same issue.\n\n4\n[Customer] No the internet issue seems to be resolved now I called for a different information that I need.\n\n5\n[Alex] I'm glad to hear that you are now able to connect to the internet with your modem router and I would also like to thank you for providing the positive customer satisfaction feedback so how can I help you today with.\n\n6\n[Customer] How do I disable the DHCP server feature in the cable modem router.\n\n7\n[Alex] In order to proceed further while looking into your product details I do see that the technical support warranty on this unit has gone beyond the 90 days of free phone support and I hope you should be aware about that too no worries though let me just go ahead and help you in activating the technical support so that we can start the work and we'll see what we are up to I would like to suggest you with 2 economical options the 12 and the 24 month contracts may I know which support option you would like to go with.\n\n8\n[Customer] But why should I pay for the support.\n\n9\n[Alex] I hope you know that every device which you use has a limitation of technical support like that our devices come with only 90 days of free technical support over the phone based on your products entitlement it is now beyond the 90 days and you can reactivate your technical support with these options let me help you reactivate it okay may I know which support option you would like to go with.\n\n10\n[Customer] Okay please add 12 months support.\n\n11\n[Alex] Okay I've just initiated the process to add 12 month support on your account still in your initial query of how to disable the DHCP server feature in the cable modem router please not that by default the cable modem router acts as a DHCP server the cable modem router assigns IP DNS server and default gateway addresses to all computers connected to the land the assign default gateway address is in the lan address of the cable modem right you can use another device on your network is the DHCP server or specify the network settings on all of your computers.\n\n12\n[Customer] Okay thanks for your quick help thank you.",
+			"parameters": {
+				"decoding_method": "greedy",
+				"max_new_tokens": 300,
+				"min_new_tokens": 80,
+				"stop_sequences": [
+					"**",
+					"****",
+					"\n\n",
+					"\n\n\n",
+					"###"
+				],
+			"repetition_penalty": 1
+			},
+			"project_id": "fe569080-aa4f-4a50-b3ef-a8e6fb268e23"
+		}
+	}
+}

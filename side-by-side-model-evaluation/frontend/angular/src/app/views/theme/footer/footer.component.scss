@@ -1,0 +1,32 @@
+
+.bx--list--unordered > .bx--list__item {
+	position: inherit;
+}
+
+.footer--grid {
+	padding-top: 2rem;
+	padding-left: 4rem;
+	padding-right: 4rem;
+	padding-bottom: 3rem;
+}
+
+.bx--list__item a {
+	text-decoration: none;
+}
+.app-footer {
+	background-color: #2c2c2c; /* Dark background */
+	color: rgb(198, 198, 198); /* Light text */
+	font-size: 50px; /* Adjust font size */
+	text-align: center; /* Center the text */
+	box-sizing: border-box;
+	padding-left: 1rem; 
+	padding-right: 5rem; 
+	line-height: 80px;
+	// margin-bottom: 10px;
+  }
+  
+  .app-footer p {
+	margin: 0; /* Remove default margin */
+	line-height: 1.8; /* Improve readability */
+  }
+  

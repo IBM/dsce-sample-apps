@@ -1,0 +1,1032 @@
+<div class="comparison" cdsGrid [condensed]="false">
+
+	<!-- <cds-breadcrumb >
+		<cds-breadcrumb-item >
+			<a [routerLink]="['/home']">Home</a>
+		</cds-breadcrumb-item>
+	</cds-breadcrumb> -->
+
+	<div class="body-text" cdsRow >
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+				<div cdsRow >
+					<div cdsCol class="titleContainer" [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+						<!-- <h3 > Compare LLM Foundation Models </h3> -->
+					</div>
+
+					<div class="menu-button" cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}">
+
+						<cds-icon-button
+							type="button"
+							kind="secondary"
+							description="Demo Documentation"
+							align="bottom"
+							size="sm"
+							(click)="openNewTab('https://dsce-llms-corpus-test.s3.us-south.cloud-object-storage.appdomain.cloud/CompareLLMs.pdf')">
+							<svg cdsIcon="information" size="16" class="cds--btn__icon"></svg>
+						</cds-icon-button>
+
+						<cds-icon-button
+							type="button"
+							kind="tertiary"
+							description="Refresh"
+							align="bottom"
+							size="sm"
+							(click)="refreshPage()">
+							<svg cdsIcon="reset" size="16" class="cds--btn__icon"></svg>
+						</cds-icon-button>
+
+						<cds-icon-button
+							type="button"
+							kind="tertiary"
+							description="Settings"
+							align="bottom"
+							size="sm"
+							(click)="showSettingsPanel()"
+							>
+							<svg cdsIcon="settings" size="16" class="cds--btn__icon"></svg>
+						</cds-icon-button>
+
+					</div>
+
+				</div>
+
+				<div cdsRow class="mainPageRow"  >
+					<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+						<div *ngIf="!showSettings">
+							<cds-sidenav-item (click)="showPageContent('QnA')"  [active]="showContent == 'QnA'" >
+								Question Answering
+							</cds-sidenav-item>
+							<cds-sidenav-item (click)="showPageContent('SUMMARIZATION')"  [active]="showContent == 'SUMMARIZATION'" >
+								Summarization
+							</cds-sidenav-item>
+							<!-- <cds-sidenav-item (click)="showPageContent('EXTRACTION')"  [active]="showContent == 'EXTRACTION'" >
+								Extraction
+							</cds-sidenav-item> -->
+							<cds-sidenav-item (click)="showPageContent('CLASSIFICATION')"  [active]="showContent == 'CLASSIFICATION'" >
+								Classification
+							</cds-sidenav-item>
+							<cds-sidenav-item (click)="showPageContent('GENERATION')"  [active]="showContent == 'GENERATION'" >
+								Generation
+							</cds-sidenav-item>
+						</div>
+					</div>
+					<div class="pageContent" cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}"  >
+						<div cdsRow *ngIf="notificationObj" >
+							<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+								<cds-inline-notification [notificationObj]="notificationObj" (close)="closeNotification()" ></cds-inline-notification>
+								<br /><br />
+							</div>
+						</div>
+						<div *ngIf="showSettings">
+								<cds-tabs
+									type="inline"
+									followFocus="true"
+									isNavigation="false"
+									cacheActive="true"
+								>
+									<cds-tab heading="RAG">
+										<form [formGroup]="ragForm" *ngIf="ragForm" >
+											<h5>RAG Configuration</h5><br/>
+
+											<div cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 7, 'md': 7, 'sm': 7}" >
+													<div>
+														<p>
+															Download Sample Document: <br>
+															
+															<a href="https://dsce-llms-corpus-test.s3.us-south.cloud-object-storage.appdomain.cloud/IBM_Annual_Report_2023.pdf" target="_blank" style="text-decoration: none; color: #0072c3;">
+															  IBM_Annual_Report_2023
+															</a> <br>
+															
+															<a href="https://dsce-llms-corpus-test.s3.us-south.cloud-object-storage.appdomain.cloud/Matercard_FAQs.pdf" target="_blank" style="text-decoration: none; color: #0072c3;">
+															  Matercard_FAQs
+															</a> <br>
+															
+															<a href="https://dsce-llms-corpus-test.s3.us-south.cloud-object-storage.appdomain.cloud/PRINTER_cpd58007.pdf" target="_blank" style="text-decoration: none; color: #0072c3;">
+															  PRINTER_cpd58007
+															</a>
+														  </p>														  
+													</div>
+													<br/>
+													<p>Select a document to upload:</p>
+														<form>
+														<div>
+															<label>
+															<input
+																type="radio"
+																name="document"
+																value="IBM_Annual_Report_2023"
+																(change)="onFileSelect($event)"
+															/>
+															<a style="color: #000000;">
+																IBM_Annual_Report_2023
+															</a>
+															</label>
+														</div>
+														<div>
+															<label>
+															<input
+																type="radio"
+																name="document"
+																value="Matercard_FAQs"
+																(change)="onFileSelect($event)"
+															/>
+															<a style="color: #000000;">
+																Matercard_FAQs
+															</a>
+															</label>
+														</div>
+														<div>
+															<label>
+															<input
+																type="radio"
+																name="document"
+																value="PRINTER_cpd58007"
+																(change)="onFileSelect($event)"
+															/>
+															<a style="color: #000000;">
+																PRINTER_cpd58007
+															</a>
+															</label>
+														</div>
+														<!-- <button type="button" (click)="onFileSelect()">Submit</button> -->
+														</form>
+
+													<!-- <cds-file-uploader
+														*ngIf="showUploader"
+														title="Upload Documents"
+														description="only .pdf and .txt files. 5mb max file size."
+														buttonText="Add Files"
+														buttonType="primary"
+														
+														size="sm"
+														fileItemSize="md"
+														drop="true"
+														dropText="Drag and drop file here or upload"
+														(filesChange)="filesAdded($event)"
+														accept=".pdf"
+													></cds-file-uploader> -->
+													<!-- to make this button for in memory only then add this condition [disabled]="!isAdmin && selectedVectorDB != 'IN_MEMORY'" > -->
+												</div>
+												<!-- <div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+													<cds-text-label *ngIf="addedFiles && addedFiles.length > 0">
+														Enter New Collection Name
+														<input cdsText type="text" class="input-field" formControlName="collection_name" readonly>
+													</cds-text-label>
+												</div> -->
+											</div>
+											<br/>
+
+											<div cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+													<cds-label >
+														Select VectorDB
+													</cds-label>
+													<cds-dropdown
+														size="md"
+														placeholder="Select VectorDB"
+														formControlName="db_name"
+														(selected)="vectordbSelected($event)"
+														itemValueKey="id"
+														>
+														<cds-dropdown-list [items]="VECTORDBS"></cds-dropdown-list>
+													</cds-dropdown>
+												</div>
+												
+												<div cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}">
+														<cds-text-label>
+															Select Collection from DB
+															<input
+																id="selectedFile"
+																type="text"
+																[value]="selectedFileName"
+																readonly
+																cdsText
+																class="input-field"
+																style="width: 100%;"
+															/>
+														</cds-text-label>	
+												</div>
+												
+												
+												<!-- <div cdsCol class="input-btn" [columnNumbers]="{'lg': 1, 'md': 1, 'sm': 1}" >
+													<cds-icon-button
+														#triggerDeleteCollectionModal
+														type="button"
+														kind="danger"
+														description="Delete Collection"
+														align="top"
+														size="sm"
+														(click)="showDeleteCollectionModal()"
+														 >
+														 to make this button for in memory only then add this condition  [disabled]="!isAdmin && selectedVectorDB != 'IN_MEMORY'"
+														<svg cdsIcon="task--remove" size="16" class="cds--btn__icon"></svg>
+													</cds-icon-button>
+												</div> -->
+												<!-- <div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+													<cds-toggle
+														label="Replace Data"
+														[checked]="replace_checked"
+														name="replace"
+														onText="Replace"
+														offText="Don't Replace"
+														(checkedChange)="replaceChange($event)"
+														>
+													</cds-toggle>
+												</div> -->
+											</div>
+											<br/>
+
+
+											<div cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 5, 'md': 5, 'sm': 5}" >
+													<cds-label >
+														Select Document Loader
+													</cds-label>
+													<cds-dropdown
+														size="md"
+														placeholder="Select Doc Loader"
+														formControlName="loader"
+														itemValueKey="id"
+														(selected)="loaderSelected($event)"
+														>
+														<cds-dropdown-list [items]="LOADERS"></cds-dropdown-list>
+													</cds-dropdown>
+												</div>
+												<div cdsCol [columnNumbers]="{'lg': 5, 'md': 5, 'sm': 5}" >
+													<cds-label >
+														Select Text Splitter
+													</cds-label>
+													<cds-dropdown
+														size="md"
+														placeholder="Select Text Splitter"
+														formControlName="splitter"
+														itemValueKey="id"
+														(selected)="splitterSelected($event)"
+														>
+														<cds-dropdown-list [items]="TEXT_SPLITTERS"></cds-dropdown-list>
+													</cds-dropdown>
+												</div>
+
+												<div cdsCol [columnNumbers]="{'lg': 5, 'md': 5, 'sm': 5}" >
+													<cds-label >
+														Select Embedding Model
+													</cds-label>
+													<cds-dropdown
+														size="md"
+														placeholder="Select Embedding"
+														formControlName="embedding_model"
+														itemValueKey="id"
+														(selected)="embeddingModelSelected($event)"
+														>
+														<cds-dropdown-list [items]="EMBEDDING_MODELS"></cds-dropdown-list>
+													</cds-dropdown>
+												</div>
+
+											</div>
+
+											<hr class="cds--side-nav__divider" />
+
+											<div cdsRow >
+												<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+													<div cdsRow class="form-item">
+														<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+															<cds-text-label>
+																{{chunk_size_label}}
+																<input cdsText type="text" class="input-field" formControlName="chunk_size" >
+															</cds-text-label>
+														</div>
+														<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+															<cds-text-label>
+																{{chunk_overlap_label}}
+																<input cdsText type="text" class="input-field" formControlName="chunk_overlap" >
+															</cds-text-label>
+														</div>
+														<!-- <div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+															<cds-text-label>
+																Separator
+																<input cdsText type="text" class="input-field" formControlName="chunk_separator" >
+															</cds-text-label>
+														</div> -->
+													</div>
+												</div>
+											</div>
+
+											<hr class="cds--side-nav__divider" />
+
+											<div cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+													<button cdsButton (click)="resetSettings()" >Reset</button>
+													&nbsp;
+													<!-- to make this button for in memory only then add this condition [disabled]="loaders['load_documents'] || !isAdmin && selectedVectorDB != 'IN_MEMORY'" -->
+													<!-- If you want to make this button to load documents which user has selected add this event (click)="showLoadDocsModal() (as of now we're using only 3 documents so we've not associated it with event)) -->
+													<button cdsButton #triggerLoadDocsModal (click)="showLoadDocsModal()" >Load Documents</button> 
+													&nbsp;
+													<button cdsButton="secondary" (click)="showSettingsPanel()">Close</button>
+													&nbsp;
+													<cds-inline-loading *ngIf="loaders['load_documents']"
+														#loading_documents
+														loadingText="Uploading Documents, this may take some time ... "
+														>
+													</cds-inline-loading >
+												</div>
+											</div>
+
+										</form>
+
+									</cds-tab>
+									<cds-tab heading="Evaluation">
+										<h5>Select Evaluation Metrices</h5><br/><br/>
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}">
+												<cds-checkbox
+													indeterminate="false"
+													[(ngModel)]="METRICS.rouge"
+													>
+													Rouge
+												</cds-checkbox>
+											</div>
+											<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}">
+												<cds-checkbox
+													indeterminate="false"
+													[(ngModel)]="METRICS.bleu"
+													>
+													Bleu
+												</cds-checkbox>
+											</div>
+											<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+												<cds-checkbox
+													indeterminate="false"
+													[(ngModel)]="METRICS.perplexity"
+													>
+													Perplexity
+												</cds-checkbox>
+											</div>
+										</div>
+										<hr class="cds--side-nav__divider" style="margin-bottom: 16px;"/>
+										<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+											<button cdsButton="secondary" (click)="showSettingsPanel()">Close</button>
+										</div>
+										
+									</cds-tab>
+								</cds-tabs>
+						</div>
+
+						<div cdsRow *ngIf="loaders['loading_page']">
+							<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}" >
+							<cds-loading
+								#loading_page
+								loadingText="Loading Page..."
+								overlay="true">
+							</cds-loading >
+							</div>
+						</div>
+
+						<div cdsRow *ngIf="!showSettings && llmSpecs && llmSpecs.length > 0">
+							<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" *ngIf="selectedLLM1">
+								<cds-label >
+									Select 1st LLM
+								</cds-label>
+								<cds-dropdown
+									#LLM1Selection
+									size="md"
+									placeholder="Select 1st LLM"
+									[(ngModel)]="selectedLLM1.id"
+									itemValueKey="id"
+									(selected)="llm1Selected($event)">
+									<cds-dropdown-list [items]="llmSpecs"></cds-dropdown-list>
+								</cds-dropdown>
+							</div>
+
+							<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" *ngIf="selectedLLM2">
+								<div class="inline-label">
+									<label>Select 2nd LLM</label>&nbsp;&nbsp;
+									<cds-radio-group [(ngModel)]="selectedPlatform">
+										<cds-radio *ngFor="let platform of platforms" [value]="platform" (change)="platformChangeEvent($event)">
+											{{platform}}
+										</cds-radio>
+									</cds-radio-group>
+								</div>
+								<cds-dropdown
+									*ngIf="selectedPlatform == 'watsonx'"
+									#LLM2Selection
+									size="md"
+									placeholder="Select 2nd LLM"
+									[(ngModel)]="selectedLLM2.id"
+									itemValueKey="id"
+									(selected)="llm2Selected($event)">
+									<cds-dropdown-list [items]="llmSpecs"></cds-dropdown-list>
+								</cds-dropdown>
+								<cds-dropdown
+									*ngIf="selectedPlatform == 'external' && externalLLMSpecs && externalLLMSpecs.length > 0"
+									#externalLLM1Selection
+									size="md"
+									placeholder="Select 2nd LLM"
+									[(ngModel)]="selectedLLM2.id"
+									itemValueKey="id"
+									(selected)="llm2Selected($event)">
+									<cds-dropdown-list [items]="externalLLMSpecs"></cds-dropdown-list>
+								</cds-dropdown>
+							</div>
+						</div>
+
+						<div cdsRow *ngIf="!showSettings" >
+							<!-- <br /> -->
+							<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" *ngIf="selectedLLM1">
+								<cds-list-row>
+									<cds-list-column>
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Price details"
+											>
+											<a href="https://www.ibm.com/products/watsonx-ai/foundation-models#generative" target="_blank" cdsLink><svg cdsIcon="currency" size="16" title="Price" style="fill: red;"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+									<!-- <cds-list-column>
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Model Card information"
+											>
+											<a href="https://dataplatform.cloud.ibm.com/wx/samples/models/{{selectedLLM1.id}}?context=wx?context=wx&audience=wdp" target="_blank" cdsLink><svg cdsIcon="information" size="16" title="Price" style="fill: green;"></svg></a>
+										</cds-tooltip>
+									</cds-list-column> -->
+									<cds-list-column>
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Transparency Index"
+											>
+											<a href="https://crfm.stanford.edu/fmti/May-2024/index.html" target="_blank" cdsLink><svg cdsIcon="chart--evaluation" size="16" title="Transparency Index" style="fill: rgb(110, 10, 146);"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+								</cds-list-row>
+							</div>
+
+							<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" *ngIf="selectedLLM2">
+								<cds-list-row>
+									<cds-list-column *ngIf="selectedPlatform == 'watsonx'">
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Price details"
+											>
+											<a href="https://www.ibm.com/products/watsonx-ai/foundation-models#generative" target="_blank" cdsLink><svg cdsIcon="currency" size="16" title="Price" style="fill: red"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+									<cds-list-column *ngIf="selectedPlatform == 'external'">
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Price details"
+											>
+											<a href="https://openai.com/api/pricing/" target="_blank" cdsLink><svg cdsIcon="currency" size="16" title="Price" style="fill: red"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+									<cds-list-column *ngIf="selectedPlatform == 'watsonx'">
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Model Card information"
+											>
+											<a href="https://dataplatform.cloud.ibm.com/wx/samples/models/{{selectedLLM2.id}}?context=wx?context=wx&audience=wdp" target="_blank" cdsLink><svg cdsIcon="information" size="16" title="Price" style="fill: green"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+									<!-- <cds-list-column *ngIf="selectedPlatform == 'external'">
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Model Card information"
+											>
+											<a href="https://platform.openai.com/docs/models" target="_blank" cdsLink><svg cdsIcon="information" size="16" title="Price" style="fill: green"></svg></a>
+										</cds-tooltip>
+									</cds-list-column> -->
+									<cds-list-column>
+										<cds-tooltip
+											caret="true"
+											align="top"
+											autoAlign="true"
+											description="Transparency Index"
+											>
+											<a href="https://crfm.stanford.edu/fmti/May-2024/index.html" target="_blank" cdsLink><svg cdsIcon="chart--evaluation" size="16" title="Transparency Index" style="fill: rgb(110, 10, 146);"></svg></a>
+										</cds-tooltip>
+									</cds-list-column>
+								</cds-list-row>
+							</div>
+
+						</div>
+
+						<div *ngIf="!showSettings">
+								<hr class="cds--side-nav__divider" />
+								<form [formGroup]="llmForm" *ngIf="llmForm" >
+									<div cdsRow>
+										<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+											<div cdsRow class="form-item" *ngIf="showContent == 'QnA' || showContent == 'EXTRACTION'">
+												<div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" >
+													<cds-toggle
+														label="Enable RAG"
+														[checked]="enable_rag_checked"
+														name="enable_rag"
+														onText="Enabled"
+														offText="Disabled"
+														(checkedChange)="ragEnableChange($event)"
+														>
+													</cds-toggle>
+												</div>
+												<div cdsCol [columnNumbers]="{'lg': 6, 'md': 6, 'sm': 6}" *ngIf="enable_rag_checked && selectedCollection" >
+														<cds-text-label>
+															Select Collection from DB
+															<input
+																id="selectedFile"
+																type="text"
+																[value]="selectedFileName"
+																readonly
+																cdsText
+																class="input-field"
+																style="width: 100%;"
+															/>
+														</cds-text-label>	
+												</div>
+												<button *ngIf="enable_rag_checked"
+															  cdsButton="ghost" 
+															  class="info-button" 
+															  type="button"
+															  aria-label="Select collection information"
+															  style="display: inline-flex; align-items: center; margin-left: 5px; vertical-align: middle;">
+															  <svg ibmIcon="information" size="16" aria-label="Information"></svg>
+															  <span class="tooltip">Click on the Settings button, select a document from Sample Documents, and the selected value will appear here.</span>
+															</button>
+												<!-- <div cdsCol [columnNumbers]="{'lg': 3, 'md': 3, 'sm': 3}" *ngIf="enable_rag_checked && doc_path" >
+													<br /><br />
+													<a class="cds--side-nav__link-text" href="{{doc_path}}" target="_blank" >
+														Show Uploaded Docs
+													</a>
+												</div> -->
+											</div>
+
+											<div *ngIf="showContent == 'QnA'" cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" *ngIf="defaultQuestions">
+													<cds-label>Select a question or enter your own in the textarea below</cds-label>
+													<cds-dropdown
+															size="md"
+															placeholder="Please select a question from the dropdown menu below "
+															itemValueKey="id"
+															(selected)="selectQuestionEvent($event)"
+															>
+															<cds-dropdown-list [items]="defaultQuestions"></cds-dropdown-list>
+													</cds-dropdown>
+
+												</div>
+											</div>
+											<div cdsRow class="form-item" >
+												<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+													<cds-textarea-label style="width: 100%;">
+														<cds-label>Prompt</cds-label>
+														<textarea cdsTextArea class="textarea-field" [cols]="promptCols" [rows]="promptRows" formControlName="inputTxt" readonly></textarea>
+													</cds-textarea-label>
+												</div>
+
+											</div>
+											<div cdsRow class="form-item" >
+												<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+													<cds-button-set>
+														<button cdsButton size="md" (click)="generateResponse()">Generate</button>
+														<button size="md" cdsButton #triggerRefTextModal  (click)="showRefTextModal()">Review Expected Response</button>
+														<!-- <button cdsButton  *ngIf="enable_rag_checked" size="md" (click)="retrieveContext()">Retrieve Context</button> -->
+														<!-- *ngIf="enable_rag_checked" -->
+														<!-- <button cdsButton size="md" (click)="generateResponse()">Generate</button> -->
+													</cds-button-set>
+													<cds-inline-loading *ngIf="loaders['fetch_context']"
+														#loading_documents
+														loadingText="Fetching Context from {{selectedVectorDB}} VectorDB, this may take some time ... "
+														>
+													</cds-inline-loading >
+												</div>
+											</div>
+
+										</div>
+
+										<div cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}">
+											<br/><br/>
+											<cds-tabs
+												type="inline"
+												followFocus="true"
+												isNavigation="false"
+												cacheActive="true">
+												<!-- <cds-tab heading="params">Params</cds-tab>
+												<cds-tab heading="two">Tab Content 2</cds-tab> -->
+												<cds-tab heading="params" [tabContent]="params"></cds-tab>
+												<cds-tab heading="cost" [tabContent]="cost"></cds-tab>
+											</cds-tabs>
+											<ng-template #params>
+												<h5>Model Parameters</h5>
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+															<cds-toggle
+																label="Decoding"
+																[checked]="llm_param_decoding"
+																name="decoding_method"
+																onText="Greedy"
+																offText="Sampling"
+																(checkedChange)="decodingChange($event)"
+																>
+															</cds-toggle>
+													</div>
+												</div>
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+														<div class="label-with-info">
+															<cds-text-label>
+															  Min Tokens
+															</cds-text-label>
+															<button 
+															  cdsButton="ghost" 
+															  class="info-button" 
+															  type="button"
+															  aria-label="Min Tokens Information">
+															  <svg ibmIcon="information" size="16" aria-label="Information"></svg>
+															  <span class="tooltip">This field specifies the minimum number of tokens to be generated.</span>
+															</button>
+														</div>
+														<input cdsText type="number" class="input-field" formControlName="min_new_tokens">
+													</div>
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+														<div class="label-with-info">
+															<cds-text-label>Max Tokens</cds-text-label>
+															<button 
+															  cdsButton="ghost" 
+															  class="info-button" 
+															  type="button"
+															  aria-label="Max Tokens Information">
+															  <svg ibmIcon="information" size="16" aria-label="Information"></svg>
+															  <span class="tooltip">This field specifies the maximum number of tokens to be generated.</span>
+															</button>
+														</div>
+														<input cdsText type="number" class="input-field" formControlName="max_new_tokens">
+													</div>
+												</div>
+
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+														<div class="label-with-info">
+															<cds-text-label>Repetition Penalty</cds-text-label>
+															<button 
+															  cdsButton="ghost" 
+															  class="info-button" 
+															  type="button"
+															  aria-label="Repetition Penalty Information">
+															  <svg ibmIcon="information" size="16" aria-label="Information"></svg>
+															  <span class="tooltip">This field controls the penalty for repeated words or phrases in the generated text.</span>
+															</button>
+														</div>
+														<input cdsText type="number" class="input-field" formControlName="repetition_penalty">														  
+													</div>
+												</div>
+
+											</ng-template>
+
+											<ng-template #cost >
+												<h5>Cost Configuration</h5><br/>
+												<label>Price: USD/1 million tokens</label><br/><br/><br/>
+
+												<div cdsRow >
+													<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+														<h6>{{selectedLLM1.content}}</h6>
+													</div>
+												</div>
+
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+														<div class="label-with-info">
+															<cds-text-label>
+																Input Cost
+															</cds-text-label>
+															<button 
+																cdsButton="ghost" 
+																class="info-button" 
+																type="button" 
+																aria-label="Input Cost Information">
+																<svg ibmIcon="information" size="16" aria-label="Information"></svg>
+																<span class="tooltip">This field specifies the cost associated with input tokens for the selected LLM1.</span>
+															</button>
+														</div>
+														<cds-number
+															id="llm1_input_cost"
+															theme="light"
+															size="sm"
+															min="0.10"
+															max="99.0"
+															[value]="selectedLLM1['price_input']"
+															invalidText="Invalid value entered"
+															(change)="llmCostChange($event)">
+														</cds-number>
+													</div>
+													
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+														<div class="label-with-info">
+															<cds-text-label>
+																Output Cost
+															</cds-text-label>
+															<button 
+																cdsButton="ghost" 
+																class="info-button" 
+																type="button" 
+																aria-label="Output Cost Information">
+																<svg ibmIcon="information" size="16" aria-label="Information"></svg>
+																<span class="tooltip">This field specifies the cost associated with output tokens for the selected LLM1.</span>
+															</button>
+														</div>
+														<cds-number
+															id="llm1_output_cost"
+															theme="light"
+															size="sm"
+															min="0.10"
+															max="99.0"
+															[value]="selectedLLM1['price_output']"
+															invalidText="Invalid value entered"
+															(change)="llmCostChange($event)">
+														</cds-number>
+													</div>
+													
+												</div>
+
+												<hr class="cds--side-nav__divider" />
+
+												<div cdsRow >
+													<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+														<h6>{{selectedLLM2.content}}</h6>
+													</div>
+												</div>
+
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+														<div class="label-with-info">
+															<cds-text-label>
+																Input Cost
+															</cds-text-label>
+															<button 
+																cdsButton="ghost" 
+																class="info-button" 
+																type="button" 
+																aria-label="Input Cost Information">
+																<svg ibmIcon="information" size="16" aria-label="Information"></svg>
+																<span class="tooltip">This field specifies the cost associated with input tokens for selected LLM2.</span>
+															</button>
+														</div>
+														<cds-number
+															id="llm2_input_cost"
+															theme="light"
+															size="sm"
+															min="0.10"
+															max="99.0"
+															[value]="selectedLLM2['price_input']"
+															invalidText="Invalid value entered"
+															(change)="llmCostChange($event)">
+														</cds-number>
+													</div>
+													
+													<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+														<div class="label-with-info">
+															<cds-text-label>
+																Output Cost
+															</cds-text-label>
+															<button 
+																cdsButton="ghost" 
+																class="info-button" 
+																type="button" 
+																aria-label="Output Cost Information">
+																<svg ibmIcon="information" size="16" aria-label="Information"></svg>
+																<span class="tooltip">This field specifies the cost associated with output tokens for selected LLM2.</span>
+															</button>
+														</div>
+														<cds-number
+															id="llm2_output_cost"
+															theme="light"
+															size="sm"
+															min="0.10"
+															max="99.0"
+															[value]="selectedLLM2['price_output']"
+															invalidText="Invalid value entered"
+															(change)="llmCostChange($event)">
+														</cds-number>
+													</div>
+													
+												</div>
+
+												<hr class="cds--side-nav__divider" />
+
+												<div cdsRow class="form-item">
+													<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+														<div class="label-with-info">
+															<cds-text-label>
+																API Calls per day
+															</cds-text-label>
+															<button 
+																cdsButton="ghost" 
+																class="info-button" 
+																type="button" 
+																aria-label="API Calls per Day Information">
+																<svg ibmIcon="information" size="16" aria-label="Information"></svg>
+																<span class="tooltip">This field specifies the number of API calls allowed per day, ranging from 1,000 to 50,000.</span>
+															</button>
+														</div>
+														<cds-number
+															theme="light"
+															min="1000"
+															max="50000"
+															size="md"
+															value="1000"
+															invalidText="Invalid value entered"
+															(change)="apiCallsChange($event)">
+														</cds-number>
+													</div>
+												</div>
+												
+											</ng-template>
+
+											<!-- <div cdsRow class="form-item">
+												<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+													<button cdsButton (click)="resetSettings()">Reset</button>
+													&nbsp;
+													<button cdsButton (click)="updateSettings()">Update</button>
+													&nbsp;
+													<button cdsButton="secondary" (click)="showSettingsPanel()">Close</button>
+												</div>
+											</div> -->
+
+										</div>
+
+									</div>
+
+
+								</form>
+
+						</div>
+
+						<div *ngIf="!showSettings">
+
+							<hr class="cds--side-nav__divider" />
+
+							<div cdsRow class="form-item" >
+								<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}"  style="overflow-wrap: break-word;">
+									<generate #generateChild1 [ragConfig]="ragConfig" [costConfig]="costConfig" [llmResponse]="llm1Response" sourceNodes="sourceNodes" (updateParentEvent)="updateParentEvent($event)" ></generate>
+								</div>
+
+								<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" style="overflow-wrap: break-word;">
+									<generate #generateChild2 [ragConfig]="ragConfig" [costConfig]="costConfig" [llmResponse]="llm2Response" sourceNodes="sourceNodes" (updateParentEvent)="updateParentEvent($event)"></generate>
+								</div>
+							</div>
+
+							<div >
+								<hr class="cds--side-nav__divider" />
+								<div class="usp" *ngIf="showPerformanceGraph">
+
+									<performance #performanceChild [costConfig]="costConfig" [llm1Response]="llm1Response" [llm2Response]="llm2Response" [selectedLLM1]="selectedLLM1" [selectedLLM2]="selectedLLM2" ></performance>
+
+								</div>
+
+								<div class="usp">
+
+									<metrics #evaluationsChild [loaders]="loaders" [referenceText]="referenceText" ></metrics>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<cds-modal
+	size="md"
+	[open]="openRefTextModal"
+	(overlaySelected)="closeModal()"
+	trigger="triggerRefTextModal"
+	>
+	<cds-modal-header (closeSelect)="closeModal()" [showCloseButton]="false">
+		<h2 cdsModalHeaderLabel>Evaluation Regarding</h2>
+		<h3 cdsModalHeaderHeading>Review Expected Response</h3>
+	</cds-modal-header>
+	<section cdsModalContent hasForm="true">
+		<div class="cds--text-input__field-wrapper">
+
+			<!-- <cds-textarea-label style="width: 100%;">
+				<cds-label>Some evaluation metrics need expected response to evaluate the accuracy score.  For example Rouge, Bleu metrics etc.</cds-label>
+				<textarea cdsTextArea class="textarea-field" cols="100" rows="10" [(ngModel)]="referenceText" ></textarea>
+			</cds-textarea-label> -->
+
+			<cds-textarea-label style="width: 100%;">
+				<cds-label>
+				  Some evaluation metrics need expected response to evaluate the accuracy score. For example Rouge, Bleu metrics etc.
+				</cds-label>
+				<textarea
+				  cdsTextArea
+				  class="textarea-field"
+				  cols="100"
+				  rows="10"
+				  [(ngModel)]="referenceText"
+				  readonly
+				  style="color: gray; background-color: #f5f5f5;"
+				></textarea>
+			</cds-textarea-label>
+
+		</div>
+	</section>
+	<cds-modal-footer>
+		<!-- <button class="cds--btn cds--btn--primary" modal-primary-focus (click)="changeExpectedResponse()">Add / Update</button> -->
+		<button class="cds--btn cds--btn--secondary" (click)="closeModal()">Close</button>
+	</cds-modal-footer>
+</cds-modal>
+<cds-placeholder></cds-placeholder>
+
+<cds-modal
+	size="md"
+	[open]="openExtLLMConfModal"
+	(overlaySelected)="closeExtLLMConfModal()"
+	trigger="triggerExternalLLMConfig"
+	>
+	<cds-modal-header (closeSelect)="closeExtLLMConfModal()" [showCloseButton]="false">
+		<h2 cdsModalHeaderLabel>External LLM Configuration</h2>
+		<h3 cdsModalHeaderHeading>Enter Your OpenAI API Key</h3>
+	</cds-modal-header>
+	<section cdsModalContent hasForm="true">
+		<form [formGroup]="externalLLMConfigForm" *ngIf="externalLLMConfigForm" >
+			<div cdsRow class="form-item">
+				<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}" >
+					<cds-text-label>
+						OpenAI API Key
+						<input cdsText type="text" class="input-field" formControlName="openai_api_key">
+					</cds-text-label>
+				</div>
+			</div>
+		</form>
+	</section>
+	<cds-modal-footer>
+		<button class="cds--btn cds--btn--primary" modal-primary-focus (click)="updateExternalLLMConf()">Add / Update</button>
+		<button class="cds--btn cds--btn--secondary" (click)="closeExtLLMConfModal()">Close</button>
+	</cds-modal-footer>
+</cds-modal>
+<cds-placeholder></cds-placeholder>
+
+<cds-modal
+	size="md"
+	[open]="openLoadDocsModal"
+	(overlaySelected)="closeLoadDocsModal()"
+	trigger="triggerLoadDocsModal"
+	>
+	<cds-modal-header (closeSelect)="closeLoadDocsModal()" [showCloseButton]="false">
+		<h2 cdsModalHeaderLabel>Data Loading Confirmation</h2>
+		<!-- <h3 cdsModalHeaderHeading>Add or Update Expected LLM Response</h3> -->
+	</cds-modal-header>
+	<section cdsModalContent hasForm="true">
+		<div class="cds--text-input__field-wrapper" >
+
+			Please Confirm: Data will be loaded to this collection: {{collection_name}}
+
+		</div>
+	</section>
+	<cds-modal-footer>
+		<button class="cds--btn cds--btn--primary" modal-primary-focus (click)="loadDocuments()">Confirm</button>
+		<button class="cds--btn cds--btn--secondary" (click)="closeLoadDocsModal()">Close</button>
+	</cds-modal-footer>
+</cds-modal>
+<cds-placeholder></cds-placeholder>
+
+<cds-modal
+	size="md"
+	[open]="openDeleteCollectionModal"
+	(overlaySelected)="closeDeleteCollectionModal()"
+	trigger="triggerDeleteCollectionModal"
+	>
+	<cds-modal-header (closeSelect)="closeDeleteCollectionModal()" [showCloseButton]="false">
+		<h2 cdsModalHeaderLabel>Collection Deletion Confirmation</h2>
+		<!-- <h3 cdsModalHeaderHeading>Add or Update Expected LLM Response</h3> -->
+	</cds-modal-header>
+	<section cdsModalContent hasForm="true">
+		<div class="cds--text-input__field-wrapper" >
+
+			Please Confirm: {{collection_name}} collection will be deleted ?
+
+		</div>
+	</section>
+	<cds-modal-footer>
+		<button class="cds--btn cds--btn--primary" modal-primary-focus (click)="deleteCollection()">Confirm</button>
+		<button class="cds--btn cds--btn--secondary" (click)="closeDeleteCollectionModal()">Close</button>
+	</cds-modal-footer>
+</cds-modal>
+<cds-placeholder></cds-placeholder>
+
+

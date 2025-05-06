@@ -1,0 +1,268 @@
+// @import "~carbon-components/scss/globals/scss/typography";
+// @import "~carbon-components/scss/globals/scss/spacing";
+
+@import '@carbon/charts/styles.min.css';
+@import "@carbon/layout";
+@import "@carbon/type";
+
+.comparison {
+
+	padding: 0px;
+	margin: 0px;
+	h6 {
+		// padding-left: 15px;
+		padding-top: 15px;
+		padding-bottom: 1px;
+	}
+
+	.title {
+		@include type-style("productive-heading-04");
+		position: relative;
+		padding-right: 1rem;
+	}
+
+	.subtitle {
+		margin-top: carbon--mini-units(1);
+		@include type-style("productive-heading-01");
+		margin-left: 1rem;
+	}
+
+	.titleContainer {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.titleContainer h3{
+		margin-left: 35px;
+	}
+
+	.buttons-wrapper {
+		// width: 50%;
+		text-align: right;
+		display: flex;
+		justify-content: flex-end;
+		padding-right: 0;
+	}
+
+	.textRow {
+		display: flex;
+		padding: 1rem;
+		align-items: center;
+	}
+
+	label {
+		font-weight: 400 !important;
+		font-size: small;
+		line-height: 20px;
+	}
+
+	.label {
+		font-weight: 400 !important;
+		font-size: small;
+	}
+
+	.inline-label{
+		display: flex;
+		font-size: var(--cds-label-01-font-size, 0.75rem);
+		letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+		color: var(--cds-text-secondary, #525252);
+		font-weight: 400;
+		line-height: 1rem;
+		margin-block-end: 0.2rem;
+		vertical-align: baseline;
+	}
+
+	.inline-label label{
+		display: inline-block;
+		vertical-align: middle;
+		// font-size: smaller;
+	}
+
+	.respText{
+		font-weight: 300 !important;
+		font-size: medium !important;
+		// color: #8aa1f2;
+	}
+
+	p, ol, li{
+		font-weight: var(--cds-body-02-font-weight, 400);
+		line-height: var(--cds-body-02-line-height, 1.5);
+		letter-spacing: var(--cds-body-02-letter-spacing, 0);
+	}
+
+	.respText p{
+		font-weight: 300 !important;
+		font-size: medium !important;
+	}
+
+	.respText ol{
+		font-weight: 300 !important;
+		font-size: medium !important;
+	}
+
+	.respText li{
+		font-weight: 300 !important;
+		font-size: medium !important;
+	}
+
+	.simple_text{
+		font-weight: 300 !important;
+		font-size: small !important;
+	}
+
+	.usp{
+		padding-top: 15px;
+	}
+
+	.center_title span{
+		@include type-style("productive-heading-04");
+		display: block;
+		text-align: center;
+		padding-top: 1rem;
+	}
+
+	.center_title .info{
+		display: block;
+		text-align: center;
+		font-weight: 300 !important;
+		font-size: small !important;
+		padding-top: 2px;
+	}
+
+	form {
+		width: 100%;
+	}
+
+	.form-label {
+		margin-top: 0.7rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.dropdown {
+		width: 100%;
+	}
+
+	.form-item {
+		margin-top: 1.5rem;
+	}
+
+	.starter-tab-description {
+		margin-bottom: carbon--mini-units(2);
+	}
+
+	.mainPageRow {
+		padding-top: 1rem;
+		margin-top: 1rem;
+	}
+
+	.pageContent {
+		// background-color: #ffffff;
+		min-height: 400px;
+	}
+
+	.no-data {
+		width: 100%;
+		height: 150px;
+		text-align: center;
+	}
+
+	.actionsCol {
+		width: 5px !important;
+		text-align: right;
+		// font-size: small !important;
+	}
+
+	.menu-button{
+		text-align: right;
+		padding-top: 5px;
+		margin-top: 5px;
+	}
+
+	.icon {
+		// margin-top: carbon--mini-units(1);
+		color: #1c23e2;
+		fill: #1c23e2;
+		// padding-top: 5px;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.modal-text {
+		margin-bottom: 30px;
+	}
+
+	.cds--structured-list-td{
+		padding-top: 5px;
+		margin-top: 5px;
+		padding-bottom: 1px;
+		margin-bottom: 1px;
+	}
+
+	.input-btn {
+		padding-left: 0px;
+		align-content: end;
+	}
+
+	.dropdown_with_rt_icon {
+		padding-right: 1px;
+		margin-right: 1px;
+	}
+
+	.label-with-info {
+		display: flex;
+		align-items: center;
+		gap: 4px; /* Adjust spacing between label and info button */
+	  }
+	  
+	  .info-button {
+		position: relative;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	  }
+	  
+	  .info-button svg {
+		fill: #0072c3; /* IBM blue color */
+	  }
+	  
+	  .tooltip {
+		visibility: hidden;
+		background-color: #000;
+		color: #fff;
+		text-align: center;
+		border-radius: 4px;
+		padding: 5px;
+		position: absolute;
+		bottom: 120%; /* Position above the button */
+		left: 50%;
+		transform: translateX(-50%);
+		white-space: nowrap;
+		z-index: 1;
+		opacity: 0;
+		transition: opacity 0.3s;
+	  }
+	  
+	  .info-button:hover .tooltip {
+		visibility: visible;
+		opacity: 1;
+	  }
+
+	.input-field[readonly] {
+		background-color: var(--cds-field-01, #ffffff) !important; 
+		color: var(--cds-text-primary, #161616) !important; 
+		cursor: text !important; 
+		opacity: 1 !important; 
+	}
+
+  
+	  
+
+}

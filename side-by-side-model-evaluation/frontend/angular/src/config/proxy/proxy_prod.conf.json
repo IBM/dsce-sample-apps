@@ -1,0 +1,20 @@
+{
+    "/accounts-endpoint": {
+        "target": "https://account-smartthings.appdev-cloudnative-ocp-2ab66b053c14936810608de9a1deac9c-0000.eu-gb.containers.appdomain.cloud",
+		"secure": false,
+		"logLevel": "debug",
+		"changeOrigin": "true",
+		"pathRewrite": {
+			"^/accounts-endpoint": "/api"
+		}
+	},
+	"/iot-endpoint": {
+        "target": "https://iot-smartthings.appdev-cloudnative-ocp-2ab66b053c14936810608de9a1deac9c-0000.eu-gb.containers.appdomain.cloud",
+		"secure": false,
+		"logLevel": "debug",
+		"changeOrigin": "true",
+		"pathRewrite": {
+			"^/iot-endpoint": "/api"
+		}
+	}
+}

@@ -1,0 +1,184 @@
+<div class="header-theme">
+	<cds-header name="[platform]" [brand]="brandTemplate" [route]="['/']" >
+
+		<!-- <cds-hamburger *ngIf="hasHamburger" [active]="leftPanelActive" (selected)="hambergerClicked()"> </cds-hamburger> -->
+
+		<!-- <cds-header-navigation ariaLabel="Watson Assistant Demo">
+
+			<cds-header-menu title="Learn">
+				<cds-header-item href="https://cloud.ibm.com/docs" target="_blank"><span>IBM Cloud Platform</span></cds-header-item>
+				<cds-header-item href="https://www.ibm.com/in-en/products/watson-assistant" target="_blank">Watson Assistant</cds-header-item>
+				<cds-header-item href="https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-about" target="_blank">Watson Discovery</cds-header-item>
+			</cds-header-menu>
+
+			<cds-search placeholder="Search" class="top-search" expandable="true" size="lg" tableSearch="true" toolbar="true"></cds-search>
+
+		</cds-header-navigation> -->
+
+		<cds-header-global >
+
+			<cds-header-menu class="no-marker" [title]="account.name" [headerItems]="userAccounts" *ngIf="userAccounts && userAccounts.length > 0" (click)="accountsSelection($event);">
+
+			</cds-header-menu>
+
+			<cds-header-action #notificationAction title="action"  >
+				<svg icon cdsIcon="notification" size="20" (click)="notificationClicked($event)"></svg>
+			</cds-header-action>
+
+			<ng-container [ngSwitch]="(user$ | async)?.id && 'isLoggedIn'">
+				<ng-container *ngSwitchCase="'isLoggedIn'">
+					<cds-header-action #avatarAction title="action"  >
+						<svg icon cdsIcon="user--avatar" size="20" (click)="avatarClicked($event)"></svg>
+					</cds-header-action>
+				</ng-container>
+				<!-- <ng-container *ngSwitchDefault>
+					<cds-header-navigation ariaLabel="Login">
+						<cds-header-item (click)="authRedirect($event);">Login</cds-header-item>
+					</cds-header-navigation>
+				</ng-container> -->
+			</ng-container>
+
+			<!-- <cds-header-action *ngIf="user$ | async as _user;" #avatarAction title="action" (click)="avatarClicked($event)" >
+				<svg cdsIconUserAvatar size="20"></svg>
+			</cds-header-action> -->
+
+			<cds-header-action #switcherAction title="action">
+				<svg cdsIcon="switcher" size="20"></svg>
+			</cds-header-action>
+		</cds-header-global>
+	</cds-header>
+</div>
+
+
+<div class="sidenav-theme" [hidden]="!showLeftPanel">
+	<cds-sidenav rail="!leftPanelActive" [expanded]="leftPanelActive" hostClass="true" theme="dark">
+
+		<cds-sidenav-item [route]="['home']" [active]="router.isActive('home', false)">
+			<svg icon cdsIcon="home" size="16"></svg>
+			Home
+		</cds-sidenav-item>
+
+		<!-- <cds-sidenav-item  [route]="['configurations']" [active]="router.isActive('configurations', false)" *hasPermission="'configurations'; operation 'create'">
+			<svg icon cdsIcon="settings" size="16"></svg>
+			Configurations
+		</cds-sidenav-item> -->
+
+		<!-- to remove authentication (removed this condition from end  *ngIf="(user$ | async)?.id && 'isLoggedIn'" ) )-->
+		<cds-sidenav-item [route]="['llm_comparison']" [active]="router.isActive('llm_comparison', false)"  >
+			<svg icon cdsIcon="watson" size="16"></svg>
+			Compare LLMs
+		</cds-sidenav-item>
+
+		<!-- removed github repo and other documentation from left side bar -->
+
+		<!-- <cds-sidenav-item href="https://github.ibm.com/ecosystem-engineering-si-lab" target="_blank">
+			<svg icon cdsIcon="logo--github" size="16"></svg>
+			Git Repository
+		</cds-sidenav-item> -->
+
+		<!-- <hr class="cds--side-nav__divider" /> -->
+
+		<!-- <cds-sidenav-menu title="GIT Repositories" [expanded]="leftPanelActive" rail="!leftPanelActive" >
+			<svg icon cdsIcon="logo--github" size="16"></svg>
+			<cds-sidenav-item href="https://github.ibm.com/ecosystem-engineering-si-lab" target="_blank"> EESI Lab Git Repo </cds-sidenav-item>
+		</cds-sidenav-menu> -->
+
+		<!-- <cds-sidenav-menu title="Documentation">
+			<svg icon cdsIcon="application" size="16"></svg>
+			<cds-sidenav-item href="https://ibm.ent.box.com/folder/266493265580" target="_blank">CompareLLMs Demo Docs</cds-sidenav-item>
+			<cds-sidenav-item href="https://www.ibm.com/watsonx/get-started" target="_blank">Watsonx Platform</cds-sidenav-item>
+			<cds-sidenav-item href="https://www.ibm.com/products/watson-assistant" target="_blank">Watsonx Assistant</cds-sidenav-item>
+			<cds-sidenav-item href="https://www.ibm.com/cloud/watson-discovery" target="_blank">Watsonx Discovery</cds-sidenav-item> -->
+
+			<!-- <cds-sidenav-item href="https://cloud.ibm.com/docs/assistant?topic=assistant-index" target="_blank">WA Docs (Managed) </cds-sidenav-item>
+			<cds-sidenav-item href="https://cloud.ibm.com/apidocs/assistant/assistant-data-v2" target="_blank">WA Docs (CP4D) </cds-sidenav-item> -->
+			<!-- <hr class="cds--side-nav__divider" />
+			<cds-sidenav-item href="https://www.carbondesignsystem.com/" target="_blank"  > IBM Carbon Design </cds-sidenav-item>
+			<cds-sidenav-item href="https://angular.carbondesignsystem.com/?path=/docs/getting-started--docs" target="_blank"  > IBM Carbon Design Angular </cds-sidenav-item>
+
+
+			<hr class="cds--side-nav__divider" />
+			<cds-sidenav-item href="https://dsce.ibm.com/" target="_blank">DSCE Demos</cds-sidenav-item>
+
+
+		</cds-sidenav-menu> -->
+
+		<!-- <cds-sidenav-menu title="RAG Techniques">
+			<svg icon cdsIcon="app-connectivity" size="16"></svg>
+			<cds-sidenav-item href="https://arxiv.org/pdf/2408.09869" target="_blank">IBM Docling</cds-sidenav-item>
+			<cds-sidenav-item href="https://arxiv.org/pdf/2206.01062" target="_blank">DocLaynet</cds-sidenav-item>
+			<cds-sidenav-item href="https://milvus.io/" target="_blank">MilvusDB</cds-sidenav-item>
+
+			<hr class="cds--side-nav__divider" />
+
+			<cds-sidenav-item href="https://docs.llamaindex.ai/en/stable/examples/node_parsers/semantic_double_merging_chunking/y" target="_blank">Llamaindex Parsers</cds-sidenav-item>
+
+
+		</cds-sidenav-menu> -->
+	</cds-sidenav>
+
+</div>
+
+	<!-- <a href="#" ibmLink>Profile and settings</a> -->
+	<cds-panel class="user_panel" [expanded]="showUserPanel" >
+		<cds-switcher-list >
+			<ng-container *ngIf="user$ | async as _user">
+				<div ibmGrid>
+					<div class="body-text" ibmRow>
+						<!-- <div ibmCol [columnNumbers]="{'lg': 3, 'md': 6, 'sm': 6}">
+							<h1>Pic</h1>
+						</div> -->
+						<div ibmCol [columnNumbers]="{'lg': 12}">
+							<h4 class="title">{{_user.name}}</h4>
+						</div>
+					</div>
+				</div>
+
+				<cds-switcher-list-item routerLink="profile">
+					Profile & Settings
+				</cds-switcher-list-item>
+			</ng-container>
+
+			<cds-switcher-list-item routerLink="privacy">Privacy</cds-switcher-list-item>
+			<cds-switcher-list-item routerLink="feedback">Feedback</cds-switcher-list-item>
+		</cds-switcher-list>
+
+		<!-- <hr class="cds--switcher__divider" /> -->
+
+		<!-- <cds-switcher-list >
+			<div class="cds--switcher__divider">
+				<span>User Actions</span>
+			</div>
+		</cds-switcher-list> -->
+
+		<cds-switcher-list-item (click)="logout()">Logout</cds-switcher-list-item>
+
+	</cds-panel>
+
+	<!-- <cds-panel [expanded]="notificationAction.active" >
+		<cds-switcher-list>
+			<cds-switcher-list-item active="true">Notification item one</cds-switcher-list-item>
+			<cds-switcher-list-item>Notification item two</cds-switcher-list-item>
+			<cds-switcher-list-item>Notification item three</cds-switcher-list-item>
+			<cds-switcher-list-item>Notification item four</cds-switcher-list-item>
+		</cds-switcher-list>
+	</cds-panel> -->
+
+	<!-- removed right side switcher
+	 <cds-panel [expanded]="switcherAction.active">
+		<cds-switcher-list>
+			<cds-switcher-list-item active="true">Switcher item one</cds-switcher-list-item>
+			<cds-switcher-list-item>Switcher item two</cds-switcher-list-item>
+			<cds-switcher-list-item>Switcher item three</cds-switcher-list-item>
+			<cds-switcher-list-item>Switcher item four</cds-switcher-list-item>
+		</cds-switcher-list>
+	</cds-panel> -->
+
+
+	<ng-template #brandTemplate>
+		<a class="cds--header__name">
+		  <!-- <svg cdsIcon="carbon" size="32" style="stroke:white;fill:white"></svg> -->
+		  <span class="cds--header__name--prefix">Compare LLM Foundation Models </span>
+		</a>
+	  </ng-template>
+

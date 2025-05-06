@@ -1,0 +1,28 @@
+// @import "~carbon-components/scss/globals/scss/typography";
+// @import "~carbon-components/scss/globals/scss/spacing";
+
+@import "@carbon/layout";
+@import "@carbon/type";
+
+.metrics {
+
+	.usp{
+		padding-top: 15px;
+	}
+
+	.center_title span{
+		@include type-style("productive-heading-04");
+		display: block;
+		text-align: center;
+		padding-top: 1rem;
+	}
+
+	.center_title .info{
+		display: block;
+		text-align: center;
+		font-weight: 300 !important;
+		font-size: small !important;
+		padding-top: 2px;
+	}
+
+}

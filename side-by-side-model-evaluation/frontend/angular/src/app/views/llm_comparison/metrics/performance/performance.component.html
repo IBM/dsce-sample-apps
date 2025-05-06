@@ -1,0 +1,57 @@
+<div class="performance" cdsGrid [condensed]="false">
+
+	<div cdsRow >
+		<div cdsCol class="center_title" [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<span>Performance & Cost Comparison</span><br />
+			<div class="info">Assumption: {{costConfig['perDayAPICalls']}} API Calls per day</div>
+		</div>
+	</div>
+	<div cdsRow class="form-item">
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<!-- <performance [llm1Response]="llm1Response" [llm2Response]="llm2Response" [selectedLLM1]="selectedLLM1" [selectedLLM2]="selectedLLM2"  ></performance> -->
+			<cds-inline-loading *ngIf="!performanceChart"
+				#loading3
+				loadingText="Working on Performance Chart.."
+				>
+			</cds-inline-loading >
+				<div *ngIf="performanceChart">
+					<!-- <canvasjs-chart [options]="performaceChartOptions" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getPerformanceChartInstance($event)"></canvasjs-chart> -->
+					<ibm-bubble-chart [data]="performanceChart['data']" [options]="performanceChart['options']" (chartInstance)="getPerformanceChartInstance($event)"></ibm-bubble-chart>
+					<br /><br />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div cdsRow class="form-item" >
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<div *ngIf="llm1Response && llm1Response['cost'] && llm1Response['cost']['price_output']">
+				<h4><a href="{{selectedLLM1['pricing_page']}}" target="_blank" cdsLink>{{selectedLLM1.id}}</a></h4> <br/><br/>
+
+				<label>Input Token Price: </label><span class="simple_text">${{llm1Response['cost']['price_input'] | number: '1.0-3'}} / 1 million tokens</span><br/>
+				<label>Output Token Price: </label><span class="simple_text">${{llm1Response['cost']['price_output'] | number: '1.0-3'}} / 1 million tokens</span><br/><br/>
+
+				<h6>Cost of Infrencing:</h6>
+				<ul cdsList>
+					<li><label>Per Day: </label><span class="simple_text">${{llm1Response['cost']['per_day_cost'] | number: '1.0-5'}}</span></li>
+					<li><label>Per Month: </label> <span class="simple_text">${{llm1Response['cost']['per_month_cost'] | number: '1.0-4'}}</span></li>
+					<li><label>Per Annum: </label> <span class="simple_text">${{llm1Response['cost']['per_annum_cost'] | number: '1.0-3'}}</span></li>
+				</ul>
+			</div>
+		</div>
+
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+
+			<div *ngIf="llm2Response && llm2Response['cost'] && llm2Response['cost']['price_output']">
+				<h4><a href="{{selectedLLM2['pricing_page']}}" target="_blank" cdsLink>{{selectedLLM2.id}}</a></h4> <br/><br/>
+				<label>Input Token Price: </label><span class="simple_text">${{llm2Response['cost']['price_input'] | number: '1.0-3'}} / 1 million tokens</span><br/>
+				<label>Output Token Price: </label><span class="simple_text">${{llm2Response['cost']['price_output'] | number: '1.0-3'}} / 1 million tokens</span><br/><br/>
+
+				<h6>Cost of Infrencing:</h6>
+				<ul cdsList>
+					<li><label>Per Day: </label><span class="simple_text">${{llm2Response['cost']['per_day_cost'] | number: '1.0-5'}}</span></li>
+					<li><label>Per Month: </label><span class="simple_text">${{llm2Response['cost']['per_month_cost'] | number: '1.0-4'}}</span></li>
+					<li><label>Per Annum: </label><span class="simple_text">${{llm2Response['cost']['per_annum_cost'] | number: '1.0-3'}}</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>

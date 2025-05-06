@@ -1,0 +1,14 @@
+{
+    "loader": "LlamaIndexLoader",
+    "splitter": "SentenceSplitter",
+    "table_extractor": "DOCLING",
+    "vectordb_config": {
+      "db_name": "IN_MEMORY",
+      "embedding_model": "BAAI/bge-small-en-v1.5",
+      "collection_name": "IBM_Annual_Report_2022",
+      "replace": true
+    },
+    "chunk_size": 512,
+    "chunk_overlap": 30,
+    "separator": " "   
+}

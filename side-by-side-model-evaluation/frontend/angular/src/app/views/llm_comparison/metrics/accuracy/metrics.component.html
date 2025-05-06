@@ -1,0 +1,81 @@
+<div class="metrics" cdsGrid [condensed]="false" *ngIf="showEvaluations">
+
+	<hr class="bx--side-nav__divider" />
+	<div cdsRow >
+		<div cdsCol class="center_title" [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<span>Evaluation Metrics Comparison (Accuracy)</span><br />
+			<!-- <div class="info">Assumption: {{costConfig['perDayAPICalls']}} API Calls per day</div> -->
+		</div>
+	</div>
+	<div cdsRow class="form-item" *ngIf="referenceText">
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<cds-inline-loading *ngIf="loaders['metrics']['rouge']"
+				#loading4
+				loadingText="Loading evaluation metrics (Rouge) chart.."
+				>
+			</cds-inline-loading >
+			<div *ngIf="rougeChartOptions">
+				<!-- <canvasjs-chart [options]="rougeChartOptions" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getRougeChartInstance($event)"></canvasjs-chart> -->
+				<ibm-grouped-bar-chart #rougeChart [data]="rougeChartOptions['data']" [options]="rougeChartOptions['options']"></ibm-grouped-bar-chart>
+			</div>
+		</div>
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<cds-inline-loading *ngIf="loaders['metrics']['bleu']"
+				#loading5
+				loadingText="Loading evaluation metrics (BLEU) chart.."
+				>
+			</cds-inline-loading >
+			<div *ngIf="bleuChartOptions">
+				<!-- <canvasjs-chart [options]="bleuChartOptions" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getBleuChartInstance($event)"></canvasjs-chart> -->
+				<!-- <ibm-simple-bar-chart #bleuChart [data]="bleuChartOptions['data']" [options]="bleuChartOptions['options']"></ibm-simple-bar-chart> -->
+				<ibm-grouped-bar-chart #bleuChart [data]="bleuChartOptions['data']" [options]="bleuChartOptions['options']"></ibm-grouped-bar-chart>
+			</div>
+		</div>
+	</div>
+
+	<div cdsRow class="form-item">
+		<div cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}" >
+			&nbsp;
+		</div>
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<cds-inline-loading *ngIf="loaders['metrics']['perplexity']"
+				#loading6
+				loadingText="Loading evaluation metrics (Perplexity) chart.."
+				>
+			</cds-inline-loading >
+			<div *ngIf="perplexityChartOptions">
+				<!-- <canvasjs-chart [options]="perplexityChartOptions" [styles]="{width: '100%', height:'360px'}" (chartInstance)="getPerplexityChartInstance($event)"></canvasjs-chart> -->
+				<ibm-simple-bar-chart #perplexityChart [data]="perplexityChartOptions['data']" [options]="perplexityChartOptions['options']"></ibm-simple-bar-chart>
+			</div>
+		</div>
+		<div cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}" >
+			&nbsp;
+		</div>
+	</div>
+
+	<div cdsRow class="form-item" *ngIf="llmAsJudgeResult">
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<cds-inline-loading *ngIf="loaders['metrics']['llm_as_judge']"
+				#loading7
+				loadingText="Loading evaluation metrics (llm_as_judge) results.."
+				>
+			</cds-inline-loading >
+			<div *ngIf="llmAsJudgeResult && llmAsJudgeResult.length > 0">
+				Model: {{llmAsJudgeResult[0]['model_id']}}
+				Score: {{llmAsJudgeResult[0]['metric']}}
+			</div>
+		</div>
+		<div cdsCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}" >
+			<cds-inline-loading *ngIf="loaders['metrics']['llm_as_judge']"
+				#loading7
+				loadingText="Loading evaluation metrics (llm_as_judge) results.."
+				>
+			</cds-inline-loading >
+			<div *ngIf="llmAsJudgeResult && llmAsJudgeResult.length > 1">
+				Model: {{llmAsJudgeResult[1]['model_id']}}
+				Score: {{llmAsJudgeResult[1]['metric']}}
+			</div>
+		</div>
+	</div>
+
+</div>
