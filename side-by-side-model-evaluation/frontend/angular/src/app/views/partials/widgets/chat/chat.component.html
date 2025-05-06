@@ -1,0 +1,261 @@
+
+<div class="chat-widget" ibmGrid>
+	<div class="closed" *ngIf="!isOpen" >
+		<svg icon ibmIcon="chat" (click)="openChat()" size="16"></svg>
+	</div>
+
+	<div class="opened" *ngIf="isOpen" ibmRow >
+		<div class="content" ibmCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+			<div class="chat-header"  >
+				<div class="title" > {{title}} </div>
+
+				<input type="checkbox" [(ngModel)]="enableDetection" >
+				<!-- <ibm-checkbox
+					indeterminate="false"
+					[(ngModel)]="enableDetection">
+
+				</ibm-checkbox> -->
+
+				<ng-template #template let-tooltip="tooltip">
+					<p>This is some tooltip text. This box shows the maximum amount of text that should appear inside.
+						If more room is needed please use a modal instead.</p>
+					<div class="bx--tooltip__footer">
+					</div>
+				</ng-template>
+
+				<button
+					ibmButton="tertiary"
+					size="sm"
+					[iconOnly]="true"
+					assistiveTextPlacement="top"
+					assistiveTextAlignment="center"
+					(click)="restartChat()" >
+					<svg icon ibmIcon="restart" size="16"></svg>
+					<span class="bx--assistive-text">Refresh</span>
+				</button>
+				<button
+					ibmButton="tertiary"
+					size="sm"
+					[iconOnly]="true"
+					assistiveTextPlacement="top"
+					assistiveTextAlignment="center"
+					(click)="closeChat()" >
+					<svg icon ibmIcon="close" size="16"></svg>
+					<span class="bx--assistive-text">Close</span>
+				</button>
+
+			</div>
+
+			<div class="chat-content" >
+				<div *ngFor="let conversation of conversations" >
+					<div class="media-area">
+						<div class="media" *ngFor="let dialog of conversation.replies">
+
+							<a class="float-left" href="javascript:void(0);"
+								*ngIf="dialog.input && dialog.input.text && dialog.input.text != ''">
+								<div class="avatar">
+									<img class="media-object" src="assets/images/avatars/profile.jpg" alt="..." />
+								</div>
+							</a>
+
+							<div class="media-body">
+
+								<div *ngIf="dialog.input && dialog.input.text">
+									<!-- <h4 *ngIf="loggedInUser && loggedInUser.firstName" class="media-heading">
+									  {{loggedInUser.firstName}} <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4>
+									<h4 *ngIf="!loggedInUser || !loggedInUser.firstName" class="media-heading">You <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4> -->
+									<h4 class="media-heading">You <small>&middot;
+										{{dialog.input.timestamp | amTimeAgo}}</small></h4>
+									<h6 class="text-muted"></h6>
+
+									<p *ngIf="dialog.input && dialog.input.text">{{dialog.input.text}}</p>
+
+								</div>
+
+								<div class="media media-post" *ngIf="dialog.output && dialog.output.generic && dialog.output.generic.length > 0" >
+									<a class="float-left" href="javascript:void(0);">
+										<div class="avatar watson">
+											<img class="media-object" src="assets/images/avatars/watson-avatar.png"
+											alt="..." />
+										</div>
+									</a>
+
+									<div class="media-body">
+										<h4 class="media-heading">Watson <small>&middot;
+											{{dialog.output.timestamp | amTimeAgo}}</small></h4>
+										<h6 class="text-muted"></h6>
+
+										<div *ngFor="let reply of dialog.output.generic">
+											<div *ngIf="reply.response_type == 'text' && reply.text">
+												<p *ngIf="reply.text.constructor.toString().indexOf('String') > -1">
+												  <span [innerHtml]="reply.text"></span>
+												</p>
+												<div *ngIf="reply.text.constructor.toString().indexOf('Array') > -1">
+												  <ul  *ngFor="let textVal of reply.text">
+													<li><span [innerHtml]="textVal"></span></li>
+												  </ul>
+												</div>
+											  </div>
+
+											<div *ngIf="reply.response_type == 'image' && reply.source">
+												<img src="{{reply.source}}" class="img-fit" alt="{{reply.title}}" />
+											</div>
+
+											<div *ngIf="reply.response_type == 'option'">
+												<p><span [innerHtml]="reply.title" *ngIf="reply.title"></span></p>
+												<p><span [innerHtml]="reply.description" *ngIf="reply.description"></span></p>
+												<div *ngFor="let option of reply.options">
+												  <div class="video-content" *ngIf="option.label == 'video' && option.value.input && option.value.input.text">
+													<vg-player>
+													  <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+														  <source src="{{option.value.input.text}}" type="video/mp4">
+													  </video>
+													</vg-player>
+												  </div>
+												  <div *ngIf="option.label == 'link' && option.value.input && option.value.input.text">
+													<a href="{{option.value.input.text}}" target="_blank">Click here for more details.</a>
+												  </div>
+												  <div *ngIf="option.label != 'video' && option.label != 'link' && option.value.input && option.value.input.text">
+													<ibm-tag type="blue" (click)="optionSelected(option)">{{option.label}}</ibm-tag>
+												  </div>
+												</div>
+											</div>
+
+											<div *ngIf="reply.response_type == 'search'">
+												<h5 *ngIf="!reply.header">Here are some search results from Discovery: </h5>
+												<h5 *ngIf="reply.header">{{reply.header}} </h5>
+												<div class="result"
+												  *ngFor="let searchResult of reply.results">
+
+												  <div class="result-title">
+													<h5>{{searchResult.title}} ({{searchResult.type}})</h5>
+												  </div>
+												  <div class="result-preview" *ngIf="searchResult.bodySnippet">
+													<p>{{searchResult.bodySnippet}}</p>
+												  </div>
+												  <div class="result-preview" *ngIf="searchResult.level">
+													<label>Level: </label> {{searchResult.level}}
+												  </div>
+												  <div class="result-preview" *ngIf="searchResult.category">
+													<label>Category: </label> {{searchResult.category}}
+												  </div>
+												  <div class="result-link" *ngIf="searchResult.demo">
+													<ibm-tag type="blue">
+														<a href="{{searchResult.demo}}" target="_blank"> Demo
+														</a>
+													</ibm-tag>
+												  </div>
+												  <div class="result-link" *ngIf="searchResult.tutorial">
+													<ibm-tag type="blue">
+														<a href="{{searchResult.tutorial}}" target="_blank"> Tutorial
+														</a>
+													</ibm-tag>
+												  </div>
+												  <div class="result-link" *ngIf="searchResult.seismic">
+													<ibm-tag type="blue">
+														<a href="{{searchResult.seismic}}" target="_blank"> Seismic
+														</a>
+													</ibm-tag>
+												  </div>
+												  <div class="result-link" *ngIf="searchResult.documentation">
+													<ibm-tag type="blue">
+														<a href="{{searchResult.documentation}}" target="_blank"> Documentation
+														</a>
+													</ibm-tag>
+												  </div>
+												  <div class="result-link" *ngIf="searchResult.url">
+													<ibm-tag type="blue">
+														<a href="{{searchResult.url}}" target="_blank"> More details..
+														</a>
+													</ibm-tag>
+												  </div>
+												</div>
+											</div>
+
+											<div *ngIf="reply.response_type == 'suggestion'">
+												<p><span [innerHtml]="reply.title" *ngIf="reply.title"></span></p>
+												<p><span [innerHtml]="reply.description" *ngIf="reply.description"></span></p>
+												<div *ngFor="let suggestion of reply.suggestions">
+												  <div *ngIf="suggestion.label && suggestion.value.input.suggestion_id">
+													<ibm-tag type="blue" (click)="suggestionSelected(suggestion)">{{suggestion.label}}</ibm-tag>
+												  </div>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="chat-footer" >
+					<div *ngIf="hasAudioDevice && token">
+						<button
+							ibmButton="primary"
+							size="sm"
+							[iconOnly]="true"
+							assistiveTextPlacement="top"
+							assistiveTextAlignment="center"
+							(click)="startStream()"
+							*ngIf="!isStreaming" >
+							<svg icon ibmIcon="microphone" size="16"></svg>
+							<span class="bx--assistive-text">Speak</span>
+						</button>
+
+						<button
+							ibmButton="primary"
+							size="sm"
+							[iconOnly]="true"
+							assistiveTextPlacement="top"
+							assistiveTextAlignment="center"
+							(click)="stopStream()"
+							*ngIf="isStreaming" >
+							<svg icon ibmIcon="microphone--filled" size="16"></svg>
+							<span class="bx--assistive-text">Stop</span>
+						</button>
+
+					</div>
+
+					<div class="chat-input">
+						<input
+						ibmText
+						size="md"
+						placeholder="Enter message"
+						name="userInput"
+						[(ngModel)]="userInput.text"
+						placeholder="Enter text here..."
+						(keyup.enter)="sendMessage()">
+					</div>
+
+					<button
+						ibmButton="primary"
+						size="sm"
+						[iconOnly]="true"
+						assistiveTextPlacement="top"
+						assistiveTextAlignment="center"
+						(click)="sendMessage()" >
+						<svg icon ibmIcon="send" size="16"></svg>
+						<span class="bx--assistive-text">Send</span>
+					</button>
+
+			</div>
+
+		</div>
+
+	<!-- <div ibmRow >
+		<div ibmCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+
+			Chat Content
+
+		</div>
+	</div>		 -->
+	</div>
+</div>

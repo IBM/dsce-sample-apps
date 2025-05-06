@@ -1,0 +1,38 @@
+[
+    {
+        "resource": "configurations",
+        "operation": "create",
+        "roles": ["admin"],
+        "groups": []
+    },
+    {
+        "resource": "configurations",
+        "operation": "read",
+        "roles": ["admin", "guest", "editor", "viewer", "manager"],
+        "groups": []
+    },
+    {
+        "resource": "configurations",
+        "operation": "delete",
+        "roles": ["admin"],
+        "groups": []
+    },
+	{
+        "resource": "agent-assist",
+        "operation": "create",
+        "roles": ["admin", "editor", "manager"],
+        "groups": []
+    },
+    {
+        "resource": "agent-assist",
+        "operation": "read",
+        "roles": ["admin", "guest", "editor", "viewer", "manager"],
+        "groups": []
+    },
+    {
+        "resource": "agent-assist",
+        "operation": "delete",
+        "roles": ["admin"],
+        "groups": []
+    }
+]

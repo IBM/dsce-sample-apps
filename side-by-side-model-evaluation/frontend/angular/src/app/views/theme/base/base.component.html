@@ -1,0 +1,33 @@
+
+<!-- <ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+		<app-header [headerEvents]="headerEvents"></app-header>
+
+		<main class="cds--content" id="main-content" (click)="onClick($event)" cdsGrid [useCssGrid]="false" [condensed]="false" >
+
+				<router-outlet></router-outlet>
+
+		</main>
+
+		<app-footer></app-footer>
+</ng-container>
+
+<ng-template #blankLayout>
+	<div class="">
+		<router-outlet></router-outlet>
+	</div>
+</ng-template> -->
+
+<ng-container>
+	<app-header [headerEvents]="headerEvents"></app-header>
+
+	<main class="cds--content" id="main-content" (click)="onClick($event)" cdsGrid [useCssGrid]="false" [condensed]="false" >
+
+			<router-outlet></router-outlet>
+
+	</main>
+
+	<app-footer></app-footer>
+</ng-container>
+
+
+

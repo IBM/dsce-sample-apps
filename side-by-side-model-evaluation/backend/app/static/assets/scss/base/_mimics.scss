@@ -1,0 +1,19 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/themes/scss/themes";
+
+$my--theme: map-merge(
+  $carbon--theme--g10,
+  (
+    ui-background: #ffffff,
+    // ui-01: #f3f3f3,
+    // ui-02: #e0dff0,
+    // field-01: #f3f3f3,
+    // field-02: #e0dff0,
+    // disabled-01: #f3f3f3,
+    // background: #ffffff,
+    // layer: #f3f3f3,
+    // field: #f3f3f3,
+    // layer-disabled: #f3f3f3,
+    // field-disabled: #f3f3f3,
+    // border-disabled: #f3f3f3,
+  )
+) !default;

@@ -1,0 +1,8 @@
+---
+applications:
+- name:      my-watson-assistant
+  routes:
+  - route: my-watson-assistant.mybluemix.net
+  memory:    128M
+  buildpacks:
+    - staticfile_buildpack

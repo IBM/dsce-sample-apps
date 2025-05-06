@@ -1,0 +1,500 @@
+<div class="configurations" cdsGrid [condensed]="false">
+
+	<cds-breadcrumb >
+		<cds-breadcrumb-item >
+			<a [routerLink]="['/home']">Home</a>
+		</cds-breadcrumb-item>
+	</cds-breadcrumb>
+
+	<div class="body-text" cdsRow >
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}">
+				<div cdsRow >
+					<div cdsCol class="titleContainer" [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+						<h3 class="title" > Configurations for </h3>
+						<div style="width: 250px" *ngIf="applications" >
+							<cds-dropdown
+								size="md"
+								placeholder="Select App"
+								[(ngModel)]="selectedAppId"
+								itemValueKey="id"
+								(selected)="applicationSelected($event)">
+								<cds-dropdown-list [items]="applications"></cds-dropdown-list>
+							</cds-dropdown>
+						</div>
+						<button cdsButton="ghost" [iconOnly]="true" size="sm" (click)="editApplication()" >
+							<svg icon cdsIcon="edit" size="16"></svg>
+						</button>
+					</div>
+					<div class="buttons-wrapper" cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}">
+						<button cdsButton="primary" size="sm"  >Add Application</button>
+						&nbsp;
+						<cds-overflow-menu #appDetailsOverflow class="actionsMenu" [offset]="offset" >
+							<cds-overflow-menu-option (click)="makeDefaultApp()">
+								Make Default App
+							</cds-overflow-menu-option>
+						</cds-overflow-menu>
+
+					</div>
+				</div>
+
+				<div cdsRow class="mainPageRow" *ngIf="selectedAppId" >
+					<div class="pageSideMenu" cdsCol [columnNumbers]="{'lg': 4, 'md': 4, 'sm': 4}">
+							<cds-sidenav-item (click)="showPageContent('WA')"  [active]="showContent == 'WA'" >
+								Watson Assistant
+							</cds-sidenav-item>
+							<cds-sidenav-item (click)="showPageContent('WD')"  [active]="showContent == 'WD'" >
+								Watson Discovery
+							</cds-sidenav-item>
+							<cds-sidenav-item (click)="showPageContent('WSTT')"  [active]="showContent == 'WSTT'" >
+								Watson STT
+							</cds-sidenav-item>
+							<cds-sidenav-item (click)="showPageContent('CHANNELS')"  [active]="showContent == 'CHANNELS'" >
+								Channels
+							</cds-sidenav-item>
+					</div>
+					<div class="pageContent" cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}"  *ngIf="configurations">
+						<div *ngIf="showContent == 'WA'">
+							<!-- <h3 class="subtitle" > Watson Assistant </h3>	 -->
+							<div *ngIf="configurations['WA_CONFIG']" >
+								<!-- {{configurations['WA_CONFIG']['config']['API_KEY']}} -->
+								<form [formGroup]="waForm" *ngIf="waForm" >
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+												<cds-label >
+													Is CP4D
+													<input type="checkbox" formControlName="WA_CP4D">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+												<cds-label
+												[invalid]="hasWAFormErrors && waForm.get('API_KEY').errors"
+												invalidText="APIKey is required" >
+													Watson Assistant API Key
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="API_KEY"
+														placeholder="Enter WA API_KEY">
+												</cds-label>
+											</div>
+										</div>
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+												<cds-label
+												[invalid]="hasWAFormErrors && waForm.get('SERVICE_URL').errors"
+												invalidText="WA serviceUrl is required">
+													Watson Assistant Service URL
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="SERVICE_URL"
+														placeholder="Enter WA ServiceUrl">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+												<cds-label >
+													Enable Skills Detection
+													<input type="checkbox" formControlName="ENABLE_SKILLS_DETECTION">
+												</cds-label>
+											</div>
+										</div>
+
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-table-container *ngIf="!showAddAssistant" >
+													<cds-table-toolbar
+														[model]="assistantsData"
+														[batchText]="assistantsTableConfig.batchText"
+														[size]="assistantsTableConfig.size"
+														(cancel)="cancelMethod()"
+														#assistantsToolbar>
+														<cds-table-toolbar-actions>
+															<!-- <button cdsButton="primary" (click)="makeDefaultAssistant()" [tabindex]="assistantsToolbar.selected ? 0 : -1">
+																Make Default
+																<cds-icon-download size="16" class="bx--btn__icon"></cds-icon-download>
+															</button> -->
+															<button cdsButton="danger" [tabindex]="assistantsToolbar.selected ? 0 : -1">
+																Delete
+																<svg icon cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
+															</button>
+														</cds-table-toolbar-actions>
+														<cds-table-toolbar-content *ngIf="!assistantsToolbar.selected">
+
+															<cds-table-toolbar-search ngDefaultControl expandable="true"></cds-table-toolbar-search>
+
+															<button
+																cdsButton="primary"
+																size="normal"
+																iconOnly="true"
+																assistiveTextPlacement="top"
+																assistiveTextAlignment="center"
+																(click)="addAssistant()"
+																[tabindex]="assistantsToolbar.selected ? -1 : 0" >
+																<!-- <span class="bx--assistive-text">Add Assistant</span> -->
+																<svg cdsIcon="add" size="16" class="cds--btn__icon"></svg>
+															</button>
+
+														</cds-table-toolbar-content>
+													</cds-table-toolbar>
+
+													<cds-placeholder></cds-placeholder>
+
+													<cds-table
+														[model]="assistantsData"
+														[size]="assistantsTableConfig.size"
+														[showSelectionColumn]="assistantsTableConfig.showSelectionColumn"
+														[enableSingleSelect]="assistantsTableConfig.enableSingleSelect"
+														[striped]="assistantsTableConfig.striped"
+														[sortable]="assistantsTableConfig.sortable"
+														[skeleton]="assistantsTableConfig.skeleton"
+														[stickyHeader]="assistantsTableConfig.stickyHeader"
+														[isDataGrid]="assistantsTableConfig.isDataGrid"
+														(rowClick) = "rowClicked($event)"
+													>
+
+														<tbody><tr><td class="no-data" colspan="3"><div>No data.</div></td></tr></tbody>
+
+													</cds-table>
+
+													<!-- <cds-pagination [model]="assistantsData" (selectPage)="selectPage($event)"></cds-pagination> -->
+												</cds-table-container>
+
+												<form [formGroup]="watsonForm" *ngIf="showAddAssistant && watsonForm">
+													<div cdsRow class="form-item">
+														<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+															<cds-label
+															[invalid]="hasWatsonFormErrors && watsonForm.get('ss_environmentId').errors"
+															invalidText="Assistant Id is required" >
+																SS Environment Id
+																<input
+																	cdsText
+																	[autocomplete]="false"
+																	formControlName="ss_environmentId"
+																	placeholder="Enter SS EnvironmentId">
+															</cds-label>
+														</div>
+													</div>
+													<div cdsRow class="form-item">
+														<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+															<cds-label
+															[invalid]="hasWatsonFormErrors && watsonForm.get('aa_environmentId').errors"
+															invalidText="Assistant Id is required" >
+																AA Environment Id
+																<input
+																	cdsText
+																	[autocomplete]="false"
+																	formControlName="aa_environmentId"
+																	placeholder="Enter AA EnvironmentId">
+															</cds-label>
+														</div>
+													</div>
+													<div cdsRow class="form-item">
+														<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+															<cds-label
+															[invalid]="hasWatsonFormErrors && watsonForm.get('name').errors"
+															invalidText="Assistant Name is required">
+																Assistant Name
+																<input
+																	cdsText
+																	[autocomplete]="false"
+																	formControlName="name"
+																	placeholder="Enter Assistant Name">
+															</cds-label>
+														</div>
+													</div>
+
+													<div cdsRow class="form-item">
+														<cds-label >
+															Is Default
+															<input type="checkbox" formControlName="default">
+														</cds-label>
+													</div>
+
+													<div cdsRow class="form-item" >
+														<div cdsCol [columnNumbers]="{'lg': 10, 'md': 10, 'sm': 10}">
+															<button cdsButton (click)="saveAssistant()">Save</button>
+															&nbsp;
+															<button cdsButton (click)="cancelAddAssistant()">Cancel</button>
+														</div>
+													</div>
+												</form>
+											</div>
+
+										</div>
+
+										<div cdsRow class="form-item" *ngIf="!showAddAssistant" >
+											<button cdsButton (click)="saveWAConfig()">Save</button>
+											&nbsp;
+											<button cdsButton (click)="resetForm()">Reset</button>
+										</div>
+
+								</form>
+							</div>
+						</div>
+
+						<div *ngIf="showContent == 'WD'">
+							<!-- <h3 class="subtitle" > Watson Discovery </h3> -->
+							<div *ngIf="configurations['WD_CONFIG']" >
+
+								<form [formGroup]="wdForm" *ngIf="wdForm" >
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label >
+													Enabled
+													<input type="checkbox" formControlName="ENABLE">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label >
+													Is CP4D
+													<input type="checkbox" formControlName="WD_CP4D">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasWDFormErrors && wdForm.get('API_KEY').errors"
+												invalidText="APIKey is required" >
+													Watson Discovery API Key
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="API_KEY"
+														placeholder="Enter WD API_KEY">
+												</cds-label>
+											</div>
+										</div>
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasWDFormErrors && wdForm.get('SERVICE_URL').errors"
+												invalidText="WD serviceUrl is required">
+													Watson Discovery Service URL
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="SERVICE_URL"
+														placeholder="Enter WD ServiceUrl">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasWDFormErrors && wdForm.get('PROJECT_ID').errors"
+												invalidText="WD ProjectId is required">
+													Watson Discovery PROJECT_ID
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="PROJECT_ID"
+														placeholder="Enter WD ProjectId">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item" >
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<button cdsButton (click)="saveWDConfig()">Save</button>
+												&nbsp;
+												<button cdsButton (click)="resetForm()">Reset</button>
+											</div>
+										</div>
+
+								</form>
+							</div>
+						</div>
+
+						<div *ngIf="showContent == 'WSTT'">
+							<!-- <h3 class="subtitle" > Watson Speech to Text </h3> -->
+							<div *ngIf="configurations['WSTT_CONFIG']" >
+
+								<form [formGroup]="wsttForm" *ngIf="wsttForm" >
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label >
+													Enabled
+													<input type="checkbox" formControlName="ENABLE">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label >
+													Is CP4D
+													<input type="checkbox" formControlName="WSTT_CP4D">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasWSTTFormErrors && wsttForm.get('STT_API_KEY').errors"
+												invalidText="STT APIKey is required" >
+													Watson STT API Key
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="STT_API_KEY"
+														placeholder="Enter STT API_KEY">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasWSTTFormErrors && wsttForm.get('STT_ENDPOINT').errors"
+												invalidText="STT Endpoint is required" >
+													Watson STT Endpoint
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="STT_ENDPOINT"
+														placeholder="https://api.us-south.speech-to-text.watson.cloud.cds.com">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label>
+													Watson STT Model
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="STT_MODEL"
+														placeholder="en-US_BroadbandModel">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label>
+													Watson STT Customization Id
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="STT_CUSTOMIZATION_ID"
+														placeholder="Enter WSTT Customization Id">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item" >
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<button cdsButton (click)="saveWSTTConfig()">Save</button>
+												&nbsp;
+												<button cdsButton (click)="resetForm()">Reset</button>
+											</div>
+										</div>
+
+								</form>
+							</div>
+						</div>
+
+						<div *ngIf="showContent == 'CHANNELS'">
+							<!-- <h3 class="subtitle" > Other </h3> -->
+							<div *ngIf="configurations['CHANNELS_CONFIG']" >
+
+								<form [formGroup]="channelsForm" *ngIf="channelsForm" >
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label >
+													Enable Slack
+													<input type="checkbox" formControlName="ENABLE_SLACK">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasChannelsFormErrors && channelsForm.get('SLACK_BOT_USER_TOKEN').errors"
+												invalidText="SLACK_BOT_USER_TOKEN is required" >
+													SLACK_BOT_USER_TOKEN
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="SLACK_BOT_USER_TOKEN"
+														placeholder="Enter SLACK_BOT_USER_TOKEN">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item">
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<cds-label
+												[invalid]="hasChannelsFormErrors && channelsForm.get('SLACK_SIGNIN_SECRET').errors"
+												invalidText="SLACK_SIGNIN_SECRET is required" >
+													SLACK_SIGNIN_SECRET
+													<input
+														cdsText
+														[autocomplete]="false"
+														formControlName="SLACK_SIGNIN_SECRET"
+														placeholder="Enter SLACK_SIGNIN_SECRET">
+												</cds-label>
+											</div>
+										</div>
+
+										<div cdsRow class="form-item" >
+											<div cdsCol [columnNumbers]="{'lg': 12, 'md': 12, 'sm': 12}">
+												<button cdsButton (click)="saveChannelsConfig()">Save</button>
+												&nbsp;
+												<button cdsButton (click)="resetForm()">Reset</button>
+											</div>
+										</div>
+
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+		</div>
+
+	</div>
+
+	<ng-template #editAssistantLink let-data="data" >
+		<a href="javascript:void(0)" (click)="editAssistant(data)">{{data.id}}</a>
+	</ng-template>
+
+	<ng-template #assistantsActionsTemplate let-data="data" >
+		<cds-overflow-menu #assistantsActionsOverflow [offset]="assistantsTableConfig.offset" flip="false" >
+			<cds-overflow-menu-option (click)="editAssistant(data)" >
+				Modify
+			</cds-overflow-menu-option>
+			<cds-overflow-menu-option (click)="makeDefaultAssistant(data)" >
+				Make Default
+			</cds-overflow-menu-option>
+			<cds-overflow-menu-option (click)="deleteAssistant(data)">
+				Delete
+			</cds-overflow-menu-option>
+		</cds-overflow-menu>
+		<cds-placeholder></cds-placeholder>
+	</ng-template>
+
+
+</div>
+

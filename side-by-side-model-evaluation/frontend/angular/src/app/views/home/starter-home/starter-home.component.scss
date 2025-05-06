@@ -1,0 +1,68 @@
+// @import "~carbon-components/scss/globals/scss/typography";
+// @import "~carbon-components/scss/globals/scss/spacing";
+
+@import "@carbon/layout";
+@import "@carbon/type";
+
+.starter-home {
+
+	padding: 30px;
+	margin: 30px;
+
+	.title {
+		@include type-style("productive-heading-05");
+	}
+
+	.subtitle {
+		margin-top: carbon--mini-units(2);
+		@include type-style("productive-heading-02");
+	}
+
+	.body-text {
+		margin-top: carbon--mini-units(2);
+		margin-bottom: carbon--mini-units(4);
+	}
+
+	.list {
+		max-width: carbon--mini-units(63);
+		padding-left: carbon--mini-units(6);
+		column-count: 2;
+
+		@media only screen and (max-width: 1055px) {
+			margin-top: carbon--mini-units(2);
+		}
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ul li {
+		padding: 0.5rem;
+	}
+
+	.home-tile {
+		height: 100%;
+	}
+
+	.home-tile b {
+		font-weight:600;
+	}
+
+	.home-tile p {
+		margin-top: carbon--mini-units(1);
+		margin-bottom: carbon--mini-units(1);
+		font-size: inherit;
+	}
+
+	.alignCenter{
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		padding: 5px;
+	}
+
+	img {
+		width: 60%;
+	}
+}

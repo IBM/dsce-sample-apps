@@ -1,0 +1,37 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+	  "baseUrl": "./",
+	  "outDir": "./dist/out-tsc",
+	  "sourceMap": true,
+	  "declaration": false,
+	  "module": "es2022",
+	  "moduleResolution": "node",
+	  "experimentalDecorators": true,
+	  "allowSyntheticDefaultImports": true,
+	  "resolveJsonModule": true,
+	  "importHelpers": true,
+	  "target": "es2022",
+	  "useDefineForClassFields": false,
+	  "skipLibCheck": true,
+	  "typeRoots": [
+		"node_modules/@types"
+	  ],
+	  "types": [
+		"node",
+		"webgl2"
+	  ],
+	  "lib": [
+		"es2022",
+		"dom"
+	  ],
+	  "paths": {
+		"crypto":["node_modules/crypto-browserify"],
+		"stream":["node_modules/stream-browserify"]
+	  }
+	},
+	"angularCompilerOptions": {
+	  "fullTemplateTypeCheck": true,
+	  "strictInjectionParameters": true
+	}
+  }

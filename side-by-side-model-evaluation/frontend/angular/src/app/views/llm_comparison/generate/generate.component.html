@@ -1,0 +1,86 @@
+<div class="generate" cdsGrid [condensed]="false" >
+
+	<div cdsRow *ngIf="sourceNodes && sourceNodes.length > 0 && sourceNodes[0]['filename']">
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<div >
+				<label>Sources: </label>
+				<!-- <span class="simple_text">{{llmResponse['output']['source_nodes'][0]}}</span><br/> -->
+				<cds-accordion align="start" size="sm" *ngFor="let source of sourceNodes; let i = index;">
+					<cds-accordion-item title="{{source['filename']}} (Page: {{source['page_no']}})" (selected)="sourceSelected(source)">
+						<!-- <p>{{source['text']}}</p><br /> -->
+						<span class="respText" [innerHtml]="source['text'] | markdown"></span><br />
+						<p><strong>Score: </strong> {{source['score'] | number: '1.0-2'}}</p><br />
+						<p><a href="javascript:void(0);" #triggershowSourceModal (click)="showSourcesOnPage(source)" cdsLink>Show in Page</a></p>
+					</cds-accordion-item>
+				</cds-accordion>
+			</div>
+		</div>
+
+
+			<cds-modal
+				size="md"
+				[open]="openSouceNodeModal"
+				(overlaySelected)="closeSourceModal()"
+				trigger="triggershowSourceModal"
+				*ngIf="sourcePage"
+			>
+				<cds-modal-header (closeSelect)="closeSourceModal()" [showCloseButton]="false" >
+					<h2 cdsModalHeaderLabel>{{sourcePage['title']}}</h2>
+				</cds-modal-header>
+				<section cdsModalContent hasForm="true">
+					<div class="cds--text-input__field-wrapper">
+
+						<pdf-viewer
+						#pdfComponent
+						[src]="sourcePage['file_path']"
+						[rotation]="0"
+						[original-size]="false"
+						[show-all]="true"
+						[stick-to-page]="false"
+						[fit-to-page]="false"
+						[zoom]="1"
+						[zoom-scale]="'page-width'"
+						[render-text]="true"
+						[external-link-target]="'blank'"
+						[autoresize]="true"
+						[show-borders]="false"
+						[page]="sourcePage['page_no']"
+						style="width: 100%; height: 100vh;"
+						(after-load-complete)="goToPage(sourcePage)"
+						></pdf-viewer>
+
+					</div>
+				</section>
+				<cds-modal-footer>
+					<button class="cds--btn cds--btn--secondary" (click)="closeSourceModal()">Close</button>
+				</cds-modal-footer>
+			</cds-modal>
+			<cds-placeholder></cds-placeholder>
+	</div>
+
+	<div cdsRow class="form-item" *ngIf="payload && payload.modelid">
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<cds-inline-loading *ngIf="loaders['api_calling']"
+				#loading1
+				loadingText="Generating LLM Response for {{payload.modelid}}"
+				>
+			</cds-inline-loading >
+			<div *ngIf="!loaders['api_calling'] && llmResponse && llmResponse['output']">
+			<h4>{{payload.modelid}}</h4> <span class="label">Generated Response: </span><br/><br/>
+				<span class="respText" [innerHtml]="llmResponse['output']['generated_text']"></span><br/><br/>
+			</div>
+		</div>
+
+	</div>
+
+	<div cdsRow class="form-item" >
+		<div cdsCol [columnNumbers]="{'lg': 16, 'md': 16, 'sm': 16}" >
+			<div *ngIf="llmResponse && llmResponse['output']">
+				<label>Tokens: </label><span class="simple_text">{{llmResponse['output']['input_token_count'] | number: '1.0-2'}} input + {{llmResponse['output']['generated_token_count'] | number: '1.0-2'}} output = {{llmResponse['output']['input_token_count'] + llmResponse['output']['generated_token_count'] | number: '1.0-2'}}</span><br/>
+				<label >LLM Call Time: </label><span class="simple_text" *ngIf="llmResponse['output']['llm_call_time']">{{llmResponse['output']['llm_call_time'] | number: '1.0-2'}} seconds</span><br/>
+				<label>UI Print Time: </label><span class="simple_text">{{llmResponse['time_taken'] | number: '1.0-2'}} seconds</span><br/>
+			</div>
+		</div>
+	</div>
+
+</div>

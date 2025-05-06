@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>Documents Uploaded</title>
+  </head>
+  <body>
+    <h1>Documents:</h1>
+    <ul>
+      {% for file in files %}
+      <li><a href="{{file}}">{{file}}</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

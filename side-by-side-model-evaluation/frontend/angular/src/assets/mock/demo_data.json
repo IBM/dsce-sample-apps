@@ -1,0 +1,181 @@
+{
+	"direct_questions": {
+		"prompt": "",
+		"questions":[
+			
+			{
+				"question": "Can you explain in not more than 10 sentences, which type of a investor would prefer to invest in equity over derivatives ?",
+				"expected_ans" : "An equity investor is more likely to prefer investing in equity over derivatives due to several reasons. Firstly, equity investments provide ownership rights to the investor, which means they have a share in the company's assets and earnings. This is not the case with derivatives, where the investor does not have any ownership rights but is only entitled to the derivative's value at maturity. Secondly, equity investments are generally considered to be less risky than derivative investments. Derivatives can be highly volatile and complex, making them more susceptible to market risks and leverage risks. Lastly, equity investments tend to offer more stable returns over the long term compared to derivatives, which can experience significant price fluctuations and may not provide a consistent return. Therefore, equity investments are more suitable for investors who are looking for long-term growth and stability in their portfolio."
+			},
+			{	
+				"question": "Can you explain in not more than 10 sentences, which type of a investor would prefer to invest in mutual funds and not equity ?",
+				"expected_ans": "An investor who values diversification, professional fund management, and lower risk would prefer mutual funds over direct equity. Mutual funds provide exposure to a mix of stocks, reducing individual stock risk. They are ideal for passive investors who lack the time or expertise to analyze stocks. Systematic Investment Plans (SIPs) help in disciplined investing. Retirees and conservative investors favor mutual funds for stability. Mutual funds offer liquidity with professional management. ELSS funds provide tax benefits. Unlike direct equity, mutual funds are managed based on predefined strategies."
+			},
+			{
+				"question": "Why is KYC a complex function for banks ?",
+				"expected_ans": "KYC, or Know Your Customer, is a critical function for banks because it is designed to prevent financial crimes such as money laundering, terrorist financing, and identity theft. Banks must collect and verify extensive personal information about their customers to ensure that they are who they claim to be. This process can be complex due to several factors:\n\n1. Large number of customers: Banks typically serve a large number of customers, making it challenging to manually verify the information of each customer.\n2. Variety of customer information: The information required for KYC can vary significantly depending on the customer's role, location, and the type of service or product being offered.\n3. Rapidly changing regulatory environment: Financial regulations are constantly evolving, adding to the complexity of KYC processes. Banks must stay up-to-date with these changes and ensure that their KYC practices comply with the latest regulations.\n4. Data privacy and security concerns: Collecting and storing sensitive customer information poses significant"
+			},
+			{
+				"question": "What is operational risk in banks ? Can you give 2/3 examples ?",
+				"expected_ans": "Operational risk in banks refers to the risk of direct or indirect loss resulting from inadequate or failed internal processes, people, and systems, or from external events. It is one of the major types of risk faced by financial institutions. Here are two examples of operational risks in banks:\n\n1. Information Security Breaches: Banks store and manage sensitive customer information, making them attractive targets for cybercriminals. A security breach can result in the unauthorized access, use, or disclosure of this information, leading to financial losses and damage to the bank's reputation. For instance, in 2018, JPMorgan Chase paid a $200 million fine for failing to adequately monitor employee email use, leading to a data breach exposing the personal information of 76 million customers.\n\n2. Process Management Failures: Operational risks can also arise from problems in the bank's internal processes. For example, inadequate risk assessment, ineffective communication, or poor quality control can lead to errors, delays,"
+			},
+			{
+				"question": "Why is BFSI one of the most regulated sectors of the economy. Please respond in maximum 10/15 sentences only ?",
+				"expected_ans": "BFSI, which stands for Banking, Financial Services, and Insurance, is one of the most heavily regulated sectors in the economy due to the critical nature of its services and the significant impact it has on the financial well-being of individuals and businesses. This sector is subject to stringent regulations to ensure transparency, accountability, and consumer protection. Regulators monitor the activities of financial institutions to prevent financial crimes, fraud, and money laundering. Additionally, regulations aim to maintain the stability of the financial system and protect consumers from predatory practices. The BFSI sector's complexity, interconnectedness, and the vast amount of data it handles further necessitate stringent regulations to safeguard the interests of all stakeholders."
+			},
+			{
+				"question": "What is the difference between personal banking customers and corporate banking customers?",
+				"expected_ans": "Personal banking customers are individuals who maintain their own accounts for personal financial transactions, such as saving accounts, checking accounts, and credit cards. Corporate banking customers, on the other hand, are businesses or organizations that maintain accounts for their financial transactions. These can include businesses, non-profit organizations, and government entities. Corporate banking customers often have more complex financial needs than personal banking customers, and they may require specialized financial services such as treasury management, commercial lending, and investment banking. \n\nPersonal banking customers typically have simpler financial needs and may not require the same level of specialized services as corporate banking customers. However, both personal and corporate banking customers rely on their banks for a range of financial services, including account management, lending, and investment advice."
+			},
+			{
+				"question": "Please explain difference between real-time fraud detection and AML investigations?",
+				"expected_ans": "Real-time fraud detection and AML investigations are two distinct areas of focus within the financial services industry, each with its unique characteristics and objectives.\n\nReal-time fraud detection is a proactive approach to identifying and preventing fraudulent activities in real-time. It typically involves analyzing various data points in near real-time, such as transaction patterns, account behavior, and user behavior, to detect anomalies and potential fraud. Real-time fraud detection systems leverage advanced algorithms, machine learning techniques, and artificial intelligence to identify complex fraud patterns and minimize false positives. These systems are designed to be scalable, adaptable, and responsive to changing fraud patterns, making them ideal for detecting and preventing sophisticated fraudulent activities in the moment.\n\nAML investigations, on the other hand, are a reactive approach to detecting and preventing financial crimes, such as money laundering, terrorist financing, and corruption. AML investigations involve reviewing historical transactions, account activities, and customer information to identify potential red flags and suspicious patterns that may indicate financial crimes."
+			},
+			{
+				"question": "Can you describe in brief what are the typical assets and liabilities of a full service bank ?",
+				"expected_ans": "A full-service bank, also known as a universal bank, offers a wide range of financial services to its customers. These services can include accepting deposits, providing loans, offering investment and wealth management services, and facilitating various types of transactions. In terms of assets, a full-service bank typically holds deposits from customers, which are loans of money that the bank has extended to its customers. The bank also lends money to customers, which are the assets known as loans and advances. Additionally, the bank may hold investment securities, such as bonds, stocks, and mutual funds, which are assets that can generate income for the bank.\n\nOn the liabilities side, a full-service bank is obligated to pay out the money it has collected in the form of deposits. These deposits can come from individuals, businesses, and organizations, and they are typically insured by the government to protect the depositors' funds. The bank also has other liabilities, such as debt, which can include bonds,"
+			},
+			{
+				"question": "What is the revenue model for a bank?",
+				"expected_ans": "A bank's revenue model can be broken down into several key components:\n\n1. **Interest Income**: This is the primary source of revenue for a bank. It is generated by lending money to customers and charging interest on the loans. The interest rate charged varies depending on the type of loan and the creditworthiness of the borrower.\n\n2. **Service Charges**: Banks may charge customers for various services, such as maintaining a minimum balance, processing transactions, or using certain ATMs. These service charges can provide a significant source of revenue, particularly for larger banks with more customers.\n\n3. **Fees for Financial Services**: Banks can earn revenue by providing various financial services, such as wealth management, investment advice, and estate planning. These fees can be based on the value of the assets under management or the specific services provided.\n\n4. **Mortgage and Loan Origination Fees**: Banks earn revenue from originating and selling mortgages and other types"
+			},
+			{
+				"question": "How do banks process an international payment request by its customer?",
+				"expected_ans": "A bank processes an international payment request by its customer through a series of steps. First, the customer initiates the payment request, providing necessary details such as the recipient's account number, bank, and any other required information. The bank then validates the customer's account details and ensures there are sufficient funds available for the payment.\n\nNext, the bank verifies the recipient's bank details and ensures the account is located in a country that supports the payment system used. If the recipient's bank is part of the payment system, the bank will then initiate the payment transfer.\n\nThe payment transfer can be processed through various methods, including the Society for Worldwide Interbank Financial Telecommunication (SWIFT), which is a messaging system used by financial institutions to securely exchange financial information and to conduct business transactions. The bank will use the appropriate SWIFT code to route the payment to the recipient's bank.\n\n"
+			},
+			{
+				"question": "Can you compare domestic payments and international payments ?",
+				"expected_ans": "Domestic payments occur within a country, using local currency and banking infrastructure. They are faster, with minimal processing fees. International payments involve cross-border transfers in different currencies, requiring currency conversion and additional compliance checks. International payments use networks like SWIFT, taking longer due to multiple intermediaries. Domestic payments are processed via NEFT, RTGS, UPI, or ACH, while international transfers rely on forex mechanisms and regulatory approvals."
+      		},
+			{
+				"question": "Can you briefily describe different payment methods offered by banks for domestic payments?",
+				"expected_ans": "Banks offer various domestic payment methods: NEFT (batch-processed transfers), RTGS (real-time large-value transfers), IMPS (instant small-value transfers), UPI (fast mobile-based payments), ACH (bulk automated clearing), and card-based payments (debit/credit). Each method varies in speed, cost, and transaction limits."
+			},
+			{
+				"question": "What are the top 10 issues and challenges that customers of bank face?",
+				"expected_ans": "1. Hidden charges and high fees. 2. Slow customer service. 3. Limited ATM availability. 4. Fraud and cybersecurity threats. 5. Technical glitches in online banking. 6. Long loan approval processes. 7. Complex documentation. 8. Poor grievance redressal. 9. Network downtime. 10. Difficulty in accessing personalized services."
+			}
+			]
+	},
+	"rag_questions": {
+        "prompt": "<|start_of_role|>system<|end_of_role|>You are an expert in Financial domain. You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior. You are a AI language model designed to function as a specialized Retrieval Augmented Generation (RAG) assistant. When generating responses, prioritize correctness, i.e., ensure that your response is correct given the context and user query, and that it is grounded in the context. Furthermore, make sure that the response is supported by the given document or context. Always make sure that your response is relevant to the question. If an explanation is needed, first provide the explanation or reasoning, and then give the final answer. Avoid repeating information unless asked.<|end_of_text|>\n<|start_of_role|>user<|end_of_role|>\n\nINSTRUCTIONS:\n\n1: You always answer the questions with markdown formatting. The markdown formatting you support: headings, bold, italic, links, tables, lists, code blocks, and blockquotes. You must omit that you answer the questions with markdown.\n2: Any HTML tags must be wrapped in block quotes, for example ```<html>```. You will be penalized for not rendering code in block quotes.\n3: When returning code blocks, specify language.\n4: Given the document and the current conversation between a user and an assistant, your task is as follows: answer any user query by using information from the document. Always answer as helpfully as possible, while being safe. When the question cannot be answered using the context or document, output the following response: \"I cannot answer that question based on the provided document.\".\n5: Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\n6: If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\"\n\nUse the following pieces of context to answer the question.\n\n{context}\nQUESTION: {query}\nANSWER:\n",
+		"PRINTER_cpd58007":
+		{
+			"questions":
+			[
+				{
+					"question": "What are the key functions of the Control Panel on the Epson printer?",
+					"expected_ans": "The Control Panel allows users to access printer settings, select paper sources, adjust print quality, and manage network connections."
+				},
+				{
+					"question": "How can you enable Wi-Fi Direct Mode on the Epson printer?",
+					"expected_ans": "Wi-Fi Direct Mode can be enabled by accessing the Control Panel, navigating to network settings, and selecting the option to enable Wi-Fi Direct Mode (Simple AP)."
+				},
+				{
+					"question": "What steps are involved in charging the built-in battery using the AC adapter?",
+					"expected_ans": "To charge the built-in battery using the AC adapter, connect the adapter to the printer and plug it into a power source. The battery indicator will show the charging status."
+				},
+				{
+					"question": "What should you do if the printer does not turn on?",
+					"expected_ans": "Check the power connection, ensure the battery is charged, and verify that the power button is functioning properly. Refer to the troubleshooting section for further assistance."
+				},
+				{
+					"question": "How can you modify the sleep timer settings on the Epson printer?",
+					"expected_ans": "Access the Control Panel, navigate to the power settings menu, and adjust the sleep timer duration as desired."
+				},
+				{
+					"question": "What are the recommended steps to solve a paper jam inside the printer?",
+					"expected_ans": "Turn off the printer, carefully open the access panel, and remove any jammed paper. Ensure no torn pieces remain and close the panel before turning the printer back on."
+				},
+				{
+					"question": "What are the safety instructions for handling ink cartridges?",
+					"expected_ans": "Avoid shaking the cartridges, keep them out of reach of children, and do not disassemble or attempt to refill them. Refer to the safety instructions section for details."
+				}
+			]
+		},
+		"IBM_Annual_Report_2023":
+		{
+        	"questions":
+            [
+				{
+					"question": "What was IBM's total revenue in 2023, and how did it compare to the previous year?",
+					"expected_ans": "IBM reported $61.9 billion in revenue in 2023, a 3% increase at constant currency compared to the previous year."
+				},
+				{
+					"question": "What contributed to the $1.9 billion increase in free cash flow in 2023?",
+					"expected_ans": "The increase in free cash flow to $11.2 billion was driven by higher profitability and improved working capital efficiency."
+				},
+				{
+					"question": "How did the Software segment perform in 2023?",
+					"expected_ans": "Software revenues were up more than 5% at constant currency, as clients turned to our advanced software capabilities across hybrid cloud, data & AI, automation, transactions processing, and security. Our performance was led by Red Hat, and we had solid growth in our recurring revenue base."
+				},
+				{
+					"question": "What factors influenced the performance of IBM's Consulting segment in 2023?",
+					"expected_ans": "The Consulting segment saw a 6% revenue increase at constant currency, leveraging expertise in digital transformation, AI deployment, cloud modernization, and business transformation."
+				},
+				{
+					"question": "Why did the Infrastructure segment revenues decline in 2023?",
+					"expected_ans": "The Infrastructure segment experienced a 4% revenue decline at constant currency, reflecting typical product cycle dynamics."
+				},
+				{
+					"question": "What strategic actions helped IBM expand its profit margins in 2023?",
+					"expected_ans": "IBM expanded profit margins by focusing on high-value offerings in Consulting and Software and by digitally transforming internal processes while scaling AI for enhanced productivity."
+				},
+				{
+					"question": "Where can the full IBM 2023 Annual Report be accessed?",
+					"expected_ans": "The full IBM 2023 Annual Report can be accessed on IBM's Investor Relations website."
+				}
+        	]
+		},
+		"Matercard_FAQs":
+		{
+        	"questions":
+            [
+				{
+					"question": "What is Mastercard doing to alleviate the limited supply of BINs?",
+					"expected_ans": "Cards with 2-series BINs were first issued in 2017."
+				},
+				{
+					"question": "When do changes go into effect?",
+					"expected_ans": "Based on the provided documents, it appears that while IBM experienced revenue growth in 2022, the profit margins did not significantly improve. The gross profit margin decreased by 2.5 points to 25.5 percent compared to the prior year, and the pre-tax margin increased by only 0.7 points to 8.8 percent. The decline in gross profit margin was primarily due to labor cost inflation, but it improved by 2.4 points in the second half of 2022 compared to the first half, reflecting the benefits of pricing actions and productivity. The improvement in pre-tax income and pre-tax margin was driven by the benefits of productivity within the workforce, a more streamlined operating and go-to-market structure, and acquisitions that became more accretive."
+				},
+				{
+					"question": "What other changes may impact BINs in the future?",
+					"expected_ans": "The industry is considering a move to a new 8-digit BIN standard and is discussing an appropriate implementation date. If adopted, it would require more extensive systems planning and upgrades. Mastercard is working with a committed group of industry participants to ensure all voices are heard in establishing the most efficient standard for continued industry growth."
+				},
+				{
+					"question": "How do I use the ATM locator?",
+					"expected_ans": "Visit the ATM locator and enter a city or a zip code. You can further narrow your search by providing a street address, a financial institution's name and checking additional options like 24-hour access. Click the Search button to see a list of ATMs nearby, then click on a specific ATM for further information about its location. Depending on your destination, driving directions and a map may also be available."
+				},
+				{
+					"question": "I don't know my password or my PIN. How can I get this information?",
+					"expected_ans": "For information about your PIN or account, you must contact the financial institution that issued your card. You'll find their contact information on the back of your Mastercard and on your billing statement, or you can visit their website to manage your account online."
+				},
+				{
+					"question": "Can I use my prepaid card, gift card or credit card at an ATM?",
+					"expected_ans": "Yes. You may withdraw cash against the balance on most Mastercard prepaid and gift cards at any ATM. However,not all prepaid and gift card issuers allow ATM or foreign transactions. Be sure to check with your card issuer toensure that these types of transactions are permitted. Most Mastercard credit cards also allow you to obtain cashadvances at an ATM.You’ll need a Personal Identification Number (PIN) to withdraw cash. You can find your issuer's contactinformation on the back of your Mastercard and on your billing statement, or you can visit the issuer's website."
+				},
+				{
+					"question": "Do I have to pay a fee for bill payment using a Mastercard?",
+					"expected_ans": "Mastercard does not charge a fee for bill payment, though your service provider might charge a fee. Be sure to ask them about fees or any restrictions associated with making a payment using your Mastercard."
+				}
+        	]
+		}
+    },
+	"summarization": {
+		"prompt": "<|user|>\nBelow is the document from a bank's operations team. Can you identify what type of document is it and summarize it in 5/6 sentences. \n\nDocument:\n\nXYZ-2713****\nAC Bank, NA (\"AC\") recommended an of personal savings account, 61007**** opened in the name of XYZ and ABC because: \n1. The savings account, 61007**** was funded by wire credit from unrelated individual located internationally for which the purpose could not be identified. \n2. The funds were offset towards an unrelated individual where payments were made on behalf of the customer's relatives with no clear purpose, and towards external accounts indicating layering and account pass-through activity. \n3. External searches could not corroborate XYZ's employment at C-Nic Investments Inc as the entity appears to have no web presence. \n4. The subjects in this matter are XYZ and ABC. \n5. The total unusual activity in this report was $181,105.35 between 09/26/2023 to 02/29/2024. \nThis matter was the result of an escalation of BSA/AML Alert, 138**** which revealed an unusual large wire credit from an unrelated individual located in Haiti with no reasonable purpose, Additionally, Haiti is on the bank's restricted country list and AC cannot accept or receive wires from this country. \nAC Bank, NA (\"AC\") filed a prior SAR report, ID 236**** (DCN 31000*********) on 06/10/2023 to report unusual cash deposits in the individual savings account, 6100******SV belonging to XYZ and ABC totaling $142,750.00, which occurred between 04/02/2023 to 04/23/2023.\n\nPer external research, XYZ is associated with the business C-Nic Investments Inc, however open-source research could not corroborate as the entity appears to have no web presence. Articles of incorporation for C-NIC Investments Inc show the entity was registered with the State of Florida on March 23, 2004, with Nicoleau as the current president. ABC is listed as the president at DSG Creations Inc. However, external searches could not determine the legitimate web presence. \nAn online negative news search for customer XYZ and ABC revealed no results pertaining to BSA/AML concerns. A review of the third-party skip trace report provided by Accurint revealed no criminal record or results relating to financial crime or money laundering for ABC. The review of XYZ's Accurint report revealed results related to Crimes Against Property, Fraud Offenses committed in the year 1997 for which Carl was being arrested and not pleaded guilty and the status of the case was closed. \nAn investigation through internal records/tools on XYZ and ABC revealed no personal/commercial loans opened with the AC as on 03/18/2024. \nAll the accounts held by XYZ and ABC were reviewed over a 6-month period between 09/18/2023 and 03/18/2024 (date of review).\n\nSavings account, 6100****: \nUnusual credit activity: $108,500.00 \n-\t1 international wire credit of $100,000.00 conducted on 01/10/2024 from an unrelated individual Frantz Jn Marie Jean Francois located in Haiti, with account held at Uni Bank S.A. (Acc. No: 180- 1052-1425880). External searches could not establish any relationship between the customer and Frantz Jn Marie Jean Francois and the purpose of the wire credit could not be identified. Furthermore, an RFI was raised to identify the purpose of the international wire credit in the account, to which the customer's responded that they were unsure of the purpose of the credit, but it was related to their father's inheritance. As a result, the wire credit appears unreasonable since the customer's responses were irrelevant and the purpose of the credit remains unknown. Moreover, no documentation was provided related to the inheritance. \n-\t2 wire credits totaling $8,500.00 conducted on 10/18/2023 and 12/14/2023 from Elmire Desrouleaux DBA Elmire with account held at JP Morgan Chase (Acc. No: 873*****). Per internal notes it was identified that Elmire Desrouleaux is the sister of the customer. However, the purpose of the wire credits could not be established, which were further offset towards customer's external account and unrelated individual Garry Cassagnol. It is unclear as to why the customer is making payments towards Garry Cassagnol on behalf of Elmire Desrouleaux. \nUnusual debits activity: $72,605.35 \n-\t3 wire debits totaling $44,575.00 conducted from 09/26/2023 to 12/15/2023 towards Garry Cassagnol with account held at Wells Fargo Bank (Acc. No: 85349*****), referencing payments related to XYZ (CN), Mario Nicoleau (MN) and Elmire Desrouleaux (ED). Per internal records, Mario Nicoleau and Elmire Desrouleaux are relatives of the customer. An RFI was raised to identify the customer's relationship with Garry Cassagnol, and it was identified that Garry Cassagnol is a \"client who is in charge of handling his father's inheritance but its taking longer to have it processed because of the political issues going on in Haiti\". However, the customer's responses were not relevant to understanding as to why the customer is making payments to Garry Cassagnol on behalf of Mario Nicoleau and Elmire Desrouleaux. Additionally, per Accurint report Garry was listed as the president at Silrue Property Management Co and H.S.G.C. Investments Inc. External searches could not determine neither the counterparty Garry nor his associated business entities. Moreover, the offset funds were derived out of the unusual cash deposits and external account transfers deposited below the daily reporting threshold limit, which was reported in the prior SAR. As a result, the purpose of the wire was unknown and appears unusual. \n-\t4 in branch debits totaling $28,030.35 conducted from 09/26/2023 to 02/29/2024 towards customer's external account ending with x4000, indicating layering and account pass through activity. \n\nThe non-concerning activity in the account consists of ACH credit of $3,330.00 as P2P transfer from Bank of America and interest deposits totaling $5,855.27. The outgoing activity consisted of ACH debit of $10,759.87 towards Tesla Motors and wire debit of $1,590.00 towards Mario Nicoleau (relative of the customer). \nBased on the investigation, the savings account belonging to XYZ and BAC displayed wire credit from unrelated individual located in a restricted country with no clear purpose. A portion of the funds were offset towards unrelated individual and customer's external account indicating layering activity. The account activity had no reasonable explanation and as a result, AC believes the suspect was likely engaged in unusual activity totaling $181,105.35 between 09/26/2023 to 02/29/2024.\n\nSuspect: 1 \nXYZ \nSSN: 261-**-**** \nDOB: 01/13/**** \nPhone No: +1 (7862*******)\nEmail: XXX@bellsouth.net \nAddress: 2501 *** XX **** XX **********_ **-33019\n\nSuspect: 2 \nABC \nSSN: 590-***** \nDOB: 02/14/**** \nPhone No: +1 (78630****) \nEmail: XXXX@dadeschools.Net \nAddress: 2654 **** XX ****-33023 \nPlease contact the BSA Officer Karen Cherrington with inquiries and/or additional details at: LErequest.fcc@AC.com.\n\n<|assistant|>\n",
+		"expected_ans": "The document is a Suspicious Activity Report (SAR) from a bank regarding potential money laundering activities. \nThe report involves two individuals, XYZ and ABC, with suspicious wire credits and debits in their personal savings account, 61007****. \nThe total suspicious activity in the account is $181,105.35, consisting of wire credits and debits to unrelated individuals and external accounts. \nThe bank cannot establish the purpose of the wire credits, and some of the funds were offset towards unrelated individuals and external accounts, indicating layering activity. \nThe bank has filed a prior SAR report on the same account for unusual cash deposits totaling $142,750.00. \nThe bank has conducted an investigation and believes that the suspect, XYZ, was likely engaged in money laundering activities."
+	},
+	"extraction": {
+		"entities": "Extract following entities given below surrounded by triple equals sign from given documents for each year.\n\n===\n['Total current assets', 'Other current assets', 'Contracts receivable', 'Total Revenue', 'Long-term mortgage debt', 'Accumulated deficit', 'Total operating expenses']\n===\n",
+		"prompt": "You are a financial expert.  Use the following instructions to answer the question.\n\nINSTRUCTIONS:\n\n1: {query}\n2: If you do not find exact match for certain entity in the given documents then show that entity's extracted value as \"null\"\n3: Do not make up any value which is not present in the given documents.\n4: Do not provide any text or explanation along with JSON output.\n5: Return the output in JSON format array as shown in example format below only if exact match of entity name is found in given documents.\n\n[{\"entity_name\": \"Entity Name\", \"entity_value\": {\"year from column header\":\"extracted value in column\", \"year from column header\":\"extracted value in column\", and so on}}]\n6: Use following documents to generate JSON Response: \n\n{context}\nHere's the JSON output:\n",
+		"expected_ans": "[ {\"entity_name\": \"Total current assets\", \"entity_value\": {\"2022\": 29118, \"2021\": 29539}}, {\"entity_name\": \"Total current liabilities\", \"entity_value\": {\"2022\": 31505, \"2021\": 33619}}, {\"entity_name\": \"Total liabilities\", \"entity_value\": {\"2022\": 105222, \"2021\": 113005}}, {\"entity_name\": \"Total Revenue\", \"entity_value\": {\"2022\": null, \"2021\": null}}, {\"entity_name\": \"Total operating expenses\", \"entity_value\": {\"2022\": null, \"2021\": null}}, {\"entity_name\": \"Long-term debt\", \"entity_value\": {\"2022\": 46189, \"2021\": 44917}} ]"
+	},
+	"classification":{
+		"prompt1": "Act as a business consultant. Your company has created several project categories described below. \n\nName: Model management\nDescription:  Helps businesses operationalize AI with trust and manage model risk to enable responsible use of AI.\n\nName: Customer Care\nDescription: Deliver exceptional customer and employee experiences through seamless access to multiple services and knowledge sources, and intuitive self-service support with virtual assistant in digital and voice channels with integrated search capabilities.\n\nName: Data Security\nDescription: Utilize automated processes along with security capabilities to understand potential data security vulnerabilities, detect/resolve active threats, and provide rapid data recovery in the event of compromise.\n\nThe following paragraph is a project summary. The project must be classified in one of the categories described above. Read the following description and determine which category the project is about. Make sure to use exactly one of the names of the categories listed above. \n\nClient counts with a semantic search engine that searches for text among the contents of its website and app to provide better customer service regarding its products and news. Currently it only processes and returns text results. The challenge is to create a solution that allows reducing both the software and maintenance costs and provide new functionalities that improve customer satisfaction and service.\n\nName of the category:\n\n",
+		"prompt2": "Analyze the sentiment expressed in the following text related to insurance. Determine whether the sentiment is positive, negative, or neutral.\n\nInput: Just had a great experience with my insurance claim! Quick processing, excellent customer service, and they covered everything without any hassle.\nOutput: Positive\n\nInput: Frustrated with my insurance company. They denied my claim without proper explanation, and their customer service was unhelpful. Disappointed with the overall experience.\nOutput: Negative\n\nInput: Submitted my insurance documents online. No issues encountered, but the process felt standard. Average experience overall.\nOutput: Neutral\n\nInput: Thrilled with the level of support from my insurance company! Their team went above and beyond to assist me during a challenging claim process. Grateful for the prompt service and the genuine care they showed.\nOutput:\n"
+	},
+	"generation":{
+		"prompt": "Write a thank you note for attending a workshop.\n\nAttendees: interns\nTopic: codefest, AI\nTone: energetic\n\n"
+	}
+}
