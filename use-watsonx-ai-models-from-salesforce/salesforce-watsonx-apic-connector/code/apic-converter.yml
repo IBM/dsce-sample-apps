@@ -563,13 +563,12 @@ x-ibm-configuration:
   assembly:
     execute:
       - parse:
-          version: 2.2.0
+          version: 2.1.0
           title: Parse request payload
           parse-settings-reference:
             parse-settings:
               document_type: json
               max_value_length: 5368709121
-          output: ''
           description: >-
             To parse the incoming payload. Also, use custom parse settings to
             allow long values.
@@ -585,7 +584,8 @@ x-ibm-configuration:
 
 
             console.error(
-              "=================================================================="
+              "==================================================================\nEndpoint: ",
+              context.get('request.uri')
             );
 
 
@@ -597,6 +597,12 @@ x-ibm-configuration:
               region = context.get("api.properties.wx-endpoint-eu-de");
             else if (parsedqs["region"] === "jp-tok")
               region = context.get("api.properties.wx-endpoint-jp-tok");
+            else if (parsedqs["region"] === "au-syd")
+                region = context.get("api.properties.wx-endpoint-au-syd");
+            else if (parsedqs["region"] === "ca-tor")
+                region = context.get("api.properties.wx-endpoint-ca-tor");
+            else if (parsedqs["region"] !== undefined)
+                region = "https://"+parsedqs["region"]+".ml.cloud.ibm.com/ml/v1";
 
             var default_projectid =
             context.get("api.properties.default-project-id");
@@ -647,7 +653,7 @@ x-ibm-configuration:
           otherwise: []
           output: iamResponse
       - parse:
-          version: 2.2.0
+          version: 2.1.0
           title: parse IAM auth response
           parse-settings-reference:
             default: apic-default-parsesettings
@@ -741,7 +747,7 @@ x-ibm-configuration:
                     target-url: $(wx.endpoint)$(text-gen)
                     description: For Completions
                 - parse:
-                    version: 2.2.0
+                    version: 2.1.0
                     title: Parse response payload
                     parse-settings-reference:
                       parse-settings:
@@ -878,7 +884,7 @@ x-ibm-configuration:
                     target-url: $(wx.endpoint)$(text-gen)
                     description: For Chat Completions
                 - parse:
-                    version: 2.2.0
+                    version: 2.1.0
                     title: Parse response payload
                     parse-settings-reference:
                       parse-settings:
@@ -990,7 +996,7 @@ x-ibm-configuration:
                     target-url: $(wx.endpoint)$(text-embd)
                     description: For Embeddings
                 - parse:
-                    version: 2.2.0
+                    version: 2.1.0
                     title: Parse response payload
                     parse-settings-reference:
                       parse-settings:
@@ -1051,6 +1057,10 @@ x-ibm-configuration:
       value: https://jp-tok.ml.cloud.ibm.com/ml/v1
     default-project-id:
       value: a7970029-0db4-4c79-9855-90dbaff6537e
+    wx-endpoint-au-syd:
+      value: https://au-syd.ml.cloud.ibm.com/ml/v1
+    wx-endpoint-ca-tor:
+      value: https://ca-tor.ml.cloud.ibm.com/ml/v1
   activity-log:
     enabled: true
     success-content: activity
