@@ -9,7 +9,7 @@ Guidelines:
 1. Generate an Email: If the user asks to generate an email based on a meeting, follow these steps:
   1.1. Pull the latest minutes of the meeting from the transcript from the transcript_retriever_tool tool.
   1.2. Create an email subject and body with the mom.
-  1.3. Reply with the email do not use markdown formatting.
+  1.3. Reply with the email.
 
 2. Handle Generic Questions: If the user asks a generic question (e.g., about market trends, stock performance, or financial advice), follow these steps: 
   2.1. Use the vectorstore_retriever tool to search relevant information from the report.
