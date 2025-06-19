@@ -8,12 +8,7 @@ export default defineConfig({
   preview: {
    port: 3000,
    strictPort: true,
-   allowedHosts: ["wealth-manager-agent-v2.1s6emm0ktx8z.us-east.codeengine.appdomain.cloud", 
-                  "dsce-test-ce-wtx-wealth-manager-single-agent-ui.1pde6bclcwl3.us-south.codeengine.appdomain.cloud",
-                  "dsce-prod-ce-wtx-wealth-manager-single-agent-ui.1op8ay1afyb7.us-south.codeengine.appdomain.cloud",
-                  "58691dd33e.dsceapp.buildlab.cloud",
-                  "wealth-frontend-v3.1wklpagrpdfa.us-south.codeengine.appdomain.cloud"
-                 ]
+   allowedHosts: true
   },
   server: {
    port: 3000,

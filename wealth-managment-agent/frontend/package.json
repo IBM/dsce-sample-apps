@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && sh ./create_env.sh && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
