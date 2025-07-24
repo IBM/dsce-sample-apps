@@ -1,5 +1,5 @@
 {
-  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+  "model_id": "mistralai/mistral-small-3-1-24b-instruct-2503",
   "input": "Read the below input text and classify overall text into one of the following options: finance, manufacturing, automotive, no industry segment.\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",

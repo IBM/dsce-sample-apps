@@ -1,5 +1,5 @@
 {
-  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+  "model_id": "mistralai/mistral-small-3-1-24b-instruct-2503",
   "input": "Read the input and classify overall sentiment into one of the following options: positive, negative, neutral\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
