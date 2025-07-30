@@ -127,36 +127,36 @@ def get_answer():
     if (question == "auto"):
         answer = ""
 
-        q1 = "what is the IRS employer identification number for redhat? Answer the question only from the given context."
+        q1 = "what is the I.I.R.S. Employer Identification number? Answer the question only from the given context."
         r = chain({"question": q1, "chat_history": chat_history})
-        answer = answer + "<b>IRS ID: </b>" + r["answer"] + "<br>"
+        answer = answer + "<b>I.R.S. ID: </b>" + r["answer"] + "<br>"
 
-        q1 = "what is the address of redhat ? Answer the question only from the given context."
+        q1 = "what is the address of principal executive offices? Answer the question only from the given context. just stick to the answer and do not provide any extra information."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>Address: </b>" + r["answer"] + "<br>"
 
-        q1 = "what is the state of incorporation of redhat? Answer the question only from the given context."
+        q1 = "what is the state of incorporation of redhat? just stick to the answer and do not provide any extra information. only give one word answer."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>State of Incorporation: </b>" + r["answer"] + "<br>"
 
-        q1 = "what are the number of employees in redhat? Answer the question only from the given context."
+        q1 = "what are the number of employees in redhat? just stick to the answer and do not provide any extra information. only give one word answer and only from the given context."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>#Employees: </b>" + r["answer"] + "<br>"
 
-        q1 = "list the acquisitions made by redhat mentioned in the report. Answer the question only from the given context."
+        q1 = "list the acquisitions made by redhat mentioned in the report. just stick to the answer and do not provide any extra information and only from the given context."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>Recent acquisitions: </b>" + r["answer"] + "<br>"
 
-        q1 = "who are all the executive officers in redhat? Answer the question only from the given context."
+        q1 = "who are all the executive officers in redhat? only provide the names, do not add any other words. just stick to the answer and do not provide any extra information and only from the given context. do not add any extra spaces."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>Executives: </b>" + r["answer"] + "<br>"
 
-        q1 = "provide some details of the business model of redhat using 100 words. Answer the question only from the given context."
+        q1 = "provide some details of the business model of redhat using 100 words. Answer in lowercase. just stick to the answer and do not provide any extra information or instruction or followup questions. Answer only from the given context. do not add any extra spaces."
         r = chain({"question": q1, "chat_history": chat_history})
         answer = answer + "<b>Business model: </b>" + r["answer"] + "<br>"
     else:
         # one question at a time from the UI
-        q1 = question + ".Answer the question only from the given context."
+        q1 = question + ".give precise answer. just stick to the answer and do not provide any extra information or instruction or followup questions. Answer only from the given context."
         r = chain({"question": q1, "chat_history": chat_history})
         
         answer = r['answer']
