@@ -126,7 +126,7 @@ def upload_pdf():
                 GenParams.MAX_NEW_TOKENS: 700
             }
             #langchain_model = LangChainInterface(model="google/flan-ul2", params=params, credentials=creds)
-            langchain_model = WatsonxLLM(model=Model(model_id="google/flan-ul2", params=params, credentials=creds, project_id=project_id))
+            langchain_model = WatsonxLLM(model=Model(model_id="mistralai/mistral-small-3-1-24b-instruct-2503", params=params, credentials=creds, project_id=project_id))
             
 
             formulated_summary = langchain_model(formatted_prompt)
