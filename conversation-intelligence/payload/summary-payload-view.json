@@ -1,5 +1,5 @@
 {
-  "model_id": "meta-llama/llama-3-3-70b-instruct",
+  "model_id": "ibm/granite-3-8b-instruct",
   "data": {
     "instruction": "Summarise the following paragraph in 2 sentences",
     "input": "",

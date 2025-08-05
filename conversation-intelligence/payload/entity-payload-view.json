@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "meta-llama/llama-3-3-70b-instruct",
   "data": {
     "instruction": "Extract PII entities from the paragraph given",
     "input": "",
@@ -21,8 +21,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }
