@@ -10,7 +10,7 @@ api_key = os.getenv('API_KEY')
 endpoint = os.getenv('ENDPOINT')
 project_id = os.getenv('PROJECT_ID')
 
-model_id = "mistralai/mixtral-8x7b-instruct-v01"
+model_id = "ibm/granite-3-3-8b-instruct"
 gen_parms   = {"decoding_method":"greedy",
             "max_new_tokens":1000,
             "stop_sequences": ["```"],

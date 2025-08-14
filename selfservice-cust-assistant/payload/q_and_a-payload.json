@@ -1,9 +1,9 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/granite-3-2b-instruct",
   "input": "",
   "parameters": {
     "decoding_method": "greedy",
-    "max_new_tokens": 300,
+    "max_new_tokens": 200,
     "min_new_tokens": 1,
     "stop_sequences": [],
     "repetition_penalty": 1
