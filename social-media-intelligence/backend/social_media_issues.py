@@ -12,7 +12,7 @@ endpoint = os.getenv('ENDPOINT')
 project_id = os.getenv('PROJECT_ID')
 url = os.getenv('URL')
 
-model_id = "meta-llama/llama-3-3-70b-instruct"
+model_id = "ibm/granite-3-3-8b-instruct"
 gen_parms   = {"decoding_method":"greedy", 
             "max_new_tokens":500,
             "random_seed":1024, 
@@ -88,7 +88,7 @@ def sentimentGenerator(prompt, token):
             "max_new_tokens": 5,
             "repetition_penalty": 1
         },
-        "model_id": "google/flan-ul2",
+        "model_id": "ibm/granite-3-3-8b-instruct",
         "project_id": project_id,
         "moderations": {
             "hap": {
@@ -148,7 +148,7 @@ def toneGenerator(prompt, token):
             "max_new_tokens": 20,
             "repetition_penalty": 1
         },
-        "model_id": "google/flan-ul2",
+        "model_id": "ibm/granite-3-3-8b-instruct",
         "project_id": project_id,
         "moderations": {
             "hap": {
@@ -213,7 +213,7 @@ def entityExtractor(prompt, token):
             "max_new_tokens": 200,
             "repetition_penalty": 1
         },
-        "model_id": "google/flan-ul2",
+        "model_id": "ibm/granite-3-3-8b-instruct",
         "project_id": project_id,
         "moderations": {
             "hap": {

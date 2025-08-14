@@ -50,7 +50,6 @@ suggestions_list = ["What the nearest hospital in zip code 77001 in AllBright In
                     "What is the claims process with the AllBright Insurance Company?",
                     "What are the benefits of the policy with AllBright Insurance Company?",
                     "Is a dental plan covered in policy with AllBright Insurance Company?",
-                    "Why is plastic surgery not included in plan with AllBright Insurance Company?"
                     ]
 suggestions_options = []
 for input_suggestion in suggestions_list:

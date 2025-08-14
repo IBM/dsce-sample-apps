@@ -1,7 +1,7 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/granite-3-2b-instruct",
   "data": {
-    "instruction": "Read the following document and answer the following question. If the answer is not in the document then respond \"I don't know\".",
+    "instruction": "Read the following document and answer the following question. Do not include multiple responses, question and explanation in response. If the answer does not found in the document then only respond \"I don't know\".",
     "input": "",
     "input_prefix": "Input:",
     "output_prefix": "Output:",
@@ -11,7 +11,7 @@
     "decoding_method": "greedy",
     "stop_sequences": [],
     "min_new_tokens": 1,
-    "max_new_tokens": 300,
+    "max_new_tokens": 200,
     "repetition_penalty": 1
   },
   "moderations": {

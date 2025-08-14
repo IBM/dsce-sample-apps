@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/granite-3-3-8b-instruct",
   "data": {
     "instruction": "Answer the question only from the given context.",
     "input": "",

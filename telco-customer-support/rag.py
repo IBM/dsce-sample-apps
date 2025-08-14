@@ -3,11 +3,19 @@
 import os, json
 from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.document_loaders import UnstructuredPDFLoader
-from langchain.vectorstores import FAISS
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+from langchain_community.document_loaders import UnstructuredPDFLoader
+from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
+# Existing: loader = UnstructuredPDFLoader("your_document.pdf")
+from langchain_community.document_loaders import UnstructuredPDFLoader # Ensure this import is correct too
+loader = UnstructuredPDFLoader("your_document.pdf", languages=["eng"]) # Or ["eng", "fra"] etc.
+from langchain_ibm import WatsonxLLM
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -65,14 +73,10 @@ def init():
     }
 
     model = Model(
-    model_id=AI_MODEL_ID,
-    credentials={
-        "apikey": WATSONX_API_KEY,
-        "url": WML_INSTANCE_URL
-    },
-    project_id=PROJECT_ID,
-    params=params
-    )
+    model_id="ibm/granite-8b-code-instruct",  # You can also use a variable like AI_MODEL_ID if needed
+    params={ "decoding_method": "greedy", "max_new_tokens": 100 },
+    credentials={ "apikey": WATSONX_API_KEY, "url": WML_INSTANCE_URL },
+    project_id=PROJECT_ID )
     chain = ConversationalRetrievalChain.from_llm(model.to_langchain(), retriever, return_source_documents=True)
     print("You can proceed")
 
