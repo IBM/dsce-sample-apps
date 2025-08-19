@@ -12,12 +12,12 @@ const MODEL_MAPPING = {
     model: 'ibm/granite-13b-chat-v2',
     extraction: 'langchain',
   },
-  [PluginID.GRANITE_3_2B_WDU]: {
-    model: 'ibm/granite-3-2b-instruct',
+  [PluginID.GRANITE_3_3_8B_WDU]: {
+    model: 'ibm/granite-3-3-8b-instruct',
     extraction: 'wdu',
   },
-  [PluginID.GRANITE_3_2B_LANGCHAIN]: {
-    model: 'ibm/granite-3-2b-instruct',
+  [PluginID.GRANITE_3_3_8B_LANGCHAIN]: {
+    model: 'ibm/granite-3-3-8b-instruct',
     extraction: 'langchain',
   },
   [PluginID.GRANITE_3_8B_WDU]: {
@@ -36,11 +36,11 @@ const MODEL_MAPPING = {
     model: 'meta-llama/llama-3-3-70b-instruct',
     extraction: 'langchain',
   },
-  [PluginID.LLAMA3_2_1B_WDU]: {
+  [PluginID.LLAMA3_405B_WDU]: {
     model: 'meta-llama/llama-3-2-1b-instruct',
     extraction: 'wdu',
   },
-  [PluginID.LLAMA3_2_1B_LANGCHAIN]: {
+  [PluginID.LLAMA3_405B_LANGCHAIN]: {
     model: 'meta-llama/llama-3-2-1b-instruct',
     extraction: 'langchain',
   },
