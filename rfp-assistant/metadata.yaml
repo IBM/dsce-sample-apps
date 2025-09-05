@@ -1,0 +1,44 @@
+# metadata.yaml
+
+title_name: RFP Asssistant
+short_description: Discovers and responds to Canadian procurement opportunities.
+long_description: |
+  The RFP Assistant is an AI-powered solution designed to eliminate the inefficiencies of traditional RFP workflows. 
+  Instead of teams spending days manually tracking procurement portals, copy-pasting boilerplate content, and struggling 
+  with formatting, the assistant automates the entire process — from discovering relevant opportunities to generating 
+  polished, ready-to-submit proposals. It uses semantic search and intelligent ranking to surface the most aligned 
+  RFPs based on a company's strengths, and produces structured responses including executive summaries and 
+  capability mappings - all through natural language queries.
+  
+demo_explainer: demo-explainer.md
+architecture_diagram: architecture.drawio
+repository_url: 
+models_used:
+  - meta-llama/llama-4-maverick-17b-128e-instruct-fp8
+  - SentenceTransformer Embedding
+ibm_products:
+  - IBM Cloud Code Engine
+  - watsonx.ai
+  - IBM Cloud Object Storage
+app_url: 
+backend_url: ""
+orchestrate_agent: "no" 
+responsive_ui: "yes"
+example_prompts:
+  - No prompt required
+workflow: "NA"
+wxo_agent_name : "NA"
+import_script_path: "NA"
+is_customizable: "yes"
+tile_image_path: 
+env:
+  - WATSONX_API_KEY
+  - API_KEY
+  - IBM_CLOUD_URL
+  - PROJECT_ID
+  - COS_RESOURCE_CRN
+  - COS_ENDPOINT
+  - COS_BUCKET_NAME
+  - COS_ACCESS_KEY_ID
+  - REACT_APP_BACKEND_URL
+
