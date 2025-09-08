@@ -1,0 +1,44 @@
+/jobs_posts
+1. {
+  "title": "Investment Banking Associate – Capital Markets & Strategy",
+  "details": "We are looking for an Investment Banking Associate to help deliver world-class financial advisory services. Responsibilities include:\n- Deliver presentations on capital structure, debt capacity, and risk\n- Work with 1.2K+ corporate clients to drive marketing and deal execution\n- Coordinate with risk teams to drive $1M+ fee-based revenue\n- Streamline client processes and identify cost-saving opportunities\n\nRequirements:\n- 7+ years in investment banking or senior analyst roles\n- Deep knowledge in M&A, leveraged finance, and capital markets\n- Technical skills in Excel, Bloomberg Terminal, S&P Capital IQ\n- Certifications such as CFA, Series 7, CFP are preferred"
+}
+
+2. {
+  "title": "Vice President - Investment Banking",
+  "details": "We are seeking an experienced Investment Banking Vice President with a proven track record in executing M&A transactions and capital raising. The candidate will:\n- Lead and execute M&A deals valued over $500M+\n- Advise clients on debt and equity financing strategies\n- Collaborate with legal, compliance, and risk teams\n- Optimize deal execution pipelines to enhance productivity\n\nRequirements:\n- 8+ years in investment banking roles\n- Expertise in financial modeling, valuation, and due diligence\n- Familiarity with Bloomberg Terminal, FactSet, Salesforce\n- CFA and FRM certifications are a strong plus"
+}
+
+3. {
+  "title": "Investment Banking Analyst – M&A and Financial Modeling",
+  "details": "We are hiring an Investment Banking Analyst to join our New York team. You will:\n- Prepare detailed financial models for M&A deals worth $200M+\n- Support pitch book creation and deal documentation\n- Conduct valuation and market research analysis\n- Work with clients on capital strategy recommendations\n\nQualifications:\n- 5+ years experience in financial services or investment banking\n- Strong understanding of equity and debt financing\n- Proficiency in Tableau, Looker, Amplitude\n- Bachelor’s degree in Business Administration or related field"
+}
+
+/jobs/top-resumes
+1. job_110337
+2. job_190776
+3. job_224364
+
+/jobs/interview-guides
+1. job_110337
+2. job_190776
+3. job_224364
+
+/assessment
+1. job ids = job_224364, job_190776 ,job_110337
+2. resume ids = res_827, res_919, res_732, res_237, res_963
+
+/search/jobs
+1.
+{
+  "query": "capital markets"
+}
+2. {
+  "query": "financial modeling"
+}
+3. {
+  "query": "investment banking"
+}
+4. {
+  "query": "Bloomberg Terminal"
+}

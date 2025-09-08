@@ -1,0 +1,14 @@
+spec_version: v1
+kind: connection
+app_id: ta-backend-connection
+environments:
+    draft:
+        kind: bearer
+        type: member
+        sso: false
+        server_url: https://dsce-backend.1y9n0rrkkv47.us-south.codeengine.appdomain.cloud
+    live:
+        kind: bearer
+        type: member
+        sso: false
+        server_url: https://dsce-backend.1y9n0rrkkv47.us-south.codeengine.appdomain.cloud

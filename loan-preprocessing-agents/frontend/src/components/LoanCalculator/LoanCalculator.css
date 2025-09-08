@@ -1,0 +1,88 @@
+.calculator-container {
+  max-width: 896px; /* max-w-4xl */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.calculator-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.calculator-header h1 {
+  margin-bottom: 0.5rem;
+}
+.calculator-header p {
+  color: #525252;
+}
+
+.calculator-layout {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .calculator-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+  }
+}
+
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.results-card {
+  background-color: #f4f4f4;
+  padding: 2rem;
+  border-radius: 4px;
+}
+.results-card h2 {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+.results-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.result-label {
+  color: #525252;
+  font-size: 0.875rem;
+}
+
+.result-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.monthly-payment-value {
+  font-size: 2.25rem;
+  font-weight: 300;
+  color: #0f62fe;
+}
+
+.total-payment-item {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+}
+.total-payment-item .result-value {
+  font-size: 1.125rem;
+}
+
+.no-results-text {
+  color: #525252;
+  text-align: center;
+  padding: 2rem 0;
+}

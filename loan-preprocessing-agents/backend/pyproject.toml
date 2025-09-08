@@ -1,0 +1,22 @@
+[project]
+name = "loan-processing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.14",
+    "ibm-cos-sdk>=2.14.3",
+    "langchain>=0.3.27",
+    "langchain-ibm>=0.3.15",
+    "pandas>=2.2.3",
+    "passlib[bcrypt]>=1.7.4",
+    "pdf2image>=1.17.0",
+    "python-dotenv>=1.1.1",
+    "python-jose[cryptography]>=3.5.0",
+    "python-multipart>=0.0.20",
+    "sqlalchemy>=2.0.41",
+    "tinydb>=4.8.2",
+    "tqdm>=4.67.1",
+    "uvicorn>=0.35.0",
+]

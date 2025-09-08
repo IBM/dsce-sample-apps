@@ -1,0 +1,9 @@
+.app-wrapper {
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.page-content {
+  /* This ensures content starts below the fixed header */
+  padding-top: 3rem; /* The height of the Carbon header */
+}

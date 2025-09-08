@@ -1,0 +1,40 @@
+.applications-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.applications-header {
+  margin-bottom: 0.5rem;
+}
+
+.applications-subtitle {
+  color: #525252;
+  margin-bottom: 2rem;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+}
+
+.language-yaml {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.language-json {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+ul ul {
+  margin-left: 1.5rem !important;;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+.clickable-row:hover {
+    background-color: #e8f4ff; /* A light blue hover effect */
+}
