@@ -1,0 +1,12 @@
+[project]
+name = "loan-processing-adk-agents"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ibm-watsonx-orchestrate>=1.6.2",
+    "ipykernel>=6.30.0",
+    "langchain>=0.3.25",
+    "langchain-ibm>=0.3.14",
+]

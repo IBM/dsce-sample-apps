@@ -1,0 +1,151 @@
+/* General Body & App Wrapper Styles */
+.app-wrapper {
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+/* Main content container for the entire form area */
+.main-content-container {
+  max-width: 1000px; /* equivalent to Tailwind's max-w-4xl */
+  margin: 0 auto;
+  padding: 40px 24px 48px 24px; /* top, sides, bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 3rem; /* Spacing between elements like header, progress, form */
+}
+
+/* Page Header (Title, subtitle, and change method button) */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+.page-header div {
+  flex-grow: 1;
+}
+.page-subtitle {
+  color: #525252;
+  margin-top: 0.5rem;
+}
+
+/* Wrapper for the main form content and navigation buttons */
+.form-content-wrapper {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 4px;
+}
+
+/* Container for each step of the form */
+.form-step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between form fields */
+}
+
+/* Center content vertically and horizontally (used for mode selection) */
+.centered-content {
+    align-items: center;
+    text-align: center;
+}
+
+/* Ensure all form items take full width */
+.form-step-container .cds--form-item {
+  width: 100%;
+}
+
+/* Mode Selection (Fill Form vs Upload PDF) */
+.mode-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .mode-selection-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mode-selection-tile {
+  cursor: pointer;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+.mode-selection-tile:hover {
+  background-color: #f4f4f4;
+}
+.tile-icon {
+  margin-bottom: 1rem;
+}
+.icon-blue { color: #0f62fe; }
+.icon-red { color: #da1e28; }
+.tile-heading {
+  margin-bottom: 0.5rem;
+}
+
+/* Document Upload Grid */
+.document-upload-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+@media (min-width: 768px) {
+  .document-upload-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Review Page Styling */
+.review-container {
+  gap: 2rem;
+}
+.review-sections-wrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.review-section h3 {
+    margin-bottom: 0.75rem;
+}
+.review-section p {
+    margin-bottom: 0.5rem;
+}
+.review-doc-list {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Bottom Navigation Buttons */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Modal Content Styling */
+.modal-content p {
+  margin-bottom: 1rem;
+}
+.modal-content p:last-child {
+  margin-bottom: 0;
+}
+
+.cds--progress {
+  align-self: center;
+}

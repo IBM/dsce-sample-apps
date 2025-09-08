@@ -1,0 +1,50 @@
+.log-viewer-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.log-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+.log-viewer-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.log-viewer-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: #f4f4f4;
+}
+.log-list {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.log-entry {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: baseline;
+}
+.log-timestamp {
+    color: #525252;
+}
+.log-level {
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+.log-level-tool_call { background-color: #e0e0e0; color: #161616; }
+.log-level-tool_response { background-color: #d4f9e3; color: #065d2c; }
+.log-level-agent_response { background-color: #fdf49a; color: #6e5a00; }
+.log-level-invoke_agent { background-color: #fce5e5; color: #a11414; }

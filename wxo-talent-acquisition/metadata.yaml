@@ -1,0 +1,36 @@
+title_name: Texas State Bank Talent Matcher
+short_description: AI-driven resume and job matching with interview guides and assessments.
+long_description: |
+  The Texas State Bank Talent Matcher is a FastAPI microservice that uses IBM watsonx.ai
+  for LLM-powered reasoning and Elasticsearch for search and ranking. It ingests resumes,
+  indexes job posts, surfaces top candidate matches, generates interview guides, and
+  produces markdown assessments of candidate fit against a role.
+
+demo_explainer: demo-explainer.md
+architecture_diagram: architecture.png  
+repository_url: "https://github.ibm.com/Aditya-Mahakali/dsce-talent-acquisition"  
+models_used:
+  - meta-llama/llama-3-3-70b-instruct (via watsonx.ai)
+  - watsonx.ai Text Generation (greedy decoding)
+ibm_products:
+  - IBM Cloud Code Engine
+  - watsonx.ai
+  - watsonx Orchestrate
+app_url: "https://application-66.1xmik2gf18vm.us-south.codeengine.appdomain.cloud"
+backend_url: "https://application-66.1xmik2gf18vm.us-south.codeengine.appdomain.cloud"
+orchestrate_agent: "no"
+responsive_ui: "no"
+example_prompts:
+  - No prompt required (REST API calls only)
+workflow: "Upload resume → Create job → Search/Rank → Interview guide → Assessment"
+wxo_agent_name: "talent_matcher_agent"
+import_script_path: ""  # Not applicable
+is_customizable: "yes"
+tile_image_path:
+env:
+  - WATSONX_ENDPOINT
+  - IBM_CLOUD_API_KEY
+  - WATSONX_PROJECT_ID
+  - ELASTIC_URL
+  - ELASTIC_USERNAME
+  - ELASTIC_PASSWORD

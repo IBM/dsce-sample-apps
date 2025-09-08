@@ -1,0 +1,741 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Texas Talent Matcher API",
+        "version": "0.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://dsce-backend.1y9n0rrkkv47.us-south.codeengine.appdomain.cloud"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Token",
+                "description": "Send your API token as: Authorization: Bearer <TOKEN>"
+            }
+        }
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
+    "paths": {
+        "/jobs_posts": {
+            "post": {
+                "summary": "Create Job",
+                "description": "Create a new job posting.\n\nArgs:\n    job (JobCreateRequest): Job creation request with title and details.\n\nReturns:\n    JobCreateResponse: Job ID and confirmation message.",
+                "operationId": "create_job_jobs_posts_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "title": "Title",
+                                        "description": "Job title"
+                                    },
+                                    "details": {
+                                        "type": "string",
+                                        "title": "Details",
+                                        "description": "Detailed job description"
+                                    }
+                                },
+                                "required": [
+                                    "title",
+                                    "details"
+                                ],
+                                "description": "Request body for creating a new job."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "job_id": {
+                                            "type": "string",
+                                            "title": "Job Id",
+                                            "description": "Unique identifier for the created job"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "title": "Message",
+                                            "description": "Status message"
+                                        }
+                                    },
+                                    "required": [
+                                        "job_id",
+                                        "message"
+                                    ],
+                                    "description": "Response schema for job creation."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs/top-resumes": {
+            "post": {
+                "summary": "Top Resumes",
+                "description": "Retrieve top resumes relevant to a job posting.\n\nArgs:\n    request (JobIdTopKRequest): Request containing job_id and top_k.\n\nReturns:\n    List[ResumeSummary]: List of matching resume summaries.",
+                "operationId": "top_resumes_jobs_top_resumes_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string",
+                                        "title": "Job Id",
+                                        "description": "Unique identifier for the job"
+                                    },
+                                    "top_k": {
+                                        "type": "integer",
+                                        "title": "Top K",
+                                        "description": "Number of results to return (default 2)",
+                                        "default": 2
+                                    }
+                                },
+                                "required": [
+                                    "job_id"
+                                ],
+                                "description": "Request with job_id and optional top_k."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "resume_id": {
+                                                "type": "string",
+                                                "title": "Resume Id",
+                                                "description": "Unique identifier for the resume"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "title": "Title",
+                                                "description": "Resume headline or desired job title"
+                                            },
+                                            "summary": {
+                                                "type": "string",
+                                                "title": "Summary",
+                                                "description": "Short summary of candidate's experience"
+                                            }
+                                        },
+                                        "required": [
+                                            "resume_id",
+                                            "title",
+                                            "summary"
+                                        ],
+                                        "description": "Resume summary for search and ranking."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs/interview-guides": {
+            "post": {
+                "summary": "Interview Guides",
+                "description": "Generate an interview guide for a job.\n\nArgs:\n    request (JobIdRequest): Request containing job_id.\n\nReturns:\n    InterviewGuideResponse: List of suggested interview questions for the job.",
+                "operationId": "interview_guides_jobs_interview_guides_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string",
+                                        "title": "Job Id",
+                                        "description": "Unique identifier for the job"
+                                    }
+                                },
+                                "required": [
+                                    "job_id"
+                                ],
+                                "description": "Request with just a job_id."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "job_id": {
+                                            "type": "string",
+                                            "title": "Job Id",
+                                            "description": "Unique identifier for the job"
+                                        },
+                                        "interview_guide": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "title": "Interview Guide",
+                                            "description": "List of suggested interview questions"
+                                        }
+                                    },
+                                    "required": [
+                                        "job_id",
+                                        "interview_guide"
+                                    ],
+                                    "description": "Interview guide response for a job."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assessment": {
+            "post": {
+                "summary": "Assessment",
+                "description": "Generate an AI-based assessment of a resume for a given job.\n\nArgs:\n    request (JobResumeIdRequest): Request containing job_id and resume_id.\n\nReturns:\n    AssessmentResponse: Markdown-formatted assessment report.",
+                "operationId": "assessment_assessment_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "job_id": {
+                                        "type": "string",
+                                        "title": "Job Id",
+                                        "description": "Unique identifier for the job"
+                                    },
+                                    "resume_id": {
+                                        "type": "string",
+                                        "title": "Resume Id",
+                                        "description": "Unique identifier for the resume"
+                                    }
+                                },
+                                "required": [
+                                    "job_id",
+                                    "resume_id"
+                                ],
+                                "description": "Request with job_id and resume_id."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "assessment_markdown": {
+                                            "type": "string",
+                                            "title": "Assessment Markdown",
+                                            "description": "Markdown-formatted assessment report"
+                                        }
+                                    },
+                                    "required": [
+                                        "assessment_markdown"
+                                    ],
+                                    "description": "Markdown-based assessment for a job-resume match."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/resumes": {
+            "post": {
+                "summary": "Upload Resume",
+                "description": "Upload a new resume, extract text, summarize it, and index into Elasticsearch.\n\nArgs:\n    resume_file (UploadFile): The PDF file of the resume.\n\nReturns:\n    ResumeUploadResponse: Resume ID and AI-generated summary.",
+                "operationId": "upload_resume_resumes_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "resume_file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "title": "Resume File"
+                                    }
+                                },
+                                "required": [
+                                    "resume_file"
+                                ],
+                                "description": "Upload file as multipart form data"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "resume_id": {
+                                            "type": "string",
+                                            "title": "Resume Id",
+                                            "description": "Unique identifier for the resume"
+                                        },
+                                        "summary": {
+                                            "type": "string",
+                                            "title": "Summary",
+                                            "description": "AI-generated summary of the resume"
+                                        }
+                                    },
+                                    "required": [
+                                        "resume_id",
+                                        "summary"
+                                    ],
+                                    "description": "Response schema after uploading a resume."
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search/resumes": {
+            "post": {
+                "summary": "Search Resumes",
+                "description": "Search resumes using a query string.\n\nArgs:\n    request (SearchResumesRequest): Request with search query and optional top_k.\n\nReturns:\n    List[ResumeSummary]: Ranked list of relevant resumes.",
+                "operationId": "search_resumes_search_resumes_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "title": "Query",
+                                        "description": "Search query string"
+                                    },
+                                    "top_k": {
+                                        "type": "integer",
+                                        "title": "Top K",
+                                        "description": "Number of resumes to return (default 2)",
+                                        "default": 2
+                                    }
+                                },
+                                "required": [
+                                    "query"
+                                ],
+                                "description": "Search resumes with query and optional top_k."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "resume_id": {
+                                                "type": "string",
+                                                "title": "Resume Id",
+                                                "description": "Unique identifier for the resume"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "title": "Title",
+                                                "description": "Resume headline or desired job title"
+                                            },
+                                            "summary": {
+                                                "type": "string",
+                                                "title": "Summary",
+                                                "description": "Short summary of candidate's experience"
+                                            }
+                                        },
+                                        "required": [
+                                            "resume_id",
+                                            "title",
+                                            "summary"
+                                        ],
+                                        "description": "Resume summary for search and ranking."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search/jobs": {
+            "post": {
+                "summary": "Search Jobs",
+                "description": "Search job postings using a query string.\n\nArgs:\n    request (SearchJobsRequest): Request with search query and optional top_k.\n\nReturns:\n    List[JobSummary]: Ranked list of matching job postings.",
+                "operationId": "search_jobs_search_jobs_post",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "title": "Query",
+                                        "description": "Search query string"
+                                    },
+                                    "top_k": {
+                                        "type": "integer",
+                                        "title": "Top K",
+                                        "description": "Number of jobs to return (default 5)",
+                                        "default": 5
+                                    }
+                                },
+                                "required": [
+                                    "query"
+                                ],
+                                "description": "Search jobs with query and optional top_k."
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "job_id": {
+                                                "type": "string",
+                                                "title": "Job Id",
+                                                "description": "Unique identifier for the job"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "title": "Title",
+                                                "description": "Job title"
+                                            },
+                                            "details": {
+                                                "type": "string",
+                                                "title": "Details",
+                                                "description": "Short description of the job"
+                                            }
+                                        },
+                                        "required": [
+                                            "job_id",
+                                            "title",
+                                            "details"
+                                        ],
+                                        "description": "Job summary for search results."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "detail": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "loc": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "msg": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

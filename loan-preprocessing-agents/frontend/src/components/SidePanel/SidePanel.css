@@ -1,0 +1,54 @@
+/* Overlay behind the panel */
+.sidepanel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.sidepanel-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* The panel itself */
+.sidepanel {
+  position: fixed;
+  top: 0;
+  right: -400px; /* hidden by default */
+  /* width: 400px; */
+  max-width: 50vw;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidepanel.open {
+  right: 0; /* slide in */
+}
+
+/* Close button */
+.sidepanel-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.sidepanel-content {
+  padding: 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
