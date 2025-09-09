@@ -53,7 +53,7 @@ function getPrompt(userId, aiTask) {
 		if (aiTask === 'sql_gen' && data === 'No data available') {
 			data = {
 				prompt: 'Upload a csv to generate the sql prompt',
-				model_id: 'bigcode/starcoder',
+				model_id: 'ibm/granite-3-3-8b-instruct',
 				max_new_tokens: '100',
 				stop_sequences: ';',
 			};
