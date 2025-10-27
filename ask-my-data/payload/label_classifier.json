@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-t5-xxl",
+  "model_id": "meta-llama/llama-3-3-70b-instruct",
   "input": "",
   "parameters": {
     "decoding_method": "greedy",
