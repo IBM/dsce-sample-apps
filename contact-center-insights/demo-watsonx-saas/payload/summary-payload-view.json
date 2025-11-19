@@ -1,5 +1,5 @@
 {
-  "model_id": "google/flan-ul2",
+  "model_id": "ibm/granite-3-3-8b-instruct",
   "data": {
     "instruction": "Summarise the following paragraph in 2 sentences",
     "input": "",
@@ -33,8 +33,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }
