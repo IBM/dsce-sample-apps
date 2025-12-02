@@ -12,20 +12,12 @@ const MODEL_MAPPING = {
     model: 'ibm/granite-13b-chat-v2',
     extraction: 'langchain',
   },
-  [PluginID.GRANITE_3_3_8B_WDU]: {
-    model: 'ibm/granite-3-3-8b-instruct',
+  [PluginID.GRANITE_4_H_SMALL_WDU]: {
+    model: 'ibm/granite-4-h-small',
     extraction: 'wdu',
   },
-  [PluginID.GRANITE_3_3_8B_LANGCHAIN]: {
-    model: 'ibm/granite-3-3-8b-instruct',
-    extraction: 'langchain',
-  },
-  [PluginID.GRANITE_3_8B_WDU]: {
-    model: 'ibm/granite-3-8b-instruct',
-    extraction: 'wdu',
-  },
-  [PluginID.GRANITE_3_8B_LANGCHAIN]: {
-    model: 'ibm/granite-3-8b-instruct',
+  [PluginID.GRANITE_4_H_SMALL_LANGCHAIN]: {
+    model: 'ibm/granite-4-h-small',
     extraction: 'langchain',
   },
   [PluginID.LLAMA3_3_70B_WDU]: {
@@ -36,12 +28,12 @@ const MODEL_MAPPING = {
     model: 'meta-llama/llama-3-3-70b-instruct',
     extraction: 'langchain',
   },
-  [PluginID.LLAMA3_405B_WDU]: {
-    model: 'meta-llama/llama-3-2-1b-instruct',
+  [PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU]: {
+    model: 'meta-llama/llama-4-maverick-17b-128e-instruct-fp8',
     extraction: 'wdu',
   },
-  [PluginID.LLAMA3_405B_LANGCHAIN]: {
-    model: 'meta-llama/llama-3-2-1b-instruct',
+  [PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN]: {
+    model: 'meta-llama/llama-4-maverick-17b-128e-instruct-fp8',
     extraction: 'langchain',
   },
 };

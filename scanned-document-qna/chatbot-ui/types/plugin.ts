@@ -34,27 +34,23 @@ const myExtractionEngine: ExtractionEngine = 'WDU';
 export enum PluginID {
  LLAMA3_3_70B_WDU = 'llama-3-3-70b-instruct@wdu',
   LLAMA3_3_70B_LANGCHAIN = 'llama-3-3-70b-instruct@langchain',
-  LLAMA3_405B_WDU = 'llama-3-405b-instruct@wdu',
-  LLAMA3_405B_LANGCHAIN = 'llama-3-405b-instruct@langchain',
+  LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU = 'llama-4-maverick-17b-128e-instruct-fp8@wdu',
+  LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN = 'llama-4-maverick-17b-128e-instruct-fp8@langchain',
   GRANITE_13b_chat_v2_wdu = 'granite-13b-chat-v2@wdu',
   GRANITE_13b_chat_v2_langchain = 'granite-13b-chat-v2@langchain',
-  GRANITE_3_3_8B_WDU = 'granite-3-3-8b-instruct@wdu',
-  GRANITE_3_3_8B_LANGCHAIN = 'granite-3-3-8b-instruct@langchain',
-  GRANITE_3_8B_WDU = 'granite-3-8b-instruct@wdu',
-  GRANITE_3_8B_LANGCHAIN = 'granite-3-8b-instruct@langchain',
+  GRANITE_4_H_SMALL_WDU = 'granite-4-h-small@wdu',
+  GRANITE_4_H_SMALL_LANGCHAIN = 'granite-4-h-small@langchain',
 }
 
 export enum PluginName {
-  LLAMA3_3_70B_WDU = 'llama-3-3-70b-instruct@wdu',
+   LLAMA3_3_70B_WDU = 'llama-3-3-70b-instruct@wdu',
   LLAMA3_3_70B_LANGCHAIN = 'llama-3-3-70b-instruct@langchain',
-  LLAMA3_405B_WDU = 'llama-3-405b-instruct@wdu',
-  LLAMA3_405B_LANGCHAIN = 'llama-3-405b-instruct@langchain',
+  LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU = 'llama-4-maverick-17b-128e-instruct-fp8@wdu',
+  LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN = 'llama-4-maverick-17b-128e-instruct-fp8@langchain',
   GRANITE_13b_chat_v2_wdu = 'ibm/granite-13b-chat-v2@wdu',
   GRANITE_13b_chat_v2_langchain = 'ibm/granite-13b-chat-v2@langchain',
-  GRANITE_3_3_8B_WDU = 'granite-3-3-8b-instruct@wdu',
-  GRANITE_3_3_8B_LANGCHAIN = 'granite-3-3-8b-instruct@langchain',
-  GRANITE_3_8B_WDU = 'granite-3-8b-instruct@wdu',
-  GRANITE_3_8B_LANGCHAIN = 'granite-3-8b-instruct@langchain',
+  GRANITE_4_H_SMALL_WDU = 'granite-4-h-small@wdu',
+  GRANITE_4_H_SMALL_LANGCHAIN = 'granite-4-h-small@langchain',
 }
 
 const PluginsGranite: PluginMappings = {
@@ -127,27 +123,15 @@ const PluginsGranite: PluginMappings = {
 };
 
 const NormalPlugins: PluginMappings = {
-  [PluginID.GRANITE_3_8B_WDU]: {
-    id: PluginID.GRANITE_3_8B_WDU,
-    name: PluginName.GRANITE_3_8B_WDU,
+  [PluginID.GRANITE_4_H_SMALL_WDU]: {
+    id: PluginID.GRANITE_4_H_SMALL_WDU,
+    name: PluginName.GRANITE_4_H_SMALL_WDU,
     extractionEngine: 'WDU',
     requiredKeys: [],
   },
-  [PluginID.GRANITE_3_8B_LANGCHAIN]: {
-    id: PluginID.GRANITE_3_8B_LANGCHAIN,
-    name: PluginName.GRANITE_3_8B_LANGCHAIN,
-    extractionEngine: 'LangChain',
-    requiredKeys: [],
-  },
-  [PluginID.GRANITE_3_3_8B_WDU]: {
-    id: PluginID.GRANITE_3_3_8B_WDU,
-    name: PluginName.GRANITE_3_3_8B_WDU,
-    extractionEngine: 'WDU',
-    requiredKeys: [],
-  },
-  [PluginID.GRANITE_3_3_8B_LANGCHAIN]: {
-    id: PluginID.GRANITE_3_3_8B_LANGCHAIN,
-    name: PluginName.GRANITE_3_3_8B_LANGCHAIN,
+  [PluginID.GRANITE_4_H_SMALL_LANGCHAIN]: {
+    id: PluginID.GRANITE_4_H_SMALL_LANGCHAIN,
+    name: PluginName.GRANITE_4_H_SMALL_LANGCHAIN,
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },
@@ -163,15 +147,15 @@ const NormalPlugins: PluginMappings = {
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },
- [PluginID.LLAMA3_405B_WDU]: {
-    id: PluginID.LLAMA3_405B_WDU,
-    name: PluginName.LLAMA3_405B_WDU,
+  [PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU]: {
+    id: PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU,
+    name: PluginName.LLAMA4_MAVERICK_17B_128E_INSTRUCT_WDU,
     extractionEngine: 'WDU',
     requiredKeys: [],
   },
-  [PluginID.LLAMA3_405B_LANGCHAIN]: {
-    id: PluginID.LLAMA3_405B_LANGCHAIN,
-    name: PluginName.LLAMA3_405B_LANGCHAIN,
+  [PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN]: {
+    id: PluginID.LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN,
+    name: PluginName.LLAMA4_MAVERICK_17B_128E_INSTRUCT_LANGCHAIN,
     extractionEngine: 'LangChain',
     requiredKeys: [],
   },
