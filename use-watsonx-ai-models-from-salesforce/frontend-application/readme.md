@@ -70,8 +70,8 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
    ```sh
    SERVER_URL = https://apic-gw-gateway-integration.apps.66ba4b07545446001ef6af7d.ocp.techzone.ibm.com/apic-org/sandbox
    API_KEY = <your IBM Cloud API key>
-   MODEL_ID = ibm/granite-3-8b-instruct
-   MODEL_ID_TEST = ibm/granite-3-8b-instruct
+   MODEL_ID = ibm/granite-4-h-small
+   MODEL_ID_TEST = ibm/granite-4-h-small
    WATSONX_REGION = <your watsonx.ai project_id>
    WATSONX_PROJECTID = <your watsonx.ai region>
    ```
