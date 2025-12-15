@@ -4,7 +4,7 @@
       "uid-s1",
       "summarization",
       "sales-conversation",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "summarization",
     "payload": {
@@ -37,7 +37,7 @@
       "uid-s2",
       "summarization",
       "sales-conversation",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "summarization",
     "payload": {
@@ -105,7 +105,7 @@
       "classification",
       "topic",
       "seamless-agent-transition",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "classification",
     "payload": {
@@ -175,7 +175,7 @@
       "entity-extraction",
       "pii-entities",
       "seamless-agent-transition",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "entity-extraction",
     "payload": {
@@ -245,7 +245,7 @@
       "classification",
       "topic",
       "email-thread-summarization",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "classification",
     "payload": {
@@ -354,7 +354,7 @@
       "summarization",
       "conversation-summary-usecase",
       "compare-ibm-models",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "summarization",
     "payload": {
@@ -389,7 +389,7 @@
       "classification",
       "conversation-sentiment-usecase",
       "compare-ibm-models",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "classification",
     "payload": {
@@ -424,7 +424,7 @@
       "classification",
       "email-topic-usecase",
       "compare-ibm-models",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "classification",
     "payload": {
@@ -459,7 +459,7 @@
       "entity-extraction",
       "conversation-entities-usecase",
       "compare-ibm-models",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "entity-extraction",
     "payload": {
@@ -494,7 +494,7 @@
       "content-generation",
       "marketing-content-usecase",
       "compare-ibm-models",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "content-generation",
     "payload": {
@@ -640,7 +640,7 @@
       "entity-extraction",
       "pii-extraction",
       "pii",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "entity-extraction",
     "payload": {
@@ -923,7 +923,7 @@
       "uid-s9",
       "summarization",
       "telco-customer-support",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "summarization",
     "payload": {
@@ -957,7 +957,7 @@
       "uid-e7",
       "entity-extraction",
       "tuning-conversation-insights",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "entity-extraction",
     "payload": {
@@ -991,7 +991,7 @@
       "classification",
       "customer-sentiment",
       "tuning-conversation-insights",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "classification",
     "payload": {
@@ -1024,7 +1024,7 @@
       "uid-s10",
       "summarization",
       "tuning-conversation-insights",
-      "granite-3-8b-instruct"
+      "granite-4-h-small"
     ],
     "ai_task": "summarization",
     "payload": {
