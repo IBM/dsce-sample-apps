@@ -1,5 +1,5 @@
 {
-  "model": "ibm/granite-3b-instruct",
+  "model": "ibm/granite-4-h-small",
   "messages": [
     {
       "role": "user",

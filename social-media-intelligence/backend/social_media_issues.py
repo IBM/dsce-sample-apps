@@ -12,7 +12,7 @@ endpoint = os.getenv('ENDPOINT')
 project_id = os.getenv('PROJECT_ID')
 url = os.getenv('URL')
 
-model_id = "ibm/granite-3-3-8b-instruct"
+model_id = "ibm/granite-4-h-small"
 gen_parms   = {"decoding_method":"greedy", 
             "max_new_tokens":500,
             "random_seed":1024, 
@@ -37,22 +37,14 @@ def auth(api_key):
 
 def sentimentGenerator(prompt, token):
     instruction = """\
-        You are a sentiment classifier bot. The following data that you will analyze are tweets about 3 telecommunications companies \
-        called TelcoA, TelcoB and TelcoC. \
+        You are a sentiment classifier.
 
-        You should follow these instructions:
-        1. You should classify the tweet using the available information.
-        2. You should not repeat your answers.
-        3. You should not use any other knowledge.
-        4. You should keep your answers short and concise.
-        5. You should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content in your answers.
-        6. You should ensure that your answers are socially unbiased and positive in nature.
-        7. You should only answer the first unanswered question.
-        8. If you don't know the answer to a question, please don't share false information, and say "I'm sorry, I was not able to find an answer to your question."
+You task is to classify the tweet in one of these three sentiments : Positive, Negative, Neutral
+You should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content in your answers.
 
-        Here are a few examples of tweets classified in 3 categories - - 'Positive', 'Negative' or 'Neutral'. 
-        Please learn the context and respond appropriately.
-        Examples:"""
+Below are few examples of tweets classified.
+        
+Examples:"""
     example = """
         Tweet  : i have been living without internet because of you & your poor service team.Waiting for the installation since October 17th, my son used to go to nearby starbucks to complete his homework, thanks to my neighbor for sharing his wifi password form last 2 weeks
         Sentiment : Negative
@@ -78,31 +70,29 @@ def sentimentGenerator(prompt, token):
 
     body = {
         "input": f"""{instruction}
-
-        {example}
-
-        Tweet : {prompt}
-        Sentiment : """,
+{example}
+        
+Classify below tweet.
+        
+Tweet : {prompt}
+Sentiment : """,
         "parameters": {
             "decoding_method": "greedy",
-            "max_new_tokens": 5,
+            "max_new_tokens": 2,
             "repetition_penalty": 1
         },
-        "model_id": "ibm/granite-3-3-8b-instruct",
+        "model_id": "ibm/granite-4-h-small",
         "project_id": project_id,
         "moderations": {
             "hap": {
                 "input": {
                           "enabled": True,
-                          "threshold": 0.5,
+                          "threshold": 0.75,
                           },
                 "output": {
                      "enabled": True,
-                          "threshold": 0.5,
-                    },
-                "mask": {
-                    "remove_entity_value": True
-                }
+                          "threshold": 0.75,
+                    }
             }
         }
     }
@@ -148,7 +138,7 @@ def toneGenerator(prompt, token):
             "max_new_tokens": 20,
             "repetition_penalty": 1
         },
-        "model_id": "ibm/granite-3-3-8b-instruct",
+        "model_id": "ibm/granite-4-h-small",
         "project_id": project_id,
         "moderations": {
             "hap": {
@@ -213,7 +203,7 @@ def entityExtractor(prompt, token):
             "max_new_tokens": 200,
             "repetition_penalty": 1
         },
-        "model_id": "ibm/granite-3-3-8b-instruct",
+        "model_id": "ibm/granite-4-h-small",
         "project_id": project_id,
         "moderations": {
             "hap": {
