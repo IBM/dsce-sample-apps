@@ -1,15 +1,13 @@
 {
-  "model_id": "ibm/granite-3-3-8b-instruct",
-  "input": "Summarise the following paragraph in 2 sentences\n\nInput:\nHi Josh,\nnI would suggest a 1-hour call which will cover overview of the product features, which Andy can deliver. Please schedule the initial call, keeping in mind east coast time. We will discuss regular connects for feedback and/or queries after the initial meeting.\n\nKind regards,\nPeter Joseph\nDirector, Product Engineering ABCLabs\n7th Floor, Block A, Golf Links,\nBangalore -560021, Karnataka, INDIA\nMobile: 91-9831117436\nE-mail: peter@abclabs.com\n\nFrom: Josh Jenson <josh@pte.com>\nSent: 07 June 2023 21:40\nTo: peter@abclabs.com; H Hasan <hasan@abc.com>; Jerry Soch  <soch@pte.com>\nSubject: Re: Product pitch\n \nThanks Peter,\n \nThanks for quick comeback. Are you going to schedule the initial call or do you want us to schedule it. Who should be invited ?\n \nDo you plan to have a weekly/bi weekly call for feedback?\n \n \nRegards,\nJosh\n\n\nOutput:\nJosh wants to know who should be on the call, who will schedule it and at what frequency. Peter responded saying that we should have a 1 hour call with Ravi and we can have a regular connect.\n\nInput:\n",
+  "model_id": "mistralai/mistral-medium-2505",
+  "input": "Summarise the given paragraph in 2 sentences. Here one example is given below for your reference. Do not generate extra information just return summarise the given mailchain.\n\nInput:\nHi Josh,\nI would suggest a 1-hour call which will cover overview of the product features, which Andy can deliver. Please schedule the initial call, keeping in mind east coast time. We will discuss regular connects for feedback and/or queries after the initial meeting.\n\nKind regards,\nPeter Joseph\nDirector, Product Engineering ABCLabs\nE-mail: peter@abclabs.com\n\n\nThanks Peter,\nThanks for quick comeback. Are you going to schedule the initial call or do you want us to schedule it. Who should be invited ?\nDo you plan to have a weekly/bi weekly call for feedback?\n\nRegards,\nJosh\n\n\nOutput:\nJosh wants to know who should be on the call, who will schedule it and at what frequency. Peter responded saying that we should have a 1 hour call with Ravi and we can have a regular connect.\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
-    "max_new_tokens": 300,
+    "max_new_tokens": 200,
     "min_new_tokens": 50,
-    "stop_sequences": [
-      "#"
-    ],
+    "stop_sequences": [],
     "include_stop_sequence": false,
-    "repetition_penalty": 1.5
+    "repetition_penalty": 1
   },
   "moderations": {
     "hap": {
