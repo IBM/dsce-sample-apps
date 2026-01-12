@@ -1,7 +1,7 @@
 {
-  "model_id": "ibm/granite-3-3-8b-instruct",
+  "model_id": "ibm/granite-4-h-small",
   "data": {
-    "instruction": "Read the below text and classify it into one of the following options: personal conversation, product development, product deployment, product support, schedule updates",
+    "instruction": "Read the below mailchain and classify it into one of the following options: personal conversation, product development, product deployment, product support, schedule updates",
     "input": "",
     "input_prefix": "Input:",
     "output_prefix": "Output:",

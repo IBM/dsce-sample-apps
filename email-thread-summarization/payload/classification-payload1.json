@@ -1,6 +1,6 @@
 {
-  "model_id": "ibm/granite-3-3-8b-instruct",
-  "input": "Read the below text and classify it into one of the following options: personal conversation, product development, product deployment, product support, schedule updates\nDo not give explaination.\nInput:\n",
+  "model_id": "ibm/granite-4-h-small",
+  "input": "Read the below mailchain and classify it into one of the following options: personal conversation, product development, product deployment, product support, schedule updates\nDo not give explaination.\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 5,
