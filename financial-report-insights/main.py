@@ -71,7 +71,7 @@ def init():
 
     decoding_method="greedy"
     maximum_new_tokens = 500
-    minimum_new_tokens = 0
+    minimum_new_tokens = 10
     repetition_penalty = 1.5
     temperature = 0.5
     top_k=50
