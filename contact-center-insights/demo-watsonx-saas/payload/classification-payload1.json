@@ -1,12 +1,13 @@
 {
-  "model_id": "ibm/granite-3-8b-instruct",
+  "model_id": "ibm/granite-4-h-small",
   "input": "Read the text and classify into one of the following options. Do not generate any information: account transfer, credit cards, balance issues\n\nInput:\n",
   "parameters": {
     "decoding_method": "greedy",
     "max_new_tokens": 100,
     "min_new_tokens": 1,
     "stop_sequences": [],
-    "repetition_penalty": 1
+    "repetition_penalty": 1,
+    "temperature": 0.0
   },
   "moderations": {
     "hap": {
