@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventory Management Portal</title>
+
+  <!-- ✅ Carbon Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@carbon/styles/css/styles.css" />
+
+  <!-- ✅ Carbon Web Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@carbon/web-components@2.43.0/es/index.js"></script>
+
+  <style>
+    body {
+      background: #f4f4f4;
+      margin: 0;
+      padding-bottom: 90px;
+    }
+
+    cds-header {
+      background-color: #1e1e2e;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 20px;
+    }
+
+    .logo { font-weight: bold; }
+    .container { padding: 2rem; }
+
+    .item-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .stock { margin: 0.5rem 0; }
+
+    footer.legal-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #1e1e2e;
+      color: #c6c6c6;
+      padding: 1rem 6rem 1rem 2rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      box-sizing: border-box;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <cds-header>
+    <div class="logo">Inventory Dashboard</div>
+    <div>Items | Orders | Suppliers | Forecasting</div>
+  </cds-header>
+
+  <div class="container">
+    <h2 class="cds--type-heading-02">Current Stock Levels</h2>
+
+    <div class="item-grid">
+
+      <cds-tile>
+        <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80" alt="Nike Running Shoes" />
+        <h3>Nike Running Shoes</h3>
+        <p class="stock">Stock: <cds-tag type="red">4 (Low)</cds-tag></p>
+        <cds-button kind="danger">Reorder</cds-button>
+      </cds-tile>
+
+      <cds-tile>
+        <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80" alt="Wireless Keyboard" />
+        <h3>Wireless Keyboards</h3>
+        <p class="stock">Stock: <cds-tag type="green">32</cds-tag></p>
+        <cds-button kind="primary">Add Stock</cds-button>
+      </cds-tile>
+
+      <cds-tile>
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Smartwatch" />
+        <h3>Smartwatches</h3>
+        <p class="stock">Stock: <cds-tag type="red">2 (Critical)</cds-tag></p>
+        <cds-button kind="danger">Reorder</cds-button>
+      </cds-tile>
+
+      <cds-tile>
+        <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=80" alt="USB-C Charger" />
+        <h3>USB-C Chargers</h3>
+        <p class="stock">Stock: <cds-tag type="cool-gray">18</cds-tag></p>
+        <cds-button kind="primary">Add Stock</cds-button>
+      </cds-tile>
+
+    </div>
+  </div>
+
+  <!-- ✅ Required root for Watsonx chat -->
+  <div id="root"></div>
+
+  <footer class="legal-footer">
+    <p style="margin: 0;">
+      Do not input personal data, or data that is sensitive or confidential into demo app.
+      This app is built using the watsonx.ai SDK and may include systems and methods pending patent with the USPTO,
+      protected under US Patent Laws. © Copyright IBM Corporation
+    </p>
+  </footer>
+
+      <!-- ✅ Watsonx Chat - GUARANTEED AUTO OPEN (WXO COMPATIBLE) -->
+  <script>
+    window.wxOConfiguration = {
+      orchestrationID: "{{ ORCHESTRATION_ID }}",
+      hostURL: "{{ WX_HOST_URL }}",
+      rootElementID: "root",
+       showLauncher: false, 
+      deploymentPlatform: "ibmcloud",
+      crn: "{{ WX_CRN }}",
+      chatOptions: {
+        agentId: "{{ AGENT_ID }}",
+        autoOpen: true
+      }
+    };
+    console.log("{{ WX_HOST_URL }}")
+    const script = document.createElement('script');
+    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+
+    script.onload = function () {
+      wxoLoader.init();
+
+      // ✅ Multi-strategy auto-open to handle all WXO versions
+      const tryOpen = () => {
+        if (window.wxoLoader && typeof wxoLoader.open === 'function') {
+          wxoLoader.open();
+          console.log('WXO Chat force-opened');
+          return true;
+        }
+        return false;
+      };
+
+      // 1. Native event hook (newer SDKs)
+      document.addEventListener('wxo:ready', tryOpen);
+
+      // 2. Fallback delayed open (most reliable)
+      setTimeout(() => {
+        tryOpen();
+      }, 1200);
+
+      // 3. Safety interval if widget loads slow
+      const interval = setInterval(() => {
+        if (tryOpen()) clearInterval(interval);
+      }, 400);
+    };
+
+    document.head.appendChild(script);
+  </script>
+
+</body>
+</html>

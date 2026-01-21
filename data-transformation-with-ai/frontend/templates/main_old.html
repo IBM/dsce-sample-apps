@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ✅ Embeds the chat widget -->
+    <meta charset="UTF-8" />
+    <title>Inventory Management Portal</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f2f2;
+        }
+
+        nav {
+            background: #1e1e2e;
+            padding: 15px 30px;
+            color: #fff;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        /* Inventory Product Grid */
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .item-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .item-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .stock {
+            font-size: 14px;
+            margin: 6px 0;
+        }
+
+        .low {
+            color: red;
+            font-weight: bold;
+        }
+
+        .button {
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">📦 Inventory Dashboard</div>
+    <div>Items | Orders | Suppliers | Forecasting</div>
+</nav>
+
+<div class="container">
+    <h2>Current Stock Levels</h2>
+
+    <div class="item-grid">
+        <div class="item-card">
+            <img src="https://picsum.photos/seed/inv1/300/200" />
+            <h3>Nike Running Shoes</h3>
+            <p class="stock">Stock: <span class="low">4 (Low)</span></p>
+            <button class="button">Reorder</button>
+        </div>
+
+        <div class="item-card">
+            <img src="https://picsum.photos/seed/inv2/300/200" />
+            <h3>Wireless Keyboards</h3>
+            <p class="stock">Stock: 32</p>
+            <button class="button">Add Stock</button>
+        </div>
+
+        <div class="item-card">
+            <img src="https://picsum.photos/seed/inv3/300/200" />
+            <h3>Smartwatches</h3>
+            <p class="stock">Stock: <span class="low">2 (Critical)</span></p>
+            <button class="button">Reorder</button>
+        </div>
+
+        <div class="item-card">
+            <img src="https://picsum.photos/seed/inv4/300/200" />
+            <h3>USB-C Chargers</h3>
+            <p class="stock">Stock: 18</p>
+            <button class="button">Add Stock</button>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Transformation with AI</title>
+
+  <!-- Carbon Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@carbon/styles/css/styles.css" />
+
+  <!-- Carbon Web Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@carbon/web-components@2.43.0/es/index.js"></script>
+
+  <style>
+    body {
+      background: #f4f7fb;
+      margin: 0;
+      padding-bottom: 90px;
+      font-family: "IBM Plex Sans", sans-serif;
+    }
+
+    /* HEADER */
+    cds-header {
+      background-color: #000;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .logo {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .nav {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 2.5rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      background: linear-gradient(135deg, #000, #1f1f1f);
+      color: white;
+      padding: 3rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+      align-items: center;
+    }
+
+    .hero img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .hero p {
+      max-width: 600px;
+      opacity: 0.9;
+    }
+
+    /* LOANS */
+    .loan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-top: 2rem;
+    }
+
+    cds-tile {
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .loan-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .loan-title {
+      font-size: 18px;
+      margin-bottom: 0.5rem;
+    }
+
+    .loan-meta {
+      color: #525252;
+      font-size: 14px;
+      margin-bottom: 1rem;
+    }
+
+    /* FOOTER */
+    footer.legal-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #000;
+      color: #c6c6c6;
+      padding: 1rem 5rem 1rem 2rem;
+      font-size: 0.8rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <cds-header>
+    <div class="logo">Data Transformation with AI </div>
+    <!-- <div class="nav">Loans | Eligibility | Interest Rates | Support</div> -->
+  </cds-header>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <h1>Loans Designed Around Your Life</h1>
+        <p>
+          Explore flexible loan options with transparent interest rates,
+          fast approvals, and AI-assisted support for every step.
+        </p>
+        <cds-button kind="primary" size="lg">
+          Talk to Loan Advisor
+        </cds-button>
+      </div>
+    </div>
+
+    <!-- LOANS -->
+    <h2 class="cds--type-heading-02">Our Loan Products</h2>
+
+    <div class="loan-grid">
+
+      <cds-tile>
+        <img class="loan-img"
+             src="https://images.unsplash.com/photo-1568605114967-8130f3a36994"
+             alt="Home loan" />
+        <h3 class="loan-title">🏠 Home Loan</h3>
+        <p class="loan-meta">
+          Interest from <strong>8.4%</strong> • Tenure up to 30 years
+        </p>
+        <cds-button kind="primary">Check Eligibility</cds-button>
+      </cds-tile>
+
+      <cds-tile>
+        <img class="loan-img"
+             src="https://images.unsplash.com/photo-1554224154-22dec7ec8818"
+             alt="Personal loan" />
+        <h3 class="loan-title">💼 Personal Loan</h3>
+        <p class="loan-meta">
+          Instant approval • No collateral • Up to ₹40L
+        </p>
+        <cds-button kind="primary">Enquire Now</cds-button>
+      </cds-tile>
+
+      <cds-tile>
+        <img class="loan-img"
+             src="https://images.unsplash.com/photo-1521791055366-0d553872125f"
+             alt="Business loan" />
+        <h3 class="loan-title">🏢 Business Loan</h3>
+        <p class="loan-meta">
+          MSME focused • Flexible repayment • Fast disbursal
+        </p>
+        <cds-button kind="primary">Speak to Advisor</cds-button>
+      </cds-tile>
+
+
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="legal-footer">
+    <p style="margin: 0;">
+      This is a demo banking experience. Do not submit sensitive personal or financial data.
+      Powered by watsonx.ai. © IBM Corporation.
+    </p>
+  </footer>
+  <script>
+    window.wxOConfiguration = {
+      orchestrationID: "{{ ORCHESTRATION_ID }}",
+      hostURL: "{{ WX_HOST_URL }}",
+      rootElementID: "root",
+      autoOpen: true,
+      deploymentPlatform: "ibmcloud",
+      crn: "{{ WX_CRN }}",
+      chatOptions: {
+        agentId: "{{ AGENT_ID }}"
+      }
+    };
+
+    function forceOpenChat() {
+      if (window.wxoLoader && typeof window.wxoLoader.openChat === 'function') {
+        window.wxoLoader.openChat();
+        return true;
+      }
+      if (window.WatsonXChat && typeof window.WatsonXChat.open === 'function') {
+        window.WatsonXChat.open();
+        return true;
+      }
+      return false;
+    }
+
+    setTimeout(function () {
+      if (!window.wxOConfiguration.hostURL || window.wxOConfiguration.hostURL === 'None') {
+        console.error('WX_HOST_URL not set. Please define it in your .env file');
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+
+      script.onload = function () {
+        wxoLoader.init();
+
+        // ✅ HARD FORCE: keep trying until it opens
+        const opener = setInterval(() => {
+          if (forceOpenChat()) {
+            clearInterval(opener);
+          }
+        }, 500);
+      };
+
+      document.head.appendChild(script);
+    }, 0);
+  </script>
+
+</body>
+</html>

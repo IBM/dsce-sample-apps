@@ -1,0 +1,8 @@
+pandas
+langchain-ibm==0.3.12
+langchain-community==0.3.12
+langchain-experimental
+langgraph==0.4.8
+python-dotenv
+fastapi==0.115.13
+uvicorn
