@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-3-3-8b-instruct",
+  "model_id": "ibm/granite-4-h-small",
   "data": {
     "instruction": "Summarise the following paragraph in 2 sentences",
     "input": "",
@@ -27,6 +27,7 @@
   "parameters": {
     "decoding_method": "greedy",
     "stop_sequences": [],
+    "temperature": 0.0,
     "min_new_tokens": 50,
     "max_new_tokens": 300,
     "repetition_penalty": 1.5

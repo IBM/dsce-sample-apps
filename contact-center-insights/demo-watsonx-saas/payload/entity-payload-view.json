@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-3-8b-instruct",
+  "model_id": "ibm/granite-4-h-small",
   "data": {
     "instruction": "Extract PII entities from the conversation given below.",
     "input": "",
@@ -18,9 +18,10 @@
   },
   "parameters": {
     "decoding_method": "greedy",
-    "stop_sequences": [],
+    "stop_sequences": ["\n\n"],
     "min_new_tokens": 1,
     "max_new_tokens": 100,
+    "temperature": 0.0,
     "repetition_penalty": 1
   },
   "moderations": {
