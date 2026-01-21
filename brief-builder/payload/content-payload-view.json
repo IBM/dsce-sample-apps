@@ -1,5 +1,5 @@
 {
-  "model_id": "ibm/granite-3-3-8b-instruct",
+  "model_id": "ibm/granite-4-h-small",
   "data": {
     "instruction": "",
     "input": "",
@@ -18,7 +18,10 @@
   },
   "parameters": {
     "decoding_method": "sample",
-    "stop_sequences": ["END.\n", "Input:"],
+    "stop_sequences": [
+      "END.\n",
+      "Input:"
+    ],
     "min_new_tokens": 50,
     "max_new_tokens": 500,
     "random_seed": null,
@@ -29,8 +32,14 @@
   },
   "moderations": {
     "hap": {
-      "input": { "enabled": true, "threshold": 0.75 },
-      "output": { "enabled": true, "threshold": 0.75 }
+      "input": {
+        "enabled": true,
+        "threshold": 0.75
+      },
+      "output": {
+        "enabled": true,
+        "threshold": 0.75
+      }
     }
   }
 }

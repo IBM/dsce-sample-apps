@@ -1,5 +1,5 @@
 {
-  "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+  "model_id": "mistralai/mistral-medium-2505",
   "input": "",
   "parameters": {
     "decoding_method": "greedy",

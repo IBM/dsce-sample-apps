@@ -3,6 +3,7 @@
 1. A watsonx.ai(watsonx.ai Studio, watsonx.ai Runtime) instance on IBM Cloud.
 2. Python3+ is installed or download from https://www.python.org/downloads/.
 3. Download CLI for watsonx flows engine
+
    1. Go to `https://wxflows.ibm.stepzen.com/`
 
    2. Login with IBM ID or Github
@@ -87,16 +88,16 @@ It is assumed that Python3+ is installed or download from <https://www.python.or
 
    - In the interactive mode, provide the following information:
 
-    ```sh
-     - Do you wish to use retrieval-augmented generation (RAG)?: yes
-     - Choose the document collection for context retrieval: create from local data
-     - Path to the data: ./source
-     - File types to include: all supported file types
-     - Chunk size (in tokens): 500
-     - Chunk overlap (in tokens): 50
-     - Collection name: wxflows-eda
-     - Endpoint name: wxflows-genai/wxflows-eda
-     ```
+   ```sh
+    - Do you wish to use retrieval-augmented generation (RAG)?: yes
+    - Choose the document collection for context retrieval: create from local data
+    - Path to the data: ./source
+    - File types to include: all supported file types
+    - Chunk size (in tokens): 500
+    - Chunk overlap (in tokens): 50
+    - Collection name: wxflows-eda
+    - Endpoint name: wxflows-genai/wxflows-eda
+   ```
 
 5. Above `step 4` creates a couple of files:
 

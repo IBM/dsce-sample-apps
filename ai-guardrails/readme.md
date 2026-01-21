@@ -1,85 +1,143 @@
-## Set up and launch application
+# AI guardrails
 
-It is assumed that Python3+ is installed or download from <https://www.python.org/downloads/>.
+This repository demonstrates how to use the Watsonx Governance SDK to implement real-time guardrails for generative AI models. These guardrails help you instantly detect and control undesired behavior. For example, you may choose to block certain responses or guide the model toward a safer or more appropriate completion. **These highly customizable AI guardrails can be applied to both AI inputs** (evaluating and filtering user queries before they reach the model) **and AI outputs** (ensuring generated responses are checked before being returned to end users).
 
-1. Go to the root directory and prepare your python environment.
+To showcase these capabilities, we provide a Dash-based web application that performs real-time evaluations for content safety, bias detection, RAG quality metrics, and more.
 
-   ```sh
-   python3 -m venv client-env
-   ```
+## Features
 
-2. Activate the virtual environment:
+- **Content Safety Metrics:** HAP, PII Detection, Harm Detection, Violence, Profanity, Social Bias, Jailbreak Detection, Unethical Behavior, Sexual Content, Evasiveness
 
-   - MacOS, Linux, and WSL using bash/zsh
+- **RAG Evaluation Metrics:** Answer Relevance, Context Relevance, Faithfulness
 
-   ```sh
-   source client-env/bin/activate
-   ```
+- **Response Quality Metrics (LLM as Judge and Custom Metrics):** Answer Completeness, Conciseness, Helpfulness, Action-Oriented Validator
 
-   - Windows with CMD shell
+- **Interactive Dashboard:** Select multiple guardrails, adjust risk thresholds, and view color-coded results
 
-   ```cmd
-   C:> client-env\Scripts\activate.bat
-   ```
+- **Export Results:** Download evaluation results as CSV files
 
-   - Windows with git bash
+<img src="images/demo-landing-page.png" 
+     alt="demo-landing-page" 
+     style="width: 90%;"/>
 
-   ```sh
-   source client-env/Scripts/activate
-   ```
+### How to Use These Metrics to Block Undesired AI Behavior
 
-   - Windows with PowerShell
+You can block undesired AI behavior by configuring customizable thresholds for each metric.
 
-   ```cmd
-   PS C:> client-env\Scripts\Activate.ps1
-   ```
+For content safety metrics, you can set an upper-limit thresholds that determine when content becomes unsafe for your application. Each metric can have its own threshold. For example, if your use case is more sensitive to **Jailbreak** attempts than **HAP**, you can configure a lower upper-limit for the Jailbreak metric to make your guardrail more sensitive to those risks.
 
-   > if there is an execution policy error, this can be changed with the following command
+For RAG evaluation metrics (Answer Relevance, Context Relevance, Faithfulness), you can set the lower-limit thresholds to enforce quality standards. If a generated answer falls below the required score, you can block the output or trigger an alternative workflow (e.g., regeneration, human review).
 
-   ```cmd
-   PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ```
+For response quality metrics, you can use LLM as judge or define your rule based or code based custom metrica. For example, **Conciseness** uses LLM as judge to evaluate the agent's response in terms of conciseness. **Action-oriented validator**, on the other hand, is a custom rule-based custom metric that evlaute's the agent's response in terms of how action oriented it ia. These metrics can be used to block agent's response (output) or trigger an alternative workflow (e.g., regeneration, human review).
 
-3. Install the required libraries.
+## Prerequisites
 
-   ```sh
-   pip3 install -r requirements.txt
-   ```
+- Python 3.11 (not python 3.13)
+- IBM watsonx.ai account with API credentials
+- IBM watsonx.governance access
 
-4. [Get a watsonx trial account](https://dataplatform.cloud.ibm.com/registration/stepone?context=wx).
+## Setup Instructions
 
-5. Add `.env` file to your application folder and add env variable
+### 1. Create Virtual Environment
 
-   ##### Steps to create IBM Cloud API key
-
-   - 5.1.1 In the [IBM Cloud console](https://cloud.ibm.com/), go to **Manage > Access (IAM) > API keys**
-   - 5.1.2 Click **Create an IBM Cloud API key**
-   - 5.1.3 Enter a name and description for your API key
-   - 5.1.4 Click **Create**
-   - 5.1.5 Then, click **Show** to display the API key. Or, click **Copy** to copy and save it for later, or click **Download**
-
-   ##### Steps to create project_id (skip 5.2.1 to 5.2.3 for watsonx trial account)
-
-   - 5.2.1 In IBM Cloud, [Set up IBM Cloud Object Storage for use with IBM watsonx](https://dataplatform.cloud.ibm.com/docs/content/wsj/console/wdp_admin_cos.html?context=wx&audience=wdp)
-   - 5.2.2 [Set up the Watson Studio and Watson Machine Learning services](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/set-up-ws.html?context=wx&audience=wdp)
-   - 5.2.3 Create a Project from IBM watsonx console - <https://dataplatform.cloud.ibm.com/projects/?context=wx>
-   - 5.2.4 (Optional step: add more collaborators) Open the Project > Click on **Manage** tab > Click on **Access Control** from the **Manage** tab > Click [Add collaborators](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/collaborate.html?context=wx&audience=wdp#add-collaborators) > **Add Users** > Choose **role** as **admin** > Click **Add**
-   - 5.2.5 Click on **Manage** tab > Copy the **Project ID** from **General**
-
-   ```sh
-   SERVER_URL = https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29
-   WATSONX_API_KEY=<your IBM Cloud API key>
-   WATSONX_PROJECT_ID=<your watsonx.ai project_id>
-   ```
-
-6. Run the application.
-
-   ```sh
-   python3 template.py
-   ```
-
-You can now access the application from your browser at the following URL.
-
-```url
-http://localhost:8050
+```bash
+python3.11 -m venv my-venv
 ```
+
+### 2. Activate Virtual Environment
+
+**MacOS/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+**Windows (CMD):**
+
+```cmd
+venv\Scripts\activate.bat
+```
+
+**Windows (PowerShell):**
+
+```powershell
+venv\Scripts\Activate.ps1
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure Environment Variables
+
+The `.env` file should already be present with your credentials. Verify it contains:
+
+```env
+## IBM watsonx.governance API Configuration
+WATSONX_APIKEY=your_watsonx_api_key_here
+WATSONX_URL=https://us-south.ml.cloud.ibm.com
+
+## Service Instance ID (required if you have multiple instances)
+WXG_SERVICE_INSTANCE_ID=your_service_instance_id_here
+
+## Project ID for watsonx.governance
+WXG_PROJECT_ID=your_project_id_here
+
+## Optional: Region (default is us-south)
+# WATSONX_REGION=us-south
+
+## OpenAI API Key (if using OpenAI as LLM judge)
+# OPENAI_API_KEY=your_openai_api_key_here
+```
+
+To get your credentials:
+
+- **API Key**: [IBM Cloud Console](https://cloud.ibm.com/) > Manage > Access (IAM) > API keys
+- **Service Instance ID**: Find in your watsonx.governance service details
+
+### 5. Run the Application
+
+```bash
+python app.py
+```
+
+The app will start on `http://localhost:8050`
+
+## Key Components
+
+### Metrics Categories
+
+**Content Safety**
+
+- Detects harmful, biased, or inappropriate content
+- Identifies security threats like jailbreak attempts
+- Filters PII and sensitive information
+
+**RAG Evaluation**
+
+- Assesses quality of retrieval-augmented generation
+- Measures relevance and faithfulness
+- Validates context usage
+
+**Response Quality Metrics**
+
+- Evaluates the completeness of the agent's response
+- Evaluates the conciseness of the agent's response
+- Evaluates the helpfulness of the agent's response
+- Evaluates whether the agent's response is action oriented
+
+## Troubleshooting
+
+**Issue: "Failed to initialize evaluator"**
+
+- Check your `.env` file contains valid credentials
+- Verify API key has necessary permissions
+- Ensure service instance ID is correct
+
+**Issue: Dependencies installation fails**
+
+- Ensure you're using Python 3.11+
+- Try upgrading pip: `pip install --upgrade pip`
+- Install dependencies one at a time to identify issues
