@@ -1,0 +1,186 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Training API",
+    "version": "1.0.0",
+    "description": "API for training embedding models for products and customers."
+  },
+  "servers": [
+    {
+      "url": "https://agentic-retail-inventory.217d1aa7tv79.us-south.codeengine.appdomain.cloud"
+    }
+  ],
+  "paths": {
+    "/train": {
+      "post": {
+        "summary": "Train embedding models",
+        "description": "Trains models using the specified configuration, embedding dimensions, and model output path.",
+        "operationId": "trainModel",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model_path": {
+                    "type": "string",
+                    "description": "Path where the trained model will be stored",
+                    "example": "../models"
+                  },
+                  "embed_dim_product": {
+                    "type": "integer",
+                    "description": "Embedding dimension for product vectors",
+                    "example": 384
+                  },
+                  "embed_dim_customer": {
+                    "type": "integer",
+                    "description": "Embedding dimension for customer vectors",
+                    "example": 384
+                  }
+                },
+                "required": [
+                  "model_path",
+                  "embed_dim_product",
+                  "embed_dim_customer"
+                ]
+              },
+              "example": {
+                "model_path": "../models",
+                "embed_dim_product": 384,
+                "embed_dim_customer": 384
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Training started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Training initiated for customer and product embeddings."
+                    },
+                    "model_path": {
+                      "type": "string",
+                      "example": "../models"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error during training"
+          }
+        }
+      }
+    },
+    "/predict": {
+      "post": {
+        "summary": "Get propensity predictions",
+        "description": "Takes SKU IDs and/or Customer IDs and returns predictions including propensity scores and cluster explanations.",
+        "operationId": "predict",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sku_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["SKU0095"]
+                  },
+                  "customer_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["C0041", "C0158"]
+                  },
+                  "full_data": {
+                    "type": "boolean",
+                    "default": false,
+                    "example": false
+                  }
+                }
+              },
+              "example": {
+                "sku_ids": ["SKU0095"],
+                "customer_ids": ["C0041", "C0158"],
+                "full_data": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful prediction response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "customer_id": {
+                        "type": "string",
+                        "example": "C0041"
+                      },
+                      "sku_id": {
+                        "type": "string",
+                        "example": "SKU0095"
+                      },
+                      "propensity_score": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0.82
+                      },
+                      "cust_cluster": {
+                        "type": "integer",
+                        "example": 3
+                      },
+                      "cust_cluster_explanation": {
+                        "type": "string",
+                        "example": "High-value repeat customer"
+                      },
+                      "sku_cluster": {
+                        "type": "integer",
+                        "example": 2
+                      },
+                      "sku_cluster_explanation": {
+                        "type": "string",
+                        "example": "Premium electronics category"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}

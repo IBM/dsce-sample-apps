@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Reorder Agent Forecast API",
+    "version": "2.0",
+    "description": "API for generating SKU-level demand forecasts across stores."
+  },
+  "servers": [
+    {
+      "url": "https://application-55.224sx6uojg4a.us-south.codeengine.appdomain.cloud/"
+    }
+  ],
+  "paths": {
+    "/forecast": {
+      "post": {
+        "summary": "Get demand forecast",
+        "operationId": "getForecast",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "start_date": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "2025/08/10",
+                    "description": "Start date for forecasting in YYYY/MM/DD format"
+                  },
+                  "sku_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": ["SKU0092"],
+                    "description": "List of SKU IDs to forecast"
+                  },
+                  "store_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [],
+                    "description": "List of Store IDs to filter by (optional)"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "example": 7,
+                    "description": "Number of days to forecast"
+                  }
+                },
+                "required": ["start_date", "n"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Forecast generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "forecast": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sku_id": { "type": "string", "example": "SKU0092" },
+                          "store_id": { "type": "string", "example": "STORE001" },
+                          "date": { "type": "string", "format": "date", "example": "2025/08/11" },
+                          "forecast_quantity": { "type": "integer", "example": 120 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
