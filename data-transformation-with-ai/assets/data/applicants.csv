@@ -1,0 +1,1001 @@
+applicant_id,name,age,gender,marital_status,dependents,education_level,employment_status,annual_income,branch_id
+A0001,Michelle Thomas DVM,49,M,Divorced,0,High School,Unemployed,185021,B001
+A0002,Janet Fitzgerald,35,f,Divorced,2,Bachelors,Unemployed,155575,B005
+A0003,Latoya Hall,55,male,Married,4,PhD,Salaried,140266,B031
+A0004,Amy Richard,27,Female,Divorced,1,Masters,Retired,153322,B004
+A0005,Miguel Mooney,45,Other,Single,3,Bachelors,Retired,154315,B015
+A0006,Darrell Cisneros,47,Other,Single,3,PhD,Salaried,157415,B019
+A0007,Rebecca Weber,54,Male,Widowed,4,Bachelors,Salaried,177858,B024
+A0008,Kristin Suarez,61,Female,Single,4,PhD,Self-Employed,120794,B005
+A0009,Johnathan Robertson,60,Other,Divorced,4,Masters,Self-Employed,163137,B026
+A0010,Sabrina Cannon,21,Male,Widowed,4,High School,Salaried,180194,B031
+A0011,Jasmine Mendoza,43,Female,Divorced,0,Bachelors,Unemployed,39642,B048
+A0012,Tracy Phillips,24,Male,Widowed,3,Bachelors,Unemployed,122299,B046
+A0013,Terry Sullivan,53,Male,Widowed,4,High School,Salaried,95728,B046
+A0014,Rachel Coleman,65,Female,Widowed,4,PhD,Unemployed,50927,B036
+A0015,April Holt,38,Female,Married,0,PhD,Retired,86750,B010
+A0016,Linda Peters,65,Female,Married,2,PhD,Unemployed,190927,B008
+A0017,Jason Barton,48,Male,Married,4,PhD,Retired,199716,B046
+A0018,Kim Patel,59,Male,Divorced,3,Bachelors,Retired,111552,B012
+A0019,Jay Young,62,Other,Single,2,Masters,Retired,83150,B037
+A0020,Anthony Nelson,43,Other,Divorced,4,Masters,Salaried,61765,B005
+A0021,Linda Snow,59,Other,Married,4,PhD,Unemployed,187342,B035
+A0022,Peter Hutchinson,54,Male,Single,3,Bachelors,Salaried,117642,B001
+A0023,Kayla Sanchez,54,Male,Divorced,4,PhD,Self-Employed,89349,B013
+A0024,Beth Wolf,65,Other,Single,4,High School,Self-Employed,144917,B026
+A0025,Stephanie Bruce,29,Male,Widowed,0,PhD,Retired,22730,B044
+A0026,Anthony Wilcox,65,Female,Divorced,2,High School,Self-Employed,127790,B050
+A0027,Kevin Anderson,52,Female,Divorced,0,High School,Unemployed,158192,B002
+A0028,Mr. Charles Mclaughlin,27,Other,Married,3,Masters,Salaried,66673,B027
+A0029,Hunter Simmons,63,Female,Divorced,4,High School,Retired,91959,B035
+A0030,Christopher Hart,45,Other,Widowed,2,Bachelors,Retired,176627,B043
+A0031,Robert Love,23,Female,Widowed,0,Bachelors,Salaried,156304,B024
+A0032,Angela Murphy,32,Female,Widowed,4,PhD,Self-Employed,35241,B028
+A0033,Natalie Pierce,52,Male,Divorced,4,PhD,Retired,21750,B035
+A0034,Dawn Knapp,39,Male,Single,4,High School,Retired,58196,B007
+A0035,Monique Barnes,59,Other,Single,3,Bachelors,Salaried,182404,B035
+A0036,Christopher Hodges,55,Male,Single,4,High School,Unemployed,166953,B028
+A0037,Adam Miller,23,Male,Married,0,Masters,Unemployed,159528,B047
+A0038,Brandon Greene,31,Male,Single,2,Masters,Unemployed,116455,B031
+A0039,Luis Barber,46,Other,Married,2,Masters,Retired,165976,B030
+A0040,Rachel Thompson,53,Other,Married,0,Masters,Retired,143100,B042
+A0041,William Jenkins,63,Male,Widowed,1,High School,Self-Employed,108263,B005
+A0042,Sarah Gallegos,32,Female,Married,2,Bachelors,Retired,156961,B017
+A0043,Mary Johns,33,Other,Divorced,1,Bachelors,Retired,157196,B043
+A0044,Andrea Warren,48,Male,Married,2,Masters,Salaried,40775,B048
+A0045,Linda Fuller,53,Female,Widowed,3,Bachelors,Unemployed,172956,B033
+A0046,Zachary Anderson,54,Female,Single,2,PhD,Unemployed,125092,B014
+A0047,Eric Arias,65,Male,Divorced,0,Masters,Salaried,59581,B027
+A0048,Patricia Marshall,40,Other,Widowed,2,PhD,Self-Employed,180252,B014
+A0049,Robin Williams,24,Other,Widowed,3,PhD,Salaried,95855,B028
+A0050,Jasmine Bradshaw,43,Female,Single,0,Masters,Self-Employed,183073,B046
+A0051,James Compton,22,Other,Married,1,Masters,Salaried,42157,B021
+A0052,Christine Calderon,35,Male,Widowed,4,Masters,Salaried,49729,B006
+A0053,Shawn Crawford,53,Other,Widowed,2,Masters,Salaried,83950,B018
+A0054,Rebekah Harrison,34,Male,Widowed,4,High School,Self-Employed,73814,B035
+A0055,Kimberly Lee,63,Male,Widowed,3,Bachelors,Unemployed,155326,B032
+A0056,Heather Hernandez,44,Other,Single,3,Masters,Unemployed,110494,B049
+A0057,James Atkinson,62,Male,Divorced,0,PhD,Salaried,154486,B005
+A0058,Robert Lopez,46,Female,Single,0,PhD,Self-Employed,120077,B044
+A0059,Ashley Rogers,23,Female,Single,0,Masters,Unemployed,99136,B049
+A0060,Erin Romero,63,Other,Widowed,1,PhD,Unemployed,173104,B002
+A0061,Jamie Brown,47,Other,Single,2,PhD,Self-Employed,122710,B010
+A0062,Cody Bell,37,Female,Widowed,3,Bachelors,Retired,20460,B044
+A0063,Gary Williams,40,Male,Widowed,2,PhD,Unemployed,37559,B029
+A0064,Luis Rodriguez,26,Female,Married,1,High School,Salaried,124783,B033
+A0065,Trevor Blevins,65,Other,Widowed,0,Bachelors,Self-Employed,100171,B018
+A0066,Michael Thomas,30,Male,Married,3,PhD,Retired,151500,B008
+A0067,Jon Torres,27,Other,Single,0,PhD,Salaried,36114,B017
+A0068,Ashley Morris,25,Other,Single,1,PhD,Self-Employed,38015,B031
+A0069,Jonathan Rodriguez,37,Male,Married,4,High School,Retired,127219,B012
+A0070,Tammy Peters,28,Female,Widowed,1,Masters,Unemployed,182658,B003
+A0071,Kurt Martinez,41,Other,Married,1,Masters,Self-Employed,171286,B033
+A0072,Bruce Garcia,58,Female,Single,0,PhD,Unemployed,166773,B011
+A0073,Matthew Ramos,51,Female,Divorced,1,Masters,Retired,160519,B032
+A0074,Anthony Gray,25,Other,Single,4,Bachelors,Salaried,179276,B034
+A0075,Ashley Mercer,38,Other,Widowed,1,Bachelors,Retired,131739,B025
+A0076,Benjamin Gregory,42,Male,Divorced,4,High School,Retired,26632,B049
+A0077,Jasmine Parker,23,Other,Divorced,4,High School,Retired,47987,B039
+A0078,Alicia Rivera,48,Other,Married,4,High School,Unemployed,187297,B006
+A0079,Pamela Griffin,45,Male,Divorced,1,High School,Salaried,67442,B029
+A0080,Joseph Scott,36,Male,Single,4,High School,Unemployed,129851,B017
+A0081,William Thomas,57,Other,Divorced,4,PhD,Self-Employed,53369,B013
+A0082,Joel Erickson,60,Female,Widowed,1,High School,Self-Employed,39115,B006
+A0083,Renee Perez,23,Other,Married,4,High School,Self-Employed,103096,B002
+A0084,Meagan Oconnor,64,Female,Divorced,3,High School,Salaried,132125,B021
+A0085,Robin Nelson,44,Male,Widowed,3,Masters,Unemployed,118442,B050
+A0086,Deanna Santos,61,Female,Single,1,Bachelors,Retired,103159,B011
+A0087,Dr. Robert Bullock,62,Female,Married,0,Bachelors,Self-Employed,30228,B024
+A0088,Rick Hill,50,Female,Divorced,3,PhD,Salaried,86782,B005
+A0089,Joan Smith,22,Other,Widowed,4,Masters,Self-Employed,113170,B045
+A0090,Jill Spencer,26,Male,Widowed,3,High School,Salaried,89954,B030
+A0091,Timothy Edwards,26,Male,Married,2,High School,Salaried,45834,B020
+A0092,Janice Bruce,65,Other,Divorced,4,PhD,Unemployed,70275,B008
+A0093,Edward Tucker,33,Female,Married,0,Bachelors,Retired,51647,B037
+A0094,Kimberly Aguilar,22,Female,Widowed,2,Masters,Salaried,159026,B046
+A0095,Heidi Williams,28,Female,Divorced,4,PhD,Retired,148292,B029
+A0096,Lindsey Miller,48,Other,Widowed,3,High School,Self-Employed,169602,B035
+A0097,Brian Morrow,33,Male,Widowed,1,Masters,Self-Employed,121311,B005
+A0098,Michael Peterson,42,Female,Single,4,Bachelors,Unemployed,115060,B030
+A0099,Joyce James,43,Other,Married,2,High School,Self-Employed,162402,B014
+A0100,Kelly Brown,29,Female,Divorced,2,PhD,Unemployed,41450,B009
+A0101,Allison Smith,59,Female,Widowed,3,High School,Self-Employed,143562,B024
+A0102,Timothy Davis,58,Male,Single,4,Masters,Self-Employed,56673,B003
+A0103,Andrea Clayton,32,Male,Married,1,Masters,Unemployed,23222,B016
+A0104,Jonathan Hall,25,Female,Single,4,High School,Unemployed,100166,B022
+A0105,Lisa Saunders,24,Male,Single,1,High School,Unemployed,94163,B044
+A0106,Nicole Baker,52,Male,Widowed,3,Bachelors,Salaried,128611,B037
+A0107,Marvin Martinez,28,Other,Divorced,1,Masters,Unemployed,167368,B025
+A0108,Dorothy Hardy,56,Male,Married,2,Masters,Salaried,132208,B028
+A0109,Randy Schmidt,50,Female,Single,4,Bachelors,Unemployed,31025,B017
+A0110,Chad Jacobs,57,Female,Married,1,Bachelors,Unemployed,172623,B007
+A0111,Guy Small,48,Male,Widowed,1,PhD,Unemployed,121795,B030
+A0112,Marissa Johnson,59,Female,Widowed,0,Masters,Retired,26549,B010
+A0113,Keith Johnson,41,Female,Widowed,2,Masters,Self-Employed,55462,B044
+A0114,Keith Carrillo,64,Other,Single,3,High School,Self-Employed,42954,B007
+A0115,Troy Munoz,25,Other,Married,2,PhD,Salaried,70927,B003
+A0116,Crystal Barnes,48,Other,Widowed,3,High School,Retired,77438,B043
+A0117,Barbara Long,34,Other,Married,2,PhD,Salaried,21966,B030
+A0118,Jeffrey Craig,22,Other,Married,1,Bachelors,Salaried,46127,B005
+A0119,John Mcdaniel,41,Other,Widowed,2,High School,Retired,151452,B013
+A0120,Karen Jones,58,Other,Divorced,2,High School,Self-Employed,156955,B037
+A0121,Melinda Lucas,36,Female,Widowed,2,Masters,Salaried,31856,B003
+A0122,Jose Davenport,41,Male,Widowed,1,High School,Salaried,78214,B040
+A0123,Hannah Anderson,59,Other,Single,2,High School,Retired,103836,B032
+A0124,Lisa Moore,57,Other,Divorced,0,Masters,Salaried,130449,B011
+A0125,Scott Wilson,34,Male,Divorced,4,High School,Salaried,138029,B005
+A0126,Dr. John Williams MD,60,Male,Single,3,Bachelors,Salaried,123328,B044
+A0127,Pamela Chen,32,Other,Widowed,1,Masters,Retired,137071,B040
+A0128,George Chapman,49,Other,Single,0,PhD,Retired,112274,B012
+A0129,Michelle King,52,Male,Divorced,3,PhD,Retired,118157,B040
+A0130,Joy Day,22,Other,Divorced,3,High School,Unemployed,181467,B034
+A0131,Christian Wilson,61,Male,Widowed,1,Bachelors,Unemployed,59433,B012
+A0132,Kristen Salas,21,Other,Widowed,2,High School,Unemployed,95863,B048
+A0133,Thomas Sanchez,38,Female,Married,0,High School,Salaried,93936,B013
+A0134,Sharon Torres,60,Female,Widowed,1,Bachelors,Salaried,94009,B043
+A0135,Brian Todd,26,Other,Single,1,High School,Self-Employed,149347,B018
+A0136,Paul Chandler,23,Male,Single,0,High School,Salaried,166019,B030
+A0137,Julia Smith,62,Female,Widowed,3,High School,Unemployed,198121,B044
+A0138,Ryan Smith,26,Female,Widowed,3,Masters,Unemployed,45468,B022
+A0139,Wendy Hamilton,37,Female,Married,3,Bachelors,Self-Employed,195598,B022
+A0140,Dawn Martinez,65,Female,Single,2,Masters,Retired,100589,B012
+A0141,Deborah Hutchinson,28,Other,Widowed,3,Bachelors,Self-Employed,50261,B004
+A0142,Robert Thomas,40,Female,Married,4,Bachelors,Salaried,136584,B036
+A0143,Adam Wright,30,Male,Widowed,0,PhD,Unemployed,144984,B004
+A0144,Amanda Robertson,33,Other,Single,1,PhD,Unemployed,73321,B020
+A0145,Sarah Keith,39,Male,Divorced,0,High School,Self-Employed,139579,B019
+A0146,Stacy Thompson,60,Female,Single,4,Bachelors,Unemployed,50678,B001
+A0147,Christian Ochoa,42,Female,Married,3,High School,Unemployed,42016,B042
+A0148,Jennifer Smith,49,Male,Widowed,2,Masters,Salaried,93426,B011
+A0149,Michele Andrews,25,Male,Divorced,3,Bachelors,Salaried,186729,B025
+A0150,Michael Daniels,39,Female,Married,0,Bachelors,Self-Employed,60385,B039
+A0151,Crystal Arnold,37,Male,Widowed,2,PhD,Retired,198698,B038
+A0152,Bobby Stafford,65,Female,Widowed,3,PhD,Unemployed,120326,B019
+A0153,Lisa Davis,51,Female,Married,0,Masters,Unemployed,40684,B045
+A0154,Deanna Hansen,33,Male,Married,2,Bachelors,Self-Employed,53608,B045
+A0155,Kimberly Nelson,52,Other,Single,1,Bachelors,Salaried,156303,B005
+A0156,Christopher Castillo,50,Female,Widowed,1,Masters,Retired,135723,B038
+A0157,William Underwood,29,Male,Single,2,PhD,Self-Employed,113766,B002
+A0158,Kevin Miller,49,Female,Single,1,Masters,Salaried,137700,B044
+A0159,Michael Hurley,23,Female,Married,2,PhD,Salaried,47994,B001
+A0160,Lindsay Anderson,26,Male,Widowed,0,PhD,Retired,123093,B020
+A0161,James Santiago,60,Other,Single,3,Bachelors,Self-Employed,64564,B050
+A0162,Ruth Johnson,61,Male,Single,0,High School,Self-Employed,139348,B044
+A0163,Chloe Miller,57,Other,Widowed,3,High School,Self-Employed,87188,B039
+A0164,Michael Dean,63,Male,Single,3,PhD,Retired,166244,B044
+A0165,Joshua Blankenship,28,Male,Married,4,Bachelors,Salaried,180002,B013
+A0166,Katherine Hodges,45,Other,Divorced,3,High School,Unemployed,106564,B031
+A0167,Christopher Ortiz,42,Male,Single,4,High School,Unemployed,41207,B002
+A0168,Tammy Marquez,58,Other,Married,0,Masters,Salaried,71116,B014
+A0169,Laura Hughes,33,Female,Divorced,4,Masters,Retired,160306,B019
+A0170,Matthew Parker,48,Female,Widowed,3,Masters,Salaried,38059,B036
+A0171,Douglas White,47,Other,Married,2,PhD,Retired,190042,B017
+A0172,Robert Davis,43,Male,Widowed,2,PhD,Salaried,146161,B041
+A0173,Carolyn Hancock,44,Male,Divorced,4,High School,Self-Employed,120610,B013
+A0174,Joan Ferrell,31,Male,Single,3,Bachelors,Retired,30950,B017
+A0175,Katherine Bell,31,Female,Divorced,3,Bachelors,Unemployed,149034,B008
+A0176,Sheri Poole,44,Other,Divorced,2,Masters,Self-Employed,132163,B015
+A0177,James Watts,30,Male,Single,3,Bachelors,Salaried,180949,B030
+A0178,Lauren Jackson,64,Other,Married,0,PhD,Retired,81893,B047
+A0179,Catherine Cole,27,Other,Single,1,Bachelors,Unemployed,39325,B039
+A0180,Michelle Webb,50,Other,Married,0,Bachelors,Unemployed,106286,B011
+A0181,Rachel Rice,33,Female,Married,4,High School,Salaried,74999,B044
+A0182,Julia Mason,44,Other,Single,2,Masters,Self-Employed,113378,B038
+A0183,Michael Clark,25,Female,Single,1,Bachelors,Self-Employed,71976,B011
+A0184,Mrs. Paula Wade MD,46,Male,Widowed,1,Bachelors,Unemployed,134342,B033
+A0185,Cindy Coleman,54,Female,Widowed,2,Masters,Salaried,125176,B001
+A0186,Jennifer Newman,51,Male,Married,2,Bachelors,Retired,63471,B050
+A0187,Tammy Rogers,56,Male,Widowed,0,High School,Retired,23774,B025
+A0188,Tracy Valenzuela,34,Other,Single,3,Masters,Salaried,91914,B004
+A0189,Casey Cooper,32,Other,Married,4,PhD,Retired,38183,B044
+A0190,Kevin Schroeder,39,Male,Single,2,Masters,Salaried,162036,B022
+A0191,Deborah Garcia,59,Female,Widowed,4,PhD,Unemployed,29313,B020
+A0192,Kelly Wilkerson,25,Male,Widowed,3,PhD,Self-Employed,98620,B019
+A0193,Laura Chan,32,Female,Divorced,0,Bachelors,Self-Employed,123668,B027
+A0194,Jesse Benitez,65,Other,Married,4,PhD,Retired,108742,B033
+A0195,Laura Rios,55,Female,Married,4,Bachelors,Self-Employed,61106,B035
+A0196,Joshua Walker,64,Other,Married,0,Masters,Salaried,46309,B034
+A0197,Kathy Phillips,39,Other,Single,4,PhD,Retired,195949,B037
+A0198,Adam Medina,63,Male,Single,2,Masters,Self-Employed,108504,B044
+A0199,David Rosales,50,Other,Widowed,4,High School,Salaried,143948,B046
+A0200,Deborah Watson,22,Other,Divorced,2,Bachelors,Salaried,42130,B050
+A0201,Christie Warren,57,Male,Widowed,1,Masters,Unemployed,53459,B029
+A0202,David Cline,29,Other,Single,3,Bachelors,Self-Employed,196410,B034
+A0203,Jacqueline Wright,47,Male,Single,0,Bachelors,Unemployed,34986,B013
+A0204,Robin Evans,64,Other,Widowed,1,Masters,Self-Employed,171875,B001
+A0205,Michael Diaz,34,Male,Married,4,Bachelors,Retired,150565,B022
+A0206,Danielle Bean,25,Male,Widowed,3,High School,Unemployed,151111,B037
+A0207,Natalie Medina,27,Female,Married,1,High School,Self-Employed,186780,B003
+A0208,Robert Hoover,55,Male,Widowed,2,Masters,Self-Employed,166559,B026
+A0209,Jennifer Figueroa,46,Other,Widowed,3,Bachelors,Salaried,117905,B044
+A0210,Shawn Mckee,41,Male,Single,1,Bachelors,Retired,162484,B009
+A0211,Thomas Hansen,41,Female,Married,4,Masters,Salaried,31588,B034
+A0212,Jane Chang,63,Female,Married,0,Masters,Self-Employed,108356,B029
+A0213,Maria Beck,60,Male,Divorced,3,PhD,Salaried,87934,B021
+A0214,Kelly Jensen,35,Male,Married,2,Bachelors,Retired,92540,B046
+A0215,Nathan Owen,30,Male,Divorced,0,Bachelors,Salaried,162200,B008
+A0216,Jeffrey Chambers,54,Female,Married,3,PhD,Retired,79411,B024
+A0217,Jeffrey Miller,23,Male,Widowed,1,Bachelors,Retired,79562,B046
+A0218,Jennifer Caldwell,55,Female,Single,2,Bachelors,Retired,61526,B001
+A0219,Kimberly Davis,36,Other,Married,2,PhD,Unemployed,92515,B025
+A0220,Heather Ortiz,40,Other,Widowed,2,PhD,Unemployed,186646,B044
+A0221,Thomas Swanson,23,Other,Married,0,Masters,Retired,87608,B004
+A0222,Angela Arnold,56,Male,Married,3,PhD,Self-Employed,50662,B007
+A0223,Jennifer Smith,58,Female,Single,3,PhD,Salaried,172158,B009
+A0224,Austin Turner,21,Male,Single,3,PhD,Retired,47939,B030
+A0225,Scott Floyd,40,Female,Divorced,2,High School,Self-Employed,185105,B004
+A0226,Dr. Sierra Lopez,25,Other,Married,2,High School,Self-Employed,33035,B046
+A0227,Andrew Smith,56,Female,Single,3,High School,Retired,20305,B029
+A0228,Terrence Adams,30,Female,Single,3,Bachelors,Retired,149182,B050
+A0229,John Martin,51,Other,Widowed,2,Bachelors,Salaried,143951,B028
+A0230,Matthew Rowe,48,Other,Widowed,2,PhD,Self-Employed,56205,B049
+A0231,Ashley Wiley,28,Male,Divorced,3,PhD,Retired,196720,B019
+A0232,Vincent Cooper,26,Other,Widowed,2,High School,Salaried,123965,B036
+A0233,Elizabeth Waller,24,Female,Single,3,Bachelors,Salaried,165546,B010
+A0234,Heather Torres,50,Other,Widowed,2,PhD,Salaried,24243,B004
+A0235,Morgan Stewart,23,Female,Single,4,Bachelors,Unemployed,134071,B005
+A0236,Jay Chandler,65,Male,Widowed,3,PhD,Retired,27665,B011
+A0237,Gregory Hayes,38,Female,Single,0,Bachelors,Retired,35053,B024
+A0238,Jeremy Baker,33,Female,Widowed,2,Masters,Unemployed,44210,B028
+A0239,Eric Stevens,27,Male,Divorced,0,Masters,Salaried,40036,B011
+A0240,Sara Stein,36,Male,Widowed,4,Bachelors,Salaried,162147,B043
+A0241,Eric Dunn,60,Male,Single,2,PhD,Salaried,44115,B007
+A0242,James Bishop,55,Female,Divorced,0,PhD,Retired,165994,B039
+A0243,Misty Hunt,48,Other,Married,3,Masters,Self-Employed,82477,B042
+A0244,Claudia Wilson,35,Male,Divorced,1,Masters,Retired,21113,B017
+A0245,Clinton Fisher,53,Female,Married,2,High School,Retired,161717,B023
+A0246,Ronnie Brown,37,Other,Married,2,Masters,Self-Employed,25859,B047
+A0247,Shannon Frey,65,Other,Single,4,PhD,Self-Employed,198033,B038
+A0248,Cody Buckley,39,Female,Single,3,Masters,Self-Employed,146462,B041
+A0249,Katie Hughes,45,Other,Widowed,2,Bachelors,Salaried,144909,B010
+A0250,Anthony Tucker,21,Female,Single,2,Bachelors,Self-Employed,115909,B036
+A0251,Jamie Pearson,54,Male,Divorced,3,Masters,Unemployed,161324,B017
+A0252,Doris Kim,57,Other,Divorced,1,High School,Salaried,124011,B025
+A0253,Maria Schmidt,48,Male,Married,2,PhD,Unemployed,158697,B003
+A0254,Mrs. Angela Barron,55,Male,Single,0,High School,Unemployed,168676,B004
+A0255,Shelby Gay,26,Male,Divorced,3,Masters,Self-Employed,46225,B038
+A0256,Kathryn Cox,34,Male,Married,3,High School,Salaried,80634,B026
+A0257,Gabrielle Thompson,52,Female,Single,2,Masters,Retired,30077,B005
+A0258,Ms. Victoria Jackson,43,Male,Divorced,1,Bachelors,Salaried,55073,B041
+A0259,Robert Jackson,40,Female,Widowed,3,Bachelors,Retired,89061,B025
+A0260,Victor Zimmerman,47,Male,Widowed,0,High School,Self-Employed,136656,B027
+A0261,Brenda Cabrera,28,Other,Single,1,Masters,Salaried,148343,B044
+A0262,Matthew Holland,32,Female,Widowed,4,PhD,Self-Employed,140555,B012
+A0263,Clarence Davis,45,Female,Widowed,4,PhD,Retired,80618,B037
+A0264,Ashley Smith,56,Female,Single,0,Masters,Retired,193581,B021
+A0265,Alexandria Roberts,35,Male,Single,4,High School,Salaried,170790,B012
+A0266,Nicholas Braun,35,Male,Single,4,Masters,Retired,78882,B014
+A0267,Jessica Yates,59,Female,Widowed,0,PhD,Retired,106553,B004
+A0268,Dominique Haynes,55,Female,Divorced,4,Masters,Salaried,40709,B014
+A0269,Mark Glover,33,Other,Widowed,4,PhD,Self-Employed,109084,B014
+A0270,Ashley Meadows,47,Other,Single,3,Bachelors,Retired,160229,B024
+A0271,Christopher Fernandez,43,Male,Divorced,0,High School,Unemployed,112890,B035
+A0272,Susan Stephens,44,Male,Widowed,4,High School,Self-Employed,72800,B033
+A0273,Michael Bates,21,Female,Single,4,High School,Retired,149649,B040
+A0274,Maria Hart,53,Female,Single,2,Masters,Salaried,40384,B015
+A0275,Dr. Katherine Rowe,25,Female,Divorced,1,Masters,Self-Employed,112657,B029
+A0276,Laura Parker,31,Other,Single,1,PhD,Salaried,189563,B019
+A0277,Donald Alvarez,62,Other,Divorced,1,Bachelors,Unemployed,107761,B010
+A0278,Thomas Salinas,50,Male,Single,0,Bachelors,Unemployed,113000,B005
+A0279,Lacey Butler,37,Female,Married,4,High School,Salaried,29042,B014
+A0280,Lindsay Kline,60,Female,Divorced,4,PhD,Retired,97426,B017
+A0281,Sheila Wheeler,32,Other,Widowed,0,Masters,Self-Employed,24350,B003
+A0282,Walter Walker,57,Female,Widowed,2,High School,Unemployed,125665,B014
+A0283,Alexis Lara,23,Female,Widowed,1,PhD,Unemployed,134460,B035
+A0284,Daniel Howe,55,Female,Divorced,1,Bachelors,Unemployed,70209,B022
+A0285,Jeremy Warren,22,Female,Widowed,1,PhD,Unemployed,134746,B011
+A0286,Michele Werner,60,Female,Divorced,3,PhD,Salaried,122313,B034
+A0287,Holly Stewart,24,Male,Married,0,Masters,Retired,73846,B014
+A0288,Scott Fuller,50,Female,Divorced,3,High School,Unemployed,185520,B017
+A0289,Terrance Griffin,64,Male,Widowed,0,PhD,Self-Employed,37204,B037
+A0290,Catherine Villegas,38,Female,Widowed,3,High School,Unemployed,149189,B035
+A0291,Garrett Coleman,53,Male,Widowed,2,Bachelors,Salaried,127001,B026
+A0292,Kari Graham,21,Female,Divorced,1,Bachelors,Self-Employed,103840,B020
+A0293,Lindsay Villa,55,Female,Single,2,Masters,Unemployed,70947,B005
+A0294,Sherry Mcintosh,59,Male,Married,0,Masters,Salaried,122156,B002
+A0295,Karen Woodard,29,Female,Married,2,Masters,Unemployed,48627,B024
+A0296,Brandon Brown,44,Female,Widowed,0,Masters,Retired,90429,B030
+A0297,Rachel Miller,22,Female,Married,3,High School,Unemployed,27952,B047
+A0298,Darryl Perry,65,Other,Divorced,0,Bachelors,Salaried,102204,B024
+A0299,Elizabeth Jones,40,Other,Married,1,PhD,Retired,46400,B018
+A0300,Anthony Sanchez,22,Male,Divorced,1,PhD,Unemployed,151999,B029
+A0301,Tammy Wolf,32,Male,Widowed,2,High School,Retired,46205,B025
+A0302,Nichole Ortega,37,Female,Divorced,0,PhD,Salaried,21412,B027
+A0303,Cynthia Rodriguez,42,Female,Single,0,Masters,Salaried,145193,B019
+A0304,Sherry Anderson,30,Other,Divorced,4,High School,Self-Employed,170419,B019
+A0305,Melanie Fields,62,Other,Single,0,Bachelors,Salaried,49691,B036
+A0306,William Potter,57,Female,Widowed,4,Masters,Salaried,152463,B014
+A0307,Crystal Scott,32,Male,Divorced,0,PhD,Retired,41845,B035
+A0308,Tiffany Wells,31,Female,Married,3,High School,Unemployed,98444,B019
+A0309,Laura Carr,61,Male,Single,3,High School,Self-Employed,94644,B005
+A0310,Kyle Williams,32,Female,Single,1,High School,Unemployed,42201,B001
+A0311,Danielle Lewis,51,Male,Widowed,0,Bachelors,Salaried,56435,B034
+A0312,Diana Drake,44,Male,Single,1,PhD,Salaried,27946,B028
+A0313,Richard Perez,42,Male,Divorced,4,High School,Unemployed,68383,B007
+A0314,Heather Mckinney,35,Other,Married,0,Masters,Salaried,141856,B018
+A0315,Jenna Coleman,52,Other,Married,0,PhD,Salaried,153703,B027
+A0316,Hector Morris,27,Female,Divorced,1,Bachelors,Retired,129188,B009
+A0317,Deborah Gonzalez,40,Male,Single,2,High School,Salaried,178833,B021
+A0318,Karen Turner,26,Other,Married,4,PhD,Salaried,194983,B013
+A0319,Morgan Hendrix,21,Male,Married,3,Bachelors,Self-Employed,28123,B036
+A0320,Maria West,21,Male,Widowed,0,Bachelors,Self-Employed,124355,B003
+A0321,Mark Herring,55,Male,Widowed,4,PhD,Retired,131978,B005
+A0322,Emily Munoz,40,Male,Single,1,PhD,Salaried,181852,B014
+A0323,Christopher Le,40,Other,Married,3,Masters,Retired,165534,B025
+A0324,Lori Thomas,49,Other,Widowed,4,Bachelors,Self-Employed,50978,B033
+A0325,Dennis Grimes,26,Male,Widowed,1,High School,Salaried,157090,B043
+A0326,Tracy Kelley,24,Female,Divorced,0,PhD,Salaried,20308,B007
+A0327,Elizabeth Anderson,55,Female,Divorced,4,Masters,Self-Employed,147724,B015
+A0328,Anna Case,62,Other,Single,4,PhD,Salaried,173495,B017
+A0329,Matthew Jensen,41,Other,Single,2,Bachelors,Salaried,191838,B027
+A0330,Christopher Riley,23,Male,Widowed,0,Masters,Self-Employed,50453,B020
+A0331,Thomas Mclaughlin,39,Male,Widowed,3,High School,Salaried,185388,B044
+A0332,Kyle Hancock DVM,28,Other,Single,1,PhD,Unemployed,190699,B028
+A0333,Jordan Brown,58,Male,Divorced,3,Masters,Retired,125273,B034
+A0334,Robert Coleman,61,Male,Divorced,1,Bachelors,Unemployed,145637,B022
+A0335,Taylor Martin,44,Female,Single,3,Masters,Salaried,122553,B031
+A0336,Kristina Garza,57,Female,Divorced,4,High School,Retired,61501,B048
+A0337,James James,59,Male,Widowed,0,Bachelors,Unemployed,88289,B041
+A0338,Paula Melendez,61,Male,Divorced,0,PhD,Unemployed,85012,B044
+A0339,Ann Garcia,34,Other,Divorced,0,High School,Retired,168861,B048
+A0340,Ms. Brittany Hernandez MD,60,Female,Widowed,1,Bachelors,Unemployed,177726,B042
+A0341,Jennifer Brown,55,Male,Widowed,3,High School,Self-Employed,60922,B040
+A0342,Dawn Harris,44,Female,Divorced,3,PhD,Unemployed,114611,B007
+A0343,Christopher Paul,35,Male,Widowed,0,Masters,Salaried,35780,B028
+A0344,Ronald Wiggins,57,Male,Married,1,PhD,Salaried,150522,B020
+A0345,Dennis Mathews,45,Other,Widowed,3,Masters,Unemployed,23023,B015
+A0346,Miguel Perry,56,Other,Widowed,3,Bachelors,Unemployed,34186,B018
+A0347,Scott Barrett,61,Female,Divorced,0,High School,Retired,133517,B032
+A0348,Karen Jacobs,28,Male,Widowed,1,Masters,Retired,167437,B020
+A0349,Daniel Anderson,32,Other,Married,0,Masters,Self-Employed,71137,B006
+A0350,Thomas Barron,52,Female,Divorced,2,Masters,Self-Employed,197643,B041
+A0351,Sarah Stone,64,Other,Married,3,High School,Retired,95875,B034
+A0352,Lucas Frank,22,Female,Widowed,2,PhD,Self-Employed,188937,B015
+A0353,Lauren Barton,33,Female,Single,3,High School,Retired,199451,B033
+A0354,Justin Freeman,59,Male,Widowed,2,Masters,Salaried,141631,B045
+A0355,Lisa Marquez,31,Female,Divorced,2,PhD,Unemployed,173193,B012
+A0356,Monica Parsons,39,Other,Divorced,0,PhD,Salaried,138494,B001
+A0357,Alexander Conrad,60,Other,Widowed,0,PhD,Salaried,171699,B022
+A0358,Tyler Coleman,48,Female,Single,0,Masters,Retired,73549,B036
+A0359,Scott Jackson,36,Other,Single,1,PhD,Retired,49984,B039
+A0360,Mark Kim,24,Male,Single,1,High School,Retired,147609,B026
+A0361,David Barr,36,Female,Married,3,High School,Retired,51944,B042
+A0362,Bryan Hughes,23,Female,Single,1,Bachelors,Self-Employed,134907,B042
+A0363,Michael Holmes,63,Other,Single,1,PhD,Self-Employed,27869,B024
+A0364,Steven York,55,Male,Divorced,0,Masters,Unemployed,63733,B002
+A0365,Peter Khan,49,Other,Single,0,High School,Salaried,83729,B004
+A0366,Kenneth Howard,39,Male,Widowed,1,Masters,Self-Employed,103366,B034
+A0367,Lindsay Ward,22,Other,Single,3,Bachelors,Retired,34718,B010
+A0368,Lori Perez,40,Male,Married,0,High School,Salaried,99269,B011
+A0369,Rickey Johnson Jr.,40,Female,Divorced,0,High School,Self-Employed,28709,B001
+A0370,Allison Stanley,48,Female,Divorced,1,PhD,Unemployed,124729,B033
+A0371,Vincent Oliver,61,Other,Divorced,0,Masters,Retired,68758,B011
+A0372,Monica Conner,21,Other,Married,2,PhD,Salaried,141292,B020
+A0373,David Brown,30,Male,Widowed,0,Masters,Self-Employed,174101,B003
+A0374,Caitlyn Walker,29,Male,Divorced,4,PhD,Unemployed,118837,B049
+A0375,Kevin West,44,Other,Divorced,2,Bachelors,Unemployed,41538,B031
+A0376,Gabriela Thomas,22,Male,Divorced,0,Masters,Unemployed,109710,B049
+A0377,Peter Howell,34,Female,Widowed,3,PhD,Retired,149247,B029
+A0378,Tammy Meadows,41,Female,Married,2,Bachelors,Retired,184297,B025
+A0379,Anita Jones,53,Other,Divorced,2,Bachelors,Salaried,87445,B028
+A0380,Jamie Dunn,38,Male,Married,4,Bachelors,Salaried,64069,B032
+A0381,Diana Smith,25,Other,Widowed,3,High School,Retired,145114,B035
+A0382,Adam Miller,52,Male,Married,4,High School,Retired,163949,B049
+A0383,Janice Davis,44,Male,Divorced,2,Bachelors,Self-Employed,128401,B030
+A0384,Kelly Howell,63,Male,Married,2,PhD,Salaried,164956,B015
+A0385,Kathryn Morris,36,Other,Divorced,3,Masters,Salaried,168653,B010
+A0386,Kari Duran,27,Male,Widowed,2,PhD,Self-Employed,119566,B002
+A0387,April Mata,51,Male,Widowed,4,Masters,Salaried,172030,B015
+A0388,Jeffrey Ellis,52,Female,Single,3,PhD,Retired,67282,B043
+A0389,James Campbell,51,Female,Divorced,1,Masters,Self-Employed,78661,B007
+A0390,Paul Thompson,40,Female,Divorced,1,High School,Retired,78947,B017
+A0391,Marcia Mitchell,64,Female,Divorced,4,PhD,Salaried,178934,B043
+A0392,Laura Pearson,62,Male,Married,4,PhD,Unemployed,91652,B001
+A0393,Michelle Smith,52,Male,Married,0,High School,Unemployed,101794,B002
+A0394,Jerry Cox,52,Other,Single,1,Masters,Self-Employed,143179,B021
+A0395,Kerry Burton,28,Other,Married,2,PhD,Salaried,150527,B037
+A0396,Daniel Ruiz,25,Male,Divorced,4,Masters,Self-Employed,164796,B008
+A0397,Madison Hill,47,Other,Married,4,High School,Salaried,155481,B020
+A0398,Debra Blake,57,Other,Married,3,Bachelors,Self-Employed,76530,B043
+A0399,Robert Anderson,56,Female,Married,3,PhD,Self-Employed,149327,B006
+A0400,Meagan Stein,28,Female,Widowed,2,High School,Unemployed,46252,B032
+A0401,Nicole Pierce,47,Female,Married,3,Bachelors,Unemployed,24220,B043
+A0402,Cheryl Mendez,62,Female,Married,2,Masters,Salaried,79906,B001
+A0403,Gina Harris,29,Other,Widowed,0,PhD,Self-Employed,57145,B004
+A0404,Carolyn Jackson,46,Female,Single,2,Bachelors,Retired,126647,B016
+A0405,Jane Ward,45,Male,Single,2,PhD,Self-Employed,141929,B033
+A0406,Tonya Tucker,59,Other,Single,0,Masters,Unemployed,160992,B046
+A0407,Christopher Sloan,63,Other,Widowed,4,Bachelors,Retired,175125,B024
+A0408,Linda Erickson,38,Other,Widowed,4,PhD,Self-Employed,148348,B025
+A0409,Dalton Smith,51,Male,Widowed,2,High School,Unemployed,192402,B047
+A0410,Angela Allison,43,Female,Single,3,Masters,Unemployed,191627,B046
+A0411,Melvin Avila,52,Male,Divorced,1,Bachelors,Retired,78226,B025
+A0412,Arthur Robertson,21,Male,Widowed,4,PhD,Self-Employed,147418,B016
+A0413,Valerie Wells,21,Female,Widowed,0,PhD,Self-Employed,67880,B020
+A0414,Laurie Palmer,61,Other,Widowed,2,PhD,Retired,158316,B048
+A0415,Christina Robinson,26,Female,Widowed,4,High School,Retired,187862,B016
+A0416,Ashlee Morris,61,Female,Divorced,3,PhD,Retired,158842,B050
+A0417,Gordon Floyd,57,Female,Widowed,0,Bachelors,Retired,111304,B018
+A0418,Alexandra Jackson,25,Female,Married,2,Bachelors,Retired,57551,B049
+A0419,Kevin Hart,55,Male,Divorced,2,Masters,Self-Employed,175078,B018
+A0420,Curtis Thompson,57,Other,Single,2,PhD,Unemployed,129089,B048
+A0421,Darrell Mitchell,25,Other,Single,2,Bachelors,Retired,124966,B031
+A0422,Benjamin Gonzalez,28,Male,Single,1,Bachelors,Self-Employed,157836,B050
+A0423,Terri Sanchez,58,Male,Married,4,Masters,Self-Employed,68996,B048
+A0424,Jessica Gonzalez,34,Other,Single,3,Masters,Unemployed,131043,B002
+A0425,Vincent Kelley,36,Other,Single,0,High School,Self-Employed,65714,B046
+A0426,Francisco Hammond,47,Other,Single,2,Masters,Unemployed,33232,B030
+A0427,Jonathan Smith,60,Male,Married,3,Masters,Self-Employed,130508,B014
+A0428,Jessica Wagner,53,Male,Single,0,High School,Self-Employed,140216,B030
+A0429,Kenneth Carter,63,Female,Widowed,2,Masters,Unemployed,193002,B001
+A0430,Mason Floyd,22,Female,Single,1,Masters,Self-Employed,38702,B019
+A0431,Nichole Ellis,47,Male,Single,2,Bachelors,Salaried,38687,B034
+A0432,Matthew Santos,30,Female,Married,1,Bachelors,Unemployed,180988,B010
+A0433,Victoria Peterson,56,Male,Single,3,Bachelors,Retired,177644,B020
+A0434,Thomas Saunders,37,Other,Married,4,High School,Retired,71630,B037
+A0435,Patricia Reid,51,Other,Divorced,3,Masters,Unemployed,103509,B002
+A0436,Joann Brown,41,Female,Widowed,3,Masters,Salaried,140533,B048
+A0437,Dawn Wilkins,54,Male,Single,0,PhD,Unemployed,51083,B039
+A0438,Stacey Henderson,37,Other,Single,4,PhD,Self-Employed,83742,B046
+A0439,Steven Spencer,36,Male,Single,1,High School,Salaried,39928,B029
+A0440,Rebekah Miller,41,Other,Divorced,3,High School,Retired,169822,B014
+A0441,Dr. Eric Benton Jr.,51,Female,Single,2,PhD,Self-Employed,50118,B013
+A0442,Matthew Moore,56,Other,Divorced,3,Masters,Salaried,43597,B014
+A0443,Donald Mullins,62,Male,Divorced,0,PhD,Salaried,171976,B020
+A0444,Patrick Walker,59,Male,Married,1,Bachelors,Retired,33427,B016
+A0445,Christina Robles,46,Female,Single,1,Masters,Unemployed,53016,B009
+A0446,Heather Cannon,56,Female,Married,4,PhD,Salaried,168349,B003
+A0447,Jennifer Smith,47,Female,Divorced,4,High School,Salaried,136620,B029
+A0448,Mr. Paul Hamilton,28,Female,Widowed,1,PhD,Salaried,22037,B026
+A0449,Bradley Lee,38,Other,Divorced,1,High School,Self-Employed,132974,B034
+A0450,Kenneth Flynn,50,Other,Widowed,3,Bachelors,Salaried,68242,B018
+A0451,Thomas Martinez,54,Female,Widowed,2,Bachelors,Salaried,86364,B016
+A0452,Rita Jones,28,Other,Divorced,0,High School,Salaried,183899,B013
+A0453,Scott Erickson,21,Male,Divorced,2,PhD,Retired,119728,B015
+A0454,Heather Stephens MD,57,Other,Divorced,2,Bachelors,Retired,110880,B023
+A0455,Nicole Floyd,52,Male,Single,3,Masters,Unemployed,138957,B033
+A0456,Nathan Jenkins,61,Male,Married,2,High School,Salaried,190096,B042
+A0457,Caitlin Wilson,49,Other,Widowed,0,High School,Retired,117208,B011
+A0458,Erik Lee,63,Male,Widowed,1,PhD,Unemployed,116074,B008
+A0459,Shelia Smith,48,Female,Married,2,Bachelors,Salaried,94390,B007
+A0460,Philip George,29,Other,Married,4,Bachelors,Self-Employed,166738,B019
+A0461,Elizabeth Conway,62,Other,Widowed,1,Bachelors,Retired,198556,B047
+A0462,Amanda Fisher,38,Other,Widowed,2,High School,Self-Employed,135455,B013
+A0463,Joe Peterson,35,Male,Divorced,2,Masters,Salaried,102356,B041
+A0464,Lisa Valdez,51,Female,Married,0,PhD,Salaried,122436,B010
+A0465,Jason Cook,42,Male,Single,0,High School,Unemployed,189305,B030
+A0466,Brandi Lee,41,Female,Single,2,Bachelors,Self-Employed,57087,B046
+A0467,Bryan Flores Jr.,56,Other,Married,3,Masters,Unemployed,83055,B019
+A0468,Jeff Anderson,63,Female,Married,4,PhD,Retired,27134,B033
+A0469,Rachael Cole,37,Female,Widowed,3,High School,Unemployed,95914,B023
+A0470,Andrew Stevens,23,Other,Widowed,0,PhD,Self-Employed,79343,B043
+A0471,Tyler Caldwell,63,Female,Widowed,4,PhD,Salaried,162803,B040
+A0472,Erin Clark,35,Female,Widowed,1,High School,Self-Employed,91994,B030
+A0473,Karen Ortega,29,Male,Single,3,Bachelors,Unemployed,78876,B008
+A0474,William Baker,30,Male,Single,3,PhD,Self-Employed,122985,B047
+A0475,Mrs. Ashley Hill,24,Female,Married,0,Bachelors,Unemployed,65426,B012
+A0476,Margaret Hamilton,39,Male,Married,3,High School,Retired,125089,B016
+A0477,Jacob Powers,29,Other,Divorced,2,Masters,Retired,41148,B031
+A0478,Lindsay Acosta,43,Male,Single,2,Masters,Unemployed,169349,B013
+A0479,Joseph Lawson,53,Female,Single,1,Bachelors,Retired,194383,B011
+A0480,Jessica Gill,43,Male,Single,0,High School,Retired,41682,B018
+A0481,Madison Grimes,29,Male,Widowed,4,Bachelors,Retired,141672,B030
+A0482,William Watson,22,Male,Single,4,High School,Self-Employed,30769,B007
+A0483,David Williams,59,Male,Widowed,1,High School,Self-Employed,121784,B002
+A0484,Rhonda Jackson,40,Other,Single,3,Masters,Retired,36816,B004
+A0485,Robert Flowers,25,Female,Single,1,High School,Retired,40462,B048
+A0486,Lee Alvarez,43,Other,Married,0,Masters,Unemployed,176092,B010
+A0487,Pamela Decker,31,Other,Divorced,2,Bachelors,Unemployed,47556,B020
+A0488,Lindsey Walters,21,Female,Single,2,PhD,Self-Employed,160996,B005
+A0489,Jeanette Brown MD,35,Male,Married,2,High School,Unemployed,134673,B017
+A0490,Donna Torres,26,Other,Widowed,0,Masters,Unemployed,198106,B034
+A0491,Rachel Stephenson,60,Female,Married,1,PhD,Unemployed,183663,B040
+A0492,Christopher Williams,42,Other,Divorced,4,High School,Unemployed,86421,B043
+A0493,Jennifer Martin,32,Female,Divorced,2,PhD,Unemployed,79828,B037
+A0494,Melissa Goodman,41,Female,Single,4,Bachelors,Unemployed,171845,B012
+A0495,Marvin Dixon,55,Male,Single,0,PhD,Self-Employed,99068,B029
+A0496,Sarah Davenport,48,Female,Divorced,0,Bachelors,Retired,84986,B039
+A0497,Logan Arnold,40,Female,Divorced,0,Masters,Salaried,143010,B006
+A0498,Tony Reynolds,26,Other,Single,0,Masters,Salaried,70398,B047
+A0499,Stephen Harper,43,Other,Married,3,Bachelors,Self-Employed,172922,B044
+A0500,Joel Obrien,40,Female,Single,0,High School,Retired,70159,B047
+A0501,Benjamin Cox,39,Female,Single,1,Bachelors,Salaried,121571,B026
+A0502,Jordan Dunn,26,Other,Single,3,High School,Salaried,84753,B019
+A0503,Deborah Harris,64,Male,Widowed,2,Bachelors,Unemployed,163633,B037
+A0504,Terry Myers,47,Male,Single,0,Bachelors,Unemployed,89001,B035
+A0505,Michael Perkins,35,Male,Divorced,0,Bachelors,Salaried,107114,B034
+A0506,Teresa Torres,36,Female,Widowed,2,High School,Self-Employed,160160,B045
+A0507,Brian Rosario,43,Other,Widowed,3,Bachelors,Retired,60974,B037
+A0508,Veronica Rodriguez MD,62,Other,Widowed,4,Bachelors,Unemployed,100006,B029
+A0509,Veronica Sanchez,46,Male,Married,4,Masters,Unemployed,132864,B014
+A0510,Tiffany Sanchez,62,Female,Single,3,High School,Retired,23130,B014
+A0511,Renee Murphy,37,Female,Married,4,PhD,Retired,144149,B028
+A0512,David Wolf,44,Male,Widowed,2,High School,Salaried,72336,B042
+A0513,Mrs. Debra Lara,62,Female,Divorced,1,Bachelors,Unemployed,137005,B003
+A0514,Louis Smith MD,35,Other,Widowed,3,Bachelors,Salaried,30427,B024
+A0515,Haley Mercado,47,Other,Widowed,0,PhD,Self-Employed,199724,B046
+A0516,Judy Benson,55,Female,Single,3,High School,Retired,76501,B002
+A0517,Crystal Kane,50,Male,Single,3,High School,Salaried,163925,B036
+A0518,Andrea Williams,65,Female,Single,1,High School,Retired,181720,B031
+A0519,Shawn Rios,51,Male,Married,3,Masters,Retired,68425,B016
+A0520,Danielle Anderson,26,Female,Divorced,4,High School,Self-Employed,57743,B009
+A0521,Jonathan Ryan,31,Other,Single,4,Bachelors,Unemployed,78186,B006
+A0522,Rachel Moore,27,Male,Single,1,Bachelors,Retired,125911,B021
+A0523,Brenda Henson,56,Male,Single,4,High School,Self-Employed,152252,B007
+A0524,Dustin Beasley,21,Female,Divorced,2,PhD,Salaried,154173,B029
+A0525,Derrick Thomas,57,Other,Divorced,3,Bachelors,Unemployed,172664,B048
+A0526,Michael Scott,26,Other,Married,3,High School,Retired,187563,B014
+A0527,Karen Ochoa,22,Male,Married,3,PhD,Unemployed,172327,B004
+A0528,Karen Young,65,Female,Married,2,Bachelors,Unemployed,80313,B031
+A0529,Thomas Larson,61,Male,Divorced,4,Masters,Self-Employed,26818,B043
+A0530,Susan Nguyen,36,Male,Widowed,1,Bachelors,Retired,123080,B018
+A0531,Jessica Giles,65,Other,Divorced,3,High School,Self-Employed,182398,B019
+A0532,David Ellis,50,Other,Divorced,2,PhD,Unemployed,68787,B047
+A0533,Alan White,52,Female,Divorced,3,PhD,Retired,169677,B045
+A0534,John Brady,48,Female,Widowed,3,High School,Salaried,56831,B009
+A0535,Kyle Reed,33,Male,Single,1,High School,Self-Employed,184442,B048
+A0536,Jo Moss,61,Other,Married,2,Bachelors,Unemployed,174380,B004
+A0537,Latasha Spencer,53,Other,Divorced,2,Masters,Self-Employed,181689,B014
+A0538,Jason Medina,29,Female,Widowed,3,PhD,Self-Employed,107941,B012
+A0539,Luke Coleman,62,Other,Widowed,0,PhD,Salaried,152176,B024
+A0540,William Miller,55,Other,Widowed,3,PhD,Unemployed,131357,B029
+A0541,Randall Fernandez,54,Male,Widowed,3,Masters,Self-Employed,145888,B038
+A0542,Taylor Ford,55,Male,Widowed,4,High School,Retired,166931,B001
+A0543,Wayne Hughes,34,Male,Divorced,0,Bachelors,Self-Employed,50137,B028
+A0544,Victoria Clark,50,Male,Married,0,Bachelors,Retired,135251,B022
+A0545,Heather Lewis,45,Female,Married,0,Masters,Unemployed,41066,B020
+A0546,Patrick Boyer,63,Other,Divorced,1,Masters,Self-Employed,199816,B040
+A0547,Todd Johnson,57,Male,Married,3,High School,Retired,166204,B024
+A0548,Mary Johnson,21,Male,Widowed,3,High School,Unemployed,172148,B009
+A0549,Christopher Malone,35,Female,Married,1,High School,Unemployed,134369,B044
+A0550,Christopher Brooks,39,Female,Divorced,3,High School,Unemployed,160815,B037
+A0551,Ray Haynes,50,Other,Single,3,High School,Retired,150693,B013
+A0552,Randy Parker,56,Female,Married,1,High School,Retired,160020,B043
+A0553,Patrick Williams,36,Female,Single,0,High School,Self-Employed,164587,B022
+A0554,Nathaniel Moss,27,Other,Divorced,0,Masters,Self-Employed,87619,B045
+A0555,William Hernandez II,52,Female,Widowed,2,Masters,Salaried,95219,B019
+A0556,Jasmine Estrada,39,Male,Married,1,High School,Retired,127917,B024
+A0557,Michael Wyatt,21,Male,Single,0,High School,Self-Employed,31515,B014
+A0558,Joshua Mcdaniel,59,Female,Widowed,0,High School,Self-Employed,192556,B028
+A0559,Amy Moore,31,Other,Widowed,4,High School,Salaried,62374,B018
+A0560,Danielle Williams,31,Other,Single,0,Bachelors,Unemployed,108631,B024
+A0561,Michael Mendoza,42,Female,Single,2,Bachelors,Retired,141527,B013
+A0562,Michael Smith,49,Male,Married,4,Bachelors,Self-Employed,70325,B041
+A0563,Eric Browning,24,Other,Single,1,PhD,Self-Employed,44709,B046
+A0564,Felicia Patterson,59,Male,Divorced,4,PhD,Salaried,193608,B028
+A0565,Kathy Booth,65,Other,Married,0,Masters,Retired,65627,B014
+A0566,Joseph Miller,35,Female,Widowed,1,PhD,Self-Employed,55831,B049
+A0567,Bryan Rivera,50,Female,Widowed,1,Masters,Self-Employed,152311,B006
+A0568,Andrew Brooks,64,Other,Married,0,High School,Self-Employed,109047,B030
+A0569,Ashley Estrada,26,Male,Divorced,0,Bachelors,Unemployed,173531,B006
+A0570,Blake Smith,31,Female,Widowed,2,Bachelors,Salaried,144398,B036
+A0571,Jessica Russell,36,Female,Widowed,0,High School,Unemployed,111484,B020
+A0572,Jordan Williams,26,Other,Widowed,2,High School,Self-Employed,139834,B006
+A0573,Jason Alvarez,30,Other,Divorced,3,High School,Unemployed,122018,B049
+A0574,Steven Barker,25,Other,Divorced,0,High School,Salaried,184880,B005
+A0575,Samantha Dominguez,27,Other,Married,3,Masters,Unemployed,116989,B004
+A0576,Dr. James Phelps MD,25,Female,Married,3,Bachelors,Salaried,162335,B039
+A0577,Angela Patterson,23,Male,Divorced,1,Masters,Self-Employed,43022,B024
+A0578,Elizabeth Lee,51,Female,Single,4,Masters,Self-Employed,77325,B040
+A0579,Mrs. Lori Butler,30,Other,Divorced,4,Bachelors,Salaried,105824,B005
+A0580,Steven Hill,41,Other,Married,2,Masters,Salaried,102508,B003
+A0581,David Mcdonald,53,Female,Widowed,0,Masters,Self-Employed,87823,B017
+A0582,Ronald Todd,27,Male,Single,4,Masters,Unemployed,97962,B018
+A0583,Brittany Keller,36,Female,Married,4,High School,Retired,173235,B016
+A0584,John Bailey,65,Female,Widowed,4,Masters,Self-Employed,123374,B045
+A0585,Sarah House,33,Other,Single,1,High School,Self-Employed,142044,B019
+A0586,Bradley Thomas,40,Male,Divorced,1,Bachelors,Unemployed,149874,B024
+A0587,Pamela Gonzalez,26,Female,Divorced,3,Bachelors,Self-Employed,167782,B048
+A0588,Thomas Donovan,41,Other,Divorced,1,PhD,Retired,105285,B047
+A0589,Courtney Harrison,64,Male,Divorced,0,Bachelors,Unemployed,63056,B047
+A0590,Garrett Brown,61,Male,Widowed,4,PhD,Salaried,84250,B018
+A0591,Leah Kennedy,49,Female,Single,0,PhD,Self-Employed,125917,B025
+A0592,Mikayla Thomas,42,Female,Divorced,2,Bachelors,Unemployed,142196,B017
+A0593,Cody Giles,34,Female,Single,0,Bachelors,Unemployed,39623,B009
+A0594,Susan Gonzalez,23,Female,Single,3,High School,Self-Employed,81793,B029
+A0595,Mrs. Stephanie Anderson,42,Male,Single,3,High School,Self-Employed,110972,B032
+A0596,Jennifer Chavez,64,Female,Divorced,2,Bachelors,Retired,124202,B048
+A0597,Jennifer Day,25,Male,Single,1,High School,Salaried,118713,B034
+A0598,Stacie Clark,34,Male,Single,1,Masters,Self-Employed,52461,B006
+A0599,Samantha Moon,55,Male,Single,2,High School,Unemployed,149246,B009
+A0600,Mr. Mike Richards,22,Male,Married,4,High School,Salaried,61262,B027
+A0601,Troy Lambert,63,Other,Single,0,High School,Unemployed,82441,B017
+A0602,Sandra Johns,51,Female,Single,4,Bachelors,Retired,44483,B037
+A0603,Derek Turner,28,Male,Married,1,Masters,Unemployed,181586,B025
+A0604,Ann Obrien,61,Female,Divorced,0,Bachelors,Unemployed,150977,B035
+A0605,Megan Parker,32,Male,Single,1,Bachelors,Salaried,195464,B002
+A0606,Bryan Weaver,38,Female,Widowed,0,PhD,Salaried,96737,B035
+A0607,Jeremy Long,31,Other,Divorced,1,Masters,Self-Employed,120822,B046
+A0608,Ian Hampton,59,Other,Divorced,3,High School,Unemployed,187053,B046
+A0609,Darrell Bryant,62,Other,Divorced,3,High School,Retired,192790,B036
+A0610,Sarah Grant,36,Female,Divorced,4,PhD,Salaried,63087,B025
+A0611,Danielle Luna,21,Male,Divorced,2,Bachelors,Self-Employed,59414,B023
+A0612,Frank Miller,50,Male,Widowed,3,PhD,Unemployed,83079,B038
+A0613,Christopher Patel,56,Other,Single,0,Masters,Self-Employed,27030,B022
+A0614,Kevin Johnson,56,Male,Divorced,1,High School,Retired,51530,B008
+A0615,Chad Greene,42,Other,Married,2,PhD,Salaried,24070,B012
+A0616,Anita Walsh,22,Male,Married,4,Masters,Unemployed,98528,B009
+A0617,James Yu,38,Other,Widowed,0,High School,Salaried,136977,B032
+A0618,Michelle Hunt,52,Other,Married,2,PhD,Self-Employed,36952,B039
+A0619,Michael Chen,46,Male,Widowed,4,Bachelors,Unemployed,194178,B019
+A0620,Jill Barnett,37,Male,Widowed,1,Masters,Self-Employed,111232,B007
+A0621,Peter Ryan,58,Other,Divorced,4,PhD,Self-Employed,148637,B025
+A0622,Catherine Harris,34,Male,Married,3,PhD,Retired,28516,B002
+A0623,Sara David,44,Female,Divorced,3,Bachelors,Self-Employed,180585,B008
+A0624,Melissa Frey,22,Other,Widowed,2,PhD,Salaried,193828,B008
+A0625,Alexandria Tran,27,Male,Married,0,Masters,Retired,158428,B002
+A0626,Paula Bryant,56,Male,Divorced,4,PhD,Salaried,72965,B038
+A0627,Amy King,63,Female,Single,0,Masters,Unemployed,74086,B020
+A0628,John Taylor,44,Other,Divorced,1,Bachelors,Unemployed,101112,B008
+A0629,Cynthia Vincent,54,Female,Single,3,High School,Salaried,165421,B011
+A0630,Tina Rivera,31,Male,Married,3,Bachelors,Retired,158353,B013
+A0631,Janet Miller,28,Female,Divorced,4,PhD,Salaried,41156,B014
+A0632,Brian Cummings,24,Other,Married,1,Masters,Self-Employed,170106,B007
+A0633,Ashley Blackburn,42,Female,Married,0,PhD,Self-Employed,187393,B014
+A0634,Catherine Ray,33,Other,Married,1,High School,Unemployed,181194,B001
+A0635,Kathryn Baker,52,Male,Married,4,Bachelors,Unemployed,176672,B015
+A0636,Jesus Tate,63,Other,Married,1,PhD,Salaried,98477,B006
+A0637,Mark Melton,21,Male,Married,2,Masters,Self-Employed,85277,B043
+A0638,Steven Hawkins,34,Female,Single,2,PhD,Unemployed,114922,B036
+A0639,Laura Blanchard,24,Female,Married,1,PhD,Self-Employed,150774,B025
+A0640,Eric Martinez,52,Male,Single,3,Masters,Salaried,135218,B027
+A0641,Danielle Garcia,56,Male,Married,3,High School,Self-Employed,157520,B038
+A0642,Sarah Benson,45,Male,Single,4,High School,Unemployed,62312,B005
+A0643,Tiffany Lee,26,Female,Widowed,0,Masters,Unemployed,75111,B016
+A0644,Chad Chambers,37,Female,Married,1,Bachelors,Self-Employed,145628,B021
+A0645,Diana Dyer,58,Other,Divorced,4,Masters,Unemployed,44575,B020
+A0646,Zachary Johnson,29,Female,Divorced,4,Bachelors,Self-Employed,32884,B036
+A0647,James Alexander,65,Female,Divorced,2,High School,Salaried,169232,B039
+A0648,Jerry Perez,42,Male,Single,0,Bachelors,Retired,97647,B028
+A0649,Christopher Phillips,62,Male,Divorced,3,Masters,Self-Employed,42470,B021
+A0650,Dr. Trevor Levy,53,Female,Widowed,4,PhD,Unemployed,58120,B021
+A0651,Wayne Schmidt,23,Other,Single,2,Masters,Unemployed,33983,B030
+A0652,Norma Howe,22,Female,Divorced,4,Masters,Salaried,71973,B026
+A0653,Michael Green,61,Other,Single,0,High School,Self-Employed,81824,B050
+A0654,Mark Roberts,36,Other,Divorced,0,PhD,Self-Employed,165518,B041
+A0655,Kevin Thompson,22,Other,Single,3,PhD,Self-Employed,116282,B031
+A0656,Roger Bush,65,Other,Widowed,4,Masters,Unemployed,90518,B046
+A0657,Becky King,45,Male,Divorced,3,Masters,Salaried,43876,B004
+A0658,Mr. Richard Abbott MD,57,Other,Divorced,3,High School,Retired,91048,B047
+A0659,Kara Davis,62,Female,Married,1,PhD,Unemployed,31709,B040
+A0660,Tiffany Mullen,54,Male,Married,4,Bachelors,Self-Employed,96756,B001
+A0661,Denise Owens,60,Female,Single,1,Bachelors,Self-Employed,59947,B010
+A0662,Dr. Brandy Mitchell,32,Other,Single,1,PhD,Unemployed,31912,B037
+A0663,Ryan Watkins,21,Female,Married,4,PhD,Retired,108586,B036
+A0664,Kathleen English,57,Other,Divorced,3,Masters,Unemployed,127784,B006
+A0665,Steven Smith,30,Male,Divorced,4,Bachelors,Unemployed,166179,B035
+A0666,Julia Mason,54,Female,Married,2,High School,Salaried,43181,B019
+A0667,Andrea Rodriguez,56,Other,Widowed,4,PhD,Salaried,82311,B014
+A0668,Cameron Jones,42,Male,Single,0,PhD,Unemployed,34283,B048
+A0669,Wesley Powell,40,Female,Widowed,3,PhD,Unemployed,131629,B021
+A0670,Gregory Roberts,50,Male,Widowed,4,High School,Self-Employed,53757,B025
+A0671,Stephanie Thompson,36,Other,Widowed,4,PhD,Salaried,182639,B044
+A0672,Lisa Zimmerman,22,Other,Widowed,2,High School,Retired,189000,B029
+A0673,Dakota Anderson,25,Other,Married,3,Masters,Retired,42105,B001
+A0674,Christine Ware,24,Other,Single,3,High School,Retired,135612,B048
+A0675,Dustin Ayers,24,Male,Divorced,3,PhD,Unemployed,187449,B023
+A0676,Jennifer Santiago,65,Female,Single,1,High School,Retired,110276,B017
+A0677,Nathan Joseph,44,Other,Divorced,2,Bachelors,Unemployed,183103,B006
+A0678,Marvin Gray,24,Other,Married,4,High School,Self-Employed,131099,B043
+A0679,Nancy Peters,37,Male,Widowed,0,PhD,Salaried,162559,B035
+A0680,Richard Lopez,54,Female,Divorced,2,PhD,Self-Employed,20291,B023
+A0681,Shane Lee,43,Other,Married,4,Masters,Retired,23330,B027
+A0682,Allen Foster,33,Female,Divorced,4,Bachelors,Unemployed,130322,B022
+A0683,Roger Perez,61,Female,Divorced,1,High School,Retired,174676,B026
+A0684,Joseph Delgado,27,Other,Widowed,1,Bachelors,Salaried,122124,B022
+A0685,Beth Gutierrez,42,Other,Divorced,3,PhD,Unemployed,190551,B038
+A0686,David Rose,21,Male,Widowed,1,High School,Unemployed,173180,B029
+A0687,Patrick Roy,28,Female,Single,3,High School,Unemployed,56165,B007
+A0688,Kaitlyn Conrad,65,Male,Single,2,High School,Unemployed,198457,B003
+A0689,Dr. Patricia Wright,37,Female,Single,1,Masters,Unemployed,83399,B020
+A0690,Maria Davenport,44,Other,Single,2,High School,Salaried,196853,B038
+A0691,Jason Turner,37,Male,Married,4,Masters,Retired,39128,B022
+A0692,Gary Green,31,Other,Married,0,Masters,Retired,161453,B041
+A0693,Devin Pham,30,Male,Married,0,PhD,Self-Employed,175800,B039
+A0694,Kevin Yates,30,Male,Single,1,High School,Retired,96744,B040
+A0695,Jonathan Figueroa,25,Male,Married,1,High School,Unemployed,50392,B045
+A0696,Ryan Adams,24,Other,Widowed,2,High School,Unemployed,51590,B029
+A0697,Logan Gonzales,59,Male,Divorced,1,High School,Salaried,32339,B021
+A0698,Rebecca Collins,46,Other,Married,2,High School,Unemployed,52216,B003
+A0699,Kevin Martin,51,Female,Single,2,PhD,Self-Employed,35916,B025
+A0700,Mary Castro,36,Male,Married,0,PhD,Retired,109032,B003
+A0701,Allison Ferguson,34,Female,Divorced,4,PhD,Unemployed,165489,B019
+A0702,Briana Jones,47,Female,Divorced,1,Masters,Salaried,39348,B011
+A0703,Angela Faulkner,27,Male,Single,0,High School,Self-Employed,182737,B023
+A0704,Kaitlyn Smith,24,Female,Married,1,Bachelors,Unemployed,195265,B040
+A0705,Melissa Ellis,52,Other,Divorced,4,PhD,Salaried,115191,B043
+A0706,Kevin Benson,54,Male,Widowed,3,Masters,Self-Employed,155843,B031
+A0707,Jaime Herrera,58,Male,Married,2,Masters,Salaried,155673,B042
+A0708,Melissa Hudson,53,Other,Married,4,PhD,Self-Employed,132134,B028
+A0709,Julie Raymond,31,Male,Married,3,Masters,Unemployed,96720,B022
+A0710,Nicole Wood,36,Other,Divorced,3,PhD,Retired,42770,B048
+A0711,Thomas Robinson,63,Other,Widowed,3,Bachelors,Self-Employed,121544,B007
+A0712,Brandon Thomas,62,Male,Single,4,Masters,Self-Employed,48834,B009
+A0713,Miss Kim Rios,22,Other,Divorced,2,High School,Unemployed,105310,B022
+A0714,Mr. James Brooks DVM,32,Female,Single,1,Masters,Self-Employed,106043,B031
+A0715,Brandi Lewis,48,Female,Divorced,0,High School,Salaried,159104,B010
+A0716,Julie Chase,26,Female,Married,1,Bachelors,Unemployed,178221,B019
+A0717,Suzanne Mccullough,50,Male,Married,1,Masters,Unemployed,145094,B019
+A0718,William Thompson,65,Male,Widowed,4,PhD,Unemployed,70700,B008
+A0719,Kari Romero,36,Female,Single,2,PhD,Retired,183926,B042
+A0720,Latoya Mcdonald,27,Male,Divorced,3,Bachelors,Unemployed,25162,B045
+A0721,Daniel Hays,53,Female,Divorced,4,Masters,Self-Employed,151137,B039
+A0722,Christina Rhodes,50,Male,Single,1,PhD,Retired,45269,B047
+A0723,Shelby Ramos,29,Other,Widowed,4,PhD,Retired,29454,B007
+A0724,David Gallagher,24,Male,Divorced,4,Bachelors,Self-Employed,31759,B027
+A0725,Shannon Greene,42,Female,Widowed,1,Bachelors,Retired,71196,B046
+A0726,John Small,47,Female,Married,2,High School,Unemployed,123327,B003
+A0727,Eric Jackson,40,Male,Married,4,High School,Unemployed,29475,B038
+A0728,Kevin Huerta,30,Other,Married,1,PhD,Unemployed,178403,B047
+A0729,Daniel Guerrero,28,Other,Divorced,1,PhD,Retired,94440,B011
+A0730,Ashley Jones,42,Female,Married,3,High School,Salaried,130014,B043
+A0731,Melissa Bridges,56,Female,Married,3,Masters,Self-Employed,117534,B002
+A0732,Jennifer Forbes,38,Male,Divorced,3,Bachelors,Salaried,74791,B027
+A0733,Sarah Jones,38,Other,Married,0,PhD,Unemployed,147675,B042
+A0734,Susan Torres,30,Female,Widowed,2,Masters,Self-Employed,42977,B030
+A0735,Steven Roberts,32,Female,Married,4,PhD,Salaried,69496,B045
+A0736,Antonio Meza,28,Other,Divorced,1,High School,Retired,193486,B043
+A0737,William Johnson,41,Male,Widowed,2,Masters,Self-Employed,78615,B013
+A0738,Mark Campbell,64,Male,Divorced,1,High School,Retired,29909,B003
+A0739,Andrew Santana,43,Female,Married,2,High School,Retired,70889,B022
+A0740,Rebekah Love,21,Other,Divorced,1,PhD,Salaried,187903,B010
+A0741,Brittany Haynes,24,Other,Single,3,High School,Retired,183858,B005
+A0742,Alexis Ward,26,Male,Widowed,2,Masters,Retired,181506,B046
+A0743,Michael Thomas,40,Male,Married,1,Bachelors,Salaried,94435,B015
+A0744,William Campbell,42,Other,Married,3,High School,Retired,121020,B018
+A0745,Jessica Mitchell,61,Female,Widowed,0,Masters,Retired,139308,B037
+A0746,Angela Fischer,35,Other,Divorced,2,Masters,Retired,137727,B032
+A0747,Ronald Thomas,51,Male,Married,4,PhD,Salaried,121233,B043
+A0748,Misty Thompson,32,Male,Widowed,4,Bachelors,Self-Employed,103512,B012
+A0749,Michelle Wall,42,Male,Widowed,1,Bachelors,Retired,51287,B015
+A0750,Samantha Mcgee,52,Other,Single,3,Masters,Unemployed,169619,B002
+A0751,Daniel Vaughn,24,Male,Divorced,4,PhD,Retired,184734,B042
+A0752,Jon Robinson,53,Female,Single,2,High School,Unemployed,37435,B049
+A0753,John Rodriguez,58,Female,Divorced,2,PhD,Salaried,77947,B006
+A0754,Jim Flores,58,Other,Married,1,High School,Self-Employed,38644,B037
+A0755,Adam Gonzales,63,Male,Divorced,2,Bachelors,Salaried,105354,B011
+A0756,Kelly Mccoy,40,Male,Divorced,1,Masters,Retired,27282,B050
+A0757,Kaitlin Davis,57,Other,Married,4,Masters,Self-Employed,67538,B050
+A0758,Kyle Klein,50,Female,Divorced,0,Bachelors,Salaried,154358,B007
+A0759,Yvonne Kim,52,Female,Divorced,4,PhD,Self-Employed,98859,B015
+A0760,Brittany Frazier,27,Other,Single,1,High School,Retired,72967,B026
+A0761,Kristine Oconnor,60,Female,Divorced,4,Masters,Retired,136540,B043
+A0762,Keith Mcdaniel,36,Other,Divorced,1,PhD,Retired,132129,B042
+A0763,Tracey Vargas,47,Other,Single,2,High School,Unemployed,63106,B039
+A0764,Carla Hernandez,43,Other,Married,4,Masters,Retired,176045,B018
+A0765,Candice Thompson,62,Other,Divorced,4,Masters,Salaried,134242,B009
+A0766,Gerald Martinez,42,Male,Single,1,Masters,Salaried,163753,B047
+A0767,Tracey Wheeler,44,Female,Married,1,PhD,Unemployed,23184,B036
+A0768,Alexis Rose,27,Other,Married,3,High School,Unemployed,148576,B030
+A0769,Martin Young,47,Male,Widowed,3,High School,Unemployed,180866,B022
+A0770,Lauren Stevenson,37,Other,Widowed,0,PhD,Self-Employed,51585,B008
+A0771,Robert Palmer,63,Male,Single,0,Masters,Retired,69664,B035
+A0772,Donna Short,32,Female,Single,0,High School,Unemployed,115249,B016
+A0773,Michael Bailey,45,Male,Widowed,2,PhD,Unemployed,46696,B040
+A0774,Mary Holder,58,Female,Married,1,Bachelors,Retired,184708,B012
+A0775,Larry Owen,52,Other,Widowed,0,Bachelors,Unemployed,169721,B011
+A0776,Jodi Martin,41,Male,Divorced,1,PhD,Retired,169005,B036
+A0777,Debbie Gonzalez,44,Male,Single,1,PhD,Salaried,185239,B042
+A0778,Regina Vance,21,Female,Divorced,2,High School,Self-Employed,70211,B014
+A0779,Amanda Evans,55,Other,Widowed,4,Bachelors,Salaried,72634,B031
+A0780,Jennifer Vazquez,63,Other,Divorced,4,PhD,Unemployed,94026,B034
+A0781,Melinda Allen,55,Female,Divorced,2,High School,Retired,125456,B023
+A0782,Steven Munoz,57,Male,Widowed,2,High School,Self-Employed,195203,B002
+A0783,Samuel Brown,45,Female,Single,3,Masters,Unemployed,194727,B002
+A0784,William Benjamin,35,Other,Single,0,PhD,Retired,161735,B017
+A0785,Patty Mcdowell,29,Other,Widowed,0,High School,Self-Employed,42062,B028
+A0786,Adam Mills,28,Male,Widowed,1,Bachelors,Unemployed,139607,B025
+A0787,Kim Page,22,Female,Married,3,High School,Retired,183384,B038
+A0788,Ian Werner,44,Male,Widowed,2,PhD,Unemployed,64232,B013
+A0789,Brittney Soto,55,Male,Single,1,High School,Unemployed,44188,B004
+A0790,William Thomas,30,Female,Divorced,4,PhD,Unemployed,174571,B004
+A0791,Karen Byrd,31,Male,Divorced,3,Bachelors,Salaried,115112,B038
+A0792,Alexander Zimmerman,38,Female,Married,1,Bachelors,Retired,151047,B025
+A0793,Cheryl Hernandez,51,Male,Divorced,1,Masters,Unemployed,121641,B040
+A0794,Ashley Yu,39,Other,Widowed,0,PhD,Unemployed,44157,B013
+A0795,Denise Crawford,27,Female,Widowed,0,Bachelors,Unemployed,150556,B043
+A0796,Riley Rodriguez,43,Female,Widowed,3,High School,Self-Employed,87573,B023
+A0797,Tyler Hood,25,Other,Married,3,Bachelors,Salaried,174885,B010
+A0798,Patrick Caldwell,48,Female,Divorced,0,Masters,Retired,41371,B031
+A0799,Robert Krueger,41,Other,Single,0,Bachelors,Unemployed,101091,B020
+A0800,Sandra Smith,64,Other,Divorced,3,High School,Salaried,129431,B001
+A0801,Ashley Cruz,24,Male,Divorced,4,High School,Retired,48227,B047
+A0802,Michael Cochran,42,Other,Married,4,Bachelors,Retired,148414,B016
+A0803,Jamie Collier,46,Male,Widowed,4,High School,Self-Employed,80134,B037
+A0804,Wendy Dickson,49,Male,Married,2,PhD,Self-Employed,199649,B044
+A0805,Phillip Burns,41,Other,Widowed,1,High School,Unemployed,109887,B003
+A0806,James Huang,62,Male,Single,4,Bachelors,Self-Employed,87100,B038
+A0807,Robert Allen,45,Male,Married,2,PhD,Salaried,97189,B027
+A0808,Deborah Smith,49,Male,Single,3,Bachelors,Unemployed,175218,B001
+A0809,Michelle Farmer,24,Other,Married,2,PhD,Salaried,142480,B029
+A0810,Angela Galvan,62,Female,Single,3,PhD,Retired,194550,B027
+A0811,Chad Ramos,45,Other,Single,4,High School,Unemployed,178263,B037
+A0812,Julie Spencer,63,Female,Divorced,2,High School,Unemployed,72587,B009
+A0813,Janet Hahn,29,Male,Married,4,PhD,Self-Employed,89871,B022
+A0814,Michael Dunn,45,Other,Divorced,1,PhD,Retired,74302,B004
+A0815,Paul Bender,36,Other,Single,3,Masters,Self-Employed,138759,B006
+A0816,Hannah Perry,37,Female,Divorced,4,PhD,Unemployed,69680,B035
+A0817,Monica Bell,38,Female,Widowed,1,PhD,Unemployed,131157,B012
+A0818,Cameron Miller,41,Female,Married,4,Bachelors,Self-Employed,160523,B005
+A0819,Miss Lisa Schroeder MD,24,Male,Single,0,Bachelors,Retired,146845,B037
+A0820,Brooke Lewis,27,Other,Divorced,4,High School,Unemployed,21558,B020
+A0821,James Parker,31,Other,Single,1,PhD,Self-Employed,149356,B043
+A0822,Rebecca Braun,39,Male,Divorced,4,High School,Self-Employed,85581,B031
+A0823,Jeffery Williams,46,Male,Widowed,0,High School,Retired,74110,B004
+A0824,Lauren Maxwell,27,Female,Widowed,3,PhD,Self-Employed,119928,B010
+A0825,Kim Fox,26,Male,Married,4,PhD,Self-Employed,165399,B024
+A0826,Alan Odonnell,62,Female,Single,1,PhD,Unemployed,22684,B030
+A0827,Teresa Sanford,53,Female,Single,0,PhD,Unemployed,31193,B012
+A0828,Hannah Sullivan,26,Male,Divorced,3,PhD,Self-Employed,181584,B005
+A0829,Dr. Sean Hughes MD,35,Female,Married,4,Bachelors,Salaried,36550,B032
+A0830,Erik Jackson,22,Other,Divorced,0,Bachelors,Self-Employed,55566,B007
+A0831,Nicholas Wilson,23,Other,Divorced,0,Bachelors,Unemployed,114575,B030
+A0832,Derrick Spence,32,Female,Married,4,High School,Unemployed,142883,B035
+A0833,Donna Bradley,57,Female,Married,1,PhD,Unemployed,157745,B003
+A0834,Carolyn Barnes,55,Male,Single,2,PhD,Retired,133969,B024
+A0835,David Little,22,Other,Married,4,PhD,Retired,62276,B018
+A0836,Johnny Martinez,26,Female,Divorced,2,High School,Unemployed,190878,B013
+A0837,Bonnie Pacheco,53,Female,Widowed,3,PhD,Unemployed,154843,B038
+A0838,Jason Ward,65,Female,Married,1,High School,Salaried,148186,B022
+A0839,Bryan Robertson,62,Other,Married,1,Bachelors,Self-Employed,75761,B040
+A0840,Edward Young,64,Male,Married,3,Masters,Self-Employed,21753,B009
+A0841,Stacy Cole,38,Female,Widowed,3,Masters,Unemployed,118646,B017
+A0842,Robert Li,21,Female,Single,1,High School,Self-Employed,177173,B015
+A0843,Jonathan Holmes,49,Male,Single,3,PhD,Retired,41481,B049
+A0844,Kristin Hinton,53,Male,Single,2,High School,Salaried,92656,B039
+A0845,Christopher Carlson,39,Other,Widowed,2,Bachelors,Unemployed,36554,B033
+A0846,Jimmy Santos,29,Female,Divorced,4,PhD,Retired,182155,B022
+A0847,David Nelson,45,Other,Married,0,Bachelors,Salaried,119878,B037
+A0848,Brian Smith,24,Male,Married,1,Bachelors,Retired,100519,B041
+A0849,Danielle Ortega,35,Female,Divorced,2,High School,Salaried,164339,B042
+A0850,James Miller,21,Other,Divorced,3,High School,Retired,148007,B046
+A0851,Maria Johnson,54,Female,Single,2,High School,Unemployed,185018,B011
+A0852,Maria Mason,44,Other,Single,4,High School,Salaried,177465,B041
+A0853,William Olson,53,Other,Divorced,1,PhD,Salaried,57006,B026
+A0854,Ricky Garner,56,Female,Single,4,Bachelors,Salaried,184228,B018
+A0855,Mr. James Nelson,52,Male,Divorced,3,PhD,Retired,163727,B050
+A0856,John Fields,26,Male,Single,4,Bachelors,Retired,73252,B047
+A0857,Tanya Lara,46,Other,Married,4,Bachelors,Retired,132136,B002
+A0858,William Walters,54,Female,Married,3,Masters,Self-Employed,85037,B004
+A0859,Timothy Mcdowell,61,Other,Married,1,High School,Salaried,192709,B033
+A0860,Nichole Delgado,63,Female,Divorced,0,High School,Retired,103777,B038
+A0861,Brooke Burton,28,Female,Widowed,0,PhD,Salaried,147074,B044
+A0862,Mrs. Amber Phillips,37,Other,Divorced,4,Masters,Unemployed,22424,B049
+A0863,Sean Mcdowell,49,Male,Divorced,2,High School,Retired,27554,B025
+A0864,Summer Garcia,64,Other,Single,4,PhD,Salaried,94070,B022
+A0865,Karen Donovan,49,Other,Single,3,Masters,Unemployed,26622,B004
+A0866,Alan Carroll Jr.,28,Male,Married,0,PhD,Unemployed,51758,B003
+A0867,Kevin Elliott,48,Male,Widowed,3,High School,Salaried,29189,B043
+A0868,Thomas Jenkins,55,Female,Divorced,1,High School,Self-Employed,47818,B007
+A0869,Holly Stokes,43,Female,Divorced,2,Bachelors,Unemployed,141675,B032
+A0870,Chad Patrick,36,Other,Married,4,Bachelors,Unemployed,113436,B012
+A0871,Darryl Huerta,64,Male,Divorced,1,High School,Self-Employed,166902,B005
+A0872,Cassandra Gray,37,Female,Married,1,Bachelors,Unemployed,52598,B031
+A0873,Victoria Lopez,23,Female,Divorced,0,Bachelors,Salaried,129317,B035
+A0874,Michael Griffith,36,Male,Single,4,Bachelors,Salaried,22141,B043
+A0875,David Clark,49,Other,Single,3,High School,Salaried,148626,B047
+A0876,Lisa Campbell PhD,59,Other,Married,2,Bachelors,Self-Employed,133023,B001
+A0877,Alejandro Peterson,36,Other,Married,3,Bachelors,Unemployed,103572,B031
+A0878,John Torres,22,Other,Married,0,Masters,Salaried,54784,B008
+A0879,James Garcia,39,Other,Married,0,PhD,Self-Employed,141263,B023
+A0880,Michael Gordon,47,Female,Divorced,3,Masters,Self-Employed,147027,B036
+A0881,Deborah Campos,53,Male,Single,4,High School,Salaried,114575,B042
+A0882,Derrick Schultz,63,Male,Divorced,1,Bachelors,Retired,175827,B015
+A0883,Timothy Harmon,49,Female,Divorced,4,High School,Self-Employed,60921,B015
+A0884,Christopher Johnson,50,Male,Divorced,2,PhD,Unemployed,112822,B005
+A0885,James Webb,61,Female,Married,1,PhD,Self-Employed,189237,B004
+A0886,James Reynolds,23,Other,Widowed,3,Bachelors,Unemployed,156719,B049
+A0887,Morgan Blair,62,Female,Divorced,0,Bachelors,Self-Employed,107276,B044
+A0888,Mrs. Amanda Gonzalez,27,Male,Widowed,4,PhD,Salaried,172086,B001
+A0889,James Pittman,33,Male,Divorced,1,PhD,Retired,31649,B015
+A0890,Danielle Carter,54,Female,Single,1,Bachelors,Unemployed,185154,B001
+A0891,Susan Velazquez,63,Female,Widowed,0,Masters,Self-Employed,198033,B004
+A0892,Dale Miller,42,Other,Divorced,1,PhD,Self-Employed,119347,B023
+A0893,Amanda Hughes,26,Female,Married,2,Bachelors,Unemployed,145085,B028
+A0894,Steven Jenkins,36,Male,Divorced,4,PhD,Retired,133516,B039
+A0895,Donald Robertson,62,Male,Divorced,3,PhD,Salaried,117537,B034
+A0896,Emily Anderson,27,Female,Single,3,PhD,Salaried,193064,B005
+A0897,Melissa Cook,61,Other,Widowed,3,Masters,Self-Employed,114761,B020
+A0898,Alexander Patton,26,Other,Widowed,4,Bachelors,Self-Employed,174481,B018
+A0899,Christopher Bailey,63,Female,Divorced,0,PhD,Self-Employed,74684,B009
+A0900,John Taylor,49,Male,Married,4,Masters,Self-Employed,29602,B027
+A0901,Mrs. Kimberly Cervantes,34,Other,Divorced,2,PhD,Unemployed,163086,B023
+A0902,Shelia Murray,32,Other,Widowed,1,High School,Unemployed,135265,B043
+A0903,Michael Richardson,29,Male,Divorced,0,Masters,Unemployed,56112,B025
+A0904,Ana Alvarez,46,Other,Widowed,3,High School,Unemployed,193180,B001
+A0905,Steven Maldonado,58,Other,Widowed,4,PhD,Unemployed,66949,B049
+A0906,Lisa Vance,27,Female,Widowed,1,High School,Retired,47149,B011
+A0907,Parker Wilson,41,Male,Divorced,3,Masters,Retired,35400,B031
+A0908,Christopher Rowe,46,Female,Divorced,2,PhD,Retired,112905,B013
+A0909,Jodi Jones,48,Other,Widowed,2,Bachelors,Salaried,29417,B010
+A0910,Kelly Hall,63,Male,Single,2,Bachelors,Self-Employed,77423,B033
+A0911,Eric Young,34,Other,Married,3,Masters,Unemployed,57967,B026
+A0912,Diana Foster,62,Other,Single,0,Masters,Retired,130576,B003
+A0913,Mr. Michael Hawkins,28,Female,Divorced,4,Masters,Salaried,126283,B012
+A0914,David Moody,58,Female,Married,4,High School,Self-Employed,169449,B007
+A0915,Margaret Hendricks,55,Female,Single,2,Bachelors,Self-Employed,132654,B029
+A0916,William Sutton,57,Other,Divorced,2,PhD,Retired,142811,B026
+A0917,Scott Lindsey,26,Male,Divorced,1,PhD,Unemployed,166663,B015
+A0918,John Adams,27,Other,Married,1,Bachelors,Self-Employed,105996,B027
+A0919,James Cummings,27,Other,Single,2,Masters,Retired,151956,B034
+A0920,John Cruz,24,Other,Widowed,1,High School,Self-Employed,118418,B002
+A0921,Sabrina Gonzalez,54,Male,Divorced,2,High School,Unemployed,55669,B012
+A0922,Max Simmons,59,Male,Widowed,1,High School,Retired,166623,B006
+A0923,Brittany Thomas,53,Male,Married,0,High School,Salaried,52214,B012
+A0924,Jim Bates,29,Female,Divorced,2,Bachelors,Self-Employed,66746,B050
+A0925,Shannon Freeman,42,Female,Single,3,Bachelors,Self-Employed,92698,B030
+A0926,Paul Carter,46,Male,Divorced,0,High School,Salaried,76469,B037
+A0927,Christina Wilson,31,Female,Divorced,1,PhD,Retired,93151,B021
+A0928,Patricia Coleman,28,Female,Divorced,0,Masters,Self-Employed,134211,B003
+A0929,Terry Livingston,34,Other,Single,0,PhD,Salaried,41681,B028
+A0930,Brian Gibson,28,Male,Married,2,Masters,Self-Employed,33826,B048
+A0931,Daniel Herrera,49,Male,Single,1,High School,Salaried,193538,B028
+A0932,Pamela Sims,61,Male,Divorced,4,Bachelors,Salaried,58977,B022
+A0933,Melissa Martin,46,Other,Married,2,Bachelors,Retired,64360,B041
+A0934,Lauren Warren,40,Male,Widowed,0,Masters,Unemployed,37481,B030
+A0935,Maria Bright PhD,27,Male,Divorced,0,Masters,Salaried,80059,B021
+A0936,John Serrano,58,Female,Divorced,2,Bachelors,Retired,78369,B021
+A0937,Calvin Winters,64,Male,Single,0,PhD,Self-Employed,48784,B026
+A0938,Erin Cook,61,Female,Married,3,Masters,Salaried,57283,B027
+A0939,Stephen Keller,25,Female,Single,2,Masters,Self-Employed,34245,B038
+A0940,Nathan Cunningham,54,Female,Married,2,High School,Retired,100441,B018
+A0941,Eric Miller,22,Female,Single,3,Bachelors,Unemployed,68508,B048
+A0942,James Graham,51,Other,Widowed,1,High School,Self-Employed,126344,B036
+A0943,Steven Robinson,65,Other,Married,2,Masters,Salaried,37423,B040
+A0944,Megan Contreras,60,Male,Divorced,3,Masters,Self-Employed,29130,B038
+A0945,Shelly Daniel,52,Male,Single,2,Bachelors,Self-Employed,44799,B017
+A0946,Laurie Jones,30,Female,Widowed,0,Bachelors,Retired,34960,B046
+A0947,Michael Case,34,Male,Widowed,0,High School,Self-Employed,90571,B027
+A0948,Lindsay Rangel,37,Other,Single,1,Masters,Retired,110255,B029
+A0949,John Williams,21,Female,Married,1,High School,Salaried,90184,B020
+A0950,Ashley Gordon,65,Other,Married,2,PhD,Self-Employed,114650,B006
+A0951,Lisa Pierce,62,Male,Divorced,2,Masters,Unemployed,110046,B011
+A0952,Marie Webb,28,Female,Divorced,0,High School,Retired,91818,B025
+A0953,Michael Baker,22,Male,Married,3,High School,Retired,189021,B020
+A0954,Nicholas Munoz,28,Female,Divorced,1,High School,Retired,26985,B006
+A0955,James Johnson,36,Male,Divorced,2,High School,Self-Employed,195946,B024
+A0956,Daniel Ellis,33,Male,Single,3,Masters,Unemployed,89711,B011
+A0957,Whitney Thomas MD,60,Other,Widowed,4,High School,Salaried,46306,B023
+A0958,Susan Edwards,29,Female,Widowed,4,High School,Self-Employed,59088,B017
+A0959,Hayden Holland,28,Female,Married,0,Masters,Unemployed,97742,B032
+A0960,Melinda Alvarez,34,Female,Single,3,High School,Self-Employed,128414,B009
+A0961,Jennifer Sullivan,54,Female,Married,1,High School,Self-Employed,167465,B029
+A0962,Zachary Smith,46,Female,Single,0,PhD,Self-Employed,105891,B047
+A0963,Joseph Hartman,28,Female,Widowed,1,Bachelors,Self-Employed,88153,B045
+A0964,Kimberly Gray,30,Female,Married,4,High School,Retired,162256,B037
+A0965,Teresa Anderson,52,Other,Widowed,2,PhD,Salaried,47144,B042
+A0966,Christopher Small,52,Female,Widowed,4,High School,Unemployed,170480,B007
+A0967,Mary Dixon,59,Male,Widowed,2,PhD,Retired,109444,B024
+A0968,Matthew Herrera,54,Female,Divorced,0,Bachelors,Self-Employed,132854,B008
+A0969,Julie Bowen,49,Other,Widowed,3,Masters,Retired,178789,B019
+A0970,Heidi Smith,59,Male,Single,2,Masters,Retired,86292,B049
+A0971,Patricia Clarke,39,Female,Married,4,Masters,Unemployed,192394,B032
+A0972,Tracy Murphy,64,Other,Divorced,3,PhD,Self-Employed,61158,B032
+A0973,Bradley Garcia,46,Female,Single,0,Bachelors,Salaried,156295,B035
+A0974,Charles Douglas,46,Female,Divorced,4,High School,Self-Employed,147143,B026
+A0975,Philip Brooks,21,Male,Single,0,Bachelors,Unemployed,102944,B040
+A0976,Joshua Reese,64,Other,Married,4,Masters,Self-Employed,164823,B012
+A0977,Erika Martinez,63,Male,Single,3,PhD,Retired,179246,B032
+A0978,Elizabeth Graham,40,Male,Divorced,4,Masters,Self-Employed,109444,B035
+A0979,Susan Thompson,58,Other,Married,4,Bachelors,Self-Employed,170949,B016
+A0980,Debra Cox,42,Female,Widowed,3,PhD,Retired,37181,B015
+A0981,Willie Chandler,46,Other,Married,1,PhD,Self-Employed,56268,B024
+A0982,Patty Davis,44,Other,Widowed,1,PhD,Salaried,94022,B010
+A0983,Rebecca Turner,35,Female,Divorced,2,Bachelors,Salaried,30916,B007
+A0984,Debbie Tyler,61,Female,Married,0,High School,Retired,123497,B027
+A0985,Timothy Foley,55,Female,Divorced,0,Masters,Unemployed,86951,B006
+A0986,Nancy Soto,32,Other,Married,1,Masters,Retired,41906,B005
+A0987,Sara Lester,37,Male,Married,3,Bachelors,Unemployed,78012,B028
+A0988,Mikayla Davis,50,Other,Widowed,3,PhD,Salaried,162443,B017
+A0989,Ashley Wilson,46,Female,Married,4,Masters,Salaried,113608,B045
+A0990,Sandra Dunn,51,Other,Married,2,Masters,Retired,111277,B017
+A0991,Maria King,21,Female,Single,2,Bachelors,Retired,109047,B034
+A0992,Kelly Bowman,49,Male,Widowed,3,PhD,Unemployed,190314,B003
+A0993,Christopher Jones,40,Female,Widowed,0,High School,Salaried,94601,B039
+A0994,Jessica Scott,57,Female,Single,2,High School,Salaried,149450,B031
+A0995,Mario Hudson,57,Other,Married,0,Masters,Self-Employed,187020,B030
+A0996,Marie Arellano,47,Female,Married,1,High School,Unemployed,193939,B006
+A0997,Tyrone Goodman,52,Female,Married,2,Masters,Unemployed,96510,B008
+A0998,Raymond Bryan,56,Male,Divorced,2,High School,Salaried,158879,B021
+A0999,Deborah White,43,Female,Widowed,1,Masters,Salaried,167764,B020
+A1000,Courtney Edwards,55,Male,Divorced,4,Bachelors,Unemployed,31090,B020

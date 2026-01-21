@@ -1,0 +1,232 @@
+{
+  "metadata": {
+    "schema": "iceberg_data.loandata2",
+    "table_count": 1,
+    "generated_at": "2025-09-30T07:53:02Z"
+  },
+  "data": [
+    {
+      "schema": "loandata2",
+      "table": "loan_data",
+      "table_description": "\"Stores origin bank information with account details and transaction history.\"",
+      "columns": [
+        {
+          "column_name": "branch_id",
+          "data_type": "varchar",
+          "description": "\"Branch identifier (e.g. B005, B004, B019)\"",
+          "sample_values": "B005|B005|B005|B004|B004|B004|B019|B019|B019|B005"
+        },
+        {
+          "column_name": "channel",
+          "data_type": "varchar",
+          "description": "\"Channel: method of account origination (e.g. Branch, Online, Agent)\"",
+          "sample_values": "Branch|Online|Agent"
+        },
+        {
+          "column_name": "applicant_id",
+          "data_type": "varchar",
+          "description": "\"Applicant ID: Unique identifier for loan applicants (e.g. A0002)\"",
+          "sample_values": "A0002|A0002|A0002|A0004|A0004|A0004|A0006|A0006|A0006|A0008"
+        },
+        {
+          "column_name": "credit_score",
+          "data_type": "integer",
+          "description": "Credit score: integer value representing customer's creditworthiness, ranging from 310 to 804.",
+          "sample_values": "594|594|594|310|310|310|492|492|492|804"
+        },
+        {
+          "column_name": "past_default_flag",
+          "data_type": "varchar",
+          "description": "\"past_default_flag: Indicator of past loan default (Y/N or 0/1)\"",
+          "sample_values": "N|0|1"
+        },
+        {
+          "column_name": "risk_segment",
+          "data_type": "varchar",
+          "description": "Risk level categorization: Low, Medium, or High.",
+          "sample_values": "Low|Medium|High"
+        },
+        {
+          "column_name": "underwriter_score",
+          "data_type": "integer",
+          "description": "Underwriter's credit score, ranging from 20 to 80.",
+          "sample_values": "66|66|66|20|20|20|37|37|37|80"
+        },
+        {
+          "column_name": "name",
+          "data_type": "varchar",
+          "description": "\"Customer full name, e.g. 'Janet Fitzgerald'\"",
+          "sample_values": "Janet Fitzgerald|Janet Fitzgerald|Janet Fitzgerald|Amy Richard|Amy Richard|Amy Richard|Darrell Cisneros|Darrell Cisneros|Darrell Cisneros|Kristin Suarez"
+        },
+        {
+          "column_name": "age",
+          "data_type": "integer",
+          "description": "Age of individual, repeated values suggest possible data duplication or sampling.",
+          "sample_values": "35|35|35|27|27|27|47|47|47|61"
+        },
+        {
+          "column_name": "gender",
+          "data_type": "varchar",
+          "description": "\"Gender: Character string indicating male, female, or other.\"",
+          "sample_values": "f|Female|Other|Male"
+        },
+        {
+          "column_name": "marital_status",
+          "data_type": "varchar",
+          "description": "Marital status of customer (e.g. Single, Married, Divorced, Widowed)",
+          "sample_values": "Divorced|Single|Widowed|Married"
+        },
+        {
+          "column_name": "dependents",
+          "data_type": "integer",
+          "description": "Number of dependents for the account holder.",
+          "sample_values": "2|1|3|4|0"
+        },
+        {
+          "column_name": "education_level",
+          "data_type": "varchar",
+          "description": "\"Education level of customer (e.g. Bachelors, Masters, PhD, High School)\"",
+          "sample_values": "Bachelors|Masters|PhD|High School"
+        },
+        {
+          "column_name": "employment_status",
+          "data_type": "varchar",
+          "description": "\"Employment status of the individual (e.g. Unemployed, Retired, Salaried, Self-Employed)\"",
+          "sample_values": "Unemployed|Retired|Salaried|Self-Employed"
+        },
+        {
+          "column_name": "annual_income",
+          "data_type": "integer",
+          "description": "Annual income in dollars, with values ranging from 120794 to 157415.",
+          "sample_values": "155575|155575|155575|153322|153322|153322|157415|157415|157415|120794"
+        },
+        {
+          "column_name": "loan_id",
+          "data_type": "varchar",
+          "description": "Unique loan identifier (e.g. L0002)",
+          "sample_values": "L0002|L0002|L0002|L0004|L0004|L0004|L0006|L0006|L0006|L0008"
+        },
+        {
+          "column_name": "emi_amount",
+          "data_type": "decimal(9,2)",
+          "description": "\"emi_amount: Decimal(9,2), represents Equated Monthly Installment amount, mostly zero values.\"",
+          "sample_values": "0.00|0.00|0.00|0.00|0.00|0.00|0.00|0.00|0.00|0.00"
+        },
+        {
+          "column_name": "payment_start_date",
+          "data_type": "date",
+          "description": "Date when payment starts, in YYYY-MM-DD format.",
+          "sample_values": "2025-07-24|2025-07-24|2025-07-24|2024-10-02|2024-10-02|2024-10-02|2023-10-15|2023-10-15|2023-10-15|2025-07-23"
+        },
+        {
+          "column_name": "payment_status",
+          "data_type": "varchar",
+          "description": "\"Payment status: P (Paid), On-time, Delayed, or Defaulted\"",
+          "sample_values": "P|On-time|Delayed|Defaulted"
+        },
+        {
+          "column_name": "days_past_due",
+          "data_type": "integer",
+          "description": "\"Days past due: integer value representing number of days an account is overdue.\"",
+          "sample_values": "0|1|73|70|64|63|86"
+        },
+        {
+          "column_name": "remaining_principal",
+          "data_type": "decimal(28,11)",
+          "description": "\"Remaining principal amount with high precision decimal value.\"",
+          "sample_values": "0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000|0.00000000000"
+        },
+        {
+          "column_name": "loan_status",
+          "data_type": "varchar",
+          "description": "\"Loan status: current state of loan (e.g. Active, Closed, Prepaid, Defaulted)\"",
+          "sample_values": "Closed|Prepaid|Active|Defaulted"
+        },
+        {
+          "column_name": "approval_status",
+          "data_type": "varchar",
+          "description": "\"Approval status of transaction (P, Rejected, Pending, Approved)\"",
+          "sample_values": "P|Rejected|Pending|Approved"
+        },
+        {
+          "column_name": "approval_date",
+          "data_type": "date",
+          "description": "Date when the transaction or account was approved.",
+          "sample_values": "2025-07-24|2025-07-24|2025-07-24|2024-10-02|2024-10-02|2024-10-02|2023-10-15|2023-10-15|2023-10-15|2025-07-23"
+        },
+        {
+          "column_name": "disbursed_amount",
+          "data_type": "integer",
+          "description": "\"Disbursed amount: integer value, always 0 in samples.\"",
+          "sample_values": "0|0|0|0|0|0|0|0|0|0"
+        },
+        {
+          "column_name": "disbursement_date",
+          "data_type": "date",
+          "description": "Date of disbursement, in YYYY-MM-DD format.",
+          "sample_values": "2025-07-24|2025-07-24|2025-07-24|2024-10-02|2024-10-02|2024-10-02|2023-10-15|2023-10-15|2023-10-15|2025-07-23"
+        },
+        {
+          "column_name": "loan_amount_requested",
+          "data_type": "integer",
+          "description": "\"Loan amount requested by customer (integer value)\"",
+          "sample_values": "543408|543408|543408|390423|390423|390423|488710|488710|488710|886131"
+        },
+        {
+          "column_name": "loan_term",
+          "data_type": "integer",
+          "description": "\"Loan term in months, e.g. 12, 24, 36, etc.\"",
+          "sample_values": "48|60|120|12|240|180|36|24|360"
+        },
+        {
+          "column_name": "interest_rate",
+          "data_type": "decimal(6,2)",
+          "description": "\"Interest rate as a decimal value with 2 decimal places, e.g. 8.02, 16.61, 19.10\"",
+          "sample_values": "8.02|8.02|8.02|16.61|16.61|16.61|19.10|19.10|19.10|5.40"
+        },
+        {
+          "column_name": "loan_purpose",
+          "data_type": "varchar",
+          "description": "\"loan_purpose: Description of loan's intended use (e.g. HomeLoan, Auto, Education)\"",
+          "sample_values": "HomeLoan|Auto|Education|Home|Business|Personal"
+        },
+        {
+          "column_name": "collateral_type",
+          "data_type": "varchar",
+          "description": "\"Collateral type (e.g. Vehicle, Property)\"",
+          "sample_values": "None|Vehicle|Property"
+        },
+        {
+          "column_name": "collateral_value",
+          "data_type": "decimal(30,13)",
+          "description": "Collateral value in high-precision decimal format, representing financial amounts with up to 30 digits and 13 decimal places.",
+          "sample_values": "776227.3859216123000|776227.3859216123000|776227.3859216123000|533248.4090894059000|533248.4090894059000|533248.4090894059000|505997.3330052929000|505997.3330052929000|505997.3330052929000|1053949.2930312210000"
+        },
+        {
+          "column_name": "application_date",
+          "data_type": "date",
+          "description": "Date when application was submitted.",
+          "sample_values": "2024-04-27|2024-04-27|2024-04-27|2023-12-18|2023-12-18|2023-12-18|2025-06-19|2025-06-19|2025-06-19|2023-11-10"
+        },
+        {
+          "column_name": "verification_status",
+          "data_type": "varchar",
+          "description": "\"Verification status of transaction: Verified, Rejected, or Pending.\"",
+          "sample_values": "Verified|Rejected|Pending"
+        },
+        {
+          "column_name": "loan_to_value_ratio",
+          "data_type": "decimal(5,2)",
+          "description": "Loan-to-value ratio as a decimal, e.g. 0.70, representing percentage of loan to property value.",
+          "sample_values": "0.70|0.70|0.70|0.73|0.73|0.73|0.97|0.97|0.97|0.84"
+        },
+        {
+          "column_name": "debt_to_income_ratio",
+          "data_type": "decimal(6,2)",
+          "description": "Debt-to-income ratio, a decimal value (6,2) representing percentage of income spent on debt repayment.",
+          "sample_values": "3.49|3.49|3.49|2.55|2.55|2.55|3.10|3.10|3.10|7.34"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Reorder Agents Chat API",
+    "version": "1.0.0",
+    "description": "API for interacting with the reorder agents chat service."
+  },
+  "servers": [
+    {
+      "url": "https://application-originbank-new.217d1aa7tv79.us-south.codeengine.appdomain.cloud/v1"
+    }
+  ],
+  "paths": {
+    "/sql_agent": {
+      "post": {
+        "summary": "Reporting Agent",
+        "operationId": "createChatCompletion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "example": "sql_agent",
+                    "default":"sql_agent",
+                    "description": "The model to be used for the chat."
+                  },
+                  "messages": {
+                    "type": "array",
+                    "description": "List of messages in the conversation.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": ["user", "assistant", "system"],
+                          "example": "user"
+                        },
+                        "content": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    }
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "Whether to stream the response.",
+                    "example": false
+                  },
+                  "extra_body": {
+                    "type": "object",
+                    "properties": {
+                      "thread_id": {
+                        "type": "string",
+                        "example": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response from the agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "a7a3825e-5629-45d3-a399-c797b8559c95"
+                    },
+                    "object": {
+                      "type": "string",
+                      "example": "chat.completion"
+                    },
+                    "created": {
+                      "type": "integer",
+                      "format": "int64",
+                      "example": 1755767055
+                    },
+                    "model": {
+                      "type": "string",
+                      "example": "sql_agent"
+                    },
+                    "choices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "index": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "message": {
+                            "type": "object",
+                            "properties": {
+                              "role": {
+                                "type": "string",
+                                "enum": ["assistant", "user", "system"],
+                                "example": "assistant"
+                              },
+                              "content": {
+                                "type": "string",
+                                "example": "I found 11 items in our inventory that match your search for \"string\"..."
+                              }
+                            }
+                          },
+                          "finish_reason": {
+                            "type": "string",
+                            "example": "stop"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

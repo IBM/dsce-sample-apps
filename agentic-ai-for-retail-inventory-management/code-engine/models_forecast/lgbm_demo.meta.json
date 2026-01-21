@@ -1,0 +1,19 @@
+{
+  "features": [
+    "lag_1",
+    "day_of_week",
+    "is_weekend",
+    "month",
+    "discount_percent",
+    "success_rate",
+    "propensity_score"
+  ],
+  "target": "sales",
+  "params": {
+    "n_estimators": 200,
+    "learning_rate": 0.05
+  },
+  "train_rows": 7834,
+  "test_rows": 1948,
+  "rmse": 3.083868915368418
+}
