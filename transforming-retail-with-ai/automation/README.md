@@ -122,11 +122,11 @@ You now have access to the full Retail Application source code, including backen
 Export the following variables before running the automation:
 
 ```bash
-export OCP_SERVER="https://a200-e.us-west.containers.cloud.ibm.com:32533"
-export OCP_TOKEN="sha256~MxZb2J1NOk7XJ2H2fgBPDbZd6IIHffQG"
+export OCP_SERVER="<Insert Server URL>"
+export OCP_TOKEN="<Insert-OCP-token>"
 
-export DOCKER_USERNAME="technologybuildingblocks"
-export DOCKER_PASSWORD="Workshops@123"
+export DOCKER_USERNAME="<Docker-user-name>"
+export DOCKER_PASSWORD="<docker password>"
 ```
 
 ---
