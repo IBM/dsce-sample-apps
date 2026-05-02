@@ -1,0 +1,5 @@
+- name: Verify backend deployment exists
+  command: oc get deployment retail-backend -n {{ namespace }}
+
+- command: oc rollout restart deployment/retail-backend -n {{ namespace }}
+- command: oc rollout restart deployment/retail-frontend -n {{ namespace }}

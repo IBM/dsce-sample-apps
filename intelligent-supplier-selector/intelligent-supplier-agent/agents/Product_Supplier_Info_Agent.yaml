@@ -1,0 +1,27 @@
+spec_version: v1
+style: planner
+structured_output: {type: "object", additionalProperties: false, properties: {data: {type: "array", items: {type: "object", additionalProperties: false, properties: {supplier_name: {type: "string"}, country: {type: "string"}, product: {type: "string"}, delivery_days: {type: "number"}}}}}}
+name: Demo_101_Product_Supplier_Info_Agent_planner
+llm: groq/openai/gpt-oss-120b
+description: |
+  Planner agent that retrieves and returns supplier information including supplier names, countries, delivery days, and product types (items/goods they supply).
+  This agent can filter suppliers by product type (coffee, tea, beans) and country, enabling users to find suppliers based on specific product and location criteria.
+  Returns supplier data as a flat JSON array with fields: supplier_name, country, product, and delivery_days.
+
+instructions: |
+  - CRITICAL: ALWAYS return ALL four fields (supplier_name, country, product, delivery_days) for every row in the data array. Never omit any of these fields.
+  - Step 1: Call demo_101_get_supplier_details() to get supplier_name, country, and product for all suppliers.
+  - Step 2: Call demo_101_get_supplier_delivery_days() to get supplier_name and delivery_days for all suppliers.
+  - Step 3: Merge the results from both tools by supplier_name to combine supplier details with delivery days.
+  - Step 4: If the query mentions a product type (coffee, tea, or beans), use demo_101_filter_data to filter by product field. Example: filter_data(data=merged_results, field="product", operator="equals", value="coffee")
+  - Step 5: If the query mentions a country, use demo_101_filter_data to filter by country field. Example: filter_data(data=filtered_results, field="country", operator="equals", value="India")
+  - Return the final results in JSON format: {"data": [{supplier_name, country, product, delivery_days}]}
+  - IMPORTANT: If no suppliers match the filter criteria, return {"data": []} - do NOT return suppliers that don't match.
+  - ALWAYS return valid JSON in the format {"data": [...]} even if the data array is empty.
+  - Ensure every row in the data array contains all four required fields: supplier_name, country, product, delivery_days.
+
+tools:
+  - demo_101_get_supplier_details
+  - demo_101_get_supplier_delivery_days
+  - demo_101_filter_data
+

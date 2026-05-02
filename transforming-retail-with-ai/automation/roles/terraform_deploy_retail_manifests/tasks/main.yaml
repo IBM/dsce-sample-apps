@@ -1,0 +1,30 @@
+---
+- name: Create terraform.tfvars
+  copy:
+    dest: "{{ terraform_dir }}/terraform/deploy_retail_manifests/terraform.tfvars"
+    mode: "0600"
+    content: |
+      namespace           = "{{ namespace }}"
+      docker_username     = "{{ docker_username }}"
+      ocp_server          = "{{ ocp_server }}"
+      ocp_token           = "{{ ocp_token }}"
+
+      postgres_db         = "{{ postgres_db }}"
+      postgres_user       = "{{ postgres_user }}"
+      postgres_password   = "{{ postgres_password }}"
+  no_log: true
+
+- name: Terraform Init
+  command: terraform init -no-color
+  args:
+    chdir: "{{ terraform_dir }}/terraform/deploy_retail_manifests"
+
+- name: Terraform Validate
+  command: terraform validate -no-color
+  args:
+    chdir: "{{ terraform_dir }}/terraform/deploy_retail_manifests"
+
+- name: Terraform Apply
+  command: terraform apply -auto-approve -no-color
+  args:
+    chdir: "{{ terraform_dir }}/terraform/deploy_retail_manifests"

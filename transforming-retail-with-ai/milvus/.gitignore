@@ -1,0 +1,14 @@
+# Milvus data volumes
+volumes/
+
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# Logs
+*.log

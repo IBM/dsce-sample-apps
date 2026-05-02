@@ -1,0 +1,218 @@
+[
+  {
+    "item_type": "coffee",
+    "supplier_name": "Brazil Premium Coffee Co",
+    "country": "Brazil",
+    "quality_grade": "A",
+    "delivery_days": 15,
+    "item_code": "item_code-011"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "S\u00e3o Paulo Coffee Export",
+    "country": "Brazil",
+    "quality_grade": "B",
+    "delivery_days": 12,
+    "item_code": "item_code-010"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Minas Coffee Traders",
+    "country": "Brazil",
+    "quality_grade": "A",
+    "delivery_days": 18,
+    "item_code": "item_code-014"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Rio Coffee Supply",
+    "country": "Brazil",
+    "quality_grade": "C",
+    "delivery_days": 10,
+    "item_code": "item_code-013"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Darjeeling Tea Estates",
+    "country": "India",
+    "quality_grade": "A",
+    "delivery_days": 20,
+    "item_code": "item_code-023"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Assam Tea Company",
+    "country": "India",
+    "quality_grade": "B",
+    "delivery_days": 18,
+    "item_code": "item_code-022"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Nilgiri Tea Traders",
+    "country": "India",
+    "quality_grade": "A",
+    "delivery_days": 22,
+    "item_code": "item_code-021"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Kangra Tea Co",
+    "country": "India",
+    "quality_grade": "C",
+    "delivery_days": 16,
+    "item_code": "item_code-028"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Karnataka Coffee Estates",
+    "country": "India",
+    "quality_grade": "A",
+    "delivery_days": 19,
+    "item_code": "item_code-011"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Tamil Nadu Coffee Traders",
+    "country": "India",
+    "quality_grade": "B",
+    "delivery_days": 17,
+    "item_code": "item_code-010"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Kerala Coffee Export",
+    "country": "India",
+    "quality_grade": "A",
+    "delivery_days": 21,
+    "item_code": "item_code-014"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Mexican Bean Exporters",
+    "country": "Mexico",
+    "quality_grade": "B",
+    "delivery_days": 8,
+    "item_code": "item_code-031"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Oaxaca Bean Supply",
+    "country": "Mexico",
+    "quality_grade": "A",
+    "delivery_days": 10,
+    "item_code": "item_code-039"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Yucatan Bean Traders",
+    "country": "Mexico",
+    "quality_grade": "C",
+    "delivery_days": 6,
+    "item_code": "item_code-036"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Chiapas Bean Co",
+    "country": "Mexico",
+    "quality_grade": "B",
+    "delivery_days": 9,
+    "item_code": "item_code-030"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Ethiopian Coffee Union",
+    "country": "Ethiopia",
+    "quality_grade": "A",
+    "delivery_days": 25,
+    "item_code": "item_code-010"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Sidamo Coffee Export",
+    "country": "Ethiopia",
+    "quality_grade": "A",
+    "delivery_days": 28,
+    "item_code": "item_code-011"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Harar Coffee Traders",
+    "country": "Ethiopia",
+    "quality_grade": "B",
+    "delivery_days": 22,
+    "item_code": "item_code-013"
+  },
+  {
+    "item_type": "coffee",
+    "supplier_name": "Yirgacheffe Coffee Co",
+    "country": "Ethiopia",
+    "quality_grade": "A",
+    "delivery_days": 30,
+    "item_code": "item_code-013"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Ceylon Tea Estates",
+    "country": "Sri Lanka",
+    "quality_grade": "A",
+    "delivery_days": 24,
+    "item_code": "item_code-028"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Dimbula Tea Company",
+    "country": "Sri Lanka",
+    "quality_grade": "B",
+    "delivery_days": 20,
+    "item_code": "item_code-029"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Nuwara Eliya Tea Co",
+    "country": "Sri Lanka",
+    "quality_grade": "A",
+    "delivery_days": 26,
+    "item_code": "item_code-020"
+  },
+  {
+    "item_type": "tea",
+    "supplier_name": "Uva Tea Traders",
+    "country": "Sri Lanka",
+    "quality_grade": "C",
+    "delivery_days": 18,
+    "item_code": "item_code-028"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Colombian Bean Export",
+    "country": "Colombia",
+    "quality_grade": "A",
+    "delivery_days": 14,
+    "item_code": "item_code-033"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Andean Bean Supply",
+    "country": "Colombia",
+    "quality_grade": "B",
+    "delivery_days": 12,
+    "item_code": "item_code-038"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Cauca Bean Traders",
+    "country": "Colombia",
+    "quality_grade": "A",
+    "delivery_days": 16,
+    "item_code": "item_code-036"
+  },
+  {
+    "item_type": "beans",
+    "supplier_name": "Tolima Bean Co",
+    "country": "Colombia",
+    "quality_grade": "C",
+    "delivery_days": 10,
+    "item_code": "item_code-033"
+  }
+]

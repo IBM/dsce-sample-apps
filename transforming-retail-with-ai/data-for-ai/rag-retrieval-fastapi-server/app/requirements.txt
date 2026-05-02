@@ -1,0 +1,15 @@
+﻿# FastAPI and server dependencies
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+
+# IBM Watsonx AI for embeddings
+ibm-watsonx-ai
+
+# Vector databases
+opensearch-py
+pymilvus[bulk_writer]
+
+# Additional dependencies
+requests

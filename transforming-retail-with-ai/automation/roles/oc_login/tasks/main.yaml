@@ -1,0 +1,2 @@
+- command: oc login --token={{ ocp_token }} --server={{ ocp_server }}
+  no_log: true

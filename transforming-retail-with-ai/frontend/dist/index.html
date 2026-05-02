@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Retail Demo App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Instana EUM Tracking Script -->
+    <script>
+      (function (s, t, a, n) {
+        s[t] ||
+          ((s[t] = a),
+          (n = s[a] = function () {
+            n.q.push(arguments);
+          }),
+          (n.q = []),
+          (n.v = 2),
+          (n.l = 1 * new Date()));
+      })(window, "InstanaEumObject", "ineum");
+
+      ineum("reportingUrl", "https://52.116.123.61.nip.io/eum/");
+      ineum("key", "EnX0ztHtTKOgfwC9Xz1d3w");
+      ineum("trackSessions");
+    </script>
+
+    <script
+      defer
+      crossorigin="anonymous"
+      src="https://52.116.123.61.nip.io/eum/1.7.5/eum.min.js"
+      integrity="sha384-HJjb3vveemdYNUfM1D28dTeXpPPbwPWJinH9ldaGt3KxCO0PNRc4Jb3oQIxMmJMk"
+    ></script>
+    <!-- End Instana EUM -->
+    <script type="module" crossorigin src="/assets/index-6kufdldH.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CpgVopyp.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+

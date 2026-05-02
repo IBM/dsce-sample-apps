@@ -1,0 +1,32 @@
+[
+  {
+    "country": "Brazil",
+    "risk_level": "medium",
+    "risk_factors": ["currency_volatility", "political_instability"]
+  },
+  {
+    "country": "India", 
+    "risk_level": "low",
+    "risk_factors": ["stable_economy", "good_infrastructure"]
+  },
+  {
+    "country": "Mexico",
+    "risk_level": "high", 
+    "risk_factors": ["political_uncertainty", "security_concerns", "trade_disputes"]
+  },
+  {
+    "country": "Ethiopia",
+    "risk_level": "high",
+    "risk_factors": ["political_instability", "infrastructure_challenges", "currency_issues"]
+  },
+  {
+    "country": "Sri Lanka",
+    "risk_level": "medium",
+    "risk_factors": ["economic_crisis", "political_transition"]
+  },
+  {
+    "country": "Colombia",
+    "risk_level": "medium", 
+    "risk_factors": ["security_concerns", "regulatory_changes"]
+  }
+]

@@ -1,0 +1,15 @@
+spec_version: v1
+style: planner
+# structured_output: {type: "object", additionalProperties: false, properties: {data: {type: "array", items: {type: "object", additionalProperties: false, properties: {supplier_name: {type: "string"}, reliability_score: {type: "number"}, items_count: {type: "number"}, trade_volume: {type: "number"}}}}}}
+name: Demo_101_Supplier_Performance_Agent_planner
+llm: groq/openai/gpt-oss-120b
+description: |
+  Planner agent that returns supplier performance as a flat JSON array.
+
+instructions: |
+  - Call get_supplier_risk_data and get_supplier_trade_stats.
+  - Merge on supplier_name and return {"data": [{supplier_name, reliability_score, items_count, trade_volume}]} as JSON.
+
+tools:
+  - demo_101_get_supplier_risk_data
+  - demo_101_get_supplier_trade_stats

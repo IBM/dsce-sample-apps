@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rag-retrieval-api
+  namespace: tbb
+spec:
+  to:
+    kind: Service
+    name: rag-retrieval-api
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+
+

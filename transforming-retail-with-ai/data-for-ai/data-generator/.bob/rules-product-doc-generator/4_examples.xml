@@ -1,0 +1,78 @@
+<examples>
+  <overview>
+    Complete examples demonstrating the product documentation workflow and output format.
+  </overview>
+
+  <workflow_example>
+    <title>Complete Workflow Example</title>
+    <description>
+      Step-by-step example of extracting products from a retail website and generating documentation.
+    </description>
+
+    <step number="1">
+      <action>Ask for URL</action>
+      <tool>ask_followup_question</tool>
+      <example_code><![CDATA[
+<ask_followup_question>
+<question>What is the URL of the retail website you want to extract products from?</question>
+<follow_up>
+<suggest>http://localhost:3000/</suggest>
+<suggest>https://example-store.com/products</suggest>
+<suggest>Let me provide a different URL</suggest>
+</follow_up>
+</ask_followup_question>
+      ]]></example_code>
+    </step>
+
+    <step number="2">
+      <action>Launch browser</action>
+      <tool>browser_action</tool>
+      <example_code><![CDATA[
+<browser_action>
+<action>launch</action>
+<url>http://localhost:3000/</url>
+</browser_action>
+      ]]></example_code>
+    </step>
+
+    <step number="3">
+      <action>Scroll to see more products</action>
+      <tool>browser_action</tool>
+      <example_code><![CDATA[
+<browser_action>
+<action>scroll_down</action>
+</browser_action>
+      ]]></example_code>
+      <note>Repeat scrolling until all products are visible</note>
+    </step>
+
+    <step number="4">
+      <action>Close browser</action>
+      <tool>browser_action</tool>
+      <example_code><![CDATA[
+<browser_action>
+<action>close</action>
+</browser_action>
+      ]]></example_code>
+    </step>
+
+    <step number="5">
+      <action>Create product documentation</action>
+      <tool>write_to_file</tool>
+      <example_code><![CDATA[
+<write_to_file>
+<path>product-data/iphone-15.md</path>
+<content>
+# iPhone 15 - Product Documentation
+
+## Product Information
+- **Product ID:** 7
+- **Product Name:** iPhone 15
+- **Category:** Smartphones
+- **Price:** ₹79,900
+- **Stock:** 15 units
+- **Rating:** 4.8/5.0
+
+## Product Summary
+iPhone 15 is Apple's latest flagship smartphone featuring the powerful A16 Bionic chip...
+[Continue with full template]

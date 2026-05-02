@@ -1,0 +1,48 @@
+/* Fullscreen overlay to center the popup */
+.toast-center-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* allows clicking through */
+  z-index: 9999;
+}
+
+/* The popup */
+.toast-center {
+  background: rgba(17, 24, 39, 0.92); /* #111827 */
+  color: white;
+  padding: 14px 26px;
+  font-size: 16px;
+  border-radius: 14px;
+  font-weight: 500;
+
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  animation: toastZoom 0.45s ease-out, toastFadeOut 0.4s ease-in 1.8s forwards;
+  backdrop-filter: blur(6px);
+}
+
+/* Zoom-in animation */
+@keyframes toastZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.04) translateY(0);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Fade-out at end */
+@keyframes toastFadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retail-postgres
+  namespace: tbb
+  labels:
+    app: retail-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: retail-postgres
+  template:
+    metadata:
+      labels:
+        app: retail-postgres
+    spec:
+      serviceAccountName: retail
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: postgres
+          image: docker.io/technologybuildingblocks/retail-postgresql:1.0.0
+          env:
+            - name: POSTGRES_DB
+              value: retaildb
+            - name: POSTGRES_USER
+              value: retail_user
+            - name: POSTGRES_PASSWORD
+              value: retail_password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          resources:
+            requests:
+              cpu: "100m"        # Small guaranteed CPU → DB will spike under load
+              memory: "256Mi"    # Enough to run but low enough to show growth
+            limits:
+              cpu: "500m"        # Limits CPU so throttling is visible
+              memory: "1Gi"      # Safe upper limit to avoid DB OOMKilled
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          ports:
+            - containerPort: 5432
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: retail-postgres-pvc
+

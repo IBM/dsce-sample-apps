@@ -1,0 +1,18 @@
+# Requirements for Smart Supply Agent Tools
+# Core dependencies for WatsonX Orchestrate agent tools
+
+# IBM WatsonX Orchestrate Agent Builder
+ibm-watsonx-orchestrate
+
+# JSON handling (built-in with Python, but listed for clarity)
+# json - built-in module
+
+# Optional: For future web scraping tools (if needed)
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Optional: For data manipulation (if we add pandas later)
+# pandas>=2.0.0
+
+# Optional: For testing
+# pytest>=7.0.0

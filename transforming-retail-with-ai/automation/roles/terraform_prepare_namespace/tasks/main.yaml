@@ -1,0 +1,12 @@
+- command: terraform init
+  args:
+    chdir: terraform/prepare_namespace
+
+- command: >
+    terraform apply -auto-approve
+    -var namespace={{ namespace }}
+    -var ocp_server={{ ocp_server }}
+    -var ocp_token={{ ocp_token }}
+  args:
+    chdir: terraform/prepare_namespace
+  no_log: false

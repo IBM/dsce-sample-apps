@@ -1,0 +1,4 @@
+- command: podman build -t docker.io/{{ docker_username }}/retail-backend:1.0.0 .
+  args:
+    chdir: "{{ app_dir }}/backend"
+- command: podman push docker.io/{{ docker_username }}/retail-backend:1.0.0
