@@ -1,0 +1,14 @@
+spec_version: v1
+style: planner
+structured_output: {type: "object", additionalProperties: false, properties: {data: {type: "array", items: {type: "object", additionalProperties: false, properties: {country: {type: "string"}, risk_level: {type: "string"}}}}}}
+name: Demo_101_Country_Risk_Agent_planner
+llm: groq/openai/gpt-oss-120b
+description: |
+  Planner agent that returns country risk levels as a flat JSON array.
+
+instructions: |
+  - Call get_country_risk_levels.
+  - Map each entry and return {"data": [{country, risk_level}]} as JSON.
+
+tools:
+  - demo_101_get_country_risk_levels

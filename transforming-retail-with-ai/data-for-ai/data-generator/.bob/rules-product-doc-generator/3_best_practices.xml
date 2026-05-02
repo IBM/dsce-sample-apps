@@ -1,0 +1,285 @@
+<best_practices>
+  <overview>
+    Guidelines and best practices for generating high-quality product documentation
+    that is comprehensive, accurate, and valuable to users.
+  </overview>
+
+  <general_principles>
+    <principle priority="critical">
+      <name>One Tool Per Message</name>
+      <description>
+        Use exactly ONE tool per message and WAIT for user confirmation before proceeding.
+        Never assume success - always wait for the user's response after each tool use.
+      </description>
+      <rationale>
+        This ensures you can react to errors, adjust your approach based on results,
+        and maintain accurate state throughout the workflow.
+      </rationale>
+    </principle>
+
+    <principle priority="critical">
+      <name>Product-Data Folder Only</name>
+      <description>
+        ALL product documentation files MUST be created in the 'product-data' folder.
+        Never create files in the root directory or other locations.
+      </description>
+      <rationale>
+        Maintains organized structure and makes it easy to find all product documentation.
+      </rationale>
+    </principle>
+
+    <principle priority="high">
+      <name>Complete Information Extraction</name>
+      <description>
+        Scroll through the ENTIRE website to capture ALL products before starting documentation.
+        Don't stop at the first page or visible products.
+      </description>
+      <rationale>
+        Ensures comprehensive coverage of all products on the website.
+      </rationale>
+    </principle>
+
+    <principle priority="high">
+      <name>Ask When Unclear</name>
+      <description>
+        If product information is unclear, incomplete, or ambiguous, use ask_followup_question
+        to request clarification from the user before proceeding.
+      </description>
+      <rationale>
+        Prevents generating inaccurate or incomplete documentation.
+      </rationale>
+    </principle>
+  </general_principles>
+
+  <browser_automation_best_practices>
+    <practice>
+      <name>Coordinate Measurement</name>
+      <description>
+        When using browser_action with coordinates, ALWAYS measure on the ACTUAL screenshot
+        image dimensions, NOT the viewport size. Screenshots are often downscaled.
+      </description>
+      <format>
+        Use format: <coordinate>x,y@WIDTHxHEIGHT</coordinate> where WIDTHxHEIGHT
+        is the EXACT pixel size of the screenshot image you see.
+      </format>
+      <example>
+        If viewport is 1280x800 but screenshot is 1000x625, and you want to click at (500,300):
+        <coordinate>500,300@1000x625</coordinate>
+      </example>
+    </practice>
+
+    <practice>
+      <name>Systematic Scrolling</name>
+      <description>
+        Use browser_action with action="scroll_down" repeatedly to view all products.
+        Take note of products at each scroll position before scrolling further.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Close Browser</name>
+      <description>
+        Always close the browser with browser_action action="close" after extraction is complete.
+        This frees up resources and signals completion of the browsing phase.
+      </description>
+    </practice>
+  </browser_automation_best_practices>
+
+  <content_generation_best_practices>
+    <practice>
+      <name>Professional Language</name>
+      <description>
+        Write in professional, engaging language that is clear and accessible.
+        Avoid overly technical jargon unless appropriate for the product category.
+      </description>
+      <good_examples>
+        <example>"The MacBook Air M2 delivers exceptional performance with all-day battery life"</example>
+        <example>"Perfect for professionals who demand reliability and cutting-edge features"</example>
+      </good_examples>
+      <bad_examples>
+        <example>"This product is good"</example>
+        <example>"It has features"</example>
+      </bad_examples>
+    </practice>
+
+    <practice>
+      <name>Specific and Detailed</name>
+      <description>
+        Provide specific, detailed information rather than vague generalities.
+        Include numbers, measurements, and concrete details.
+      </description>
+      <good_examples>
+        <example>"Up to 18 hours of battery life"</example>
+        <example>"8-core CPU with 10-core GPU"</example>
+        <example>"13.6-inch Liquid Retina display with 500 nits brightness"</example>
+      </good_examples>
+      <bad_examples>
+        <example>"Long battery life"</example>
+        <example>"Fast processor"</example>
+        <example>"Nice display"</example>
+      </bad_examples>
+    </practice>
+
+    <practice>
+      <name>Realistic Specifications</name>
+      <description>
+        Generate realistic technical specifications appropriate for the product type and price point.
+        Research similar products if needed to ensure authenticity.
+      </description>
+      <guidelines>
+        <guideline>Match specs to product category (laptop, phone, headphones, etc.)</guideline>
+        <guideline>Ensure specs are consistent with price point</guideline>
+        <guideline>Use proper technical terminology</guideline>
+        <guideline>Include relevant measurements and units</guideline>
+      </guidelines>
+    </practice>
+
+    <practice>
+      <name>Authentic Customer Sentiment</name>
+      <description>
+        Create authentic-sounding customer reviews and feedback that reflect real user experiences.
+        Balance positive aspects with constructive feedback.
+      </description>
+      <guidelines>
+        <guideline>Mention specific features users appreciate</guideline>
+        <guideline>Include realistic concerns or limitations</guideline>
+        <guideline>Vary the tone and focus of different feedback points</guideline>
+        <guideline>Make feedback relevant to the product category</guideline>
+      </guidelines>
+    </practice>
+
+    <practice>
+      <name>Consistency Across Documents</name>
+      <description>
+        Maintain consistent formatting, tone, and structure across all product documents.
+        Each document should feel like part of a cohesive catalog.
+      </description>
+      <checklist>
+        <item>Same section order in all documents</item>
+        <item>Consistent formatting of prices, ratings, and specs</item>
+        <item>Similar level of detail across products</item>
+        <item>Consistent tone and writing style</item>
+      </checklist>
+    </practice>
+  </content_generation_best_practices>
+
+  <file_management_best_practices>
+    <practice>
+      <name>Kebab-Case Naming</name>
+      <description>
+        Always use kebab-case for filenames: lowercase with hyphens separating words.
+      </description>
+      <conversion_rules>
+        <rule>Convert to lowercase</rule>
+        <rule>Replace spaces with hyphens</rule>
+        <rule>Remove special characters (except hyphens)</rule>
+        <rule>Keep numbers as-is</rule>
+        <rule>Add .md extension</rule>
+      </conversion_rules>
+    </practice>
+
+    <practice>
+      <name>One Product Per File</name>
+      <description>
+        Create exactly one markdown file for each product. Never combine multiple products
+        in a single file or split one product across multiple files.
+      </description>
+    </practice>
+
+    <practice>
+      <name>Verify File Creation</name>
+      <description>
+        After creating all product files, use list_files on the product-data directory
+        to verify all products are documented.
+      </description>
+    </practice>
+  </file_management_best_practices>
+
+  <forbidden_practices>
+    <forbidden>
+      <practice>Creating readme.md files</practice>
+      <reason>Focus is solely on product documentation, not project documentation</reason>
+    </forbidden>
+
+    <forbidden>
+      <practice>Using "# Made with Bob" statements</practice>
+      <reason>Product documentation should be professional and not include tool attribution</reason>
+    </forbidden>
+
+    <forbidden>
+      <practice>Creating files outside product-data folder</practice>
+      <reason>All product documentation must be organized in the designated folder</reason>
+    </forbidden>
+
+    <forbidden>
+      <practice>Assuming tool success without confirmation</practice>
+      <reason>Must wait for user confirmation to ensure accuracy and handle errors</reason>
+    </forbidden>
+
+    <forbidden>
+      <practice>Using placeholder or incomplete content</practice>
+      <reason>All documentation must be complete and comprehensive</reason>
+    </forbidden>
+  </forbidden_practices>
+
+  <markdown_formatting_rules>
+    <rule>
+      <name>Clickable References</name>
+      <description>
+        ALL filename and language construct references MUST be shown as clickable markdown links.
+      </description>
+      <format>
+        - Filenames: [`filename.ext`](relative/path/to/file.ext)
+        - Language constructs: [`Class.method()`](relative/path/to/file.ext:line)
+      </format>
+      <note>
+        Line numbers are required for language constructs, optional for filename links.
+      </note>
+    </rule>
+
+    <rule>
+      <name>Consistent Formatting</name>
+      <description>
+        Use consistent markdown formatting throughout all documents.
+      </description>
+      <standards>
+        <standard>Use ## for main sections</standard>
+        <standard>Use ### for subsections</standard>
+        <standard>Use **bold** for field labels</standard>
+        <standard>Use - for bullet lists</standard>
+        <standard>Use 1. for numbered lists</standard>
+        <standard>Use --- for horizontal rules</standard>
+      </standards>
+    </rule>
+  </markdown_formatting_rules>
+
+  <quality_checklist>
+    <category name="before_starting">
+      <item>Received website URL from user</item>
+      <item>Understand the product category and type</item>
+      <item>Browser is ready to launch</item>
+    </category>
+
+    <category name="during_extraction">
+      <item>Scrolled through entire website</item>
+      <item>Captured all product information</item>
+      <item>Noted all relevant details</item>
+      <item>Closed browser after extraction</item>
+    </category>
+
+    <category name="during_documentation">
+      <item>Following template structure exactly</item>
+      <item>Using kebab-case for filenames</item>
+      <item>Creating files in product-data folder</item>
+      <item>Waiting for confirmation after each file</item>
+      <item>Writing professional, detailed content</item>
+    </category>
+
+    <category name="before_completion">
+      <item>All products documented</item>
+      <item>All files in product-data folder</item>
+      <item>Verified with list_files</item>
+      <item>No readme or extra files created</item>
+    </category>
+  </quality_checklist>
+</best_practices>

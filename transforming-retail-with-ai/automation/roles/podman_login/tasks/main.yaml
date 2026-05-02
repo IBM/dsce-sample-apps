@@ -1,0 +1,7 @@
+- name: Login to Docker registry
+  command: podman login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io
+  environment:
+    DOCKER_USERNAME: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    DOCKER_PASSWORD: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
+  no_log: true
+

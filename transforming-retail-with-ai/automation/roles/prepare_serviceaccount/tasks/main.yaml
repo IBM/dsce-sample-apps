@@ -1,0 +1,12 @@
+- name: Ensure ServiceAccount exists
+  command: oc create sa retail -n {{ namespace }}
+  register: sa_create
+  failed_when: false
+  changed_when: "'created' in sa_create.stdout"
+
+- name: Ensure pull secret is linked
+  command: oc secrets link retail dockerhub-secret --for=pull -n {{ namespace }}
+  register: secret_link
+  failed_when: false
+  changed_when: "'linked' in secret_link.stdout"
+

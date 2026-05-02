@@ -1,0 +1,8 @@
+- shell: oc get route -n {{ namespace }} | grep retail-backend | awk '{print $2}'
+  register: backend_route
+
+- command: podman build --build-arg VITE_API_BASE_URL=https://{{ backend_route.stdout }}/api -t docker.io/{{ docker_username }}/retail-frontend:1.0.0 .
+  args:
+    chdir: "{{ app_dir }}/frontend"
+
+- command: podman push docker.io/{{ docker_username }}/retail-frontend:1.0.0

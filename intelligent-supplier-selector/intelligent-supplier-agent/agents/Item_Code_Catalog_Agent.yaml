@@ -1,0 +1,14 @@
+spec_version: v1
+style: planner
+structured_output: {type: "object", additionalProperties: false, properties: {data: {type: "array", items: {type: "object", additionalProperties: false, properties: {item_code: {type: "string"}, description: {type: "string"}}}}}}
+name: Demo_101_Item_Code_Catalog_Agent_planner
+llm: groq/openai/gpt-oss-120b
+description: |
+  Planner agent that returns item codes and descriptions as a flat JSON array.
+
+instructions: |
+  - Call get_item_code_catalog.
+  - Map each entry and return {"data": [{item_code, description}]} as JSON.
+
+tools:
+  - demo_101_get_item_code_catalog

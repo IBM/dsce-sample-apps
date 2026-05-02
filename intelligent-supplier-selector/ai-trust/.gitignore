@@ -1,0 +1,41 @@
+# Environment variables (contains secrets)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache and temporary files
+inference_engine_cache/
+*.log
+
+# Test data and results
+RAG-eval-dataset.xlsx
+*_evaluation_results.txt
+RAG_*.json
+eval_*.txt
+evaluation_results_*.txt
+
+# Local test files
+test_*.json
+!example_request.json  # Keep this example for users

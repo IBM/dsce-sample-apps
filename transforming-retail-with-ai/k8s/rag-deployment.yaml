@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-retrieval-api
+  namespace: tbb
+  labels:
+    app: rag-retrieval-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-retrieval-api
+  template:
+    metadata:
+      labels:
+        app: rag-retrieval-api
+    spec:
+      serviceAccountName: retail
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: rag-api
+          image: docker.io/technologybuildingblocks/retail-rag-retrieval:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "8080"
+            - name: SERVER_NAME
+              value: "rag-retrieval-api"
+            - name: SERVER_VERSION
+              value: "1.0.0"
+            - name: SERVER_DESCRIPTION
+              value: "FastAPI RAG Retrieval Server for semantic and keyword search"
+            - name: ENVIRONMENT
+              value: "production"
+            - name: ALLOWED_ORIGINS
+              value: "*"
+            - name: APP_BEARER_TOKEN
+              value: ""
+            # IBM Watsonx Embeddings Configuration
+            - name: WATSONX_URL
+              value: ${WATSONX_URL}
+            - name: WATSONX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: rag-credentials
+                  key: watsonx-api-key
+            - name: WATSONX_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: rag-credentials
+                  key: watsonx-project-id
+            - name: EMBEDDING_MODEL_ID
+              value: "intfloat/multilingual-e5-large"
+            # Vector Database Configuration
+            - name: VECTOR_DB_TYPE
+              value: "milvus"
+            # Milvus Configuration
+            - name: MILVUS_HOST
+              value: ${MILVUS_HOST}
+            - name: MILVUS_PORT
+              value: ${MILVUS_PORT}
+            - name: MILVUS_USER
+              value: ${MILVUS_USER}
+            - name: MILVUS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rag-credentials
+                  key: milvus-password
+            - name: MILVUS_SECURE
+              value: "true"
+            - name: MILVUS_COLLECTION
+              value: "product_insights"
+            - name: MILVUS_DENSE_FIELD
+              value: "vector"
+            - name: MILVUS_TEXT_FIELD
+              value: "text"
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 20
+
+

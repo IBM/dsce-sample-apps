@@ -1,0 +1,12 @@
+- replace:
+    path: "{{ app_dir }}/k8s/backend-deployment.yaml"
+    regexp: technologybuildingblocks
+    replace: "{{ docker_username }}"
+- replace:
+    path: "{{ app_dir }}/k8s/frontend-deployment.yaml"
+    regexp: technologybuildingblocks
+    replace: "{{ docker_username }}"
+- replace:
+    path: "{{ app_dir }}/k8s/postgres-deployment.yaml"
+    regexp: technologybuildingblocks
+    replace: "{{ docker_username }}"

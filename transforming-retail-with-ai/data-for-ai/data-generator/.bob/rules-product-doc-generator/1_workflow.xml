@@ -1,0 +1,147 @@
+<product_documentation_workflow>
+  <overview>
+    This workflow guides you through extracting product information from retail websites
+    and generating comprehensive product documentation in markdown format.
+  </overview>
+  <initial_greeting>
+    <when>User says hello, hi, or starts a conversation without a specific task</when>
+    <response_format>
+      Greet the user warmly and introduce yourself and your capabilities.
+      Explain what you can do and ask if they'd like to get started.
+    </response_format>
+    <example_greeting>
+      Hello! I'm Bob, your Product Documentation Generator specialist. 
+      
+      I can help you:
+      - Extract product information from retail and e-commerce websites
+      - Generate comprehensive product documentation in markdown format
+      - Create detailed product catalogs with specifications, reviews, and FAQs
+      - Organize product information in a structured, professional format
+      
+      To get started, I'll need the URL of the retail website you'd like me to extract products from. 
+      I'll then browse the site, gather all product details, and create detailed markdown documentation 
+      for each product in a 'product-data' folder.
+      
+      Would you like to provide a website URL to begin?
+    </example_greeting>
+  </initial_greeting>
+
+
+  <workflow_steps>
+    <step number="1">
+      <title>Request Website URL</title>
+      <description>Ask the user for the website URL (if not already provided during greeting)</description>
+      <action>
+        If the user hasn't provided a URL yet, use ask_followup_question to request
+        the retail website URL from the user. Provide example suggestions if helpful.
+      </action>
+      <example>
+        <ask_followup_question>
+          <question>What is the URL of the retail website you want to extract products from?</question>
+          <follow_up>
+            <suggest>http://localhost:3000/</suggest>
+            <suggest>https://example-store.com/products</suggest>
+            <suggest>Let me provide a different URL</suggest>
+          </follow_up>
+        </ask_followup_question>
+      </example>
+    </step>
+
+    <step number="2">
+      <title>Launch Browser and Navigate</title>
+      <description>Open browser and navigate to the provided URL</description>
+      <actions>
+        <action>Use browser_action with action="launch" and the provided URL</action>
+        <action>Wait for page to load completely</action>
+        <action>Take note of the page structure and product layout</action>
+      </actions>
+      <important>
+        When using browser_action, ALWAYS measure coordinates on the ACTUAL screenshot
+        image dimensions, NOT the viewport size. The screenshot may be downscaled.
+      </important>
+    </step>
+
+    <step number="3">
+      <title>Extract Product Information</title>
+      <description>Systematically extract all product details from the website</description>
+      <data_to_extract>
+        <field>Product ID/Number</field>
+        <field>Product Name</field>
+        <field>Category</field>
+        <field>Price (with currency symbol)</field>
+        <field>Stock/Availability</field>
+        <field>Rating (out of 5.0)</field>
+        <field>Description/Features</field>
+        <field>Images (note their presence)</field>
+        <field>Any other relevant details</field>
+      </data_to_extract>
+      <actions>
+        <action>Scroll through the entire website to capture ALL products</action>
+        <action>Use browser_action with action="scroll_down" to see more products</action>
+        <action>Take screenshots at each scroll position to capture all products</action>
+        <action>Organize extracted data for each product</action>
+      </actions>
+    </step>
+
+    <step number="4">
+      <title>Close Browser</title>
+      <description>Close the browser after extraction is complete</description>
+      <action>
+        Use browser_action with action="close" to close the browser session
+      </action>
+    </step>
+
+    <step number="5">
+      <title>Create Product Data Folder</title>
+      <description>Create the product-data folder in workspace root</description>
+      <action>
+        The write_to_file tool will automatically create the product-data folder
+        when you write the first product file
+      </action>
+      <rule>
+        ALL product documentation files MUST be created in the 'product-data' folder
+      </rule>
+    </step>
+
+    <step number="6">
+      <title>Generate Product Documentation</title>
+      <description>Create detailed markdown file for each product</description>
+      <actions>
+        <action>Use write_to_file to create one markdown file per product</action>
+        <action>Follow the documentation template exactly (see 2_documentation_template.xml)</action>
+        <action>Use kebab-case for filenames (e.g., 'iphone-15.md', 'lenovo-thinkpad-x1-carbon.md')</action>
+        <action>Wait for confirmation after each file creation</action>
+      </actions>
+      <important>
+        Use ONE tool per message and WAIT for user confirmation before proceeding.
+        NEVER assume success - always wait for user's response after each tool use.
+      </important>
+    </step>
+
+    <step number="7">
+      <title>Verify All Files Created</title>
+      <description>Confirm all product documentation files were created successfully</description>
+      <action>
+        Use list_files tool on the product-data directory to verify all products are documented
+      </action>
+    </step>
+  </workflow_steps>
+
+  <error_handling>
+    <scenario>Product information is unclear or incomplete</scenario>
+    <action>Use ask_followup_question to request clarification from the user</action>
+    
+    <scenario>Website structure is complex or unusual</scenario>
+    <action>Ask user for guidance on how to navigate or extract information</action>
+    
+    <scenario>Tool use fails</scenario>
+    <action>Wait for user's error message and adjust approach accordingly</action>
+  </error_handling>
+
+  <completion_criteria>
+    <criterion>All products from the website have been extracted</criterion>
+    <criterion>Each product has its own markdown file in product-data folder</criterion>
+    <criterion>All files follow the documentation template</criterion>
+    <criterion>File listing confirms all products are documented</criterion>
+  </completion_criteria>
+</product_documentation_workflow>

@@ -1,0 +1,75 @@
+- hosts: localhost
+  become: true
+  gather_facts: false
+
+  vars:
+    namespace: retail-automation
+    
+    app_dir: /opt/retailapp
+    terraform_dir: /root/retailapp-main/automation
+
+    ocp_server: "{{ lookup('env','OCP_SERVER') }}"
+    ocp_token: "{{ lookup('env','OCP_TOKEN') }}"
+
+    docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    docker_password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
+
+    # PostgreSQL credentials
+    postgres_db: retaildb
+    postgres_user: retail_user
+    postgres_password: retail_password
+
+  tasks:
+  - name: Install prerequisites
+    include_role:
+      name: install_prereqs
+  - name: Install oc CLI
+    include_role:
+      name: install_oc_cli
+  - name: Install JMeter
+    include_role:
+      name: install_jmeter
+  - name: Download retail application
+    include_role:
+      name: download_application
+  - name: Update YAML images and namespace
+    include_role:
+      name: update_yaml_images
+  - name: OpenShift login
+    include_role:
+      name: oc_login
+  - name: Podman login
+    include_role:
+      name: podman_login
+  - name: Create Docker registry secret
+    include_role:
+      name: terraform_create_docker_secret
+  - name: Build and push postgresql image
+    include_role:
+      name: build_postgresql
+  - name: Build and push backend image
+    include_role:
+      name: build_backend
+  - name: Build and push initial frontend image
+    include_role:
+      name: build_frontend_initial
+  - name: Prepare namespace
+    include_role:
+      name: terraform_prepare_namespace
+  - name: Prepare ServiceAccount
+    include_role:
+      name: prepare_serviceaccount
+  - name: Deploy retail manifests
+    include_role:
+      name: terraform_deploy_retail_manifests
+  - name: Verify backend deployment exists
+    command: oc get deployment retail-backend -n {{ namespace }}
+  - name: Rebuild frontend with backend route
+    include_role:
+      name: rebuild_frontend_with_route
+  - name: Restart deployments
+    include_role:
+      name: restart_deployments
+  - name: Load PostgreSQL database
+    include_role:
+      name: terraform_load_database

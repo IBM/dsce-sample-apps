@@ -1,0 +1,247 @@
+<documentation_template>
+  <overview>
+    This template defines the exact structure that MUST be followed for every product documentation file.
+    Each product gets its own markdown file following this comprehensive format.
+  </overview>
+
+  <template_structure>
+    <section name="header" required="true">
+      <format># [Product Name] - Product Documentation</format>
+      <example># Lenovo ThinkPad X1 Carbon - Product Documentation</example>
+    </section>
+
+    <section name="product_information" required="true">
+      <format>
+## Product Information
+- **Product ID:** [ID]
+- **Product Name:** [Name]
+- **Category:** [Category]
+- **Price:** [Price with currency]
+- **Stock:** [Stock quantity] units
+- **Rating:** [Rating]/5.0
+      </format>
+      <guidelines>
+        <guideline>Include currency symbol with price (e.g., ₹115,000 or $999)</guideline>
+        <guideline>Stock should be a number followed by "units"</guideline>
+        <guideline>Rating should be out of 5.0 (e.g., 4.8/5.0)</guideline>
+      </guidelines>
+    </section>
+
+    <section name="product_summary" required="true">
+      <format>
+## Product Summary
+[2-3 sentences describing the product, its purpose, and target audience]
+      </format>
+      <guidelines>
+        <guideline>Write 2-3 comprehensive sentences</guideline>
+        <guideline>Describe what the product is and what it does</guideline>
+        <guideline>Mention the target audience or ideal use case</guideline>
+        <guideline>Use professional, engaging language</guideline>
+      </guidelines>
+      <example>
+Lenovo ThinkPad X1 Carbon is a premium business ultrabook offering exceptional value and performance. 
+This 14-inch laptop features 16GB RAM and 512GB SSD, designed for professionals who demand quality, 
+reliability, and cutting-edge features in their computing devices.
+      </example>
+    </section>
+
+    <section name="key_features" required="true">
+      <format>
+## Key Features
+
+### [Feature Name]
+**Impact Level:** High/Medium/Low
+[Detailed description of the feature and its benefits]
+
+[Repeat for 4-5 key features]
+      </format>
+      <guidelines>
+        <guideline>Include 4-5 key features</guideline>
+        <guideline>Each feature needs a descriptive name</guideline>
+        <guideline>Impact Level must be: High, Medium, or Low</guideline>
+        <guideline>Provide detailed description (2-3 sentences) explaining the feature and its benefits</guideline>
+        <guideline>Focus on features that differentiate the product</guideline>
+      </guidelines>
+    </section>
+
+    <section name="use_cases" required="true">
+      <format>
+## Use Cases
+
+### [Use Case Title]
+[Description of who this is perfect for]
+
+**Benefits:**
+- [Benefit 1]
+- [Benefit 2]
+- [Benefit 3]
+- [Benefit 4]
+- [Benefit 5]
+
+[Include 3-4 use cases]
+      </format>
+      <guidelines>
+        <guideline>Include 3-4 distinct use cases</guideline>
+        <guideline>Each use case should target a specific user type or scenario</guideline>
+        <guideline>Provide 1-2 sentence description of who it's perfect for</guideline>
+        <guideline>List 4-5 specific benefits for that use case</guideline>
+        <guideline>Make benefits concrete and actionable</guideline>
+      </guidelines>
+    </section>
+
+    <section name="technical_specifications" required="true">
+      <format>
+## Technical Specifications
+
+### Core Specifications
+- **Category:** [Category]
+- **Model:** [Model]
+- [Other key specs]
+- **Price:** [Price]
+- **Rating:** [Rating]/5.0 stars
+
+[Include detailed technical specifications organized by category]
+      </format>
+      <guidelines>
+        <guideline>Start with Core Specifications section</guideline>
+        <guideline>Organize specs into logical categories (Performance, Display, Connectivity, etc.)</guideline>
+        <guideline>Be specific and detailed with technical details</guideline>
+        <guideline>Include realistic specifications appropriate for the product type</guideline>
+        <guideline>Use proper technical terminology</guideline>
+      </guidelines>
+    </section>
+
+    <section name="customer_sentiment" required="true">
+      <format>
+## Customer Sentiment
+
+### Overall Rating: [Rating]/5.0
+[Brief summary of customer feedback]
+
+### Positive Aspects
+1. **[Aspect]** - [Description]
+[List 5-7 positive aspects]
+
+### Common Feedback
+1. **[Topic]** - [Feedback]
+[List 4-5 common feedback points]
+      </format>
+      <guidelines>
+        <guideline>Provide realistic customer sentiment analysis</guideline>
+        <guideline>List 5-7 positive aspects with descriptions</guideline>
+        <guideline>List 4-5 common feedback points</guideline>
+        <guideline>Make feedback authentic and balanced</guideline>
+        <guideline>Include both strengths and constructive feedback</guideline>
+      </guidelines>
+    </section>
+
+    <section name="recommendations" required="true">
+      <format>
+## Recommendations
+
+### Complementary Products
+[List of products that enhance this product]
+
+### Alternatives to Consider
+[List of alternative products]
+      </format>
+      <guidelines>
+        <guideline>Suggest 4-6 complementary products</guideline>
+        <guideline>Suggest 2-3 alternative products</guideline>
+        <guideline>Make recommendations relevant and helpful</guideline>
+      </guidelines>
+    </section>
+
+    <section name="faqs" required="true">
+      <format>
+## Frequently Asked Questions
+
+**Q: [Question]**
+A: [Detailed answer]
+
+[Include 5-6 relevant FAQs]
+      </format>
+      <guidelines>
+        <guideline>Include 5-6 relevant questions</guideline>
+        <guideline>Questions should address common concerns</guideline>
+        <guideline>Provide detailed, helpful answers</guideline>
+        <guideline>Cover topics like features, comparisons, value, usage</guideline>
+      </guidelines>
+    </section>
+
+    <section name="best_for" required="true">
+      <format>
+## Best For
+- [Target audience 1]
+- [Target audience 2]
+[List 5-7 ideal user types]
+      </format>
+      <guidelines>
+        <guideline>List 5-7 ideal user types or scenarios</guideline>
+        <guideline>Be specific about who would benefit most</guideline>
+        <guideline>Consider different use cases and needs</guideline>
+      </guidelines>
+    </section>
+
+    <section name="conclusion" required="true">
+      <format>
+## Conclusion
+[2-3 sentences summarizing the product's value proposition and ideal use case]
+      </format>
+      <guidelines>
+        <guideline>Write 2-3 comprehensive sentences</guideline>
+        <guideline>Summarize the product's key value proposition</guideline>
+        <guideline>Reinforce who it's best for</guideline>
+        <guideline>End on a positive, conclusive note</guideline>
+      </guidelines>
+    </section>
+
+    <section name="footer" required="true">
+      <format>
+---
+**Document Version:** 1.0
+**Last Updated:** [Month Year]
+**Product ID:** [ID]
+**Stock Status:** [Stock] units available
+      </format>
+      <guidelines>
+        <guideline>Always use version 1.0 for new documents</guideline>
+        <guideline>Use current month and year</guideline>
+        <guideline>Include product ID from extracted data</guideline>
+        <guideline>Include stock quantity</guideline>
+      </guidelines>
+    </section>
+  </template_structure>
+
+  <file_naming_rules>
+    <rule>Use kebab-case for all filenames</rule>
+    <rule>Convert product name to lowercase</rule>
+    <rule>Replace spaces with hyphens</rule>
+    <rule>Remove special characters except hyphens</rule>
+    <rule>Add .md extension</rule>
+    <examples>
+      <example>
+        <product_name>Lenovo ThinkPad X1 Carbon</product_name>
+        <filename>lenovo-thinkpad-x1-carbon.md</filename>
+      </example>
+      <example>
+        <product_name>iPhone 15</product_name>
+        <filename>iphone-15.md</filename>
+      </example>
+      <example>
+        <product_name>Sony WH-1000XM5</product_name>
+        <filename>sony-wh-1000xm5.md</filename>
+      </example>
+    </examples>
+  </file_naming_rules>
+
+  <content_quality_standards>
+    <standard>Write in professional, engaging language</standard>
+    <standard>Be specific and detailed in all descriptions</standard>
+    <standard>Include realistic technical specifications</standard>
+    <standard>Create authentic-sounding customer reviews and feedback</standard>
+    <standard>Ensure all sections are comprehensive and valuable</standard>
+    <standard>Maintain consistency across all product documents</standard>
+    <standard>Generate real-world kind of product details including reviews</standard>
+  </content_quality_standards>
+</documentation_template>

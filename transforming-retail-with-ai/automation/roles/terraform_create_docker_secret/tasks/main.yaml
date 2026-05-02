@@ -1,0 +1,14 @@
+- command: terraform init
+  args:
+    chdir: terraform/create_docker_secret
+
+- command: >
+    terraform apply -auto-approve
+    -var namespace={{ namespace }}
+    -var docker_username={{ docker_username }}
+    -var docker_password={{ docker_password }}
+    -var ocp_server={{ ocp_server }}
+    -var ocp_token={{ ocp_token }}
+  args:
+    chdir: terraform/create_docker_secret
+  no_log: false

@@ -1,0 +1,66 @@
+[
+  {
+    "item_code": "item_code-010",
+    "description": "Roasted coffee beans, premium grade"
+  },
+  {
+    "item_code": "item_code-011",
+    "description": "Unroasted green coffee beans, specialty grade"
+  },
+  {
+    "item_code": "item_code-013",
+    "description": "Medium roast coffee beans, standard grade"
+  },
+  {
+    "item_code": "item_code-014",
+    "description": "Dark roast coffee beans, premium grade"
+  },
+  {
+    "item_code": "item_code-020",
+    "description": "Black tea leaves, loose leaf premium"
+  },
+  {
+    "item_code": "item_code-021",
+    "description": "Green tea leaves, loose leaf premium"
+  },
+  {
+    "item_code": "item_code-022",
+    "description": "White tea leaves, loose leaf specialty"
+  },
+  {
+    "item_code": "item_code-023",
+    "description": "Oolong tea leaves, loose leaf premium"
+  },
+  {
+    "item_code": "item_code-028",
+    "description": "Tea bags, herbal blend"
+  },
+  {
+    "item_code": "item_code-029",
+    "description": "Matcha green tea powder, premium grade"
+  },
+  {
+    "item_code": "item_code-030",
+    "description": "Dried black beans, whole grade A"
+  },
+  {
+    "item_code": "item_code-031",
+    "description": "Dried kidney beans, whole grade A"
+  },
+  {
+    "item_code": "item_code-033",
+    "description": "Dried navy beans, whole grade A"
+  },
+  {
+    "item_code": "item_code-036",
+    "description": "Dried lima beans, whole grade A"
+  },
+  {
+    "item_code": "item_code-038",
+    "description": "Organic dried beans, mixed variety"
+  },
+  {
+    "item_code": "item_code-039",
+    "description": "Dried adzuki beans, whole grade A"
+  }
+]
