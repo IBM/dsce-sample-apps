@@ -4,7 +4,7 @@ from enum import Enum
 class ModelEnum(str, Enum):
     # Models that are good at reasoning
     LLAMA_3_70_B_INSTRUCT = 'meta-llama/llama-3-3-70b-instruct'
-    GRANITE_3_8_B_INSTRUCT = 'ibm/granite-3-8b-instruct'
+    GRANITE_3_8_B_INSTRUCT = 'ibm/granite-4-h-small'
     MISTRAL_LARGE = 'mistralai/mistral-large'
     LLAMA_3_90_B_VISION = 'meta-llama/llama-3-2-90b-vision-instruct'
 
@@ -39,6 +39,6 @@ class AppConfig:
     AGENT_VERBOSE = True # Set to True to see the agent's thought, action and observation process in the console
     CSV_FILE_PATH = "docs/Example Stock portfolio.csv"
     CALL_TRANSCRIPT_PATH = "docs/Wealth Manager Consultation Call Transcript.docx"
-    USE_TOOL_CACHE = True if os.getenv('USE_TOOL_CACHE').lower() == 'true' else False
+    USE_TOOL_CACHE = os.getenv('USE_TOOL_CACHE', 'true').lower() == 'true'
     TOOL_CACHE = ToolCacheEnum
     FILE_SAVE_PATH = "public/static/reports/portfolio_report.pdf"

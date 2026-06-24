@@ -7,7 +7,7 @@ langchain_ibm
 langchain_huggingface
 ibm_watsonx_ai
 pymupdf
-pymilvus
+pymilvus[milvus_lite]
 pyarrow
 tavily-python
 langchain-experimental

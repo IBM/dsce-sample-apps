@@ -1,4 +1,4 @@
-from langchain.tools import StructuredTool
+from langchain_classic.tools import StructuredTool
 from pydantic import BaseModel, Field
 import os
 from src.core.llm import Watsonx
@@ -27,11 +27,15 @@ class GoldmanReportRetriever:
             self.summary_prompt = ffile.read()
 
     def get_information(self, username):
-        if app_config.USE_TOOL_CACHE:
-            with open(app_config.TOOL_CACHE.GOLDMAN_TOOL_CACHE, 'r') as f:
-                tool_output = f.read()
-            logger.info("TOOL: goldman_reports_retriever - returning cached results")
-            return tool_output
+        # Check cache if enabled and file exists
+        if app_config.USE_TOOL_CACHE and os.path.exists(app_config.TOOL_CACHE.GOLDMAN_TOOL_CACHE):
+            try:
+                with open(app_config.TOOL_CACHE.GOLDMAN_TOOL_CACHE, 'r') as f:
+                    tool_output = f.read()
+                logger.info("TOOL: goldman_reports_retriever - returning cached results")
+                return tool_output
+            except (IOError, OSError):
+                pass
         
         final_resp = "## Goldman report\n\n"
         # User questions
@@ -49,10 +53,14 @@ class GoldmanReportRetriever:
             final_resp += f"Question: {q}\nAnswer: {response}\n\n"
         prompt_formatted_str = self.summary_prompt.format(document=final_resp)
         response = llama3_llm.generate_text(prompt_formatted_str, guardrails=False)
+        
+        # Ensure cache directory exists before writing
+        cache_dir = os.path.dirname(app_config.TOOL_CACHE.GOLDMAN_TOOL_CACHE)
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
+        
         with open(app_config.TOOL_CACHE.GOLDMAN_TOOL_CACHE, 'w') as f:
-                f.write(
-                    response
-                )
+            f.write(response)
         logger.info("TOOL: goldman_reports_retriever - returning actual results")
         return response
     

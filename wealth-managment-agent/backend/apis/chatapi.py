@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from src.core.agent import Agent
 from src.core.rag import Rag
 from fastapi.responses import FileResponse
+import re
 
 # Tools
 from src.tools.goldman_report_retriever import GoldmanReportRetriever
@@ -143,6 +144,74 @@ async def generate(req: GenerateInputSchema, api_key_valid: bool = Depends(get_a
 
     input_data = req.input_data
     session_id = req.session_id if req.session_id else agent_session_id
+
+    portfolio_report_match = re.search(
+        r"report on (.+?)'?s stock investment portfolio",
+        input_data,
+        re.IGNORECASE
+    )
+
+    if portfolio_report_match:
+        username = portfolio_report_match.group(1).strip()
+        portfolio_markdown = portfolio_retriever_tool.get_portfolio(username)
+
+        if "not found in the database" in portfolio_markdown.lower():
+            return {
+                "output": portfolio_markdown,
+                "reasoning": None,
+                "execution_time": "0 sec"
+            }
+
+        security_names = []
+        for line in portfolio_markdown.splitlines():
+            if "|" not in line or "Security Name" in line or "---" in line:
+                continue
+            parts = [part.strip() for part in line.split("|") if part.strip()]
+            if len(parts) >= 4:
+                security_names.append(parts[1])
+
+        web_sections = []
+        reasoning_steps = []
+
+        for security_name in security_names:
+            performance_query = f"{security_name} performance"
+            news_query = f"{security_name} news"
+
+            performance_result = web_search_tool.get_web_info(performance_query)
+            news_result = web_search_tool.get_web_info(news_query)
+
+            reasoning_steps.append((type("Step", (), {"tool": "web_search_tool", "tool_input": performance_query})(), performance_result))
+            reasoning_steps.append((type("Step", (), {"tool": "web_search_tool", "tool_input": news_query})(), news_result))
+
+            web_sections.append(
+                f"## {security_name}\n\n"
+                f"### Performance\n{performance_result.get('answer', str(performance_result))}\n\n"
+                f"### News\n{news_result.get('answer', str(news_result))}\n"
+            )
+
+        combined_web_content = "\n\n".join(web_sections)
+        summarized_web_content = summarizer_tool.summarize_articles(combined_web_content)
+        goldman_summary = goldman_report_tool.get_information(username)
+
+        report_markdown = (
+            f"# Stock Investment Portfolio Report for {username}\n\n"
+            f"## Portfolio Holdings\n\n{portfolio_markdown}\n\n"
+            f"## Market and News Summary\n\n{summarized_web_content}\n\n"
+            f"## Goldman Sachs Report Insights\n\n{goldman_summary}\n"
+        )
+
+        save_pdf_tool.save_pdf_to_disk(report_markdown)
+
+        reasoning_steps.append((type("Step", (), {"tool": "portfolio_retriever", "tool_input": username})(), portfolio_markdown))
+        reasoning_steps.append((type("Step", (), {"tool": "summarizer_tool", "tool_input": "compiled market and news content"})(), summarized_web_content))
+        reasoning_steps.append((type("Step", (), {"tool": "goldman_reports_retriever", "tool_input": username})(), goldman_summary))
+        reasoning_steps.append((type("Step", (), {"tool": "save_pdf_to_disk", "tool_input": "generated markdown report"})(), report_markdown))
+
+        return {
+            "output": report_markdown,
+            "reasoning": agent.summarize_agent_actions(reasoning_steps) if agent else None,
+            "execution_time": "0 sec"
+        }
     
     if is_agent_initialized:
         response = agent.invoke_agent(

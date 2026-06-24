@@ -1,5 +1,5 @@
 import os
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -17,7 +17,20 @@ class Rag:
         self.milvus_client = self.rag_load(collection_name, doc_path)
 
     def rag_load(self, collection_name, doc_path) -> MilvusClient:
-        milvus_client = MilvusClient(f"db/milvus_{collection_name}.db")
+        # Ensure db directory exists
+        db_dir = 'db'
+        if not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+        
+        # Create Milvus database path
+        milvus_db_path = f"db/milvus_{collection_name}.db"
+        
+        # If milvus path exists as a file (not directory), remove it
+        if os.path.exists(milvus_db_path) and os.path.isfile(milvus_db_path):
+            os.remove(milvus_db_path)
+            logger.info(f"Removed existing file at {milvus_db_path}")
+        
+        milvus_client = MilvusClient(milvus_db_path)
         if milvus_client.has_collection(collection_name):
             # milvus_client.drop_collection(collection_name)
             logger.info(f"Collection {collection_name} already exists")

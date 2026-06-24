@@ -1,4 +1,4 @@
-from langchain.tools import StructuredTool
+from langchain_classic.tools import StructuredTool
 from pydantic import BaseModel, Field
 from src.core.llm import Watsonx
 from docx import Document
@@ -21,25 +21,34 @@ class TranscriptRetriever:
         self.init_prompt_templates()
     
     def init_prompt_templates(self):
-        with open(app_config.PROMPT.SUMMARIZER_PROMPT, 'r') as ffile:
+        with open(app_config.PROMPT.TRANSCRIPT_SUMMARIZER_PROMPT, 'r') as ffile:
             self.summary_prompt = ffile.read()
 
     def transcript_retriever_and_summarizer(self, no_input):
-        if app_config.USE_TOOL_CACHE:
-            with open(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE, 'r') as f:
-                tool_output = f.read()
-            logger.info("TOOL: transcript_retriever_tool - returning cached results")
-            return tool_output
+        # Check cache if enabled and file exists
+        if app_config.USE_TOOL_CACHE and os.path.exists(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE):
+            try:
+                with open(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE, 'r') as f:
+                    tool_output = f.read()
+                logger.info("TOOL: transcript_retriever_tool - returning cached results")
+                return tool_output
+            except (IOError, OSError):
+                pass
+        
         doc = Document(app_config.CALL_TRANSCRIPT_PATH)
         content = "\n".join([para.text for para in doc.paragraphs])
         
         prompt_formatted_str = self.summary_prompt.format(email=content)
         
         response = granite_llm.generate_text(prompt_formatted_str, guardrails=False)
+        
+        # Ensure cache directory exists before writing
+        cache_dir = os.path.dirname(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE)
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
+        
         with open(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE, 'w') as f:
-                f.write(
-                    response
-                )
+            f.write(response)
         logger.info("TOOL: transcript_retriever_tool - returning actual results")
         return response
         

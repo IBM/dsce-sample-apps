@@ -702,5 +702,410 @@
             }
         ],
         "response_time": 2.84
+    },
+    "IBM stock price 20 June": {
+        "query": "IBM stock price 20 June",
+        "follow_up_questions": null,
+        "answer": "As of June 20, 2026, IBM stock was trading at $249.40, down 5.05% from the previous close. The stock had a market capitalization of $233.99 billion. IBM's 52-week high was $332.46, and its 52-week low was $212.34.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.investing.com/equities/ibm-historical-data",
+                "title": "IBM Stock Price History - Investing.com",
+                "content": "[Open in App](https://www.investing.com/equities/ibm-historical-data). *   [Stocks](https://www.investing.com/equities/). *   [After Hours](https://www.investing.com/equities/after-hours). *   [Most Active](https://www.investing.com/equities/most-active-stocks). *   [Top Gainers](https://www.investing.com/equities/top-stock-gainers). *   [Top Losers](https://www.investing.com/equities/top-stock-losers). *   [Undervalued Stocks](https://www.investing.com/equities/most-undervalued). *   [Overvalued Stocks](https://www.investing.com/equities/most-overvalued). *   [Apple](https://www.investing.com/equities/apple-computer-inc). *   [Netflix](https://www.investing.com/equities/netflix,-inc.). *   [Cryptocurrency](https://www.investing.com/crypto/). *   [OFFICIAL TRUMP](https://www.investing.com/crypto/official-trump). *   [](https://www.investing.com/pro/). *   [More](https://www.investing.com/equities/ibm-historical-data). *   [Stocks](https://www.investing.com/equities). *   [After Hours](https://www.investing.com/equities/after-hours). *   [Top Gainers](https://www.investing.com/equities/top-stock-gainers). *   [Most Active](https://www.investing.com/equities/most-active-stocks). *   [Undervalued Stocks](https://www.investing.com/equities/most-undervalued). [Unlock Value](https://www.investing.com/pro/pricing/?entry=fair_value_header_widget&backTo=/equities/ibm&). *   [Overview](https://www.investing.com/equities/ibm). *   [Profile](https://www.investing.com/equities/ibm-company-profile). *   [Ownership](https://www.investing.com/equities/ibm-ownership). *   [Historical Data](https://www.investing.com/equities/ibm-historical-data). *   [Historical Splits](https://www.investing.com/equities/ibm-historical-data-splits). *   [Options](https://www.investing.com/equities/ibm-options). *   [Chart](https://www.investing.com/equities/ibm-chart). *   [Streaming Chart](https://www.investing.com/equities/ibm-chart). *   [News & Analysis](https://www.investing.com/equities/ibm-news). *   [News](https://www.investing.com/equities/ibm-news). *   [Analysis & Opinion](https://www.investing.com/equities/ibm-opinion). *   [Financials](https://www.investing.com/equities/ibm-financial-summary). *   [Ratios](https://www.investing.com/equities/ibm-ratios). *   [Dividends](https://www.investing.com/equities/ibm-dividends). *   [Earnings](https://www.investing.com/equities/ibm-earnings). *   [Forecast](https://www.investing.com/equities/ibm-consensus-estimates). *   [Technical](https://www.investing.com/equities/ibm-technical). *   [Technical Analysis](https://www.investing.com/equities/ibm-technical). *   [Candlestick Patterns](https://www.investing.com/equities/ibm-candlestick). *   [Forum](https://www.investing.com/equities/ibm-commentary). *   [Discussions](https://www.investing.com/equities/ibm-commentary). *   [Recent Sentiments](https://www.investing.com/equities/ibm-scoreboard). *   [Overview](https://www.investing.com/equities/ibm). *   [Profile](https://www.investing.com/equities/ibm-company-profile). *   [Ownership](https://www.investing.com/equities/ibm-ownership). *   [Historical Splits](https://www.investing.com/equities/ibm-historical-data-splits). *   [Options](https://www.investing.com/equities/ibm-options). [Video 1](https://www.investing.com/equities/ibm-historical-data). [Video 2](https://www.investing.com/equities/ibm-historical-data). | [NOW](https://www.investing.com/equities/servicenow-inc) | 124.37 | +14.38% | 68.24M |  |. | [IBM](https://www.investing.com/equities/ibm) | 297.80 | +12.71% | 28.48M |  |. | [NOW](https://www.investing.com/equities/servicenow-inc) | 124.37 | +14.38% | 68.24M |  |. [Most Undervalued Stocks](https://www.investing.com/equities/most-undervalued). [See full list](https://www.investing.com/equities/most-undervalued). *   [About Us](https://www.investing.com/about-us/).",
+                "score": 0.7352811,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.wsj.com/market-data/quotes/IBM/historical-prices",
+                "title": "International Business Machines Corp. Price & News - WSJ | IBM",
+                "content": "IBM (U.S.: NYSE) 4:00 PM EDT 06/18/26 $249.10 USD -13.25 -5.05% Volume 0 AFTER HOURS. HIGH LOW CLOSE VOLUME",
+                "score": 0.7197191,
+                "raw_content": null
+            },
+            {
+                "url": "https://robinhood.com/us/en/stocks/IBM",
+                "title": "IBM: IBM Stock Price Quote & News | Robinhood",
+                "content": "#### Trade IBM 24 hours a day, five days a week on Robinhood. As of today, IBM(IBM) shares are valued at $249.40. The company's market cap stands at 233.99B, with a P/E ratio of 22.03 and a dividend yield of 2.70%. The current price stands at $249.40, placing the stock +2.3% above today's low and -3.6% off the high. The IBM(IBM)'s current trading volume is 16.62M, compared to an average daily volume of 8.14M. In the last year, IBM(IBM) shares hit a 52-week high of $332.46 and a 52-week low of $212.34. ADP Stock The High ROE Dividend Play In Large CapsBenzinga 2d. Why Is IBM Stock Declining On Thursday? The Bull Case For IBM Could Change Following Massive Quantum Spend And New AI Alliances \u2013 Learn Why. In early June 2026, IBM and multiple partners announced a wave of AI, hybrid cloud, and quantum initiatives, including a more than US$10.00 billion five-year qu...",
+                "score": 0.6682966,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.marketwatch.com/investing/stock/ibm",
+                "title": "IBM Stock Price | International Business Machines Corp. Stock Quote (U.S.: NYSE) | MarketWatch",
+                "content": "|  | S&P 500 | 7,500.58 | 80.48 | 1.08% |. * \u2018I\u2019ll probably be working until I die\u2019: I\u2019m 60, work as a waiter and have $2,000 in a Roth IRA. * I\u2019m spending $170,000 to upgrade my home for my aging parents. What should I do with the money? * \u2018We are habitually frugal\u2019: My wife and I have money. * \u2018Money can make you happy\u2019: My wife and I have no heirs, but we\u2019re making the world a better place by giving it away. ### Technology The Next Hot Quantum Stock Is an AI Data-Center Play, Too. Jun. Jun. 18, 2026 at 4:34 p.m. ET by MarketWatch Automation. Jun. 18, 2026 at 11:52 a.m. ET by Gordon Gottsegen. 12, 2026 at 1:35 p.m. ET by Barron's. Jun. 9, 2026 at 2:56 p.m. ET by Barron's. Jun. 1, 2026 at 4:37 p.m. ET by Investor's Business Daily. Jun. 18, 2026 at 1:35 p.m. ET on Benzinga.com.",
+                "score": 0.6469293,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.cnn.com/markets/stocks/IBM",
+                "title": "IBM Stock Quote Price and Forecast - CNN",
+                "content": "IBM is trading in the middle of its 52-week range and near its 200-day simple moving average. The price of IBM shares has increased $2.10 since the market last closed. The stock has since risen $0.11 in after-hours trading. is an information technology company, which engages in the provision of integrated solutions that leverage information technology and knowledge of business processes. The Infrastructure segment offers solutions for hybrid cloud and is the foundation of the hybrid cloud stack. The Financing segment refers to the client and commercial financing, facilitating IBM clients\u2019 acquisition of IT systems, software, and services. ## Latest IBM news. Net Income increased 75.88% since last year and decreased 78.2% since last quarter. IBM's competitors are included in the Technology Services sector and Information Technology Services group. Dow Jones: The Dow Jones branded indices are proprietary to and are calculated, distributed and marketed by DJI Opco, a subsidiary of S&P Dow Jones Indices LLC and have been licensed for use to S&P Opco, LLC and CNN.",
+                "score": 0.62303346,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.26,
+        "request_id": "a0a7b53d-2ae4-47fc-b463-36b216b6fe82"
+    },
+    "US equity market vs global equity markets news": {
+        "query": "US equity market vs global equity markets news",
+        "follow_up_questions": null,
+        "answer": "US equity markets often outperform global markets, but international equities have recently gained attractiveness due to lower valuations. MSCI USA Index typically leads over MSCI World Index. Reuters provides current global market headlines.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.longtermtrends.com/msci-usa-vs-the-world",
+                "title": "US Stocks vs. The World - Updated Chart | LongtermTrends",
+                "content": "The chart above compares the performance of the MSCI USA index to the MSCI World index. On the other hand, the **MSCI World** index represents global equity performance and includes stocks from developed markets across the world. When the ratio rises, it indicates that US stocks outperform the rest of the world, whereas a decline in the ratio suggests underperformance by US stocks compared to the global market. This chart gives a different view of the data from the chart above, comparing the percentage change between the **MSCI USA Index** and the **MSCI World Index** over time. The ratio in the chart above divides the **MSCI USA** by the **MSCI All Country World Index** (ACWI). This chart gives a different view of the data from the chart above, comparing the percentage change between the **MSCI USA Index** and the **MSCI All Country World Index (ACWI)** over time. ## The Correlation Between the MSCI USA and the MSCI World Index.",
+                "score": 0.5614318,
+                "raw_content": null
+            },
+            {
+                "url": "https://dodgeandcox.com/individual-investor/us/en/insights/the-case-for-international-equities.html",
+                "title": "The Case for International Equities | Dodge & Cox",
+                "content": "Learn more about our approach and the Fund. * In early 2025, investor enthusiasm shifted from U.S. to international equities. By the end of 2024, international equities were the cheapest they have been relative to their U.S. counterparts. International Equities Are Trading at a Large Discount to U.S. Equities. The MSCI ACWI ex USA trades at only 13.4 times forward earnings compared to 20.9 times for the S&P 500 Index.4 At Dodge & Cox, our U.S., international, and global strategies all trade at a meaningful discount to their broader market given our active, value-oriented approach. While our thesis for each holding is unique, the following examples highlight businesses that are run by excellent management teams and trade at attractive valuations in our view.7 These companies have the potential to outperform their U.S. competitors, not have much U.S. competition, and/or operate in attractive end markets unavailable to U.S. peers.",
+                "score": 0.5073975,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.reuters.com/markets",
+                "title": "Global Market Headlines | Breaking Stock Market News - Reuters",
+                "content": "*   [World](https://www.reuters.com/world/). ## [Browse World](https://www.reuters.com/world/). *   [India](https://www.reuters.com/world/india/). *   [Business](https://www.reuters.com/business/). ## [Browse Business](https://www.reuters.com/business/). *   [Take Five](https://www.reuters.com/business/take-five/). *   [Markets](https://www.reuters.com/markets/). ## [Browse Markets](https://www.reuters.com/markets/). *   [On the Money](https://www.reuters.com/markets/on-the-money/). *   [Commodities](https://www.reuters.com/markets/commodities/). *   [Currencies](https://www.reuters.com/markets/currencies/). *   [Deals](https://www.reuters.com/markets/deals/). *   [ETFs](https://www.reuters.com/markets/etf/). *   [Funds](https://www.reuters.com/markets/funds/). *   [Econ World](https://www.reuters.com/markets/econ-world/). *   [Stocks](https://www.reuters.com/markets/stocks/). *   [U.S. Markets](https://www.reuters.com/markets/us/). *   [Wealth](https://www.reuters.com/markets/wealth/). *   [Sustainability](https://www.reuters.com/sustainability/). ## [Browse Sustainability](https://www.reuters.com/sustainability/). *   [Legal](https://www.reuters.com/legal/). ## [Sports](https://www.reuters.com/sports/). ## [Podcasts](https://www.reuters.com/podcasts/). *   [On the Money](https://www.reuters.com/markets/on-the-money/). *   [Commodities](https://www.reuters.com/markets/commodities/). *   [Currencies](https://www.reuters.com/markets/currencies/). *   [Deals](https://www.reuters.com/markets/deals/). *   [ETFs](https://www.reuters.com/markets/etf/). *   [Funds](https://www.reuters.com/markets/funds/). *   [Econ World](https://www.reuters.com/markets/econ-world/). *   [Stocks](https://www.reuters.com/markets/stocks/). *   [U.S. Markets](https://www.reuters.com/markets/us/). *   [Wealth](https://www.reuters.com/markets/wealth/). ### [Commodities](https://www.reuters.com/markets/commodities). | [Gold](https://www.reuters.com/markets/quote/GCc1/) | 4,145.30 | -1.87%Negative |. ### [Currencies](https://www.reuters.com/markets/currencies). | [US 10Y](https://www.reuters.com/markets/rates-bonds/) | 4.455 | +0.004 |. | [DE 10Y](https://www.reuters.com/markets/rates-bonds/) | 2.985 | +0.001 |. ### [Stocks](https://www.reuters.com/markets/stocks). | [S&P 500](https://www.reuters.com/markets/quote/.SPX/) | 7,500.58 | +1.08%Positive |. | [FTSE 100](https://www.reuters.com/markets/quote/.FTSE/) | 10,363.27 | -0.35%Negative |. | [Nikkei 225](https://www.reuters.com/markets/quote/.N225/) | 71,250.06 | +0.28%Positive |. ## [U.S. Markets](https://www.reuters.com/markets/us/). *   [Home](https://www.reuters.com/). *    [Podcasts](https://www.reuters.com/podcasts/). *   [Home](https://www.reuters.com/). *   [World](https://www.reuters.com/world/). *   [Business](https://www.reuters.com/business/). *   [Markets](https://www.reuters.com/markets/). *   [Sustainability](https://www.reuters.com/sustainability/). *   [Legal](https://www.reuters.com/legal/). *   [Sports](https://www.reuters.com/sports/). *    [Podcasts](https://www.reuters.com/podcasts/). *   [](https://www.facebook.com/Reuters). *   [](https://www.instagram.com/Reuters).",
+                "score": 0.49582586,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.youtube.com/watch?v=e5AZEQOgq2U",
+                "title": "Why Investors Are Looking Beyond The U.S. Market - YouTube",
+                "content": "International equities grabbed attention last year as they outpaced U.S. stocks, reversing the U.S. market's long-standing dominance.",
+                "score": 0.4851368,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.morningstar.com/markets",
+                "title": "US Markets, Company Earnings, Stock Market Trends, Market News",
+                "content": "![Image 7](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/v_fASPEM69_vjYV1gVINyVDjmbw=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/XHSS64XARBHPPL32QPOB7OJWHU.jpg) Karen Gilchrist Jun 16, 2026](https://www.morningstar.com/markets/how-much-lower-can-oil-prices-go-iran-peace-deal). *   #### [\u2018Nothing Else Matters\u2019 in Today\u2019s Market, Says Strategist ![Image 10](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/mrI7osC4qZZJ6rnZINgZoZD39i0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/54f9f69f-0232-435e-9557-5edc4b17c660.jpg) David Sekera, CFA May 14, 2026](https://www.morningstar.com/stocks/nothing-else-matters-todays-market-says-strategist). *   #### [How Investors Can Buy and Manage Core Stocks for the Long Term ![Image 19](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/mrI7osC4qZZJ6rnZINgZoZD39i0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/54f9f69f-0232-435e-9557-5edc4b17c660.jpg) David Sekera, CFA Jun 16, 2026](https://www.morningstar.com/podcasts/the-morning-filter/how-investors-can-buy-manage-core-stocks-long-term). *   #### [Markets Brief: Vanguard on the AI Borrowing Binge, Pimco on the Return of Financial Engineering ![Image 20](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/YjgJDbnJKTpSnNnTNZKcC6PLHdE=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/ed529c14-e87a-417f-a91c-4cee045d88b4.jpg) Tom Lauricella Jun 15, 2026](https://www.morningstar.com/markets/markets-brief-vanguard-ai-borrowing-binge-pimco-return-financial-engineering). *   #### [Smart Investor: 2026\u2019s Big Winners So Far, What\u2019s Next for SpaceX, and Bond Outlook ![Image 21](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/YjgJDbnJKTpSnNnTNZKcC6PLHdE=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/ed529c14-e87a-417f-a91c-4cee045d88b4.jpg) Tom Lauricella Jun 13, 2026](https://www.morningstar.com/markets/smart-investor-2026s-big-winners-so-far-whats-next-spacex-bond-outlook). ![Image 25](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/pIyA7-Q7VSLG2T8bQa5ke6Kpt0U=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/eac97a65-70a3-4d46-a9d1-f3eb40aed83f.jpg) Dan Romanoff, CPA Jun 18, 2026](https://www.morningstar.com/stocks/after-earnings-is-adobe-stock-buy-sell-or-fairly-valued-7). ![Image 26](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/Iszb0QWowWbKIhDvbLbqKl9BQo0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/4b77f405-7bc5-4c94-9e73-943b641ea977.jpg) Luke Yang, CFA Jun 17, 2026](https://www.morningstar.com/stocks/after-earnings-is-oracle-stock-buy-sell-or-fairly-valued-5). ![Image 29](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/y2_YboWTQ1sltsstAmj1P1FUbO0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/ca129aad-9614-4bf0-993b-3df5f6bfa41e.jpg) William Kerwin, CFA Jun 11, 2026](https://www.morningstar.com/stocks/after-earnings-is-broadcom-stock-buy-sell-or-fairly-valued-9). ![Image 38](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/mrI7osC4qZZJ6rnZINgZoZD39i0=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/54f9f69f-0232-435e-9557-5edc4b17c660.jpg) David Sekera, CFA Jun 5, 2026](https://www.morningstar.com/stocks/why-is-stock-market-overlooking-this-potential-headwind). ![Image 39](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/YjgJDbnJKTpSnNnTNZKcC6PLHdE=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/ed529c14-e87a-417f-a91c-4cee045d88b4.jpg) Tom Lauricella May 26, 2026](https://www.morningstar.com/markets/markets-brief-will-fed-really-raise-rates-2026). *   #### [Smart Investor: Stocks Leading the Rotation, Could Tariffs Rise Again, and the New Alts Manager Stock Meltdown ![Image 46](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/YjgJDbnJKTpSnNnTNZKcC6PLHdE=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/ed529c14-e87a-417f-a91c-4cee045d88b4.jpg) Tom Lauricella Feb 21, 2026](https://www.morningstar.com/markets/smart-investor-stocks-leading-rotation-could-tariffs-rise-again-new-alts-manager-stock-meltdown). ![Image 48](https://morningstar-morningstar-prod.web.arc-cdn.net/resizer/DTrW7N9n_mQlbJps6sq64s8jLyM=/2000x2000/author-service-images-prod-us-east-1.publishing.aws.arc.pub/morningstar/010b102c-b598-40b8-9642-c4f9552b403a.jpg) Preston Caldwell Feb 20, 2026](https://www.morningstar.com/markets/could-tariffs-go-still-higher-despite-supreme-court-ruling).",
+                "score": 0.38435796,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.45,
+        "request_id": "c31ac7d3-ea1b-47e9-9951-d5a9c7b14a87"
+    },
+    "TOPIX news": {
+        "query": "TOPIX news",
+        "follow_up_questions": null,
+        "answer": "TOPIX is a stock market index for the Tokyo Stock Exchange, currently stands at 4,095.05 on June 22, 2026, and reflects the performance of large-cap companies listed on the exchange.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.jpx.co.jp/english/markets/indices/topix",
+                "title": "TOPIX (TPX) | Japan Exchange Group - JPX",
+                "content": "| May. 08, 2026 | [Calculation of TOPIX in relation to shares of MAEZAWA Holdings CO.,LTD.](https://www.jpx.co.jp/english/news/6030/20260508-01.html) |. | Mar. 04, 2026 | [Calculation of TOPIX in relation to shares of Muninova Holdings Inc., etc.](https://www.jpx.co.jp/english/news/6030/20260304-01.html) |. | Sep. 04, 2024 | [Calculation of TOPIX in relation to shares of TOBISHIMA HOLDINGS Inc.](https://www.jpx.co.jp/english/news/6030/20240904-01.html) |. | Aug. 27, 2024 | [Index Calculation in Relation to Shares of MELCO HOLDINGS INC.](https://www.jpx.co.jp/english/news/6030/20240827-01.html) |. | Jun. 19, 2024 | [Index Consultation on Revisions of TOPIX and Other Indices](https://www.jpx.co.jp/english/news/6030/20240619-02.html) |. | May 07, 2024 | [Calculation of TOPIX in relation to shares of SAMTY HOLDINGS Co.,Ltd.](https://www.jpx.co.jp/english/news/6030/20240507-01.html) |. | Sep. 05, 2023 | [Calculation of TOPIX in relation to shares of MIGALO HOLDINGS Inc., etc.](https://www.jpx.co.jp/english/news/6030/20230905-01.html) |. | Jul. 14, 2023 | [Calculation of TOPIX in relation to shares of Confidence Inc.](https://www.jpx.co.jp/english/news/6030/20230714-01.html) |. | Aug. 03, 2022 | [Calculation of TOPIX in relation to shares of PICKLES HOLDINGS CO.,LTD.](https://www.jpx.co.jp/english/news/6030/20220803-01.html) |. | Mar. 03, 2022 | [Calculation of TOPIX in relation to shares of Procrea Holdings,Inc.](https://www.jpx.co.jp/english/news/1044/20220303-01.html) |.",
+                "score": 0.838376,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.tradingview.com/symbols/TSE-TOPIX/news",
+                "title": "TOPIX Latest News and Headlines - TradingView",
+                "content": "Find today's TOPIX Index news and updates to make informed decisions in strategies based on TOPIX.",
+                "score": 0.7707586,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.investing.com/indices/topix-news",
+                "title": "TOPIX News (TOPX) - Investing.com",
+                "content": "TOPIX (TOPX). Tokyo. Currency in JPY. Add to Watchlist. 4,095.05. +50.09(+1.24%). Closed\u00b7 22/06. Day's Range. 4,028.61. 4,103.76. 52 wk",
+                "score": 0.7552947,
+                "raw_content": null
+            },
+            {
+                "url": "https://en.wikipedia.org/wiki/Topix_(website)",
+                "title": "Topix (website) - Wikipedia",
+                "content": "Topix began as a news aggregator which categorizes news stories by topic and geography. In the last few years, Topix changed its focus from aggregation and",
+                "score": 0.75181264,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.google.com/finance/beta/quote/TOPIX:INDEXTOPIX",
+                "title": "TOPIX Price, Real-time Quote & News - Google Finance",
+                "content": "| *arrow\\_upward* Symbols  *arrow\\_upward* Symbols | Trend | Change | *arrow\\_upward* Price | *arrow\\_upward* Change | *arrow\\_upward* % Change | *arrow\\_upward* Prev Close | *arrow\\_upward* Open | *arrow\\_upward* High | *arrow\\_upward* Low | *arrow\\_upward* Volume | *arrow\\_upward* Mkt Cap |. | SIXB  Materials  SIXB  Materials | SIXB  +0.06% *arrow\\_upward* | \u2014 | 1,117.58  +0.06% *arrow\\_upward* | 1,117.58 | +0.70 *arrow\\_upward* | +0.06% *arrow\\_upward* | 1,116.88 | 1,114.55 | 1,120.41 | 1,111.62 | \u2014 | \u2014 |. | SIXE  Energy  SIXE  Energy | SIXE  -0.92% *arrow\\_downward* | \u2014 | 1,146.91  -0.92% *arrow\\_downward* | 1,146.91 | -10.61 *arrow\\_downward* | -0.92% *arrow\\_downward* | 1,157.52 | 1,153.71 | 1,154.77 | 1,145.26 | \u2014 | \u2014 |. | SIXI  Industrials  SIXI  Industrials | SIXI  +0.85% *arrow\\_upward* | \u2014 | 1,825.32  +0.85% *arrow\\_upward* | 1,825.32 | +15.41 *arrow\\_upward* | +0.85% *arrow\\_upward* | 1,809.91 | 1,810.47 | 1,826.91 | 1,810.25 | \u2014 | \u2014 |.",
+                "score": 0.6757865,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.24,
+        "request_id": "65280646-84b1-4c12-a8cb-78fee17ae940"
+    },
+    "STOXX 600 news": {
+        "query": "STOXX 600 news",
+        "follow_up_questions": null,
+        "answer": "The STOXX 600 reached an all-time high on June 15, 2026, and has shown recent volatility. The index closed at 638.53 points, up 0.9%.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.investing.com/indices/stoxx-600-news",
+                "title": "STOXX 600 News - Investing.com",
+                "content": "STOXX 600 News \u00b7 ByReuters \u00b7 Jun 17, 2026 \u00b7 2 \u00b7 Trading Day: US stocks end lower, dollar jumps as Federal Reserve kicks off Warsh era. By Stephen Culp",
+                "score": 0.8452414,
+                "raw_content": null
+            },
+            {
+                "url": "https://stoxx.com/news-research",
+                "title": "News & research | Blog posts | STOXX",
+                "content": "Sparinvest and STOXX Ltd., part of the ISS STOXX group of companies, today announced Sparinvest\u2019s launch of the first Danish-domiciled Exchange Traded Mutual Fund (the fund) tracking the STOXX\u00ae Europe 600 index. STOXX Ltd., part of the ISS STOXX group of companies, today announced the expansion of its collaboration with BlackRock following the launch of the iShares Space Technologies UCITS ETF (STAR), which tracks the STOXX\u00ae Global Space Satellites and Drones index. STOXX Ltd., part of the ISS STOXX group of companies and leading provider of benchmark and custom index solutions to global institutional investors, today announced the new composition of the DAX blue-chip indices. STOXX Ltd. part of the ISS STOXX group of companies and a leading provider of benchmark and custom index solutions to global institutional investors, today announced the new composition of the STOXX Europe 600 Index.",
+                "score": 0.8430832,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.cnbc.com/quotes/.STOXX",
+                "title": ".STOXX: STOXX Europe 600 - Stock Price, Quote and News - CNBC",
+                "content": "# STOXX Europe 600 .STOXX:STOXX. \\*Data is delayed | Exchange | EUR. * 52 Week High Date06/15/26. * 52 Week Low Date06/23/25. ## Latest On STOXX Europe 600. * Dow climbs above 52,000 for first time as oil prices fall, but tech sell-off knocks down S&P 500CNBC.com. * Luxury stocks spike on proposed U.S.-Iran peace deal; LVMH up 5%CNBC.com. * Stocks end higher as SpaceX soars in debut, U.S.-Iran deal nearsCNBC.com. * Stocks are recovering from a sell-off \u2014 but even bulls warn of more volatilityCNBC.com. * S&P 500 and Nasdaq close lower as chip stock rebound failsCNBC.com. * Weight loss drug maker sinks 23% after new safety data spooks investorsCNBC.com. * Global week ahead: Soccer isn't the only thing that's kicking offCNBC.com. * Global tech sell-off spreads to Europe as chip shares fallCNBC.com. * Universal Music slumps as Pershing exits; European stocks dipCNBC.com. * Dulux owner Akzo Nobel closes 17% lower after takeover talks collapseCNBC.com. There is no recent news for this security.",
+                "score": 0.82728493,
+                "raw_content": null
+            },
+            {
+                "url": "https://stoxx.com/post-type/press-releases",
+                "title": "Press releases - STOXX",
+                "content": "Sparinvest and STOXX Ltd., part of the ISS STOXX group of companies, today announced Sparinvest\u2019s launch of the first Danish-domiciled Exchange Traded Mutual Fund (the fund) tracking the STOXX\u00ae Europe 600 index. STOXX Ltd., part of the ISS STOXX group of companies and leading provider of benchmark and custom index solutions to global institutional investors, today announced the new composition of the DAX blue-chip indices. STOXX Ltd. part of the ISS STOXX group of companies and a leading provider of benchmark and custom index solutions to global institutional investors, today announced the new composition of the STOXX Europe 600 Index. STOXX Ltd., part of the ISS STOXX group of companies and leading provider of benchmark and custom index solutions to global institutional investors, today announced unscheduled adjustment in SDAX. STOXX Ltd., part of the ISS STOXX group of companies and leading provider of benchmark and custom index solutions to global institutional investors, today announced an unscheduled change to the MDAX and SDAX indices.",
+                "score": 0.81025416,
+                "raw_content": null
+            },
+            {
+                "url": "https://money.usnews.com/investing/news/articles/2026-06-15/europes-stoxx-600-hits-all-time-high",
+                "title": "Europe's STOXX 600 Hits All-Time High - U.S. News - Money",
+                "content": "The \u2060STOXX 600 was last up 0.9% at 638.53 points. (Reporting by Alun John and \u200bSamuel Indyk ; Editing by \u200bAmanda Cooper). Copyright 2026 Thomson",
+                "score": 0.78154784,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.23,
+        "request_id": "abef1f25-7cbb-4009-a02d-b1065325425e"
+    },
+    "MSCI EM news": {
+        "query": "MSCI EM news",
+        "follow_up_questions": null,
+        "answer": "MSCI Emerging Markets Index shows slight gains; foreign investors withdrew $27 billion in May; ETF EEM tracks the MSCI Emerging Markets Index.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.investing.com/indices/msci-emerging-markets-news",
+                "title": "MSCI Emerging Markets News (MSCIEF) - Investing.com",
+                "content": "## MSCI Emerging Markets News. Find the latest financial news about the MSCI Emerging Markets. * South Korea\u2019s stock rally shifts focus to potential MSCI market upgrade. Investing.com -- South Korea\u2019s stock market is approaching a key milestone as investors await MSCI\u2019s upcoming market... * Stocks weigh as foreign investors pull $27 billion out of emerging market portfolios in May. By Rodrigo Campos NEW YORK, June 10 (Reuters) - Foreign investors pulled nearly $27 billion net from emerging market portfolios... Investing.com --\u00a0The AI-driven rally in semiconductor and technology stocks is showing signs of exhaustion, Barclays strategists... * AI-led concentration is creating a market of stocks, not a stock market: Evercore. Investing.com -- The S&P 500 is becoming a market of stocks rather than a stock market, as record concentration in a handful of AI... Investing.com --\u00a0U.S. stocks and bonds are on a collision course, and only a sharp equity decline is likely to bring bond... | Aaa Aaaaaaaa Aa Aaaa | 43.70 | +76.42% | 77.10 |.",
+                "score": 0.85797083,
+                "raw_content": null
+            },
+            {
+                "url": "https://finance.yahoo.com/quote/EEM",
+                "title": "iShares MSCI Emerging Markets ETF (EEM) - Yahoo Finance",
+                "content": "*   [Finance](https://finance.yahoo.com/). *   [Finance](https://finance.yahoo.com/). *   [News](https://finance.yahoo.com/news/). *   [Markets](https://finance.yahoo.com/markets/). *   [Videos](https://finance.yahoo.com/videos/). 2.   [News](https://finance.yahoo.com/news/). 6.   [Crypto](https://finance.yahoo.com/markets/crypto/). 4.   [Markets](https://finance.yahoo.com/markets/). 1.   [Stocks](https://finance.yahoo.com/markets/stocks/). 1.   [Most active](https://finance.yahoo.com/markets/stocks/most-active/). 2.   [Day gainers](https://finance.yahoo.com/markets/stocks/gainers/). 3.   [Day losers](https://finance.yahoo.com/markets/stocks/losers/). 4.   [Trending](https://finance.yahoo.com/markets/stocks/trending/). 8.   [Most expensive](https://finance.yahoo.com/markets/stocks/most-expensive-stocks/). [Unusual volume](https://finance.yahoo.com/markets/stocks/unusual-volume-stocks/). 2.   [Crypto](https://finance.yahoo.com/markets/crypto/all/). 1.   [Most active](https://finance.yahoo.com/markets/crypto/most-active/). 2.   [Recently funded](https://finance.yahoo.com/markets/private-companies/recently-funded/). 3.   [Most funded](https://finance.yahoo.com/markets/private-companies/most-funded/). 4.   [Options](https://finance.yahoo.com/markets/options/most-active/). 5.   [Sectors](https://finance.yahoo.com/sectors/). 1.   [Technology](https://finance.yahoo.com/sectors/technology/). 7.   [Futures](https://finance.yahoo.com/markets/commodities/). 8.   [Currencies](https://finance.yahoo.com/markets/currencies/). [ETFs](https://finance.yahoo.com/markets/etfs/). 8.   [Videos](https://finance.yahoo.com/videos/). 8.   [ETF Report](https://finance.yahoo.com/topic/etf-report/). 9.   [Watch Now](https://finance.yahoo.com/live/). [S&P 500](https://finance.yahoo.com/quote/%5EGSPC/). [Dow 30](https://finance.yahoo.com/quote/%5EDJI/). [Nasdaq](https://finance.yahoo.com/quote/%5EIXIC/). [Russell 2000](https://finance.yahoo.com/quote/%5ERUT/). [VIX](https://finance.yahoo.com/quote/%5EVIX/). [Bitcoin USD](https://finance.yahoo.com/quote/BTC-USD/). *   [Summary](https://finance.yahoo.com/quote/EEM/ \"Summary\"). *   [Holdings](https://finance.yahoo.com/quote/EEM/holdings/ \"Holdings\"). *   [Performance](https://finance.yahoo.com/quote/EEM/performance/ \"Performance\"). [More about iShares MSCI Emerging Markets ETF](https://finance.yahoo.com/quote/EEM/profile/). [View More](https://finance.yahoo.com/quote/EEM/performance/ \"View More\"). [](https://finance.yahoo.com/quote/EEM/performance/ \"YTD Return\"). [](https://finance.yahoo.com/quote/EEM/performance/ \"1-Year Return\"). [](https://finance.yahoo.com/quote/EEM/performance/ \"3-Year Return\"). [View More](https://finance.yahoo.com/quote/EEM/performance/ \"View More\"). [](https://finance.yahoo.com/quote/EFA/ \"EFA\"). [](https://finance.yahoo.com/quote/EWZ/ \"EWZ\"). [](https://finance.yahoo.com/quote/FXI/ \"FXI\"). [](https://finance.yahoo.com/quote/EWJ/ \"EWJ\"). [](https://finance.yahoo.com/quote/IWM/ \"IWM\"). [View More](https://finance.yahoo.com/quote/EEM/holdings/ \"View More\"). [Technology](https://finance.yahoo.com/sectors/technology/)44.26%. [View More](https://finance.yahoo.com/quote/EEM/holdings/ \"View More\"). [](https://finance.yahoo.com/quote/XSD/ \"XSD\"). [](https://finance.yahoo.com/quote/FTXL/ \"FTXL\"). [](https://finance.yahoo.com/quote/SOXX/ \"SOXX\"). [](https://finance.yahoo.com/quote/PSI/ \"PSI\"). [](https://finance.yahoo.com/quote/SMH/ \"SMH\"). [](https://finance.yahoo.com/quote/QLD/ \"QLD\"). [](https://finance.yahoo.com/quote/EWT/ \"EWT\"). [](https://finance.yahoo.com/quote/AIA/ \"AIA\"). [](https://finance.yahoo.com/quote/FLTW/ \"FLTW\"). [](https://finance.yahoo.com/quote/KNCT/ \"KNCT\"). [](https://finance.yahoo.com/quote/CNXT/ \"CNXT\"). [](https://finance.yahoo.com/quote/EMXC/ \"EMXC\"). [](https://finance.yahoo.com/quote/PTF/ \"PTF\"). [](https://finance.yahoo.com/quote/AIQ/ \"AIQ\"). [](https://finance.yahoo.com/quote/XNTK/ \"XNTK\"). [](https://finance.yahoo.com/quote/XCEM/ \"XCEM\"). [Most active](https://finance.yahoo.com/most-active/).",
+                "score": 0.77548623,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.reuters.com/markets/quote/.MSCIEF",
+                "title": "(.MSCIEF) | Stock Price & Latest News - Reuters",
+                "content": "MSCI EM IDX \u00b7 June 19, 2026. EM assets fall as US-Iran talks stall \u00b7 June 17, 2026. LatAm assets broadly slide after Fed keeps door open to rate hike \u00b7 June 12,",
+                "score": 0.76951396,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.cnbc.com/quotes/MXEF",
+                "title": "MXEF: MSCI EM IDX - Stock Price, Quote and News - CNBC",
+                "content": "# MSCI EM IDX MXEF:MSCI. Last | 11:20 AM GMT. 1,780.50quote price arrow up+5.18 (+0.29%). * 52 Week High1,799.24. * 52 Week High Date06/03/26. * 52 Week Low1,388.12. * 52 Week Low Date03/31/26. ## Latest On MSCI EM IDX. ### KEY STATS. ## Content From Our Affiliates. There is no recent news for this security.",
+                "score": 0.7132923,
+                "raw_content": null
+            },
+            {
+                "url": "https://money.usnews.com/funds/etfs/diversified-emerging-mkts/ishares-msci-emerging-markets-etf/eem",
+                "title": "iShares MSCI Emerging Markets ETF (EEM) - U.S. News - Money",
+                "content": "The investment seeks to track the investment results of the MSCI Emerging Markets Index. The fund generally will invest at least 80% of its assets in the",
+                "score": 0.6780931,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.28,
+        "request_id": "5908b0b8-bb1c-4dbb-ab7a-e2978fbf3f26"
+    },
+    "US equity market vs global equity market": {
+        "query": "US equity market vs global equity market",
+        "follow_up_questions": null,
+        "answer": "The US equity market often outperforms global markets, but international equities can provide growth opportunities and diversification. Historically, US stocks have had higher valuations compared to global counterparts. Global markets can offer value and growth potential outside the US.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://www.longtermtrends.com/msci-usa-vs-the-world",
+                "title": "US Stocks vs. The World - Updated Chart | LongtermTrends",
+                "content": "The chart above compares the performance of the MSCI USA index to the MSCI World index. On the other hand, the **MSCI World** index represents global equity performance and includes stocks from developed markets across the world. When the ratio rises, it indicates that US stocks outperform the rest of the world, whereas a decline in the ratio suggests underperformance by US stocks compared to the global market. This chart gives a different view of the data from the chart above, comparing the percentage change between the **MSCI USA Index** and the **MSCI World Index** over time. The ratio in the chart above divides the **MSCI USA** by the **MSCI All Country World Index** (ACWI). This chart gives a different view of the data from the chart above, comparing the percentage change between the **MSCI USA Index** and the **MSCI All Country World Index (ACWI)** over time. ## The Correlation Between the MSCI USA and the MSCI World Index.",
+                "score": 0.7092009,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.reddit.com/r/Bogleheads/comments/1rmcnhd/us_vs_international_stocks_pros_and_cons",
+                "title": "US vs International Stocks \u2014 Pros and Cons? : r/Bogleheads - Reddit",
+                "content": "US has double the global average of its GDP, %-wise, in its stock market while Europe has half the global avg. The US system is more favorable",
+                "score": 0.6108487,
+                "raw_content": null
+            },
+            {
+                "url": "https://dodgeandcox.com/individual-investor/us/en/insights/the-case-for-international-equities.html",
+                "title": "The Case for International Equities | Dodge & Cox",
+                "content": "Learn more about our approach and the Fund. * In early 2025, investor enthusiasm shifted from U.S. to international equities. By the end of 2024, international equities were the cheapest they have been relative to their U.S. counterparts. International Equities Are Trading at a Large Discount to U.S. Equities. The MSCI ACWI ex USA trades at only 13.4 times forward earnings compared to 20.9 times for the S&P 500 Index.4 At Dodge & Cox, our U.S., international, and global strategies all trade at a meaningful discount to their broader market given our active, value-oriented approach. While our thesis for each holding is unique, the following examples highlight businesses that are run by excellent management teams and trade at attractive valuations in our view.7 These companies have the potential to outperform their U.S. competitors, not have much U.S. competition, and/or operate in attractive end markets unavailable to U.S. peers.",
+                "score": 0.5164741,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.blackrock.com/us/individual/insights/equity-market-outlook",
+                "title": "Equity market outlook - BlackRock",
+                "content": "I consult or invest on behalf of a financial institution. # Equity Market Outlook. ### Investing in AI. ### U.S. market broadening. However, AI is also showing signs of recalibration as the opportunity set broadens beyond the prevailing leaders. Importantly, we see that choice extending well beyond AI and the U.S., as pockets of opportunity present themselves around the globe. ## The makings of a broader U.S. stock market. But they may have been early as the mega-cap market leaders in the S&P 500 continued to drive returns for longer than many expected. Fundamental Equities Global CIO Carrie King says markets are anticipatory, and some of the recent rotation in returns may reflect investor expectations of broadening fundamental strength. She expects market broadening to come not in large swaths but in a growing number of interesting pockets, making the coming months and years a particularly exciting time for active stock selection. ## A global tour of stock market value.",
+                "score": 0.3649365,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.investopedia.com/terms/e/equitymarket.asp",
+                "title": "Understanding Equity Markets: Definition, Function, and Global ...",
+                "content": "The equity market, also known as the stock market, is a part of a market economy that facilitates the issuing and trading of company shares.",
+                "score": 0.3615484,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.25,
+        "request_id": "3b747640-012b-43c7-907e-f8dd81c30197"
+    },
+    "IBM stock price June 20": {
+        "query": "IBM stock price June 20",
+        "follow_up_questions": null,
+        "answer": "As of June 20, IBM stock was trading at $262.99, up 0.7% from the day's low and down 1.5% from the day's high. The company's market cap was around $237.29 billion. For the most current price, check a reliable financial news source.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://robinhood.com/us/en/stocks/IBM",
+                "title": "IBM Stock Price Quote & News | Robinhood",
+                "content": "#### Trade IBM 24 hours a day, five days a week on Robinhood. The company's market cap stands at 237.29B, with a P/E ratio of 22.03 and a dividend yield of 2.70%. The current price stands at $262.99, placing the stock +0.7% above today's low and -1.5% off the high. In the last year, IBM(IBM) shares hit a 52-week high of $332.46 and a 52-week low of $212.34. Quantum computing stocks gained renewed attention this week after President Donald Trump signed executive orders targeting a powerful U.S.-made quantum computer... Trump\u2019s 2 New Quantum Computing Orders Reignite the Next AI-Style Investing Boom. Trump\u2019s 2 New Quantum Computing Orders Reignite the Next AI-Style Investing BoomTipRanks 2h. Morgan Stanley raised the firm\u2019s price target on IBM (IBM) to $267 from $225 and keeps an Equal Weight rating on the shares. JPMorgan analyst Brian Essex upgraded IBM (IBM) to Overweight from Neutral with a price target of $291, up from $270.",
+                "score": 0.6844544,
+                "raw_content": null
+            },
+            {
+                "url": "https://finance.yahoo.com/quote/IBM",
+                "title": "International Business Machines Corporation (IBM) - Yahoo Finance",
+                "content": "*   [Finance](https://finance.yahoo.com/). *   [Finance](https://finance.yahoo.com/). *   [News](https://finance.yahoo.com/news/). *   [Markets](https://finance.yahoo.com/markets/). *   [Videos](https://finance.yahoo.com/videos/). 2.   [News](https://finance.yahoo.com/news/). 2.   [Earnings](https://finance.yahoo.com/topic/earnings/). 4.   [Markets](https://finance.yahoo.com/markets/). 1.   [Stocks](https://finance.yahoo.com/markets/stocks/). 1.   [Most active](https://finance.yahoo.com/markets/stocks/most-active/). 4.   [Trending](https://finance.yahoo.com/markets/stocks/trending/). 5.   [Highest dividend](https://finance.yahoo.com/markets/stocks/highest-dividend/). [Pink sheet](https://finance.yahoo.com/markets/stocks/pink-sheet-stocks/). [Unusual volume](https://finance.yahoo.com/markets/stocks/unusual-volume-stocks/). 3.   [Private companies](https://finance.yahoo.com/markets/private-companies/highest-valuation/). 3.   [Most funded](https://finance.yahoo.com/markets/private-companies/most-funded/). 5.   [Sectors](https://finance.yahoo.com/sectors/). 6.   [Industrials](https://finance.yahoo.com/sectors/industrials/). 7.   [Futures](https://finance.yahoo.com/markets/commodities/). 1.   [Earnings](https://finance.yahoo.com/calendar/earnings/). 4.   [Stock comparison](https://finance.yahoo.com/compare/). 8.   [Videos](https://finance.yahoo.com/videos/). 9.   [Watch Now](https://finance.yahoo.com/live/). [Nasdaq Futures](https://finance.yahoo.com/quote/NQ%3DF/). [VIX](https://finance.yahoo.com/quote/%5EVIX/). *   [Summary](https://finance.yahoo.com/quote/IBM/ \"Summary\"). *   [News](https://finance.yahoo.com/quote/IBM/news/ \"News\"). *   [Statistics](https://finance.yahoo.com/quote/IBM/key-statistics/ \"Statistics\"). *   [Financials](https://finance.yahoo.com/quote/IBM/financials/ \"Financials\"). [More about International Business Machines Corporation](https://finance.yahoo.com/quote/IBM/profile/). [View More](https://finance.yahoo.com/quote/IBM/news/ \"View More\"). [View More](https://finance.yahoo.com/quote/IBM/news/ \"View More\"). [](https://finance.yahoo.com/quote/IBM/analysis/ \"Earnings Per Share\"). [](https://finance.yahoo.com/quote/IBM/analysis/ \"Revenue vs. [View More](https://finance.yahoo.com/quote/IBM/analyst-insights/ \"View More\"). [](https://finance.yahoo.com/quote/IBM/analyst-insights/ \"Analyst Price Targets\"). [](https://finance.yahoo.com/quote/IBM/analyst-insights/ \"Analyst Recommendations\"). [](https://finance.yahoo.com/quote/IBM/analyst-insights/#upgrade-downgrade-table \"Latest Rating\"). [View More](https://finance.yahoo.com/quote/IBM/analyst-insights/ \"View More\"). [View More](https://finance.yahoo.com/quote/IBM/key-statistics/ \"View More\"). [View More](https://finance.yahoo.com/quote/IBM/key-statistics/ \"View More\"). [Compare](https://finance.yahoo.com/compare/IBM). [IBM International Business Machines Corporation](https://finance.yahoo.com/quote/IBM/). [IT Gartner, Inc.](https://finance.yahoo.com/quote/IT/). [](https://finance.yahoo.com/quote/CSCO/ \"CSCO\"). [](https://finance.yahoo.com/quote/ORCL/ \"ORCL\"). [](https://finance.yahoo.com/quote/INTC/ \"INTC\"). [](https://finance.yahoo.com/quote/JNJ/ \"JNJ\"). [](https://finance.yahoo.com/quote/WMT/ \"WMT\"). *   [INTC Intel Corporation 133.99+12.89(+10.64%)](https://finance.yahoo.com/quote/INTC/). *   [KEEL Keel Infrastructure Corp.6.29+0.32(+5.36%)](https://finance.yahoo.com/quote/KEEL/). *   [SNDK Sandisk Corporation 2,184.75+225.95(+11.54%)](https://finance.yahoo.com/quote/SNDK/). *   [BE Bloom Energy Corporation 328.91+43.92(+15.41%)](https://finance.yahoo.com/quote/BE/). [Most active](https://finance.yahoo.com/most-active/). *   [INTC Intel Corporation 133.99+12.89(+10.64%)](https://finance.yahoo.com/quote/INTC/).",
+                "score": 0.63452125,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.cnn.com/markets/stocks/IBM",
+                "title": "IBM Stock Quote Price and Forecast - CNN",
+                "content": "IBM is trading in the middle of its 52-week range and near its 200-day simple moving average. The price of IBM shares has increased $2.10 since the market last closed. The stock has since risen $0.11 in after-hours trading. is an information technology company, which engages in the provision of integrated solutions that leverage information technology and knowledge of business processes. The Infrastructure segment offers solutions for hybrid cloud and is the foundation of the hybrid cloud stack. The Financing segment refers to the client and commercial financing, facilitating IBM clients\u2019 acquisition of IT systems, software, and services. ## Latest IBM news. Net Income increased 75.88% since last year and decreased 78.2% since last quarter. IBM's competitors are included in the Technology Services sector and Information Technology Services group. Dow Jones: The Dow Jones branded indices are proprietary to and are calculated, distributed and marketed by DJI Opco, a subsidiary of S&P Dow Jones Indices LLC and have been licensed for use to S&P Opco, LLC and CNN.",
+                "score": 0.6307082,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.marketwatch.com/investing/stock/ibm",
+                "title": "IBM Stock Price | International Business Machines Corp. Stock ...",
+                "content": "|  | S&P 500 | 7,365.46 | -107.33 | -1.44% |. * Alphabet\u2019s stock is set to join the Dow, pivoting index\u2019s industrial roots toward tech. * Cerebras delivers its first earnings report \u2014 but it\u2019s not enough to lift the stock. * Micron and Sandisk lead a sharp tech selloff in a \u2018gut-check\u2019 moment for AI stocks. Jun. 23, 2026 at 2:32 p.m. ET by The Wall Street Journal. ### Technology Infleqtion, IBM, and Other Quantum Stocks Defy the Tech Selloff. 23, 2026 at 12:37 p.m. ET by MarketWatch Automation. Jun. 23, 2026 at 11:40 a.m. ET by Barron's. 23, 2026 at 7:30 a.m. ET by Barron's. Jun. 18, 2026 at 4:34 p.m. ET by MarketWatch Automation. Jun. 4, 2026 at 10:35 a.m. ET by Investor's Business Daily. Jun. 23, 2026 at 3:01 p.m. ET on GuruFocus.com. Jun. 23, 2026 at 2:33 p.m. ET on Motley Fool. Jun. 23, 2026 at 11:23 a.m. ET on TipRanks.com.",
+                "score": 0.57437146,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.macrotrends.net/stocks/charts/IBM/ibm/stock-price-history",
+                "title": "64 Year Stock Price History | IBM - Macrotrends",
+                "content": "## IBM - 15 Year Stock Price History | IBM. | IBM Historical Annual Stock Price Data | | | | | | |. | Year | Average Stock Price | Year Open | Year High | Year Low | Year Close | Annual % Change |. IBM is addressing the hybrid cloud and AI opportunity with a platform-centric approach focused on providing two primary sources of client value: technology and business expertise. IBM provides integrated solutions and products that leverage data, information technology, deep expertise in industries and business processes, trust and security, and a broad ecosystem of partners and alliances. Its hybrid cloud platform and AI technology and services capabilities support clients? | IonQ (IONQ) | United States | $10.556B | 0.00 |. | Infleqtion (INFQ) | United States | $2.725B | 0.00 |. | Digital China Holdings (DCHIF) | Hong Kong, SAR China | $0.569B | 0.00 |. | CSP (CSPI) | United States | $0.088B | 0.00 |.",
+                "score": 0.5082762,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.41,
+        "request_id": "1e021077-46ca-44b1-978a-0b1fda51d782"
+    },
+    "IBM stock price today": {
+        "query": "IBM stock price today",
+        "follow_up_questions": null,
+        "answer": "IBM stock price today is around $264.24, showing a slight increase from the previous close. The exact price may vary slightly across different platforms. For the most accurate and up-to-date information, check a reliable financial website.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://robinhood.com/us/en/stocks/IBM",
+                "title": "IBM Stock Price Quote & News | Robinhood",
+                "content": "The current price stands at $264.24, placing the stock +3.5% above today's low and -1.2% off the high. The IBM(IBM)'s current trading volume is 15.69M",
+                "score": 0.9322132,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.tradingview.com/symbols/NYSE-IBM",
+                "title": "IBM Stock Price and Chart \u2014 NYSE:IBM - TradingView",
+                "content": "The current price of IBM is 264.94 USD \u2014 it has increased by 5.52% in the past 24 hours. Watch International Business Machines Corporation stock price",
+                "score": 0.9121316,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.etoro.com/markets/ibm",
+                "title": "IBM Stock Price | Analyst Target 304.00 & Moderate Buy Consensus",
+                "content": "The current price of IBM is \u200e$\u200e264.10. What is International Business Machines Corporation (IBM)'s stock future price target? +.",
+                "score": 0.88705814,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.cnn.com/markets/stocks/IBM",
+                "title": "IBM Stock Quote Price and Forecast - CNN",
+                "content": "The price of IBM shares has increased $12.72 since the market last closed. This is a 5.04% rise. Closed at $264.94. The stock has since dropped $0.80 in after",
+                "score": 0.86136365,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.google.com/finance/beta/quote/IBM:NYSE",
+                "title": "IBM Common Stock (IBM) Stock Price & News - Google Finance",
+                "content": "Open. $261.58. High. $267.53. Low. $255.26. Mkt. cap. 249.01B \u00b7 Avg. vol. 10.80M ; Ex-dividend date. May 8, 2026. P/E ratio. 23.43. 52-wk high. $332.46. 52-wk low.",
+                "score": 0.8539252,
+                "raw_content": null
+            }
+        ],
+        "response_time": 1.02,
+        "request_id": "9255705f-9a87-4f44-80ba-e1a8b77de3e0"
+    },
+    "test": {
+        "query": "test",
+        "follow_up_questions": null,
+        "answer": "A test is an assessment or experiment to evaluate knowledge, performance, or capability. It can refer to educational exams, medical diagnostics, or internet speed checks. Tests are used to measure, verify, or validate various aspects.",
+        "images": [],
+        "results": [
+            {
+                "url": "https://en.wikipedia.org/wiki/Test",
+                "title": "Test - Wikipedia",
+                "content": "# Test. From Wikipedia, the free encyclopedia. To test editing of Wikipedia, go to Wikipedia:Sandbox. Look up ***test***, ***testing***, ***Test***, or ***TEST*** in Wiktionary, the free dictionary. **Test**(**s**), **testing**, or **TEST** may refer to:. * Test (assessment) \"Test (assessment)\"), an educational assessment intended to measure the respondents' knowledge or other abilities. * *Test* (2013 film) \"Test (2013 film)\"), an American film. * *Test* (2014 film) \"Test (2014 film)\"), a Russian film. * *Test* (2025 film) \"Test (2025 film)\"), an Indian sports drama. * *Test* (2026 film) \"Test (2026 film)\"), an American sports drama film. * *Tests* (album) \"Tests (album)\"), a 1998 album by The Microphones. * *Testing* (album) \"Testing (album)\"), an album by ASAP Rocky. * \"Test\", a song by Aitch featuring AJ Tracey from the album *4 \"4 (Aitch album)\")*. + Proof test, a stress test to demonstrate the fitness of a load-bearing structure. * The Test (disambiguation) \"The Test (disambiguation)\").",
+                "score": 0.7445268,
+                "raw_content": null
+            },
+            {
+                "url": "https://www.merriam-webster.com/dictionary/test",
+                "title": "TEST Definition & Meaning - Merriam-Webster",
+                "content": "[Dictionary](https://www.merriam-webster.com/dictionary/test#)Definition. *   [noun (1)](https://www.merriam-webster.com/dictionary/test#dictionary-entry-1). *   [verb](https://www.merriam-webster.com/dictionary/test#dictionary-entry-2). *   [adjective](https://www.merriam-webster.com/dictionary/test#dictionary-entry-3). *   [noun (2)](https://www.merriam-webster.com/dictionary/test#dictionary-entry-4). *   [abbreviation](https://www.merriam-webster.com/dictionary/test#dictionary-entry-5). *   [Citation](https://www.merriam-webster.com/dictionary/test#citations). *   [Kids](https://www.merriam-webster.com/dictionary/test#kidsdictionary). *   [Medical](https://www.merriam-webster.com/dictionary/test#medicalDictionary). *   [More from M-W](https://www.merriam-webster.com/dictionary/test#more-from-mw). **:**a means of [testing](https://www.merriam-webster.com/dictionary/testing): such as. **:**to put to test or proof **:**[try](https://www.merriam-webster.com/dictionary/try)\u2014often used with _out_. [test the waters](https://www.merriam-webster.com/dictionary/test%20the%20waters). **:**subjected to, used for, or revealed by [testing](https://www.merriam-webster.com/dictionary/testing). 1687, in the meaning defined at [sense 1](https://www.merriam-webster.com/dictionary/test#h3). 1842, in the meaning defined [above](https://www.merriam-webster.com/dictionary/test#h4). *   [alpha test](https://www.merriam-webster.com/dictionary/alpha%20test). *   [aptitude test](https://www.merriam-webster.com/dictionary/aptitude%20test). *   [blood test](https://www.merriam-webster.com/dictionary/blood%20test). *   [Dick test](https://www.merriam-webster.com/dictionary/Dick%20test). *   [DNA test](https://www.merriam-webster.com/dictionary/DNA%20test). *   [drug test](https://www.merriam-webster.com/dictionary/drug%20test). *   [high-test](https://www.merriam-webster.com/dictionary/high-test). *   [inkblot test](https://www.merriam-webster.com/dictionary/inkblot%20test). *   [intelligence test](https://www.merriam-webster.com/dictionary/intelligence%20test). *   [laboratory test](https://www.merriam-webster.com/dictionary/laboratory%20test). *   [litmus test](https://www.merriam-webster.com/dictionary/litmus%20test). *   [means test](https://www.merriam-webster.com/dictionary/means%20test). *   [personality test](https://www.merriam-webster.com/dictionary/personality%20test). *   [put (someone or something) to the test](https://www.merriam-webster.com/dictionary/put%20%28someone%20or%20something%29%20to%20the%20test). *   [Rorschach test](https://www.merriam-webster.com/dictionary/Rorschach%20test). *   [Student's t-test](https://www.merriam-webster.com/dictionary/Student%27s%20t-test). *   [test run](https://www.merriam-webster.com/dictionary/test%20run). *   [test the waters](https://www.merriam-webster.com/dictionary/test%20the%20waters). *   [test-tube](https://www.merriam-webster.com/dictionary/test-tube). *   [t-test](https://www.merriam-webster.com/dictionary/t-test). *   [word-association test](https://www.merriam-webster.com/dictionary/word-association%20test). **:**to put to test or proof **:**[try](https://www.merriam-webster.com/dictionary/try#kidsdictionary). **:**a means of [testing](https://www.merriam-webster.com/dictionary/testing): as. **:**subjected to, used for, or revealed by [testing](https://www.merriam-webster.com/dictionary/testing). [Video 1](https://www.merriam-webster.com/dictionary/test). [Do not sell or share my personal information.](https://www.merriam-webster.com/).",
+                "score": 0.7265231,
+                "raw_content": null
+            },
+            {
+                "url": "https://test.io",
+                "title": "Test IO: Home",
+                "content": "Test IO delivers a full range of web, mobile, and IoT testing, delivered as a service.",
+                "score": 0.29325312,
+                "raw_content": null
+            },
+            {
+                "url": "https://speed.measurementlab.net",
+                "title": "Speed Test by Measurement Lab",
+                "content": "# Test Your Speed. M-Lab's Speed Test provides advanced diagnostics of the performance of your broadband connection through quick measurements. Please agree to the data policy prior to the test. For more on M-Lab's data collection and measurement, including the disclosure of IP addresses, see our Privacy Policy. Measurement Lab (M-Lab) provides the largest collection of open Internet performance data on the planet. As a consortium of research, industry, and public-interest partners, M-Lab is dedicated to providing an ecosystem for the open, verifiable measurement of global network performance. Measurement tools are openly licensed and operated, allowing third parties to develop their own client-side measurement software and audit the source. Data collected is made available to the public, allowing researchers and anyone else to build on a common pool of network measurement information. Distributed infrastructure and large user base provides an open, verifiable measurement platform for global network performance. Used by public organization, academic researchers, regulators and companies around the world to understand the health of the Internet.",
+                "score": 0.22051065,
+                "raw_content": null
+            },
+            {
+                "url": "https://testmy.net",
+                "title": "Internet Speed Test",
+                "content": "Run a speed test and see why millions of consumers choose TestMy.net. Check the download bandwidth speed of your Internet connection. Check the upload bandwidth speed of your Internet connection using the same browser form submission upload that popular sites like youtube utilize. The automatic speed test is an easy way to make sure your provider is delivering what you're paying for. ## Internet Speed Test. TestMy.net is a powerful broadband speed test that will test your Internet, calculate your transfer rate and output accurate, reliable and easy to understand results. TestMy.net is an independent third party and is not affiliated with your Internet service provider. Our results are unbiased because TMN has no vested interest in the outcome of your speed test. First to offer the ability to log test results, test upload speed and automatically test Internet speed. TestMy has a unique testing method and can help you diagnose connection, browser and operating system issues that other speed tests fail to detect.",
+                "score": 0.19410832,
+                "raw_content": null
+            }
+        ],
+        "response_time": 0.52,
+        "request_id": "aa418a50-b137-4e5d-9f1d-d4fb5845b1c9"
     }
 }

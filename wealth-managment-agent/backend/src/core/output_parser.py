@@ -1,4 +1,4 @@
-from langchain.agents.output_parsers import JSONAgentOutputParser
+from langchain_classic.agents.output_parsers import JSONAgentOutputParser
 from langchain_core.agents import AgentAction, AgentFinish
 
 class CustomJSONAgentOutputParser(JSONAgentOutputParser):

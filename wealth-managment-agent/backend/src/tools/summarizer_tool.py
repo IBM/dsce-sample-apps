@@ -1,4 +1,4 @@
-from langchain.tools import StructuredTool
+from langchain_classic.tools import StructuredTool
 from pydantic import BaseModel, Field
 from src.core.llm import Watsonx
 from config.app_config import AppConfig

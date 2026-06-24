@@ -8,7 +8,13 @@ RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://
 RUN pip install git+https://github.com/PyFPDF/fpdf2.git@master
 RUN pip install -r requirements.txt
 
-RUN python3 -c "from src.core.rag import Rag; Rag()"
+# Create db and cache directories with proper permissions
+RUN mkdir -p /db && chmod 777 /db
+RUN mkdir -p /cache/tools && chmod 777 /cache/tools
+
+# Clean up any existing milvus db file and create as directory
+# Milvus expects a directory, not a file
+RUN rm -f /db/milvus_goldman_report.db && mkdir -p /db/milvus_goldman_report.db && chmod 777 /db/milvus_goldman_report.db
 
 EXPOSE 8080
 

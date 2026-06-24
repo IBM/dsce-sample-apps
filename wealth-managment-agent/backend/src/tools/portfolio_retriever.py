@@ -1,4 +1,4 @@
-from langchain.tools import StructuredTool
+from langchain_classic.tools import StructuredTool
 from pydantic import BaseModel, Field
 from src.core.sql import SQL
 import pandas as pd
@@ -16,11 +16,16 @@ class InputSchema(BaseModel):
 
 class PortfolioRetriever:
     def get_portfolio(self, username):
-        if app_config.USE_TOOL_CACHE:
-            with open(app_config.TOOL_CACHE.PORTFOLIO_TOOL_CACHE, 'r') as f:
-                tool_output = f.read()
-            logger.info("TOOL: portfolio_retriever - returning cached results")
-            return tool_output
+        # Check cache if enabled and file exists
+        if app_config.USE_TOOL_CACHE and os.path.exists(app_config.TOOL_CACHE.PORTFOLIO_TOOL_CACHE):
+            try:
+                with open(app_config.TOOL_CACHE.PORTFOLIO_TOOL_CACHE, 'r') as f:
+                    tool_output = f.read()
+                logger.info("TOOL: portfolio_retriever - returning cached results")
+                return tool_output
+            except (IOError, OSError):
+                pass
+        
         try:
             data = db.read_by_username(username)
             if not data:
@@ -30,10 +35,14 @@ class PortfolioRetriever:
             data_without_username = [row[:-1] for row in data]
             df = pd.DataFrame(data_without_username, columns=['ID', 'Security Name', 'Market Value (USD)', 'Y2Y %', 'Industry Sector'])
             portfolio = df.to_markdown(index=False)
+            
+            # Ensure cache directory exists before writing
+            cache_dir = os.path.dirname(app_config.TOOL_CACHE.PORTFOLIO_TOOL_CACHE)
+            if not os.path.exists(cache_dir):
+                os.makedirs(cache_dir, exist_ok=True)
+            
             with open(app_config.TOOL_CACHE.PORTFOLIO_TOOL_CACHE, 'w') as f:
-                f.write(
-                    portfolio
-                )
+                f.write(portfolio)
             logger.info("TOOL portfolio_retriever - returning actual results")
             return portfolio
         except Exception as e:
