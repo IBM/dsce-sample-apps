@@ -11,7 +11,13 @@ import os
 logging.basicConfig(level=os.getenv('LOG_LEVEL', 'ERROR'))
 logger = logging.getLogger(__name__)
 
-granite_llm = Watsonx(model=app_config.MODEL.GRANITE_3_8_B_INSTRUCT).get_llm()
+_granite_llm = None
+
+def get_granite_llm():
+    global _granite_llm
+    if _granite_llm is None:
+        _granite_llm = Watsonx(model=app_config.MODEL.GRANITE_3_8_B_INSTRUCT).get_llm()
+    return _granite_llm
 
 class InputSchema(BaseModel):
     no_input: str = Field(description="No input required.")
@@ -40,7 +46,7 @@ class TranscriptRetriever:
         
         prompt_formatted_str = self.summary_prompt.format(email=content)
         
-        response = granite_llm.generate_text(prompt_formatted_str, guardrails=False)
+        response = get_granite_llm().generate_text(prompt_formatted_str, guardrails=False)
         
         # Ensure cache directory exists before writing
         cache_dir = os.path.dirname(app_config.TOOL_CACHE.TRANSCRIPT_TOOL_CACHE)

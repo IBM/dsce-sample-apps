@@ -12,10 +12,6 @@ RUN pip install -r requirements.txt
 RUN mkdir -p /db && chmod 777 /db
 RUN mkdir -p /cache/tools && chmod 777 /cache/tools
 
-# Clean up any existing milvus db file and create as directory
-# Milvus expects a directory, not a file
-RUN rm -f /db/milvus_goldman_report.db && mkdir -p /db/milvus_goldman_report.db && chmod 777 /db/milvus_goldman_report.db
-
 EXPOSE 8080
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

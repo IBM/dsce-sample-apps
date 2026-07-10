@@ -128,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Runtime data — never copy local DB or cache into the image
+db/
+cache/
