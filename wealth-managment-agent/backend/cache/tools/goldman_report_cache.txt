@@ -1,12 +1,12 @@
-## Goldman report
-
+ 
 ### Key Points
-* The US equity market accounts for around 70% of the MSCI AC World Index, indicating significant dominance in the global equity landscape.
-* The biggest 10 US stocks account for over 20% of the entire value of the global index, further emphasizing the concentration of market value in the US.
-* The MSCI world index is up nearly 40% in price terms alone since October 2023, and around 60% since the trough triggered by rising interest rates in 2022.
-* The Nasdaq has climbed over 50% during the same period, and Nvidia, the World's biggest company, has surged 264%.
-* The S&P 500 has had one of its strongest performances since 1928, with a significant rise in 2024.
-
+* The US equity market accounts for around 70% of the MSCI AC World Index
+* The biggest 10 US stocks account for over 20% of the entire value of the global index
+* The MSCI world index is up nearly 40% in price terms alone since October 2023
+* The S&P 500 has had one of its strongest performances since 1928
+* The Nasdaq has climbed over 50% since October 2023
 ### Disclosures
-* The report includes disclosures related to Article 6 (2) of the European Commission Delegated Regulation (EU) (2016/958) and company-specific regulatory disclosures.
-* Restrictions on the use of the information provided include not reselling or reverse engineering the information, not creating derivative works, and not publishing or transmitting the information without express written consent from Goldman Sachs.
+1. **Article 6 (2) of the European Commission Delegated Regulation (EU) (2016/958)**: related to the European Union and United Kingdom
+2. **Company-specific regulatory disclosures**: includes information about manager/co-manager, 1% or other ownership, compensation, client relationships, public offerings, and directorships
+3. **Trading activities**: Goldman Sachs trades or may trade as a market maker and/or specialist for equity securities
+4. **Restrictions on use of information**: cannot be resold, reverse-engineered, or used to create any index, derivative works, or commercial products without express written consent of Goldman Sachs

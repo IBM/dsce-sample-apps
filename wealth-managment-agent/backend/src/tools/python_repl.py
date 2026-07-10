@@ -13,16 +13,17 @@ class InputSchema(BaseModel):
 
 class PythonRepl:
     def python_repl_tool(self, code):
-            if app_config.USE_TOOL_CACHE:
+        if app_config.USE_TOOL_CACHE and os.path.exists(app_config.TOOL_CACHE.PYTHON_REPL_TOOL_CACHE):
+            try:
                 with open(app_config.TOOL_CACHE.PYTHON_REPL_TOOL_CACHE, 'r') as f:
                     tool_output = f.read()
                 logger.info("TOOL: python_repl_tool - returning cached results")
                 return tool_output
-            python_repl = PythonREPL()
-            logger.info("TOOL: python_repl_tool - executing the following piece of code:\n", code)
-            result = python_repl.run(code)
-            logger.info("TOOL: python_repl_tool - results:\n", result)
-            return result
+            except (IOError, OSError):
+                pass
+        python_repl = PythonREPL()
+        result = python_repl.run(code)
+        return result
     
     def get_tool(self):
         return StructuredTool.from_function(

@@ -1,8 +1,40 @@
+ Wealth Manager Consultation Meeting
+Date: February 7, 2025, 10:15 AM
+Participants:
+- Client: John Johnson
+- Wealth Manager: Mary Miller, Senior Financial Advisor at Horizon Wealth Partners
 
+[Call Begins]
+- John sought advice on global diversification to balance U.S. market comfort with international opportunities.
+- Discussed potential in emerging markets (Southeast Asia, Latin America) and value opportunities in Europe.
+- Highlighted the importance of hedging against U.S. dollar weakness through international investments.
 
-* John Johnson, a client of Horizon Wealth Partners, is interested in global diversification to capitalize on growth opportunities and hedge against U.S. dollar weakness.
-* Mary Miller, a Senior Financial Advisor, suggests focusing on emerging markets like Southeast Asia and Latin America, as well as value opportunities in Europe.
-* John aims for a higher international allocation, targeting 20-30% of his portfolio in international equities, with 60% in developed markets and 40% in emerging markets.
-* Mary proposes using international-focused ETFs or mutual funds for broader diversification, considering specialized funds for specific regions or sectors.
-* The proposal will include details on fees, performance history, volatility, and tax implications of international investing.
-* John and Mary plan to meet next week to finalize the allocations after reviewing the initial proposal.
+Discussion Points:
+1. **Global Diversification**:
+   - Considered potential risks and returns in emerging and European markets.
+   - Discussed the balance between growth and stability in international investments.
+
+2. **Investment Vehicles**:
+   - Explored options: international-focused ETFs, mutual funds, and direct foreign stock purchases.
+   - Noted additional considerations for direct stock ownership (brokerage and tax).
+
+3. **Portfolio Allocation**:
+   - Desired a higher allocation to international equities for increased growth potential.
+   - Proposed allocation: 60% to developed markets (Europe, Japan, Australia) and 40% to emerging markets (Southeast Asia, Latin America).
+   - Recommended 10-20% of portfolio in international equities based on risk tolerance.
+
+Action Items:
+1. **Proposal Preparation**:
+   - Mary will compile a proposal with details on global funds, including developed and emerging markets.
+   - Proposal will outline blending international holdings with existing U.S. investments.
+
+2. **Fees and Performance Data**:
+   - John requested data on fees, performance history, and volatility for proposed investments.
+
+3. **Tax Implications**:
+   - Planned discussion on tax implications and reporting requirements for international investments.
+
+4. **Follow-Up Meeting**:
+   - Scheduled for next week to review the proposal and finalize allocations.
+
+[Call Ends]

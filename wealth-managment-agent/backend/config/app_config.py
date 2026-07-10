@@ -39,6 +39,9 @@ class AppConfig:
     AGENT_VERBOSE = True # Set to True to see the agent's thought, action and observation process in the console
     CSV_FILE_PATH = "docs/Example Stock portfolio.csv"
     CALL_TRANSCRIPT_PATH = "docs/Wealth Manager Consultation Call Transcript.docx"
-    USE_TOOL_CACHE = os.getenv('USE_TOOL_CACHE', 'true').lower() == 'true'
     TOOL_CACHE = ToolCacheEnum
     FILE_SAVE_PATH = "public/static/reports/portfolio_report.pdf"
+
+    @property
+    def USE_TOOL_CACHE(self):
+        return os.getenv('USE_TOOL_CACHE', 'true').lower() == 'true'

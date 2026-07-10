@@ -44,7 +44,13 @@ class SQL:
         return self.cursor.fetchone()   
     
     def read_by_username(self, username: str):
-        self.cursor.execute("SELECT * FROM market_data WHERE username=?", (username,))
+        # Match on the first word of the provided name to handle cases where
+        # the LLM passes a full name (e.g. "John Doe") but the DB stores only
+        # the first name (e.g. "John").
+        first_name = username.strip().split()[0] if username.strip() else username
+        self.cursor.execute(
+            "SELECT * FROM market_data WHERE LOWER(username)=LOWER(?)", (first_name,)
+        )
         return self.cursor.fetchall()
     
     def read_all(self):
