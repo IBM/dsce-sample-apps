@@ -14,6 +14,7 @@ const ChatContainer = ({ children, handleNewChat, disableChat, getCurrentMessage
 
     const [message, setMessage] = useState("")
     const chatContainerRef = useRef<HTMLDivElement | null>(null);
+    const isChatEnabled = import.meta.env.VITE_ENABLE_CHAT === 'true';
     useEffect(() => {
 
         // Scroll to the bottom of the chat container
@@ -48,7 +49,7 @@ const ChatContainer = ({ children, handleNewChat, disableChat, getCurrentMessage
                         </IconButton>
                     </div>
 </header>*/}
-                <div ref={chatContainerRef} style={{ height: "85%", padding: "2rem 8rem 2rem 8rem", overflow: "auto", width: "60%", margin: "0 auto", scrollbarWidth: "none" }}>
+                <div ref={chatContainerRef} style={{ height: "85%", padding: "2rem 8rem", overflow: "auto", width: "70%", margin: "0 auto", scrollbarWidth: "none" }}>
 
                     <div style={{ textAlign: "center" }}>
                         <IbmWatsonxAssistant size="32" />
@@ -68,7 +69,7 @@ const ChatContainer = ({ children, handleNewChat, disableChat, getCurrentMessage
                                 hideLabel
                                 onKeyDown={handleKeyDown}
                                 placeholder="Type something"
-                                disabled={disableChat}
+                                disabled={!isChatEnabled || disableChat}
                                 onChange={(event) => {
                                     setMessage(event.target.value);
                                 }
@@ -118,24 +119,24 @@ const ChatContainer = ({ children, handleNewChat, disableChat, getCurrentMessage
                             )}
                         </div>
                         <div style={{
-                        padding: "0", position: 'absolute',
-                        right: "17%",
-                        bottom: "12%"
-                    }}>
-                        <IconButton
-                            kind="ghost"
-                            size="sm"
-                            onClick={() => { getCurrentMessage(message); setMessage("") }}
-                            className="icon-btn"
-                            disabled={disableChat || message.trim() == ""}
-                            style={{
-
-                            }}
-                            label="Enter"
-                        >
-                            <SendFilled size={16} />
-                        </IconButton>
-                    </div>
+                            position: 'absolute',
+                            right: "17%",
+                            bottom: "calc(8% + 2rem)",
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                kind="ghost"
+                                size="sm"
+                                onClick={() => { getCurrentMessage(message); setMessage("") }}
+                                className="icon-btn"
+                                disabled={!isChatEnabled || disableChat || message.trim() == ""}
+                                label="Enter"
+                            >
+                                <SendFilled size={16} />
+                            </IconButton>
+                        </div>
                     </Column>
 
 

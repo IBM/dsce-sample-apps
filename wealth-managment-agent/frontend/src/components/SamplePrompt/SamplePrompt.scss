@@ -1,7 +1,27 @@
 .prompt-tile {
     background: var(--cds-layer-accent-01, #262626);
-    font-size: 6px;
-    width: 12rem;
-    height: 7rem;
+    font-size: 12px;
+    width: 100%;
+    height: 8rem;
     border-radius: 5%;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    
+    &:hover {
+        background: var(--cds-layer-accent-02, #393939);
+    }
+    
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        flex: 1;
+    }
 }

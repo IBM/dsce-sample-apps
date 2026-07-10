@@ -8,7 +8,14 @@ logger = logging.getLogger(__name__)
 
 class SQL:
     def __init__(self):
-        self.conn = sqlite3.connect('db/portfolio.db')
+        # Ensure db directory exists
+        db_dir = 'db'
+        if not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+        
+        # Use check_same_thread=False to allow connection sharing across threads
+        # This is necessary for FastAPI's async operations
+        self.conn = sqlite3.connect('db/portfolio.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.create_table()
 

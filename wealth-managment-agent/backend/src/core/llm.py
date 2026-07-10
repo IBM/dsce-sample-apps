@@ -1,5 +1,4 @@
 from ibm_watsonx_ai.foundation_models import ModelInference
-from langchain_ibm import WatsonxLLM
 from config.app_config import AppConfig
 app_config = AppConfig()
 
@@ -20,8 +19,7 @@ class Watsonx:
 			params = app_config.PARAMETERS
 		)
 		if self.use_langchain_wrapper:
-			langchain_wrapper = WatsonxLLM(watsonx_model=self.model)
-			self.model = langchain_wrapper
+			pass
 
-	def get_llm(self) -> ModelInference | WatsonxLLM:
+	def get_llm(self) -> ModelInference:
 		return self.model

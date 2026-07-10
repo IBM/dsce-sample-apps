@@ -4,18 +4,13 @@ import logging
 import time
 import random
 import string
-from langchain.tools import Tool
-from langchain.tools.render import render_text_description
-from langchain.agents import AgentExecutor
-from langchain_core.agents import AgentAction, AgentFinish
-from langchain.agents.output_parsers import JSONAgentOutputParser
-from langchain.agents.format_scratchpad import format_log_to_str
-from langchain.prompts import ChatPromptTemplate
-from langchain.prompts.chat import MessagesPlaceholder
-from ibm_watsonx_ai.metanames import GenTextParamsMetaNames
+from langchain_classic.agents import AgentExecutor
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_ibm import WatsonxLLM
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_classic.agents.format_scratchpad import format_log_to_str
+from pydantic import SecretStr
 from .output_parser import CustomJSONAgentOutputParser
 
 from config.app_config import AppConfig
@@ -50,8 +45,8 @@ class Agent:
         try:
             logger.info("initializing llm...")
             self.llm = WatsonxLLM(
-                url=self.WX_ENDPOINT,
-                apikey=self.IBM_CLOUD_API_KEY,
+                url=SecretStr(self.WX_ENDPOINT or ""),
+                apikey=SecretStr(self.IBM_CLOUD_API_KEY) if self.IBM_CLOUD_API_KEY else None,
                 project_id=self.WX_PROJECT_ID,
                 model_id=self.MODEL_ID,
                 params=self.PARAMETERS
@@ -76,14 +71,13 @@ class Agent:
 
             tools_chat = self.tools
             prompt_chat = prompt.partial(
-                tools=render_text_description(list(tools_chat)),
                 tool_names=", ".join([t.name for t in tools_chat]),
             )
 
             # Create the chain of runnables for agent chat handling
             agent_chat = (
                 RunnablePassthrough.assign(
-                    agent_scratchpad=lambda x: format_log_to_str(x["intermediate_steps"]),
+                    agent_scratchpad=lambda x: format_log_to_str(x.get("intermediate_steps", [])),
                 )
                 | prompt_chat
                 | self.llm.bind(stop=["}\n"])
@@ -96,16 +90,14 @@ class Agent:
                 tools=tools_chat,
                 verbose=self.AGENT_VERBOSE,
                 handle_parsing_errors=True,
-                return_intermediate_steps=True
+                return_intermediate_steps=True,
+                max_iterations=5,
+                early_stopping_method="force"
             )
             
             # Message history for session management
-            if self.memory == 'Conversation buffer memory':
-                from langchain.memory import ConversationBufferMemory
-                message_history = ConversationBufferMemory()
-            elif self.memory == 'Chat history memory':
-                from langchain_community.chat_message_histories import ChatMessageHistory
-                message_history = ChatMessageHistory()
+            from langchain_community.chat_message_histories import ChatMessageHistory
+            message_history = ChatMessageHistory()
 
             self.agent_with_chat_history = RunnableWithMessageHistory(
                 self.agent_executor_chat,
@@ -143,7 +135,7 @@ class Agent:
         """Invokes the agent to process the input and return the result."""
 
         try:
-            logger.info("Input: ", input_)
+            logger.info(f"Input: {input_}")
             start_time = time.time()
             answer = self.agent_with_chat_history.invoke(
                 {"input": input_},

@@ -7,7 +7,7 @@ import ChatMessage from "../../components/ChatMessage/ChatMessage";
 import { CircleLoader } from "react-spinners";
 import "./ChatPage.scss"
 import { askDocument, startChatSession } from "../../services/llm.service";
-import { Column, Row } from "@carbon/react";
+import { Grid, Column } from "@carbon/react";
 import SamplePrompt from "../../components/SamplePrompt/SamplePrompt";
 
 
@@ -68,13 +68,13 @@ const ChatPage = () => {
           <ChatMessage message={message.message} sender={message.sender} reasoning={message.reasoning ? message.reasoning : ""} key={Math.random().toString(36).substring(2, 5)} />
 
         )}
-        <Row style={{marginLeft: "1rem"}}>
+        <Grid narrow style={{marginTop: "2rem"}}>
             {messages.length <= 6 && !waiting && samplePrompts.map(prompt =>
-            <Column md={2} key={prompt}>
+            <Column sm={4} md={8} lg={5} key={prompt}>
               <SamplePrompt message={prompt} sendMessage={sendMessage} disabled={waiting} sessionId={sessionId} />
             </Column>
             )}
-        </Row>
+        </Grid>
         {messages.length > 1 && waiting && <ChatMessage message="" sender="watsonx" reasoning={""} />}
 
       </ChatContainer>

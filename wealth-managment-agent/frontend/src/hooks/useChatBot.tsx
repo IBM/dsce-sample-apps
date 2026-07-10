@@ -26,7 +26,13 @@ const useChatBot = ({defaultMessage, senderType, getResponse}:UseChatbotProps) =
         try {
             let reply = await getResponse(message, sessionId, extraParams)
             console.log(reply)
-            setMessages(prev => [...prev, {message: reply.output, sender : "bot", reasoning: reply.reasoning}])
+
+            const normalizedOutput =
+                reply?.output === "Agent stopped due to iteration limit or time limit."
+                    ? "I couldn’t complete that request in one pass. Please try a more specific question, or break the request into smaller steps."
+                    : reply?.output ?? "Sorry, something went wrong, please try again."
+
+            setMessages(prev => [...prev, {message: normalizedOutput, sender : "bot", reasoning: reply.reasoning}])
         } finally {
             setWaiting(false)
         }
