@@ -1,0 +1,99 @@
+{{ define "main" }}
+  {{ $slug := .Params.slug }}
+  {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
+  {{ if $demo }}
+    {{ $images := $demo.landingPage.images }}
+    <main class="demo-detail-page">
+      <div class="demo-detail-content">
+
+        <div class="demo-detail-column-left">
+          <div class="pill-container">
+            {{ range $demo.tags }}<span class="pill-tag">{{ . }}</span>{{ end }}
+          </div>
+          <h1 class="demo-detail-title">{{ $demo.name }}</h1>
+          <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
+
+          <div class="demo-action-buttons">
+            {{ $dlIcon := resources.Get "images/download.png" | fingerprint }}
+            {{ $ghIcon := resources.Get "images/github.png" | fingerprint }}
+            <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener" class="demo-btn demo-btn--primary">
+              <img src="{{ $dlIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+              Download Building Blocks
+            </a>
+            {{ if $demo.githubRepo }}
+              <a href="{{ $demo.githubRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
+                <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                Access GitHub Repo
+              </a>
+            {{ end }}
+          </div>
+
+          <div class="demo-meta-card">
+            <p class="demo-meta-card-title">Solution Components</p>
+            <div class="demo-meta-columns">
+              {{ if $demo.skills }}
+                <div class="demo-meta-section">
+                  <h2 class="demo-meta-heading">Building Blocks Skills</h2>
+                  <ul class="demo-meta-list">
+                    {{ range $demo.skills }}<li>{{ . }}</li>{{ end }}
+                  </ul>
+                </div>
+              {{ end }}
+              {{ if $demo.products }}
+                <div class="demo-meta-section">
+                  <h2 class="demo-meta-heading">Products</h2>
+                  <ul class="demo-meta-list">
+                    {{ range $demo.products }}<li>{{ . }}</li>{{ end }}
+                  </ul>
+                </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+
+        {{/* ── Slideshow ── */}}
+        <div class="demo-detail-column-right">
+          <div class="demo-slideshow-title">Screenshots</div>
+          <div class="demo-slideshow">
+            <div class="demo-slides">
+              {{ range $i, $filename := $images }}
+                {{ $imgPath := printf "images/demos/%s/%s" $demo.slug $filename }}
+                {{ $img := resources.Get $imgPath }}
+                {{ if $img }}
+                  {{ $img = $img | fingerprint }}
+                  <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
+                    <img src="{{ $img.RelPermalink }}" alt="{{ $demo.name }} screenshot {{ add $i 1 }}" />
+                  </div>
+                {{ end }}
+              {{ end }}
+            </div>
+
+            {{ if gt (len $images) 1 }}
+              <button class="demo-slide-prev" aria-label="Previous image">&#8592;</button>
+              <button class="demo-slide-next" aria-label="Next image">&#8594;</button>
+            {{ end }}
+          </div>
+
+          {{ if gt (len $images) 1 }}
+            <div class="demo-slide-dots">
+              {{ range $i, $filename := $images }}
+                <button class="demo-slide-dot{{ if eq $i 0 }} is-active{{ end }}" aria-label="Go to image {{ add $i 1 }}"></button>
+              {{ end }}
+            </div>
+          {{ end }}
+          <div class="demo-detail-specifications">
+            {{ $specImgPath := printf "images/demos/%s/%s" $demo.slug $demo.specificationsFlow }}
+            {{ $specImg := resources.Get $specImgPath }}
+            <div class="demo-detail-specifications-title">Specifications Worklow</div>
+            <div class="demo-detail-specifications-description">IBM Bob execute these Specifications when building this demo.</div>
+            <img src="{{ $specImg.RelPermalink }}" />
+          </div>
+        </div>
+      </div>
+    </main>
+  {{ else }}
+    <main class="demo-detail-page">
+      <p class="demo-detail-missing">Demo not found.</p>
+    </main>
+  {{ end }}
+{{ end }}

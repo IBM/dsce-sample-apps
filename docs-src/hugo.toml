@@ -1,0 +1,5 @@
+baseURL = 'https://ibm-self-serve-assets.github.io/sdd-orbital-outfitters/'
+locale = 'en-us'
+title = 'DSCE 2.0'
+
+[taxonomies]
