@@ -123,7 +123,7 @@ details[open] .accordion-header::after {
 }
 .checkbox-label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 6px;
   font-size: 14px;
   color: #393939;
@@ -131,8 +131,24 @@ details[open] .accordion-header::after {
   line-height: 1.1;
 }
 .checkbox-label input[type="checkbox"] {
-  margin-top: 2px;
+  margin-top: 0;
   cursor: pointer;
+  flex-shrink: 0;
+}
+.filter-count {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background-color: #e0e0e0;
+  color: #393939;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
 }
 
 /* Info icon & tooltip */
@@ -363,42 +379,86 @@ details[open] .accordion-header::after {
   gap: 6px;
 }
 
-.pill-tag {
-  background-color: #e0f0ff;
-  color: #0043ce;
+.pill-tag-building-blocks {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #F5F6F8;
+  color: #161616;
+  border-radius: 12px;
+  border: 1px solid #D0D5DD;
   font-size: 12px;
   font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 12px;
-/*  text-transform: capitalize; */
+  padding: 4px 10px;
   white-space: nowrap;
-  margin-top: 6px;
+  flex-wrap: nowrap;
+}
+
+.pill-tag-overflow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  padding: 1px 6px;
+  background-color: #F5F6F8;
+  color: #161616;
+  border-radius: 12px;
+  border: 1px solid #D0D5DD;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: default;
 }
 
 .pill-tag-specifications {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #FFF2B2;
-  color: #051F0E;
+  background-color: #F5F6F8;
+  color: #161616;
+  border-radius: 12px;
+  border: 1px solid #D0D5DD;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 8px;
-  border-radius: 12px;
   white-space: nowrap;
+  margin-top: 6px;
 }
 
 .pill-tag-code {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background-color: #FFD9A8;
-  color: #041E22;
+  background-color: #F5F6F8;
+  color: #161616;
+  border-radius: 12px;
+  border: 1px solid #D0D5DD;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 8px;
-  border-radius: 12px;
   white-space: nowrap;
+  margin-top: 6px;
+}
+
+.pill-tag-conceptual {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #F5F6F8;
+  color: #161616;
+  border-radius: 12px;
+  border: 1px solid #D0D5DD;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  white-space: nowrap;
+  margin-top: 6px;
+}
+
+.pill-tag-building-blocks img {
+  width: 16px;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .pill-tag-specifications img {
@@ -681,7 +741,7 @@ a.card-item {
 }
 
 .demo-detail-content .pill-container {
-  margin-bottom: 20px;
+  margin-top: 6px;
 }
 
 .demo-detail-content {
@@ -937,10 +997,6 @@ a.card-item {
   margin-top: 10px;
 }
 
-.demo-detail-specifications {
-  margin-bottom: 10px;
-}
-
 .demo-detail-specifications-title {
   font-weight: 600;
   color: black;
@@ -961,7 +1017,7 @@ a.card-item {
 
 /* Back link in header */
 .global-header-back {
-  color: #ffffff;
+  color: black;
   text-decoration: none;
   font-size: 14px;
   font-family: inherit;

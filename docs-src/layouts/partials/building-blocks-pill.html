@@ -1,0 +1,14 @@
+{{/* Renders a single combined building-blocks pill.
+     Usage: {{ partial "building-blocks-pill.html" .buildingBlocks }}
+     Expects a slice of building block name strings. */}}
+{{ $blocks  := . }}
+{{ $visible := first 4 $blocks }}
+{{ $overflow := after 4 $blocks }}
+{{ $cube := resources.Get "images/cube.png" | fingerprint }}
+<span class="pill-tag-building-blocks">
+  <img src="{{ $cube.RelPermalink }}">
+  {{- range $i, $b := $visible }}{{- if gt $i 0 }} · {{ end }}{{ $b }}{{- end -}}
+  {{ if gt (len $overflow) 0 }}
+    <span class="pill-tag-overflow" title="{{ delimit $overflow ", " }}">+{{ len $overflow }}</span>
+  {{ end }}
+</span>

@@ -85,6 +85,7 @@
       "skills": [],
       "codeRepo": "",
       "specificationRepo": "",
+      "specificationsFlow": "specs-flow.png",
       "card": {
         "descriptionShort1": "Forward deployed engineers (FDE) are in high demand while the supply of skilled personnel is limited. Bob+ is IBM's answer to the FDE shortage. With Bob+ you have an engineer designed to meet your team's sales needs",
         "descriptionShort2": "Bob+ is skilled in IBM's Technology Builidng Blocks so can not only answer partner questions but also build demos targed to the partner's industry and use case.",

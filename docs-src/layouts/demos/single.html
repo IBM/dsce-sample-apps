@@ -14,16 +14,15 @@
       <div class="demo-detail-content">
 
         <div class="demo-detail-column-left">
-          <h1 class="demo-detail-title">{{ $demo.name }}</h1>
-          <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
-
           <div class="pill-container">
               {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
               {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
               {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
           </div>
+          <h1 class="demo-detail-title">{{ $demo.name }}</h1>
+          <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
           <div class="pill-container">
-            {{ range $demo.buildingBlocks }}{{ $spec := resources.Get "images/cube.png" | fingerprint }}<span class="pill-tag-building-blocks"><img src="{{ $spec.RelPermalink }}"> {{ . }}</span>{{ end }}
+            {{ partial "building-blocks-pill.html" $demo.buildingBlocks }}
           </div>
           <div class="demo-action-buttons">
             {{ $dlIcon := resources.Get "images/download.png" | fingerprint }}
@@ -93,13 +92,17 @@
               {{ end }}
             </div>
           {{ end }}
-          <div class="demo-detail-specifications">
+          {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
             {{ $specImgPath := printf "images/demos/%s/%s" $demo.slug $demo.specificationsFlow }}
             {{ $specImg := resources.Get $specImgPath }}
-            <div class="demo-detail-specifications-title">Specifications Worklow</div>
-            <div class="demo-detail-specifications-description">IBM Bob execute these Specifications when building this demo.</div>
-            <img src="{{ $specImg.RelPermalink }}" />
-          </div>
+            {{ if $specImg }}
+              <div class="demo-detail-specifications">
+                <div class="demo-detail-specifications-title">Specifications Worklow</div>
+                <div class="demo-detail-specifications-description">IBM Bob execute these Specifications when building this demo.</div>
+                <img src="{{ $specImg.RelPermalink }}" />
+              </div>
+            {{ end }}
+          {{ end }}
         </div>
       </div>
     </main>
