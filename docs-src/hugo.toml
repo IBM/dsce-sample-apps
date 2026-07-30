@@ -1,4 +1,4 @@
-baseURL = 'https://ibm-self-serve-assets.github.io/sdd-orbital-outfitters/'
+baseURL = 'http://localhost:1313/'
 locale = 'en-us'
 title = 'DSCE 2.0'
 
