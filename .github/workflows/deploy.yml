@@ -1,0 +1,38 @@
+name: Deploy Hugo Docs with Filtering
+
+on:
+  push:
+    branches:
+      - main  # Change to master if your default repo branch uses master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v7
+        with:
+          submodules: true  # Required if your Hugo template utilizes submodules
+
+      - name: Install Hugo Engine
+        uses: peaceiris/actions-hugo@v3.2.1
+        with:
+          hugo-version: 'latest'
+          extended: true    # Compiles custom styles if your theme uses them
+
+      - name: Build Hugo Site
+        working-directory: ./docs-src  # Runs Hugo inside your target subfolder
+        run: hugo --gc --minify
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./docs-src/public  # Grabs compiled HTML assets from subfolder
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5
