@@ -30,9 +30,9 @@
         <details class="master-nav-section" open>
           <summary class="master-nav-header">Demo Type</summary>
           <div class="accordion-content">
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="specifications">Specifications <span class="info-icon" data-tooltip="Natural language specification showing IBM Bob how to rebuild the demo using the IBM Building Blocks">&#9432;</span><span class="filter-count">{{ $countSpec }}</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="code">Source Code <span class="info-icon" data-tooltip="Code to run the demo">&#9432;</span><span class="filter-count">{{ $countCode }}</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="conceptual">Conceptual <span class="info-icon" data-tooltip="&#x26A0;&#xFE0F;  Demos showcasing the 'art of the possible' but not-yet-implemented using the IBM Building Blocks.">&#9432;</span><span class="filter-count">{{ $countConceptual }}</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="specifications">Specifications ({{ $countSpec }}) <span class="info-icon" data-tooltip="Natural language specification showing IBM Bob how to rebuild the demo using the IBM Building Blocks">&#9432;</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="code">Source Code ({{ $countCode }}) <span class="info-icon" data-tooltip="Code to run the demo">&#9432;</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="conceptual">Conceptual ({{ $countConceptual }}) <span class="info-icon" data-tooltip="&#x26A0;&#xFE0F;  Demos showcasing the 'art of the possible' but not-yet-implemented using the IBM Building Blocks.">&#9432;</span></label>
           </div>
         </details>
 
@@ -55,8 +55,8 @@
             <div class="nav-section">
               <h3 class="section-title">AI</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents ({{ index $bbCounts "agents" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust ({{ index $bbCounts "ai-trust" | default 0 }})</label>
               </div>
             </div>
 
@@ -64,9 +64,9 @@
             <div class="nav-section">
               <h3 class="section-title">DATA</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval <span class="filter-count">{{ index $bbCounts "query" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration ({{ index $bbCounts "integration" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence ({{ index $bbCounts "intelligence" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval ({{ index $bbCounts "query" | default 0 }})</label>
               </div>
             </div>
 
@@ -74,9 +74,9 @@
             <div class="nav-section">
               <h3 class="section-title">AUTOMATION</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build ({{ index $bbCounts "build" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure ({{ index $bbCounts "secure" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize ({{ index $bbCounts "optimize" | default 0 }})</label>
               </div>
             </div>
 
@@ -210,17 +210,17 @@
              data-tags="{{ delimit $demo.buildingBlocks " " | lower }}"
              data-asset-types="{{ delimit $assetTypes " " }}">
             <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
-            <div class="pill-container">
-              {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
-              {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
-              {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
-            </div>
             <div class="card-item-description">
               <div>{{ $demo.name }}</div>
               <p>{{ $demo.card.descriptionShort1 }}</p>
             </div>
             <div class="pill-container">
-              {{ partial "building-blocks-pill.html" $demo.buildingBlocks }}
+              {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
+              {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
+              {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
+            </div>
+            <div class="pill-container">
+              {{ range $demo.buildingBlocks }}{{ $spec := resources.Get "images/cube.png" | fingerprint }}<span class="pill-tag-building-blocks"><img src="{{ $spec.RelPermalink }}"> {{ . }}</span>{{ end }}
             </div>
             <div class="explore-demo">Explore use case →</div>
           </a>
