@@ -27,8 +27,7 @@ jobs:
 
       - name: Build Hugo Site
         working-directory: ./docs-src  # Runs Hugo inside your target subfolder
-        run: hugo --gc --minify --baseURL "https://ibm.github.io/dsce-sample-apps/"
-        #run: hugo --gc --minify --baseURL "https://ibm-self-serve-assets.github.io/sdd-orbital-outfitters/"
+        run: hugo --gc --minify --baseURL "https://ibm-self-serve-assets.github.io/sdd-orbital-outfitters/"
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v5
