@@ -93,13 +93,17 @@
               {{ end }}
             </div>
           {{ end }}
-          <div class="demo-detail-specifications">
+          {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
             {{ $specImgPath := printf "images/demos/%s/%s" $demo.slug $demo.specificationsFlow }}
             {{ $specImg := resources.Get $specImgPath }}
-            <div class="demo-detail-specifications-title">Specifications Worklow</div>
-            <div class="demo-detail-specifications-description">IBM Bob execute these Specifications when building this demo.</div>
-            <img src="{{ $specImg.RelPermalink }}" />
-          </div>
+            {{ if $specImg }}
+              <div class="demo-detail-specifications">
+                <div class="demo-detail-specifications-title">Specifications Worklow</div>
+                <div class="demo-detail-specifications-description">IBM Bob execute these Specifications when building this demo.</div>
+                <img src="{{ $specImg.RelPermalink }}" />
+              </div>
+            {{ end }}
+          {{ end }}
         </div>
       </div>
     </main>
