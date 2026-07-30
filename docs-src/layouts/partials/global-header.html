@@ -1,0 +1,64 @@
+<header class="global-header">
+  {{ if .showBack }}
+    <a class="global-header-back" href="javascript:history.back()">&#8592; Back</a>
+  {{ end }}
+  <span class="global-header-title">IBM <strong>Digital Self-Serve Co-Create Experience</strong></span>
+  <button class="contact-btn" id="contactBtn">Contact us</button>
+</header>
+
+<!-- ==================== CONTACT DRAWER ==================== -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="contact-drawer" id="contactDrawer" aria-hidden="true">
+  <div class="drawer-header">
+    <span class="drawer-title">Contact us</span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&#x2715;</button>
+  </div>
+  <div class="drawer-body">
+    <section class="drawer-section">
+      <h3 class="drawer-section-title">Topic</h3>
+      <label class="drawer-label">Category</label>
+      <select class="drawer-select">
+        <option>Share feedback</option>
+        <option>Technical assistance</option>
+        <option>Learn more about a use case</option>
+        <option>Get in touch with Sales team</option>
+        <option>Request container customization</option>
+        <option>Other</option>
+      </select>
+      <label class="drawer-label">What would you like to discuss? <span class="required">*</span></label>
+      <textarea class="drawer-textarea" maxlength="500" placeholder=""></textarea>
+    </section>
+    <section class="drawer-section">
+      <h3 class="drawer-section-title">Contact Details</h3>
+      <div class="drawer-row">
+        <div class="drawer-field">
+          <label class="drawer-label">First name</label>
+          <input type="text" class="drawer-input">
+        </div>
+        <div class="drawer-field">
+          <label class="drawer-label">Last name</label>
+          <input type="text" class="drawer-input">
+        </div>
+      </div>
+      <div class="drawer-row">
+        <div class="drawer-field">
+          <label class="drawer-label">Email address <span class="required">*</span></label>
+          <input type="email" class="drawer-input">
+        </div>
+        <div class="drawer-field">
+          <label class="drawer-label">Phone number</label>
+          <input type="tel" class="drawer-input">
+        </div>
+      </div>
+      <div class="drawer-field">
+        <label class="drawer-label">Company</label>
+        <input type="text" class="drawer-input">
+      </div>
+      <p class="drawer-privacy">I understand my personal data will be processed in accordance with <a href="https://www.ibm.com/privacy" class="drawer-link" target="_blank">IBM's Privacy Policy.</a></p>
+    </section>
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-btn-cancel" id="drawerCancel">Cancel</button>
+    <button class="drawer-btn-submit">Submit</button>
+  </div>
+</aside>

@@ -1,0 +1,76 @@
+{
+  "demos": [
+    {
+      "name": "Cold Chain Logistics",
+      "slug": "cold-chain-logistics",
+      "tags": ["agent-builder", "application-lifecycle-management", "application-performance-management", "predictive-analytics"],
+      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Instana"],
+      "skills": ["agent-builder", "predictive-analytics", "application-performance-management"],
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. ",
+        "descriptionShort2": "They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
+        "image": "dashboard.png"
+      },
+      "landingPage": {
+        "description": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
+        "images": ["dashboard.png"]
+      }
+    },
+    {
+      "name": "Agentic Supply Chain Operations",
+      "slug": "agentic-supply-chain-operations",
+      "tags": ["agent-builder", "infrastructure-as-code", "data-streaming"],
+      "products": ["watsonx Orchestrate", "Confluent", "OpenSearch", "Red Hat OpenShift", "IBM Cloud", "HashiCorp Terraform"],
+      "skills": ["agent-builder", "agent-integrate", "data-streaming-confluent", "ibm-cloud", "infrastructure-as-code-terraform", "udi-opensearch"],
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Orbital Suppliers manages a solar system-wide supply chain that delivers mission critical equipment to asteroid mining fleets and research facilities within a guaranteed 7 day delivery window.",
+        "descriptionShort2": "Discover how Orbital Suppliers' Operations Managers analyze and remediate supply chain disruptions in natural language using rich agentic chat and real-time event-based data streams. With connected operational data and intelligent workflows, Orbital Suppliers predicts demand and optimize inventory levels by tracking products, orders, and shipments across the supply chain.",
+        "image": "home_page.png"
+      },
+      "landingPage": {
+        "description": "Orbital Suppliers manages a solar system-wide supply chain that delivers mission critical equipment to asteroid mining fleets and research facilities within a guaranteed 7 day delivery window. Discover how Orbital Suppliers' Operations Managers analyze and remediate supply chain disruptions in natural language using rich agentic chat and real-time event-based data streams. With connected operational data and intelligent workflows, Orbital Suppliers predicts demand and optimize inventory levels by tracking products, orders, and shipments across the supply chain.",
+        "images": ["home_page.png", "agentic_search.png", "product_page.png", "cart_logged_in_full.png", "my_orders.png"]
+      }
+    },
+    {
+      "name": "Agentic Security Operations Center",
+      "slug": "agentic-security-operations-center",
+      "tags": ["agent-builder"],
+      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM QRadar"],
+      "skills": ["agent-builder"],
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk.",
+        "descriptionShort2": "Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
+        "image": "home_page.png"
+      },
+      "landingPage": {
+        "description": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
+        "images": ["home_page.png"]
+      }
+    },
+    {
+      "name": "Maritime Situational Awareness",
+      "slug": "maritime-situational-awareness",
+      "tags": ["agent-builder", "infrastructure-as-code", "data-streaming"],
+      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Event Streams"],
+      "skills": ["agent-builder", "infrastructure-as-code", "data-streaming"],
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response.",
+        "descriptionShort2": "The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+        "image": "home_page.png"
+      },
+      "landingPage": {
+        "description": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+        "images": ["home_page.png"]
+      }
+    }
+  ]
+}

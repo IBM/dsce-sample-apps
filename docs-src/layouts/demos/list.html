@@ -1,0 +1,127 @@
+{{ define "main" }}
+  <div class="site-layout-wrapper">
+    <aside class="sidebar-nav">
+
+      <section class="intro-banner">
+        <h2>Building Blocks</h2>
+        <p class="lead-text">IBM Technology Building Blocks are pre-built, embeddable capabilities spanning AI, Data, and Automation — designed to help teams rapidly infuse advanced capabilities into their applications.</p>
+        <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="inline-link">Learn more →</a>
+      </section>
+
+      <div class="bob-card">
+        <div class="bob-text">
+          <div class="bob-tagline">
+            {{ $bob := resources.Get "images/bob.png" | fingerprint }}
+            <img src="{{ $bob.RelPermalink }}" width="60">
+            <span class="bob-tagline-text">
+              <strong>Bob</strong>
+              <span>Your Build Partner</span>
+            </span>
+          </div>
+          <p>IBM's AI-first development partner for the entire software lifecycle. Explore Building Blocks use cases below, and leverage Bob—your dedicated build partner—to tailor solutions and put these capabilities into action.</p>
+          <a href="https://bob.ibm.com/" class="cta-link">Try Bob →</a>
+        </div>
+      </div>
+
+      <div class="filter-toolbar">
+        <span class="clear-all-btn" id="clearAllBtn">clear all</span>
+      </div>
+
+      <!-- ==================== SECTION: AI ==================== -->
+      <div class="nav-section">
+        <h3 class="section-title">AI</h3>
+
+        <details class="accordion-group" open>
+          <summary class="accordion-header">Agents</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agent-builder"> Agent Builder</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agentic-sdlc"> Agentic SDLC</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="multi-agent-orchestration"> Multi-Agent Orchestration</label>
+          </div>
+        </details>
+
+        <details class="accordion-group">
+          <summary class="accordion-header">AI Trust</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-compliance"> AI Compliance</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agent-ops"> Agent Ops</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="model-evaluation"> Model Evaluation</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="real-time-guardrails"> Real-time Guardrails</label>
+          </div>
+        </details>
+      </div>
+
+      <!-- ==================== SECTION: DATA ==================== -->
+      <div class="nav-section">
+        <h3 class="section-title">DATA</h3>
+
+        <details class="accordion-group">
+          <summary class="accordion-header">Integration</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-generated-data-pipeline"> AI-generated data pipeline</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="data-streaming"> Data Streaming</label>
+          </div>
+        </details>
+
+        <details class="accordion-group">
+          <summary class="accordion-header">Intelligence</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="data-enrichment"> Data Enrichment</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="quality-lineage"> Quality &amp; Lineage</label>
+          </div>
+        </details>
+
+        <details class="accordion-group">
+          <summary class="accordion-header">Query</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="federated-search"> Federated search</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="natural-language-query"> Natural Language to Structured Data Query</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="no-sql-database"> No SQL database</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="vector-search"> Vector Search/Unstructured data query</label>
+          </div>
+        </details>
+      </div>
+
+      <!-- ==================== SECTION: AUTOMATION ==================== -->
+      <div class="nav-section">
+        <h3 class="section-title">AUTOMATION</h3>
+
+        <details class="accordion-group">
+          <summary class="accordion-header">Build</summary>
+          <div class="accordion-content">
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="infrastructure-as-code"> Infrastructure as Code</label>
+            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ipaas"> iPaaS</label>
+          </div>
+        </details>
+      </div>
+
+    </aside>
+    <main class="main-content-window">
+      <div class="demo-cards-header">Interactive use cases</div>
+      <div class="demo-cards-subheader">Explore then rebuild using IBM Bob and provided IBM Building Block specifications and skills</div>
+      <div id="demo-cards-wrapper" class="demo-cards-wrapper">
+        {{ range hugo.Data.demos.demos }}
+          {{ $demo := . }}
+          {{ $cardImg := resources.Get (printf "images/demos/%s/%s" $demo.slug $demo.card.image) | fingerprint }}
+          <a class="card-item"
+             href="{{ printf "demos/%s/" $demo.slug | relURL }}"
+             data-tags="{{ delimit $demo.tags " " | lower }}">
+            <div class="card-item-image-title">
+              <div>
+                <h4>{{ $demo.name }}</h4>
+                <p>{{ $demo.card.descriptionShort1 }}</p>
+              </div>
+              <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
+            </div>
+            <p>{{ $demo.card.descriptionShort2 }}</p>
+            <div class="pill-container">
+              {{ range $demo.tags }}<span class="pill-tag">{{ . }}</span>{{ end }}
+            </div>
+          </a>
+        {{ end }}
+      </div>
+    </main>
+  </div>
+  {{ $js := resources.Get "js/index.js" | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" type="module" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
+{{ end }}
