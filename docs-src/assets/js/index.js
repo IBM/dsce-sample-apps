@@ -4,9 +4,6 @@ const wrapper = document.getElementById('demo-cards-wrapper');
 const checkboxes = document.querySelectorAll('.filter-cb');
 const allCards = Array.from(wrapper.querySelectorAll('.card-item'));
 
-// Asset-type values are resolved from JSON fields at build time, not from tags.
-const ASSET_TYPE_VALUES = new Set(['specifications', 'code', 'conceptual']);
-
 function getActiveFilters() {
   return Array.from(checkboxes)
     .filter(cb => cb.checked)
@@ -15,18 +12,12 @@ function getActiveFilters() {
 
 function applyFilter() {
   const active = getActiveFilters();
-  const activeAssetTypes = active.filter(f => ASSET_TYPE_VALUES.has(f));
-  const activeTags = active.filter(f => !ASSET_TYPE_VALUES.has(f));
   let anyVisible = false;
 
   allCards.forEach(card => {
     const cardBuildingBlocks = (card.dataset.buildingBlocks || '').split(' ');
-    const cardAssetTypes = (card.dataset.assetTypes || '').split(' ');
 
-    const tagsMatch = activeTags.length === 0 || activeTags.every(f => cardBuildingBlocks.includes(f));
-    const assetMatch = activeAssetTypes.length === 0 || activeAssetTypes.some(f => cardAssetTypes.includes(f));
-
-    const visible = tagsMatch && assetMatch;
+    const visible = active.length === 0 || active.every(f => cardBuildingBlocks.includes(f));
     card.style.display = visible ? '' : 'none';
     if (visible) anyVisible = true;
   });

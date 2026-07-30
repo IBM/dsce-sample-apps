@@ -9,34 +9,12 @@
 
         <div class="asset-type-filter">
           <div class="asset-type-filter-header">
-            <h3>Filters</h3>
             <span class="clear-all-btn" id="clearAllBtn">clear filter selections</span>
           </div>
         </div>
 
-        <!-- ==================== MASTER SECTION: DEMO TYPE ==================== -->
-        {{ $allDemos := hugo.Data.demos.demos }}
-        {{ $countSpec := 0 }}
-        {{ $countCode := 0 }}
-        {{ $countConceptual := 0 }}
-        {{ range $allDemos }}
-          {{ $hasSpec := and .specificationRepo (gt (len .specificationRepo) 0) }}
-          {{ $hasCode := and .codeRepo (gt (len .codeRepo) 0) }}
-          {{ $isConceptual := not (or $hasSpec $hasCode) }}
-          {{ if $hasSpec }}{{ $countSpec = add $countSpec 1 }}{{ end }}
-          {{ if $hasCode }}{{ $countCode = add $countCode 1 }}{{ end }}
-          {{ if not (or $hasSpec $hasCode) }}{{ $countConceptual = add $countConceptual 1 }}{{ end }}
-        {{ end }}
-        <details class="master-nav-section" open>
-          <summary class="master-nav-header">Demo Type</summary>
-          <div class="accordion-content">
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="specifications">Specifications ({{ $countSpec }}) <span class="info-icon" data-tooltip="Natural language specification showing IBM Bob how to rebuild the demo using the IBM Building Blocks">&#9432;</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="code">Source Code ({{ $countCode }}) <span class="info-icon" data-tooltip="Code to run the demo">&#9432;</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="conceptual">Conceptual ({{ $countConceptual }}) <span class="info-icon" data-tooltip="&#x26A0;&#xFE0F;  Demos showcasing the 'art of the possible' but not-yet-implemented using the IBM Building Blocks.">&#9432;</span></label>
-          </div>
-        </details>
-
         <!-- ==================== MASTER SECTION: BUILDING BLOCKS ==================== -->
+        {{ $allDemos := hugo.Data.demos.demos }}
         {{ $bbCounts := dict }}
         {{ range $allDemos }}
           {{ range .buildingBlocks }}
@@ -47,7 +25,7 @@
             {{ end }}
           {{ end }}
         {{ end }}
-        <details class="master-nav-section">
+        <details class="master-nav-section" open>
           <summary class="master-nav-header">Building Blocks</summary>
           <div class="master-nav-content">
 
@@ -55,8 +33,8 @@
             <div class="nav-section">
               <h3 class="section-title">AI</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents ({{ index $bbCounts "agents" | default 0 }})</label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust ({{ index $bbCounts "ai-trust" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
               </div>
             </div>
 
@@ -64,9 +42,9 @@
             <div class="nav-section">
               <h3 class="section-title">DATA</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration ({{ index $bbCounts "integration" | default 0 }})</label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence ({{ index $bbCounts "intelligence" | default 0 }})</label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval ({{ index $bbCounts "query" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval <span class="filter-count">{{ index $bbCounts "query" | default 0 }}</span></label>
               </div>
             </div>
 
@@ -74,90 +52,15 @@
             <div class="nav-section">
               <h3 class="section-title">AUTOMATION</h3>
               <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build ({{ index $bbCounts "build" | default 0 }})</label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure ({{ index $bbCounts "secure" | default 0 }})</label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize ({{ index $bbCounts "optimize" | default 0 }})</label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
+                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
               </div>
             </div>
 
           </div>
         </details>
 
-        <!-- ==================== MASTER SECTION: SKILLS ==================== -->
-        <details class="master-nav-section">
-          <summary class="master-nav-header">IBM Bob Skills</summary>
-          <div class="master-nav-content">
-
-            <!-- ==================== SECTION: AI ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">AI</h3>
-
-              <details class="accordion-group" open>
-                <summary class="accordion-header">Agents</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agent-builder">Agent Builder</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agentic-sdlc">Agentic SDLC</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="multi-agent-orchestration">Multi-Agent Orchestration</label>
-                </div>
-              </details>
-
-              <details class="accordion-group">
-                <summary class="accordion-header">AI Trust</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-compliance">AI Compliance</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agent-ops">Agent Ops</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="model-evaluation">Model Evaluation</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="real-time-guardrails">Real-time Guardrails</label>
-                </div>
-              </details>
-            </div>
-
-            <!-- ==================== SECTION: DATA ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">DATA</h3>
-
-              <details class="accordion-group">
-                <summary class="accordion-header">Integration</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-generated-data-pipeline"> AI-generated data pipeline</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="data-streaming">Data Streaming</label>
-                </div>
-              </details>
-
-              <details class="accordion-group">
-                <summary class="accordion-header">Intelligence</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="data-enrichment">Data Enrichment</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="quality-lineage">Quality &amp; Lineage</label>
-                </div>
-              </details>
-
-              <details class="accordion-group">
-                <summary class="accordion-header">Query</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="federated-search"> Federated search</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="natural-language-query"> Natural Language to Structured Data Query</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="no-sql-database"> No SQL database</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="vector-search"> Vector Search/Unstructured data query</label>
-                </div>
-              </details>
-            </div>
-
-            <!-- ==================== SECTION: AUTOMATION ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">AUTOMATION</h3>
-
-              <details class="accordion-group">
-                <summary class="accordion-header">Build</summary>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="infrastructure-as-code"> Infrastructure as Code</label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ipaas"> iPaaS</label>
-                </div>
-              </details>
-            </div>
-
-          </div>
-        </details>
       </div>
       <div class="info-card">
         <div>
@@ -215,12 +118,7 @@
               <p>{{ $demo.card.descriptionShort1 }}</p>
             </div>
             <div class="pill-container">
-              {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
-              {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
-              {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
-            </div>
-            <div class="pill-container">
-              {{ range $demo.buildingBlocks }}{{ $spec := resources.Get "images/cube.png" | fingerprint }}<span class="pill-tag-building-blocks"><img src="{{ $spec.RelPermalink }}"> {{ . }}</span>{{ end }}
+              {{ partial "building-blocks-pill.html" $demo.buildingBlocks }}
             </div>
             <div class="explore-demo">Explore use case →</div>
           </a>
