@@ -1,0 +1,24 @@
+{
+    "skills" : [
+        {
+            "ai" : {
+                "agents" : ["agent"],
+                "ai-trust" : ["agent-ops", "real-time-guardrails", "build-time-gen-ai-evals"]
+            }
+        },
+        {
+            "data" : {
+                "integration" : ["data-streaming-confluent", "data-streaming-confluent-terraform"],
+                "intelligence" : ["coming-soon"],
+                "retrieval" : ["coming-soon"]
+            }
+        },
+        {
+            "automation" : {
+                "build" : ["infrastructure-as-code-ansible", "infrastructure-as-code-terraform", "ibm-cloud", "maximo-code-optimization"],
+                "optimize" : ["automated-resource-mgmt-turbonomic"],
+                "secure" : ["non-human-identity-vault"]
+            }
+        }
+    ]
+}
