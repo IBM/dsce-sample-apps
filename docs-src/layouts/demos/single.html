@@ -8,11 +8,7 @@
 
         <div class="demo-detail-column-left">
           <div class="pill-container">
-            {{ if and $demo.specificationRepo (gt (len $demo.specificationRepo) 0) }}<span class="pill-tag-specifications">Specifications</span>{{ end }}
-            {{ if and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}<span class="pill-tag-code">Source Code</span>{{ end }}
-          </div>
-          <div class="pill-container">
-            {{ range $demo.buildingBlocks }}<span class="pill-tag">{{ . }}</span>{{ end }}
+            {{ range $demo.tags }}<span class="pill-tag">{{ . }}</span>{{ end }}
           </div>
           <h1 class="demo-detail-title">{{ $demo.name }}</h1>
           <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
@@ -22,10 +18,10 @@
             {{ $ghIcon := resources.Get "images/github.png" | fingerprint }}
             <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener" class="demo-btn demo-btn--primary">
               <img src="{{ $dlIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
-              Download Building Blocks Skills
+              Download Building Blocks
             </a>
-            {{ if and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
-              <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
+            {{ if $demo.githubRepo }}
+              <a href="{{ $demo.githubRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
                 <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                 Access GitHub Repo
               </a>

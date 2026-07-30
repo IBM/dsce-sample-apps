@@ -3,14 +3,13 @@
     {
       "name": "Cold Chain Logistics",
       "slug": "cold-chain-logistics",
+      "tags": ["agent-builder", "application-lifecycle-management", "application-performance-management", "predictive-analytics"],
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Instana"],
-      "buildingBlocks": ["ai.agents", "data.integration"],
       "skills": ["agent-builder", "predictive-analytics", "application-performance-management"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "",
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
       "specificationsFlow": "specs-flow.png",
       "card": {
-        "descriptionShort1": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "descriptionShort1": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. ",
         "descriptionShort2": "They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
         "image": "dashboard.png"
       },
@@ -24,10 +23,8 @@
       "slug": "agentic-supply-chain-operations",
       "tags": ["agent-builder", "infrastructure-as-code", "data-streaming"],
       "products": ["watsonx Orchestrate", "Confluent", "OpenSearch", "Red Hat OpenShift", "IBM Cloud", "HashiCorp Terraform"],
-      "buildingBlocks": ["ai.agents", "data.integration"],
       "skills": ["agent-builder", "agent-integrate", "data-streaming-confluent", "ibm-cloud", "infrastructure-as-code-terraform", "udi-opensearch"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
       "specificationsFlow": "specs-flow.png",
       "card": {
         "descriptionShort1": "Orbital Suppliers manages a solar system-wide supply chain that delivers mission critical equipment to asteroid mining fleets and research facilities within a guaranteed 7 day delivery window.",
@@ -42,11 +39,10 @@
     {
       "name": "Agentic Security Operations Center",
       "slug": "agentic-security-operations-center",
+      "tags": ["agent-builder"],
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM QRadar"],
-      "buildingBlocks": ["ai.agents", "automation.secure"],
       "skills": ["agent-builder"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "",
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
       "specificationsFlow": "specs-flow.png",
       "card": {
         "descriptionShort1": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk.",
@@ -59,13 +55,12 @@
       }
     },
     {
-      "name": "Counter-UAS in Modern Warfare",
-      "slug": "counter-uas-in-modern-warfare",
+      "name": "Maritime Situational Awareness",
+      "slug": "maritime-situational-awareness",
+      "tags": ["agent-builder", "infrastructure-as-code", "data-streaming"],
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Event Streams"],
-      "buildingBlocks": ["ai.agents"],
       "skills": ["agent-builder", "infrastructure-as-code", "data-streaming"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "",
+      "githubRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
       "specificationsFlow": "specs-flow.png",
       "card": {
         "descriptionShort1": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response.",
@@ -74,24 +69,6 @@
       },
       "landingPage": {
         "description": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
-        "images": ["home_page.png"]
-      }
-    },
-    {
-      "name": "Forward Deployed Engineer",
-      "slug": "forward-deployed-engineer",
-      "products": [],
-      "buildingBlocks": ["ai.agents"],
-      "skills": [],
-      "codeRepo": "",
-      "specificationRepo": "",
-      "card": {
-        "descriptionShort1": "Forward deployed engineers (FDE) are in high demand while the supply of skilled personnel is limited. Bob+ is IBM's answer to the FDE shortage. With Bob+ you have an engineer designed to meet your team's sales needs",
-        "descriptionShort2": "Bob+ is skilled in IBM's Technology Builidng Blocks so can not only answer partner questions but also build demos targed to the partner's industry and use case.",
-        "image": "home_page.png"
-      },
-      "landingPage": {
-        "description": "Forward Deployed Engineers are in high demand while the supply of skilled personnel is limited. Bob+ is IBM's answer. With Bob+ you have an engineer designed to meet your team's sales needs",
         "images": ["home_page.png"]
       }
     }
