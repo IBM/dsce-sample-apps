@@ -363,7 +363,10 @@ details[open] .accordion-header::after {
   gap: 6px;
 }
 
-.pill-tag {
+.pill-tag-building-blocks {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   background-color: #e0f0ff;
   color: #0043ce;
   font-size: 12px;
@@ -380,7 +383,7 @@ details[open] .accordion-header::after {
   align-items: center;
   gap: 4px;
   background-color: #FFF2B2;
-  color: #051F0E;
+  color: #5A4800;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 8px;
@@ -393,12 +396,32 @@ details[open] .accordion-header::after {
   align-items: center;
   gap: 4px;
   background-color: #FFD9A8;
-  color: #041E22;
+  color: #5A2E00;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 8px;
   border-radius: 12px;
   white-space: nowrap;
+}
+
+.pill-tag-conceptual {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #FFB3B3;
+  color: #510904;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.pill-tag-building-blocks img {
+  width: 16px;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 .pill-tag-specifications img {
@@ -681,7 +704,7 @@ a.card-item {
 }
 
 .demo-detail-content .pill-container {
-  margin-bottom: 20px;
+  margin-top: 6px;
 }
 
 .demo-detail-content {
@@ -937,10 +960,6 @@ a.card-item {
   margin-top: 10px;
 }
 
-.demo-detail-specifications {
-  margin-bottom: 10px;
-}
-
 .demo-detail-specifications-title {
   font-weight: 600;
   color: black;
@@ -961,7 +980,7 @@ a.card-item {
 
 /* Back link in header */
 .global-header-back {
-  color: #ffffff;
+  color: black;
   text-decoration: none;
   font-size: 14px;
   font-family: inherit;

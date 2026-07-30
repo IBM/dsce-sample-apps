@@ -20,10 +20,10 @@ jobs:
           submodules: true  # Required if your Hugo template utilizes submodules
 
       - name: Install Hugo Engine
-        uses: peaceiris/actions-hugo@v3.2.1
-        with:
-          hugo-version: 'latest'
-          extended: true    # Compiles custom styles if your theme uses them
+        run: |
+          HUGO_VERSION=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')
+          curl -sSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" | tar -xz hugo
+          sudo mv hugo /usr/local/bin/hugo
 
       - name: Build Hugo Site
         working-directory: ./docs-src  # Runs Hugo inside your target subfolder

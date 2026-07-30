@@ -3,25 +3,37 @@
   {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
   {{ if $demo }}
     {{ $images := $demo.landingPage.images }}
+    {{ $hasSpec := and $demo.specificationRepo (gt (len $demo.specificationRepo) 0) }}
+    {{ $hasCode := and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
+    {{ $isConceptual := not (or $hasSpec $hasCode) }}
+    {{ $assetTypes := slice }}
+    {{ if $hasSpec }}{{ $assetTypes = $assetTypes | append "specifications" }}{{ end }}
+    {{ if $hasCode }}{{ $assetTypes = $assetTypes | append "code" }}{{ end }}
+    {{ if not (or $hasSpec $hasCode) }}{{ $assetTypes = $assetTypes | append "conceptual" }}{{ end }}
     <main class="demo-detail-page">
       <div class="demo-detail-content">
 
         <div class="demo-detail-column-left">
-          <div class="pill-container">
-            {{ range $demo.tags }}<span class="pill-tag">{{ . }}</span>{{ end }}
-          </div>
           <h1 class="demo-detail-title">{{ $demo.name }}</h1>
           <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
 
+          <div class="pill-container">
+              {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
+              {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
+              {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
+          </div>
+          <div class="pill-container">
+            {{ range $demo.buildingBlocks }}{{ $spec := resources.Get "images/cube.png" | fingerprint }}<span class="pill-tag-building-blocks"><img src="{{ $spec.RelPermalink }}"> {{ . }}</span>{{ end }}
+          </div>
           <div class="demo-action-buttons">
             {{ $dlIcon := resources.Get "images/download.png" | fingerprint }}
             {{ $ghIcon := resources.Get "images/github.png" | fingerprint }}
             <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener" class="demo-btn demo-btn--primary">
               <img src="{{ $dlIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
-              Download Building Blocks
+              Download Building Blocks Skills
             </a>
-            {{ if $demo.githubRepo }}
-              <a href="{{ $demo.githubRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
+            {{ if and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
+              <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
                 <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                 Access GitHub Repo
               </a>

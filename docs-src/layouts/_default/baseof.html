@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ .Title }}</title>
-  <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}">
+  {{ $styles := resources.Get "css/styles.css" | fingerprint }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
+
+  <script type="text/javascript">
+    // Load amplitude tracking
+    !function(e,t){var n=e.amplitude||{_q:[],_iq:{}};if(n.invoked)e.console&&e.console.error&&e.console.error("Amplitude snippet version 0.0.0 already loaded.");else{var r=t.createElement("script");r.type="text/javascript",r.integrity="sha384-GeBySpUnb+6XisgY3SAnzE5wTAn9KIs3EofX9IOf6S278M9BfI6m6997C9X9Pq60",r.crossOrigin="anonymous",r.async=!0,r.src="https://amplitude.com",r.onload=function(){e.amplitude.runQueuedFunctions||console.log("Error: amplitude.runQueuedFunctions not loaded")};var s=t.getElementsByTagName("script")[0];s.parentNode.insertBefore(r,s);for(var o=function(e){n[e]=function(){n._q.push([e].concat(Array.prototype.slice.call(arguments,0)))}},i=["init","track","setUserId","setUserProperties","setGroup","setGroupProperties","reset","setOptOut","setTransport"],a=0;a<i.length;a++)o(i[a]);e.amplitude=n}}(window,document);    
+
+    amplitude.init('YOUR_AMPLITUDE_API_KEY', {
+        defaultTracking: {
+          pageViews: true, 
+          sessions: true,
+        },
+    });
+    </script>
 </head>
 <body>
 
