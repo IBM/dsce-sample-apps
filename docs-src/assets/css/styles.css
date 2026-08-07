@@ -129,6 +129,20 @@ details[open] .accordion-header::after {
   font-weight: 500;
   flex-shrink: 0;
 }
+.filter-count {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #393939;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
 /* ==================== GLOBAL TWO-COLUMN FLEXBOX LAYOUT ==================== */
 .site-layout-wrapper {
   display: flex;

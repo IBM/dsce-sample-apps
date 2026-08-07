@@ -13,7 +13,7 @@ function getActiveFilters() {
 
 function applyFilter() {
   const active = getActiveFilters();
-  let visibleCount = 0;
+  let anyVisible = false;
 
   allCards.forEach(card => {
     const cardBuildingBlocks = (card.dataset.buildingBlocks || '').split(' ');

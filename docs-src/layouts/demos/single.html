@@ -18,13 +18,41 @@
       </div>
       <div class="demo-detail-content">
         <div class="demo-detail-column-left">
-          <div class="demo-step-wrapper">
-            <div class="demo-step">
-              <div class="demo-step-title">
-                <span class="step-circle">1</span> Review use case
-              </div>
-              {{ range split $demo.landingPage.useCaseDescription "\n\n" }}
-                <p class="demo-detail-summary">{{ . }}</p>
+          <div class="pill-container">
+              {{ if $hasSpec }}{{ $spec := resources.Get "images/paper_stack.svg" | fingerprint }}<span class="pill-tag-specifications"><img src="{{ $spec.RelPermalink }}"> specifications</span>{{ end }}
+              {{ if $hasCode }}{{ $spec := resources.Get "images/code_file.svg" | fingerprint }}<span class="pill-tag-code"><img src="{{ $spec.RelPermalink }}"> source code</span>{{ end }}
+              {{ if $isConceptual }}<span class="pill-tag-conceptual">&#x26A0; conceptual</span>{{ end }}
+          </div>
+          <h1 class="demo-detail-title">{{ $demo.name }}</h1>
+          <p class="demo-detail-summary">{{ $demo.landingPage.description }}</p>
+          <div class="pill-container">
+            {{ partial "building-blocks-pill.html" $demo.buildingBlocks }}
+          </div>
+          <div class="demo-action-buttons">
+            {{ $dlIcon := resources.Get "images/download.png" | fingerprint }}
+            {{ $ghIcon := resources.Get "images/github.png" | fingerprint }}
+            <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener" class="demo-btn demo-btn--primary">
+              <img src="{{ $dlIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+              Download Building Blocks Skills
+            </a>
+            {{ if and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
+              <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn--outline">
+                <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                Access GitHub Repo
+              </a>
+            {{ end }}
+          </div>
+
+          <div class="demo-meta-card">
+            <p class="demo-meta-card-title">Solution Components</p>
+            <div class="demo-meta-columns">
+              {{ if $demo.skills }}
+                <div class="demo-meta-section">
+                  <h2 class="demo-meta-heading">Building Blocks Skills</h2>
+                  <ul class="demo-meta-list">
+                    {{ range $demo.skills }}<li>{{ . }}</li>{{ end }}
+                  </ul>
+                </div>
               {{ end }}
               <div class="info-box-wrapper">
                 <div class="info-box">

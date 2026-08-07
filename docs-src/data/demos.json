@@ -76,11 +76,30 @@
       "buildingBlocks": ["ai.agents"],
       "skills": ["agent-builder", "infrastructure-as-code", "data-streaming"],
       "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "architecture": "architecture-placeholder.png",
-      "specificationsRepo": "https://github.com/",
-      "specificationsFlow": "specs-flow-placeholder.png",
-      "infoCard": {
-        "description": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response.",
+      "specificationRepo": "",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response.",
+        "descriptionShort2": "The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+        "image": "home_page.png"
+      },
+      "landingPage": {
+        "description": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+        "images": ["home_page.png"]
+      }
+    },
+    {
+      "name": "Forward Deployed Engineer",
+      "slug": "forward-deployed-engineer",
+      "products": [],
+      "buildingBlocks": ["ai.agents"],
+      "skills": [],
+      "codeRepo": "",
+      "specificationRepo": "",
+      "specificationsFlow": "specs-flow.png",
+      "card": {
+        "descriptionShort1": "Forward deployed engineers (FDE) are in high demand while the supply of skilled personnel is limited. Bob+ is IBM's answer to the FDE shortage. With Bob+ you have an engineer designed to meet your team's sales needs",
+        "descriptionShort2": "Bob+ is skilled in IBM's Technology Builidng Blocks so can not only answer partner questions but also build demos targed to the partner's industry and use case.",
         "image": "home_page.png"
       },
       "landingPage": {
