@@ -1,78 +1,81 @@
 {{ define "main" }}
-  <div class="site-header-content">
-    <div class="site-header">Explore interactive use cases</div>
-    <div class="site-subheader">See how IBM Building Blocks can be used with IBM Bob to build enterprise solutions.</div>
-  </div>
-  <div class="site-layout-wrapper">
-    <div class="sidebar-nav">
-      <div class="demo-filter">
+  <div class="homepage-wrapper">
+    <div class="site-header-content">
+      <div class="site-header">Explore interactive use cases</div>
+      <div class="site-subheader">See how IBM Building Blocks can be used with IBM Bob to build enterprise solutions.</div>
+    </div>
+    <div class="site-filter-wrapper">
+      <div class="sidebar-nav">
+        <div class="demo-filter">
 
-        <div class="asset-type-filter">
-          <div class="asset-type-filter-header">
-            <span class="clear-all-btn" id="clearAllBtn">clear filter selections</span>
+          <div class="asset-type-filter">
+            <div class="asset-type-filter-header">
+              <div class="master-nav-header">Filter by Building Block</div>
+              <span class="clear-all-btn" id="clearAllBtn">Clear all</span>
+            </div>
+          </div>
+          <hr>
+
+          <!-- ==================== MASTER SECTION: BUILDING BLOCKS ==================== -->
+          {{ $allDemos := hugo.Data.demos.demos }}
+          {{ $bbCounts := dict }}
+          {{ range $allDemos }}
+            {{ range .buildingBlocks }}
+              {{ $parts := split . "." }}
+              {{ if eq (len $parts) 2 }}
+                {{ $key := index $parts 1 }}
+                {{ $bbCounts = merge $bbCounts (dict $key (add (index $bbCounts $key | default 0) 1)) }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <div class="master-nav-section">
+            <div class="master-nav-content">
+
+              <!-- ==================== SECTION: AI ==================== -->
+              <div class="nav-section">
+                <h3 class="section-title">AI</h3>
+                <div class="accordion-content">
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
+                </div>
+              </div>
+
+              <!-- ==================== SECTION: DATA ==================== -->
+              <div class="nav-section">
+                <h3 class="section-title">DATA</h3>
+                <div class="accordion-content">
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval <span class="filter-count">{{ index $bbCounts "query" | default 0 }}</span></label>
+                </div>
+              </div>
+
+              <!-- ==================== SECTION: AUTOMATION ==================== -->
+              <div class="nav-section">
+                <h3 class="section-title">AUTOMATION</h3>
+                <div class="accordion-content">
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
 
-        <!-- ==================== MASTER SECTION: BUILDING BLOCKS ==================== -->
-        {{ $allDemos := hugo.Data.demos.demos }}
-        {{ $bbCounts := dict }}
-        {{ range $allDemos }}
-          {{ range .buildingBlocks }}
-            {{ $parts := split . "." }}
-            {{ if eq (len $parts) 2 }}
-              {{ $key := index $parts 1 }}
-              {{ $bbCounts = merge $bbCounts (dict $key (add (index $bbCounts $key | default 0) 1)) }}
-            {{ end }}
-          {{ end }}
-        {{ end }}
-        <details class="master-nav-section" open>
-          <summary class="master-nav-header">Building Blocks</summary>
-          <div class="master-nav-content">
-
-            <!-- ==================== SECTION: AI ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">AI</h3>
-              <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
-              </div>
+        <div class="info-card">
+          <div>
+            <div class="info-card-tagline">
+              {{ $bb := resources.Get "images/building_blocks.png" | fingerprint }}
+              <img src="{{ $bb.RelPermalink }}" width="50">
+              
+              <span class="info-card-tagline-text">
+                <strong>Building Blocks</strong>
+                <span>Pre-built capabilities spanning AI, Data, and Automation.</span>
+                <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="cta-link">Learn More →</a>
+              </span>
             </div>
-
-            <!-- ==================== SECTION: DATA ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">DATA</h3>
-              <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval <span class="filter-count">{{ index $bbCounts "query" | default 0 }}</span></label>
-              </div>
-            </div>
-
-            <!-- ==================== SECTION: AUTOMATION ==================== -->
-            <div class="nav-section">
-              <h3 class="section-title">AUTOMATION</h3>
-              <div class="accordion-content">
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
-                <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
-              </div>
-            </div>
-
-          </div>
-        </details>
-
-      </div>
-      <div class="info-card">
-        <div>
-          <div class="info-card-tagline">
-            {{ $bb := resources.Get "images/building_blocks.png" | fingerprint }}
-            <img src="{{ $bb.RelPermalink }}" width="60">
-            
-            <span class="info-card-tagline-text">
-              <strong>Building Blocks</strong>
-              <span>Pre-built capabilities spanning AI, Data, and Automation.</span>
-              <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="cta-link">Learn More →</a>
-            </span>
           </div>
         </div>
         <div class="info-card">
@@ -132,29 +135,7 @@
               <div class="explore-demo">Explore use case →</div>
             </a>
           {{ end }}
-          {{ $cardImg := cond (ne $cardImgRaw nil) ($cardImgRaw | fingerprint) nil }}
-          {{ $hasSpec := and $demo.specificationRepo (gt (len $demo.specificationRepo) 0) }}
-          {{ $hasCode := and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
-          {{ $isConceptual := not (or $hasSpec $hasCode) }}
-          {{ $assetTypes := slice }}
-          {{ if $hasSpec }}{{ $assetTypes = $assetTypes | append "specifications" }}{{ end }}
-          {{ if $hasCode }}{{ $assetTypes = $assetTypes | append "code" }}{{ end }}
-          {{ if $isConceptual }}{{ $assetTypes = $assetTypes | append "conceptual" }}{{ end }}
-          <a class="card-item"
-             href="{{ printf "demos/%s/" $demo.slug | relURL }}"
-             data-tags="{{ delimit $demo.buildingBlocks " " | lower }}"
-             data-asset-types="{{ delimit $assetTypes " " }}">
-            <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
-            <div class="card-item-description">
-              <div>{{ $demo.name }}</div>
-              <p>{{ $demo.card.descriptionShort1 }}</p>
-            </div>
-            <div class="pill-container">
-              {{ partial "building-blocks-pill.html" $demo.buildingBlocks }}
-            </div>
-            <div class="explore-demo">Explore use case →</div>
-          </a>
-        {{ end }}
+        </div>
       </div>
     </main>
   </div>
