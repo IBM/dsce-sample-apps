@@ -75,30 +75,62 @@
             </span>
           </div>
         </div>
-      </div>
-      <div class="info-card">
-        <div>
-          <div class="info-card-tagline">
-            {{ $bob := resources.Get "images/bob.png" | fingerprint }}
-            <img src="{{ $bob.RelPermalink }}" width="60">
+        <div class="info-card">
+          <div>
+            <div class="info-card-tagline">
+              {{ $bob := resources.Get "images/bob.png" | fingerprint }}
+              <img src="{{ $bob.RelPermalink }}" width="50">
 
-            <span class="info-card-tagline-text">
-              <strong>IBM Bob</strong>
-              <span>AI-first development partner for building enterprise solutions.</span>
-              <a href="https://bob.ibm.com/" class="cta-link">Try Bob →</a>
-            </span>
+              <span class="info-card-tagline-text">
+                <strong>IBM Bob</strong>
+                <span>AI-first development partner for building enterprise solutions.</span>
+                <a href="https://bob.ibm.com/" class="cta-link">Try Bob →</a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <main class="main-content-window">
-      <div id="demo-cards-wrapper" class="demo-cards-wrapper">
-        {{ range hugo.Data.demos.demos }}
-          {{ $demo := . }}
-          {{ $cardImgPath := printf "images/demos/%s/%s" $demo.slug $demo.card.image }}
-          {{ $cardImgRaw := resources.Get $cardImgPath }}
-          {{ if not $cardImgRaw }}
-            {{ warnf "demos/list.html: card image not found for demo %q — expected asset at %q" $demo.slug $cardImgPath }}
+      <main class="main-content-window">
+        <div id="demo-results-count" class="demo-results-count">{{ len hugo.Data.demos.demos }} use cases fund</div>
+        <div id="demo-cards-wrapper" class="demo-cards-wrapper">
+          {{ range hugo.Data.demos.demos }}
+            {{ $demo := . }}
+            {{ $cardImgPath := printf "images/demos/%s/%s" $demo.slug $demo.infoCard.image }}
+            {{ $cardImgRaw := resources.Get $cardImgPath }}
+            {{ if not $cardImgRaw }}
+              {{ warnf "demos/list.html: card image not found for demo %q — expected asset at %q" $demo.slug $cardImgPath }}
+            {{ end }}
+            {{ $cardImg := cond (ne $cardImgRaw nil) ($cardImgRaw | fingerprint) nil }}
+            {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}
+            {{ $hasCode := and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
+            {{ $isConceptual := not (or $hasSpec $hasCode) }}
+            {{ $assetTypes := slice }}
+            {{ if $hasSpec }}{{ $assetTypes = $assetTypes | append "specifications" }}{{ end }}
+            {{ if $hasCode }}{{ $assetTypes = $assetTypes | append "code" }}{{ end }}
+            {{ if $isConceptual }}{{ $assetTypes = $assetTypes | append "conceptual" }}{{ end }}
+            {{ $bbSlugs := slice }}
+            {{ range $demo.buildingBlocks }}
+              {{ $parts := split . "." }}
+              {{ if eq (len $parts) 2 }}
+                {{ $bbSlugs = $bbSlugs | append (index $parts 1) }}
+              {{ else }}
+                {{ $bbSlugs = $bbSlugs | append (. | lower) }}
+              {{ end }}
+            {{ end }}
+            <a class="card-item"
+              href="{{ printf "demos/%s/" $demo.slug | relURL }}"
+              data-building-blocks="{{ delimit $bbSlugs " " | lower }}"
+              data-asset-types="{{ delimit $assetTypes " " }}">
+              <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
+              <div class="card-item-description">
+                <div>{{ $demo.name }}</div>
+                <p>{{ $demo.infoCard.description }}</p>
+              </div>
+              <div class="pill-container">
+                {{ partial "building-blocks-pill.html" (dict "blocks" $demo.buildingBlocks "linked" false) }}
+              </div>
+              <div class="explore-demo">Explore use case →</div>
+            </a>
           {{ end }}
           {{ $cardImg := cond (ne $cardImgRaw nil) ($cardImgRaw | fingerprint) nil }}
           {{ $hasSpec := and $demo.specificationRepo (gt (len $demo.specificationRepo) 0) }}

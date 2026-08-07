@@ -1,0 +1,22 @@
+{
+    "building_blocks" :
+    [
+        { "ai" : [
+                { "agents" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/agents/" },
+                { "ai-trust" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-trust/" }
+            ]
+        },
+        { "data" : [
+                { "integration" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/integration/" },
+                { "intelligence" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/intelligence/" },
+                { "retrieval" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/retrieval/" }
+            ]
+        },
+        { "automation" : [
+                { "build" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/build/" },
+                { "optimize" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/optimize/" },
+                { "secure" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/optimize/" }
+            ]
+        }
+    ]
+}

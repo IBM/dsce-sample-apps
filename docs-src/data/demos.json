@@ -1,67 +1,78 @@
 {
   "demos": [
     {
-      "name": "Cold Chain Logistics",
+      "name": "Agentic Logistics for Cold Chain Operators",
       "slug": "cold-chain-logistics",
+      "contactEmail": "utdixit1@in.ibm.com",
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Instana"],
       "buildingBlocks": ["ai.agents", "data.integration"],
       "skills": ["agent-builder", "predictive-analytics", "application-performance-management"],
       "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "",
-      "specificationsFlow": "specs-flow.png",
-      "card": {
-        "descriptionShort1": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
-        "descriptionShort2": "They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
-        "image": "dashboard.png"
-      },
-      "landingPage": {
-        "description": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
-        "images": ["dashboard.png"]
-      }
-    },
-    {
-      "name": "Agentic Supply Chain Operations",
-      "slug": "agentic-supply-chain-operations",
-      "tags": ["agent-builder", "infrastructure-as-code", "data-streaming"],
-      "products": ["watsonx Orchestrate", "Confluent", "OpenSearch", "Red Hat OpenShift", "IBM Cloud", "HashiCorp Terraform"],
-      "buildingBlocks": ["ai.agents", "data.integration"],
-      "skills": ["agent-builder", "agent-integrate", "data-streaming-confluent", "ibm-cloud", "infrastructure-as-code-terraform", "udi-opensearch"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "specificationsFlow": "specs-flow.png",
-      "card": {
-        "descriptionShort1": "Orbital Suppliers manages a solar system-wide supply chain that delivers mission critical equipment to asteroid mining fleets and research facilities within a guaranteed 7 day delivery window.",
-        "descriptionShort2": "Discover how Orbital Suppliers' Operations Managers analyze and remediate supply chain disruptions in natural language using rich agentic chat and real-time event-based data streams. With connected operational data and intelligent workflows, Orbital Suppliers predicts demand and optimize inventory levels by tracking products, orders, and shipments across the supply chain.",
+      "architecture": "architecture-placeholder.png",
+      "specificationsRepo": "https://github.com/",
+      "specificationsFlow": "specs-flow-placeholder.png",
+      "infoCard": {
+        "description": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
         "image": "home_page.png"
       },
       "landingPage": {
-        "description": "Orbital Suppliers manages a solar system-wide supply chain that delivers mission critical equipment to asteroid mining fleets and research facilities within a guaranteed 7 day delivery window. Discover how Orbital Suppliers' Operations Managers analyze and remediate supply chain disruptions in natural language using rich agentic chat and real-time event-based data streams. With connected operational data and intelligent workflows, Orbital Suppliers predicts demand and optimize inventory levels by tracking products, orders, and shipments across the supply chain.",
-        "images": ["home_page.png", "agentic_search.png", "product_page.png", "cart_logged_in_full.png", "my_orders.png"]
+        "introDescription": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
+        "useCaseDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "demoExplainer": "Not-yet-provided",
+        "slideshowImages": ["home_page.png"]
+      }
+    },
+    {
+      "name": "Spec-Driven Development With IBM Bob",
+      "slug": "spec-driven-development-with-ibm-bob",
+      "contactEmail": "apsteven@us.ibm.com",
+      "products": ["IBM watsonX Orchestrate", "IBM Confluent", "OpenSearch", "Red Hat OpenShift", "IBM Cloud", "HashiCorp Terraform"],
+      "buildingBlocks": ["ai.agents", "automation.build", "data.retrieval", "data.integration"],
+      "skills": ["agent", "data-streaming-confluent", "ibm-cloud", "infrastructure-as-code-terraform", "udi-opensearch"],
+      "workingDemoURL": "https://orbital-suppliers-orbital-suppliers.orbital-suppliers-2bef1f4b4097001da9502000c44fc2b2-0000.us-south.containers.appdomain.cloud/",
+      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-retail-order-fulfillment",
+      "architecture": "architecture.png",
+      "specificationsRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
+      "specificationsFlow": "specs-flow.png",
+      "video": { "cosFileName": "Orbital%20Outfitters%20-%20SDD%20v1.mp4", "thumbnail": "orbital_outfitters_sdd_video_thumbnail.jpg" },
+      "infoCard": {
+        "description": "Rapidly build full-featured agentic applications matching pre-approved design comps then containerize and deploy to IBM Cloud using Spec-Driven Development.",
+        "image": "orbital_outfitters_sdd_video_thumbnail.jpg"
+      },
+      "landingPage": {
+        "introDescription": "Observe how natural language specifications are converted into a production-ready application - built by AI agents and deployed to Red Hat OpenShift in 30 minutes. Starting with zero code, IBM Bob uses knowledge from the IBM Building Block skills to spawn a team of subagents that build, containerize then deploy this application on IBM Cloud for ~100 IBM Bob coins.",
+        "useCaseDescription": "This demo is a use case wrapped within a use case.  The application use case is a product ordering website for travelers needing supplies that can survive the rigors of space.  Agentic search powered by OpenSearch supports detailed queries about available products plus full shopping cart functionality.\n\nHowever the primary use case demonstrates the power of Spec-Driven Development, which allowed IBM Bob to build the Orbital Suppliers using only natural language documents, UI design images, dataset requirements and backend endpoint APIs. This highlights how enterprise development teams build production quality solutions.  More up-front documentation and less interactive vibe coding.",
+        "demoExplainer": "1. Start by reviewing the provided Specifications workflow diagram which shows each step followed by IBM Bob to build the demo application.\n\n 2. Download the natural language specifications for this demo and skim through the specs to view the natural language instructions provided to IBM Bob, which includes UI design images to accurately build applications from scratch.\n\n3. You can rebuild this full-featured website w/agentic product search by simply asking Bob to 'Follow the instructions in `0-team-manager-ibm-building-blocks.md`.'",
+        "slideshowImages": ["home_page.png", "agentic_search.png", "product_page.png", "cart_logged_in_full.png", "my_orders.png"]
       }
     },
     {
       "name": "Agentic Security Operations Center",
       "slug": "agentic-security-operations-center",
+      "contactEmail": "Kaushikkumar.Patel1@ibm.com",
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM QRadar"],
-      "buildingBlocks": ["ai.agents", "automation.secure"],
+      "buildingBlocks": ["ai.agent", "automation.secure"],
       "skills": ["agent-builder"],
       "codeRepo": "",
-      "specificationRepo": "",
-      "specificationsFlow": "specs-flow.png",
-      "card": {
-        "descriptionShort1": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk.",
-        "descriptionShort2": "Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
+      "architecture": "architecture-placeholder.png",
+      "specificationsRepo": "https://github.com/",
+      "specificationsFlow": "specs-flow-placeholder.png",
+      "infoCard": {
+        "description": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk.",
         "image": "home_page.png"
       },
       "landingPage": {
-        "description": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
-        "images": ["home_page.png"]
+        "introDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
+        "useCaseDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "demoExplainer": "Not-yet-provided",
+        "slideshowImages": ["home_page.png"]
       }
     },
     {
       "name": "Counter-UAS in Modern Warfare",
       "slug": "counter-uas-in-modern-warfare",
-      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Event Streams"],
+      "contactEmail": "rahul.deb.das@ibm.com",
+      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Confluent"],
       "buildingBlocks": ["ai.agents"],
       "skills": ["agent-builder", "infrastructure-as-code", "data-streaming"],
       "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
@@ -92,8 +103,10 @@
         "image": "home_page.png"
       },
       "landingPage": {
-        "description": "Forward Deployed Engineers are in high demand while the supply of skilled personnel is limited. Bob+ is IBM's answer. With Bob+ you have an engineer designed to meet your team's sales needs",
-        "images": ["home_page.png"]
+        "introDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+        "useCaseDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "demoExplainer": "Not-yet-provided",
+        "slideshowImages": ["home_page.png"]
       }
     }
   ]

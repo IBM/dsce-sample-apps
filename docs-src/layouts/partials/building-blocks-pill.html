@@ -1,14 +1,64 @@
-{{/* Renders a single combined building-blocks pill.
-     Usage: {{ partial "building-blocks-pill.html" .buildingBlocks }}
-     Expects a slice of building block name strings. */}}
-{{ $blocks  := . }}
-{{ $visible := first 4 $blocks }}
-{{ $overflow := after 4 $blocks }}
-{{ $cube := resources.Get "images/cube.png" | fingerprint }}
-<span class="pill-tag-building-blocks">
-  <img src="{{ $cube.RelPermalink }}">
-  {{- range $i, $b := $visible }}{{- if gt $i 0 }} · {{ end }}{{ $b }}{{- end -}}
-  {{ if gt (len $overflow) 0 }}
-    <span class="pill-tag-overflow" title="{{ delimit $overflow ", " }}">+{{ len $overflow }}</span>
+{{/*
+  Renders one pill per building block, ordered by the canonical sequence in
+  data/building_blocks.json, coloured by top-level category.
+
+  Usage:
+    {{ partial "building-blocks-pill.html" (dict "blocks" $demo.buildingBlocks "linked" false) }}
+    {{ partial "building-blocks-pill.html" (dict "blocks" $demo.buildingBlocks "linked" true) }}
+
+  When "linked" is true each pill is an <a> whose href comes from
+  building_blocks.json. When false it is a plain <span>.
+*/}}
+{{ $blocks := .blocks }}
+{{ $linked := .linked }}
+
+{{/*
+  building_blocks.json shape:
+    { "building_blocks": [
+        { "ai":         [ {"agents": "url"}, {"ai-trust": "url"} ] },
+        { "data":       [ {"integration": "url"}, … ] },
+        { "automation": [ {"build": "url"}, … ] }
+    ]}
+
+  Each top-level array element is a single-key map: catName → []singleKeyMaps.
+  Hugo's range over a map gives (key, value) pairs, so we use that directly.
+*/}}
+
+{{/* ── Walk the JSON once; build both the url lookup and the ordered key list ── */}}
+{{ $urlMap  := dict }}
+{{ $ordered := slice }}
+
+{{ range hugo.Data.building_blocks.building_blocks }}
+  {{/* Each element is e.g. {"ai": […]} — range gives $catName, $items */}}
+  {{ range $catName, $items := . }}
+    {{/* $items is a slice of single-key maps, e.g. [{"agents":"url"}, …] */}}
+    {{ range $items }}
+      {{ range $name, $url := . }}
+        {{ $key     := printf "%s.%s" $catName $name }}
+        {{ $urlMap   = merge $urlMap (dict $key $url) }}
+        {{ $ordered  = $ordered | append $key }}
+      {{ end }}
+    {{ end }}
   {{ end }}
-</span>
+{{ end }}
+
+{{/* ── Emit pills in canonical order, skipping keys absent from this demo ── */}}
+{{ range $key := $ordered }}
+  {{ if in $blocks $key }}
+    {{ $parts    := split $key "." }}
+    {{ $category := index $parts 0 }}
+    {{ $class    := printf "pill-tag-bb pill-tag-bb-%s" $category }}
+    {{ $url      := index $urlMap $key }}
+    {{ $iconPath := printf "images/cube-%s.svg" $category }}
+    {{ $icon     := resources.Get $iconPath | fingerprint }}
+    {{ if and $linked $url }}
+      <a class="{{ $class }}" href="{{ $url }}" target="_blank" rel="noopener">
+        <img src="{{ $icon.RelPermalink }}">{{ $key }}
+      </a>
+    {{ else }}
+      <span class="{{ $class }}">
+        <img src="{{ $icon.RelPermalink }}">{{ $key }}
+      </span>
+    {{ end }}
+  {{ end }}
+{{ end }}
