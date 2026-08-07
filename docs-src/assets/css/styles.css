@@ -129,6 +129,20 @@ details[open] .accordion-header::after {
   font-weight: 500;
   flex-shrink: 0;
 }
+.filter-count {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #393939;
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
 /* ==================== GLOBAL TWO-COLUMN FLEXBOX LAYOUT ==================== */
 .site-layout-wrapper {
   display: flex;
@@ -139,8 +153,8 @@ details[open] .accordion-header::after {
 
 /* Make Left Sidebar stay fixed on screen while right main contents scroll */
 .sidebar-nav {
-  min-width: 300px;
-  width: 15%;
+  min-width: 250px;
+  width: 10%;
   flex-shrink: 0;
   position: sticky;
   height: calc(100vh - 80px);
@@ -1076,6 +1090,86 @@ a.card-item {
 .info-box > a > img {
   width: 100%;
   border: 2px solid #c1c7cd;
+}
+
+/* =============================================================================
+   SITE LAYOUT  (two-column sidebar + main)
+   ============================================================================= */
+
+.site-filter-wrapper {
+  display: flex;
+  max-width: 100%;
+  margin-top: 10px;
+  gap: 24px;
+}
+
+/* Sticky left sidebar */
+.sidebar-nav {
+  min-width: 300px;
+  width: 15%;
+  flex-shrink: 0;
+  position: sticky;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  margin-left: 25px;
+  background: white;
+}
+
+/* Scrollable main content area */
+.main-content-window {
+  padding: 0 24px 24px 0;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.site-header-content {
+  padding: 10px 25px;
+}
+
+.site-header {
+  font-size: 42px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.site-subheader {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+
+/* =============================================================================
+   SIDEBAR NAVIGATION
+   ============================================================================= */
+
+/* Category label (AI / DATA / AUTOMATION) */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #000000;
+  margin: 4px 0;
+  text-transform: uppercase;
+}
+
+/* Top-level collapsible nav groups */
+.master-nav-section {
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 4px;
+}
+
+.master-nav-section:last-of-type {
+  border-bottom: none;
+}
+
+.master-nav-header {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #161616;
 }
 
 .checkbox-label {
