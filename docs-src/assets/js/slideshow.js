@@ -1,12 +1,11 @@
 (() => {
   const INTERVAL_MS = 5000;
 
-  document.querySelectorAll('.demo-detail-column-right').forEach(wrap => {
-    const slideshow = wrap.querySelector('.demo-slideshow');
+  document.querySelectorAll('.demo-slideshow').forEach(slideshow => {
     const slides = slideshow.querySelectorAll('.demo-slide');
     if (slides.length <= 1) return;
 
-    const dots = wrap.querySelectorAll('.demo-slide-dot');
+    const dots = slideshow.querySelectorAll('.demo-slide-dot');
     let current = 0;
     let timer;
 
@@ -23,12 +22,12 @@
       timer = setInterval(() => goTo(current + 1), INTERVAL_MS);
     }
 
-    wrap.querySelector('.demo-slide-prev').addEventListener('click', () => {
+    slideshow.querySelector('.demo-slide-prev').addEventListener('click', () => {
       goTo(current - 1);
       startTimer();
     });
 
-    wrap.querySelector('.demo-slide-next').addEventListener('click', () => {
+    slideshow.querySelector('.demo-slide-next').addEventListener('click', () => {
       goTo(current + 1);
       startTimer();
     });

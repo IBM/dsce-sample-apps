@@ -1,24 +1,20 @@
 {
-    "skills" : [
-        {
-            "ai" : {
-                "agents" : ["agent"],
-                "ai-trust" : ["agent-ops", "real-time-guardrails", "build-time-gen-ai-evals"]
-            }
-        },
-        {
-            "data" : {
-                "integration" : ["data-streaming-confluent", "data-streaming-confluent-terraform"],
-                "intelligence" : ["coming-soon"],
-                "retrieval" : ["coming-soon"]
-            }
-        },
-        {
-            "automation" : {
-                "build" : ["infrastructure-as-code-ansible", "infrastructure-as-code-terraform", "ibm-cloud", "maximo-code-optimization"],
-                "optimize" : ["automated-resource-mgmt-turbonomic"],
-                "secure" : ["non-human-identity-vault"]
-            }
-        }
-    ]
+    "ai.agents" : [ { "name": "agent", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" }],
+    "ai.trust" : [  { "name": "agent-ops", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" },
+                    { "name": "real-time-guardrails", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" },
+                    { "name": "build-time-gen-ai-evals", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" }
+                ],
+    "data.integration" : [   { "name": "data-streaming-confluent", "product": "IBM Confluent", "product url": "https://www.ibm.com/products/confluent" },
+                        { "name": "data-streaming-confluent-terraform", "product": "IBM Confluent", "product url": "https://www.ibm.com/products/confluent" },
+                        { "name": "udi-opensearch", "product": "Open Search", "product url": "https://opensearch.org/" }
+                    ],
+    "data.intelligence" : [{ "name": "xxx", "product": "IBM watsonX.data", "product url": "https://www.ibm.com/products/watsonx-data" }],
+    "data.retrieval" : [{ "name": "xxx", "product": "IBM watsonX.data", "product url": "https://www.ibm.com/products/watsonx-data" }],
+    "automation.build" : [ { "name": "infrastructure-as-code-ansible", "product": "Red Hat Ansible", "product url": "https://www.redhat.com/en/technologies/management/ansible" },
+                { "name": "infrastructure-as-code-terraform", "product": "xxx", "product url": "https://developer.hashicorp.com/terraform" },
+                { "name": "ibm-cloud", "product": "IBM Cloud", "product url": "http://cloud.ibm.com/" },
+                { "name": "maximo-code-optimization", "product": "IBM Maximo", "product url": "https://www.ibm.com/products/maximo/ai-asset-management" }
+            ],
+    "automation.optimize" : [{ "name": "automated-resource-mgmt-turbonomic", "product": "IBM Turbonomic", "product url": "https://www.ibm.com/products/turbonomic" }],
+    "automation.secure" : [{ "name": "non-human-identity-vault", "product": "Hashicorp Vault", "product url": "https://www.hashicorp.com/en/products/vault" }]
 }

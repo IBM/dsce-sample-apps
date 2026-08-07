@@ -1,20 +1,50 @@
 // ==================== CONTACT DRAWER ====================
-const drawer  = document.getElementById('contactDrawer');
+const drawer = document.getElementById('contactDrawer');
 const overlay = document.getElementById('drawerOverlay');
 
-function openDrawer() {
-  drawer.classList.add('is-open');
-  overlay.classList.add('is-open');
-  drawer.setAttribute('aria-hidden', 'false');
+function bindDrawer(options) {
+  const trigger = document.getElementById(options.triggerId);
+  const panel = document.getElementById(options.drawerId);
+  const panelOverlay = document.getElementById(options.overlayId);
+  const closeButton = document.getElementById(options.closeId);
+  const cancelButton = options.cancelId ? document.getElementById(options.cancelId) : null;
+
+  if (!trigger || !panel || !panelOverlay || !closeButton) return;
+
+  function openDrawer() {
+    panel.classList.add('is-open');
+    panelOverlay.classList.add('is-open');
+    panel.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDrawer() {
+    panel.classList.remove('is-open');
+    panelOverlay.classList.remove('is-open');
+    panel.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  trigger.addEventListener('click', openDrawer);
+  closeButton.addEventListener('click', closeDrawer);
+  panelOverlay.addEventListener('click', closeDrawer);
+
+  if (cancelButton) {
+    cancelButton.addEventListener('click', closeDrawer);
+  }
 }
 
-function closeDrawer() {
-  drawer.classList.remove('is-open');
-  overlay.classList.remove('is-open');
-  drawer.setAttribute('aria-hidden', 'true');
-}
+bindDrawer({
+  triggerId: 'contactBtn',
+  drawerId: 'contactDrawer',
+  overlayId: 'drawerOverlay',
+  closeId: 'drawerClose',
+  cancelId: 'drawerCancel'
+});
 
-document.getElementById('contactBtn').addEventListener('click', openDrawer);
-document.getElementById('drawerClose').addEventListener('click', closeDrawer);
-document.getElementById('drawerCancel').addEventListener('click', closeDrawer);
-overlay.addEventListener('click', closeDrawer);
+bindDrawer({
+  triggerId: 'demoExplainerBtn',
+  drawerId: 'demoExplainerDrawer',
+  overlayId: 'demoExplainerOverlay',
+  closeId: 'demoExplainerClose'
+});

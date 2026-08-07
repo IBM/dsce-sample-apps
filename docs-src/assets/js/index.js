@@ -1,6 +1,7 @@
 // ==================== HOMEPAGE FILTER ====================
 // Cards are rendered at build time by Hugo. JS only handles show/hide filtering.
 const wrapper = document.getElementById('demo-cards-wrapper');
+const resultsCount = document.getElementById('demo-results-count');
 const checkboxes = document.querySelectorAll('.filter-cb');
 const allCards = Array.from(wrapper.querySelectorAll('.card-item'));
 
@@ -12,16 +13,21 @@ function getActiveFilters() {
 
 function applyFilter() {
   const active = getActiveFilters();
-  let anyVisible = false;
+  let visibleCount = 0;
 
   allCards.forEach(card => {
     const cardBuildingBlocks = (card.dataset.buildingBlocks || '').split(' ');
 
     const visible = active.length === 0 || active.every(f => cardBuildingBlocks.includes(f));
     card.style.display = visible ? '' : 'none';
-    if (visible) anyVisible = true;
+    if (visible) visibleCount += 1;
   });
 
+  if (resultsCount) {
+    resultsCount.textContent = `Showing ${visibleCount} demo${visibleCount === 1 ? '' : 's'}`;
+  }
+
+  const anyVisible = visibleCount > 0;
   let empty = document.getElementById('cards-empty-state');
   if (!anyVisible) {
     if (!empty) {
@@ -45,3 +51,5 @@ if (clearBtn) {
     applyFilter();
   });
 }
+
+applyFilter();
