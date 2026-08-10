@@ -16,6 +16,7 @@ function bindDrawer(options) {
     panelOverlay.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('drawer-open');
   }
 
   function closeDrawer() {
@@ -23,6 +24,7 @@ function bindDrawer(options) {
     panelOverlay.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
     trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('drawer-open');
   }
 
   trigger.addEventListener('click', openDrawer);
@@ -48,3 +50,102 @@ bindDrawer({
   overlayId: 'demoExplainerOverlay',
   closeId: 'demoExplainerClose'
 });
+
+// ==================== DEMO EXPLAINER COPY BUTTON ====================
+const demoExplainerCopyBtn = document.getElementById('demoExplainerCopyBtn');
+if (demoExplainerCopyBtn) {
+  demoExplainerCopyBtn.addEventListener('click', function () {
+    const body = document.getElementById('demoExplainerBody');
+    const text = Array.from(body.querySelectorAll('.demo-script-paragraph'))
+      .map(p => p.textContent.trim())
+      .join('\n\n');
+
+    navigator.clipboard.writeText(text).then(function () {
+      const copyIcon = demoExplainerCopyBtn.querySelector('.copy-icon');
+      const checkIcon = demoExplainerCopyBtn.querySelector('.copy-check-icon');
+      const label = demoExplainerCopyBtn.querySelector('.demo-script-copy-label');
+
+      copyIcon.style.display = 'none';
+      checkIcon.style.display = '';
+      label.textContent = 'Copied!';
+      demoExplainerCopyBtn.classList.add('is-copied');
+
+      setTimeout(function () {
+        copyIcon.style.display = '';
+        checkIcon.style.display = 'none';
+        label.textContent = 'Copy';
+        demoExplainerCopyBtn.classList.remove('is-copied');
+      }, 2000);
+    });
+  });
+}
+
+const demoSectionNavLinks = Array.from(document.querySelectorAll('.demo-section-nav-link'));
+const demoSections = demoSectionNavLinks
+  .map((link) => {
+    const targetId = link.getAttribute('href');
+    if (!targetId || !targetId.startsWith('#')) {
+      return null;
+    }
+
+    const section = document.querySelector(targetId);
+    if (!section) {
+      return null;
+    }
+
+    return { link, section };
+  })
+  .filter(Boolean);
+
+if (demoSections.length > 0) {
+  let hoverSuppressed = false;
+
+  const setActiveDemoSection = (activeLink) => {
+    demoSections.forEach(({ link }) => {
+      const isActive = link === activeLink;
+      link.classList.toggle('is-active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (hoverSuppressed) return;
+
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleEntries.length === 0) {
+        return;
+      }
+
+      const activeEntry = visibleEntries[0];
+      const activeSection = demoSections.find(({ section }) => section === activeEntry.target);
+      if (activeSection) {
+        setActiveDemoSection(activeSection.link);
+      }
+    },
+    {
+      rootMargin: '-112px 0px -55% 0px',
+      threshold: [0.2, 0.4, 0.6]
+    }
+  );
+
+  demoSections.forEach(({ section }) => observer.observe(section));
+
+  // Hover on a demo-step section activates matching nav item
+  demoSections.forEach(({ link, section }) => {
+    section.addEventListener('mouseenter', () => {
+      hoverSuppressed = true;
+      setActiveDemoSection(link);
+    });
+    section.addEventListener('mouseleave', () => {
+      hoverSuppressed = false;
+    });
+  });
+}

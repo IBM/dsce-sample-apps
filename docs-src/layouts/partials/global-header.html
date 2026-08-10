@@ -1,9 +1,27 @@
-<header class="global-header">
-  {{ if .showBack }}
-    <a class="global-header-back" href="javascript:history.back()">&#8592; Back</a>
-  {{ end }}
-  <span class="global-header-title">IBM <strong>Digital Self-Serve Co-Create Experience</strong></span>
-  <button class="contact-btn" id="contactBtn">Contact us</button>
+<header class="global-header-shell">
+  <div class="global-header-brand-row">
+    <a class="global-header-brand" href="/" aria-label="IBM Digital Self-Serve Co-Create Experience home">
+      {{ $ibmLogo := resources.Get "images/products/ibm-black.svg" | fingerprint }}
+      <img src="{{ $ibmLogo.RelPermalink }}" alt="IBM" class="global-header-brand-logo" />
+      <span class="global-header-brand-divider" aria-hidden="true"></span>
+      <span class="global-header-brand-title">Digital Self-Serve Co-Create Experience</span>
+    </a>
+    <button class="contact-btn" id="contactBtn">Contact us</button>
+  </div>
+  <div class="global-header global-header-breadcrumbs" aria-label="Breadcrumb">
+    <a class="global-header-home" href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path fill="currentColor" d="M12 3.3 4 9.5V21h5v-6h6v6h5V9.5z"/>
+      </svg>
+      <span>Home</span>
+    </a>
+    {{ if .showBack }}
+      <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
+      <span class="global-header-use-cases">use cases</span>
+      <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
+      <span class="global-header-current">{{ .title }}</span>
+    {{ end }}
+  </div>
 </header>
 
 <!-- ==================== CONTACT DRAWER ==================== -->
