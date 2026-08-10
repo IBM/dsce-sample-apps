@@ -12,6 +12,39 @@ body {
   background-attachment: fixed;
 }
 
+/* AI, DATA, AUTOMATION Header Elements */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #000000;
+  margin: 4px 0;
+  text-transform: uppercase;
+}
+
+/* Master Nav Sections (Building Blocks / Skills) */
+.master-nav-section {
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 4px;
+}
+
+.master-nav-section:last-of-type {
+  border-bottom: 0px;
+}
+
+.master-nav-header {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #161616;
+  cursor: pointer;
+}
+
 .site-header-content {
   padding: 0px 25px;
 }
@@ -109,7 +142,7 @@ details[open] .accordion-header::after {
   display: flex;
   max-width: 100%;
   margin-top: 10px;
-  gap: 24px;
+  gap: 24px; /* Standard spacing gap between sidebar and main window column */
 }
 
 /* Make Left Sidebar stay fixed on screen while right main contents scroll */
@@ -119,8 +152,15 @@ details[open] .accordion-header::after {
   flex-shrink: 0;
   position: sticky;
   height: calc(100vh - 80px);
-  overflow-y: auto;
+  overflow-y: auto; /* Adds scrollbar inside sidebar only if menu items overflow screen */
   margin-left: 25px;
+}
+
+.site-filter-wrapper {
+  display: flex;
+  max-width: 100%;
+  margin-top: 10px;
+  gap: 24px;
 }
 
 /* Right Main Content Window Area Flex Allocation */
