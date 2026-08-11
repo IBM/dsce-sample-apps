@@ -18,13 +18,105 @@
       </div>
       <div class="demo-detail-content">
         <div class="demo-detail-column-left">
+          <nav class="info-box demo-section-nav" aria-label="Demo sections">
+            <a href="#review-use-case" class="demo-section-nav-link is-active" aria-current="page">
+              <span class="demo-section-nav-number">1</span>
+              <span class="demo-section-nav-text">Review use case</span>
+            </a>
+            <a href="#try-the-demo" class="demo-section-nav-link">
+              <span class="demo-section-nav-number">2</span>
+              <span class="demo-section-nav-text">Try the demo</span>
+            </a>
+            <a href="#explore-how-it-was-built" class="demo-section-nav-link">
+              <span class="demo-section-nav-number">3</span>
+              <span class="demo-section-nav-text">Explore how it was built</span>
+            </a>
+            <a href="#download-and-modify-with-ibm-bob" class="demo-section-nav-link">
+              <span class="demo-section-nav-number">4</span>
+              <span class="demo-section-nav-text">Download and modify with IBM Bob</span>
+            </a>
+          </nav>
+          {{ if $demo.skills }}
+            <div class="info-box">
+              {{ $downloadIcon := resources.Get "images/library.svg" | fingerprint }}
+              <div class="info-box-header">
+                <img src="{{ $downloadIcon.RelPermalink }}">
+                <div class="info-box-title">
+                  Skills used
+                </div>
+              </div>
+              <div class="info-box-subtitle">
+                <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="skill-download-link">Download skills for IBM Bob &rarr;</a>
+              </div>
+              <div class="demo-metadata">
+                <ul class="demo-metadata-list demo-metadata-list-bullets">
+                  {{ range $demo.skills }}
+                    {{ $skillName := . }}
+                    <li><a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener">{{ $skillName }}</a></li>
+                  {{ end }}
+                </ul>
+              </div>
+            </div>
+          {{ else }}
+            <div class="info-box">
+                {{ $downloadIcon := resources.Get "images/library.svg" | fingerprint }}
+              <div class="info-box-header">
+                <img src="{{ $downloadIcon.RelPermalink }}">
+                <div class="info-box-title">
+                  Looking for Building Block skills?
+                </div>
+              </div>
+              <div class="info-box-subtitle">
+                Skills provide best practices for IBM technologies
+              </div>
+                  <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="demo-contact-card-link">Download skills &rarr;</a>
+              </div>
+          {{ end }}
+      
+          {{ if $demo.products }}
+            <div class="info-box">
+              {{ $skillsIcon := resources.Get "images/products/ibm-black.svg" | fingerprint }}
+              <div class="info-box-header">
+                <img src="{{ $skillsIcon.RelPermalink }}">
+                <div class="info-box-title">
+                  Products Used
+                </div>
+              </div>
+              <div class="demo-metadata">                          
+                <ul class="demo-metadata-list">
+                  {{ range sort $demo.products }}
+                    {{ $name := . }}
+                    {{ $product := index hugo.Data.products $name }}
+                    <li>
+                      {{ if $product }}
+                        {{ $productImgPath := printf "images/products/%s" $product.image }}
+                        {{ $productIcon := resources.Get $productImgPath }}
+                        <a href="{{ $product.url }}" target="_blank" rel="noopener">
+                          {{ if $productIcon }}
+                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="githhub-btn-icon" />
+                          {{ end }}
+                          {{ if not (index $product "isNameImage")}}
+                            {{ $name }}
+                          {{ end }}
+                          </a>
+                      {{ else }}
+                        <span class="demo-metadata-no-link">{{ $name }}</span>
+                      {{ end }}
+                    </li>
+                  {{ end }}
+                </ul>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+        <div class="demo-detail-column-right">
           <div class="demo-step-wrapper">
-            <div class="demo-step">
+            <section class="demo-step" id="review-use-case">
               <div class="demo-step-title">
                 <span class="step-circle">1</span> Review use case
               </div>
               {{ range split $demo.landingPage.useCaseDescription "\n\n" }}
-                <p class="demo-detail-summary">{{ . }}</p>
+                <p class="demo-detail-description">{{ . }}</p>
               {{ end }}
               <div class="info-boxes-wrapper">
                 <div class="info-box">
