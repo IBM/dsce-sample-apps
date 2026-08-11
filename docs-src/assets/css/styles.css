@@ -1,6 +1,7 @@
 html {
   min-height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -45,17 +46,19 @@ body {
 }
 
 .site-header-content {
-  padding: 10px 25px;
+  padding: 0px 25px;
 }
 .site-header {
-  font-size: 38px;
+  font-size: 42px;
   font-weight: 500;
   margin-bottom: 6px;
 }
+
 .site-subheader {
   font-size: 16px;
   font-weight: 300;
 }
+
 
 /* Individual Accordion Compartments */
 .accordion-group {
@@ -65,7 +68,6 @@ body {
   border-bottom: 1px solid #e0e0e0;
 }
 
-/* Accordion Header & Interactive Controls */
 .accordion-header {
   list-style: none;
   display: flex;
@@ -109,6 +111,7 @@ details[open] .accordion-header::after {
   color: #393939;
   cursor: pointer;
   line-height: 1.1;
+  margin-bottom: 4px;
 }
 .checkbox-label input[type="checkbox"] {
   margin-top: 0;
@@ -129,22 +132,13 @@ details[open] .accordion-header::after {
   font-weight: 500;
   flex-shrink: 0;
 }
-.filter-count {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background-color: #e0e0e0;
-  color: #393939;
-  font-size: 11px;
-  font-weight: 500;
-  flex-shrink: 0;
-}
+
 /* ==================== GLOBAL TWO-COLUMN FLEXBOX LAYOUT ==================== */
-.site-layout-wrapper {
+/* =============================================================================
+   SITE LAYOUT  (two-column sidebar + main)
+   ============================================================================= */
+
+.site-filter-wrapper {
   display: flex;
   max-width: 100%;
   margin-top: 10px;
@@ -153,7 +147,7 @@ details[open] .accordion-header::after {
 
 /* Make Left Sidebar stay fixed on screen while right main contents scroll */
 .sidebar-nav {
-  min-width: 250px;
+  min-width: 275px;
   width: 10%;
   flex-shrink: 0;
   position: sticky;
@@ -174,6 +168,40 @@ details[open] .accordion-header::after {
   padding: 0px 24px 24px 0px;
   flex-grow: 1;
   min-width: 0; /* Prevents long titles from overflowing flex boundaries */
+}
+
+/* =============================================================================
+   SIDEBAR NAVIGATION
+   ============================================================================= */
+/* Master Nav Sections (Building Blocks / Skills) */
+.master-nav-header {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #161616;
+  cursor: pointer;
+}
+
+.master-nav-section {
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 4px;
+}
+
+.master-nav-section:last-of-type {
+  border-bottom: none;
+}
+
+
+.site-layout-wrapper {
+  display: flex;
+  max-width: 100%;
+  margin-top: 10px;
+  gap: 24px; /* Standard spacing gap between sidebar and main window column */
 }
 
 /* ==================== CONTENT ELEMENT DECORATIONS ==================== */
@@ -205,6 +233,7 @@ details[open] .accordion-header::after {
   margin-top: 12px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
+  background: white;
 }
 
 .info-card-tagline {
@@ -266,7 +295,7 @@ details[open] .accordion-header::after {
 /* Filter toolbar above accordion list */
 /* Asset type filter box */
 .demo-filter {
-  padding: 12px 12px 0px 12px;
+  padding: 12px 12px 0px 12px;  
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   background: white;
@@ -274,13 +303,21 @@ details[open] .accordion-header::after {
 
 .asset-type-filter-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.asset-type-filter {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 .asset-type-filter-header h3 {
   margin: 5px 0 0 0;
 }
+
 .clear-all-btn {
   font-size: 13px;
   color: #0f62fe;
@@ -292,6 +329,7 @@ details[open] .accordion-header::after {
 .clear-all-btn:hover {
   color: #0043ce;
 }
+
 
 .cards-empty-state {
   font-size: 16px;
@@ -395,31 +433,94 @@ a.pill-tag-bb:hover {
 }
 
 /* ==================== GLOBAL HEADER ==================== */
-.global-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  color: black;
-  padding: 0 24px;
-  height: 48px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 16px;
+.global-header-shell {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: #ffffff;
+}
+
+.global-header-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 40px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.global-header-title {
-  color: black;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  margin-right: auto;
+.global-header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  color: #161616;
+  text-decoration: none;
 }
 
-.global-header-title strong {
+.global-header-brand-logo {
+  width: 52px;
+  height: auto;
+  display: block;
+}
+
+.global-header-brand-divider {
+  width: 1px;
+  height: 32px;
+  background: #c6c6c6;
+  flex-shrink: 0;
+}
+
+.global-header-brand-title {
+  font-size: 18px;
   font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.global-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  min-height: 20px;
+  color: #525252;
+  font-size: 14px;
+  min-width: 0;
+  background: #f1f7fc;
+}
+
+.global-header-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2f66d0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.global-header-home:hover {
+  text-decoration: underline;
+}
+
+.global-header-breadcrumb-separator {
+  color: #8d8d8d;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.global-header-use-cases {
+  color: #2f66d0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.global-header-current {
+  color: #525252;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-btn {
@@ -438,6 +539,10 @@ a.pill-tag-bb:hover {
 }
 
 /* ==================== CONTACT DRAWER ==================== */
+body.drawer-open {
+  overflow: hidden;
+}
+
 .drawer-overlay {
   display: none;
   position: fixed;
@@ -649,7 +754,7 @@ a.card-item {
 /* ==================== DEMO DETAIL PAGE ==================== */
 .demo-detail-page {
   margin: 0;
-  padding: 24px;
+  padding: 6px 24px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -663,12 +768,15 @@ a.card-item {
 }
 
 .demo-detail-column-left {
-  flex: 0 0 65%;
+  flex: 1 1 0;
+  min-width: 300px;
+  position: sticky;
+  top: 112px;
+  align-self: flex-start;
 }
 
 .demo-detail-column-right {
-  flex: 1 1 0;
-  min-width: 475px;
+  flex: 0 0 75%;
 }
 
 .pill-demo {
@@ -699,7 +807,7 @@ a.card-item {
 .demo-slideshow {
   position: relative;
   margin-bottom: 0;
-  border: 2px solid #c1c7cd;
+  border: 1px solid #c1c7cd;
   border-radius: 6px;
   overflow: hidden;
 }
@@ -796,25 +904,18 @@ a.card-item {
   margin: 0;
 }
 
+.demo-detail-description {
+  font-size: 14px;
+  color: black;
+  line-height: 1.6;
+  margin: 0;
+}
+
 .demo-action-buttons {
   display: flex;
   flex-direction: row;
   gap: 12px;
   margin: 8px 0;
-}
-
-.demo-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 12px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 400;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  line-height: 1;
 }
 
 .demo-btn-icon {
@@ -828,7 +929,7 @@ a.card-item {
 .demo-btn-simple {
   background: white;
   color: #161616;
-  border: 2px solid #161616;
+  border: 1px solid #161616;
 }
 
 .demo-btn-simple:hover {
@@ -841,35 +942,12 @@ a.card-item {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 8px 0;
-  padding: 8px;
-  border: 1px solid #e5e7eb;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: #ffffff;
-}
-
-.demo-contact-card-icon {
-  flex-shrink: 0;
-  padding-top: 2px;
-}
-
-.demo-contact-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.demo-contact-card-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: #2850B8;
-  margin: 0;
-}
-
-.demo-contact-card-sub {
-  font-size: 14px;
-  color: #57606a;
-  margin: 0;
 }
 
 .demo-contact-card-link {
@@ -1027,9 +1105,8 @@ a.card-item {
 .global-header-back {
   color: black;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   font-family: inherit;
-  opacity: 0.8;
   white-space: nowrap;
   margin-right: 30px;
 }
@@ -1057,6 +1134,7 @@ a.card-item {
   border-radius: 8px;
   padding: 16px 8px 0 12px;
   background: white;
+  scroll-margin-top: 120px;
 }
 
 .demo-step-title {
@@ -1093,119 +1171,6 @@ a.card-item {
 }
 
 /* =============================================================================
-   SITE LAYOUT  (two-column sidebar + main)
-   ============================================================================= */
-
-.site-filter-wrapper {
-  display: flex;
-  max-width: 100%;
-  margin-top: 10px;
-  gap: 24px;
-}
-
-/* Sticky left sidebar */
-.sidebar-nav {
-  min-width: 300px;
-  width: 15%;
-  flex-shrink: 0;
-  position: sticky;
-  height: calc(100vh - 80px);
-  overflow-y: auto;
-  margin-left: 25px;
-  background: white;
-}
-
-/* Scrollable main content area */
-.main-content-window {
-  padding: 0 24px 24px 0;
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.site-header-content {
-  padding: 10px 25px;
-}
-
-.site-header {
-  font-size: 42px;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-
-.site-subheader {
-  font-size: 16px;
-  font-weight: 300;
-}
-
-
-/* =============================================================================
-   SIDEBAR NAVIGATION
-   ============================================================================= */
-
-/* Category label (AI / DATA / AUTOMATION) */
-.section-title {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #000000;
-  margin: 4px 0;
-  text-transform: uppercase;
-}
-
-/* Top-level collapsible nav groups */
-.master-nav-section {
-  border-bottom: 2px solid #e0e0e0;
-  margin-bottom: 4px;
-}
-
-.master-nav-section:last-of-type {
-  border-bottom: none;
-}
-
-.master-nav-header {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding: 6px 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #161616;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #393939;
-  cursor: pointer;
-  line-height: 1.1;
-  margin-bottom: 4px;
-}
-
-.checkbox-label input[type="checkbox"] {
-  margin-top: 0;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.filter-count {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  color: #393939;
-  font-size: 11px;
-  font-weight: 500;
-  flex-shrink: 0;
-}
-
-
-/* =============================================================================
    DEMO CARD LIST PAGE
    ============================================================================= */
 
@@ -1214,148 +1179,6 @@ a.card-item {
   font-weight: 400;
   color: #161616;
   margin-bottom: 16px;
-}
-
-.cards-empty-state {
-  font-size: 16px;
-  color: #525252;
-}
-
-/* Asset-type filter toolbar */
-.demo-filter {
-  padding-top: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-}
-
-.asset-type-filter-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-}
-
-.asset-type-filter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.asset-type-filter-header h3 {
-  margin: 5px 0 0 0;
-}
-
-.clear-all-btn {
-  font-size: 13px;
-  color: #0f62fe;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-bottom: 5px;
-}
-
-.clear-all-btn:hover {
-  color: #0043ce;
-}
-
-/* Individual demo card tile */
-.card-item {
-  background: #ffffff;
-  border: 2px solid #e0e0e0;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  border-radius: 8px;
-}
-
-.card-item:hover {
-  border-color: #0f62fe;
-  background: #F9FCFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-a.card-item {
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.card-item-description {
-  margin: 10px 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #161616;
-}
-
-.card-item-description p {
-  font-weight: 400;
-  font-size: 14px;
-  color: #161616;
-  margin: 4px;
-}
-
-.card-item img {
-  border: 1px solid lightgray;
-  width: 100%;
-}
-
-.explore-demo {
-  margin-top: 8px;
-  color: #0f62fe;
-}
-
-
-/* =============================================================================
-   BUILDING BLOCKS INFO CARD  (sidebar partner card)
-   ============================================================================= */
-
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 6px;
-  margin-top: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  background: white;
-}
-
-.info-card-tagline {
-  margin: 0 0 8px 0;
-  color: #161616;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.info-card-tagline img {
-  flex-shrink: 0;
-}
-
-.info-card-tagline-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.3;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.info-card-tagline-text > span {
-  font-size: 14px;
-  font-weight: 500;
-  color: #525252;
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-
-.cta-link {
-  color: #0f62fe;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.cta-link:hover {
-  text-decoration: underline;
 }
 
 /* Downsize pills rendered inside card tiles */
@@ -1434,7 +1257,7 @@ a.card-item {
    STEP 1  — info boxes (video + slideshow)
    ============================================================================= */
 
-.info-box-wrapper {
+.info-boxes-wrapper {
   display: flex;
   flex-direction: row;
   gap: 16px;
@@ -1443,7 +1266,7 @@ a.card-item {
 }
 
 .info-box {
-  flex: 1 1 0;
+  flex: 0 0 calc(50% - 32px);
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -1478,14 +1301,64 @@ a.card-item {
   min-width: 30px;
 }
 
-  gap: 12px;
-  margin-top: 28px;
+.demo-section-nav {
+  gap: 6px;
+  padding: 8px;
+}
+
+.demo-section-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: #393939;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.demo-section-nav-link:hover {
+  background: #f4f4f4;
+  text-decoration: none;
+}
+
+.demo-section-nav-link.is-active {
+  background: #e8eef9;
+  color: #2850B8;
+  font-weight: 600;
+}
+
+.demo-section-nav-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: #e8eaed;
+  color: #393939;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.demo-section-nav-link.is-active .demo-section-nav-number {
+  background: #2f66d0;
+  color: #ffffff;
+}
+
+.demo-section-nav-text {
+  flex: 1;
 }
 
 /* Pill-style action button — base */
 .demo-btn {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   padding: 12px;
   border-radius: 12px;
   font-size: 15px;
@@ -1547,23 +1420,23 @@ a.card-item {
   flex-shrink: 0;
 }
 
-.demo-explainer-btn-icon {
+.demo-script-btn-icon {
   width: 18px;
   height: 18px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-.demo-explainer-drawer {
+.demo-script-drawer {
   width: 560px;
 }
 
-.demo-explainer-body {
+.demo-script-body {
   padding-top: 24px;
   padding-bottom: 24px;
 }
 
-.demo-explainer-paragraph {
+.demo-script-paragraph {
   font-size: 16px;
   line-height: 1.7;
   color: #161616;
@@ -1571,27 +1444,43 @@ a.card-item {
   white-space: pre-wrap;
 }
 
-.demo-explainer-paragraph:last-child {
+.demo-script-paragraph:last-child {
   margin-bottom: 0;
 }
 
+.demo-script-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
+.demo-script-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #c1c7cd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #525252;
+  cursor: pointer;
+  padding: 4px 10px;
+  line-height: 1;
+}
+
+.demo-script-copy-btn:hover {
+  color: #161616;
+  border-color: #8d8d8d;
+}
+
+.demo-script-copy-btn.is-copied {
+  color: #198038;
+  border-color: #198038;
+}
 
 /* =============================================================================
-   DEMO DETAIL PAGE  — contact card
+   DEMO DETAIL PAGE
    ============================================================================= */
-
-.demo-contact-card {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 16px;
-  padding: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: #ffffff;
-}
 
 .demo-card-details {
   display: flex;
@@ -1610,21 +1499,6 @@ a.card-item {
   font-size: 14px;
   color: #57606a;
   margin: 0;
-}
-
-.demo-contact-card-link {
-  font-size: 14px;
-  font-weight: 500;
-  color: #2850B8;
-  text-decoration: none;
-}
-
-.demo-contact-card-link:hover {
-  text-decoration: underline;
-}
-
-.demo-contact-card-bottom {
-  border: 1px solid #2850B8;
 }
 
 .demo-card-contact-icon {

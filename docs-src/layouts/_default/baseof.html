@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  {{ partial "global-header.html" (dict "showBack" (.Params.showBack | default false)) }}
+  {{ partial "global-header.html" (dict "showBack" (.Params.showBack | default false) "title" .Title) }}
 
   {{ block "main" . }}{{ end }}
 

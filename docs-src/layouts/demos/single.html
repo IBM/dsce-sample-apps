@@ -8,9 +8,9 @@
     <main class="demo-detail-page">
       <div class="pill-container pill-tag-bb pill-demo">DEMO</div>
       <div class="demo-name">{{ $demo.name }}</div>
-      <div class="demo-intro-description">
+      <div class="demo-intro-summary">
         {{ range split $demo.landingPage.introDescription "\n\n" }}
-          <p class="demo-detail-summary">{{ . }}</p>
+          <p>{{ . }}</p>
         {{ end }}
       </div>
       <div class="pill-container">
@@ -26,9 +26,9 @@
               {{ range split $demo.landingPage.useCaseDescription "\n\n" }}
                 <p class="demo-detail-summary">{{ . }}</p>
               {{ end }}
-              <div class="info-box-wrapper">
+              <div class="info-boxes-wrapper">
                 <div class="info-box">
-                  {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-images/%s" $demo.video.cosFileName }}
+                  {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo.video.cosFileName }}
                   {{ $thumbPath := printf "images/demos/%s/%s" $demo.slug $demo.video.thumbnail }}
                   {{ $thumbRes := resources.Get $thumbPath }}
                   {{ $videoIcon := resources.Get "images/video.svg" | fingerprint }}
@@ -78,39 +78,51 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="demo-step">
+            </section>
+            <section class="demo-step" id="try-the-demo">
               <div class="demo-step-title">
                 <span class="step-circle">2</span> Try the interactive application
               </div>
-              Experience the interactive demo and explore its features.
+              Experience the interactive demo and explore its features. A demo script is provided to help when presenting the application to partners.
               <div class="demo-action-buttons">
                 {{ $hasWorkingDemo := and $demo.workingDemoURL (gt (len $demo.workingDemoURL) 0) }}
                 {{ if $hasWorkingDemo }}
                   {{ $workingDemoIcon := resources.Get "images/monitor-white.svg" | fingerprint }}
                   <a href="{{ $demo.workingDemoURL }}" target="_blank" rel="noopener" class="working-demo-btn">
                     <img src="{{ $workingDemoIcon.RelPermalink }}" alt="" class="working-demo-btn-icon" />
-                    Working Demo Site
+                    Try the demo
                   </a>
                 {{ end }}
                 {{ if and $demo.landingPage.demoExplainer (gt (len $demo.landingPage.demoExplainer) 0) }}
                   {{ $speechBubbleIcon := resources.Get "images/speech-bubble.svg" | fingerprint }}
-                  <button type="button" class="demo-btn demo-explainer-btn" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
-                    <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-explainer-btn-icon" />
-                    Demo explainer
+                  <button type="button" class="demo-btn demo-script-btn" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
+                    <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-script-btn-icon" />
+                    Demo script
                   </button>
                 {{ end }}
               </div>
-            </div>
-
-            <div class="demo-step">
+              <div class="demo-contact-card">
+                <div class="demo-card-contact-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="#2850B8">
+                    <path d="M16 4a6 6 0 1 1 0 12A6 6 0 0 1 16 4zm0 14c6.627 0 12 2.686 12 6v2H4v-2c0-3.314 5.373-6 12-6z"/>
+                  </svg>
+                </div>
+                <div class="demo-card-details">
+                  <p class="demo-card-details-title">Have questions, want a walkthrough or found a bug?</p>
+                  <p class="demo-card-details-subtitle">Contact the demo owner for assistance.</p>
+                  <a href="mailto:{{$demo.contactEmail}}" class="demo-contact-card-link">Submit a request &rarr;</a>
+                </div>
+              </div>
+            </section>
+ 
+            <section class="demo-step" id="explore-how-it-was-built">
               <div class="demo-step-title">
-                <span class="step-circle">3</span> Explore how the application was built
+                <span class="step-circle">3</span> Explore how it was built
               </div>
               {{ range split $demo.landingPage.demoExplainer "\n\n" }}
-                <p class="demo-detail-summary">{{ . }}</p>
+                <p class="demo-detail-description">{{ . }}</p>
               {{ end }}
-              <div class="info-box-wrapper">
+              <div class="info-boxes-wrapper">
                 <div class="info-box">
                   {{ $cubeComponentsIcon := resources.Get "images/cube-components.svg" | fingerprint }}
                   <div class="info-box-header">
@@ -128,34 +140,32 @@
                     <img src="{{ $architectureImg.RelPermalink }}" />
                   </a>
                 </div>
-                <div class="info-box">
-                  {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
+                {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
+                  <div class="info-box">
                     {{ $specImgPath := printf "images/demos/%s/%s" $demo.slug $demo.specificationsFlow }}
                     {{ $specImg := resources.Get $specImgPath }}
-                    {{ if $specImg }}
-                      {{ $specImg = $specImg | fingerprint }}
-                      {{ $bobIcon := resources.Get "images/bob.png" | fingerprint }}
-                      <div class="info-box-header">
-                        <img src="{{ $bobIcon.RelPermalink }}">
-                        <div class="info-box-title">
-                          Specifications Workflow
-                        </div>
+                    {{ $specImg = $specImg | fingerprint }}
+                    {{ $bobIcon := resources.Get "images/bob.png" | fingerprint }}
+                    <div class="info-box-header">
+                      <img src="{{ $bobIcon.RelPermalink }}">
+                      <div class="info-box-title">
+                        Specifications Workflow
                       </div>
-                      <div class="info-box-subtitle">
-                        IBM Bob executes these Specifications to build this demo.
-                      </div>
-                      <a href="{{ $specImg.RelPermalink }}" target="_blank" rel="noopener">
-                        <img src="{{ $specImg.RelPermalink }}" />
-                      </a>
-                    {{ end }}
-                  {{ end }}
-                </div>
+                    </div>
+                    <div class="info-box-subtitle">
+                      IBM Bob executes these Specifications to build this demo.
+                    </div>
+                    <a href="{{ $specImg.RelPermalink }}" target="_blank" rel="noopener">
+                      <img src="{{ $specImg.RelPermalink }}" />
+                    </a>
+                  </div>
+                {{ end }}
               </div>
-            </div>
-
-            <div class="demo-step">
+            </section>
+ 
+            <section class="demo-step" id="download-and-modify-with-ibm-bob">
               <div class="demo-step-title">
-                <span class="step-circle">4</span> Get the application and modify with IBM Bob
+                <span class="step-circle">4</span> Download and modify with IBM Bob
               </div>
               Download the source code and specifications for this application to set up and run it locally.
               Once downloaded, open the code in <a href="https://bob.ibm.com" target="_blank" rel="noopener">IBM Bob</a> to modify and adapt it to your own use case.
@@ -176,116 +186,31 @@
                   </a>
                 {{ end }}
               </div>
-              <div class="demo-contact-card demo-contact-card-bottom">
-                <div class="demo-card-contact-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="#2850B8">
-                    <path d="M16 4a6 6 0 1 1 0 12A6 6 0 0 1 16 4zm0 14c6.627 0 12 2.686 12 6v2H4v-2c0-3.314 5.373-6 12-6z"/>
-                  </svg>
-                </div>
-                <div class="demo-card-details">
-                  <p class="demo-card-details-title">Have questions or want a walkthrough?</p>
-                  <p class="demo-card-details-subtitle">Contact demo owner to learn more.</p>
-                  <a href="mailto:{{$demo.contactEmail}}" class="demo-contact-card-link">Send a message &rarr;</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="demo-detail-column-right">
-          {{ if $demo.skills }}
-            <div class="info-box">
-              {{ $skillsIcon := resources.Get "images/bob.png" | fingerprint }}
-              <div class="info-box-header">
-                <img src="{{ $skillsIcon.RelPermalink }}">
-                <div class="info-box-title">
-                  Skills Used
-                </div>
-              </div>
-              <div class="info-box-subtitle">
-                Skills provide best practices for IBM technologies
-              </div>
-              <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="skill-download-link">Download skills for IBM Bob &rarr;</a>
-              <div class="demo-metadata">
-                <ul class="demo-metadata-list demo-metadata-list-bullets">
-                  {{ range $demo.skills }}
-                    {{ $skillName := . }}
-                    <li><a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener">{{ $skillName }}</a></li>
-                  {{ end }}
-                </ul>
-              </div>
-            </div>
-          {{ else }}
-            <div class="demo-contact-card">
-                {{ $downloadIcon := resources.Get "images/library.svg" | fingerprint }}
-                <img src="{{ $downloadIcon.RelPermalink }}" alt="" class="demo-card-download-icon" />
-                <div class="demo-card-details">
-                    <p class="demo-card-details-title">Looking for Building Block skills?</p>
-                    <p class="demo-card-details-subtitle">Skills teach IBM Bob how to build applications using IBM technologies.</p>
-                    <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="demo-contact-card-link">Download skills &rarr;</a>
-                </div>
-              </div>
-          {{ end }}
-      
-          {{ if $demo.products }}
-            <div class="info-box">
-              {{ $skillsIcon := resources.Get "images/products/ibm-black.svg" | fingerprint }}
-              <div class="info-box-header">
-                <img src="{{ $skillsIcon.RelPermalink }}">
-                <div class="info-box-title">
-                  Products Used
-                </div>
-              </div>
-              <div class="demo-metadata">                          
-                <ul class="demo-metadata-list">
-                  {{ range sort $demo.products }}
-                    {{ $name := . }}
-                    {{ $product := index hugo.Data.products $name }}
-                    <li>
-                      {{ if $product }}
-                        {{ $productImgPath := printf "images/products/%s" $product.image }}
-                        {{ $productIcon := resources.Get $productImgPath }}
-                        <a href="{{ $product.url }}" target="_blank" rel="noopener">
-                          {{ if $productIcon }}
-                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="githhub-btn-icon" />
-                          {{ end }}
-                          {{ if not (index $product "isNameImage")}}
-                            {{ $name }}
-                          {{ end }}
-                          </a>
-                      {{ else }}
-                        <span class="demo-metadata-no-link">{{ $name }}</span>
-                      {{ end }}
-                    </li>
-                  {{ end }}
-                </ul>
-              </div>
-            </div>
-          {{ end }}
-          <div class="demo-contact-card">
-            <div class="demo-card-contact-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="#000000">
-                <path d="M16 4a6 6 0 1 1 0 12A6 6 0 0 1 16 4zm0 14c6.627 0 12 2.686 12 6v2H4v-2c0-3.314 5.373-6 12-6z"/>
-              </svg>
-            </div>
-            <div class="demo-card-details">
-              <p class="demo-card-details-title">Have questions or want a walkthrough?</p>
-              <p class="demo-card-details-subtitle">Contact demo owner to learn more.</p>
-              <a href="mailto:{{$demo.contactEmail}}" class="demo-contact-card-link">Send a message &rarr;</a>
-            </div>
+            </section>
           </div>
         </div>
       </div>
       {{ if and $demo.landingPage.demoExplainer (gt (len $demo.landingPage.demoExplainer) 0) }}
-        <div class="drawer-overlay demo-explainer-overlay" id="demoExplainerOverlay"></div>
-        <aside class="contact-drawer demo-explainer-drawer" id="demoExplainerDrawer" aria-hidden="true">
-          <div class="drawer-header demo-explainer-header">
-            <span class="drawer-title">Demo explainer</span>
-            <button class="drawer-close" id="demoExplainerClose" aria-label="Close">&#x2715;</button>
+        <div class="drawer-overlay demo-script-overlay" id="demoExplainerOverlay"></div>
+        <aside class="contact-drawer demo-script-drawer" id="demoExplainerDrawer" aria-hidden="true">
+          <div class="drawer-header demo-script-header">
+            <span class="drawer-title">Demo script</span>
+            <div class="demo-script-header-actions">
+              <button type="button" class="demo-script-copy-btn" id="demoExplainerCopyBtn" aria-label="Copy text">
+                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
+                  <path d="M28 10H14a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2zm0 18H14V12h14zM4 20V4h14v4h2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4v-2H4z"/>
+                </svg>
+                <svg class="copy-check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor" style="display:none">
+                  <path d="M13 24L4 15l1.4-1.4 7.6 7.6L26.6 8 28 9.4z"/>
+                </svg>
+                <span class="demo-script-copy-label">Copy</span>
+              </button>
+              <button class="drawer-close" id="demoExplainerClose" aria-label="Close">&#x2715;</button>
+            </div>
           </div>
-          <div class="drawer-body demo-explainer-body">
-            {{ range split $demo.demoExplainer "\n\n" }}
-              <p class="demo-explainer-paragraph">{{ . }}</p>
+          <div class="drawer-body demo-script-body" id="demoExplainerBody">
+            {{ range split $demo.landingPage.demoExplainer "\n\n" }}
+              <p class="demo-script-paragraph">{{ . }}</p>
             {{ end }}
           </div>
         </aside>

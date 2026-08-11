@@ -121,7 +121,7 @@
               {{ end }}
             {{ end }}
             <a class="card-item"
-              href="{{ printf "demos/%s/" $demo.slug | relURL }}"
+              href="{{ printf "demos/%s/" $demo.slug | absURL }}"
               data-building-blocks="{{ delimit $bbSlugs " " | lower }}"
               data-asset-types="{{ delimit $assetTypes " " }}">
               <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />

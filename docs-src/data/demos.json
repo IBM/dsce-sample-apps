@@ -1,25 +1,27 @@
 {
   "demos": [
     {
-      "name": "Agentic Logistics for Cold Chain Operators",
-      "slug": "cold-chain-logistics",
-      "contactEmail": "utdixit1@in.ibm.com",
-      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Instana"],
-      "buildingBlocks": ["ai.agents", "data.integration"],
-      "skills": ["agent-builder", "predictive-analytics", "application-performance-management"],
-      "codeRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
-      "architecture": "architecture-placeholder.png",
-      "specificationsRepo": "https://github.com/",
-      "specificationsFlow": "specs-flow-placeholder.png",
+      "name": "Intelligent Cold Chain Logistics",
+      "slug": "intelligent-cold-chain-logistics",
+      "contactEmail": "shanmsel@in.ibm.com",
+      "products": ["IBM watsonX Orchestrate", "Red Hat OpenShift", "IBM Turbonomic", "IBM Instana"],
+      "buildingBlocks": ["ai.agents", "automation.optimize"],
+      "skills": ["agent", "apm-instana"],
+      "codeRepo": "https://github.ibm.com/shanmsel/smart-cold-chain/tree/fleetops-phase1",
+      "workingDemoURL": "https://orbital-suppliers-orbital-suppliers.orbital-suppliers-2bef1f4b4097001da9502000c44fc2b2-0000.us-south.containers.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "video": { "cosFileName": "intelligent-cold-chain-logistics-2026.09.mp4", "thumbnail": "intelligent-cold-chain-logistics-2026.09_video_thumbnail.jpg" },
       "infoCard": {
-        "description": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "description": "An enterprise fleet management demo for pharmaceutical cold-chain logistics that autonomously detects temperature breaches and reroutes trucks.",
         "image": "home_page.png"
       },
       "landingPage": {
-        "introDescription": "Refrigerated transport (cold-chain) operators face increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust. They need more than monitoring - they need predictive insight and clear actions. FleetOPTX recognized both a market gap and a strategic opportunity. With an already strong fleet management platform, they partnered with IBM to embed AI capabilities.",
-        "useCaseDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+        "introDescription": "Experience how AI-driven logistics intelligence improves productivity of FleetOps managers, site reliability engineers and drivers responsible for day-to-day fleet operations delivering pharmaceutical under strict cold chain storage requirements.",
+        "useCaseDescription": "The Smart Cold-Chain Guardrail Platform is an enterprise-grade demo of AI-driven logistics intelligence applied to pharmaceutical fleet operations. It uses a Python simulation engine to model a fleet of 10 refrigerated trucks — each with simulated GPS co-ordinates, temperature telemetry, cargo manifests, and route waypoints — transporting temperature-sensitive goods (vaccines, perishables) against regulatory thresholds (-18 °C frozen / 2–8 °C pharmaceutical). All data is surfaced through an IBM Carbon Design System dashboard with three operator personas: FleetOps Manager, SRE, and Driver.\n\nWhen a simulated cooling incident is detected — either by the IBM Granite TimeSeries TTM-R2 forecasting service (predicting breach risk up to 96 steps ahead, zero-shot) or by a simulated temperature spike — the platform triggers an autonomous 5-agent pipeline in IBM watsonx Orchestrate: a Weather Advisor scores route-segment severity, a Station Agent finds emergency-cooling facilities within radius, a Route Optimization Agent ranks alternative routes, a Decision Agent produces a risk score (0–100) with financial analysis, and a Notification Agent dispatches a WhatsApp alert via Twilio. The SRE persona monitors infrastructure health via IBM Instana APM and IBM Turbonomic auto-scaling — all deployed on Red Hat OpenShift.",
         "demoExplainer": "Not-yet-provided",
-        "slideshowImages": ["home_page.png"]
+        "slideshowImages": ["home_page.png", "screenshot-01.jpg", "screenshot-02.jpg", "screenshot-03.jpg", "screenshot-04.jpg", "screenshot-05.jpg"]
       }
     },
     {
@@ -34,7 +36,7 @@
       "architecture": "architecture.png",
       "specificationsRepo": "https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters",
       "specificationsFlow": "specs-flow.png",
-      "video": { "cosFileName": "Orbital%20Outfitters%20-%20SDD%20v1.mp4", "thumbnail": "orbital_outfitters_sdd_video_thumbnail.jpg" },
+      "video": { "cosFileName": "orbital-outfitters-sdd-v1.mp4", "thumbnail": "orbital_outfitters_sdd_video_thumbnail.jpg" },
       "infoCard": {
         "description": "Rapidly build full-featured agentic applications matching pre-approved design comps then containerize and deploy to IBM Cloud using Spec-Driven Development.",
         "image": "orbital_outfitters_sdd_video_thumbnail.jpg"
