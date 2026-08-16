@@ -1,17 +1,17 @@
 {{ define "main" }}
   {{ $slug := .Params.slug }}
   {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
+  {{ $mdSrc := printf "demos/%s/description.md" $demo.slug }}
+  {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/description.md" $demo.slug) }}
   {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}            
   {{ if $demo }}
-    {{ $images := $demo.landingPage.slideshowImages }}
+    {{ $images := $demo.screenshots }}
     {{ $assetTypes := slice }}
     <main class="demo-detail-page">
       <div class="pill-container pill-tag-bb pill-demo">DEMO</div>
       <div class="demo-name">{{ $demo.name }}</div>
       <div class="demo-intro-summary">
-        {{ range split $demo.landingPage.introDescription "\n\n" }}
-          <p>{{ . }}</p>
-        {{ end }}
+        {{ $demo.shortDescription}}
       </div>
       <div class="pill-container">
         <B>Building Blocks used:</B> {{ partial "building-blocks-pill.html" (dict "blocks" $demo.buildingBlocks "linked" true) }}
@@ -69,7 +69,7 @@
               <div class="info-box-subtitle">
                 Skills provide best practices for IBM technologies
               </div>
-                  <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="demo-contact-card-link">Download skills &rarr;</a>
+                  <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="info-box-link">Download skills &rarr;</a>
               </div>
           {{ end }}
       
@@ -93,7 +93,7 @@
                         {{ $productIcon := resources.Get $productImgPath }}
                         <a href="{{ $product.url }}" target="_blank" rel="noopener">
                           {{ if $productIcon }}
-                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="githhub-btn-icon" />
+                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                           {{ end }}
                           {{ if not (index $product "isNameImage")}}
                             {{ $name }}
@@ -115,13 +115,13 @@
               <div class="demo-step-title">
                 <span class="step-circle">1</span> Review use case
               </div>
-              {{ range split $demo.landingPage.useCaseDescription "\n\n" }}
+              {{ range split $demo.longDescription "\n\n" }}
                 <p class="demo-detail-description">{{ . }}</p>
               {{ end }}
               <div class="info-boxes-wrapper">
                 <div class="info-box">
                   {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo.video.cosFileName }}
-                  {{ $thumbPath := printf "images/demos/%s/%s" $demo.slug $demo.video.thumbnail }}
+                  {{ $thumbPath := printf "demos/%s/%s" $demo.slug $demo.video.thumbnail }}
                   {{ $thumbRes := resources.Get $thumbPath }}
                   {{ $videoIcon := resources.Get "images/video.svg" | fingerprint }}
                   <div class="info-box-header">
@@ -137,7 +137,7 @@
                   </video>
                 </div>
                 <div class="info-box">
-                  {{ $applicationIcon := resources.Get "images/application.svg" | fingerprint }}
+                  {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
                   <div class="info-box-header">
                     <img src="{{ $applicationIcon.RelPermalink }}">
                     <div class="info-box-title">
@@ -147,18 +147,24 @@
                   <div class="info-box-subtitle">Explore key screens from the demo</div>
                   <div class="demo-slideshow">
                     {{ range $i, $filename := $images }}
-                      {{ $imgPath := printf "images/demos/%s/%s" $demo.slug $filename }}
+                      {{ $imgPath := printf "demos/%s/%s" $demo.slug $filename }}
                       {{ $img := resources.Get $imgPath }}
                       {{ if $img }}
                         {{ $img = $img | fingerprint }}
                         <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
-                          <img src="{{ $img.RelPermalink }}" alt="{{ $demo.name }} screenshot {{ add $i 1 }}" />
+                          <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $img.RelPermalink }}" data-alt="{{ $demo.name }} screenshot {{ add $i 1 }}">
+                            <img src="{{ $img.RelPermalink }}" alt="{{ $demo.name }} screenshot {{ add $i 1 }}" />
+                          </button>
                         </div>
                       {{ end }}
                     {{ end }}
                     {{ if gt (len $images) 1 }}
-                      <button class="demo-slide-prev" aria-label="Previous image">&#8592;</button>
-                      <button class="demo-slide-next" aria-label="Next image">&#8594;</button>
+                      <button class="demo-slide-prev" aria-label="Previous image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="16,4 6,12 16,20"/></svg>
+                      </button>
+                      <button class="demo-slide-next" aria-label="Next image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="8,4 18,12 8,20"/></svg>
+                      </button>
                     {{ end }}
                     {{ if gt (len $images) 1 }}
                       <div class="demo-slide-dots">
@@ -180,17 +186,23 @@
                 {{ $hasWorkingDemo := and $demo.workingDemoURL (gt (len $demo.workingDemoURL) 0) }}
                 {{ if $hasWorkingDemo }}
                   {{ $workingDemoIcon := resources.Get "images/monitor-white.svg" | fingerprint }}
-                  <a href="{{ $demo.workingDemoURL }}" target="_blank" rel="noopener" class="working-demo-btn">
-                    <img src="{{ $workingDemoIcon.RelPermalink }}" alt="" class="working-demo-btn-icon" />
+                  <a href="{{ $demo.workingDemoURL }}" target="_blank" rel="noopener" class="demo-btn try-demo-btn">
+                    <img src="{{ $workingDemoIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                     Try the demo
                   </a>
                 {{ end }}
-                {{ if and $demo.landingPage.demoExplainer (gt (len $demo.landingPage.demoExplainer) 0) }}
-                  {{ $speechBubbleIcon := resources.Get "images/speech-bubble.svg" | fingerprint }}
-                  <button type="button" class="demo-btn demo-script-btn" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
-                    <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-script-btn-icon" />
-                    Demo script
-                  </button>
+                {{ $speechBubbleIcon := resources.Get "images/speech-bubble.svg" | fingerprint }}
+                <button type="button" class="demo-btn demo-btn-simple" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
+                  <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                  Demo script
+                </button>
+                {{ $hasExtras := and $demo.extrasBoxUrl (gt (len $demo.extrasBoxUrl) 0) }}
+                {{ if $hasExtras }}
+                  {{ $boxIcon := resources.Get "images/box.svg" | fingerprint }}
+                  <a href="{{ $demo.extrasBoxUrl }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
+                    <img src="{{ $boxIcon.RelPermalink }}" alt="" class="demo-btn-icon-height" />
+                    Extra demo assets
+                  </a>
                 {{ end }}
               </div>
               <div class="demo-contact-card">
@@ -202,7 +214,10 @@
                 <div class="demo-card-details">
                   <p class="demo-card-details-title">Have questions, want a walkthrough or found a bug?</p>
                   <p class="demo-card-details-subtitle">Contact the demo owner for assistance.</p>
-                  <a href="mailto:{{$demo.contactEmail}}" class="demo-contact-card-link">Submit a request &rarr;</a>
+                  {{ $repoOwner := .Site.Params.githubRepoOwner }}
+                  {{ $repoName := .Site.Params.githubRepoName }}
+                  {{ $contactUsURL := printf "https://github.com/%s/%s/issues/new?template=contact-us.yml" $repoOwner $repoName }}
+                  <a href="{{ $contactUsURL }}" target="_blank" rel="noopener" class="demo-contact-card-link">Submit a request &rarr;</a>
                 </div>
               </div>
             </section>
@@ -211,11 +226,8 @@
               <div class="demo-step-title">
                 <span class="step-circle">3</span> Explore how it was built
               </div>
-              {{ range split $demo.landingPage.demoExplainer "\n\n" }}
-                <p class="demo-detail-description">{{ . }}</p>
-              {{ end }}
               <div class="info-boxes-wrapper">
-                <div class="info-box">
+                <div class="info-box">    
                   {{ $cubeComponentsIcon := resources.Get "images/cube-components.svg" | fingerprint }}
                   <div class="info-box-header">
                     <img src="{{ $cubeComponentsIcon.RelPermalink }}"/>
@@ -226,15 +238,16 @@
                   <div class="info-box-subtitle">
                     High level overview of major demo components
                   </div>
-                  {{ $architectureImgPath := printf "images/demos/%s/%s" $demo.slug $demo.architecture }}
+                  {{ $hasWorkingDemo := and $demo.workingDemoURL (gt (len $demo.workingDemoURL) 0) }}
+                  {{ $architectureImgPath := printf "demos/%s/%s" $demo.slug $demo.architecture }}
                   {{ $architectureImg := resources.Get $architectureImgPath }}
-                  <a href="{{ $architectureImg.RelPermalink }}" target="_blank" rel="noopener">
+                  <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $architectureImg.RelPermalink }}" data-alt="{{ $demo.name }} architecture diagram">
                     <img src="{{ $architectureImg.RelPermalink }}" />
-                  </a>
+                  </button>
                 </div>
                 {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
                   <div class="info-box">
-                    {{ $specImgPath := printf "images/demos/%s/%s" $demo.slug $demo.specificationsFlow }}
+                    {{ $specImgPath := printf "demos/%s/%s" $demo.slug $demo.specificationsFlow }}
                     {{ $specImg := resources.Get $specImgPath }}
                     {{ $specImg = $specImg | fingerprint }}
                     {{ $bobIcon := resources.Get "images/bob.png" | fingerprint }}
@@ -247,9 +260,9 @@
                     <div class="info-box-subtitle">
                       IBM Bob executes these Specifications to build this demo.
                     </div>
-                    <a href="{{ $specImg.RelPermalink }}" target="_blank" rel="noopener">
+                    <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $specImg.RelPermalink }}" data-alt="{{ $demo.name }} specifications workflow">
                       <img src="{{ $specImg.RelPermalink }}" />
-                    </a>
+                    </button>
                   </div>
                 {{ end }}
               </div>
@@ -265,7 +278,7 @@
                 {{ if $hasSpec }}
                   {{ $specsIcon := resources.Get "images/papers.svg" | fingerprint }}
                   <a href="{{ $demo.specificationsRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
-                    <img src="{{ $specsIcon.RelPermalink }}" alt="" class="specs-btn-icon" />
+                    <img src="{{ $specsIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                     Specifications
                   </a>
                 {{ end }}
@@ -273,7 +286,7 @@
                 {{ if $hasCode }}
                   {{ $ghIcon := resources.Get "images/github.svg" | fingerprint }}
                   <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
-                    <img src="{{ $ghIcon.RelPermalink }}" alt="" class="githhub-btn-icon" />
+                    <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                     Source Code
                   </a>
                 {{ end }}
@@ -282,32 +295,32 @@
           </div>
         </div>
       </div>
-      {{ if and $demo.landingPage.demoExplainer (gt (len $demo.landingPage.demoExplainer) 0) }}
-        <div class="drawer-overlay demo-script-overlay" id="demoExplainerOverlay"></div>
-        <aside class="contact-drawer demo-script-drawer" id="demoExplainerDrawer" aria-hidden="true">
-          <div class="drawer-header demo-script-header">
-            <span class="drawer-title">Demo script</span>
-            <div class="demo-script-header-actions">
-              <button type="button" class="demo-script-copy-btn" id="demoExplainerCopyBtn" aria-label="Copy text">
-                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
-                  <path d="M28 10H14a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2zm0 18H14V12h14zM4 20V4h14v4h2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4v-2H4z"/>
-                </svg>
-                <svg class="copy-check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" fill="currentColor" style="display:none">
-                  <path d="M13 24L4 15l1.4-1.4 7.6 7.6L26.6 8 28 9.4z"/>
-                </svg>
-                <span class="demo-script-copy-label">Copy</span>
-              </button>
-              <button class="drawer-close" id="demoExplainerClose" aria-label="Close">&#x2715;</button>
-            </div>
+      <div class="drawer-overlay demo-script-overlay" id="demoExplainerOverlay"></div>
+      <aside class="contact-drawer demo-script-drawer" id="demoExplainerDrawer" aria-hidden="true">
+        <div class="drawer-header demo-script-header">
+          <span class="drawer-title">Demo script</span>
+          <div class="demo-script-header-actions">
+                <a href="{{ $mdRes.RelPermalink }}" download="demo-script.md" class="demo-script-save-btn" aria-label="Download script">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="currentColor">
+                    <path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4zm-2-7-1.41-1.41L17 22.17V4h-2v18.17l-5.59-5.58L8 18l8 8 8-8z"/>
+                  </svg>
+                  <span>Download Script</span>
+                </a>
+            <button class="drawer-close" id="demoExplainerClose" aria-label="Close">&#x2715;</button>
           </div>
-          <div class="drawer-body demo-script-body" id="demoExplainerBody">
-            {{ range split $demo.landingPage.demoExplainer "\n\n" }}
-              <p class="demo-script-paragraph">{{ . }}</p>
-            {{ end }}
-          </div>
-        </aside>
-      {{ end }}
+        </div>
+        <div class="drawer-body demo-script-body" id="demoExplainerBody">
+          {{ $scriptPath := printf "assets/demos/%s/description.md" $demo.slug }}
+          {{ $scriptFile := readFile $scriptPath }}
+          {{ $scriptFile | markdownify }}
+        </div>
+      </aside>
     </main>
+    <!-- Lightbox -->
+    <div class="demo-lightbox" id="demoLightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+      <button class="demo-lightbox-close" id="demoLightboxClose" aria-label="Close">&#x2715;</button>
+      <img class="demo-lightbox-img" id="demoLightboxImg" src="" alt="" />
+    </div>
   {{ else }}
     <main class="demo-detail-page">
       <p class="demo-detail-missing">Demo not found.</p>

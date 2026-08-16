@@ -1,82 +1,38 @@
 <header class="global-header-shell">
   <div class="global-header-brand-row">
-    <a class="global-header-brand" href="/" aria-label="IBM Digital Self-Serve Co-Create Experience home">
+    <a class="global-header-brand" href="{{ site.Home.RelPermalink }}" aria-label="IBM Digital Self-Serve Co-Create Experience home">
       {{ $ibmLogo := resources.Get "images/products/ibm-black.svg" | fingerprint }}
       <img src="{{ $ibmLogo.RelPermalink }}" alt="IBM" class="global-header-brand-logo" />
       <span class="global-header-brand-divider" aria-hidden="true"></span>
       <span class="global-header-brand-title">Digital Self-Serve Co-Create Experience</span>
     </a>
-    <button class="contact-btn" id="contactBtn">Contact us</button>
+    <nav class="header-actions" aria-label="Header actions">
+      {{ $repoOwner := .page.Site.Params.githubRepoOwner }}
+      {{ $repoName := .page.Site.Params.githubRepoName }}
+      {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
+      {{ $contactUsURL := printf "https://github.com/%s/%s/issues/new?template=contact-us.yml" $repoOwner $repoName }}
+      <a class="header-btn" href="{{$demoSubmissionURL}}" target="_blank" rel="noopener noreferrer">Submit your demo</a>
+      <span class="header-actions-divider" aria-hidden="true">|</span>
+      <a class="header-btn" href="{{$contactUsURL}}" target="_blank" rel="noopener noreferrer">Contact us</a>
+    </nav>
   </div>
   <div class="global-header global-header-breadcrumbs" aria-label="Breadcrumb">
-    <a class="global-header-home" href="/">
+    <a class="global-header-home" href="{{ site.Home.RelPermalink }}">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
         <path fill="currentColor" d="M12 3.3 4 9.5V21h5v-6h6v6h5V9.5z"/>
       </svg>
       <span>Home</span>
     </a>
+    {{ if .showUseCases }}
+      <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
+      <span class="global-header-current">Use cases</span>
+    {{ end }}
     {{ if .showBack }}
       <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
-      <span class="global-header-use-cases">use cases</span>
+      <a class="global-header-use-cases" href="{{ "demos/" | relURL }}">Use cases</a>
       <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
       <span class="global-header-current">{{ .title }}</span>
     {{ end }}
   </div>
 </header>
 
-<!-- ==================== CONTACT DRAWER ==================== -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<aside class="contact-drawer" id="contactDrawer" aria-hidden="true">
-  <div class="drawer-header">
-    <span class="drawer-title">Contact us</span>
-    <button class="drawer-close" id="drawerClose" aria-label="Close">&#x2715;</button>
-  </div>
-  <div class="drawer-body">
-    <section class="drawer-section">
-      <h3 class="drawer-section-title">Topic</h3>
-      <label class="drawer-label">Category</label>
-      <select class="drawer-select">
-        <option>Share feedback</option>
-        <option>Technical assistance</option>
-        <option>Learn more about a use case</option>
-        <option>Get in touch with Sales team</option>
-        <option>Request container customization</option>
-        <option>Other</option>
-      </select>
-      <label class="drawer-label">What would you like to discuss? <span class="required">*</span></label>
-      <textarea class="drawer-textarea" maxlength="500" placeholder=""></textarea>
-    </section>
-    <section class="drawer-section">
-      <h3 class="drawer-section-title">Contact Details</h3>
-      <div class="drawer-row">
-        <div class="drawer-field">
-          <label class="drawer-label">First name</label>
-          <input type="text" class="drawer-input">
-        </div>
-        <div class="drawer-field">
-          <label class="drawer-label">Last name</label>
-          <input type="text" class="drawer-input">
-        </div>
-      </div>
-      <div class="drawer-row">
-        <div class="drawer-field">
-          <label class="drawer-label">Email address <span class="required">*</span></label>
-          <input type="email" class="drawer-input">
-        </div>
-        <div class="drawer-field">
-          <label class="drawer-label">Phone number</label>
-          <input type="tel" class="drawer-input">
-        </div>
-      </div>
-      <div class="drawer-field">
-        <label class="drawer-label">Company</label>
-        <input type="text" class="drawer-input">
-      </div>
-      <p class="drawer-privacy">I understand my personal data will be processed in accordance with <a href="https://www.ibm.com/privacy" class="drawer-link" target="_blank">IBM's Privacy Policy.</a></p>
-    </section>
-  </div>
-  <div class="drawer-footer">
-    <button class="drawer-btn-cancel" id="drawerCancel">Cancel</button>
-    <button class="drawer-btn-submit">Submit</button>
-  </div>
-</aside>

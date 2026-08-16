@@ -16,6 +16,11 @@
         "url" : "https://www.ibm.com/products/confluent",
         "image" : "ibm-confluent.svg"
     },
+    "IBM DataStax" : {
+        "url" : "https://www.ibm.com/products/datastax",
+        "image" : "ibm-datastax.svg",
+        "is_name_image" : true
+    },
     "IBM Instana" : {
         "url" : "https://www.ibm.com/products/instana",
         "image" : "ibm-instana.svg"
