@@ -69,7 +69,7 @@
               <div class="info-box-subtitle">
                 Skills provide best practices for IBM technologies
               </div>
-                  <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="info-box-link">Download skills &rarr;</a>
+                  <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" class="demo-contact-card-link">Download skills &rarr;</a>
               </div>
           {{ end }}
       
@@ -93,7 +93,7 @@
                         {{ $productIcon := resources.Get $productImgPath }}
                         <a href="{{ $product.url }}" target="_blank" rel="noopener">
                           {{ if $productIcon }}
-                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                            <img src="{{ $productIcon.RelPermalink }}" alt="" class="githhub-btn-icon" />
                           {{ end }}
                           {{ if not (index $product "isNameImage")}}
                             {{ $name }}
@@ -115,7 +115,7 @@
               <div class="demo-step-title">
                 <span class="step-circle">1</span> Review use case
               </div>
-              {{ range split $demo.longDescription "\n\n" }}
+              {{ range split $demo.landingPage.useCaseDescription "\n\n" }}
                 <p class="demo-detail-description">{{ . }}</p>
               {{ end }}
               <div class="info-boxes-wrapper">
