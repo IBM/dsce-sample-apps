@@ -41,4 +41,40 @@
 
     startTimer();
   });
+
+  // Lightbox
+  const lightbox = document.getElementById('demoLightbox');
+  if (!lightbox) return;
+
+  const lightboxImg = document.getElementById('demoLightboxImg');
+  const lightboxClose = document.getElementById('demoLightboxClose');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.hidden = false;
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.demo-slide-zoom').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openLightbox(btn.dataset.src, btn.dataset.alt);
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  // Close on backdrop click (not on the image itself)
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
 })();

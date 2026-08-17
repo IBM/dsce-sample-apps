@@ -33,7 +33,7 @@
 
               <!-- ==================== SECTION: AI ==================== -->
               <div class="nav-section">
-                <h3 class="section-title">AI</h3>
+                <div class="section-title">AI</div>
                 <div class="accordion-content">
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
@@ -42,7 +42,7 @@
 
               <!-- ==================== SECTION: DATA ==================== -->
               <div class="nav-section">
-                <h3 class="section-title">DATA</h3>
+                <div class="section-title">Data</div>
                 <div class="accordion-content">
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
@@ -52,7 +52,7 @@
 
               <!-- ==================== SECTION: AUTOMATION ==================== -->
               <div class="nav-section">
-                <h3 class="section-title">AUTOMATION</h3>
+                <div class="section-title">Automation</div>
                 <div class="accordion-content">
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
@@ -67,9 +67,8 @@
         <div class="info-card">
           <div>
             <div class="info-card-tagline">
-              {{ $bb := resources.Get "images/building_blocks.png" | fingerprint }}
-              <img src="{{ $bb.RelPermalink }}" width="50">
-              
+              {{ $bbIcon := resources.Get "images/blocks.svg" | fingerprint }}
+              <img src="{{ $bbIcon.RelPermalink }}" width="50">
               <span class="info-card-tagline-text">
                 <strong>Building Blocks</strong>
                 <span>Pre-built capabilities spanning AI, Data, and Automation.</span>
@@ -81,13 +80,28 @@
         <div class="info-card">
           <div>
             <div class="info-card-tagline">
-              {{ $bob := resources.Get "images/bob.png" | fingerprint }}
-              <img src="{{ $bob.RelPermalink }}" width="50">
-
+              {{ $bobIcon := resources.Get "images/bob.png" | fingerprint }}
+              <img src="{{ $bobIcon.RelPermalink }}" width="50">
               <span class="info-card-tagline-text">
                 <strong>IBM Bob</strong>
                 <span>AI-first development partner for building enterprise solutions.</span>
                 <a href="https://bob.ibm.com/" class="cta-link">Try Bob →</a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div>
+            <div class="info-card-tagline">
+              {{ $repoOwner := .Site.Params.githubRepoOwner }}
+              {{ $repoName := .Site.Params.githubRepoName }}
+              {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
+              {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
+              <img src="{{ $applicationIcon.RelPermalink }}" width="50">
+              <span class="info-card-tagline-text">
+                <strong>Have a demo to share?</strong>
+                <span>We are accepting new applications to showcase</span>
+                <a href="{{$demoSubmissionURL}}" class="cta-link">Submit your demo →</a>
               </span>
             </div>
           </div>
@@ -98,7 +112,7 @@
         <div id="demo-cards-wrapper" class="demo-cards-wrapper">
           {{ range hugo.Data.demos.demos }}
             {{ $demo := . }}
-            {{ $cardImgPath := printf "images/demos/%s/%s" $demo.slug $demo.infoCard.image }}
+            {{ $cardImgPath := printf "demos/%s/%s" $demo.slug (index $demo.screenshots 0) }}
             {{ $cardImgRaw := resources.Get $cardImgPath }}
             {{ if not $cardImgRaw }}
               {{ warnf "demos/list.html: card image not found for demo %q — expected asset at %q" $demo.slug $cardImgPath }}
@@ -127,7 +141,7 @@
               <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
               <div class="card-item-description">
                 <div>{{ $demo.name }}</div>
-                <p>{{ $demo.infoCard.description }}</p>
+                <p>{{ $demo.shortDescription }}</p>
               </div>
               <div class="pill-container">
                 {{ partial "building-blocks-pill.html" (dict "blocks" $demo.buildingBlocks "linked" false) }}

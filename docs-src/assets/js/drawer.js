@@ -1,7 +1,4 @@
-// ==================== CONTACT DRAWER ====================
-const drawer = document.getElementById('contactDrawer');
-const overlay = document.getElementById('drawerOverlay');
-
+// ==================== DRAWERS ====================
 function bindDrawer(options) {
   const trigger = document.getElementById(options.triggerId);
   const panel = document.getElementById(options.drawerId);
@@ -37,48 +34,11 @@ function bindDrawer(options) {
 }
 
 bindDrawer({
-  triggerId: 'contactBtn',
-  drawerId: 'contactDrawer',
-  overlayId: 'drawerOverlay',
-  closeId: 'drawerClose',
-  cancelId: 'drawerCancel'
-});
-
-bindDrawer({
   triggerId: 'demoExplainerBtn',
   drawerId: 'demoExplainerDrawer',
   overlayId: 'demoExplainerOverlay',
   closeId: 'demoExplainerClose'
 });
-
-// ==================== DEMO EXPLAINER COPY BUTTON ====================
-const demoExplainerCopyBtn = document.getElementById('demoExplainerCopyBtn');
-if (demoExplainerCopyBtn) {
-  demoExplainerCopyBtn.addEventListener('click', function () {
-    const body = document.getElementById('demoExplainerBody');
-    const text = Array.from(body.querySelectorAll('.demo-script-paragraph'))
-      .map(p => p.textContent.trim())
-      .join('\n\n');
-
-    navigator.clipboard.writeText(text).then(function () {
-      const copyIcon = demoExplainerCopyBtn.querySelector('.copy-icon');
-      const checkIcon = demoExplainerCopyBtn.querySelector('.copy-check-icon');
-      const label = demoExplainerCopyBtn.querySelector('.demo-script-copy-label');
-
-      copyIcon.style.display = 'none';
-      checkIcon.style.display = '';
-      label.textContent = 'Copied!';
-      demoExplainerCopyBtn.classList.add('is-copied');
-
-      setTimeout(function () {
-        copyIcon.style.display = '';
-        checkIcon.style.display = 'none';
-        label.textContent = 'Copy';
-        demoExplainerCopyBtn.classList.remove('is-copied');
-      }, 2000);
-    });
-  });
-}
 
 const demoSectionNavLinks = Array.from(document.querySelectorAll('.demo-section-nav-link'));
 const demoSections = demoSectionNavLinks

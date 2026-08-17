@@ -1,3 +1,33 @@
 {{ define "main" }}
-  <meta http-equiv="refresh" content="0; url={{ "demos/" | absURL }}" />
+  <div class="landing-wrapper">
+    <div class="landing-hero-panel">
+      <h1 class="landing-hero-headline">Accelerate and scale innovation with IBM AI</h1>
+    </div>
+    <div class="landing-content-panel">
+      <p class="landing-intro-text">
+        IBM <strong>Digital Self-Serve Co-Create Experience (DSCE)</strong> helps data
+        scientists, application developers and ML-Ops engineers discover and try IBM's AI
+        portfolio across IBM watsonx, IBM AI libraries and APIs for Embed and IBM AI
+        Applications.
+      </p>
+      <p class="landing-intro-text">
+        The wizard asks contextual questions about your goals with IBM's AI and provides a
+        curated set of demos, sample applications, trials, and education to accelerate your
+        work.
+      </p>
+      <a class="landing-cta-btn" href="{{ "demos/" | absURL }}">
+        Get Started &nbsp;&#8594;
+      </a>
+    </div>
+  </div>
+  <footer class="landing-footer">
+    <span class="landing-footer-left">Developed by IBM Build Engineering team</span>
+    <nav class="landing-footer-links" aria-label="Footer links">
+      <a href="https://www.ibm.com/privacy" target="_blank" rel="noopener">Privacy</a>
+      <span class="landing-footer-sep" aria-hidden="true">|</span>
+      <a href="https://www.ibm.com/legal" target="_blank" rel="noopener">Terms of use</a>
+      <span class="landing-footer-sep" aria-hidden="true">|</span>
+      <a href="https://www.ibm.com/accessibility" target="_blank" rel="noopener">Accessibility</a>
+    </nav>
+  </footer>
 {{ end }}
