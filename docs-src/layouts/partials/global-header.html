@@ -1,11 +1,13 @@
 <header class="global-header-shell">
   <div class="global-header-brand-row">
-    <a class="global-header-brand" href="{{ site.Home.RelPermalink }}" aria-label="IBM Digital Self-Serve Co-Create Experience home">
-      {{ $ibmLogo := resources.Get "images/products/ibm-black.svg" | fingerprint }}
-      <img src="{{ $ibmLogo.RelPermalink }}" alt="IBM" class="global-header-brand-logo" />
+    <div class="global-header-brand">
+      <a class="global-header-brand-logo-link" href="{{ site.Home.RelPermalink }}" aria-label="IBM home">
+        {{ $ibmLogo := resources.Get "images/products/ibm-black.svg" | fingerprint }}
+        <img src="{{ $ibmLogo.RelPermalink }}" alt="IBM" class="global-header-brand-logo" />
+      </a>
       <span class="global-header-brand-divider" aria-hidden="true"></span>
       <span class="global-header-brand-title">Digital Self-Serve Co-Create Experience</span>
-    </a>
+    </div>
     <nav class="header-actions" aria-label="Header actions">
       {{ $repoOwner := .page.Site.Params.githubRepoOwner }}
       {{ $repoName := .page.Site.Params.githubRepoName }}

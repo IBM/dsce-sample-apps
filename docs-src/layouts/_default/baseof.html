@@ -28,5 +28,7 @@
   <script src="{{ $drawer.RelPermalink }}" type="module" integrity="{{ $drawer.Data.Integrity }}" crossorigin="anonymous"></script>
   {{ $slideshow := resources.Get "js/slideshow.js" | fingerprint }}
   <script src="{{ $slideshow.RelPermalink }}" defer integrity="{{ $slideshow.Data.Integrity }}" crossorigin="anonymous"></script>
+  {{ $debugMode := resources.Get "js/debug-mode.js" | fingerprint }}
+  <script src="{{ $debugMode.RelPermalink }}" type="module" integrity="{{ $debugMode.Data.Integrity }}" crossorigin="anonymous"></script>
 </body>
 </html>

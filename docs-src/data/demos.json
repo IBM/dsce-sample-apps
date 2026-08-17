@@ -16,7 +16,8 @@
       "screenshots": ["home_page.png", "screenshot-01.jpg", "screenshot-02.jpg", "screenshot-03.jpg"],
       "longDescription": "The Smart Cold-Chain Guardrail Platform is an enterprise-grade demo of AI-driven logistics intelligence applied to pharmaceutical fleet operations. It uses a Python simulation engine to model a fleet of 10 refrigerated trucks — each with simulated GPS co-ordinates, temperature telemetry, cargo manifests, and route waypoints — transporting temperature-sensitive goods (vaccines, perishables) against regulatory thresholds (-18 °C frozen / 2–8 °C pharmaceutical). All data is surfaced through an IBM Carbon Design System dashboard with three operator personas: FleetOps Manager, SRE, and Driver.\n\nWhen a simulated cooling incident is detected — either by the IBM Granite TimeSeries TTM-R2 forecasting service (predicting breach risk up to 96 steps ahead, zero-shot) or by a simulated temperature spike — the platform triggers an autonomous 5-agent pipeline in IBM watsonx Orchestrate: a Weather Advisor scores route-segment severity, a Station Agent finds emergency-cooling facilities within radius, a Route Optimization Agent ranks alternative routes, a Decision Agent produces a risk score (0–100) with financial analysis, and a Notification Agent dispatches a WhatsApp alert via Twilio. The SRE persona monitors infrastructure health via IBM Instana APM and IBM Turbonomic auto-scaling — all deployed on Red Hat OpenShift.",
       "shortDescription": "Experience how AI-driven logistics intelligence improves productivity of FleetOps managers, site reliability engineers and drivers responsible for day-to-day fleet operations delivering pharmaceutical under strict cold chain storage requirements.",
-      "extrasBoxUrl": "https://ibm.box.com/s/p02og23ax9ltq27kcgah7evmgl6n0ulf"
+      "extrasBoxUrl": "https://ibm.box.com/s/p02og23ax9ltq27kcgah7evmgl6n0ulf",
+      "isLive": true
     },
     {
       "name": "Spec-Driven Development With IBM Bob",
@@ -33,7 +34,8 @@
       "video": { "cosFileName": "orbital-outfitters-sdd-v1.mp4", "thumbnail": "orbital_outfitters_sdd_video_thumbnail.jpg" },
       "screenshots": ["home_page.png", "agentic_search.png", "product_page.png", "cart_logged_in_full.png", "my_orders.png"],
       "longDescription": "This demo is a use case wrapped within a use case.  The application's use case is a product ordering website for travelers needing supplies that can survive the rigors of space.  Travelers use agentic search (powered by OpenSearch) to research available products then use full shopping cart functionality.\n\nThis demo's primary use case is to educate partners on the power of Spec-Driven Development, which allowed IBM Bob to build the Orbital Suppliers using only natural language documents, UI design images, dataset requirements and backend endpoint APIs. This highlights how enterprise development teams build production quality solutions.  More up-front documentation and less interactive vibe coding.\n\nPartners can use the provided Specifications (in natural language not code) which IBM Bob can use to rebuild this entire demo.",
-      "shortDescription": "Build a production-ready application starting from a use case specifications in natural language. Starting with zero code, IBM Bob spawns a team of subagents that build, containerize then deploy an application to IBM Cloud in 15 mins."
+      "shortDescription": "Build a production-ready application starting from a use case specifications in natural language. Starting with zero code, IBM Bob spawns a team of subagents that build, containerize then deploy an application to IBM Cloud in 15 mins.",
+      "isLive": true
     },
     {
       "name": "Agentic Security Operations Center",
@@ -48,7 +50,8 @@
       "specificationsFlow": "specs-flow-placeholder.png",
       "screenshots": ["home_page.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
-      "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks."
+      "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
+      "isLive": true
     },
     {
       "name": "NexusIQ - Intelligent Operations Platform",
@@ -63,7 +66,8 @@
       "specificationsFlow": "",
       "screenshots": ["screenshot-1.jpg", "architecture.png"],
       "longDescription": "Modern enterprises hold their most valuable operational knowledge in two completely disconnected worlds: structured records locked in databases and data warehouses, and unstructured institutional knowledge buried in runbooks, incident reports, and policy PDFs. Today, answering a single operational question — 'Why is this order delayed, and what should we do?' — requires an analyst to manually query multiple systems, search through documents, and correlate results before anyone can act. That process takes hours.\n\nThis demo collapses that time to under two seconds. It showcases a fully agentic architecture built on IBM watsonx.data as the unified query layer, with Apache Iceberg hosting all structured operational, analytics, and lakehouse data (covering orders, customers, warehouses, inventory, shipment events, and compensation policies). Unstructured content — four operational runbooks and two historical incident reports — is stored as vector embeddings in DataStax Astra DB or HCD, enabling semantic retrieval.\n\nA lightweight Python MCP (Model Context Protocol) server bridges the AI agent to both data worlds, exposing seven tools: SQL execution, vector search, and five schema-exploration helpers. An optional Confluent Kafka pipeline streams live orders into Iceberg with sub-500 ms end-to-end latency.\n\nThe entire system is orchestrated through IBM Bob — a VS Code AI assistant — using a custom 'AI Driven Analyst' mode that understands the demo schema, enforces correct tool selection, and formats answers for a live audience. The result is a demo that illustrates, in plain English, how structured facts and unstructured guidance combine into a single actionable insight: root cause, inventory reroute option, compensation amount, and runbook citation — all in one response.",
-      "shortDescription": "Answer complex questions about supply-chain operations in seconds by federating structured data with unstructured runbooks and incident notes"
+      "shortDescription": "Answer complex questions about supply-chain operations in seconds by federating structured data with unstructured runbooks and incident notes",
+      "isLive": true
     },
     {
       "name": "Counter-UAS in Modern Warfare",
@@ -76,16 +80,10 @@
       "architecture": "architecture-placeholder.png",
       "specificationsRepo": "",
       "specificationsFlow": "",
-      "infoCard": {
-        "description": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response.",
-        "image": "home_page.png"
-      },
-      "landingPage": {
-        "introDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
-        "useCaseDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
-        "demoExplainer": "Not-yet-provided",
-        "slideshowImages": ["home_page.png"]
-      }
+      "screenshots": ["home_page.png"],
+      "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
+      "shortDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
+      "isLive": false
     }
   ]
 }

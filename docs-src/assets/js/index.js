@@ -1,5 +1,9 @@
 // ==================== HOMEPAGE FILTER ====================
 // Cards are rendered at build time by Hugo. JS only handles show/hide filtering.
+
+const DEBUG_KEY = 'dsce_isDebugMode';
+function isDebugMode() { return localStorage.getItem(DEBUG_KEY) === 'true'; }
+
 const wrapper = document.getElementById('demo-cards-wrapper');
 const resultsCount = document.getElementById('demo-results-count');
 const checkboxes = document.querySelectorAll('.filter-cb');
@@ -13,10 +17,18 @@ function getActiveFilters() {
 
 function applyFilter() {
   const active = getActiveFilters();
+  const debugOn = isDebugMode();
   let visibleCount = 0;
 
   allCards.forEach(card => {
     const cardBuildingBlocks = (card.dataset.buildingBlocks || '').split(' ');
+    const isLive = card.dataset.islive === 'true';
+
+    // In normal mode hide non-live cards; in debug mode show all
+    if (!isLive && !debugOn) {
+      card.style.display = 'none';
+      return;
+    }
 
     const visible = active.length === 0 || active.every(f => cardBuildingBlocks.includes(f));
     card.style.display = visible ? '' : 'none';
@@ -51,5 +63,8 @@ if (clearBtn) {
     applyFilter();
   });
 }
+
+// Re-run filter when debug mode is toggled from any page
+window.addEventListener('dsce:debugModeChange', applyFilter);
 
 applyFilter();
