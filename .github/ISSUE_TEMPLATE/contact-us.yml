@@ -1,0 +1,43 @@
+name: Contact Us
+description: Share feedback, request assistance or get in touch with the team.
+title: "[Contact Us] "
+labels: ["contact-us"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to reach out to the DSCE team. Fields marked **required** must be completed before submitting.
+
+  # ── Topic ──────────────────────────────────────────────────
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Select the topic that best describes your inquiry.
+      options:
+        - Share feedback
+        - Technical assistance
+        - Learn more about a use case
+        - Get in touch with Sales team
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: discussion
+    attributes:
+      label: What would you like to discuss?
+      description: Provide as much detail as possible (max 500 characters).
+      placeholder: Describe your question or feedback…
+    validations:
+      required: true
+
+  # ── Privacy ────────────────────────────────────────────────
+  - type: checkboxes
+    id: response
+    attributes:
+      label: Follow this issue and don't submit personal details
+      options:
+        - label: I understand this GitHub issue and website are public and did not include any personal information.  I will listen for a response on this issue's thread.
+    validations:
+      required: true

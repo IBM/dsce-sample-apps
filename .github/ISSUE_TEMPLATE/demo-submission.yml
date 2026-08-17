@@ -1,0 +1,170 @@
+name: DSCE Demo Submission
+description: Submit a new demo for inclusion in the DSCE Demo Catalog.
+title: "[Demo Submission] "
+labels: ["demo-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to submit a new demo to the DSCE catalog. Fields marked **required** must be completed.
+        Once submitted, the demo team will review your submission and follow up with any questions.
+
+  # ── Overview ───────────────────────────────────────────────
+  - type: input
+    id: demo_name
+    attributes:
+      label: Demo name
+      description: The full display name of your demo as it should appear in the catalog.
+      placeholder: "e.g. Intelligent Cold Chain Logistics"
+    validations:
+      required: true
+
+  - type: textarea
+    id: short_description
+    attributes:
+      label: Short description
+      description: "1–2 sentences (<= 30 words). Used on the catalog card and top of demo detail page. Keep it punchy and outcome-focused."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: industry
+    attributes:
+      label: Industry / Use Case
+      description: Select the primary industry this demo targets.
+      options:
+        - Energy
+        - Finance
+        - Healthcare
+        - Life Sciences
+        - Manufacturing
+        - Retail
+        - Telecom
+    validations:
+      required: true
+
+  - type: textarea
+    id: long_description
+    attributes:
+      label: Long description
+      description: "2-3 paragraphs (3-5 sentences each sentences). Used on the demo detail page. Describe the problem, solution, key capabilities, and personas involved."
+      placeholder: |
+        Paragraph 1 — the business problem and context...
+
+        Paragraph 2 — the technical approach, key AI/automation components, and outcome...
+    validations:
+      required: true
+
+  # ── Skills & Products ─────────────────────────────────────
+  - type: textarea
+    id: skills
+    attributes:
+      label: IBM Bob Building Block skills used
+      description: |
+        List each Bob skill used to build this demo — one per line.
+        Browse available [Building Block skills for IBM Bob.](https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/)
+      placeholder: |
+        agent-builder
+        data-streaming-confluent
+        infrastructure-as-code-terraform
+        udi-opensearch
+
+  - type: textarea
+    id: products
+    attributes:
+      label: IBM products used
+      description: List each product used — one per line. Use the exact product names as they appear in the catalog.
+      placeholder: |
+        IBM watsonx Orchestrate
+        IBM watsonx.ai
+        Red Hat OpenShift
+        IBM Cloud
+    validations:
+      required: true
+
+  # ── Links ─────────────────────────────────────────────────
+  - type: input
+    id: working_demo_url
+    attributes:
+      label: Link to functional demo
+      description: The publicly accessible URL where reviewers can try the live demo.
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: input
+    id: code_repo
+    attributes:
+      label: Link to source code repository
+      description: GitHub (or GitHub Enterprise) repo containing the demo application source code.
+      placeholder: "https://github.com/..."
+    validations:
+      required: true
+
+  - type: input
+    id: specifications_repo
+    attributes:
+      label: Link to specifications repository (if available)
+      description: GitHub repo containing the natural language specifications used by IBM Bob to build this demo. Leave blank if not applicable.
+      placeholder: "https://github.com/..."
+
+  # ── Media ──────────────────────────────────────────────────
+  - type: input
+    id: video_url
+    attributes:
+      label: Demo overview video
+      description: "Short walkthrough video (2–5 minutes)."
+      placeholder: "Link to video on Box or OneDrive."
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots (2–5 images)
+      description: |
+        Attach 2–5 screenshots that showcase key screens of your demo.
+        Drag and drop image files directly into this text box, or paste URLs — one per line.
+        Accepted formats: JPG, PNG. Recommended resolution: 1280 × 800 px or higher.
+      placeholder: |
+        screenshot-01.jpg
+        screenshot-02.jpg
+        screenshot-03.jpg
+    validations:
+      required: true
+
+  - type: textarea
+    id: demo_script
+    attributes:
+      label: How to use the demo (seller / demo script)
+      description: |
+        Step-by-step explanation of how a seller should present this demo.
+        You can write this as plain text or Markdown — [see an example in Markdown format](https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters/blob/main/docs-src/assets/demos/intelligent-cold-chain-logistics/description.md).
+        You can also drag and drop a `.md` file directly into this field.
+      placeholder: |
+        1. Start by ...
+        2. Navigate to ...
+        3. Point out ...
+    validations:
+      required: true
+
+  # ── Architecture ───────────────────────────────────────────
+  - type: textarea
+    id: architecture_diagram
+    attributes:
+      label: Architecture diagram
+      description: |
+        Attach your architecture diagram image file here (drag and drop or paste a URL).
+        Accepted formats: PNG, JPEG. Recommended: wide aspect ratio (e.g. 1600 × 900 px).
+      placeholder: "architecture.png"
+    validations:
+      required: true
+
+  - type: textarea
+    id: architecture_description
+    attributes:
+      label: Architecture description
+      description: "A short paragraph describing the major components shown in the diagram and how they interact."
+      placeholder: "The demo uses IBM watsonx Orchestrate to orchestrate a 5-agent pipeline that ..."
+    validations:
+      required: true

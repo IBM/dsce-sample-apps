@@ -104,73 +104,6 @@ details[open] .accordion-header::after {
   font-weight: 500;
   flex-shrink: 0;
 }
-
-/* ==================== GLOBAL TWO-COLUMN FLEXBOX LAYOUT ==================== */
-/* =============================================================================
-   SITE LAYOUT  (two-column sidebar + main)
-   ============================================================================= */
-
-.site-filter-wrapper {
-  display: flex;
-  max-width: 100%;
-  margin-top: 10px;
-  gap: 24px;
-}
-
-/* Make Left Sidebar stay fixed on screen while right main contents scroll */
-.sidebar-nav {
-  min-width: 275px;
-  width: 10%;
-  flex-shrink: 0;
-  position: sticky;
-  top: 112px;
-  align-self: flex-start;
-  height: calc(100vh - 112px);
-  overflow-y: auto;
-  margin-left: 25px;
-}
-
-/* Right Main Content Window Area Flex Allocation */
-.main-content-window {
-  padding: 0px 24px 24px 0px;
-  flex-grow: 1;
-  min-width: 0; /* Prevents long titles from overflowing flex boundaries */
-}
-
-/* =============================================================================
-   SIDEBAR NAVIGATION
-   ============================================================================= */
-/* Master Nav Sections (Building Blocks / Skills) */
-.master-nav-header {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #161616;
-  cursor: pointer;
-}
-
-.master-nav-section {
-  border-bottom: 2px solid #e0e0e0;
-  margin-bottom: 4px;
-}
-
-.master-nav-section:last-of-type {
-  border-bottom: none;
-}
-
-
-.site-layout-wrapper {
-  display: flex;
-  max-width: 100%;
-  margin-top: 10px;
-  gap: 24px; /* Standard spacing gap between sidebar and main window column */
-}
-
 /* ==================== CONTENT ELEMENT DECORATIONS ==================== */
 .building-blocks-card {
   margin-top: 12px;
@@ -422,7 +355,12 @@ a.pill-tag-bb:hover {
   gap: 20px;
   min-width: 0;
   color: #161616;
-  text-decoration: none;
+}
+
+.global-header-brand-logo-link {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
 }
 
 .global-header-brand-logo {
@@ -524,6 +462,21 @@ a.pill-tag-bb:hover {
 
 .header-btn:hover {
   text-decoration: underline;
+}
+
+/* ==================== DEBUG MODE BADGE ==================== */
+.debug-mode-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #da1e28;
+  border-radius: 3px;
+  padding: 2px 7px;
+  line-height: 1.6;
+  user-select: none;
+  white-space: nowrap;
 }
 
 /* ==================== CONTACT DRAWER ==================== */
@@ -631,6 +584,7 @@ a.card-item {
 
 .demo-detail-column-right {
   flex: 0 0 75%;
+  margin-bottom: 900px;
 }
 
 .pill-demo {
