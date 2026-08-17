@@ -23,67 +23,6 @@ body {
   margin-bottom: 6px;
 }
 
-.site-subheader {
-  font-size: 18px;
-  font-weight: 400;
-  margin: 4px 0;
-}
-
-/* ==================== GLOBAL TWO-COLUMN FLEXBOX LAYOUT ==================== */
-/* =============================================================================
-   SITE LAYOUT  (two-column sidebar + main)
-   ============================================================================= */
-
-.site-filter-wrapper {
-  display: flex;
-  max-width: 100%;
-  margin-top: 10px;
-  gap: 24px;
-}
-
-/* Make Left Sidebar stay fixed on screen while right main contents scroll */
-.sidebar-nav {
-  min-width: 275px;
-  width: 10%;
-  flex-shrink: 0;
-  position: sticky;
-  top: 112px;
-  align-self: flex-start;
-  height: calc(100vh - 112px);
-  overflow-y: auto;
-  margin-left: 25px;
-}
-
-/* Right Main Content Window Area Flex Allocation */
-.main-content-window {
-  padding: 0px 24px 24px 0px;
-  flex-grow: 1;
-  min-width: 0; /* Prevents long titles from overflowing flex boundaries */
-}
-
-/* =============================================================================
-   SIDEBAR NAVIGATION
-   ============================================================================= */
-/* Master Nav Sections (Building Blocks / Skills) */
-.master-nav-header {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #161616;
-  cursor: pointer;
-  user-select: none;
-}
-
-.master-nav-section {
-  border-bottom: 2px solid #e0e0e0;
-  margin-bottom: 4px;
-}
-
 .master-nav-section:last-of-type {
   border-bottom: none;
 }

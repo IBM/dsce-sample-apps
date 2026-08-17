@@ -113,6 +113,22 @@
             </div>
           </div>
         </div>
+        <div class="info-card">
+          <div>
+            <div class="info-card-tagline">
+              {{ $repoOwner := .Site.Params.githubRepoOwner }}
+              {{ $repoName := .Site.Params.githubRepoName }}
+              {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
+              {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
+              <img src="{{ $applicationIcon.RelPermalink }}" width="50">
+              <span class="info-card-tagline-text">
+                <strong>Have a demo to share?</strong>
+                <span>We are accepting new applications to showcase</span>
+                <a href="{{$demoSubmissionURL}}" class="cta-link">Submit your demo →</a>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <main class="main-content-window">
         <div id="demo-results-count" class="demo-results-count"></div>
