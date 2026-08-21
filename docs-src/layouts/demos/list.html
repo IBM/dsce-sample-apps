@@ -158,8 +158,8 @@
             </a>
           {{ end }}
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
   {{ $js := resources.Get "js/index.js" | fingerprint }}
   <script src="{{ $js.RelPermalink }}" defer integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
