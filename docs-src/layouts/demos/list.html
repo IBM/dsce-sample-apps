@@ -73,7 +73,7 @@
               <span class="info-card-tagline-text">
                 <strong>Building Blocks</strong>
                 <span>Pre-built capabilities spanning AI, Data, and Automation.</span>
-                <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="cta-link" target="_blank" rel="noopener noreferrer">
+                <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="cta-link" target="_blank" rel="noopener noreferrer" id="buildingBlocksDocsBtn">
                   Learn More →
                 </a>
               </span>
@@ -88,7 +88,7 @@
               <span class="info-card-tagline-text">
                 <strong>IBM Bob</strong>
                 <span>AI-first development partner for building enterprise solutions.</span>
-                <a href="https://bob.ibm.com/" class="cta-link" target="_blank" rel="noopener noreferrer">
+                <a href="https://bob.ibm.com/" class="cta-link" target="_blank" rel="noopener noreferrer" id="tryBobBtn">
                   Try Bob →
                 </a>
               </span>
@@ -106,7 +106,7 @@
               <span class="info-card-tagline-text">
                 <strong>Have a demo to share?</strong>
                 <span>We are accepting new applications to showcase</span>
-                <a href="{{$demoSubmissionURL}}" class="cta-link" target="_blank" rel="noopener noreferrer">
+                <a href="{{$demoSubmissionURL}}" class="cta-link" target="_blank" rel="noopener noreferrer" id="sidebarSubmitDemoBtn">
                   Submit your demo →
                 </a>
               </span>
@@ -163,4 +163,22 @@
   </div>
   {{ $js := resources.Get "js/index.js" | fingerprint }}
   <script src="{{ $js.RelPermalink }}" defer integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
+  {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .Site.Params.segmentApiKey -}}
+  {{- if $segmentKey }}
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var base = { productCodeType: 'ibm build engineering', productCode: 'dsce2' };
+    var links = [
+      { id: 'buildingBlocksDocsBtn', event: 'Building Blocks Docs Clicked' },
+      { id: 'tryBobBtn',             event: 'Try Bob Clicked'               },
+      { id: 'sidebarSubmitDemoBtn',  event: 'Submit Demo Clicked', extra: { source: 'sidebar' } }
+    ];
+    links.forEach(function (cfg) {
+      var el = document.getElementById(cfg.id);
+      if (!el || !window.analytics) return;
+      window.analytics.trackLink(el, cfg.event, Object.assign({}, base, cfg.extra || {}));
+    });
+  });
+  </script>
+  {{- end }}
 {{ end }}

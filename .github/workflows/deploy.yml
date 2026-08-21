@@ -25,8 +25,18 @@ jobs:
           curl -sSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" | tar -xz hugo
           sudo mv hugo /usr/local/bin/hugo
 
+      - name: Verify Segment secret is present
+        run: |
+          if [ -z "${{ secrets.HUGO_SEGMENT_API_KEY }}" ]; then
+            echo "::warning::HUGO_SEGMENT_API_KEY secret is not set or is empty"
+          else
+            echo "HUGO_SEGMENT_API_KEY is set (starts with: ${{ secrets.HUGO_SEGMENT_API_KEY && 'non-empty' }})"
+          fi
+
       - name: Build Hugo Site
         working-directory: ./docs-src  # Runs Hugo inside your target subfolder
+        env:
+          HUGO_SEGMENT_API_KEY: ${{ secrets.HUGO_SEGMENT_API_KEY }}
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}" 
           # Write a production params overlay so githubRepo is always available.

@@ -168,3 +168,13 @@ body:
       placeholder: "The demo uses IBM watsonx Orchestrate to orchestrate a 5-agent pipeline that ..."
     validations:
       required: true
+
+  # ── Privacy ────────────────────────────────────────────────
+  - type: checkboxes
+    id: response
+    attributes:
+      label: Don't submit personal information or customer/partner IP
+      options:
+        - label: I understand this GitHub issue and website are public, so I did not include any personal information or anything else that should not be publicly visible..
+    validations:
+      required: true

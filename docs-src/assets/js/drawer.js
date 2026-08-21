@@ -8,12 +8,22 @@ function bindDrawer(options) {
 
   if (!trigger || !panel || !panelOverlay || !closeButton) return;
 
+  const demoMeta = window.__DSCE_DEMO__ || {};
+
   function openDrawer() {
     panel.classList.add('is-open');
     panelOverlay.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     trigger.setAttribute('aria-expanded', 'true');
     document.body.classList.add('drawer-open');
+    if (window.analytics) {
+      window.analytics.track('Demo Script Opened', {
+        demo_name: demoMeta.name,
+        demo_slug: demoMeta.slug,
+        productCodeType: 'ibm build engineering',
+        productCode: 'dsce2'
+      });
+    }
   }
 
   function closeDrawer() {

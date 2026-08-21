@@ -8,15 +8,29 @@
       <span class="global-header-brand-divider" aria-hidden="true"></span>
       <span class="global-header-brand-title">Digital Self-Serve Co-Create Experience</span>
     </div>
+    {{- $segmentKey := .page.Site.Params.segmentApiKey -}}
     <nav class="header-actions" aria-label="Header actions">
       {{ $repoOwner := .page.Site.Params.githubRepoOwner }}
       {{ $repoName := .page.Site.Params.githubRepoName }}
       {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
       {{ $contactUsURL := printf "https://github.com/%s/%s/issues/new?template=contact-us.yml" $repoOwner $repoName }}
-      <a class="header-btn" href="{{$demoSubmissionURL}}" target="_blank" rel="noopener noreferrer">Submit your demo</a>
+      <a class="header-btn" href="{{$demoSubmissionURL}}" target="_blank" rel="noopener noreferrer" id="headerSubmitDemoBtn">Submit your demo</a>
       <span class="header-actions-divider" aria-hidden="true">|</span>
-      <a class="header-btn" href="{{$contactUsURL}}" target="_blank" rel="noopener noreferrer">Contact us</a>
+      <a class="header-btn" href="{{$contactUsURL}}" target="_blank" rel="noopener noreferrer" id="headerContactUsBtn">Contact us</a>
     </nav>
+    {{- if $segmentKey }}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var base = { source: 'header', productCodeType: 'ibm build engineering', productCode: 'dsce2' };
+      ['headerSubmitDemoBtn', 'headerContactUsBtn'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el || !window.analytics) return;
+        var event = id === 'headerSubmitDemoBtn' ? 'Submit Demo Clicked' : 'Contact Us Clicked';
+        window.analytics.trackLink(el, event, base);
+      });
+    });
+    </script>
+    {{- end }}
   </div>
   <div class="global-header global-header-breadcrumbs" aria-label="Breadcrumb">
     <a class="global-header-home" href="{{ site.Home.RelPermalink }}">

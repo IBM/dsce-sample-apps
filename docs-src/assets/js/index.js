@@ -4,6 +4,15 @@
 const DEBUG_KEY = 'dsce_isDebugMode';
 function isDebugMode() { return localStorage.getItem(DEBUG_KEY) === 'true'; }
 
+function segmentTrack(event, props) {
+  if (window.analytics) {
+    window.analytics.track(event, Object.assign(
+      { productCodeType: 'ibm build engineering', productCode: 'dsce2' },
+      props
+    ));
+  }
+}
+
 const wrapper = document.getElementById('demo-cards-wrapper');
 const resultsCount = document.getElementById('demo-results-count');
 const checkboxes = document.querySelectorAll('.filter-cb');
@@ -54,15 +63,31 @@ function applyFilter() {
   }
 }
 
-checkboxes.forEach(cb => cb.addEventListener('change', applyFilter));
+checkboxes.forEach(cb => cb.addEventListener('change', () => {
+  applyFilter();
+  const active = getActiveFilters();
+  segmentTrack('Filter Applied', { filter_values: active, result_count: parseInt(resultsCount?.textContent) || 0 });
+}));
 
 const clearBtn = document.getElementById('clearAllBtn');
 if (clearBtn) {
   clearBtn.addEventListener('click', () => {
     checkboxes.forEach(cb => { cb.checked = false; });
     applyFilter();
+    segmentTrack('Filter Cleared', {});
   });
 }
+
+// Demo card click tracking
+allCards.forEach(card => {
+  card.addEventListener('click', () => {
+    const name = card.querySelector('.card-item-description div')?.textContent?.trim();
+    const href = card.getAttribute('href') || '';
+    const slug = href.replace(/.*\/demos\//, '').replace(/\/$/, '');
+    const buildingBlocks = (card.dataset.buildingBlocks || '').split(' ').filter(Boolean);
+    segmentTrack('Demo Card Clicked', { demo_name: name, demo_slug: slug, building_blocks: buildingBlocks });
+  });
+});
 
 // Re-run filter when debug mode is toggled from any page
 window.addEventListener('dsce:debugModeChange', applyFilter);
