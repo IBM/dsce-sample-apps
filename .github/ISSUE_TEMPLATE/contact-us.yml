@@ -36,8 +36,8 @@ body:
   - type: checkboxes
     id: response
     attributes:
-      label: Follow this issue and don't submit personal details
+      label: Don't submit personal information or customer/partner IP
       options:
-        - label: I understand this GitHub issue and website are public and did not include any personal information.  I will listen for a response on this issue's thread.
+        - label: I understand this GitHub issue and website are public, so I did not include any personal information or anything else that should not be publicly visible..
     validations:
       required: true

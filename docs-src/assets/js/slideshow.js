@@ -1,5 +1,15 @@
 (() => {
   const INTERVAL_MS = 5000;
+  const demoMeta = window.__DSCE_DEMO__ || {};
+
+  function segmentTrack(event, props) {
+    if (window.analytics) {
+      window.analytics.track(event, Object.assign(
+        { demo_name: demoMeta.name, demo_slug: demoMeta.slug, productCodeType: 'ibm build engineering', productCode: 'dsce2' },
+        props
+      ));
+    }
+  }
 
   document.querySelectorAll('.demo-slideshow').forEach(slideshow => {
     const slides = slideshow.querySelectorAll('.demo-slide');
@@ -64,6 +74,11 @@
   document.querySelectorAll('.demo-slide-zoom').forEach(btn => {
     btn.addEventListener('click', () => {
       openLightbox(btn.dataset.src, btn.dataset.alt);
+      const alt = btn.dataset.alt || '';
+      const imageType = alt.includes('architecture') ? 'architecture'
+        : alt.includes('specifications') ? 'specifications-workflow'
+        : 'screenshot';
+      segmentTrack('Screenshot Expanded', { image_type: imageType, image_alt: alt });
     });
   });
 
@@ -76,5 +91,15 @@
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+
+  // Video play tracking
+  document.querySelectorAll('video').forEach(video => {
+    let tracked = false;
+    video.addEventListener('play', () => {
+      if (tracked) return;
+      tracked = true;
+      segmentTrack('Demo Video Played', {});
+    });
   });
 })();

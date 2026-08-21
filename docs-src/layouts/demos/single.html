@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .Site.Params.segmentApiKey -}}
   {{ $slug := .Params.slug }}
   {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
   {{ $mdSrc := printf "demos/%s/description.md" $demo.slug }}
@@ -7,6 +8,11 @@
   {{ if $demo }}
     {{ $images := $demo.screenshots }}
     {{ $assetTypes := slice }}
+    {{- if $segmentKey }}
+    <script>
+      window.__DSCE_DEMO__ = { name: {{ $demo.name | jsonify }}, slug: {{ $demo.slug | jsonify }} };
+    </script>
+    {{- end }}
     <main class="demo-detail-page">
       <div class="pill-container pill-tag-bb pill-demo">DEMO</div>
       <div class="demo-name">{{ $demo.name }}</div>
@@ -184,26 +190,26 @@
               Experience the interactive demo and explore its features. A demo script is provided to help when presenting the application to partners.
               <div class="demo-action-buttons">
                 {{ $hasWorkingDemo := and $demo.workingDemoURL (gt (len $demo.workingDemoURL) 0) }}
-                {{ if $hasWorkingDemo }}
-                  {{ $workingDemoIcon := resources.Get "images/monitor-white.svg" | fingerprint }}
-                  <a href="{{ $demo.workingDemoURL }}" target="_blank" rel="noopener" class="demo-btn try-demo-btn">
-                    <img src="{{ $workingDemoIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
-                    Try the demo
-                  </a>
-                {{ end }}
-                {{ $speechBubbleIcon := resources.Get "images/speech-bubble.svg" | fingerprint }}
-                <button type="button" class="demo-btn demo-btn-simple" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
-                  <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
-                  Demo script
-                </button>
-                {{ $hasExtras := and $demo.extrasBoxUrl (gt (len $demo.extrasBoxUrl) 0) }}
-                {{ if $hasExtras }}
-                  {{ $boxIcon := resources.Get "images/box.svg" | fingerprint }}
-                  <a href="{{ $demo.extrasBoxUrl }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
-                    <img src="{{ $boxIcon.RelPermalink }}" alt="" class="demo-btn-icon-height" />
-                    Extra demo assets
-                  </a>
-                {{ end }}
+                  {{ if $hasWorkingDemo }}
+                    {{ $workingDemoIcon := resources.Get "images/monitor-white.svg" | fingerprint }}
+                    <a href="{{ $demo.workingDemoURL }}" target="_blank" rel="noopener" class="demo-btn try-demo-btn" id="tryDemoBtn">
+                      <img src="{{ $workingDemoIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                      Try the demo
+                    </a>
+                  {{ end }}
+                  {{ $speechBubbleIcon := resources.Get "images/speech-bubble.svg" | fingerprint }}
+                  <button type="button" class="demo-btn demo-btn-simple" id="demoExplainerBtn" aria-controls="demoExplainerDrawer" aria-expanded="false">
+                    <img src="{{ $speechBubbleIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
+                    Demo script
+                  </button>
+                  {{ $hasExtras := and $demo.extrasBoxUrl (gt (len $demo.extrasBoxUrl) 0) }}
+                  {{ if $hasExtras }}
+                    {{ $boxIcon := resources.Get "images/box.svg" | fingerprint }}
+                    <a href="{{ $demo.extrasBoxUrl }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple" id="extraAssetsBtn">
+                      <img src="{{ $boxIcon.RelPermalink }}" alt="" class="demo-btn-icon-height" />
+                      Extra demo assets
+                    </a>
+                  {{ end }}
               </div>
               <div class="demo-contact-card">
                 <div class="demo-card-contact-icon">
@@ -217,7 +223,7 @@
                   {{ $repoOwner := .Site.Params.githubRepoOwner }}
                   {{ $repoName := .Site.Params.githubRepoName }}
                   {{ $contactUsURL := printf "https://github.com/%s/%s/issues/new?template=contact-us.yml" $repoOwner $repoName }}
-                  <a href="{{ $contactUsURL }}" target="_blank" rel="noopener" class="demo-contact-card-link">Submit a request &rarr;</a>
+                  <a href="{{ $contactUsURL }}" target="_blank" rel="noopener" class="demo-contact-card-link" id="demoContactBtn">Submit a request &rarr;</a>
                 </div>
               </div>
             </section>
@@ -277,7 +283,7 @@
               <div class="demo-action-buttons">
                 {{ if $hasSpec }}
                   {{ $specsIcon := resources.Get "images/papers.svg" | fingerprint }}
-                  <a href="{{ $demo.specificationsRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
+                  <a href="{{ $demo.specificationsRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple" id="specsRepoBtn">
                     <img src="{{ $specsIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                     Specifications
                   </a>
@@ -285,7 +291,7 @@
                 {{ $hasCode := and $demo.codeRepo (gt (len $demo.codeRepo) 0) }}
                 {{ if $hasCode }}
                   {{ $ghIcon := resources.Get "images/github.svg" | fingerprint }}
-                  <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple">
+                  <a href="{{ $demo.codeRepo }}" target="_blank" rel="noopener" class="demo-btn demo-btn-simple" id="sourceCodeBtn">
                     <img src="{{ $ghIcon.RelPermalink }}" alt="" class="demo-btn-icon" />
                     Source Code
                   </a>
@@ -300,7 +306,7 @@
         <div class="drawer-header demo-script-header">
           <span class="drawer-title">Demo script</span>
           <div class="demo-script-header-actions">
-                <a href="{{ $mdRes.RelPermalink }}" download="demo-script.md" class="demo-script-save-btn" aria-label="Download script">
+                <a href="{{ $mdRes.RelPermalink }}" download="demo-script.md" class="demo-script-save-btn" aria-label="Download script" id="demoScriptDownloadBtn">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="currentColor">
                     <path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4zm-2-7-1.41-1.41L17 22.17V4h-2v18.17l-5.59-5.58L8 18l8 8 8-8z"/>
                   </svg>
@@ -326,4 +332,25 @@
       <p class="demo-detail-missing">Demo not found.</p>
     </main>
   {{ end }}
+  {{- if $segmentKey }}
+  <script>
+  (function () {
+    var meta = window.__DSCE_DEMO__ || {};
+    var base = { demo_name: meta.name, demo_slug: meta.slug, productCodeType: 'ibm build engineering', productCode: 'dsce2' };
+
+    function tl(id, event, extra) {
+      var el = document.getElementById(id);
+      if (!el || !window.analytics) return;
+      window.analytics.trackLink(el, event, Object.assign({}, base, extra || {}));
+    }
+
+    tl('tryDemoBtn',           'Demo CTA Clicked',          {});
+    tl('extraAssetsBtn',       'Demo Extra Assets Clicked',  {});
+    tl('specsRepoBtn',         'Specifications Clicked',     {});
+    tl('sourceCodeBtn',        'Source Code Clicked',        {});
+    tl('demoContactBtn',       'Demo Contact Requested',     {});
+    tl('demoScriptDownloadBtn','Demo Script Downloaded',     {});
+  })();
+  </script>
+  {{- end }}
 {{ end }}

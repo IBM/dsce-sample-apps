@@ -8,3 +8,5 @@ title = 'DSCE 2.0'
   # Overridden at build time via config/production/params.toml written in deploy.yml.
   # Used to construct GitHub Issues URLs. Format: "https://github.com/owner/repo"
   githubRepoURL = ''
+  # This Segment write key is set as a repository secret (HUGO_SEGMENT_API_KEY) in the GitHub repo under Settings > Secrets and Variables > Actions.
+  segmentApiKey = ''
