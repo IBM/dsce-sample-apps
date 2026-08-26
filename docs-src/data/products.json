@@ -1,4 +1,16 @@
 {
+    "HashiCorp Vault" : {
+        "url" : "https://www.hashicorp.com/en/products/vault",
+        "image" : "hashicorp-vault.svg"
+    },
+    "HashiCorp Vault Radar" : {
+        "url" : "https://www.hashicorp.com/en/products/vault/radar",
+        "image" : "hashicorp-vault-radar.svg"
+    },
+    "IBM Bob" : {
+        "url" : "https://bob.ibm.com/",
+        "image" : "ibm-bob.svg"
+    },
     "HashiCorp Terraform" : {
         "url" : "https://developer.hashicorp.com/terraform",
         "image" : "hashicorp-terraform.svg"

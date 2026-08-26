@@ -126,9 +126,6 @@
               {{ end }}
               <div class="info-boxes-wrapper">
                 <div class="info-box">
-                  {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo.video.cosFileName }}
-                  {{ $thumbPath := printf "demos/%s/%s" $demo.slug $demo.video.thumbnail }}
-                  {{ $thumbRes := resources.Get $thumbPath }}
                   {{ $videoIcon := resources.Get "images/video.svg" | fingerprint }}
                   <div class="info-box-header">
                     <img src="{{ $videoIcon.RelPermalink }}">
@@ -137,10 +134,28 @@
                     </div>
                   </div>
                   <div class="info-box-subtitle">Watch this short overview</div>
-                  <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
-                    <source src="{{ $videoURL }}" type="video/mp4">
-                    Your browser does not support the video tag
-                  </video>
+                  {{ $externalVideoURL := $demo.video.externalVideoURL | default "" }}
+                  {{ if $externalVideoURL }}
+                    {{/* YouTube only — convert watch URL to embed URL */}}
+                    {{ $ytEmbed := $externalVideoURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
+                    <iframe
+                      class="demo-video-iframe"
+                      src="{{ $ytEmbed }}"
+                      title="{{ $demo.name }} overview video"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen>
+                    </iframe>
+                  {{ else if $demo.video.cosFileName }}
+                    {{/* COS — existing behaviour, unchanged */}}
+                    {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo.video.cosFileName }}
+                    {{ $thumbPath := printf "demos/%s/%s" $demo.slug $demo.video.thumbnail }}
+                    {{ $thumbRes := resources.Get $thumbPath }}
+                    <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
+                      <source src="{{ $videoURL }}" type="video/mp4">
+                      Your browser does not support the video tag
+                    </video>
+                  {{ end }}
                 </div>
                 <div class="info-box">
                   {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
