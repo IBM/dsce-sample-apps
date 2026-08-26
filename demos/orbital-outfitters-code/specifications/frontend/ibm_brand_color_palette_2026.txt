@@ -1,0 +1,8 @@
+| Color family |   Darkest |      Dark |  Original |     Light |  Lightest |
+| ------------ | --------: | --------: | --------: | --------: | --------: |
+| Teal         | `#021F1F` | `#0F6E6E` | `#6ADADA` | `#B2F2F2` | `#D2F7F7` |
+| Purple       | `#160040` | `#5E28C0` | `#A56EFF` | `#D5ACFF` | `#EAD0FF` |
+| Indigo       | `#060440` | `#3E3CB8` | `#8A87FE` | `#BDBCFF` | `#DCDCFF` |
+| Blue         | `#031040` | `#2850B8` | `#6FA1FE` | `#AACAFF` | `#CCDDFF` |
+| Blue-green   | `#041E22` | `#226E78` | `#6FBEC5` | `#A8DADD` | `#C8E6E8` |
+| Green        | `#051F0E` | `#1E7A40` | `#6FDC8C` | `#AAEBB8` | `#C8F2D0` |

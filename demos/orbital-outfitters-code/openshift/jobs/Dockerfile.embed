@@ -1,0 +1,17 @@
+FROM node:20
+
+WORKDIR /app
+
+# Install curl so this image can be reused as the wait-for-opensearch init container
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
+COPY vector-db/package.json vector-db/package-lock.json ./vector-db/
+RUN cd vector-db && npm ci --omit=dev
+
+COPY vector-db/ ./vector-db/
+
+# Bake the embedding model in at build time — no internet egress from cluster
+COPY openshift/jobs/download-model.mjs ./vector-db/download-model.mjs
+RUN cd vector-db && node download-model.mjs
+
+CMD ["node", "vector-db/embed.js"]

@@ -1,0 +1,46 @@
+# .dockerignore — applied from project root when building backend/frontend images
+# Prevents secrets, dev artifacts, and unrelated directories from entering the build context.
+
+# Git metadata
+.git/
+
+# Secrets — never bake into an image
+.env
+**/.env
+**/.env.*
+!rancher/.env.docker.example
+
+# Node modules — reinstalled inside the image
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+vector-db/node_modules/
+
+# Build outputs
+frontend/dist/
+dist/
+.cache/
+*.log
+
+# Python / agent — not needed in Node images
+venv/
+.venv/
+agent/
+vector-db/
+# Exception: embed.js + package files are needed by openshift/jobs/Dockerfile.embed
+!vector-db/embed.js
+!vector-db/package.json
+!vector-db/package-lock.json
+__pycache__/
+*.py[cod]
+
+# Specifications / requirements docs — not needed in images
+specifications/
+
+# Rancher config (not needed inside app containers)
+# Exception: nginx.conf is copied into the frontend image by Dockerfile.frontend (CTR-004)
+rancher/
+!rancher/nginx.conf
+
+# OS noise
+.DS_Store

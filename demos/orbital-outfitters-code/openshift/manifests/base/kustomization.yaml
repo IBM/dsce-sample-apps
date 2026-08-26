@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - deployment-frontend.yaml
+  - deployment-backend.yaml
+  - statefulset-opensearch.yaml
+  - service-frontend.yaml
+  - service-backend.yaml
+  - service-opensearch.yaml
+  - pvc-opensearch.yaml
+  - route.yaml

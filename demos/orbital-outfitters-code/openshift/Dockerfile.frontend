@@ -1,0 +1,22 @@
+# ── Stage 1: build ────────────────────────────────────────────────────────────
+FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Default empty — baked into the bundle. OpenShift uses relative URLs via nginx proxy.
+ARG VITE_BACKEND_URL=""
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+
+COPY frontend/ .
+RUN npm run build
+
+# ── Stage 2: serve ─────────────────────────────────────────────────────────────
+FROM nginxinc/nginx-unprivileged:alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY openshift/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 8080

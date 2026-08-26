@@ -1,0 +1,8 @@
+FROM opensearchproject/opensearch:2.13.0
+
+ENV discovery.type=single-node \
+    DISABLE_SECURITY_PLUGIN=true \
+    DISABLE_INSTALL_DEMO_CONFIG=true \
+    OPENSEARCH_JAVA_OPTS="-Xms512m -Xmx512m"
+
+EXPOSE 9200 9300

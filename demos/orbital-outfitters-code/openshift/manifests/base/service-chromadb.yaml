@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chromadb
+  namespace: orbital-suppliers
+spec:
+  selector:
+    app: chromadb
+  ports:
+    - port: 8000
+      targetPort: 8000
