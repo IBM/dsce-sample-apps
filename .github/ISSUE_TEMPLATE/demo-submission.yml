@@ -149,6 +149,15 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: box_one_drive_link
+    attributes:
+      label: Link to documents on Box or One Drive
+      description: "Additional documents about the demo: longer videos, slide decks, ..."
+      placeholder: "Link to documents on Box or OneDrive."
+    validations:
+      required: false
+
   # ── Architecture ───────────────────────────────────────────
   - type: textarea
     id: architecture_diagram

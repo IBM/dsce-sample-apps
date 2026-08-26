@@ -1,0 +1,14 @@
+{
+  "name": "vector-db",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "embed": "node embed.js"
+  },
+  "dependencies": {
+    "@opensearch-project/opensearch": "^2",
+    "@xenova/transformers": "^2",
+    "dotenv": "^16",
+    "pg": "^8"
+  }
+}

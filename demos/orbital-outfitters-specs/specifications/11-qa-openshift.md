@@ -1,0 +1,2 @@
+# Quality Assurance of Backend API Endpoints and Frontend UI
+Read the "backend and frontend QA" specifications from earlier in @specifications/.  Validate the same functionality works now that the application has been deployed to Red Hat OpenShift on IBM Cloud

@@ -1,0 +1,68 @@
+# Environment
+.env
+
+# OS
+.DS_Store
+
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Build / cache
+.cache/
+dist/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Docker / Rancher
+*.tar
+.docker/
+
+
+# Vector DB
+vector-db/venv/
+vector-db/node_modules/
+vector-db/.cache/
+
+rancher/.env.docker
+rancher/.cache/
+
+# Frontend
+frontend/.env
+frontend/qa-screenshots/
+frontend/dist/
+frontend/node_modules/
+
+# Backend
+backend/node_modules/
+
+# Logs
+backend.log
+frontend.log
+
+# OpenShift / Terraform
+openshift/.terraform/
+openshift/terraform/.terraform/
+openshift/terraform/*.tfplan
+openshift/terraform/terraform.tfstate
+openshift/terraform/terraform.tfstate.backup
+openshift/.env.*
+kubeconfig
+*.kubeconfig
+.venv/
+
+# OpenShift / Terraform
+openshift/terraform/.terraform/
+openshift/terraform/*.tfplan
+openshift/terraform/terraform.tfstate
+openshift/terraform/terraform.tfstate.backup
+openshift/terraform/.terraform.lock.hcl
+openshift/.env.*
+kubeconfig
+*.kubeconfig

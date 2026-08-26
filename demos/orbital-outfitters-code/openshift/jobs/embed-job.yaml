@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: embed-job
+  namespace: orbital-suppliers
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: wait-for-opensearch
+          image: us.icr.io/orbital-suppliers-aps/embed:latest
+          command:
+            - sh
+            - -c
+            - |
+              until curl -sf http://opensearch:9200/_cluster/health | grep -qv '"status":"red"'; do
+                echo "Waiting for OpenSearch..."; sleep 5;
+              done
+              echo "OpenSearch is ready."
+      containers:
+        - name: embed
+          image: us.icr.io/orbital-suppliers-aps/embed:latest
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets

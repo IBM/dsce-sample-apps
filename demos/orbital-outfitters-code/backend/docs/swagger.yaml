@@ -1,0 +1,509 @@
+openapi: 3.0.3
+info:
+  title: Orbital Suppliers API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+    description: Local development
+  - url: http://backend:3001
+    description: Internal container network
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+          nullable: true
+        area_code:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        address_1:
+          type: string
+          nullable: true
+        address_2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        zip_code:
+          type: string
+          nullable: true
+        email_opt_in:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    LoginRequest:
+      type: object
+      required: [login, password]
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: string
+        product_name:
+          type: string
+        product_description:
+          type: string
+        product_image_url:
+          type: string
+        category:
+          type: string
+        price:
+          type: string
+        currency:
+          type: string
+        in_stock:
+          type: boolean
+        inventory_quantity:
+          type: integer
+        shipping_days:
+          type: integer
+        width_inches:
+          type: string
+        height_inches:
+          type: string
+        depth_inches:
+          type: string
+        weight_lbs:
+          type: string
+        feature1:
+          type: string
+          nullable: true
+        feature2:
+          type: string
+          nullable: true
+        feature3:
+          type: string
+          nullable: true
+        feature4:
+          type: string
+          nullable: true
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        review:
+          type: string
+        score:
+          type: integer
+        reviewer_initials:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+    CartItem:
+      type: object
+      properties:
+        cart_item_id:
+          type: integer
+        product_id:
+          type: string
+        product_name:
+          type: string
+        product_image_url:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: string
+        line_total:
+          type: string
+    Cart:
+      type: object
+      properties:
+        cart_id:
+          type: integer
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+        subtotal:
+          type: string
+        item_count:
+          type: integer
+    OrderItem:
+      type: object
+      properties:
+        order_item_id:
+          type: integer
+        product_id:
+          type: string
+        product_name:
+          type: string
+        product_image_url:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: string
+        line_total:
+          type: string
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: integer
+        order_number:
+          type: string
+        status:
+          type: string
+        subtotal:
+          type: string
+        tax_rate:
+          type: string
+        tax_amount:
+          type: string
+        shipping_cost:
+          type: string
+        total_amount:
+          type: string
+        shipping_address_1:
+          type: string
+        shipping_address_2:
+          type: string
+          nullable: true
+        shipping_city:
+          type: string
+        shipping_state:
+          type: string
+        shipping_zip:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    AgentSearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+    AgentSearchResponse:
+      type: object
+      properties:
+        agent_response:
+          type: string
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+              product_name:
+                type: string
+              product_description:
+                type: string
+              product_image_url:
+                type: string
+paths:
+  /auth/login:
+    post:
+      summary: Log in with email or username
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400': { description: Missing fields }
+        '401': { description: Invalid credentials }
+        '500': { description: Server error }
+  /auth/logout:
+    post:
+      summary: Log out
+      responses:
+        '200':
+          description: Logged out
+  /auth/me:
+    get:
+      summary: Get current user profile
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401': { description: Unauthorized }
+        '404': { description: User not found }
+        '500': { description: Server error }
+    put:
+      summary: Update current user profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400': { description: No updatable fields }
+        '401': { description: Unauthorized }
+        '500': { description: Server error }
+  /products:
+    get:
+      summary: List active products
+      parameters:
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 20, maximum: 100 }
+      responses:
+        '200':
+          description: Product list
+        '400': { description: Invalid pagination }
+        '500': { description: Server error }
+  /products/{id}:
+    get:
+      summary: Get single product with reviews
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product detail
+        '404': { description: Product not found }
+        '500': { description: Server error }
+  /cart:
+    get:
+      summary: Get current cart
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Cart detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '401': { description: Unauthorized }
+        '500': { description: Server error }
+  /cart/items:
+    post:
+      summary: Add item to cart
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [product_id, quantity]
+              properties:
+                product_id:
+                  type: string
+                quantity:
+                  type: integer
+      responses:
+        '201':
+          description: Updated cart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '400': { description: Invalid input }
+        '401': { description: Unauthorized }
+        '404': { description: Product not found }
+        '500': { description: Server error }
+  /cart/items/{cart_item_id}:
+    put:
+      summary: Update cart item quantity
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: cart_item_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [quantity]
+              properties:
+                quantity:
+                  type: integer
+      responses:
+        '200': { description: Updated cart }
+        '400': { description: Invalid input }
+        '401': { description: Unauthorized }
+        '403': { description: Forbidden }
+        '500': { description: Server error }
+    delete:
+      summary: Remove item from cart
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: cart_item_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200': { description: Updated cart }
+        '401': { description: Unauthorized }
+        '403': { description: Forbidden }
+        '500': { description: Server error }
+  /orders:
+    get:
+      summary: List current user's orders
+      security:
+        - BearerAuth: []
+      responses:
+        '200': { description: Orders list }
+        '401': { description: Unauthorized }
+        '500': { description: Server error }
+    post:
+      summary: Checkout current cart into an order
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [shipping_address_1, shipping_city, shipping_state, shipping_zip]
+              properties:
+                shipping_address_1:
+                  type: string
+                shipping_address_2:
+                  type: string
+                shipping_city:
+                  type: string
+                shipping_state:
+                  type: string
+                shipping_zip:
+                  type: string
+      responses:
+        '201':
+          description: Order created
+        '400': { description: Invalid input or empty cart }
+        '401': { description: Unauthorized }
+        '500': { description: Server error }
+  /orders/{id}:
+    get:
+      summary: Get a single order
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400': { description: Invalid id }
+        '401': { description: Unauthorized }
+        '403': { description: Forbidden }
+        '404': { description: Not found }
+        '500': { description: Server error }
+  /agentSearch:
+    post:
+      summary: Natural-language product search and agent response
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSearchRequest'
+      responses:
+        '200':
+          description: Agent search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSearchResponse'
+        '400': { description: Missing query }
+        '500': { description: Search failed }

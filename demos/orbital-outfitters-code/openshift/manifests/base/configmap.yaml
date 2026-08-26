@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: orbital-suppliers
+data:
+  BACKEND_PORT: "3001"
+  OPENSEARCH_HOST: "opensearch"
+  OPENSEARCH_PORT: "9200"
+  OPENSEARCH_INDEX: "products"
+  DB_PORT: "30481"
+  DB_NAME: "ibmclouddb"
+  DB_SCHEMA: "ai_retail_83032671"
+  DB_SSL: "true"
+  # DB_HOST is set in the prod overlay to DB_HOST_PRIVATE (VPE hostname)
