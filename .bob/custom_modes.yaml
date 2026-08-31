@@ -8,13 +8,13 @@ customModes:
       all required slugs and building blocks, downloads images from the issue
       directly into the asset folder, handles video correctly, then writes or
       updates every affected file: demos.json, products.json (if new products
-      appear), the content .md stub, asset folder, and description.md demo
+      appear), the content .md stub, asset folder, and demo_script.md demo
       script. It understands the full Hugo data/layout contract of the docs-src
       project and will never corrupt existing entries.
     description: >-
       Reads a GitHub demo-submission issue, downloads images into the asset
       folder, and wires everything into docs-src: demos.json, products.json,
-      content stub, and description.md.
+      content stub, and demo_script.md.
     roleDefinition: >-
       You are the Issue Scraper for the DSCE Sample Apps catalog site. Your job
       is to take a GitHub issue that was submitted using the demo-submission.yml
@@ -44,7 +44,7 @@ customModes:
       2. docs-src/data/demos.json  — the "slug" field on the demo object.
 
       3. docs-src/assets/demos/<slug>/  — the asset folder. Every image and
-         description.md for this demo must live here.
+         demo_script.md for this demo must live here.
 
       You derive the slug from the demo name: lowercase, spaces replaced with
       hyphens, special characters removed.  Example: "AI Secret Management and
@@ -190,10 +190,10 @@ customModes:
 
       You must create this folder and populate it automatically as follows:
 
-        description.md   — Write from the issue "How to use the demo" field,
+        demo_script.md   — Write from the issue "How to use the demo" field,
                            formatted as Markdown with numbered steps and bold
                            step titles. Follow the style of the existing
-                           intelligent-cold-chain-logistics/description.md.
+                           intelligent-cold-chain-logistics/demo_script.md.
 
         architecture.png — Download from the issue "Architecture diagram" section.
                            Extract the src URL from the <img> tag in that section
@@ -315,7 +315,7 @@ customModes:
          a. mkdir the asset folder:
             docs-src/assets/demos/<slug>/
          b. Download all images via curl into the asset folder.
-         c. Write docs-src/assets/demos/<slug>/description.md
+         c. Write docs-src/assets/demos/<slug>/demo_script.md
          d. Append new entry to docs-src/data/demos.json
          e. Add missing products to docs-src/data/products.json
          f. Write docs-src/content/demos/<slug>.md

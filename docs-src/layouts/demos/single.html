@@ -2,8 +2,8 @@
   {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .Site.Params.segmentApiKey -}}
   {{ $slug := .Params.slug }}
   {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
-  {{ $mdSrc := printf "demos/%s/description.md" $demo.slug }}
-  {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/description.md" $demo.slug) }}
+  {{ $mdSrc := printf "demos/%s/demo_script.md" $demo.slug }}
+  {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/demo_script.md" $demo.slug) }}
   {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}            
   {{ if $demo }}
     {{ $images := $demo.screenshots }}
@@ -331,7 +331,7 @@
           </div>
         </div>
         <div class="drawer-body demo-script-body" id="demoExplainerBody">
-          {{ $scriptPath := printf "assets/demos/%s/description.md" $demo.slug }}
+          {{ $scriptPath := printf "assets/demos/%s/demo_script.md" $demo.slug }}
           {{ $scriptFile := readFile $scriptPath }}
           {{ $scriptFile | markdownify }}
         </div>

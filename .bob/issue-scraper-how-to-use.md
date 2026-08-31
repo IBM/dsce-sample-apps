@@ -82,7 +82,7 @@ Files to write:
   docs-src/data/demos.json                                      (append)
   docs-src/data/products.json                                   (add 2 products)
   docs-src/content/demos/ai-secret-management-and-modernization.md
-  docs-src/assets/demos/ai-secret-management-and-modernization/description.md
+  docs-src/assets/demos/ai-secret-management-and-modernization/demo_script.md
 
 Confirm? (yes / no)
 ```
@@ -104,7 +104,7 @@ After you confirm, the mode runs in this order:
 | 3 | Download screenshots from GitHub CDN | ✅ |
 | 4 | For YouTube video: set `externalVideoURL` (no upload) | ✅ |
 | 5 | For Box/OneDrive video: download + upload to COS | ✅ |
-| 6 | Write `description.md` from the demo script field | ✅ |
+| 6 | Write `demo_script.md` from the demo script field | ✅ |
 | 7 | Append new entry to `demos.json` | ✅ |
 | 8 | Add missing products to `products.json` | ✅ |
 | 9 | Write `content/demos/<slug>.md` front-matter stub | ✅ |
@@ -170,7 +170,7 @@ write partial data.
 | `docs-src/data/demos.json` | New demo object appended to the `demos` array |
 | `docs-src/data/products.json` | Any products from the issue not already present are added |
 | `docs-src/content/demos/<slug>.md` | Minimal Hugo front-matter stub created |
-| `docs-src/assets/demos/<slug>/description.md` | Demo script formatted as Markdown |
+| `docs-src/assets/demos/<slug>/demo_script.md` | Demo script formatted as Markdown |
 | `docs-src/assets/demos/<slug>/architecture.png` | Downloaded from issue |
 | `docs-src/assets/demos/<slug>/home_page.png` | First screenshot downloaded from issue |
 | `docs-src/assets/demos/<slug>/screenshot-0N.png` | Additional screenshots downloaded |
@@ -193,7 +193,7 @@ dsce-sample-apps/
       <slug>.md             ← Hugo page stub (mode creates)
     assets/demos/
       <slug>/               ← per-demo assets (mode creates folder + files)
-        description.md
+        demo_script.md
         architecture.png
         home_page.png
         screenshot-01.png

@@ -140,7 +140,7 @@ body:
       label: How to use the demo (seller / demo script)
       description: |
         Step-by-step explanation of how a seller should present this demo.
-        You can write this as plain text or Markdown — [see an example in Markdown format](https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters/blob/main/docs-src/assets/demos/intelligent-cold-chain-logistics/description.md).
+        You can write this as plain text or Markdown — [see an example in Markdown format](https://github.com/ibm-self-serve-assets/sdd-orbital-outfitters/blob/main/docs-src/assets/demos/intelligent-cold-chain-logistics/demo_script.md).
         You can also drag and drop a `.md` file directly into this field.
       placeholder: |
         1. Start by ...
