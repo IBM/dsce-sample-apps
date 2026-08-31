@@ -97,7 +97,7 @@
       "longDescription": "Organizations often inherit applications containing hardcoded credentials, API keys, service endpoints, and certificates embedded in source code or configuration files. This fragmented and manual approach increases the risk of credential exposure, makes rotation difficult, slows application modernization, and creates security and compliance challenges across development environments.\n\nThe solution uses HashiCorp Vault Radar to detect exposed secrets, IBM Bob to analyze findings and generate a secure remediation plan, and the Vault MCP Server to automate approved Vault operations. HashiCorp Vault centrally manages secrets and certificates while IBM Bob refactors the application to retrieve them securely at runtime, enabling policy-controlled access, simplified rotation, reduced developer effort, and modernization without embedding sensitive values in code.",
       "shortDescription": "Detect exposed credentials, securely migrate them to centralized vaults, and automate remediation using AI — reducing risk and enabling secret rotation without code changes.",
       "extrasBoxUrl": "",
-      "isLive": false
+      "isLive": true
     }
   ]
 }
