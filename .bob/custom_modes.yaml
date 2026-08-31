@@ -138,8 +138,10 @@ customModes:
                                   paragraph breaks as \n\n. Do not truncate.
         shortDescription (string) From issue "Short description". Trim to under
                                   30 words if the submitter exceeded the limit.
-        extrasBoxUrl    (string)  Optional. Empty string "" — not collected in
-                                  the template; a maintainer adds this later.
+        extrasBoxUrl    (string)  Optional. From issue "Link to documents on Box
+                                  or One Drive" (field id: box_one_drive_link).
+                                  Use the URL as-is if provided. Empty string ""
+                                  if "_No response_", blank, or not present.
         isLive          (boolean) Always set to false for new submissions. A
                                   maintainer flips this to true after reviewing.
 
@@ -296,6 +298,8 @@ customModes:
          - Strip leading/trailing whitespace from all values.
          - Detect video URLs (youtube.com, youtu.be, sharepoint.com, vimeo.com,
            box.com) in "Link to functional demo" and set workingDemoURL to "".
+         - Extract "Link to documents on Box or One Drive" (box_one_drive_link)
+           into extrasBoxUrl. Use "" if "_No response_" or blank.
          - Split multi-line fields (products, skills) on newlines.
          - Extract all <img src="..."> URLs from the Screenshots and Architecture
            sections.
