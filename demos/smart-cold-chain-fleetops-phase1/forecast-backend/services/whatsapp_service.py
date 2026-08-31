@@ -15,9 +15,9 @@ class WhatsAppService:
     
     def __init__(self):
         """Initialize Twilio client with credentials from environment"""
-        self.account_sid = os.getenv('TWILIO_ACCOUNT_SID', 'AC6b3670626a3b046dee9f42018d1adb63')
+        self.account_sid = os.getenv('TWILIO_ACCOUNT_SID', 'xxx')
         self.auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-        self.from_number = os.getenv('TWILIO_FROM_NUMBER', 'whatsapp:+14155238886')  # Sandbox number
+        self.from_number = os.getenv('TWILIO_FROM_NUMBER', 'whatsapp:+1415551212')  # Sandbox number
         self.demo_phone = os.getenv('DEMO_PHONE_NUMBER')  # Your mobile number
         
         if not self.auth_token:
