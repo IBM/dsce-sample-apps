@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleetops-forecasting
+  labels:
+    app: fleetops-forecasting
+    app.kubernetes.io/name: fleetops-forecasting
+    app.kubernetes.io/component: forecasting-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fleetops-forecasting
+  template:
+    metadata:
+      labels:
+        app: fleetops-forecasting
+    spec:
+      containers:
+      - name: forecasting
+        # Replace with your image: <registry>/<namespace>/fleetops-forecasting:<tag>
+        # Example: docker.io/myorg/fleetops-forecasting:v1.0.0
+        # Build with: docker build -t <registry>/<namespace>/fleetops-forecasting:<tag> forecast-backend/
+        # Push with:  docker push <registry>/<namespace>/fleetops-forecasting:<tag>
+        image: <your-registry>/<your-namespace>/fleetops-forecasting:<tag>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: fleetops-forecasting-config
+        - secretRef:
+            name: fleetops-forecasting-secrets
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5001
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetops-forecasting
+  labels:
+    app: fleetops-forecasting
+spec:
+  selector:
+    app: fleetops-forecasting
+  ports:
+  - name: http
+    port: 5001
+    targetPort: 5001
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: fleetops-forecasting
+  labels:
+    app: fleetops-forecasting
+spec:
+  to:
+    kind: Service
+    name: fleetops-forecasting
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+# Made with Bob

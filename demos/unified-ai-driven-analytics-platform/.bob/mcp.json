@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "wxd-presto-local": {
+      "command": "./mcp-servers/query-layer/.venv/bin/python",
+      "args": [
+        "./mcp-servers/query-layer/server.py",
+        "--transport",
+        "stdio",
+        "--dotenv",
+        "./mcp-servers/query-layer/.env"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "get_instance_details",
+        "list_catalogs",
+        "list_schemas",
+        "list_tables",
+        "describe_table",
+        "vector_search",
+        "execute_select"
+      ],
+      "disabledTools": []
+    }
+  }
+}

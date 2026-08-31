@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Cold-Chain — Try It Out Locally</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1f2328;
+    background: #ffffff;
+  }
+
+  .hero {
+    background: #161616;
+    color: #f4f4f4;
+    padding: 48px 24px 40px;
+    border-bottom: 3px solid #0f62fe;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #78a9ff;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    color: #f4f4f4;
+  }
+  .hero h1 strong { font-weight: 600; }
+  .hero-desc {
+    font-size: 16px;
+    color: #c6c6c6;
+    max-width: 680px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #a8a8a8;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+  .hero-meta .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #42be65; display: inline-block;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .overview-card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-top: 3px solid #0f62fe;
+    padding: 20px 18px;
+    border-radius: 2px;
+  }
+  .overview-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #57606a;
+    margin-bottom: 8px;
+  }
+  .overview-card p { font-size: 13px; color: #1f2328; margin-bottom: 6px; }
+  .overview-card .tag {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 2px 8px;
+    background: #d0e2ff;
+    color: #0043ce;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .arch-box {
+    background: #161616;
+    border-radius: 4px;
+    padding: 28px 24px;
+    margin-bottom: 40px;
+    overflow: auto;
+  }
+  .arch-box pre {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 12.5px;
+    color: #c6c6c6;
+    line-height: 1.5;
+    white-space: pre;
+  }
+  .arch-box .c-blue   { color: #78a9ff; }
+  .arch-box .c-green  { color: #42be65; }
+  .arch-box .c-yellow { color: #f1c21b; }
+  .arch-box .c-teal   { color: #3ddbd9; }
+
+  h2.section-title {
+    font-size: 22px;
+    font-weight: 300;
+    color: #1f2328;
+    margin: 48px 0 16px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 10px;
+  }
+  h3.sub-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2328;
+    margin: 20px 0 10px;
+  }
+
+  .step-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 40px 0 20px;
+    padding: 14px 20px;
+    background: #f4f4f4;
+    border-left: 4px solid #0f62fe;
+    border-radius: 0 2px 2px 0;
+  }
+  .step-divider .sd-num {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #0f62fe;
+    white-space: nowrap;
+  }
+  .step-divider .sd-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2328;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0 20px;
+    margin-bottom: 36px;
+  }
+  .step-badge {
+    width: 48px; height: 48px;
+    background: #0f62fe;
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1f2328;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+  }
+  .step-intro {
+    color: #57606a;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .callout {
+    padding: 14px 16px;
+    border-radius: 2px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .callout.tip  { background: #defbe6; border-left: 4px solid #24a148; color: #198038; }
+  .callout.info { background: #edf5ff; border-left: 4px solid #0f62fe; color: #0043ce; }
+  .callout.warn { background: #fff8e1; border-left: 4px solid #f1c21b; color: #8a6914; }
+  .callout.crit { background: #fff1f1; border-left: 4px solid #da1e28; color: #a2191f; }
+  .callout strong { font-weight: 700; }
+
+  .env-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .env-col {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .env-col-header {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .env-col-header.draft { background: #f4f4f4; color: #57606a; border-bottom: 2px solid #8d8d8d; }
+  .env-col-header.live  { background: #0f62fe; color: #fff;    border-bottom: 2px solid #002d9c; }
+  .env-col-body { padding: 12px 14px; font-size: 13px; color: #57606a; line-height: 1.6; }
+
+  pre.code-block {
+    background: #161616;
+    color: #dde1e7;
+    font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    padding: 18px 20px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 12px 0;
+    border: 1px solid #393939;
+  }
+  pre.code-block .cm { color: #8d8d8d; }
+  pre.code-block .ck { color: #78a9ff; }
+  pre.code-block .cv { color: #42be65; }
+  pre.code-block .cp { color: #f1c21b; }
+
+  code {
+    font-family: "IBM Plex Mono", Consolas, monospace;
+    font-size: 12px;
+    background: #f0f0f0;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #0f62fe;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: #f4f4f4;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #1f2328;
+    border-bottom: 2px solid #c6c6c6;
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+    color: #1f2328;
+  }
+  tr:nth-child(even) td { background: #f7f8fa; }
+  td code { background: #e8e8e8; color: #161616; }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+  }
+  .pill.tab    { background: #161616; color: #78a9ff; border: 1px solid #393939; }
+  .pill.action { background: #0f62fe; color: #fff; }
+  .pill.port   { background: #393939; color: #f4f4f4; font-family: monospace; }
+  .pill.draft  { background: #8d8d8d; color: #fff; }
+  .pill.live   { background: #0f62fe; color: #fff; }
+
+  .scenario {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .scenario-header {
+    background: #f4f4f4;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .scenario-letter {
+    width: 28px; height: 28px;
+    background: #0f62fe;
+    color: #fff;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .scenario-name { font-size: 14px; font-weight: 600; color: #1f2328; }
+  .scenario-body { padding: 16px 18px; }
+  .scenario-body ol { padding-left: 20px; margin: 0; }
+  .scenario-body ol > li {
+    margin-bottom: 9px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #1f2328;
+  }
+  .scenario-body ul { padding-left: 20px; margin: 6px 0 4px; }
+  .scenario-body ul > li {
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #57606a;
+    line-height: 1.55;
+  }
+  .expected {
+    background: #defbe6;
+    border-left: 3px solid #24a148;
+    padding: 10px 14px;
+    margin-top: 14px;
+    border-radius: 0 2px 2px 0;
+    font-size: 13px;
+    color: #198038;
+    line-height: 1.6;
+  }
+  .expected strong { font-weight: 700; }
+
+  .ts-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .ts-problem {
+    background: #fff1f1;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a2191f;
+    border-bottom: 1px solid #ffd7d9;
+  }
+  .ts-solution {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #1f2328;
+    line-height: 1.6;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    margin-top: 60px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #8d8d8d;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">IBM DSCE Demo Asset &middot; Cold-Chain Logistics</div>
+    <h1><strong>Smart Cold-Chain Guardrail Platform</strong><br>Deploy on OpenShift</h1>
+    <p class="hero-desc">
+      Deploy the AI-powered cold-chain logistics platform on OpenShift.
+      This guide walks you through registering five watsonx Orchestrate agents and tools,
+      deploying three backend services to OpenShift, and exploring every dashboard feature &mdash;
+      from real-time fleet telemetry and IBM Granite TTM forecasting to the live 5-agent decision pipeline.
+    </p>
+    <div class="hero-meta">
+      <span><span class="dot"></span> Python 3.12+ &amp; Node.js 18+</span>
+      <span>&#9201; watsonx Orchestrate SaaS</span>
+      <span>&#129504; OpenShift</span>
+      <span>&#128202; IBM Granite TTM</span>
+      <span>&#128051; Podman / Docker</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- OVERVIEW CARDS -->
+<div class="overview-grid">
+  <div class="overview-card">
+    <h3>Services</h3>
+    <p>3 services on OpenShift</p>
+    <span class="tag">fleetops-backend</span><br>
+    <span class="tag">forecast-backend</span><br>
+    <span class="tag">FleetOps dashboard</span>
+  </div>
+  <div class="overview-card">
+    <h3>AI Agents</h3>
+    <p>5 watsonx Orchestrate native agents</p>
+    <span class="tag">Weather &rarr; Station &rarr; Route &rarr; Decision &rarr; Notify</span>
+  </div>
+  <div class="overview-card">
+    <h3>Tools</h3>
+    <p>5 Python tools registered in Orchestrate</p>
+    <span class="tag">weather &middot; station &middot; route &middot; decision &middot; whatsapp</span>
+  </div>
+  <div class="overview-card">
+    <h3>Dashboard Tabs</h3>
+    <p>5 tabs in the Carbon UI</p>
+    <span class="tag">Operations &middot; Forecasting &middot; Agents &middot; Observe &amp; Optimize &middot; Driver View</span>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<h2 class="section-title">Architecture Overview</h2>
+<div class="arch-box"><pre>
+  Browser  <span class="c-blue">https://&lt;dashboard-route&gt;.apps.&lt;cluster&gt;</span>
+     |
+     v
++------------------------------------------------------------------+
+|  <span class="c-blue">FleetOps Dashboard</span>  (Node.js + IBM Carbon)   <span class="c-yellow">port 4000</span>          |
+|  5 tabs: Operations . Forecasting . <span class="c-teal">Agents</span> . Observe . Driver   |
+|  Express proxy --&gt; rewrites /api/*  and  /forecast/*            |
++-------------+---------------------+-----------------------------+
+              |                     |
+              v                     v
++-------------------------+  +----------------------------------+
+|  <span class="c-green">FleetOps Backend</span>       |  |  <span class="c-green">Forecast Backend</span>  (FastAPI)     |
+|  (FastAPI / Python 3.12)|  |  IBM Granite TTM-R2 model        |
+|  <span class="c-yellow">port 8085</span>              |  |  <span class="c-yellow">port 5001</span>                        |
+|  10-truck fleet sim     |  |  Temperature . Station . Weather |
+|  Incident engine        |  |  Fleet optimisation forecasts    |
+|  WatsonX agent invoke   |  +----------------------------------+
++------------+------------+
+             |  POST /api/agents/{id}/invoke
+             v
++------------------------------------------------------------------+
+|  <span class="c-blue">watsonx Orchestrate</span>  (cloud)                                    |
+|                                                                  |
+|  weather_advisor --&gt; station_agent --&gt; RouteOptimizationAgent   |
+|                                             |                    |
+|                                    decision_agent                |
+|                                             |                    |
+|                                  notification_agent              |
+|                                 (WhatsApp driver alert)          |
++------------------------------------------------------------------+
+</pre></div>
+
+<!-- BEFORE YOU BEGIN -->
+<div class="step-divider">
+  <div class="sd-num">Before You Begin</div>
+  <div class="sd-title">Prerequisites &mdash; verify your environment</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">&#10003;</div>
+  <div>
+    <div class="step-title">Check runtimes and credentials</div>
+    <p class="step-intro">Confirm all required runtimes and credentials are in place before cloning the repository.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Requirement</th><th>Version / Notes</th><th>Check command</th></tr>
+        <tr><td>Python</td><td>3.12 or higher</td><td><code>python3 --version</code></td></tr>
+        <tr><td>Node.js</td><td>18 or higher</td><td><code>node --version</code></td></tr>
+        <tr><td>npm</td><td>9 or higher</td><td><code>npm --version</code></td></tr>
+        <tr><td>Git</td><td>Any recent version</td><td><code>git --version</code></td></tr>
+        <tr><td>Docker</td><td>Required — for building and pushing service images to a registry</td><td><code>docker --version</code></td></tr>
+        <tr><td>OpenShift CLI (<code>oc</code>)</td><td>Logged in to your OpenShift cluster</td><td><code>oc whoami</code></td></tr>
+        <tr><td>watsonx Orchestrate instance</td><td>Active SaaS instance with API key</td><td>IBM Cloud console</td></tr>
+        <tr><td>Orchestrate CLI (<code>orchestrate</code>)</td><td>ADK CLI authenticated to your instance</td><td><code>orchestrate env list</code></td></tr>
+        <tr><td>Instana account</td><td>Active Instana APM tenant with an API token — required for the Observe tab</td><td>Instana console &rarr; Settings &rarr; API Tokens</td></tr>
+        <tr><td>Turbonomic account</td><td>Active Turbonomic instance with username &amp; password — required for the Observe tab</td><td>Turbonomic console login</td></tr>
+        <tr><td>Twilio account</td><td>Account SID, Auth Token, and a WhatsApp-enabled number — required for driver WhatsApp alerts</td><td>console.twilio.com</td></tr>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <strong>Instana, Turbonomic, and Twilio are not strictly required to deploy.</strong>
+      You can proceed without them — the core fleet simulation, AI agents, and forecasting will work fully.
+      However, the <strong>Observe &amp; Optimize</strong> tab will show no metrics, and the
+      <strong>driver WhatsApp notification</strong> will not be sent at the end of an agent workflow.
+    </div>
+
+    <h3 class="sub-title">Install the ADK CLI and register your Orchestrate environment</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Create a dedicated virtual environment for the ADK CLI so it does not conflict with the
+      per-service virtual environments created in later steps. Replace the <code>--url</code> value
+      with your actual instance URL from the IBM Cloud console, and supply your API key when prompted.
+    </p>
+<pre class="code-block"><span class="cm"># 1. Create and activate a virtual environment for the ADK CLI</span>
+$ python3 -m venv adk-venv
+$ source adk-venv/bin/activate      <span class="cm"># Windows: adk-venv\Scripts\activate</span>
+
+<span class="cm"># 2. Install the IBM watsonx Orchestrate ADK</span>
+$ pip install ibm-watsonx-orchestrate==2.10
+
+<span class="cm"># 3. Register your Orchestrate environment (--url is required)</span>
+$ orchestrate env add --name myenv \
+    --url https://api.&lt;region&gt;.watson-orchestrate.cloud.ibm.com/instances/&lt;INSTANCE_ID&gt;
+
+<span class="cm"># 4. Activate the environment (you will be prompted for your API key)</span>
+$ orchestrate env activate myenv
+
+<span class="cm"># 5. Verify -- 'myenv' should be listed as active</span>
+$ orchestrate env list</pre>
+
+    <div class="callout tip">
+      <strong>Keep this terminal open.</strong> The <code>adk-venv</code> environment must remain active
+      whenever you run <code>orchestrate</code> CLI commands in Steps 1 and 2.
+    </div>
+
+    <h3 class="sub-title">Clone the repository</h3>
+<pre class="code-block">$ git clone --branch fleetops-v2 https://github.ibm.com/shanmsel/smart-cold-chain.git
+$ cd smart-cold-chain</pre>
+  </div>
+</div>
+
+<!-- STEP 1 -->
+<div class="step-divider">
+  <div class="sd-num">Step 1</div>
+  <div class="sd-title">Import Python tools into watsonx Orchestrate</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">1</div>
+  <div>
+    <div class="step-title">Register the five Python tools</div>
+    <p class="step-intro">
+      Five Python tools must be registered in your Orchestrate instance before any agent can run.
+      Each tool lives under its own directory inside <code>tools/</code>.
+      Run these commands with the <code>adk-venv</code> environment active
+      (<code>source adk-venv/bin/activate</code>).
+    </p>
+
+    <h3 class="sub-title">1a &mdash; Import connection schemas</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Three tools call live backends and receive their URLs through <strong>key-value connections</strong>.
+      Register both connection definitions now — before importing any tools — so the <code>-a</code> flag works
+      in the import commands below.
+    </p>
+<pre class="code-block">$ orchestrate connections import -f tools/connections/fleetops_api.yaml
+$ orchestrate connections import -f tools/connections/forecast_api.yaml</pre>
+    <div class="callout info" style="margin-top:10px;">
+      You will set the actual backend URLs on these connections in Step 6a, after the OpenShift services
+      are deployed. The connections must exist now so the tools can reference them; they can carry
+      placeholder values until Step 6a.
+    </div>
+
+    <h3 class="sub-title">1b &mdash; Import the five tools</h3>
+
+    <h3 class="sub-title">Tool 1 &mdash; Weather Forecast</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Provides per-waypoint weather forecasts along truck routes with severity classification
+      (CLEAR / MODERATE / SEVERE) and optional weather injection for demo scenarios.
+    </p>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/weather_forecast/weather_forecast_tool.py \
+    -r tools/weather_forecast/requirements.txt \
+    -a fleetops_api</pre>
+
+    <h3 class="sub-title">Tool 2 &mdash; Station Search</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Searches FleetOps stations for facilities matching capability requirements (e.g. <code>emergencyCooling</code>)
+      within a configurable radius, along or off the planned route.
+    </p>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/station_tool/station_search_tool.py \
+    -r tools/station_tool/requirements.txt \
+    -a fleetops_api</pre>
+
+    <h3 class="sub-title">Tool 3 &mdash; Route Optimizer</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Scores and ranks alternative routes to candidate facilities using a weighted formula:
+      Duration 40%, Distance 25%, Cost 20%, Capability 15%.
+    </p>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/RouteOptimization/tools.py \
+    -r tools/RouteOptimization/requirements.txt</pre>
+
+    <h3 class="sub-title">Tool 4 &mdash; Decision Analysis</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Synthesises telemetry, cargo data, weather segments, station facilities, and ranked routes
+      into a risk-scored decision with financial analysis and post-recovery plan.
+    </p>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/decision_tool/decision_analysis_tool.py</pre>
+
+    <h3 class="sub-title">Tool 5 &mdash; WhatsApp Notification</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Formats the Decision Agent output into a driver-friendly message and dispatches it
+      via the Twilio WhatsApp API.
+    </p>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/whatsapp_notification/whatsapp_notification_tool.py \
+    -r tools/whatsapp_notification/requirements.txt \
+    -a forecast_api</pre>
+
+    <h3 class="sub-title">Verify all five tools are registered</h3>
+<pre class="code-block">$ orchestrate tools list
+
+<span class="cm"># Expected -- five entries:
+#   get_route_weather_forecast
+#   search_stations
+#   route_optimizer
+#   analyze_decision
+#   send_whatsapp_notification</span></pre>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-divider">
+  <div class="sd-num">Step 2</div>
+  <div class="sd-title">Import and deploy the five agents into watsonx Orchestrate</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">2</div>
+  <div>
+    <div class="step-title">Import agents, deploy to live, then retrieve their IDs</div>
+    <p class="step-intro">
+      Each YAML file in <code>agents/</code> defines an Orchestrate native agent with its LLM,
+      tools, instructions, and output schema. The workflow is two stages:
+      <strong>import</strong> lands each agent in the <span class="pill draft">draft</span> environment for testing,
+      then <strong>deploy</strong> promotes it to the <span class="pill live">live</span> environment so it is
+      reachable by the FleetOps backend at runtime.
+    </p>
+
+    <div class="env-cols">
+      <div class="env-col">
+        <div class="env-col-header draft">Draft environment</div>
+        <div class="env-col-body">
+          Created by <code>orchestrate agents import</code>. Active for single-user development and testing.
+          Visible in the <strong>Manage Agents</strong> page in the Orchestrate UI.
+        </div>
+      </div>
+      <div class="env-col">
+        <div class="env-col-header live">Live environment</div>
+        <div class="env-col-body">
+          Created by <code>orchestrate agents deploy</code>. Promoted from draft and reachable by
+          external API calls &mdash; required for the FleetOps backend to invoke agents at runtime.
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>#</th><th>Agent YAML file</th><th>Name in Orchestrate</th><th>Role</th></tr>
+        <tr><td>1</td><td><code>agents/weather_advisor.yaml</code></td><td><code>weather_advisor</code></td><td>Per-segment weather severity along the route</td></tr>
+        <tr><td>2</td><td><code>agents/station-agent.yaml</code></td><td><code>station_agent</code></td><td>Finds nearby facilities matching capability requirements</td></tr>
+        <tr><td>3</td><td><code>agents/RouteOptimizationAgent.yaml</code></td><td><code>RouteOptimizationAgent</code></td><td>Scores and ranks alternative routes to candidate facilities</td></tr>
+        <tr><td>4</td><td><code>agents/decision-agent.yaml</code></td><td><code>decision_agent</code></td><td>Risk assessment, facility selection, financial analysis</td></tr>
+        <tr><td>5</td><td><code>agents/notification-agent.yaml</code></td><td><code>notification_agent</code></td><td>Sends WhatsApp alert to driver after the decision</td></tr>
+      </table>
+    </div>
+
+    <h3 class="sub-title">2a &mdash; Import all five agents (lands in draft)</h3>
+<pre class="code-block">$ orchestrate agents import -f agents/weather_advisor.yaml
+$ orchestrate agents import -f agents/station-agent.yaml
+$ orchestrate agents import -f agents/RouteOptimizationAgent.yaml
+$ orchestrate agents import -f agents/decision-agent.yaml
+$ orchestrate agents import -f agents/notification-agent.yaml</pre>
+
+    <h3 class="sub-title">2b &mdash; Deploy all five agents to live</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Deploying promotes each agent from <span class="pill draft">draft</span> to
+      <span class="pill live">live</span>, making it callable via the Orchestrate REST API.
+    </p>
+<pre class="code-block">$ orchestrate agents deploy --name weather_advisor
+$ orchestrate agents deploy --name station_agent
+$ orchestrate agents deploy --name RouteOptimizationAgent
+$ orchestrate agents deploy --name decision_agent
+$ orchestrate agents deploy --name notification_agent</pre>
+
+    <h3 class="sub-title">2c &mdash; Verify all five agents are live</h3>
+<pre class="code-block">$ orchestrate agents list
+
+<span class="cm"># Expected -- five entries, each showing status: live
+#   weather_advisor
+#   station_agent
+#   RouteOptimizationAgent
+#   decision_agent
+#   notification_agent</span></pre>
+
+    <h3 class="sub-title">2d &mdash; Retrieve agent IDs (needed in Step 3)</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      The FleetOps backend invokes each agent by its Orchestrate <strong>instance UUID</strong>, not by name.
+    </p>
+<pre class="code-block">$ orchestrate agents list --verbose
+
+<span class="cm"># Note the 'id' field for each agent.
+# IDs look like: a16f0e60-3de1-44a4-a28a-2f2525e1da7a</span></pre>
+
+    <div class="callout warn">
+      <strong>Important:</strong> Copy all five UUIDs before moving to Step 3.
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step-divider">
+  <div class="sd-num">Step 3</div>
+  <div class="sd-title">Configure and deploy the FleetOps simulation backend to OpenShift</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">3</div>
+  <div>
+    <div class="step-title">FleetOps backend &mdash; deploy to OpenShift</div>
+    <p class="step-intro">
+      Follow the <strong>OpenShift Deployment &rarr; Manual Deployment</strong> section in
+      <code>fleetops-backend/DEPLOYMENT.md</code>. The notes below cover things not mentioned
+      in that file that you will miss if skipped.
+    </p>
+
+    <div class="callout warn">
+      <strong>Before step 2 — update <code>REPOSITORY</code> in <code>build-and-push.sh</code></strong><br>
+      Line 10 has a placeholder <code>REPOSITORY="&lt;docker repo&gt;"</code>. Set it to your Docker Hub
+      repository name and run the script from <code>fleetops-backend/</code>, not from <code>k8s/</code>.
+    </div>
+
+    <div class="callout warn">
+      <strong>Before step 6 — update the image in <code>k8s/deployment.yaml</code></strong><br>
+      Line 34 contains <code>image: &lt;docker image path&gt;</code>. Replace it with the image you
+      pushed in step 2, e.g. <code>docker.io/&lt;your-org&gt;/fleetops-backend:&lt;version&gt;</code>,
+      before running <code>oc apply -f k8s/deployment.yaml</code>.
+    </div>
+
+    <div class="callout warn">
+      <strong>Step 5 — WatsonX secret requires all 7 keys including notification agent</strong><br>
+      Use the agent UUIDs from Step 2d. The <code>DEPLOYMENT.md</code> secret command includes all 7 keys.
+    </div>
+
+    <div class="callout tip">
+      <strong>Note the route URL after step 7</strong> — you will need it as
+      <code>FLEETOPS_API_BASE_URL</code> when configuring the Forecast backend (Step 4) and
+      the dashboard (Step 5).<br>
+      <code>oc get route fleetops-api -n fleetops-backend -o jsonpath='{.spec.host}'</code>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step-divider">
+  <div class="sd-num">Step 4</div>
+  <div class="sd-title">Deploy the Forecast backend to OpenShift</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">4</div>
+  <div>
+    <div class="step-title">Forecast backend &mdash; IBM Granite TTM-R2 time-series model</div>
+    <p class="step-intro">
+      The Forecast backend is a Python FastAPI service that loads the
+      <strong>IBM Granite TTM-R2</strong> (Tiny Time Mixer) model and serves four forecast endpoints
+      used by the Forecasting tab. Follow the OpenShift deployment option from
+      <code>forecast-backend/README.md</code> (Option 3).
+    </p>
+
+    <div class="callout info">
+      The steps below walk you through all required configuration before running the deploy script.
+    </div>
+
+    <h3 class="sub-title">4a &mdash; Build and push the container image</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      The TTM model (~2–3 GB) is preloaded into the image during build — allow 5–10 minutes.
+      Run from the repository root.
+    </p>
+<pre class="code-block"><span class="cm"># Build</span>
+$ docker build -t <span class="cv">&lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops-forecasting:&lt;tag&gt;</span> forecast-backend/
+
+<span class="cm"># Push</span>
+$ docker push <span class="cv">&lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops-forecasting:&lt;tag&gt;</span></pre>
+
+    <div class="callout warn">
+      <strong>Update <code>openshift-deployment.yaml</code> line 25</strong> with the image you just pushed:<br>
+      <code>image: &lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops-forecasting:&lt;tag&gt;</code>
+    </div>
+
+    <h3 class="sub-title">4b &mdash; Edit <code>openshift-secret.yaml</code> &mdash; Twilio credentials</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Open <code>forecast-backend/openshift-secret.yaml</code> and fill in your Twilio credentials.
+      These are used by the WhatsApp notification tool to send driver alerts.
+    </p>
+<pre class="code-block"><span class="cm"># forecast-backend/openshift-secret.yaml</span>
+<span class="ck">stringData</span>:
+  <span class="ck">TWILIO_AUTH_TOKEN</span>: <span class="cv">"&lt;your-twilio-auth-token&gt;"</span>
+  <span class="ck">TWILIO_ACCOUNT_SID</span>: <span class="cv">"&lt;your-twilio-account-sid&gt;"</span>
+  <span class="ck">TWILIO_FROM_NUMBER</span>: <span class="cv">"whatsapp:+14155238886"</span>
+  <span class="ck">DEMO_PHONE_NUMBER</span>: <span class="cv">"+&lt;your-phone-number&gt;"</span></pre>
+
+    <h3 class="sub-title">4c &mdash; Edit <code>openshift-configmap.yaml</code> &mdash; point to FleetOps backend</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Open <code>forecast-backend/openshift-configmap.yaml</code> and update
+      <code>FLEETOPS_API_BASE_URL</code> to the route URL you noted at the end of Step 3.
+      All other values can stay at their defaults.
+    </p>
+<pre class="code-block"><span class="cm"># forecast-backend/openshift-configmap.yaml — key values to verify</span>
+<span class="ck">FLEETOPS_API_BASE_URL</span>: <span class="cv">"https://fleetops-api-fleetops-backend.apps.&lt;your-cluster&gt;"</span>  <span class="cm"># from Step 3e</span>
+<span class="ck">FREQUENCY</span>: <span class="cv">"1min"</span>          <span class="cm"># must be lowercase — 1min / 5min / 1h (NOT 1H)</span>
+<span class="ck">USE_TTM_MODEL</span>: <span class="cv">"True"</span>
+<span class="ck">DEVICE</span>: <span class="cv">"cpu"</span>
+<span class="ck">CONTEXT_LENGTH</span>: <span class="cv">"512"</span>
+<span class="ck">PREDICTION_LENGTH</span>: <span class="cv">"96"</span></pre>
+
+    <div class="callout crit">
+      <strong>Frequency case matters:</strong> Use lowercase pandas frequency strings &mdash;
+      <code>1min</code>, <code>5min</code>, <code>1h</code>.
+      The value <code>1H</code> (uppercase H) causes a pandas <code>ValueError</code> at startup.
+    </div>
+
+    <h3 class="sub-title">4d &mdash; Deploy using the script</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      The <code>deploy-openshift.sh</code> script applies the ConfigMap, Secret, Deployment, Service,
+      and Route in one command. Run it from <code>forecast-backend/</code> with <code>oc</code> already
+      logged in and the <code>fleetops-backend</code> project active.
+    </p>
+<pre class="code-block"><span class="cm"># From forecast-backend/</span>
+$ cd forecast-backend
+
+<span class="cm"># Full deploy (ConfigMap → Secret → Deployment / Service / Route)</span>
+$ ./deploy-openshift.sh apply</pre>
+
+    <p style="font-size:13px;color:#57606a;margin:10px 0 6px;">Other useful script commands:</p>
+<pre class="code-block"><span class="cm"># Update config only and restart pods (after editing configmap)</span>
+$ ./deploy-openshift.sh update-config
+
+<span class="cm"># Tail pod logs</span>
+$ ./deploy-openshift.sh logs
+
+<span class="cm"># Show pods / service / route status</span>
+$ ./deploy-openshift.sh status
+
+<span class="cm"># Tear everything down</span>
+$ ./deploy-openshift.sh delete</pre>
+
+    <h3 class="sub-title">4e &mdash; Verify the deployment</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      The script prints the route URL on success. You can also retrieve it manually:
+    </p>
+<pre class="code-block"><span class="cm"># Get route URL</span>
+$ FORECAST_ROUTE=$(oc get route fleetops-forecasting -n fleetops-backend -o jsonpath='{.spec.host}')
+
+<span class="cm"># Health check</span>
+$ curl -sk https://$FORECAST_ROUTE/health
+
+<span class="cm"># Expected:
+# { "status": "healthy", "service": "fleetops-forecasting", "ttm_model_enabled": true }</span></pre>
+
+    <div class="callout tip">
+      <strong>Note the forecast route URL</strong> — you will need it as <code>FORECAST_API_URL</code>
+      when configuring the FleetOps dashboard in Step 5.
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step-divider">
+  <div class="sd-num">Step 5</div>
+  <div class="sd-title">Configure and deploy the FleetOps dashboard to OpenShift</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">5</div>
+  <div>
+    <div class="step-title">FleetOps dashboard &mdash; IBM Carbon Design System UI</div>
+    <p class="step-intro">
+      The FleetOps dashboard is a Node.js/Express application that serves the IBM Carbon Design System
+      UI and proxies all API calls to the two backends deployed in Steps 3 and 4.
+      Full deployment instructions are in <code>FleetOps/README.md</code> &rarr;
+      <strong>Deploying to OpenShift</strong>.
+    </p>
+
+    <div class="callout info">
+      <strong>Prerequisites:</strong> You must have the route URLs from Step 3 (fleetops-backend)
+      and Step 4 (forecast-backend) before starting this step. Both services must be running.
+    </div>
+
+    <h3 class="sub-title">5a &mdash; Files overview</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>File</th><th>Purpose</th></tr>
+        <tr><td><code>openshift-rbac.yaml</code></td><td>ServiceAccount + Role + RoleBinding</td></tr>
+        <tr><td><code>openshift-pvc-execution-history.yaml</code></td><td>PersistentVolumeClaim for execution history</td></tr>
+        <tr><td><code>openshift-configmap.yaml</code></td><td>Non-sensitive configuration (backend URLs, Instana/Turbonomic settings)</td></tr>
+        <tr><td><code>openshift-secrets.yaml.example</code></td><td>Template for sensitive credentials (Instana token, Turbonomic password)</td></tr>
+        <tr><td><code>openshift-deployment.yaml</code></td><td>Deployment + Service + Route — <strong>image placeholder must be updated</strong> before deploying (see 5b)</td></tr>
+        <tr><td><code>deploy-openshift.sh</code></td><td>Helper script — applies RBAC, PVC, ConfigMap and Deployment in order</td></tr>
+      </table>
+    </div>
+
+    <h3 class="sub-title">5b &mdash; Build and push the container image</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Run from the repository root.
+    </p>
+<pre class="code-block"><span class="cm"># Build</span>
+$ docker build -t <span class="cv">&lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops:&lt;tag&gt;</span> FleetOps/
+
+<span class="cm"># Push</span>
+$ docker push <span class="cv">&lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops:&lt;tag&gt;</span></pre>
+
+    <div class="callout warn">
+      <strong>Update <code>openshift-deployment.yaml</code> line 41</strong> with the image you just pushed:<br>
+      <code>image: &lt;your-registry&gt;/&lt;your-namespace&gt;/fleetops:&lt;tag&gt;</code>
+    </div>
+
+    <h3 class="sub-title">5c &mdash; Required edits before deploying</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:10px;">
+      On OpenShift there is no <code>.env</code> file. All variables are injected via two manifest files
+      loaded by <code>openshift-deployment.yaml</code> through <code>envFrom</code>.
+    </p>
+
+    <div class="callout warn">
+      <strong>1 — Edit <code>openshift-configmap.yaml</code></strong><br>
+      Replace every <code>&lt;placeholder&gt;</code> with your real values:
+<pre style="margin:8px 0 0 0;background:transparent;border:none;padding:0;"><span class="cm"># ── Required: Backend URLs ─────────────────────────────────────────────────</span>
+<span class="ck">COLDCHAIN_API_URL</span>: <span class="cv">"https://&lt;fleetops-backend-route&gt;.apps.&lt;your-cluster&gt;"</span>  <span class="cm"># from Step 3e</span>
+<span class="ck">FORECAST_API_URL</span>:  <span class="cv">"https://&lt;forecast-backend-route&gt;.apps.&lt;your-cluster&gt;"</span>   <span class="cm"># from Step 4</span>
+
+<span class="cm"># ── Instana (Observe tab) ──────────────────────────────────────────────────</span>
+<span class="ck">INSTANA_URL</span>:             <span class="cv">"https://&lt;your-instana-tenant&gt;.instana.io"</span>
+<span class="ck">INSTANA_BASE_URL</span>:        <span class="cv">"https://&lt;your-instana-tenant&gt;.instana.io"</span>
+<span class="ck">INSTANA_SERVICE_NAME</span>:    <span class="cv">"&lt;service-name-as-registered-in-instana&gt;"</span>
+<span class="ck">INSTANA_DEPLOYMENT_NAME</span>: <span class="cv">"&lt;kubernetes-deployment-name&gt;"</span>
+<span class="ck">INSTANA_NAMESPACE</span>:       <span class="cv">"&lt;kubernetes-namespace&gt;"</span>
+<span class="ck">INSTANA_CLUSTER</span>:         <span class="cv">"&lt;kubernetes-cluster-name&gt;"</span>
+
+<span class="cm"># ── Turbonomic (Observe tab) ───────────────────────────────────────────────</span>
+<span class="ck">TURBONOMIC_URL</span>:          <span class="cv">"https://&lt;your-turbonomic-host&gt;/app/#/view/main/live/&lt;entity-id&gt;/overview"</span>
+<span class="ck">TURBONOMIC_LOGIN_URL</span>:    <span class="cv">"https://&lt;your-turbonomic-host&gt;/api/v3/login"</span>
+<span class="ck">TURBONOMIC_API_URL</span>:      <span class="cv">"https://&lt;your-turbonomic-api-host&gt;/api/v3"</span>
+<span class="ck">TURBONOMIC_DISPLAY_NAME</span>: <span class="cv">"&lt;deployment-display-name-in-turbonomic&gt;"</span></pre>
+    </div>
+
+    <div class="callout warn">
+      <strong>2 — Edit <code>openshift-pvc-execution-history.yaml</code></strong><br>
+      Update the two placeholders before applying:
+      <ul style="margin:6px 0 0 0;font-size:13px;">
+        <li><code>namespace: &lt;your-namespace&gt;</code> → set to <code>fleetops-backend</code> (the same namespace used in Steps 3 and 4)</li>
+        <li><code>storageClassName</code> → run <code>oc get storageclass</code> to find an available class on your cluster</li>
+      </ul>
+    </div>
+
+    <div class="callout warn">
+      <strong>3 — Create <code>openshift-secrets.yaml</code> from the example</strong><br>
+      The <code>deploy-openshift.sh</code> script deliberately <strong>skips secrets</strong> and warns you to apply them manually first.
+      Base64-encode each value and apply before running the script:
+<pre style="margin:8px 0 0 0;background:transparent;border:none;padding:0;">$ cd FleetOps
+$ cp openshift-secrets.yaml.example openshift-secrets.yaml
+<span class="cm"># base64-encode each credential, e.g.:</span>
+$ echo -n <span class="cv">'your-instana-token'</span> | base64
+<span class="cm"># Edit openshift-secrets.yaml and paste the encoded values, then:</span>
+$ oc apply -f openshift-secrets.yaml -n fleetops-backend</pre>
+    </div>
+
+    <h3 class="sub-title">5d &mdash; Login and switch to namespace</h3>
+<pre class="code-block">$ oc login &lt;your-cluster&gt;
+$ oc project fleetops-backend</pre>
+
+    <div class="callout info">
+      <code>deploy-openshift.sh</code> has <code>PROJECT="fleetops-backend"</code> hardcoded on line 8.
+      If you are using a different namespace, update that value in the script before running it.
+    </div>
+
+    <h3 class="sub-title">5e &mdash; Deploy</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Run from the <code>FleetOps/</code> directory. The script applies RBAC, PVC, ConfigMap,
+      and Deployment in the correct order and prints the route URL on completion.
+    </p>
+<pre class="code-block">$ cd FleetOps
+$ ./deploy-openshift.sh apply</pre>
+
+    <h3 class="sub-title">5f &mdash; Verify the deployment</h3>
+<pre class="code-block"><span class="cm"># Check pod is running</span>
+$ oc get pods -l app=fleetops
+
+<span class="cm"># Check logs</span>
+$ oc logs -f deployment/fleetops
+
+<span class="cm"># Get the route URL</span>
+$ oc get route fleetops -o jsonpath='{.spec.host}'
+
+<span class="cm"># Test health endpoint</span>
+$ curl https://$(oc get route fleetops -o jsonpath='{.spec.host}')/health
+
+<span class="cm"># Expected:
+# {
+#   "status": "healthy",
+#   "service": "fleetops-carbon-app",
+#   "coldchainApi": "https://&lt;fleetops-backend-route&gt;"
+# }</span></pre>
+
+    <div class="callout tip">
+      <strong>All three services are now running on OpenShift.</strong> Open the route URL in your
+      browser to access the FleetOps dashboard.
+    </div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step-divider">
+  <div class="sd-num">Step 6</div>
+  <div class="sd-title">Set backend URLs and re-import the three backend-dependent tools</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">6</div>
+  <div>
+    <div class="step-title">Set backend URLs and re-import tools</div>
+    <p class="step-intro">
+      The two connection schemas were already registered in Step 1a. Now that both OpenShift backends
+      are running, set the real URLs on each connection and re-import the three tools that call them
+      so Orchestrate injects the correct URL at runtime.
+    </p>
+
+    <div class="callout info">
+      Have the two OpenShift route URLs from earlier steps ready before you begin:<br>
+      &bull; <strong>FleetOps backend route</strong> — from Step 3e (<code>oc get route fleetops-api -n fleetops-backend</code>)<br>
+      &bull; <strong>Forecast backend route</strong> — from Step 4 (<code>oc get route fleetops-forecasting -n fleetops-backend</code>)
+    </div>
+
+    <h3 class="sub-title">Which tools need a URL</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Tool</th><th>Connection</th><th>URL key(s) injected</th><th>URL to use</th></tr>
+        <tr><td><code>get_route_weather_forecast</code></td><td><code>fleetops_api</code></td><td><code>FLEETOPS_API_URL</code></td><td>FleetOps backend route (Step 3e)</td></tr>
+        <tr><td><code>search_stations</code></td><td><code>fleetops_api</code></td><td><code>FLEETOPS_API_BASE_URL</code></td><td>FleetOps backend route (Step 3e)</td></tr>
+        <tr><td><code>send_whatsapp_notification</code></td><td><code>forecast_api</code></td><td><code>FORECAST_API_URL</code></td><td>Forecast backend route (Step 4)</td></tr>
+        <tr><td><code>route_optimizer</code></td><td>none</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td><code>analyze_decision</code></td><td>none</td><td>&mdash;</td><td>&mdash;</td></tr>
+      </table>
+    </div>
+
+    <h3 class="sub-title">6a &mdash; Set the backend URLs on each connection</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Replace the placeholders with your actual OpenShift route URLs. Both <code>draft</code> and
+      <code>live</code> environments are set so tools work in both.
+    </p>
+<pre class="code-block"><span class="cm"># fleetops_api — used by weather_forecast and station_tool
+# Use the FleetOps backend route URL from Step 3e</span>
+$ orchestrate connections set-credentials -a fleetops_api --env draft \
+    -e <span class="cv">"FLEETOPS_API_URL=https://&lt;fleetops-api-route&gt;.apps.&lt;your-cluster&gt;"</span> \
+    -e <span class="cv">"FLEETOPS_API_BASE_URL=https://&lt;fleetops-api-route&gt;.apps.&lt;your-cluster&gt;"</span>
+
+$ orchestrate connections set-credentials -a fleetops_api --env live \
+    -e <span class="cv">"FLEETOPS_API_URL=https://&lt;fleetops-api-route&gt;.apps.&lt;your-cluster&gt;"</span> \
+    -e <span class="cv">"FLEETOPS_API_BASE_URL=https://&lt;fleetops-api-route&gt;.apps.&lt;your-cluster&gt;"</span>
+
+<span class="cm"># forecast_api — used by whatsapp_notification
+# Use the Forecast backend route URL from Step 4</span>
+$ orchestrate connections set-credentials -a forecast_api --env draft \
+    -e <span class="cv">"FORECAST_API_URL=https://&lt;forecast-backend-route&gt;.apps.&lt;your-cluster&gt;"</span>
+
+$ orchestrate connections set-credentials -a forecast_api --env live \
+    -e <span class="cv">"FORECAST_API_URL=https://&lt;forecast-backend-route&gt;.apps.&lt;your-cluster&gt;"</span></pre>
+
+    <h3 class="sub-title">6b &mdash; Re-import the three backend-dependent tools</h3>
+    <p style="font-size:13px;color:#57606a;margin-bottom:8px;">
+      Re-import only the three tools that call a backend. The <code>-a &lt;connection-name&gt;</code> flag was
+      already set in Step 1b — re-importing here picks up the real URLs you just set in Step 6a.
+      Tool 3 (Route Optimizer) and Tool 4 (Decision Analysis) do not need to be re-imported.
+    </p>
+
+    <h3 class="sub-title" style="font-size:13px;font-weight:600;margin:14px 0 4px;">Tool 1 &mdash; Weather Forecast <span style="font-weight:400;color:#57606a;">(uses <code>fleetops_api</code>)</span></h3>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/weather_forecast/weather_forecast_tool.py \
+    -r tools/weather_forecast/requirements.txt \
+    -p tools/weather_forecast \
+    -a fleetops_api</pre>
+
+    <h3 class="sub-title" style="font-size:13px;font-weight:600;margin:14px 0 4px;">Tool 2 &mdash; Station Search <span style="font-weight:400;color:#57606a;">(uses <code>fleetops_api</code>)</span></h3>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/station_tool/station_search_tool.py \
+    -r tools/station_tool/requirements.txt \
+    -a fleetops_api</pre>
+
+    <h3 class="sub-title" style="font-size:13px;font-weight:600;margin:14px 0 4px;">Tool 5 &mdash; WhatsApp Notification <span style="font-weight:400;color:#57606a;">(uses <code>forecast_api</code>)</span></h3>
+<pre class="code-block">$ orchestrate tools import -k python \
+    -f tools/whatsapp_notification/whatsapp_notification_tool.py \
+    -r tools/whatsapp_notification/requirements.txt \
+    -a forecast_api</pre>
+
+    <h3 class="sub-title">6c &mdash; Verify all five tools are registered</h3>
+<pre class="code-block">$ orchestrate tools list
+
+<span class="cm"># Expected — five entries:
+#   get_route_weather_forecast
+#   search_stations
+#   route_optimizer
+#   analyze_decision
+#   send_whatsapp_notification</span></pre>
+  </div>
+</div>
+
+<!-- STEP 7 -->
+<div class="step-divider">
+  <div class="sd-num">Step 7</div>
+  <div class="sd-title">Run the demo scenarios</div>
+</div>
+
+<div class="step">
+  <div class="step-badge">7</div>
+  <div>
+    <div class="step-title">Explore the dashboard &mdash; seven scenarios</div>
+    <p class="step-intro">
+      Open the FleetOps dashboard route URL from Step 5 in your browser. The IBM Carbon dark-theme
+      interface loads with tabs visible based on the active persona. Use the <strong>persona dropdown
+      at the top-right corner</strong> of the UI to switch between personas:
+    </p>
+    <div class="table-wrap" style="margin-bottom:16px;">
+      <table>
+        <tr><th>Persona</th><th>Tabs available</th></tr>
+        <tr><td><strong>FleetOps Manager</strong></td><td><span class="pill tab">Operations</span> &nbsp;<span class="pill tab">Forecasting</span> &nbsp;<span class="pill tab">Agents</span></td></tr>
+        <tr><td><strong>SRE</strong></td><td><span class="pill tab">Observe &amp; Optimize</span></td></tr>
+        <tr><td><strong>Driver</strong></td><td><span class="pill tab">Driver View</span></td></tr>
+      </table>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">A</div>
+        <div class="scenario-name">Real-time fleet monitoring &mdash; <span class="pill tab">Operations</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(FleetOps Manager persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Click the <span class="pill tab">Operations</span> tab.</li>
+          <li>The Leaflet map loads with <strong>10 truck markers</strong>. Green markers indicate normal status; red pulsing markers indicate a critical incident.</li>
+          <li>Click any truck marker on the map to open a popup showing current location, speed, and cargo details.</li>
+          <li>Scroll the <strong>Truck Cards</strong> panel on the right. Each card shows a colour-coded temperature gauge:
+            <ul>
+              <li>Green &mdash; temperature below &minus;15 &deg;C (optimal)</li>
+              <li>Orange &mdash; &minus;15 &deg;C to &minus;10 &deg;C (warning threshold)</li>
+              <li>Red &mdash; above &minus;10 &deg;C (critical breach)</li>
+            </ul>
+          </li>
+          <li>Wait 10 seconds &mdash; the map and all truck cards <strong>auto-refresh</strong> as trucks move along their routes.</li>
+          <li>Identify a truck with a <strong>CRITICAL</strong> badge and note its truck ID for use in Scenario C.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> Map renders with all 10 trucks on their routes across the US, auto-refreshing every 10 seconds. Critical trucks show pulsing red markers alongside orange or red temperature gauges on their cards.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">B</div>
+        <div class="scenario-name">TTM temperature breach forecast &mdash; <span class="pill tab">Forecasting</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(FleetOps Manager persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Click the <span class="pill tab">Forecasting</span> tab.</li>
+          <li>Use the <strong>truck selector dropdown</strong> at the top to choose a truck (e.g. <code>TRUCK-001</code>).</li>
+          <li>The <strong>Temperature Forecast</strong> chart renders: 512 historical readings followed by 96 predicted future steps (next 8 hours).</li>
+          <li>Read the <strong>Risk Assessment</strong> panel below the chart:
+            <ul>
+              <li><strong>Risk score</strong> &mdash; 0 to 100 composite score</li>
+              <li><strong>Time to breach</strong> &mdash; estimated minutes until predicted threshold violation</li>
+              <li><strong>Action label</strong> &mdash; NORMAL, MONITOR, WARNING, or CRITICAL</li>
+              <li><strong>Recommendations</strong> &mdash; list of suggested actions</li>
+            </ul>
+          </li>
+          <li>Switch trucks using the selector &mdash; TTM inference takes ~2&ndash;3 seconds and the chart re-renders automatically.</li>
+          <li>Scroll down to review the <strong>Station Availability</strong> and <strong>Weather Impact</strong> charts.</li>
+          <li>Wait 30 seconds &mdash; all three charts <strong>auto-refresh</strong> with updated TTM forecasts.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> All charts load within ~3 seconds per truck. A truck with an active cooling incident shows a sharp upward temperature trend, a CRITICAL risk score, and a non-null time-to-breach value.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">C</div>
+        <div class="scenario-name">Live 5-agent decision pipeline &mdash; <span class="pill tab">Agents</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(FleetOps Manager persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Click the <span class="pill tab">Agents</span> tab.</li>
+          <li>Five <strong>agent tiles</strong> are displayed &mdash; Weather Advisor, Station Facility Search, Route Optimization, Decision &amp; Recommendation, Driver Notification. All show <strong>IDLE</strong> status.</li>
+          <li>Open the <strong>"Select Truck"</strong> dropdown and choose the CRITICAL truck noted in Scenario A.</li>
+          <li>No button press is needed &mdash; selecting a truck <strong>automatically triggers</strong> the full pipeline. Each tile cycles through:
+            <ul>
+              <li><strong>PENDING</strong> &mdash; agent is queued</li>
+              <li><strong>RUNNING</strong> &mdash; agent executing in Orchestrate (spinner visible)</li>
+              <li><strong>COMPLETED</strong> &mdash; agent finished (green checkmark)</li>
+            </ul>
+          </li>
+          <li>Agents execute sequentially: Weather &rarr; Station &rarr; Route &rarr; Decision &rarr; Notification (~60&ndash;120 seconds total).</li>
+          <li>Watch the <strong>Activity Log</strong> at the bottom &mdash; each agent completion appends a timestamped entry.</li>
+          <li>Once all five tiles show <strong>COMPLETED</strong>, click any tile to open its <strong>detail modal</strong> with the full structured JSON output.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> All five tiles reach COMPLETED. The Decision tile modal shows a JSON object with <code>"decision": "EMERGENCY_REROUTE"</code> (or similar), a numeric risk score, selected facility and route, financial analysis, and a post-recovery plan.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">D</div>
+        <div class="scenario-name">Inspect agent output in the detail modal &mdash; <span class="pill tab">Agents</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(FleetOps Manager persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Click the <strong>Decision &amp; Recommendation</strong> tile to open its modal and review:
+            <ul>
+              <li><code>decision</code> &mdash; EMERGENCY_REROUTE / CONTROLLED_REROUTE / CONTINUE / ABORT</li>
+              <li><code>urgency</code> &mdash; LOW / MEDIUM / HIGH / CRITICAL</li>
+              <li><code>riskScore</code> &mdash; composite 0&ndash;100 (temperature 40 pts + time 20 pts + weather 30 pts + station 10 pts)</li>
+              <li><code>selectedFacility</code> &mdash; nearest facility with required capability and open bays</li>
+              <li><code>selectedRoute</code> &mdash; highest-scored route with ETA and fuel cost</li>
+              <li><code>financialAnalysis.netSavings</code> &mdash; cargo value saved minus reroute cost</li>
+              <li><code>postRecoveryPlan</code> &mdash; timeline: cooling restoration &rarr; transfer &rarr; final arrival</li>
+            </ul>
+          </li>
+          <li>Open the <strong>Weather Advisor</strong> modal. Review per-segment severity (CLEAR / MODERATE / SEVERE) and <code>totalDelayMinutes</code>.</li>
+          <li>Open the <strong>Station Facility Search</strong> modal. Review ranked facilities with bay availability, distance, travel time, and capability flags.</li>
+          <li>Open the <strong>Route Optimization</strong> modal. Review scored routes sorted by the weighted formula (Duration 40%, Distance 25%, Cost 20%, Capability 15%).</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> Each modal shows well-formed JSON. The decision is fully traceable from weather risk through facility scoring to the final route selection and financial justification.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">E</div>
+        <div class="scenario-name">Cross-tab navigation &mdash; <span class="pill tab">Forecasting</span> &rarr; <span class="pill tab">Agents</span> &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(FleetOps Manager persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Click the <span class="pill tab">Forecasting</span> tab and select a truck with a CRITICAL forecast risk score.</li>
+          <li>Locate the <span class="pill action">Analyse with AI Agents</span> button near the risk assessment panel.</li>
+          <li>Click the button &mdash; the dashboard automatically switches to the <span class="pill tab">Agents</span> tab with that truck pre-selected.</li>
+          <li>The 5-agent pipeline starts immediately for the pre-selected truck &mdash; no further interaction required.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> The Agents tab opens with the same truck pre-selected and the pipeline running automatically, demonstrating end-to-end handoff from predictive analytics to agentic decision-making in a single click.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">F</div>
+        <div class="scenario-name">Observe &amp; Optimize &mdash; <span class="pill tab">Observe &amp; Optimize</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(SRE persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Switch to the <strong>SRE</strong> persona using the dropdown at the top-right corner. The <span class="pill tab">Observe &amp; Optimize</span> tab becomes available.</li>
+          <li>Review the <strong>IBM Instana</strong> and <strong>IBM Turbonomic</strong> integration panels showing deep-links to APM and resource-management dashboards.</li>
+          <li>If <code>INSTANA_URL</code> and <code>TURBONOMIC_URL</code> are configured in <code>openshift-configmap.yaml</code>, the panels load live observability data and cost optimisation recommendations.</li>
+          <li>Without those credentials, the panels render the integration architecture description.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> The tab loads with IBM Carbon-styled integration panels. Clicking the Instana or Turbonomic links opens the respective dashboards in a new browser tab.</div>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <div class="scenario-header">
+        <div class="scenario-letter">G</div>
+        <div class="scenario-name">Driver-facing summary &mdash; <span class="pill tab">Driver View</span> tab &nbsp;<span style="font-size:11px;font-weight:400;color:#57606a;">(Driver persona)</span></div>
+      </div>
+      <div class="scenario-body">
+        <ol>
+          <li>Switch to the <strong>Driver</strong> persona using the dropdown at the top-right corner. The <span class="pill tab">Driver View</span> tab becomes available.</li>
+          <li>Review driver-facing information: current cargo temperature, next waypoint, route status, and active alerts.</li>
+          <li>After completing Scenario C, return to this tab. The Decision Agent rerouting recommendation renders in a driver-friendly format &mdash; clear language, no raw JSON.</li>
+          <li>The urgency level (LOW / MEDIUM / HIGH / CRITICAL) controls the visual styling of the alert banner.</li>
+        </ol>
+        <div class="expected"><strong>Expected result:</strong> A clean driver summary shows route status, cargo temperature, and the latest agent recommendation with the selected facility name, estimated arrival, and urgency level.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- API REFERENCE -->
+<h2 class="section-title">Quick API Reference</h2>
+<div class="table-wrap">
+  <table>
+    <tr><th>Service</th><th>Endpoint</th><th>Method</th><th>Description</th></tr>
+    <tr><td rowspan="6" style="font-weight:600;vertical-align:top;padding-top:10px;">FleetOps backend</td>
+        <td><code>/health</code></td><td>GET</td><td>Health check with simulation and Orchestrate status</td></tr>
+    <tr><td><code>/api/trucks</code></td><td>GET</td><td>All 10 trucks with real-time telemetry</td></tr>
+    <tr><td><code>/api/trucks/{truckId}</code></td><td>GET</td><td>Single truck state &mdash; cargo, temperature, route</td></tr>
+    <tr><td><code>/api/routes/waypoints/{truckId}</code></td><td>GET</td><td>Planned route and alternatives with waypoints</td></tr>
+    <tr><td><code>/api/stations/search</code></td><td>POST</td><td>Search stations by radius and capability requirements</td></tr>
+    <tr><td><code>/api/agents/execute</code></td><td>POST</td><td>Trigger the full 5-agent pipeline for a given truck</td></tr>
+    <tr><td rowspan="4" style="font-weight:600;vertical-align:top;padding-top:10px;">Forecast backend</td>
+        <td><code>/api/forecast/temperature/{truck_id}</code></td><td>GET</td><td>TTM temperature breach prediction &mdash; 96-step forecast</td></tr>
+    <tr><td><code>/api/forecast/station</code></td><td>GET</td><td>Station bay availability forecast &mdash; 240-step forecast</td></tr>
+    <tr><td><code>/api/forecast/weather/{truck_id}</code></td><td>GET</td><td>Weather impact time-series along route</td></tr>
+    <tr><td><code>/api/forecast/fleet</code></td><td>GET</td><td>Fleet-wide optimisation forecast</td></tr>
+    <tr><td rowspan="2" style="font-weight:600;vertical-align:top;padding-top:10px;">Dashboard</td>
+        <td><code>/health</code></td><td>GET</td><td>Node proxy health with configured backend URLs</td></tr>
+    <tr><td><code>/api/*</code></td><td>&mdash;</td><td>Transparent proxy forwarded to FleetOps backend</td></tr>
+  </table>
+</div>
+
+<!-- WHAT YOU BUILT -->
+<h2 class="section-title">What You Built</h2>
+<div class="table-wrap">
+  <table>
+    <tr><th>Component</th><th>Technology</th><th>Runs on</th></tr>
+    <tr><td>Fleet simulation + agent orchestration API</td><td>Python 3.12 &middot; FastAPI &middot; APScheduler</td><td>OpenShift</td></tr>
+    <tr><td>IBM Granite TTM forecasting API</td><td>Python &middot; FastAPI &middot; Hugging Face Transformers</td><td>OpenShift</td></tr>
+    <tr><td>Cold-chain operations dashboard</td><td>Node.js &middot; Express &middot; IBM Carbon Design System</td><td>OpenShift</td></tr>
+    <tr><td>Weather Advisor agent</td><td>watsonx Orchestrate native agent &middot; LLM: gpt-oss-120b</td><td>Cloud (Orchestrate)</td></tr>
+    <tr><td>Station Facility Search agent</td><td>watsonx Orchestrate native agent &middot; LLM: gpt-oss-120b</td><td>Cloud (Orchestrate)</td></tr>
+    <tr><td>Route Optimization agent</td><td>watsonx Orchestrate native agent &middot; LLM: gpt-oss-120b</td><td>Cloud (Orchestrate)</td></tr>
+    <tr><td>Decision &amp; Recommendation agent</td><td>watsonx Orchestrate native agent &middot; LLM: gpt-oss-120b</td><td>Cloud (Orchestrate)</td></tr>
+    <tr><td>Driver Notification agent</td><td>watsonx Orchestrate native agent &middot; Twilio WhatsApp</td><td>Cloud (Orchestrate)</td></tr>
+  </table>
+</div>
+
+</div><!-- /.page -->
+
+</body>
+</html>

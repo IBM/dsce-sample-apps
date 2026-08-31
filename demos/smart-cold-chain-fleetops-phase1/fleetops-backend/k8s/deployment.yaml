@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleetops-backend
+  namespace: fleetops-backend
+  labels:
+    app: fleetops
+    component: backend
+    version: v1
+spec:
+  replicas: 1  # Single replica for minimal resource usage
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: fleetops
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: fleetops
+        component: backend
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8085"
+        prometheus.io/path: "/health"
+    spec:
+      containers:
+      - name: backend
+        image: <docker image path>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8085
+          name: http
+          protocol: TCP
+        env:
+        - name: PORT
+          value: "8085"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        # WatsonX Orchestrate credentials from Kubernetes Secret
+        - name: WATSONX_ORCHESTRATE_ENABLED
+          value: "true"
+        - name: WATSONX_ORCHESTRATE_URL
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_URL
+        - name: WATSONX_ORCHESTRATE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_API_KEY
+        - name: WATSONX_ORCHESTRATE_AGENT_WEATHER
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_AGENT_WEATHER
+        - name: WATSONX_ORCHESTRATE_AGENT_STATION
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_AGENT_STATION
+        - name: WATSONX_ORCHESTRATE_AGENT_ROUTE
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_AGENT_ROUTE
+        - name: WATSONX_ORCHESTRATE_AGENT_DECISION
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_AGENT_DECISION
+        - name: WATSONX_ORCHESTRATE_AGENT_NOTIFICATION
+          valueFrom:
+            secretKeyRef:
+              name: watsonx-orchestrate-credentials
+              key: WATSONX_ORCHESTRATE_AGENT_NOTIFICATION
+        resources:
+          requests:
+            cpu: 100m      # Minimal CPU request
+            memory: 256Mi  # Minimal memory request
+          limits:
+            cpu: 500m      # Reduced CPU limit
+            memory: 512Mi  # Reduced memory limit
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8085
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8085
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+        - name: config
+          mountPath: /app/config.yaml
+          subPath: config.yaml
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: fleetops-data
+      - name: config
+        configMap:
+          name: fleetops-config
+          items:
+          - key: config.yaml
+            path: config.yaml
+      restartPolicy: Always
+      # Security context removed - OpenShift will assign UID automatically from allowed range
+
+# Made with Bob

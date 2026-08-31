@@ -1,0 +1,5 @@
+# Weather Forecast Tool Dependencies
+# The ibm_watsonx_orchestrate package is provided by the watsonx Orchestrate runtime
+
+# External dependencies for API integration
+requests>=2.31.0

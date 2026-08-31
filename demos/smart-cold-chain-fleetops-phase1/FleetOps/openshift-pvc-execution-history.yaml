@@ -1,0 +1,30 @@
+# FleetOps PVC — persistent storage for execution history
+#
+# BEFORE APPLYING:
+#   - Update the namespace to match your deployment namespace.
+#   - Update storageClassName to a class available on your cluster.
+#     To list available storage classes: oc get storageclass
+#     Common classes:
+#       OpenShift Data Foundation (ODF/OCS): ocs-storagecluster-ceph-rbd
+#       IBM Cloud:                           ibmc-block-gold
+#       Generic/self-managed:                standard, gp2, managed-csi
+#
+# Apply with:
+#   oc apply -f openshift-pvc-execution-history.yaml -n <your-namespace>
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fleetops-execution-history
+  namespace: <your-namespace>   # ← update this
+  labels:
+    app: fleetops
+    component: frontend
+    purpose: execution-history
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ocs-storagecluster-ceph-rbd   # ← update if needed (see above)

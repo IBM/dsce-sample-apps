@@ -1,0 +1,72 @@
+# FleetOps Persistence Configuration
+
+persistence:
+  # Enable/disable persistence system
+  enabled: true
+  
+  # Persistence backend type: json | astra | db2
+  type: json
+  
+  # Persistence levels - when to save data
+  levels:
+    # Save initial data when trucks/stations are generated
+    initial_data: true
+    
+    # Save on important events (route changes, alerts, incidents)
+    on_events: true
+    
+    # Periodic save interval in seconds (0 to disable)
+    interval_seconds: 30
+  
+  # JSON file-based persistence configuration
+  json:
+    data_directory: ./fleetops-backend/data
+  
+  # Astra DB (Cassandra) configuration - Plugin
+  astra:
+    enabled: false
+    secure_connect_bundle: /path/to/secure-connect-bundle.zip
+    client_id: your_client_id
+    client_secret: your_client_secret
+    keyspace: fleetops
+  
+  # IBM Db2 configuration - Plugin
+  db2:
+    enabled: false
+    host: localhost
+    port: 50000
+    database: fleetops
+    username: <username>
+    password: <password>
+    schema: fleetops
+
+# Simulation configuration
+simulation:
+  # Simulation speed multiplier (1x = real-time speed)
+  speed_multiplier: 1
+  
+  # Update interval in seconds
+  update_interval: 5
+  
+  # Number of trucks in fleet
+  num_trucks: 10
+  
+  # Number of trucks that will have incidents
+  incident_trucks: 4
+  
+  # Station spacing in kilometers
+  station_spacing_km: 120
+
+
+# watsonx Orchestrate configuration
+# Credentials are loaded from environment variables (set via Kubernetes secrets in production)
+watsonx_orchestrate:
+  enabled: true
+  url: ${WATSONX_ORCHESTRATE_URL}
+  api_key: ${WATSONX_ORCHESTRATE_API_KEY}
+  agent_weather: ${WATSONX_ORCHESTRATE_AGENT_WEATHER}
+  agent_station: ${WATSONX_ORCHESTRATE_AGENT_STATION}
+  agent_route: ${WATSONX_ORCHESTRATE_AGENT_ROUTE}
+  agent_decision: ${WATSONX_ORCHESTRATE_AGENT_DECISION}
+  agent_notification: ${WATSONX_ORCHESTRATE_AGENT_NOTIFICATION}
+  timeout: 120

@@ -1,0 +1,10 @@
+# Demo loaders (Lakehouse, Astra DB runbooks).
+# macOS Intel (x86): sentence-transformers pulls PyTorch 2.4+ which has no x86 Mac builds — see README "Notes / troubleshooting" for a version workaround.
+presto-python-client>=0.8.4
+requests>=2.31.0
+python-dotenv>=1.0.0
+PyYAML>=6.0
+astrapy>=2.0.1
+sentence-transformers>=2.2.0
+reportlab>=4.0.0
+PyPDF2>=3.0.0

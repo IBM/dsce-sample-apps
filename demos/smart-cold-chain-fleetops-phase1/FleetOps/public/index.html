@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBM FleetOptx - ColdPulse</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        /* IBM Carbon Design System - Gray 90 Theme with UI Shell */
+        :root {
+            /* IBM Carbon Gray 90 Colors */
+            --cds-background: #262626;
+            --cds-layer-01: #393939;
+            --cds-layer-02: #525252;
+            --cds-layer-03: #6f6f6f;
+            --cds-field-01: #393939;
+            --cds-field-02: #525252;
+            --cds-ui-background: #262626;
+            --cds-interactive: #78a9ff;
+            --cds-interactive-hover: #a6c8ff;
+            --cds-text-primary: #f4f4f4;
+            --cds-text-secondary: #c6c6c6;
+            --cds-text-placeholder: #6f6f6f;
+            --cds-text-on-color: #ffffff;
+            --cds-border-subtle: #525252;
+            --cds-border-strong: #8d8d8d;
+            --cds-support-error: #ff8389;
+            --cds-support-success: #42be65;
+            --cds-support-warning: #f1c21b;
+            --cds-support-info: #4589ff;
+            
+            /* IBM Spacing */
+            --cds-spacing-03: 0.5rem;
+            --cds-spacing-05: 1rem;
+            --cds-spacing-06: 1.5rem;
+            --cds-spacing-07: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #161616;
+            color: var(--cds-text-primary);
+            line-height: 1.5;
+        }
+
+        /* IBM Carbon UI Shell Header (Black) */
+        .ui-shell-header {
+            background: #161616;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            border-bottom: 1px solid #393939;
+            position: sticky;
+            top: 0;
+            z-index: 8000;
+        }
+
+        .header-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cds-text-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0 1rem;
+            height: 100%;
+            border-right: 1px solid #393939;
+        }
+
+        .header-name:hover {
+            background: #262626;
+        }
+
+        .ibm-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--cds-interactive);
+            letter-spacing: 0.05em;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        /* Profile Switcher */
+        .profile-switcher {
+            position: relative;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--cds-layer-01);
+            border: 1px solid var(--cds-border-subtle);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--cds-text-primary);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .profile-btn:hover {
+            background: var(--cds-layer-02);
+        }
+
+        .profile-icon {
+            font-size: 1.25rem;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .profile-role {
+            font-size: 0.75rem;
+            color: var(--cds-text-secondary);
+            line-height: 1.2;
+        }
+
+        .dropdown-icon {
+            font-size: 0.625rem;
+            margin-left: 0.25rem;
+        }
+
+        .profile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.25rem;
+            background: var(--cds-layer-01);
+            border: 1px solid var(--cds-border-subtle);
+            min-width: 280px;
+            z-index: 9000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-menu.active {
+            display: block;
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--cds-border-subtle);
+            transition: background 0.2s;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu-item:hover {
+            background: var(--cds-layer-02);
+        }
+
+        .profile-menu-item.active {
+            background: var(--cds-layer-02);
+            border-left: 3px solid var(--cds-interactive);
+        }
+
+        .profile-menu-icon {
+            font-size: 1.5rem;
+        }
+
+        .profile-menu-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-menu-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--cds-text-primary);
+        }
+
+        .profile-menu-role {
+            font-size: 0.75rem;
+            color: var(--cds-text-secondary);
+        }
+
+        /* Profile Menu Section and Submenu Styles */
+        .profile-menu-section {
+            border-bottom: 1px solid var(--cds-border-subtle);
+        }
+
+        .profile-menu-section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .profile-menu-section-header:hover {
+            background: var(--cds-layer-02);
+        }
+
+        .profile-menu-section-header .profile-menu-info {
+            flex: 1;
+        }
+
+        .submenu-arrow {
+            font-size: 0.75rem;
+            color: var(--cds-text-secondary);
+            transition: transform 0.2s;
+        }
+
+        .profile-menu-section-header.expanded .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .profile-submenu {
+            display: none;
+            background: var(--cds-layer-02);
+        }
+
+        .profile-submenu.active {
+            display: block;
+        }
+
+        .profile-menu-item.submenu-item {
+            padding-left: 2.5rem;
+            background: var(--cds-layer-02);
+        }
+
+        .profile-menu-item.submenu-item:hover {
+            background: var(--cds-layer-03);
+        }
+
+        /* IBM Carbon Tabs (Below Header) */
+        .tabs-container {
+            background: var(--cds-background);
+            border-bottom: 1px solid var(--cds-border-subtle);
+        }
+
+        .tabs {
+            display: flex;
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: 0 var(--cds-spacing-05);
+        }
+
+        .tab {
+            padding: 0.875rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--cds-text-secondary);
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            border-bottom: 2px solid transparent;
+            transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+            position: relative;
+        }
+
+        .tab:hover {
+            color: var(--cds-text-primary);
+            background: var(--cds-layer-01);
+        }
+
+        .tab.active {
+            color: var(--cds-text-primary);
+            border-bottom-color: var(--cds-interactive);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Mode Toggle in Header */
+        .mode-toggle {
+            display: flex;
+            gap: 0;
+            align-items: center;
+            background: #262626;
+            border: 1px solid #393939;
+        }
+
+        .mode-btn {
+            padding: 0.5rem 0.75rem;
+            border: none;
+            background: transparent;
+            color: var(--cds-text-secondary);
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .mode-btn:hover {
+            background: #393939;
+            color: var(--cds-text-primary);
+        }
+
+        .mode-btn.active {
+            background: var(--cds-interactive);
+            color: var(--cds-text-on-color);
+        }
+
+        /* Timeframe Button Group */
+        .timeframe-btn {
+            background: transparent;
+            color: var(--cds-text-secondary);
+            border: none;
+            border-right: 1px solid var(--cds-border-subtle);
+            padding: 0.5rem 1rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+        }
+
+        .timeframe-btn:last-child {
+            border-right: none;
+        }
+
+        .timeframe-btn:hover {
+            background: var(--cds-layer-02);
+            color: var(--cds-text-primary);
+        }
+
+        .timeframe-btn.active {
+            background: var(--cds-interactive);
+            color: var(--cds-text-on-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1584px;
+            margin: 0 auto;
+            padding: var(--cds-spacing-06);
+        }
+
+        /* IBM Carbon Tiles (Cards) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--cds-spacing-05);
+            margin-bottom: var(--cds-spacing-06);
+        }
+
+        .stat-card {
+            background: var(--cds-layer-01);
+            border: 1px solid var(--cds-border-subtle);
+            padding: var(--cds-spacing-05);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--cds-text-primary);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--cds-text-secondary);
+            margin-top: var(--cds-spacing-03);
+            font-weight: 400;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: var(--cds-spacing-05);
+        }
+
+        .card {
+            background: var(--cds-layer-01);
+            border: 1px solid var(--cds-border-subtle);
+            padding: var(--cds-spacing-05);
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--cds-spacing-05);
+            color: var(--cds-text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: var(--cds-spacing-03);
+            border-bottom: 1px solid var(--cds-border-subtle);
+        }
+
+        /* Map */
+        .map-container {
+            grid-row: span 1;
+        }
+
+        #map {
+            height: 600px;
+            max-height: 600px;
+            border: 1px solid var(--cds-border-subtle);
+        }
+
+        /* Truck Cards */
+        .truck-status-grid {
+            display: grid;
+            gap: var(--cds-spacing-05);
+            min-height: 600px;
+        }
+
+        .truck-card {
+            background: var(--cds-layer-02);
+            border: 1px solid var(--cds-border-subtle);
+            padding: var(--cds-spacing-05);
+        }
+
+        .truck-card h3 {
+            margin-bottom: var(--cds-spacing-03);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--cds-text-primary);
+        }
+
+        .truck-temp {
+            width: 120px;
+            height: 120px;
+            margin: var(--cds-spacing-03) auto;
+            position: relative;
+        }
+        
+        .truck-temp svg {
+            transform: rotate(-90deg);
+        }
+        
+        .temp-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cds-text-primary);
+        }
+
+        .truck-status-badge {
+            display: inline-block;
+        }
+        
+        /* Agent status badge colors */
+        .agent-status-badge.status-pending {
+            background-color: #da1e28 !important; /* Red for pending */
+            color: white !important;
+        }
+        
+        .agent-status-badge.status-running,
+        .agent-status-badge.status-completed {
+            background-color: #24a148 !important; /* Green for running and completed */
+            color: white !important;
+        }
+        
+        .agent-status-badge.status-failed {
+            background-color: #da1e28 !important; /* Red for failed */
+            color: white !important;
+        }
+
+        .status-ok {
+            background: var(--cds-support-success);
+            color: #161616;
+        }
+
+        .status-critical {
+            background: var(--cds-support-error);
+            color: #161616;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        .truck-info-line {
+            font-size: 0.75rem;
+            margin: 0.25rem 0;
+            color: var(--cds-text-secondary);
+        }
+
+        /* Right Column */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: var(--cds-spacing-05);
+            height: 700px;
+            overflow: hidden;
+        }
+
+        .alerts-section,
+        .activity-section,
+        .command-status-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .alerts-container,
+        .activity-log,
+        .command-status-list {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 0;
+        }
+
+        /* Alerts */
+        .alert-card {
+            background: var(--cds-layer-02);
+            border-left: 3px solid;
+            padding: var(--cds-spacing-03);
+            margin-bottom: var(--cds-spacing-03);
+            border: 1px solid var(--cds-border-subtle);
+        }
+
+        .alert-critical {
+            border-left-color: var(--cds-support-error);
+            background: rgba(255, 131, 137, 0.1);
+        }
+
+        .alert-warning {
+            border-left-color: var(--cds-support-warning);
+            background: rgba(241, 194, 27, 0.1);
+        }
+
+        .alert-info {
+            border-left-color: var(--cds-support-info);
+            background: rgba(69, 137, 255, 0.1);
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-severity {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--cds-text-primary);
+        }
+
+        .alert-time {
+            font-size: 0.75rem;
+            color: var(--cds-text-secondary);
+        }
+
+        .alert-message {
+            font-size: 0.875rem;
+            color: var(--cds-text-primary);
+        }
+
+        /* Activity Log */
+        .log-entry {
+            padding: var(--cds-spacing-03);
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+            border-left: 3px solid;
+            background: var(--cds-layer-02);
+        }
+
+        .log-auto {
+            border-left-color: var(--cds-support-success);
+        }
+
+        .log-manual {
+            border-left-color: var(--cds-support-warning);
+        }
+
+        .log-alert {
+            border-left-color: var(--cds-support-error);
+        }
+
+        .log-info {
+            border-left-color: var(--cds-support-info);
+        }
+
+        .log-time {
+            font-size: 0.75rem;
+            color: var(--cds-text-secondary);
+            margin-right: 0.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Command Status */
+        .command-status-item {
+            background: var(--cds-layer-02);
+            padding: var(--cds-spacing-03);
+            margin-bottom: 0.25rem;
+            border-left: 3px solid;
+            border: 1px solid var(--cds-border-subtle);
+        }
+
+        .command-sent {
+            border-left-color: var(--cds-interactive);
+        }
+
+        .command-executed {
+            border-left-color: var(--cds-support-success);
+        }
+
+        .command-failed {
+            border-left-color: var(--cds-support-error);
+        }
+
+        /* IBM Carbon Buttons */
+        .command-btn {
+            padding: 0.625rem 1rem;
+            border: none;
+            background: var(--cds-interactive);
+            color: var(--cds-text-on-color);
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+            border-radius: 0;
+        }
+
+        .command-btn:hover:not(:disabled) {
+            background: var(--cds-interactive-hover);
+        }
+
+        .command-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-emergency {
+            background: var(--cds-support-error);
+            color: #161616;
+        }
+
+        .btn-emergency:hover:not(:disabled) {
+            background: #ffb3b8;
+        }
+
+        .btn-warning {
+            background: var(--cds-support-warning);
+            color: #161616;
+        }
+
+        .btn-warning:hover:not(:disabled) {
+            background: #f1c21b;
+        }
+
+        .btn-success {
+            background: var(--cds-support-success);
+            color: #161616;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #6fdc8c;
+        }
+
+        .btn-info {
+            background: var(--cds-interactive);
+            color: var(--cds-text-on-color);
+        }
+
+        /* Control Section */
+        .control-section {
+            background: var(--cds-layer-02);
+            padding: var(--cds-spacing-05);
+            margin-top: var(--cds-spacing-05);
+        }
+
+        .control-section h4 {
+            color: var(--cds-text-primary);
+            margin-bottom: var(--cds-spacing-03);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .truck-selector {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            border: none;
+            border-bottom: 1px solid var(--cds-border-strong);
+            background: var(--cds-field-01);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.875rem;
+            margin-bottom: var(--cds-spacing-05);
+            cursor: pointer;
+            color: var(--cds-text-primary);
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--cds-spacing-03);
+        }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            bottom: var(--cds-spacing-05);
+            right: var(--cds-spacing-05);
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 1000;
+            border: 1px solid var(--cds-border-subtle);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .connected {
+            background: var(--cds-support-success);
+            color: #161616;
+        }
+
+        .disconnected {
+            background: var(--cds-support-error);
+            color: #161616;
+        }
+
+        .loading {
+            text-align: center;
+            padding: var(--cds-spacing-05);
+            color: var(--cds-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tab 2 Placeholder */
+        .placeholder-content {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .placeholder-content h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--cds-text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .placeholder-content p {
+            font-size: 1rem;
+            color: var(--cds-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* IBM Carbon Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cds-layer-01);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--cds-border-strong);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cds-text-secondary);
+        }
+
+        /* Driver View Styles */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.in-transit {
+            background: var(--cds-support-info);
+            color: #161616;
+        }
+
+        .status-badge.idle {
+            background: var(--cds-text-secondary);
+            color: #161616;
+        }
+
+        .status-badge.loading {
+            background: var(--cds-support-warning);
+            color: #161616;
+        }
+
+        .status-badge.unloading {
+            background: var(--cds-support-warning);
+            color: #161616;
+        }
+
+        .status-badge.maintenance {
+            background: var(--cds-support-error);
+            color: #ffffff;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--cds-layer-01);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--cds-interactive);
+            transition: width 0.3s ease;
+        }
+
+        .info-section {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cds-border-subtle);
+        }
+
+        .info-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-section strong {
+            color: var(--cds-text-primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status connected" id="connectionStatus">
+        Connected
+    </div>
+
+    <!-- IBM Carbon UI Shell Header (Black) -->
+    <!-- IBM Carbon UI Shell Header (Black #161616) -->
+    <header class="ui-shell-header">
+        <a href="#" class="header-name">
+            <span class="ibm-logo">IBM FleetOptx</span>
+            <span style="font-size: 1.15rem;"> ColdPulse</span>
+        </a>
+
+        <div class="header-actions">
+            <div class="profile-switcher">
+                <button class="profile-btn" onclick="toggleProfileMenu()">
+                    <span class="profile-icon" id="currentPersonaIcon">👩‍💼</span>
+                    <div class="profile-info">
+                        <span class="profile-name" id="currentPersonaName">Sarah Chen</span>
+                        <span class="profile-role" id="currentPersonaRole">Operations Manager</span>
+                    </div>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="profile-menu" id="profileMenu">
+                    <div class="profile-menu-item" onclick="switchPersona('sarah')">
+                        <span class="profile-icon">👩‍💼</span>
+                        <div class="profile-info">
+                            <span class="profile-name">Sarah Chen</span>
+                            <span class="profile-role">Operations Manager</span>
+                        </div>
+                    </div>
+                    <div class="profile-menu-item" onclick="switchPersona('david')">
+                        <span class="profile-icon">👨‍💻</span>
+                        <div class="profile-info">
+                            <span class="profile-name">David Kumar</span>
+                            <span class="profile-role">Site Reliability Engineer</span>
+                        </div>
+                    </div>
+                    <div class="profile-menu-item" onclick="openDriverView()">
+                        <span class="profile-icon">🚛</span>
+                        <div class="profile-info">
+                            <span class="profile-name">Driver Persona</span>
+                            <span class="profile-role">Truck Driver</span>
+                        </div>
+                    </div>
+                    <div class="profile-menu-item" onclick="switchPersona('rachel')">
+                        <span class="profile-icon">👩‍💼</span>
+                        <div class="profile-info">
+                            <span class="profile-name">Rachel Martinez</span>
+                            <span class="profile-role">Platform Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- IBM Carbon Tabs (Below Header) -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('operations-new', event)">
+                Operations
+            </button>
+            <button class="tab" onclick="switchTab('forecasting', event)">
+                Forecasting
+            </button>
+            <button class="tab" onclick="switchTab('agentic', event)">
+                Agents
+            </button>
+            <button class="tab" onclick="switchTab('observe', event)">
+                Observe & Optimize
+            </button>
+            <button class="tab" onclick="switchTab('driver', event)">
+                Driver View
+            </button>
+            <button class="tab" onclick="switchTab('guardrails', event)" style="display: none;">
+                Guardrails
+            </button>
+        </div>
+    </div>
+
+    <!-- Tab 1: Operations (New) - Same layout as archive, new data source -->
+    <div id="operations-new-tab" class="tab-content active">
+        <div class="container">
+            <!-- Stats Grid -->
+            <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
+                <div class="stat-card">
+                    <div class="stat-value" id="newTotalTrucks">0</div>
+                    <div class="stat-label">Total Trucks</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, rgba(218, 30, 40, 0.1) 0%, var(--cds-layer-01) 100%);">
+                    <div class="stat-value" style="color: #da1e28;" id="newCriticalTrucks">0</div>
+                    <div class="stat-label">Critical</div>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, rgba(241, 194, 27, 0.1) 0%, var(--cds-layer-01) 100%);">
+                    <div class="stat-value" style="color: #f1c21b;" id="newWarningTrucks">0</div>
+                    <div class="stat-label">Warning</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="newCargoValue">$0</div>
+                    <div class="stat-label">Total Cargo Value</div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Map Container -->
+                <div class="card map-container">
+                    <div class="card-title">
+                         Live Fleet Tracking & Route Visualization
+                    </div>
+                    <div id="newMap" style="height: 600px; width: 100%;"></div>
+                </div>
+
+                <!-- Truck Status Cards -->
+                <div class="card" style="overflow-y: auto; max-height: 700px;">
+                    <div class="card-title">Fleet Status (<span id="newFleetCount">0</span> Trucks)</div>
+                    <div class="truck-status-grid" id="newTruckStatusGrid">
+                        <div class="loading">Loading fleet data...</div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Alerts Section -->
+                    <div class="card alerts-section">
+                        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Alerts</span>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button id="activeAlertsBtn" onclick="toggleAlertFilter('active')" style="
+                                    background: var(--cds-interactive);
+                                    color: var(--cds-text-on-color);
+                                    border: none;
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 4px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: background 0.2s;
+                                ">Active</button>
+                                <button id="acknowledgedAlertsBtn" onclick="toggleAlertFilter('acknowledged')" style="
+                                    background: var(--cds-layer-03);
+                                    color: var(--cds-text-primary);
+                                    border: 1px solid var(--cds-border-subtle);
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 4px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: background 0.2s;
+                                ">Acknowledged</button>
+                            </div>
+                        </div>
+                        <div class="alerts-container" id="newAlertsContainer">
+                            <div class="loading">No alerts</div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log Section - HIDDEN -->
+                    <div class="card activity-section" style="display: none;">
+                        <div class="card-title">📋 Activity Log</div>
+                        <div class="activity-log" id="newActivityLog">
+                            <div class="loading">Waiting for activity...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Old Operations tab removed - using operations-new tab instead -->
+
+
+    <!-- Tab: Driver View -->
+    <div id="driver-tab" class="tab-content">
+        <div class="container">
+            <!-- Driver Profile Selector -->
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary); margin-bottom: 0.5rem;">
+                    SELECT DRIVER PROFILE
+                </label>
+                <select id="driverProfileSelector" onchange="onDriverProfileChange()" style="
+                    width: 350px;
+                    padding: 0.625rem 1rem;
+                    border: none;
+                    border-bottom: 1px solid var(--cds-border-strong);
+                    background: var(--cds-field-01);
+                    font-family: 'IBM Plex Sans', sans-serif;
+                    font-size: 0.875rem;
+                    cursor: pointer;
+                    color: var(--cds-text-primary);
+                ">
+                    <option value="">Select a driver...</option>
+                    <option value="mike">🚛 Mike Rodriguez - TRUCK-001</option>
+                    <option value="sarah_j">🚛 Sarah Johnson - TRUCK-002</option>
+                    <option value="carlos">🚛 Carlos Martinez - TRUCK-003</option>
+                    <option value="emily">🚛 Emily Chen - TRUCK-004</option>
+                </select>
+            </div>
+
+            <!-- First Row: 3 Columns -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                
+                <!-- Column 1: Map -->
+                <div class="card">
+                    <div class="card-title">My Current Route</div>
+                    <div id="driverMapContainer" style="height: 400px; width: 100%;"></div>
+                </div>
+
+                <!-- Column 2: Truck Info & Station Info (Stacked) -->
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Truck Information -->
+                    <div class="card" style="flex: 1;">
+                        <div class="card-title">My Truck</div>
+                        <div id="driverTruckInfo" style="padding: 0.5rem 0;">
+                            <div style="font-size: 0.75rem; color: var(--cds-text-secondary);">
+                                Select a driver to view truck information
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Destination Station Information -->
+                    <div class="card" style="flex: 1;">
+                        <div class="card-title">Destination Station</div>
+                        <div id="driverStationInfo" style="padding: 0.5rem 0;">
+                            <div style="font-size: 0.75rem; color: var(--cds-text-secondary);">
+                                Select a driver to view destination
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Notifications -->
+                <div class="card">
+                    <div class="card-title">Notifications</div>
+                    <div id="driverNotificationsContainer" style="max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 1rem; text-align: center; color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            No notifications yet
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row: Historical Routes -->
+            <div class="card">
+                <div class="card-title">My Recent Deliveries</div>
+                <div style="overflow-x: auto;">
+                    <table id="driverPastTripsTable" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--cds-border-subtle);">
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">DATE</th>
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">ROUTE</th>
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">CARGO</th>
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">DISTANCE</th>
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">DURATION</th>
+                                <th style="padding: 0.75rem; text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--cds-text-secondary);">STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Past trips will be dynamically rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2: Observe & Optimize (Placeholder) -->
+    <div id="observe-tab" class="tab-content">
+        <div class="container" style="margin-top: 2rem;">
+            <!-- Two Column Layout: Observe (60%) | Optimize (40%) -->
+            <div style="display: grid; grid-template-columns: 60% 40%; gap: var(--cds-spacing-07);">
+                
+                <!-- LEFT COLUMN: APPLICATION OBSERVABILITY -->
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-06);">
+                        <div>
+                            <h2 style="font-size: 1.75rem; font-weight: 600; color: var(--cds-text-primary); margin: 0 0 0.25rem 0;">
+                                Application Observability
+                            </h2>
+                            <div style="font-size: 0.875rem; color: var(--cds-text-secondary); font-weight: 400;">
+                                Powered by Instana
+                            </div>
+                            <!-- Time Range Buttons -->
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span style="font-size: 0.75rem; color: var(--cds-text-secondary); font-weight: 600; margin-right: 0.25rem;">Time Range:</span>
+                                <button onclick="changeTimeRange(300000, 'btn-5m')" id="btn-5m" style="
+                                    background: var(--cds-layer-02);
+                                    color: var(--cds-text-secondary);
+                                    border: 1px solid var(--cds-border-subtle);
+                                    padding: 0.25rem 0.75rem;
+                                    font-family: 'IBM Plex Sans', sans-serif;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                ">5m</button>
+                                <button onclick="changeTimeRange(1800000, 'btn-30m')" id="btn-30m" style="
+                                    background: var(--cds-interactive);
+                                    color: var(--cds-text-on-color);
+                                    border: none;
+                                    padding: 0.25rem 0.75rem;
+                                    font-family: 'IBM Plex Sans', sans-serif;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                ">30m</button>
+                                <button onclick="changeTimeRange(3600000, 'btn-1h')" id="btn-1h" style="
+                                    background: var(--cds-layer-02);
+                                    color: var(--cds-text-secondary);
+                                    border: 1px solid var(--cds-border-subtle);
+                                    padding: 0.25rem 0.75rem;
+                                    font-family: 'IBM Plex Sans', sans-serif;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                ">1h</button>
+                                <button onclick="changeTimeRange(21600000, 'btn-6h')" id="btn-6h" style="
+                                    background: var(--cds-layer-02);
+                                    color: var(--cds-text-secondary);
+                                    border: 1px solid var(--cds-border-subtle);
+                                    padding: 0.25rem 0.75rem;
+                                    font-family: 'IBM Plex Sans', sans-serif;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                ">6h</button>
+                                <button onclick="changeTimeRange(86400000, 'btn-24h')" id="btn-24h" style="
+                                    background: var(--cds-layer-02);
+                                    color: var(--cds-text-secondary);
+                                    border: 1px solid var(--cds-border-subtle);
+                                    padding: 0.25rem 0.75rem;
+                                    font-family: 'IBM Plex Sans', sans-serif;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                ">24h</button>
+                                
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 2rem;">
+                            <a id="instana-link" href="#" target="_blank" style="
+                                                        display: inline-flex;
+                                                        align-items: center;
+                                                        gap: 0.5rem;
+                                                        background: var(--cds-layer-02);
+                                                        color: var(--cds-interactive);
+                                                        border: 1px solid var(--cds-border-subtle);
+                                                        padding: 0.4rem 1rem;
+                                                        font-family: 'IBM Plex Sans', sans-serif;
+                                                        font-size: 0.875rem;
+                                                        font-weight: 600;
+                                                        text-decoration: none;
+                                                        transition: all 0.11s;
+                                                        border-radius: 2px;
+                                                    "
+                                onmouseover="this.style.background='var(--cds-layer-03)'; this.style.borderColor='var(--cds-interactive)'"
+                                onmouseout="this.style.background='var(--cds-layer-02)'; this.style.borderColor='var(--cds-border-subtle)'">
+                                View in Instana
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M13 3L13 9 12 9 12 4.7 4.5 12.2 3.8 11.5 11.3 4 7 4 7 3z" />
+                                </svg>
+                            </a>
+                        </div>
+                    
+                </div>
+                    
+                    <!-- ROW 1: Service Performance (Single Row) -->
+                    <div class="card" style="margin-bottom: var(--cds-spacing-05);">
+                        <div class="card-title">Service Performance</div>
+                        <div id="serviceMetricsLoading" class="loading">Loading service metrics...</div>
+                        <div id="serviceMetricsContent" style="display: none;">
+                            <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="callsPerSecond">-</div>
+                                    <div class="stat-label">Calls/Second</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="errorRate">-</div>
+                                    <div class="stat-label">Error Rate</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="avgLatency">-</div>
+                                    <div class="stat-label">Avg Latency (ms)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="serviceMetricsError" style="display: none; padding: var(--cds-spacing-05); color: var(--cds-support-error);"></div>
+                    </div>
+
+                    <!-- ROW 2: Infrastructure Metrics (2x2 Grid) -->
+                    <div class="card" style="margin-bottom: var(--cds-spacing-05);">
+                        <div class="card-title">Infrastructure Metrics</div>
+                        <div id="infraMetricsLoading" class="loading">Loading infrastructure metrics...</div>
+                        <div id="infraMetricsContent" style="display: none;">
+                            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="cpuRequests">-</div>
+                                    <div class="stat-label">CPU Requests</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="memRequests">-</div>
+                                    <div class="stat-label">Memory Requests</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="cpuLimits">-</div>
+                                    <div class="stat-label">CPU Limits</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="memLimits">-</div>
+                                    <div class="stat-label">Memory Limits</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="infraMetricsError" style="display: none; padding: var(--cds-spacing-05); color: var(--cds-support-error);"></div>
+                    </div>
+
+                    <!-- ROW 3: Performance Charts -->
+                    <div class="card" style="margin-bottom: var(--cds-spacing-05);">
+                        <div class="card-title">Performance Trends</div>
+                        
+                        <!-- Calls & Latency Chart -->
+                        <div style="margin-bottom: var(--cds-spacing-05);">
+                            <h4 style="font-size: 0.875rem; font-weight: 600; color: var(--cds-text-secondary); margin-bottom: var(--cds-spacing-03);">Calls & Latency Trends</h4>
+                            <div style="position: relative; height: 300px;">
+                                <canvas id="callsLatencyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROW 4: Top Endpoints -->
+                    <div class="card">
+                        <div class="card-title">Top Endpoints</div>
+                        <div id="endpointsLoading" class="loading">Loading endpoints...</div>
+                        <div id="endpointsContent" style="display: none;">
+                            <div id="endpointsList" style="max-height: 300px; overflow-y: auto;"></div>
+                        </div>
+                        <div id="endpointsError" style="display: none; padding: var(--cds-spacing-05); color: var(--cds-support-error);"></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: RESOURCE OPTIMIZATION -->
+                <div style="border-left: 1px solid var(--cds-border-subtle-01); padding-left: var(--cds-spacing-06);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-06);">
+                        <div style="max-width: 100%;">
+                            <h2 style="font-size: 1.75rem; font-weight: 600; color: var(--cds-text-primary); margin: 0 0 0.3rem 0; white-space: nowrap;">
+                                Resource Optimization
+                            </h2>
+                            <div style="font-size: 0.875rem; color: var(--cds-text-secondary); font-weight: 400;">
+                                Powered by Turbonomic
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem; margin-top: 2rem;">
+                             <a id="turbonomic-link" href="#" target="_blank" style="
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 0.5rem;
+                                background: var(--cds-layer-02);
+                                color: var(--cds-interactive);
+                                border: 1px solid var(--cds-border-subtle);
+                                padding: 0.4rem 1rem;
+                                font-family: 'IBM Plex Sans', sans-serif;
+                                font-size: 0.875rem;
+                                font-weight: 600;
+                                text-decoration: none;
+                                transition: all 0.11s;
+                                border-radius: 2px;
+                            "
+                            onmouseover="this.style.background='var(--cds-layer-03)'; this.style.borderColor='var(--cds-interactive)'"
+                            onmouseout="this.style.background='var(--cds-layer-02)'; this.style.borderColor='var(--cds-border-subtle)'">
+                                View in Turbonomic
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M13 3L13 9 12 9 12 4.7 4.5 12.2 3.8 11.5 11.3 4 7 4 7 3z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Turbonomic Pending Actions -->
+                    <div class="card" style="margin-top: 3rem;">
+                        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Optimization Recommendations</span>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span id="turboActionCount" style="font-size: 0.875rem; color: var(--cds-text-secondary);">-</span>
+                                <button onclick="fetchTurbonomicActions()" title="Refresh actions" style="
+                                    background: transparent;
+                                    border: 1px solid var(--cds-border-subtle);
+                                    color: var(--cds-text-secondary);
+                                    padding: 0.25rem 0.5rem;
+                                    font-size: 0.75rem;
+                                    cursor: pointer;
+                                    border-radius: 2px;
+                                    transition: all 0.11s;
+                                " onmouseover="this.style.background='var(--cds-layer-02)'" onmouseout="this.style.background='transparent'">
+                                    🔄 Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div id="turboActionsLoading" class="loading">Loading optimization actions...</div>
+                        <div id="turboActionsContent" style="display: none;">
+                            <div id="turboActionsList"></div>
+                        </div>
+                        <div id="turboActionsError" style="display: none; padding: var(--cds-spacing-05); color: var(--cds-support-error);"></div>
+                        
+                        <!-- Mock Infrastructure Scaling Alerts (from Infra Monitor) -->
+                        <div id="mockAlertsContainer" style="margin-top: var(--cds-spacing-05);">
+                            <!-- Mock alerts will be dynamically inserted here when infrastructure scaling is detected -->
+                        </div>
+                    </div>
+                    
+                    <!-- Turbonomic Executed Actions History -->
+                    <div class="card" style="margin-top: var(--cds-spacing-06);">
+                        <div class="card-title">
+                            Execution History
+                        </div>
+                        <div id="turboExecutedHistory" style="max-height: 400px; overflow-y: auto;">
+                            <div style="padding: var(--cds-spacing-05); text-align: center; color: var(--cds-text-secondary);">
+                                <div style="font-size: 0.875rem;">No actions executed yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: Guardrails -->
+    <div id="guardrails-tab" class="tab-content">
+        <div class="container" style="margin-top: 2rem;">
+            <div style="margin-bottom: var(--cds-spacing-07);">
+                <h2 style="font-size: 1.75rem; font-weight: 600; color: var(--cds-text-primary); margin: 0 0 0.25rem 0;">
+                    Infrastructure monitoring and automated response control
+                </h2>
+            </div>
+
+            <!-- Two Column Layout: Monitor (40%) | Workflow + Instructions (60%) -->
+            <div style="display: grid; grid-template-columns: 40% 60%; gap: var(--cds-spacing-06);">
+                
+                <!-- LEFT COLUMN: Infrastructure Monitor -->
+                <div>
+                    <div class="card">
+                <div class="card-title">🔍 Infra Monitor</div>
+                <div style="padding: var(--cds-spacing-05);">
+                    <!-- Monitor Status and Control -->
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div id="monitorStatusIndicator" style="
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 50%;
+                            background: var(--cds-border-subtle);
+                            flex-shrink: 0;
+                        "></div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 600; font-size: 0.875rem;">
+                                Status: <span id="monitorStatusText">Stopped</span>
+                            </div>
+                            <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                <span id="monitorStatusDescription">Monitor not running</span>
+                            </div>
+                        </div>
+                        <button id="monitorToggleBtn" class="command-btn" style="padding: 0.5rem 1rem; font-size: 0.875rem; flex-shrink: 0;" onclick="toggleMonitor()">
+                            Start Monitor
+                        </button>
+                    </div>
+                    
+                    <!-- Monitor Details (shown when running) -->
+                    <div id="monitorDetails" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--cds-border-subtle);">
+                        <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-bottom: 0.5rem;">
+                            Baseline Metrics:
+                        </div>
+                        <div id="monitorBaseline" style="font-size: 0.75rem; line-height: 1.8; color: var(--cds-text-primary);">
+                            <!-- Baseline will be inserted here -->
+                        </div>
+                        <div id="monitorLastCheck" style="font-size: 0.75rem; line-height: 1.8; color: var(--cds-text-secondary); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--cds-border-subtle);">
+                            <!-- Last check info will be inserted here -->
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Workflow + Instructions -->
+                <div style="display: flex; flex-direction: column; gap: var(--cds-spacing-06);">
+                    
+                    <!-- Guardrail Workflow Description -->
+                    <div class="card">
+                <div class="card-title">⚙️ Guardrail Workflow</div>
+                <div style="padding: var(--cds-spacing-05);">
+                    <div style="font-size: 0.875rem; color: var(--cds-text-secondary); margin-bottom: 1rem;">
+                        When infrastructure scaling is detected (15%+ increase in CPU or Memory limits):
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: start; gap: 0.75rem;">
+                            <div style="
+                                background: var(--cds-interactive);
+                                color: var(--cds-text-on-color);
+                                width: 24px;
+                                height: 24px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            ">1</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary);">
+                                    Emergency Cooling Activation
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                    Automatically activates emergency cooling for all trucks with temperature breaches
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 0.75rem;">
+                            <div style="
+                                background: var(--cds-interactive);
+                                color: var(--cds-text-on-color);
+                                width: 24px;
+                                height: 24px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            ">2</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary);">
+                                    Find Nearest Emergency Station
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                    Calculates distance to 16 emergency stations using Haversine formula
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 0.75rem;">
+                            <div style="
+                                background: var(--cds-interactive);
+                                color: var(--cds-text-on-color);
+                                width: 24px;
+                                height: 24px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            ">3</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary);">
+                                    Reroute to Emergency Station
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                    Saves original route and redirects truck to nearest station
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 0.75rem;">
+                            <div style="
+                                background: var(--cds-interactive);
+                                color: var(--cds-text-on-color);
+                                width: 24px;
+                                height: 24px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            ">4</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary);">
+                                    Inspection Wait Period
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                    Simulates 5-minute inspection and maintenance at station
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 0.75rem;">
+                            <div style="
+                                background: var(--cds-interactive);
+                                color: var(--cds-text-on-color);
+                                width: 24px;
+                                height: 24px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                flex-shrink: 0;
+                            ">5</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary);">
+                                    Resume Original Route
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-top: 0.25rem;">
+                                    Automatically restores original destination and continues delivery
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    <!-- Instructions Card -->
+                    <div class="card" style="background: var(--cds-layer-02); border-left: 3px solid var(--cds-support-info);">
+                <div style="padding: var(--cds-spacing-05);">
+                    <div style="font-weight: 600; font-size: 0.875rem; color: var(--cds-text-primary); margin-bottom: 0.5rem;">
+                        How to Test the Closed-Loop Guardrails
+                    </div>
+                    <ol style="font-size: 0.75rem; color: var(--cds-text-secondary); line-height: 1.8; padding-left: 1.25rem; margin: 0;">
+                        <li>Click "Start Monitor" above to begin infrastructure monitoring</li>
+                        <li>Switch to "Observe & Optimize" tab</li>
+                        <li>Wait for trucks to randomly fail (2% chance per cycle)</li>
+                        <li>Execute Turbonomic scaling actions manually in the Optimize section</li>
+                        <li>Monitor will detect 15%+ infrastructure scaling and trigger guardrail automation</li>
+                        <li>Check Activity Log in Operations tab to see the 5-step recovery sequence</li>
+                    </ol>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 4: Agents -->
+    <div id="agentic-tab" class="tab-content">
+            <!-- Truck Selection Section -->
+            <div style="margin-bottom: var(--cds-spacing-07); padding: var(--cds-spacing-05); background: var(--cds-layer-01); border-radius: 4px; border-left: 3px solid var(--cds-interactive-01);">
+                <label for="agent-truck-select" style="display: block; margin-bottom: var(--cds-spacing-03); color: var(--cds-text-primary); font-weight: 600; font-size: 0.875rem;">
+                    Select Truck for Agent Analysis
+                </label>
+                <select
+                    id="agent-truck-select"
+                    style="width: 100%; padding: var(--cds-spacing-03); background: var(--cds-field-01); border: 1px solid var(--cds-border-subtle-01); border-radius: 4px; color: var(--cds-text-primary); font-size: 0.875rem; cursor: pointer;">
+                    <option value="">-- Select a Truck --</option>
+                    <!-- Options will be populated dynamically by agents.js -->
+                </select>
+                <p style="margin-top: var(--cds-spacing-03); color: var(--cds-text-secondary); font-size: 0.75rem;">
+                    Agent workflow will execute automatically when you select a truck
+                </p>
+                <div id="agent-loading-indicator" style="display: none; margin-top: var(--cds-spacing-04); padding: var(--cds-spacing-03); background: var(--cds-layer-02); border-radius: 4px;">
+                    <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                        <div class="loading-spinner" style="width: 16px; height: 16px; border: 2px solid var(--cds-border-subtle-01); border-top-color: var(--cds-interactive-01); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        <span style="color: var(--cds-text-secondary); font-size: 0.875rem;">Executing agent workflow...</span>
+                    </div>
+                </div>
+            </div>
+
+        <div class="container" style="margin-top: 2rem;">
+            <div style="display: grid; grid-template-columns: 65% 35%; gap: var(--cds-spacing-07);">
+                
+                <!-- Left Column: Agent Tiles -->
+                <div>
+                    <div style="margin-bottom: var(--cds-spacing-06);">
+                        <h2 style="color: var(--cds-text-primary); font-size: 1.5rem; font-weight: 600; margin-bottom: var(--cds-spacing-03);">
+                            AI Agents Activity
+                        </h2>
+                        <p style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            Real-time monitoring of intelligent agents analyzing fleet operations
+                        </p>
+                    </div>
+
+                    <!-- Agents Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--cds-spacing-05);">
+                        
+                        <!-- Weather Agent -->
+                        <div id="agent-weather" class="card" style="padding: var(--cds-spacing-05);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-04);">
+                                <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                                    <span style="color: var(--cds-text-primary); font-weight: 600; font-size: 1rem;">Weather Agent</span>
+                                </div>
+                                <span class="agent-status-badge" data-status="idle" style="
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 12px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                ">IDLE</span>
+                            </div>
+                            <div class="agent-output" style="
+                                min-height: 60px;
+                                padding: var(--cds-spacing-04);
+                                background: var(--cds-layer-01);
+                                border-radius: 4px;
+                                color: var(--cds-text-secondary);
+                                font-size: 0.875rem;
+                                margin-bottom: var(--cds-spacing-04);
+                            ">Waiting for truck data...</div>
+                            <div style="height: 4px; background: var(--cds-layer-02); border-radius: 2px; overflow: hidden;">
+                                <div class="agent-progress-bar" style="height: 100%; width: 0%; background: var(--cds-interactive-01); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Station Agent -->
+                        <div id="agent-station" class="card" style="padding: var(--cds-spacing-05);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-04);">
+                                <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                                    <span style="color: var(--cds-text-primary); font-weight: 600; font-size: 1rem;">Station Agent</span>
+                                </div>
+                                <span class="agent-status-badge" data-status="idle" style="
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 12px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                ">IDLE</span>
+                            </div>
+                            <div class="agent-output" style="
+                                min-height: 60px;
+                                padding: var(--cds-spacing-04);
+                                background: var(--cds-layer-01);
+                                border-radius: 4px;
+                                color: var(--cds-text-secondary);
+                                font-size: 0.875rem;
+                                margin-bottom: var(--cds-spacing-04);
+                            ">Waiting for truck data...</div>
+                            <div style="height: 4px; background: var(--cds-layer-02); border-radius: 2px; overflow: hidden;">
+                                <div class="agent-progress-bar" style="height: 100%; width: 0%; background: var(--cds-interactive-01); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Route Agent -->
+                        <div id="agent-route" class="card" style="padding: var(--cds-spacing-05);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-04);">
+                                <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                                    <span style="color: var(--cds-text-primary); font-weight: 600; font-size: 1rem;">Route Agent</span>
+                                </div>
+                                <span class="agent-status-badge" data-status="idle" style="
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 12px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                ">IDLE</span>
+                            </div>
+                            <div class="agent-output" style="
+                                min-height: 60px;
+                                padding: var(--cds-spacing-04);
+                                background: var(--cds-layer-01);
+                                border-radius: 4px;
+                                color: var(--cds-text-secondary);
+                                font-size: 0.875rem;
+                                margin-bottom: var(--cds-spacing-04);
+                            ">Waiting for truck data...</div>
+                            <div style="height: 4px; background: var(--cds-layer-02); border-radius: 2px; overflow: hidden;">
+                                <div class="agent-progress-bar" style="height: 100%; width: 0%; background: var(--cds-interactive-01); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Decision Agent -->
+                        <div id="agent-decision" class="card" style="padding: var(--cds-spacing-05);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-04);">
+                                <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                                    <span style="color: var(--cds-text-primary); font-weight: 600; font-size: 1rem;">Decision Agent</span>
+                                </div>
+                                <span class="agent-status-badge" data-status="idle" style="
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 12px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                ">IDLE</span>
+                            </div>
+                            <div class="agent-output" style="
+                                min-height: 60px;
+                                padding: var(--cds-spacing-04);
+                                background: var(--cds-layer-01);
+                                border-radius: 4px;
+                                color: var(--cds-text-secondary);
+                                font-size: 0.875rem;
+                                margin-bottom: var(--cds-spacing-04);
+                            ">Waiting for truck data...</div>
+                            <div style="height: 4px; background: var(--cds-layer-02); border-radius: 2px; overflow: hidden;">
+                                <div class="agent-progress-bar" style="height: 100%; width: 0%; background: var(--cds-interactive-01); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Notification Agent — spans full width (5th item in 2-col grid) -->
+                        <div id="agent-notification" class="card" style="padding: var(--cds-spacing-05); grid-column: 1 / -1;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--cds-spacing-04);">
+                                <div style="display: flex; align-items: center; gap: var(--cds-spacing-03);">
+                                    <span style="color: var(--cds-text-primary); font-weight: 600; font-size: 1rem;">Notification Agent</span>
+                                </div>
+                                <span class="agent-status-badge" data-status="idle" style="
+                                    padding: 0.25rem 0.75rem;
+                                    border-radius: 12px;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                ">IDLE</span>
+                            </div>
+                            <div class="agent-output" style="
+                                min-height: 60px;
+                                padding: var(--cds-spacing-04);
+                                background: var(--cds-layer-01);
+                                border-radius: 4px;
+                                color: var(--cds-text-secondary);
+                                font-size: 0.875rem;
+                                margin-bottom: var(--cds-spacing-04);
+                            ">Waiting for truck data...</div>
+                            <div style="height: 4px; background: var(--cds-layer-02); border-radius: 2px; overflow: hidden;">
+                                <div class="agent-progress-bar" style="height: 100%; width: 0%; background: var(--cds-interactive-01); transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Activity Log -->
+                <div>
+                    <div class="card" style="height: 100%;">
+                        <div style="padding: var(--cds-spacing-05); border-bottom: 1px solid var(--cds-border-subtle-01);">
+                            <h3 style="color: var(--cds-text-primary); font-size: 1.125rem; font-weight: 600; margin: 0;">
+                                Activity Log
+                            </h3>
+                        </div>
+                        <div id="agentActivityLog" style="
+                            padding: var(--cds-spacing-05);
+                            max-height: 600px;
+                            overflow-y: auto;
+                        ">
+                            <!-- Activity Timeline Items -->
+                            <div class="activity-item" style="
+                                padding-bottom: var(--cds-spacing-05);
+                                border-left: 2px solid var(--cds-border-subtle-01);
+                                padding-left: var(--cds-spacing-05);
+                                margin-left: var(--cds-spacing-03);
+                                position: relative;
+                            ">
+                                <div style="
+                                    position: absolute;
+                                    left: -6px;
+                                    top: 0;
+                                    width: 10px;
+                                    height: 10px;
+                                    border-radius: 50%;
+                                    background: var(--cds-layer-02);
+                                    border: 2px solid var(--cds-border-subtle-01);
+                                "></div>
+                                <div style="color: var(--cds-text-secondary); font-size: 0.75rem; margin-bottom: var(--cds-spacing-02);">
+                                    --:--:--
+                                </div>
+                                <div style="color: var(--cds-text-primary); font-weight: 600; font-size: 0.875rem; margin-bottom: var(--cds-spacing-02);">
+                                    System Ready
+                                </div>
+                                <div style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                                    Monitoring fleet operations...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Details Modal -->
+    <div id="agentDetailsModal" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        overflow-y: auto;
+    ">
+        <div style="
+            background: var(--cds-layer-01);
+            margin: 2rem auto;
+            max-width: 900px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        ">
+            <!-- Modal Header -->
+            <div style="
+                padding: var(--cds-spacing-05);
+                border-bottom: 1px solid var(--cds-border-subtle-01);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h2 id="modalAgentTitle" style="
+                    color: var(--cds-text-primary);
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    margin: 0;
+                ">Agent Details</h2>
+                <button onclick="AgentsModule.closeModal()" style="
+                    background: none;
+                    border: none;
+                    color: var(--cds-text-primary);
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    padding: 0;
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">×</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div id="modalAgentContent" style="
+                padding: var(--cds-spacing-05);
+                max-height: calc(100vh - 200px);
+                overflow-y: auto;
+            ">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+            
+            <!-- Modal Footer -->
+            <div style="
+                padding: var(--cds-spacing-05);
+                border-top: 1px solid var(--cds-border-subtle-01);
+                display: flex;
+                justify-content: flex-end;
+            ">
+                <button onclick="AgentsModule.closeModal()" style="
+                    background: var(--cds-button-primary);
+                    color: var(--cds-text-on-color);
+                    border: none;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                ">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 5: Forecasting -->
+    <div id="forecasting-tab" class="tab-content">
+        <div class="container" style="margin-top: 1rem;">
+            <!-- Fleet Optimization (Merged Header) -->
+            <div class="card" style="margin-bottom: 1rem;">
+                <div style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--cds-border-subtle); display: flex; align-items: center; justify-content: space-between; gap: 3rem;">
+                    <div style="flex: 0 0 auto;">
+                        <h2 style="color: var(--cds-text-primary); font-size: 1.25rem; font-weight: 600; margin: 0 0 0.25rem 0;">
+                            AI-Powered Forecasting - Fleet Optimization
+                        </h2>
+                        <div style="color: var(--cds-text-secondary); font-size: 0.75rem;">
+                            Powered by IBM Granite TTM
+                        </div>
+                    </div>
+                    <!-- Fleet Summary Stats (Centered with gap) -->
+                    <div id="fleetSummary" style="display: flex; gap: 1.5rem; align-items: center; flex: 1; justify-content: center;">
+                        <!-- Stats will be populated here -->
+                    </div>
+                </div>
+                <div style="padding: var(--cds-spacing-05);">
+                    <!-- High Risk Trucks Table -->
+                    <div id="highRiskTrucks" style="
+                        background: var(--cds-layer-01);
+                        border-radius: 4px;
+                        padding: var(--cds-spacing-05);
+                    ">
+                        <div style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            Loading fleet optimization data...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Truck Selection Controls -->
+            <div class="card" style="margin-bottom: 1rem; padding: 0.75rem 1rem;">
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label style="color: var(--cds-text-secondary); font-size: 0.8125rem; font-weight: 600;">Truck:</label>
+                        <select id="forecastTruckSelector" style="
+                            padding: 0.375rem 0.75rem;
+                            background: var(--cds-field-01);
+                            color: var(--cds-text-primary);
+                            border: 1px solid var(--cds-border-subtle);
+                            border-radius: 0;
+                            font-family: 'IBM Plex Sans', sans-serif;
+                            font-size: 0.8125rem;
+                            cursor: pointer;
+                        ">
+                            <option value="">Select a truck...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <label style="color: var(--cds-text-secondary); font-size: 0.8125rem; font-weight: 600;">Frequency:</label>
+                        <select id="forecastFrequency" style="
+                            padding: 0.375rem 0.75rem;
+                            background: var(--cds-field-01);
+                            color: var(--cds-text-primary);
+                            border: 1px solid var(--cds-border-subtle);
+                            border-radius: 0;
+                            font-family: 'IBM Plex Sans', sans-serif;
+                            font-size: 0.8125rem;
+                            cursor: pointer;
+                        ">
+                            <option value="1min">1 minute</option>
+                            <option value="5min" selected>5 minutes</option>
+                            <option value="15min">15 minutes</option>
+                            <option value="1h">1 hour</option>
+                        </select>
+                    </div>
+                    <button id="loadForecastsBtn" style="
+                        padding: 0.375rem 1rem;
+                        background: var(--cds-interactive);
+                        color: var(--cds-text-on-color);
+                        border: none;
+                        font-family: 'IBM Plex Sans', sans-serif;
+                        font-size: 0.8125rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+                    " onmouseover="this.style.background='var(--cds-interactive-hover)'"
+                       onmouseout="this.style.background='var(--cds-interactive)'">
+                        Load Forecasts
+                    </button>
+                </div>
+            </div>
+
+            <!-- Temperature Breach Prediction -->
+            <div class="card" style="margin-bottom: var(--cds-spacing-07);">
+                <div style="padding: var(--cds-spacing-05); border-bottom: 1px solid var(--cds-border-subtle);">
+                    <h3 style="color: var(--cds-text-primary); font-size: 1.125rem; font-weight: 600; margin: 0;">
+                        Temperature Breach Prediction
+                    </h3>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--cds-spacing-05); padding: var(--cds-spacing-05);">
+                    <!-- Chart -->
+                    <div>
+                        <canvas id="tempForecastChart" style="max-height: 300px;"></canvas>
+                    </div>
+                    <!-- Recommendations -->
+                    <div id="tempRecommendations" style="
+                        padding: var(--cds-spacing-05);
+                        background: var(--cds-layer-01);
+                        border-radius: 4px;
+                    ">
+                        <div style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            Select a truck to view temperature forecast
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Impact Forecast -->
+            <div class="card" style="margin-bottom: var(--cds-spacing-07);">
+                <div style="padding: var(--cds-spacing-05); border-bottom: 1px solid var(--cds-border-subtle);">
+                    <h3 style="color: var(--cds-text-primary); font-size: 1.125rem; font-weight: 600; margin: 0;">
+                        Weather Impact Forecast
+                    </h3>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--cds-spacing-05); padding: var(--cds-spacing-05);">
+                    <!-- Chart -->
+                    <div>
+                        <canvas id="weatherForecastChart" style="max-height: 300px;"></canvas>
+                    </div>
+                    <!-- Recommendations -->
+                    <div id="weatherRecommendations" style="
+                        padding: var(--cds-spacing-05);
+                        background: var(--cds-layer-01);
+                        border-radius: 4px;
+                    ">
+                        <div style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            Select a truck to view weather forecast
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Station Availability Forecast -->
+            <div class="card" style="margin-bottom: var(--cds-spacing-07);">
+                <div style="padding: var(--cds-spacing-05); border-bottom: 1px solid var(--cds-border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--cds-text-primary); font-size: 1.125rem; font-weight: 600; margin: 0;">
+                        Station Availability Forecast
+                    </h3>
+                    <select id="stationSelector" style="
+                        padding: 0.5rem;
+                        background: var(--cds-field);
+                        color: var(--cds-text-primary);
+                        border: 1px solid var(--cds-border-strong);
+                        border-radius: 4px;
+                        font-size: 0.875rem;
+                        cursor: pointer;
+                    ">
+                        <option value="">Loading stations...</option>
+                    </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--cds-spacing-05); padding: var(--cds-spacing-05);">
+                    <!-- Chart -->
+                    <div>
+                        <canvas id="stationForecastChart" style="max-height: 300px;"></canvas>
+                    </div>
+                    <!-- Recommendations -->
+                    <div id="stationRecommendations" style="
+                        padding: var(--cds-spacing-05);
+                        background: var(--cds-layer-01);
+                        border-radius: 4px;
+                    ">
+                        <div style="color: var(--cds-text-secondary); font-size: 0.875rem;">
+                            Loading station availability forecast...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="agents.js?v=4"></script>
+    <script src="app.js"></script>
+    <script src="forecast.js"></script>
+    <script>
+        // Mode toggle function (must be defined before app.js loads)
+        function setMode(mode) {
+            const manualBtn = document.getElementById('manualBtn');
+            const autoBtn = document.getElementById('autoBtn');
+            const manualSection = document.getElementById('manualControlSection');
+            
+            if (mode === 'manual') {
+                manualBtn.classList.add('active');
+                autoBtn.classList.remove('active');
+                if (manualSection) manualSection.style.display = 'block';
+            } else {
+                manualBtn.classList.remove('active');
+                autoBtn.classList.add('active');
+                if (manualSection) manualSection.style.display = 'none';
+            }
+            
+            // Update global state in app.js if it's loaded
+            if (typeof window.currentMode !== 'undefined') {
+                window.currentMode = mode;
+            }
+            
+            console.log('Mode switched to:', mode);
+        }
+        
+        // Persona Management
+        const personas = {
+            'sarah': {
+                name: 'Sarah Chen',
+                role: 'Operations Manager',
+                icon: '👩‍💼',
+                tabs: ['operations-new', 'forecasting', 'agentic'],
+                truckId: null
+            },
+            'david': {
+                name: 'David Kumar',
+                role: 'Site Reliability Engineer',
+                icon: '👨‍💻',
+                tabs: ['observe'],
+                truckId: null
+            },
+            'mike': {
+                name: 'Mike Rodriguez',
+                role: 'Truck Driver',
+                icon: '🚛',
+                tabs: ['driver'],
+                truckId: 'TRUCK-001'
+            },
+            'sarah_j': {
+                name: 'Sarah Johnson',
+                role: 'Truck Driver',
+                icon: '🚛',
+                tabs: ['driver'],
+                truckId: 'TRUCK-002'
+            },
+            'carlos': {
+                name: 'Carlos Martinez',
+                role: 'Truck Driver',
+                icon: '🚛',
+                tabs: ['driver'],
+                truckId: 'TRUCK-003'
+            },
+            'emily': {
+                name: 'Emily Chen',
+                role: 'Truck Driver',
+                icon: '🚛',
+                tabs: ['driver'],
+                truckId: 'TRUCK-004'
+            },
+            'rachel': {
+                name: 'Rachel Martinez',
+                role: 'Platform Administrator',
+                icon: '👩‍💼',
+                tabs: ['operations-new', 'forecasting', 'agentic', 'driver', 'observe'],
+                truckId: null
+            }
+        };
+
+        let currentPersona = 'sarah';
+        let selectedTruckFromOtherTab = null; // Global variable for cross-tab truck selection
+        let driverNotifications = []; // Store all notifications with persistence
+
+        // Toggle profile menu
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileSwitcher = document.querySelector('.profile-switcher');
+            const menu = document.getElementById('profileMenu');
+            if (menu && !profileSwitcher.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Switch persona
+        function switchPersona(personaKey) {
+            const persona = personas[personaKey];
+            if (!persona) return;
+            
+            currentPersona = personaKey;
+            
+            // Update profile button display
+            document.getElementById('currentPersonaIcon').textContent = persona.icon;
+            document.getElementById('currentPersonaName').textContent = persona.name;
+            document.getElementById('currentPersonaRole').textContent = persona.role;
+            
+            // Update tab visibility
+            updateTabVisibility(persona.tabs);
+            
+            // Switch to first available tab
+            if (persona.tabs.length > 0) {
+                switchTab(persona.tabs[0]);
+            }
+            
+            // Close menu
+            document.getElementById('profileMenu').classList.remove('show');
+            
+            console.log('Switched to persona:', personaKey);
+        }
+
+        // Open driver view directly
+        function openDriverView() {
+            // Close menu
+            document.getElementById('profileMenu').classList.remove('show');
+            
+            // Update profile button to show driver persona
+            document.getElementById('currentPersonaIcon').textContent = '🚛';
+            document.getElementById('currentPersonaName').textContent = 'Driver Persona';
+            document.getElementById('currentPersonaRole').textContent = 'Truck Driver';
+            
+            // Update tab visibility to show only driver tab
+            updateTabVisibility(['driver']);
+            
+            // Switch to driver tab
+            switchTab('driver');
+        }
+
+        // Per-driver trip history data
+        const driverTripHistory = {
+            'mike': [
+                { date: 'May 14, 2026', route: 'Cleveland → Boston', via: 'via Pittsburgh', cargo: 'Pfizer Vaccines', value: '$450K', distance: '385 mi', duration: '7h 15m' },
+                { date: 'May 12, 2026', route: 'Chicago → Detroit', via: 'Direct route', cargo: 'Moderna Vaccines', value: '$320K', distance: '283 mi', duration: '4h 45m' },
+                { date: 'May 10, 2026', route: 'New York → Philadelphia', via: 'Direct route', cargo: 'Johnson & Johnson', value: '$280K', distance: '95 mi', duration: '2h 10m' }
+            ],
+            'sarah_j': [
+                { date: 'May 13, 2026', route: 'Los Angeles → San Francisco', via: 'via Bakersfield', cargo: 'AstraZeneca Vaccines', value: '$520K', distance: '382 mi', duration: '6h 30m' },
+                { date: 'May 11, 2026', route: 'Seattle → Portland', via: 'Direct route', cargo: 'Novavax Vaccines', value: '$410K', distance: '173 mi', duration: '3h 15m' },
+                { date: 'May 9, 2026', route: 'San Diego → Phoenix', via: 'via Yuma', cargo: 'Sanofi Vaccines', value: '$380K', distance: '355 mi', duration: '5h 45m' }
+            ],
+            'carlos': [
+                { date: 'May 14, 2026', route: 'Miami → Atlanta', via: 'via Jacksonville', cargo: 'BioNTech Vaccines', value: '$490K', distance: '662 mi', duration: '10h 20m' },
+                { date: 'May 11, 2026', route: 'Houston → Dallas', via: 'Direct route', cargo: 'Merck Vaccines', value: '$360K', distance: '239 mi', duration: '4h 0m' },
+                { date: 'May 8, 2026', route: 'New Orleans → Memphis', via: 'via Jackson', cargo: 'GSK Vaccines', value: '$340K', distance: '394 mi', duration: '6h 15m' }
+            ],
+            'emily': [
+                { date: 'May 13, 2026', route: 'Denver → Salt Lake City', via: 'Direct route', cargo: 'Pfizer Vaccines', value: '$470K', distance: '525 mi', duration: '8h 10m' },
+                { date: 'May 10, 2026', route: 'Phoenix → Las Vegas', via: 'Direct route', cargo: 'Moderna Vaccines', value: '$390K', distance: '297 mi', duration: '4h 50m' },
+                { date: 'May 7, 2026', route: 'Portland → Boise', via: 'Direct route', cargo: 'Johnson & Johnson', value: '$310K', distance: '428 mi', duration: '6h 45m' }
+            ]
+        };
+
+        // Render driver trip history
+        function renderDriverTripHistory(driverKey) {
+            const tbody = document.querySelector('#driverPastTripsTable tbody');
+            if (!tbody) return;
+            
+            const trips = driverTripHistory[driverKey] || [];
+            
+            if (trips.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="padding: 1rem; text-align: center; color: var(--cds-text-secondary);">No past trips available</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = trips.map(trip => `
+                <tr style="border-bottom: 1px solid var(--cds-border-subtle);">
+                    <td style="padding: 0.75rem; font-size: 0.875rem; color: var(--cds-text-primary);">${trip.date}</td>
+                    <td style="padding: 0.75rem; font-size: 0.875rem; color: var(--cds-text-primary);">
+                        <div>${trip.route}</div>
+                        <div style="font-size: 0.75rem; color: var(--cds-text-secondary);">${trip.via}</div>
+                    </td>
+                    <td style="padding: 0.75rem; font-size: 0.875rem; color: var(--cds-text-primary);">
+                        <div>${trip.cargo}</div>
+                        <div style="font-size: 0.75rem; color: var(--cds-text-secondary);">${trip.value}</div>
+                    </td>
+                    <td style="padding: 0.75rem; font-size: 0.875rem; color: var(--cds-text-primary);">${trip.distance}</td>
+                    <td style="padding: 0.75rem; font-size: 0.875rem; color: var(--cds-text-primary);">${trip.duration}</td>
+                    <td style="padding: 0.75rem;">
+                        <span style="background: var(--cds-support-success); color: #161616; padding: 0.25rem 0.5rem; border-radius: 2px; font-size: 0.75rem; font-weight: 600;">
+                            DELIVERED
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Driver Profile Change Handler
+        function onDriverProfileChange() {
+            const selector = document.getElementById('driverProfileSelector');
+            const selectedDriver = selector.value;
+            
+            if (!selectedDriver) {
+                console.log('No driver selected');
+                // Clear trip history when no driver selected
+                const tbody = document.querySelector('#driverPastTripsTable tbody');
+                if (tbody) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="padding: 1rem; text-align: center; color: var(--cds-text-secondary);">Select a driver to view past trips</td></tr>';
+                }
+                return;
+            }
+            
+            console.log('Driver profile changed to:', selectedDriver);
+            
+            // Render trip history for selected driver
+            renderDriverTripHistory(selectedDriver);
+            
+            // Get the persona for this driver
+            const persona = personas[selectedDriver];
+            if (persona && persona.truckId) {
+                // Update the driver view with this truck
+                selectedTruckFromOtherTab = persona.truckId;
+                // Set the truck filter dropdown and trigger update
+                const truckFilter = document.getElementById('driverTruckFilter');
+                if (truckFilter) {
+                    truckFilter.value = persona.truckId;
+                    performDriverViewUpdate(persona.truckId);
+                }
+            }
+        }
+
+        function updateTabVisibility(allowedTabs) {
+            // Hide all tabs first
+            document.querySelectorAll('.tab').forEach(tab => {
+                const tabName = tab.getAttribute('onclick').match(/'([^']+)'/)[1];
+                if (allowedTabs.includes(tabName)) {
+                    tab.style.display = 'block';
+                } else {
+                    tab.style.display = 'none';
+                }
+            });
+        }
+
+
+        // Initialize persona on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            updateTabVisibility(personas[currentPersona].tabs);
+        });
+
+        // Tab switching function
+        function switchTab(tabName, event) {
+            console.log('Switching to tab:', tabName);
+            
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            const tabElement = document.getElementById(tabName + '-tab');
+            if (tabElement) {
+                tabElement.classList.add('active');
+                console.log('Tab element found and activated:', tabName + '-tab');
+            } else {
+                console.error('Tab element not found:', tabName + '-tab');
+            }
+            
+            // Add active class to clicked tab button
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            // Initialize tab-specific functionality
+            if (tabName === 'operations-new') {
+                if (typeof initOperationsNew === 'function') {
+                    initOperationsNew();
+                }
+            } else if (tabName === 'forecasting') {
+                console.log('Initializing forecasting tab...');
+                if (typeof initForecasting === 'function') {
+                    initForecasting();
+                } else {
+                    console.error('initForecasting function not found');
+                }
+            } else if (tabName === 'agentic') {
+                console.log('Initializing agents tab...');
+                if (typeof AgentsModule !== 'undefined' && AgentsModule.populateAgentTruckDropdown) {
+                    // Fetch truck data directly to ensure it's available
+                    fetch('/api/trucks')
+                        .then(response => response.json())
+                        .then(trucksData => {
+                            console.log('Fetched truck data for agents tab:', trucksData.length, 'trucks');
+                            if (Array.isArray(trucksData) && trucksData.length > 0) {
+                                // Pass full truck data to agents module for caching (needed for Activity Log)
+                                AgentsModule.populateAgentTruckDropdown(trucksData);
+                                console.log('Agent truck dropdown populated with', trucksData.length, 'trucks');
+                            } else {
+                                console.warn('No truck data available for agents dropdown');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching truck data for agents tab:', error);
+                        });
+                } else {
+                    console.error('AgentsModule.populateAgentTruckDropdown function not found');
+                }
+            } else if (tabName === 'observe') {
+                console.log('Initializing observe tab...');
+                // Fetch Instana metrics when switching to observe tab
+                if (typeof fetchInstanaMetrics === 'function') {
+                    fetchInstanaMetrics();
+                    console.log('Instana metrics fetch triggered');
+                } else {
+                    console.error('fetchInstanaMetrics function not found');
+                }
+            } else if (tabName === 'driver') {
+                console.log('Initializing driver view tab...');
+                // Initialize driver view with new driver-view.js module
+                if (typeof initDriverMap === 'function') {
+                    setTimeout(() => {
+                        initDriverMap();
+                        // Trigger initial driver profile change to load data
+                        if (typeof onDriverProfileChange === 'function') {
+                            onDriverProfileChange();
+                        }
+                        // Start auto-refresh
+                        if (typeof startDriverViewAutoRefresh === 'function') {
+                            startDriverViewAutoRefresh();
+                        }
+                    }, 100);
+                } else {
+                    console.error('Driver view functions not found - driver-view.js may not be loaded');
+                }
+            }
+        }
+    </script>
+    <script src="operations-new.js"></script>
+    <script src="driver-view.js"></script>
+    <script>
+        // Initialize the default active tab after operations-new.js is loaded
+        window.addEventListener('DOMContentLoaded', async () => {
+            console.log('Page loaded, initializing default tab...');
+            
+            // Fetch configuration for external links
+            try {
+                const configResponse = await fetch('/api/config');
+                const config = await configResponse.json();
+                
+                // Update Instana link
+                const instanaLink = document.getElementById('instana-link');
+                if (instanaLink && config.instanaUrl) {
+                    instanaLink.href = config.instanaUrl;
+                }
+                
+                // Update Turbonomic link
+                const turbonomicLink = document.getElementById('turbonomic-link');
+                if (turbonomicLink && config.turbonomicUrl) {
+                    turbonomicLink.href = config.turbonomicUrl;
+                }
+                
+                console.log('External links configured:', config);
+            } catch (error) {
+                console.error('Failed to load configuration:', error);
+            }
+            
+            // Operations tab is active by default, so initialize it
+            if (typeof initOperationsNew === 'function') {
+                initOperationsNew();
+            } else {
+                console.error('initOperationsNew function not found');
+            }
+            
+            // Initialize Resource Optimization data loading (Turbonomic actions)
+            if (typeof initTurbonomicActions === 'function') {
+                initTurbonomicActions();
+            } else {
+                console.error('initTurbonomicActions function not found');
+            }
+        });
+    </script>
+    <!-- forecast.js already loaded above at line 1777 - removed duplicate to fix redeclaration error -->
+    
+    <!-- Alert History Modal -->
+    <div id="alertHistoryModal" style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    " onclick="closeAlertHistoryModal(event)">
+        <div style="
+            background: var(--cds-layer-01);
+            border-radius: 4px;
+            max-width: 800px;
+            max-height: 80vh;
+            width: 90%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        " onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div style="
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid var(--cds-border-subtle);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h3 id="modalTruckTitle" style="
+                    color: var(--cds-text-primary);
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    margin: 0;
+                ">Alert History</h3>
+                <button onclick="closeAlertHistoryModal()" style="
+                    background: none;
+                    border: none;
+                    color: var(--cds-text-secondary);
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    padding: 0;
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 4px;
+                " onmouseover="this.style.background='var(--cds-layer-02)'"
+                   onmouseout="this.style.background='none'">×</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div id="alertHistoryContent" style="
+                padding: 1.5rem;
+                overflow-y: auto;
+                flex: 1;
+            ">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

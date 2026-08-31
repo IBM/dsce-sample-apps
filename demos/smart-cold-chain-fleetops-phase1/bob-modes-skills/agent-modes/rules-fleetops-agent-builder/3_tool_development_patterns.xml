@@ -1,0 +1,575 @@
+<tool_development_patterns>
+  <overview>
+    This file defines patterns and best practices for creating Python tools using the @tool decorator and Pydantic models.
+    CRITICAL: Always ask users to define their input/output schemas before creating tools - never assume or reuse existing schemas.
+  </overview>
+
+  <schema_discovery_requirement>
+    <critical_rule>
+      Before implementing any tool, you MUST ask the user to specify:
+      1. Input schema: All fields the tool needs to receive
+      2. Output schema: All fields the tool will return
+      3. Field types and descriptions for each field
+      4. Whether fields are required or optional
+      5. Any nested structures or complex types
+    </critical_rule>
+
+    <discovery_approach>
+      <step>Ask: "What input fields does your tool need?"</step>
+      <step>Ask: "What output fields should your tool return?"</step>
+      <step>Ask: "What are the data types for each field?"</step>
+      <step>Ask: "Are there any nested objects or arrays?"</step>
+      <step>Confirm understanding before implementation</step>
+    </discovery_approach>
+
+    <do_not_assume>
+      <rule>Do NOT assume field names from existing tools</rule>
+      <rule>Do NOT reuse schemas from reference examples</rule>
+      <rule>Do NOT copy data models from other tools</rule>
+      <rule>ALWAYS create schemas based on user specifications</rule>
+    </do_not_assume>
+  </schema_discovery_requirement>
+
+  <tool_file_structure>
+    <standard_structure>
+      <![CDATA[
+tools/
+├── decision_tool/
+│   ├── decision_analysis_tool.py
+│   └── requirements.txt
+├── station_tool/
+│   ├── station_search_tool.py
+│   └── requirements.txt
+├── weather_forecast/
+│   ├── weather_forecast_tool.py
+│   ├── config.py
+│   ├── requirements.txt
+│   └── README.md
+└── whatsapp_notification/
+    ├── whatsapp_notification_tool.py
+    ├── __init__.py
+    └── requirements.txt
+      ]]>
+    </standard_structure>
+
+    <file_naming>
+      <rule>Use snake_case for all file and directory names</rule>
+      <rule>Tool file should be named {tool_name}_tool.py</rule>
+      <rule>Each tool should have its own directory</rule>
+      <rule>Include requirements.txt for dependencies</rule>
+      <rule>Add README.md for complex tools</rule>
+    </file_naming>
+  </tool_file_structure>
+
+  <tool_implementation_pattern>
+    <imports>
+      <required>
+        <![CDATA[
+from typing import List, Dict, Any, Optional
+from pydantic import BaseModel, Field
+from ibm_watsonx_orchestrate.agent_builder.tools import tool
+        ]]>
+      </required>
+      
+      <common>
+        <![CDATA[
+import requests
+import os
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+        ]]>
+      </common>
+    </imports>
+
+    <pydantic_models>
+      <purpose>Define input and output schemas with validation based on USER specifications</purpose>
+      
+      <important_note>
+        The following are GENERIC TEMPLATES only. You MUST replace field names, types,
+        and descriptions with the user's actual specifications. Never use these as-is.
+      </important_note>
+      
+      <input_model_pattern>
+        <![CDATA[
+# TEMPLATE - Replace with user's actual field specifications
+class ToolNameInput(BaseModel):
+    """Input schema for the tool - describe based on user's requirements"""
+    # Replace these fields with user-specified fields:
+    field1: str = Field(description="User's description for field1")
+    field2: int = Field(description="User's description for field2")
+    optional_field: Optional[str] = Field(None, description="User's description")
+        ]]>
+      </input_model_pattern>
+      
+      <output_model_pattern>
+        <![CDATA[
+# TEMPLATE - Replace with user's actual field specifications
+class ToolNameOutput(BaseModel):
+    """Output schema for the tool - describe based on user's requirements"""
+    # Replace these fields with user-specified fields:
+    result_field: str = Field(description="User's description")
+    status_field: str = Field(description="User's description")
+        ]]>
+      </output_model_pattern>
+
+      <user_driven_example>
+        <user_specification>
+          <![CDATA[
+User says: "My tool needs:
+Input: vehicle_id (string), current_temp (float), threshold (float, optional)
+Output: alert_status (string), message (string), timestamp (string)"
+          ]]>
+        </user_specification>
+        
+        <correct_implementation>
+          <![CDATA[
+class ToolInput(BaseModel):
+    """Input schema based on user specifications"""
+    vehicle_id: str = Field(description="Vehicle identifier")
+    current_temp: float = Field(description="Current temperature reading")
+    threshold: Optional[float] = Field(None, description="Temperature threshold")
+
+class ToolOutput(BaseModel):
+    """Output schema based on user specifications"""
+    alert_status: str = Field(description="Status of the alert")
+    message: str = Field(description="Alert message")
+    timestamp: str = Field(description="Timestamp of the alert")
+          ]]>
+        </correct_implementation>
+      </user_driven_example>
+      
+      <nested_models>
+        <purpose>Use nested models for complex data structures</purpose>
+        <example>
+          <![CDATA[
+class LocationCoordinates(BaseModel):
+    """Geographic coordinates"""
+    latitude: float = Field(description="Latitude coordinate")
+    longitude: float = Field(description="Longitude coordinate")
+
+class FacilityInfo(BaseModel):
+    """Facility information"""
+    stationId: str
+    name: str
+    location: LocationCoordinates
+    distance: float = Field(description="Distance in kilometers")
+          ]]>
+        </example>
+      </nested_models>
+      
+      <enum_usage>
+        <purpose>Use Enums for fixed value sets</purpose>
+        <example>
+          <![CDATA[
+class DecisionType(str, Enum):
+    """Decision types"""
+    EMERGENCY_REROUTE = "EMERGENCY_REROUTE"
+    CONTROLLED_REROUTE = "CONTROLLED_REROUTE"
+    CONTINUE = "CONTINUE"
+    ABORT = "ABORT"
+          ]]>
+        </example>
+      </enum_usage>
+    </pydantic_models>
+
+    <tool_decorator_usage>
+      <basic_pattern>
+        <![CDATA[
+@tool
+def tool_name(input_data: ToolNameInput) -> ToolNameOutput:
+    """
+    Brief description of what the tool does.
+    
+    Args:
+        input_data: Input parameters for the tool
+        
+    Returns:
+        ToolNameOutput: Result of the tool operation
+    """
+    # Implementation here
+    pass
+        ]]>
+      </basic_pattern>
+      
+      <with_credentials>
+        <![CDATA[
+from ibm_watsonx_orchestrate.agent_builder.tools import tool, expect_credentials
+
+@tool
+@expect_credentials(["api_key", "api_url"])
+def authenticated_tool(input_data: ToolInput, credentials: dict) -> ToolOutput:
+    """
+    Tool that requires credentials.
+    
+    Args:
+        input_data: Input parameters
+        credentials: Dictionary containing api_key and api_url
+        
+    Returns:
+        ToolOutput: Result of operation
+    """
+    api_key = credentials.get("api_key")
+    api_url = credentials.get("api_url")
+    # Use credentials for API calls
+    pass
+        ]]>
+      </with_credentials>
+    </tool_decorator_usage>
+
+    <api_integration_pattern>
+      <important_note>
+        NEVER hardcode production API URLs in tools. Always require users to provide
+        their API endpoint through environment variables or credentials.
+      </important_note>
+      
+      <rest_api_call>
+        <![CDATA[
+def call_fleetops_api(endpoint: str, data: dict) -> dict:
+    """
+    Call FleetOps backend API.
+    
+    Args:
+        endpoint: API endpoint path
+        data: Request payload
+        
+    Returns:
+        dict: API response
+        
+    Raises:
+        requests.RequestException: If API call fails
+        ValueError: If FLEETOPS_API_URL is not configured
+    """
+    base_url = os.environ.get('FLEETOPS_API_URL')
+    
+    if not base_url:
+        raise ValueError(
+            "FLEETOPS_API_URL environment variable is not set. "
+            "Please configure your FleetOps API endpoint."
+        )
+    
+    timeout = 10
+    
+    try:
+        response = requests.post(
+            f"{base_url}{endpoint}",
+            json=data,
+            timeout=timeout,
+            headers={"Content-Type": "application/json"}
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.Timeout:
+        raise Exception(f"API call to {endpoint} timed out after {timeout}s")
+    except requests.RequestException as e:
+        raise Exception(f"API call failed: {str(e)}")
+        ]]>
+      </rest_api_call>
+      
+      <error_handling>
+        <![CDATA[
+try:
+    # API call
+    result = call_api(endpoint, data)
+    
+    # Validate response
+    if not result or "error" in result:
+        return ErrorOutput(
+            status="ERROR",
+            message=result.get("error", "Unknown error"),
+            data={}
+        )
+    
+    # Process successful response
+    return SuccessOutput(
+        status="SUCCESS",
+        data=result
+    )
+    
+except requests.Timeout:
+    return ErrorOutput(
+        status="TIMEOUT",
+        message="API request timed out",
+        data={}
+    )
+    
+except requests.RequestException as e:
+    return ErrorOutput(
+        status="ERROR",
+        message=f"API request failed: {str(e)}",
+        data={}
+    )
+    
+except Exception as e:
+    return ErrorOutput(
+        status="ERROR",
+        message=f"Unexpected error: {str(e)}",
+        data={}
+    )
+        ]]>
+      </error_handling>
+    </api_integration_pattern>
+
+    <complete_tool_example>
+      <![CDATA[
+"""
+Weather Forecast Tool for FleetOps Cold-Chain Logistics
+
+This tool provides weather forecasts along truck routes by fetching
+truck data from the FleetOps backend API.
+"""
+
+from typing import List, Dict, Any, Optional
+from pydantic import BaseModel, Field
+from ibm_watsonx_orchestrate.agent_builder.tools import tool
+import requests
+import os
+from datetime import datetime, timezone
+
+
+class WeatherSegment(BaseModel):
+    """Weather information for a route segment"""
+    location: str = Field(description="Location name or waypoint")
+    coordinates: Dict[str, float] = Field(description="Latitude and longitude")
+    condition: str = Field(description="Weather condition (Clear, Rain, Snow, etc.)")
+    severity: str = Field(description="Severity level (CLEAR, MODERATE, SEVERE)")
+    temperature: float = Field(description="Temperature in Fahrenheit")
+    windSpeed: float = Field(description="Wind speed in mph")
+    visibility: float = Field(description="Visibility in miles")
+    estimatedDelay: int = Field(description="Estimated delay in minutes")
+
+
+class WeatherForecastInput(BaseModel):
+    """Input for weather forecast tool"""
+    truck_id: str = Field(description="Truck identifier (e.g., TRUCK-001)")
+    inject_weather_condition: Optional[str] = Field(
+        None,
+        description="Optional weather condition to inject for testing"
+    )
+
+
+class WeatherForecastOutput(BaseModel):
+    """Output from weather forecast tool"""
+    severeWeatherDetected: bool = Field(description="Whether severe weather was detected")
+    overallWeatherRisk: int = Field(description="Overall risk score (0-100)")
+    totalDelayMinutes: int = Field(description="Total estimated delay in minutes")
+    segments: List[WeatherSegment] = Field(description="Weather data for each segment")
+
+
+@tool
+def get_route_weather_forecast(
+    input_data: WeatherForecastInput
+) -> WeatherForecastOutput:
+    """
+    Get weather forecast along a truck's route.
+    
+    This tool fetches the truck's route from the FleetOps API and generates
+    weather forecasts for each waypoint along the route.
+    
+    Args:
+        input_data: Input containing truck_id and optional weather injection
+        
+    Returns:
+        WeatherForecastOutput: Weather analysis with risk assessment
+    """
+    # Get API configuration - must be provided by user
+    api_url = os.environ.get('FLEETOPS_API_URL')
+    
+    if not api_url:
+        raise ValueError(
+            "FLEETOPS_API_URL environment variable is not set. "
+            "Please configure your FleetOps API endpoint before using this tool."
+        )
+    
+    timeout = 10
+    
+    try:
+        # Fetch truck data from API
+        response = requests.get(
+            f"{api_url}/api/trucks/{input_data.truck_id}",
+            timeout=timeout
+        )
+        response.raise_for_status()
+        truck_data = response.json()
+        
+        # Extract route information
+        route = truck_data.get("route", {})
+        waypoints = route.get("waypoints", [])
+        
+        if not waypoints:
+            return WeatherForecastOutput(
+                severeWeatherDetected=False,
+                overallWeatherRisk=0,
+                totalDelayMinutes=0,
+                segments=[]
+            )
+        
+        # Generate weather forecast for each waypoint
+        segments = []
+        total_delay = 0
+        max_risk = 0
+        severe_detected = False
+        
+        for waypoint in waypoints:
+            # Generate or fetch weather data
+            weather = generate_weather_for_waypoint(
+                waypoint,
+                input_data.inject_weather_condition
+            )
+            
+            segment = WeatherSegment(
+                location=waypoint.get("city", "Unknown"),
+                coordinates={
+                    "latitude": waypoint.get("latitude", 0.0),
+                    "longitude": waypoint.get("longitude", 0.0)
+                },
+                condition=weather["condition"],
+                severity=weather["severity"],
+                temperature=weather["temperature"],
+                windSpeed=weather["windSpeed"],
+                visibility=weather["visibility"],
+                estimatedDelay=weather["estimatedDelay"]
+            )
+            
+            segments.append(segment)
+            total_delay += weather["estimatedDelay"]
+            
+            if weather["severity"] == "SEVERE":
+                severe_detected = True
+                max_risk = max(max_risk, 80)
+            elif weather["severity"] == "MODERATE":
+                max_risk = max(max_risk, 50)
+        
+        return WeatherForecastOutput(
+            severeWeatherDetected=severe_detected,
+            overallWeatherRisk=max_risk,
+            totalDelayMinutes=total_delay,
+            segments=segments
+        )
+        
+    except requests.Timeout:
+        raise Exception(f"API request timed out after {timeout}s")
+    except requests.RequestException as e:
+        raise Exception(f"Failed to fetch truck data: {str(e)}")
+    except Exception as e:
+        raise Exception(f"Error generating weather forecast: {str(e)}")
+
+
+def generate_weather_for_waypoint(
+    waypoint: dict,
+    forced_condition: Optional[str] = None
+) -> dict:
+    """
+    Generate weather data for a waypoint.
+    
+    Args:
+        waypoint: Waypoint information
+        forced_condition: Optional forced weather condition
+        
+    Returns:
+        dict: Weather data
+    """
+    # Implementation details...
+    pass
+      ]]>
+    </complete_tool_example>
+  </tool_implementation_pattern>
+
+  <requirements_txt_pattern>
+    <purpose>Define Python dependencies for the tool</purpose>
+    <example>
+      <![CDATA[
+# Core dependencies
+ibm-watsonx-orchestrate>=1.0.0
+pydantic>=2.0.0
+requests>=2.31.0
+
+# Optional dependencies
+python-dotenv>=1.0.0  # For environment variables
+      ]]>
+    </example>
+    <best_practices>
+      <practice>Pin major versions for stability</practice>
+      <practice>Include comments for clarity</practice>
+      <practice>List core dependencies first</practice>
+      <practice>Group related dependencies</practice>
+    </best_practices>
+  </requirements_txt_pattern>
+
+  <fleetops_tool_patterns>
+    <pattern name="api_integration_tool">
+      <description>Tool that calls FleetOps backend API</description>
+      <characteristics>
+        <item>Uses requests library</item>
+        <item>Handles timeouts and errors</item>
+        <item>Validates API responses</item>
+        <item>Returns structured Pydantic models</item>
+      </characteristics>
+    </pattern>
+    
+    <pattern name="data_analysis_tool">
+      <description>Tool that analyzes data and makes decisions</description>
+      <characteristics>
+        <item>Receives complex input from multiple sources</item>
+        <item>Performs calculations and risk assessment</item>
+        <item>Returns detailed analysis results</item>
+        <item>Includes reasoning and recommendations</item>
+      </characteristics>
+    </pattern>
+    
+    <pattern name="notification_tool">
+      <description>Tool that sends notifications</description>
+      <characteristics>
+        <item>Integrates with external services (WhatsApp, SMS, email)</item>
+        <item>Formats messages appropriately</item>
+        <item>Handles delivery failures gracefully</item>
+        <item>Returns delivery status</item>
+      </characteristics>
+    </pattern>
+  </fleetops_tool_patterns>
+
+  <best_practices>
+    <practice>CRITICAL: Always ask users to define input/output schemas before implementation</practice>
+    <practice>CRITICAL: Create Pydantic models based on user specifications, not templates</practice>
+    <practice>Never assume field names or types - always ask the user</practice>
+    <practice>Use descriptive tool and parameter names from user specifications</practice>
+    <practice>Write comprehensive docstrings</practice>
+    <practice>Define clear Pydantic models matching user's exact requirements</practice>
+    <practice>Include proper error handling</practice>
+    <practice>Set appropriate timeouts for API calls</practice>
+    <practice>Validate all inputs and outputs</practice>
+    <practice>Use environment variables for configuration (never hardcode URLs)</practice>
+    <practice>Add type hints for all functions</practice>
+    <practice>Keep tools focused on single responsibility</practice>
+    <practice>Test tools independently before integration</practice>
+    <practice>Confirm schema implementation matches user specifications</practice>
+  </best_practices>
+
+  <common_pitfalls>
+    <pitfall>
+      <issue>Missing error handling for API calls</issue>
+      <solution>Always wrap API calls in try-except blocks</solution>
+    </pitfall>
+    
+    <pitfall>
+      <issue>Hardcoded API URLs or credentials</issue>
+      <solution>Use environment variables or credentials parameter</solution>
+    </pitfall>
+    
+    <pitfall>
+      <issue>No timeout on requests</issue>
+      <solution>Always set timeout parameter in requests</solution>
+    </pitfall>
+    
+    <pitfall>
+      <issue>Incomplete Pydantic models</issue>
+      <solution>Define all fields with proper types and descriptions</solution>
+    </pitfall>
+    
+    <pitfall>
+      <issue>Poor error messages</issue>
+      <solution>Provide clear, actionable error messages</solution>
+    </pitfall>
+  </common_pitfalls>
+</tool_development_patterns>
+
+<!-- Made with Bob -->

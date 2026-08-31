@@ -1,0 +1,224 @@
+<fleetops_discovery_and_workflow>
+  <overview>
+    This file defines the discovery phase and overall workflow for building FleetOps cold-chain logistics agents and tools.
+    The mode follows a structured approach: Discovery → Planning → Implementation → Deployment → Documentation.
+  </overview>
+
+  <discovery_phase>
+    <purpose>
+      Understand the user's requirements before building any agents or tools.
+      Gather information about the logistics workflow, API endpoints, and integration needs.
+    </purpose>
+
+    <initial_questions>
+      <question_group name="project_context">
+        <question>Are you working with an existing FleetOps project or starting fresh?</question>
+        <question>Do you have existing agents or tools that need modification?</question>
+        <question>What is the primary goal of this agent/tool? (e.g., weather analysis, routing, decision-making, notifications)</question>
+      </question_group>
+
+      <question_group name="domain_understanding">
+        <question>What type of cargo or shipment does this involve? (e.g., pharmaceuticals, food, chemicals)</question>
+        <question>What are the critical temperature thresholds or constraints?</question>
+        <question>What triggers the need for this agent? (e.g., temperature alerts, route deviations, weather conditions)</question>
+      </question_group>
+
+      <question_group name="technical_requirements">
+        <question>What is your FleetOps API base URL? (e.g., https://your-api.example.com or http://localhost:8085)</question>
+        <question>What backend APIs or services does this agent/tool need to integrate with?</question>
+      </question_group>
+
+      <question_group name="input_output_schema">
+        <question>What data fields does the agent need to receive as input? Please describe each field with its type and purpose.</question>
+        <question>What data fields should the agent output? Please describe the complete output schema.</question>
+        <question>Are there any nested objects or arrays in the input/output? Please describe their structure.</question>
+        <question>What are the data types for each field? (string, integer, float, boolean, array, object)</question>
+      </question_group>
+
+      <question_group name="workflow_integration">
+        <question>Where does this agent fit in the overall workflow? (beginning, middle, end)</question>
+        <question>What agent should run before this one?</question>
+        <question>What agent should run after this one?</question>
+        <question>How should errors be handled? (retry, fallback, abort)</question>
+      </question_group>
+    </initial_questions>
+
+    <discovery_best_practices>
+      <practice>ALWAYS ask for the FleetOps API URL first - never use hardcoded URLs</practice>
+      <practice>Ask 2-3 questions at a time to avoid overwhelming the user</practice>
+      <practice>Use follow-up questions to clarify ambiguous answers</practice>
+      <practice>Analyze existing codebase (agents/, tools/) to understand patterns</practice>
+      <practice>Identify API endpoints by reading existing tool implementations</practice>
+      <practice>Document all gathered requirements including API URL before proceeding</practice>
+      <practice>Remind users to set FLEETOPS_API_URL environment variable or use credentials</practice>
+    </discovery_best_practices>
+  </discovery_phase>
+
+  <workflow_phases>
+    <phase number="1" name="Discovery">
+      <description>Gather requirements and understand the use case</description>
+      <actions>
+        <action>Ask discovery questions about the agent/tool purpose</action>
+        <action>Ask user to define input schema with field names, types, and descriptions</action>
+        <action>Ask user to define output schema with field names, types, and descriptions</action>
+        <action>Clarify any nested structures or complex data types</action>
+        <action>Analyze existing codebase if present (but don't assume schemas)</action>
+        <action>Identify integration points and dependencies</action>
+        <action>Document requirements clearly including complete schemas</action>
+      </actions>
+      <completion_criteria>
+        <criterion>All required information gathered</criterion>
+        <criterion>Input schema fully defined by user</criterion>
+        <criterion>Output schema fully defined by user</criterion>
+        <criterion>User confirms understanding is correct</criterion>
+        <criterion>Integration points identified</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase number="2" name="Planning">
+      <description>Create a detailed implementation plan</description>
+      <actions>
+        <action>Ask user if they want a plan.md file created</action>
+        <action>If yes, switch to Plan mode to create detailed plan</action>
+        <action>Include agent structure, tool design, API integration approach</action>
+        <action>Define Pydantic schemas based on user-provided input/output specifications</action>
+        <action>Map user's field descriptions to proper Pydantic Field definitions</action>
+        <action>Outline error handling strategy</action>
+        <action>Get user approval before implementation</action>
+      </actions>
+      <completion_criteria>
+        <criterion>Plan.md created and reviewed</criterion>
+        <criterion>Pydantic schemas match user's specifications exactly</criterion>
+        <criterion>User approves the approach</criterion>
+        <criterion>All technical decisions documented</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase number="3" name="Implementation">
+      <description>Build the agent YAML and Python tools</description>
+      <actions>
+        <action>Create agent YAML file with proper structure</action>
+        <action>Write agent instructions with JSON output format matching user's schema</action>
+        <action>Implement Python tools with @tool decorator</action>
+        <action>Define Pydantic models based on user-provided schemas (not existing patterns)</action>
+        <action>Ensure field names, types, and descriptions match user specifications</action>
+        <action>Add API integration code with error handling</action>
+        <action>Create requirements.txt with dependencies</action>
+        <action>Implement retry logic and fallback strategies</action>
+      </actions>
+      <completion_criteria>
+        <criterion>Agent YAML is valid and complete</criterion>
+        <criterion>Python tools follow best practices</criterion>
+        <criterion>Pydantic models exactly match user-defined schemas</criterion>
+        <criterion>No assumptions made about data structure</criterion>
+        <criterion>Error handling implemented</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase number="4" name="Testing">
+      <description>Validate agent and tool functionality</description>
+      <actions>
+        <action>Review agent instructions for clarity</action>
+        <action>Validate JSON output format specifications</action>
+        <action>Check Pydantic model definitions</action>
+        <action>Verify API integration patterns</action>
+        <action>Ensure error handling covers edge cases</action>
+      </actions>
+      <completion_criteria>
+        <criterion>Agent instructions are clear and complete</criterion>
+        <criterion>Tool implementations are correct</criterion>
+        <criterion>Data validation is comprehensive</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase number="5" name="Deployment">
+      <description>Prepare for deployment to watsonx Orchestrate</description>
+      <actions>
+        <action>Generate deployment script (deploy.sh)</action>
+        <action>Include orchestrate CLI commands</action>
+        <action>Add environment setup steps</action>
+        <action>Create rollback script if needed</action>
+        <action>Document deployment procedure</action>
+      </actions>
+      <completion_criteria>
+        <criterion>Deployment script is executable</criterion>
+        <criterion>All commands are correct</criterion>
+        <criterion>Documentation is complete</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase number="6" name="Documentation">
+      <description>Create comprehensive documentation</description>
+      <actions>
+        <action>Generate README.md for the agent/tool</action>
+        <action>Document agent purpose and workflow</action>
+        <action>Explain tool usage and parameters</action>
+        <action>Provide example inputs and outputs</action>
+        <action>Include troubleshooting guide</action>
+      </actions>
+      <completion_criteria>
+        <criterion>README is clear and comprehensive</criterion>
+        <criterion>Examples are accurate</criterion>
+        <criterion>Troubleshooting covers common issues</criterion>
+      </completion_criteria>
+    </phase>
+  </workflow_phases>
+
+  <codebase_analysis>
+    <when_to_analyze>
+      Analyze the existing codebase when:
+      - User mentions existing agents or tools
+      - Modifying or extending existing functionality
+      - Understanding integration patterns
+      - Learning API endpoint structures
+    </when_to_analyze>
+
+    <what_to_analyze>
+      <analyze_agents>
+        <action>Read existing agent YAML files in agents/ directory</action>
+        <action>Understand agent instructions and output formats</action>
+        <action>Identify tool usage patterns</action>
+        <action>Map agent collaboration workflows</action>
+      </analyze_agents>
+
+      <analyze_tools>
+        <action>Read Python tool files in tools/ directories</action>
+        <action>Understand Pydantic model patterns</action>
+        <action>Identify API endpoints and authentication</action>
+        <action>Learn error handling approaches</action>
+        <action>Note requirements.txt dependencies</action>
+      </analyze_tools>
+
+      <analyze_apis>
+        <action>Identify backend API base URLs</action>
+        <action>Map endpoint patterns</action>
+        <action>Understand request/response formats</action>
+        <action>Note authentication mechanisms</action>
+      </analyze_apis>
+    </what_to_analyze>
+
+    <analysis_output>
+      <output>Summarize findings to user</output>
+      <output>Identify reusable patterns</output>
+      <output>Note any inconsistencies or issues</output>
+      <output>Suggest improvements if appropriate</output>
+    </analysis_output>
+  </codebase_analysis>
+
+  <important_rules>
+    <rule>CRITICAL: Always ask users for their FleetOps API URL - NEVER hardcode production URLs</rule>
+    <rule>CRITICAL: Always ask users to define input/output schemas - NEVER assume or reuse existing schemas</rule>
+    <rule>Always start with discovery questions before implementation</rule>
+    <rule>Ask users to specify each field name, type, and description for inputs and outputs</rule>
+    <rule>Create Pydantic models based on user specifications, not existing patterns</rule>
+    <rule>Offer to create plan.md before coding</rule>
+    <rule>Never assume requirements - always ask</rule>
+    <rule>Analyze existing code to understand patterns but don't copy schemas</rule>
+    <rule>Follow the sequential workflow phases</rule>
+    <rule>Get user approval at major decision points</rule>
+    <rule>Document everything clearly</rule>
+    <rule>Remind users to configure FLEETOPS_API_URL environment variable</rule>
+  </important_rules>
+</fleetops_discovery_and_workflow>
+
+<!-- Made with Bob -->

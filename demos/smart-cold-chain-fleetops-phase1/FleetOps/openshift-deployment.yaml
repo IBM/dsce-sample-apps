@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleetops
+  labels:
+    app: fleetops
+    app.kubernetes.io/name: fleetops
+    app.kubernetes.io/component: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: fleetops
+  template:
+    metadata:
+      labels:
+        app: fleetops
+    spec:
+      serviceAccountName: fleetops-sa
+      terminationGracePeriodSeconds: 10
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - fleetops
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: fleetops
+        # Replace with your image: <registry>/<namespace>/fleetops:<tag>
+        # Example: docker.io/myorg/fleetops:v1.0.0
+        # Build with: docker build -t <registry>/<namespace>/fleetops:<tag> FleetOps/
+        # Push with:  docker push <registry>/<namespace>/fleetops:<tag>
+        image: <your-registry>/<your-namespace>/fleetops:<tag>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: fleetops-observability-config
+        - secretRef:
+            name: fleetops-secrets
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: fleetops-execution-history
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetops
+  labels:
+    app: fleetops
+spec:
+  selector:
+    app: fleetops
+  ports:
+  - name: http
+    port: 4000
+    targetPort: 4000
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: fleetops
+  labels:
+    app: fleetops
+spec:
+  to:
+    kind: Service
+    name: fleetops
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+# Made with Bob

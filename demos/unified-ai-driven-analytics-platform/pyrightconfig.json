@@ -1,0 +1,14 @@
+{
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    ".venv",
+    ".venv-demo",
+    "mcp-servers/query-layer/.venv"
+  ],
+  "ignore": [
+    "mcp-servers/query-layer/server.py"
+  ],
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": false
+}

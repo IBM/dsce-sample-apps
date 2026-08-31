@@ -1,0 +1,255 @@
+<fleetops_domain_knowledge>
+  <overview>
+    This file contains FleetOps-specific domain knowledge for cold-chain logistics,
+    agent orchestration patterns, and common workflows.
+  </overview>
+
+  <cold_chain_logistics>
+    <definition>
+      Cold-chain logistics involves transporting temperature-sensitive cargo
+      (pharmaceuticals, food, chemicals) while maintaining specific temperature ranges.
+    </definition>
+
+    <key_concepts>
+      <concept name="temperature_monitoring">
+        <description>Continuous monitoring of cargo temperature</description>
+        <critical_thresholds>
+          <threshold type="pharmaceuticals">2-8°C (36-46°F)</threshold>
+          <threshold type="frozen_goods">-18°C (0°F) or below</threshold>
+          <threshold type="perishables">0-4°C (32-39°F)</threshold>
+        </critical_thresholds>
+      </concept>
+
+      <concept name="time_to_spoilage">
+        <description>Time remaining before cargo spoils if temperature exceeds threshold</description>
+        <urgency_levels>
+          <level name="CRITICAL">≤60 minutes</level>
+          <level name="HIGH">61-120 minutes</level>
+          <level name="MEDIUM">121-180 minutes</level>
+          <level name="LOW">>180 minutes</level>
+        </urgency_levels>
+      </concept>
+
+      <concept name="emergency_reroute">
+        <description>Immediate route change to nearest service facility</description>
+        <triggers>
+          <trigger>Coolant system failure</trigger>
+          <trigger>Temperature exceeding critical threshold</trigger>
+          <trigger>Severe weather on planned route</trigger>
+          <trigger>Mechanical breakdown</trigger>
+        </triggers>
+      </concept>
+    </key_concepts>
+  </cold_chain_logistics>
+
+  <agent_orchestration_workflow>
+    <sequential_chain>
+      <description>
+        FleetOps uses a sequential agent chain where each agent's output
+        becomes input for the next agent.
+      </description>
+
+      <workflow>
+        <step number="1" agent="weather_advisor">
+          <input>truck_id</input>
+          <action>Analyze weather conditions along route</action>
+          <output>Weather analysis with risk assessment</output>
+        </step>
+
+        <step number="2" agent="station_agent">
+          <input>Weather analysis, search criteria</input>
+          <action>Search for service facilities</action>
+          <output>List of available facilities with capabilities</output>
+        </step>
+
+        <step number="3" agent="route_optimization_agent">
+          <input>Facilities list, truck location</input>
+          <action>Calculate optimal routes to facilities</action>
+          <output>Ranked routes with travel times and costs</output>
+        </step>
+
+        <step number="4" agent="decision_agent">
+          <input>All previous outputs + telemetry + cargo data</input>
+          <action>Analyze all data and make final decision</action>
+          <output>Decision with selected route, facility, and recommendations</output>
+        </step>
+
+        <step number="5" agent="notification_agent">
+          <input>Decision output</input>
+          <action>Send WhatsApp notification to driver</action>
+          <output>Notification delivery status</output>
+        </step>
+      </workflow>
+    </sequential_chain>
+
+    <data_flow_principles>
+      <principle>Each agent receives ALL data from previous agents</principle>
+      <principle>Agents pass data through without modification</principle>
+      <principle>Only the Decision Agent makes recommendations</principle>
+      <principle>All agents output pure JSON for next agent</principle>
+      <principle>Error handling at each step with fallback strategies</principle>
+    </data_flow_principles>
+  </agent_orchestration_workflow>
+
+  <fleetops_api_patterns>
+    <base_url>
+      <description>
+        The FleetOps API base URL should be provided by the user through environment variables
+        or agent credentials. Never hardcode production URLs in tools or agents.
+      </description>
+      <configuration_methods>
+        <method>Environment variable: FLEETOPS_API_URL</method>
+        <method>Agent credentials: api_url parameter</method>
+        <method>User prompt: Ask user for their API endpoint</method>
+      </configuration_methods>
+      <examples>
+        <example type="production">https://your-fleetops-api.example.com</example>
+        <example type="local">http://localhost:8085</example>
+        <example type="staging">https://staging-fleetops-api.example.com</example>
+      </examples>
+    </base_url>
+
+    <common_endpoints>
+      <endpoint path="/api/trucks/{truck_id}">
+        <method>GET</method>
+        <description>Get truck information including route and telemetry</description>
+      </endpoint>
+
+      <endpoint path="/api/stations/search">
+        <method>POST</method>
+        <description>Search for service facilities</description>
+      </endpoint>
+
+      <endpoint path="/api/weather/route">
+        <method>POST</method>
+        <description>Get weather forecast along route</description>
+      </endpoint>
+
+      <endpoint path="/api/routes/optimize">
+        <method>POST</method>
+        <description>Calculate optimal routes</description>
+      </endpoint>
+    </common_endpoints>
+
+    <authentication>
+      <type>None (internal API)</type>
+      <note>Future versions may require API keys</note>
+    </authentication>
+  </fleetops_api_patterns>
+
+  <reference_data_models>
+    <important_note>
+      These are REFERENCE EXAMPLES ONLY from the FleetOps domain.
+      DO NOT assume users want these exact data models.
+      ALWAYS ask users to define their own input/output schemas.
+      These examples are provided for context only, not for reuse.
+    </important_note>
+
+    <example_model name="TelemetryData">
+      <note>Example only - ask user for their actual telemetry fields</note>
+      <example_fields>
+        <field name="temperature" type="float">Current cargo temperature</field>
+        <field name="coolantStatus" type="string">Coolant system status</field>
+        <field name="location" type="LocationCoordinates">Current GPS location</field>
+      </example_fields>
+    </example_model>
+
+    <example_model name="CargoData">
+      <note>Example only - ask user for their actual cargo fields</note>
+      <example_fields>
+        <field name="value" type="float">Cargo value in USD</field>
+        <field name="criticalThreshold" type="float">Critical temperature threshold</field>
+        <field name="timeToSpoilage" type="int">Minutes until spoilage</field>
+      </example_fields>
+    </example_model>
+
+    <example_model name="WeatherAnalysis">
+      <note>Example only - ask user for their actual weather analysis fields</note>
+      <example_fields>
+        <field name="severeWeatherDetected" type="bool">Severe weather flag</field>
+        <field name="overallWeatherRisk" type="int">Risk score 0-100</field>
+        <field name="totalDelayMinutes" type="int">Total estimated delay</field>
+        <field name="segments" type="List[WeatherSegment]">Weather per waypoint</field>
+      </example_fields>
+    </example_model>
+
+    <example_model name="FacilityInfo">
+      <note>Example only - ask user for their actual facility fields</note>
+      <example_fields>
+        <field name="stationId" type="string">Facility identifier</field>
+        <field name="name" type="string">Facility name</field>
+        <field name="location" type="LocationCoordinates">GPS coordinates</field>
+        <field name="distance" type="float">Distance in km</field>
+        <field name="travelTime" type="int">Travel time in minutes</field>
+        <field name="onPlannedRoute" type="bool">On original route</field>
+        <field name="baysAvailable" type="int">Available service bays</field>
+        <field name="capabilities" type="Dict">Service capabilities</field>
+      </example_fields>
+    </example_model>
+
+    <usage_guideline>
+      Use these examples to understand the FleetOps domain, but ALWAYS ask users
+      to specify their own data models. Never copy these models directly into
+      implementations without user confirmation.
+    </usage_guideline>
+  </reference_data_models>
+
+  <decision_making_logic>
+    <risk_scoring>
+      <component name="temperature_risk" max_points="40">
+        <level name="CRITICAL" points="40">≥5°C from threshold</level>
+        <level name="HIGH" points="30">3-5°C from threshold</level>
+        <level name="MEDIUM" points="20">1-3°C from threshold</level>
+        <level name="LOW" points="10"><1°C from threshold</level>
+      </component>
+
+      <component name="time_criticality" max_points="20">
+        <level name="CRITICAL" points="20">≤60 minutes to spoilage</level>
+        <level name="HIGH" points="15">61-120 minutes</level>
+        <level name="MEDIUM" points="10">121-180 minutes</level>
+        <level name="LOW" points="5">>180 minutes</level>
+      </component>
+
+      <component name="weather_risk" max_points="30">
+        <level name="CRITICAL" points="30">Risk ≥70</level>
+        <level name="HIGH" points="20">Risk 50-69</level>
+        <level name="MEDIUM" points="10">Risk 30-49</level>
+        <level name="LOW" points="0">Risk <30</level>
+      </component>
+
+      <component name="facility_availability" max_points="10">
+        <description>Based on facility score and service availability</description>
+      </component>
+    </risk_scoring>
+
+    <decision_thresholds>
+      <threshold risk_score="≥60">
+        <decision>EMERGENCY_REROUTE</decision>
+        <urgency>CRITICAL</urgency>
+      </threshold>
+      <threshold risk_score="40-59">
+        <decision>EMERGENCY_REROUTE</decision>
+        <urgency>HIGH</urgency>
+      </threshold>
+      <threshold risk_score="20-39">
+        <decision>CONTROLLED_REROUTE</decision>
+        <urgency>MEDIUM</urgency>
+      </threshold>
+      <threshold risk_score="<20">
+        <decision>CONTINUE</decision>
+        <urgency>LOW</urgency>
+      </threshold>
+    </decision_thresholds>
+  </decision_making_logic>
+
+  <best_practices>
+    <practice>Always prioritize cargo preservation over cost savings</practice>
+    <practice>Include safety buffers in time calculations (minimum 30 minutes)</practice>
+    <practice>Consider weather risks when selecting routes</practice>
+    <practice>Verify facility capabilities match cargo requirements</practice>
+    <practice>Document all decision reasoning clearly</practice>
+    <practice>Provide post-recovery plans for rerouted shipments</practice>
+  </best_practices>
+</fleetops_domain_knowledge>
+
+<!-- Made with Bob -->
