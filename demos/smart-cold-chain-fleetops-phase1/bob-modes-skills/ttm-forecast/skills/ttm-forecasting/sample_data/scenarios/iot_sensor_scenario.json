@@ -1,0 +1,33 @@
+{
+  "scenario_name": "IoT Sensor Prediction",
+  "description": "Predict sensor values for predictive maintenance and anomaly detection",
+  "use_case": "Equipment monitoring and failure prevention",
+  "frequency": "5min",
+  "context_length": 512,
+  "prediction_length": 96,
+  "unit": "temperature_celsius",
+  "threshold": 85.0,
+  "data": [
+    {"timestamp": "2024-01-01T00:00:00Z", "value": 72.5},
+    {"timestamp": "2024-01-01T00:05:00Z", "value": 73.2},
+    {"timestamp": "2024-01-01T00:10:00Z", "value": 73.8},
+    {"timestamp": "2024-01-01T00:15:00Z", "value": 74.1},
+    {"timestamp": "2024-01-01T00:20:00Z", "value": 74.5},
+    {"timestamp": "2024-01-01T00:25:00Z", "value": 75.0},
+    {"timestamp": "2024-01-01T00:30:00Z", "value": 75.8},
+    {"timestamp": "2024-01-01T00:35:00Z", "value": 76.2},
+    {"timestamp": "2024-01-01T00:40:00Z", "value": 76.8},
+    {"timestamp": "2024-01-01T00:45:00Z", "value": 77.5},
+    {"timestamp": "2024-01-01T00:50:00Z", "value": 78.0},
+    {"timestamp": "2024-01-01T00:55:00Z", "value": 78.5},
+    {"timestamp": "2024-01-01T01:00:00Z", "value": 79.2},
+    {"timestamp": "2024-01-01T01:05:00Z", "value": 79.8},
+    {"timestamp": "2024-01-01T01:10:00Z", "value": 80.1},
+    {"timestamp": "2024-01-01T01:15:00Z", "value": 80.5},
+    {"timestamp": "2024-01-01T01:20:00Z", "value": 81.0},
+    {"timestamp": "2024-01-01T01:25:00Z", "value": 81.5},
+    {"timestamp": "2024-01-01T01:30:00Z", "value": 82.0},
+    {"timestamp": "2024-01-01T01:35:00Z", "value": 82.5}
+  ],
+  "notes": "Sample shows gradual temperature increase. Threshold at 85°C triggers maintenance alert. Extend to 512+ readings (42.6 hours) for production."
+}

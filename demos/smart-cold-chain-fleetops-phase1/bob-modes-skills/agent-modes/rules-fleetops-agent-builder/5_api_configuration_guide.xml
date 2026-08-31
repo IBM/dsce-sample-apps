@@ -1,0 +1,323 @@
+<api_configuration_guide>
+  <overview>
+    This file provides guidance on how to properly configure API endpoints for FleetOps agents and tools.
+    NEVER hardcode production URLs - always require user configuration.
+  </overview>
+
+  <critical_principle>
+    <rule>NEVER hardcode production API URLs in agent specifications or tool implementations</rule>
+    <rule>ALWAYS ask users to provide their API endpoint during discovery</rule>
+    <rule>ALWAYS validate that API URL is configured before tool execution</rule>
+    <rule>ALWAYS provide clear error messages when API URL is missing</rule>
+  </critical_principle>
+
+  <configuration_methods>
+    <method name="environment_variable" priority="1">
+      <description>
+        The preferred method for configuring API endpoints. Users set the FLEETOPS_API_URL
+        environment variable before running agents.
+      </description>
+      <example>
+        <![CDATA[
+# In shell or .env file
+export FLEETOPS_API_URL="https://your-fleetops-api.example.com"
+
+# In Python tool
+import os
+
+api_url = os.environ.get('FLEETOPS_API_URL')
+if not api_url:
+    raise ValueError(
+        "FLEETOPS_API_URL environment variable is not set. "
+        "Please configure your FleetOps API endpoint."
+    )
+        ]]>
+      </example>
+      <advantages>
+        <advantage>Easy to change without modifying code</advantage>
+        <advantage>Works across all tools and agents</advantage>
+        <advantage>Supports different environments (dev, staging, prod)</advantage>
+      </advantages>
+    </method>
+
+    <method name="agent_credentials" priority="2">
+      <description>
+        Use the @expect_credentials decorator to require API URL as a credential parameter.
+        This allows per-agent configuration.
+      </description>
+      <example>
+        <![CDATA[
+from ibm_watsonx_orchestrate.agent_builder.tools import tool, expect_credentials
+
+@tool
+@expect_credentials(["api_url"])
+def my_tool(input_data: MyInput, credentials: dict) -> MyOutput:
+    """
+    Tool that requires API URL as credential.
+    
+    Args:
+        input_data: Tool input parameters
+        credentials: Dictionary containing 'api_url'
+    """
+    api_url = credentials.get("api_url")
+    
+    if not api_url:
+        raise ValueError("api_url credential is required")
+    
+    # Use api_url for API calls
+    response = requests.get(f"{api_url}/api/endpoint")
+    # ...
+        ]]>
+      </example>
+      <advantages>
+        <advantage>Per-agent configuration flexibility</advantage>
+        <advantage>Explicit credential management</advantage>
+        <advantage>Better for multi-tenant scenarios</advantage>
+      </advantages>
+    </method>
+
+    <method name="user_prompt" priority="3">
+      <description>
+        During discovery phase, explicitly ask users for their API endpoint and document it.
+      </description>
+      <discovery_question>
+        What is your FleetOps API base URL? (e.g., https://your-api.example.com or http://localhost:8085)
+      </discovery_question>
+      <follow_up_suggestions>
+        <suggest>https://my-fleetops-api.example.com</suggest>
+        <suggest>http://localhost:8085 (local development)</suggest>
+        <suggest>https://staging-fleetops-api.example.com</suggest>
+      </follow_up_suggestions>
+    </method>
+  </configuration_methods>
+
+  <implementation_pattern>
+    <tool_template>
+      <![CDATA[
+"""
+FleetOps Tool with Proper API Configuration
+
+This tool demonstrates the correct pattern for API endpoint configuration.
+"""
+
+from typing import Dict, Any
+from pydantic import BaseModel, Field
+from ibm_watsonx_orchestrate.agent_builder.tools import tool
+import requests
+import os
+
+
+class ToolInput(BaseModel):
+    """Input schema"""
+    param: str = Field(description="Parameter description")
+
+
+class ToolOutput(BaseModel):
+    """Output schema"""
+    result: str = Field(description="Result description")
+    status: str = Field(description="Operation status")
+
+
+@tool
+def my_fleetops_tool(input_data: ToolInput) -> ToolOutput:
+    """
+    Tool that integrates with FleetOps API.
+    
+    Requires FLEETOPS_API_URL environment variable to be set.
+    
+    Args:
+        input_data: Tool input parameters
+        
+    Returns:
+        ToolOutput: Result of operation
+        
+    Raises:
+        ValueError: If FLEETOPS_API_URL is not configured
+        requests.RequestException: If API call fails
+    """
+    # Get API URL from environment - NEVER use hardcoded fallback
+    api_url = os.environ.get('FLEETOPS_API_URL')
+    
+    if not api_url:
+        raise ValueError(
+            "FLEETOPS_API_URL environment variable is not set. "
+            "Please configure your FleetOps API endpoint before using this tool. "
+            "Example: export FLEETOPS_API_URL='https://your-api.example.com'"
+        )
+    
+    # Validate URL format (optional but recommended)
+    if not api_url.startswith(('http://', 'https://')):
+        raise ValueError(
+            f"Invalid FLEETOPS_API_URL format: {api_url}. "
+            "URL must start with http:// or https://"
+        )
+    
+    timeout = 10
+    
+    try:
+        # Make API call
+        response = requests.get(
+            f"{api_url}/api/endpoint",
+            timeout=timeout,
+            headers={"Content-Type": "application/json"}
+        )
+        response.raise_for_status()
+        data = response.json()
+        
+        return ToolOutput(
+            result="Success",
+            status="OK"
+        )
+        
+    except requests.Timeout:
+        raise Exception(f"API request to {api_url} timed out after {timeout}s")
+    except requests.RequestException as e:
+        raise Exception(f"API request failed: {str(e)}")
+    except Exception as e:
+        raise Exception(f"Unexpected error: {str(e)}")
+      ]]>
+    </tool_template>
+  </implementation_pattern>
+
+  <documentation_requirements>
+    <requirement>
+      Always include API configuration instructions in tool/agent README files
+    </requirement>
+    <requirement>
+      Document the required environment variables clearly
+    </requirement>
+    <requirement>
+      Provide examples for different environments (local, staging, production)
+    </requirement>
+    <requirement>
+      Include troubleshooting steps for common configuration issues
+    </requirement>
+  </documentation_requirements>
+
+  <readme_template>
+    <![CDATA[
+# FleetOps Agent/Tool Name
+
+## Configuration
+
+### Required Environment Variables
+
+- `FLEETOPS_API_URL`: Base URL for the FleetOps API
+
+### Setup Instructions
+
+1. Set the FleetOps API URL:
+
+```bash
+# For production
+export FLEETOPS_API_URL="https://your-fleetops-api.example.com"
+
+# For local development
+export FLEETOPS_API_URL="http://localhost:8085"
+
+# For staging
+export FLEETOPS_API_URL="https://staging-fleetops-api.example.com"
+```
+
+2. Verify the configuration:
+
+```bash
+echo $FLEETOPS_API_URL
+```
+
+3. Deploy the agent/tool using orchestrate CLI
+
+### Troubleshooting
+
+**Error: "FLEETOPS_API_URL environment variable is not set"**
+- Ensure you've set the environment variable before running the agent
+- Check that the variable is exported in your current shell session
+- For persistent configuration, add it to your `.bashrc` or `.zshrc`
+
+**Error: "Invalid FLEETOPS_API_URL format"**
+- Ensure the URL starts with `http://` or `https://`
+- Verify there are no trailing slashes
+- Check for typos in the URL
+    ]]>
+  </readme_template>
+
+  <deployment_script_pattern>
+    <![CDATA[
+#!/bin/bash
+
+# FleetOps Agent Deployment Script
+
+# Check if FLEETOPS_API_URL is set
+if [ -z "$FLEETOPS_API_URL" ]; then
+    echo "Error: FLEETOPS_API_URL environment variable is not set"
+    echo "Please set it before deploying:"
+    echo "  export FLEETOPS_API_URL='https://your-api.example.com'"
+    exit 1
+fi
+
+echo "Using FleetOps API URL: $FLEETOPS_API_URL"
+
+# Deploy agent
+orchestrate agents create \
+    --name "agent-name" \
+    --spec agent.yaml \
+    --env FLEETOPS_API_URL="$FLEETOPS_API_URL"
+
+echo "Agent deployed successfully"
+    ]]>
+  </deployment_script_pattern>
+
+  <validation_checklist>
+    <check>No hardcoded production URLs in any tool or agent file</check>
+    <check>All tools validate FLEETOPS_API_URL is set before execution</check>
+    <check>Clear error messages when API URL is missing</check>
+    <check>README includes API configuration instructions</check>
+    <check>Deployment script validates environment variables</check>
+    <check>Examples show different environment configurations</check>
+  </validation_checklist>
+
+  <common_mistakes_to_avoid>
+    <mistake>
+      <description>Using hardcoded URL with environment variable fallback</description>
+      <bad_example>
+        <![CDATA[
+api_url = os.environ.get('FLEETOPS_API_URL', 'https://hardcoded-url.com')
+        ]]>
+      </bad_example>
+      <correct_example>
+        <![CDATA[
+api_url = os.environ.get('FLEETOPS_API_URL')
+if not api_url:
+    raise ValueError("FLEETOPS_API_URL must be configured")
+        ]]>
+      </correct_example>
+    </mistake>
+
+    <mistake>
+      <description>Not validating API URL before use</description>
+      <bad_example>
+        <![CDATA[
+api_url = os.environ.get('FLEETOPS_API_URL')
+response = requests.get(f"{api_url}/api/endpoint")  # May fail silently
+        ]]>
+      </bad_example>
+      <correct_example>
+        <![CDATA[
+api_url = os.environ.get('FLEETOPS_API_URL')
+if not api_url:
+    raise ValueError("FLEETOPS_API_URL is required")
+if not api_url.startswith(('http://', 'https://')):
+    raise ValueError("Invalid URL format")
+response = requests.get(f"{api_url}/api/endpoint")
+        ]]>
+      </correct_example>
+    </mistake>
+
+    <mistake>
+      <description>Not documenting API configuration requirements</description>
+      <solution>Always include configuration section in README with examples</solution>
+    </mistake>
+  </common_mistakes_to_avoid>
+</api_configuration_guide>
+
+<!-- Made with Bob -->

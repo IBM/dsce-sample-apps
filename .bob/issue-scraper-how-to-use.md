@@ -102,7 +102,7 @@ After you confirm, the mode runs in this order:
 | 1 | Create `assets/demos/<slug>/` folder | ✅ |
 | 2 | Download architecture diagram from GitHub CDN | ✅ |
 | 3 | Download screenshots from GitHub CDN | ✅ |
-| 4 | For YouTube video: set `externalVideoURL` (no upload) | ✅ |
+| 4 | For YouTube video: set `youTubeURL` (no upload) | ✅ |
 | 5 | For Box/OneDrive video: download + upload to COS | ✅ |
 | 6 | Write `description.md` from the demo script field | ✅ |
 | 7 | Append new entry to `demos.json` | ✅ |
@@ -130,7 +130,7 @@ every push to `main`.
 
 | Video source in issue | How it renders on site | What mode does |
 |---|---|---|
-| `youtube.com` / `youtu.be` | Embedded `<iframe>` player | Sets `externalVideoURL`, no upload |
+| `youtube.com` / `youtu.be` | Embedded `<iframe>` player | Sets `youTubeURL`, no upload |
 | Box / OneDrive / SharePoint | Native `<video>` streamed from COS | Downloads file → uploads to `dsce2-demo-videos` COS bucket |
 | Local file path (you provide) | Native `<video>` streamed from COS | Uploads directly from local path to COS |
 

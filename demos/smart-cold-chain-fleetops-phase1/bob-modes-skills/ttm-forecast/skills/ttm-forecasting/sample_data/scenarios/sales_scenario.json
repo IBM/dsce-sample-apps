@@ -1,0 +1,33 @@
+{
+  "scenario_name": "Daily Sales Forecasting",
+  "description": "Predict product sales for inventory planning and demand management",
+  "use_case": "Inventory optimization and demand planning",
+  "frequency": "1d",
+  "context_length": 512,
+  "prediction_length": 96,
+  "unit": "units",
+  "threshold": 500,
+  "data": [
+    {"timestamp": "2024-01-01T00:00:00Z", "value": 450},
+    {"timestamp": "2024-01-02T00:00:00Z", "value": 480},
+    {"timestamp": "2024-01-03T00:00:00Z", "value": 520},
+    {"timestamp": "2024-01-04T00:00:00Z", "value": 510},
+    {"timestamp": "2024-01-05T00:00:00Z", "value": 490},
+    {"timestamp": "2024-01-06T00:00:00Z", "value": 650},
+    {"timestamp": "2024-01-07T00:00:00Z", "value": 680},
+    {"timestamp": "2024-01-08T00:00:00Z", "value": 470},
+    {"timestamp": "2024-01-09T00:00:00Z", "value": 490},
+    {"timestamp": "2024-01-10T00:00:00Z", "value": 530},
+    {"timestamp": "2024-01-11T00:00:00Z", "value": 520},
+    {"timestamp": "2024-01-12T00:00:00Z", "value": 500},
+    {"timestamp": "2024-01-13T00:00:00Z", "value": 670},
+    {"timestamp": "2024-01-14T00:00:00Z", "value": 690},
+    {"timestamp": "2024-01-15T00:00:00Z", "value": 480},
+    {"timestamp": "2024-01-16T00:00:00Z", "value": 500},
+    {"timestamp": "2024-01-17T00:00:00Z", "value": 540},
+    {"timestamp": "2024-01-18T00:00:00Z", "value": 530},
+    {"timestamp": "2024-01-19T00:00:00Z", "value": 510},
+    {"timestamp": "2024-01-20T00:00:00Z", "value": 680}
+  ],
+  "notes": "Sample shows weekly pattern with weekend spikes. Threshold at 500 units for reorder alerts. Extend to 512+ days for production."
+}

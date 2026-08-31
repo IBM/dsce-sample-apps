@@ -1,0 +1,24 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: fleetops-api
+  namespace: fleetops-backend
+  labels:
+    app: fleetops
+    component: backend
+  annotations:
+    description: "Public HTTPS route for FleetOps Backend API"
+spec:
+  host: ""  # Will be auto-generated as fleetops-api-fleetops-backend.apps.<cluster-domain>
+  to:
+    kind: Service
+    name: fleetops-backend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect  # Force HTTPS
+  wildcardPolicy: None
+
+# Made with Bob

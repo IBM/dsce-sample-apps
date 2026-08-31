@@ -1,0 +1,44 @@
+# FleetOps ConfigMap — non-sensitive configuration
+#
+# BEFORE APPLYING: replace every <placeholder> with your actual values.
+# Sensitive values (API tokens, passwords) go in openshift-secrets.yaml — NOT here.
+#
+# Apply with:
+#   oc apply -f openshift-configmap.yaml -n <your-namespace>
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fleetops-observability-config
+data:
+  # Server
+  PORT: "4000"
+  NODE_ENV: "production"
+
+  # ── Required: Backend API URLs ─────────────────────────────────────────────
+  # Set these to the routes of your fleetops-backend and forecast-backend services.
+  COLDCHAIN_API_URL: "https://<fleetops-backend-route>.<your-cluster-domain>"
+  FORECAST_API_URL: "https://<forecast-backend-route>.<your-cluster-domain>"
+
+  # ── Optional: Observe tab deep-link URLs ───────────────────────────────────
+  # Shown as "Open in Instana / Turbonomic" links in the UI.
+  INSTANA_URL: "https://<your-instana-tenant>.instana.io"
+  TURBONOMIC_URL: "https://<your-turbonomic-host>/app/#/view/main/live/<entity-id>/overview"
+
+  # ── Optional: Instana API (backend calls for Observe tab metrics) ──────────
+  INSTANA_BASE_URL: "https://<your-instana-tenant>.instana.io"
+  INSTANA_SERVICE_NAME: "<service-name-as-registered-in-instana>"
+  INSTANA_DEPLOYMENT_NAME: "<kubernetes-deployment-name>"
+  INSTANA_NAMESPACE: "<kubernetes-namespace>"
+  INSTANA_CLUSTER: "<kubernetes-cluster-name>"
+
+  # ── Optional: Turbonomic API (backend calls for Observe tab actions) ────────
+  # Note: Login uses the nginx-turbonomic host; the API may use a separate host.
+  TURBONOMIC_LOGIN_URL: "https://<your-turbonomic-host>/api/v3/login"
+  TURBONOMIC_API_URL: "https://<your-turbonomic-api-host>/api/v3"
+  TURBONOMIC_DISPLAY_NAME: "<deployment-display-name-in-turbonomic>"
+
+  # ── Optional: OpenShift resource scaling (used by mock Turbonomic action) ───
+  OPENSHIFT_CPU_INCREMENT: "100m"
+  OPENSHIFT_NAMESPACE: "<your-namespace>"
+  OPENSHIFT_DEPLOYMENT: "<your-fleetops-backend-deployment-name>"

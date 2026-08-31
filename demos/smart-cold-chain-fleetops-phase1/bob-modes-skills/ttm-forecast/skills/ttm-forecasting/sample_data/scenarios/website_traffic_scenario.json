@@ -1,0 +1,33 @@
+{
+  "scenario_name": "Website Traffic Prediction",
+  "description": "Forecast visitor counts for capacity planning and auto-scaling",
+  "use_case": "Auto-scaling and resource optimization",
+  "frequency": "1h",
+  "context_length": 512,
+  "prediction_length": 96,
+  "unit": "visitors",
+  "threshold": 10000,
+  "data": [
+    {"timestamp": "2024-01-01T00:00:00Z", "value": 2500},
+    {"timestamp": "2024-01-01T01:00:00Z", "value": 2200},
+    {"timestamp": "2024-01-01T02:00:00Z", "value": 1800},
+    {"timestamp": "2024-01-01T03:00:00Z", "value": 1500},
+    {"timestamp": "2024-01-01T04:00:00Z", "value": 1200},
+    {"timestamp": "2024-01-01T05:00:00Z", "value": 1000},
+    {"timestamp": "2024-01-01T06:00:00Z", "value": 1500},
+    {"timestamp": "2024-01-01T07:00:00Z", "value": 2500},
+    {"timestamp": "2024-01-01T08:00:00Z", "value": 4000},
+    {"timestamp": "2024-01-01T09:00:00Z", "value": 6000},
+    {"timestamp": "2024-01-01T10:00:00Z", "value": 8000},
+    {"timestamp": "2024-01-01T11:00:00Z", "value": 9500},
+    {"timestamp": "2024-01-01T12:00:00Z", "value": 10500},
+    {"timestamp": "2024-01-01T13:00:00Z", "value": 11000},
+    {"timestamp": "2024-01-01T14:00:00Z", "value": 10800},
+    {"timestamp": "2024-01-01T15:00:00Z", "value": 10200},
+    {"timestamp": "2024-01-01T16:00:00Z", "value": 9500},
+    {"timestamp": "2024-01-01T17:00:00Z", "value": 8500},
+    {"timestamp": "2024-01-01T18:00:00Z", "value": 7000},
+    {"timestamp": "2024-01-01T19:00:00Z", "value": 5500}
+  ],
+  "notes": "Sample contains 20 points. Threshold at 10,000 visitors triggers scaling alerts. Extend to 512+ points for production use."
+}

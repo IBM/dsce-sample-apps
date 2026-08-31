@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fleetops-backend
+  labels:
+    app: fleetops
+    component: backend
+    environment: production
+  annotations:
+    description: "FleetOps Cold-Chain Logistics Backend"
+
+# Made with Bob

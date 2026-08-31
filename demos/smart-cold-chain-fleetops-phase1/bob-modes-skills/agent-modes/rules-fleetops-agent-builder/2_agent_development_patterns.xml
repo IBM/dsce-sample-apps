@@ -1,0 +1,419 @@
+<agent_development_patterns>
+  <overview>
+    This file defines patterns and best practices for creating watsonx Orchestrate agent YAML files.
+    IMPORTANT: Always ask users to define their own input/output schemas - never assume or reuse existing patterns.
+  </overview>
+
+  <schema_discovery_first>
+    <critical_principle>
+      Before creating any agent or tool, you MUST ask the user to define:
+      1. Input schema: What data fields the agent/tool receives
+      2. Output schema: What data fields the agent/tool produces
+      3. Field types: string, integer, float, boolean, array, object
+      4. Field descriptions: Purpose and meaning of each field
+      5. Nested structures: Any complex objects or arrays
+    </critical_principle>
+
+    <discovery_questions>
+      <question>What input fields does your agent need? Please list each field with its type and description.</question>
+      <question>What output fields should your agent produce? Please list each field with its type and description.</question>
+      <question>Are there any nested objects or arrays? Please describe their structure.</question>
+      <question>Are any fields optional? Which ones are required?</question>
+    </discovery_questions>
+
+    <example_user_response>
+      <![CDATA[
+Input Schema:
+- truck_id (string, required): Unique identifier for the truck
+- location (object, required): Current GPS coordinates
+  - latitude (float): Latitude coordinate
+  - longitude (float): Longitude coordinate
+- cargo_type (string, optional): Type of cargo being transported
+
+Output Schema:
+- analysis_result (string, required): Result of the analysis
+- risk_score (integer, required): Risk score from 0-100
+- recommendations (array of strings, optional): List of recommendations
+      ]]>
+    </example_user_response>
+  </schema_discovery_first>
+
+  <agent_yaml_structure>
+    <required_fields>
+      <field name="spec_version">
+        <value>v1</value>
+        <description>Always use v1 for watsonx Orchestrate agents</description>
+      </field>
+      
+      <field name="kind">
+        <value>native</value>
+        <description>Use 'native' for Python-based agents</description>
+      </field>
+      
+      <field name="name">
+        <format>snake_case</format>
+        <example>weather_advisor</example>
+        <example>decision_agent</example>
+        <example>station_agent</example>
+        <description>Agent identifier in snake_case</description>
+      </field>
+      
+      <field name="llm">
+        <recommended>groq/openai/gpt-oss-120b</recommended>
+        <alternatives>
+          <option>anthropic/claude-3-5-sonnet-20241022</option>
+          <option>openai/gpt-4</option>
+        </alternatives>
+        <description>LLM model to use for agent reasoning</description>
+      </field>
+      
+      <field name="description">
+        <purpose>Brief summary of agent's purpose</purpose>
+        <best_practice>One sentence describing what the agent does</best_practice>
+        <example>Analyzes weather conditions along truck routes and identifies potential hazards</example>
+      </field>
+      
+      <field name="title">
+        <purpose>Human-readable display name</purpose>
+        <format>Title Case with descriptive suffix</format>
+        <example>Weather Advisor Agent</example>
+        <example>Decision & Recommendation Agent</example>
+      </field>
+      
+      <field name="instructions">
+        <purpose>Detailed instructions for agent behavior</purpose>
+        <format>Multi-line YAML string with markdown formatting</format>
+        <critical>This is the most important field - defines agent behavior</critical>
+      </field>
+      
+      <field name="tools">
+        <purpose>List of tools the agent can use</purpose>
+        <format>Array of tool names</format>
+        <example>
+          <![CDATA[
+tools:
+  - get_route_weather_forecast
+  - search_stations
+  - analyze_decision
+          ]]>
+        </example>
+      </field>
+      
+      <field name="collaborators">
+        <purpose>Other agents this agent can invoke</purpose>
+        <format>Array of agent names</format>
+        <note>Usually empty for FleetOps agents (orchestration handled externally)</note>
+      </field>
+      
+      <field name="config">
+        <subfields>
+          <field name="hidden">false</field>
+          <field name="enable_cot">true or false</field>
+        </subfields>
+        <description>Agent configuration settings</description>
+      </field>
+    </required_fields>
+
+    <complete_example>
+      <![CDATA[
+spec_version: v1
+kind: native
+name: weather_advisor
+llm: groq/openai/gpt-oss-120b
+description: Analyzes weather conditions along truck routes for cold-chain logistics
+title: Route Weather Advisor
+
+instructions: |
+  You are a Route Weather Advisor for cold-chain pharmaceutical logistics.
+  
+  Your role is to:
+  1. Analyze weather conditions along truck routes
+  2. Identify potential hazards (storms, extreme temperatures, ice)
+  3. Provide detailed forecasts for waypoints
+  4. Alert about dangerous conditions
+  
+  When using the get_route_weather_forecast tool:
+  - Provide ONLY the truck_id parameter
+  - The tool automatically fetches route information
+  
+  CRITICAL: You MUST respond in JSON format:
+  ```json
+  {
+    "severeWeatherDetected": boolean,
+    "overallWeatherRisk": integer (0-100),
+    "totalDelayMinutes": integer,
+    "segments": [...]
+  }
+  ```
+
+tools:
+  - get_route_weather_forecast
+
+collaborators: []
+
+config:
+  hidden: false
+  enable_cot: true
+      ]]>
+    </complete_example>
+  </agent_yaml_structure>
+
+  <instruction_writing_patterns>
+    <structure>
+      <section name="role_definition">
+        <content>Start with "You are [role] for [domain]"</content>
+        <purpose>Establish agent identity and context</purpose>
+        <example>You are a Route Weather Advisor for cold-chain pharmaceutical logistics</example>
+      </section>
+      
+      <section name="responsibilities">
+        <content>List 3-5 core responsibilities</content>
+        <format>Numbered or bulleted list</format>
+        <purpose>Define what the agent does</purpose>
+      </section>
+      
+      <section name="tool_usage">
+        <content>Explain how to use each tool</content>
+        <include>Parameter requirements</include>
+        <include>Expected behavior</include>
+        <include>Error handling</include>
+      </section>
+      
+      <section name="output_format">
+        <critical>ALWAYS specify exact JSON output format</critical>
+        <include>Complete JSON schema</include>
+        <include>Field descriptions</include>
+        <include>Data types</include>
+        <best_practice>Use code blocks with ```json</best_practice>
+      </section>
+      
+      <section name="rules_and_constraints">
+        <content>Important rules the agent must follow</content>
+        <format>Numbered list or bullet points</format>
+        <examples>
+          <rule>Never hardcode credentials</rule>
+          <rule>Always validate input data</rule>
+          <rule>Return pure JSON without markdown</rule>
+        </examples>
+      </section>
+    </structure>
+
+    <json_output_requirements>
+      <critical_rule>
+        ALL agents that produce data for other agents MUST output pure JSON
+      </critical_rule>
+      
+      <formatting_rules>
+        <rule>Start with { and end with }</rule>
+        <rule>Use double quotes for all strings</rule>
+        <rule>No markdown code blocks (```json)</rule>
+        <rule>No explanatory text before or after JSON</rule>
+        <rule>No trailing commas</rule>
+        <rule>Validate JSON structure before returning</rule>
+      </formatting_rules>
+      
+      <instruction_template>
+        <![CDATA[
+## Output Format
+
+**CRITICAL JSON OUTPUT RULES:**
+
+1. **Pure JSON Only**: You MUST return ONLY a valid JSON object. No other text, explanations, or formatting.
+
+2. **Forbidden Elements**:
+   - ❌ NO markdown formatting (no ```json or ``` blocks)
+   - ❌ NO headers or titles before the JSON
+   - ❌ NO explanations or comments after the JSON
+   - ❌ NO backticks or code block markers
+   - ❌ NO trailing commas in arrays or objects
+   - ❌ NO single quotes (use double quotes only)
+
+3. **Required Format**:
+   - ✓ Start with { and end with }
+   - ✓ Use double quotes for all strings
+   - ✓ Ensure all brackets and braces are properly closed
+   - ✓ Validate JSON structure before returning
+
+Return the complete analysis as a pure JSON object:
+```json
+{
+  "field1": "value",
+  "field2": 123,
+  "field3": ["array", "values"]
+}
+```
+        ]]>
+      </instruction_template>
+    </json_output_requirements>
+
+    <data_passthrough_pattern>
+      <purpose>
+        Ensure agents pass ALL received data to tools without modification
+      </purpose>
+      
+      <critical_rules>
+        <rule>Pass ALL input data to tools EXACTLY as received</rule>
+        <rule>Do NOT modify, filter, or omit any data</rule>
+        <rule>Do NOT convert arrays to empty arrays</rule>
+        <rule>Do NOT remove nested objects or properties</rule>
+        <rule>Think of yourself as a data passthrough</rule>
+      </critical_rules>
+      
+      <instruction_template>
+        <![CDATA[
+## Tool Usage Rules
+
+**CRITICAL: Follow these rules when using tools:**
+
+1. **Pass Through ALL Data Exactly As Received**:
+   - You MUST pass ALL input data to the tool EXACTLY as you received it
+   - Do NOT modify, filter, or omit any data from the input
+   - Do NOT convert arrays to empty arrays
+   - Do NOT remove nested objects or properties
+   - Think of yourself as a data passthrough - what comes in MUST go to the tool unchanged
+
+2. **Examples**:
+   ❌ WRONG:
+   Input: facilities = [facility1, facility2, facility3]
+   Tool call: facilities = []  // Data lost!
+   
+   ✅ CORRECT:
+   Input: facilities = [facility1, facility2, facility3]
+   Tool call: facilities = [facility1, facility2, facility3]  // All data passed!
+        ]]>
+      </instruction_template>
+    </data_passthrough_pattern>
+
+    <error_handling_pattern>
+      <retry_logic>
+        <instruction_template>
+          <![CDATA[
+## Retry Logic for Errors
+
+If the tool returns an error:
+1. **First Attempt**: Call the tool with all available parameters
+2. **If Error Occurs**: Analyze the error message carefully
+3. **Second Attempt**: Retry the EXACT SAME call with the SAME parameters
+4. **After 2 Failed Attempts**: Provide a response based on available data without the tool
+
+Example:
+- Attempt 1: Tool returns "Agent response content is not valid JSON"
+- Attempt 2: Retry with EXACT SAME parameters (do not modify anything)
+- If Attempt 2 succeeds: Use the tool output
+- If Attempt 2 fails: Proceed with manual analysis
+          ]]>
+        </instruction_template>
+      </retry_logic>
+      
+      <graceful_degradation>
+        <instruction_template>
+          <![CDATA[
+## Handle Tool Failures Gracefully
+
+If the tool fails after 2 attempts:
+1. Acknowledge the tool failure
+2. Perform manual analysis using the provided data
+3. Generate a valid response based on your analysis
+4. Clearly indicate that the response is based on manual analysis
+          ]]>
+        </instruction_template>
+      </graceful_degradation>
+    </error_handling_pattern>
+  </instruction_writing_patterns>
+
+  <reference_agent_examples>
+    <note>
+      These are REFERENCE EXAMPLES ONLY from FleetOps domain.
+      DO NOT assume users want these exact schemas.
+      ALWAYS ask users to define their own input/output schemas.
+    </note>
+
+    <example_agent name="weather_advisor">
+      <purpose>Example: Analyze weather conditions along routes</purpose>
+      <example_input>truck_id (string)</example_input>
+      <example_output>Weather analysis with risk assessment</example_output>
+      <note>This is just an example - ask user for their actual schema</note>
+    </example_agent>
+    
+    <example_agent name="station_agent">
+      <purpose>Example: Search for service facilities</purpose>
+      <example_input>Search criteria, required capabilities</example_input>
+      <example_output>List of available facilities</example_output>
+      <note>This is just an example - ask user for their actual schema</note>
+    </example_agent>
+    
+    <example_agent name="decision_agent">
+      <purpose>Example: Make final reroute decisions</purpose>
+      <example_input>All previous agent outputs</example_input>
+      <example_output>Decision with recommendations</example_output>
+      <note>This is just an example - ask user for their actual schema</note>
+    </example_agent>
+  </reference_agent_examples>
+
+  <schema_to_pydantic_conversion>
+    <purpose>
+      Convert user-provided schema specifications into Pydantic models
+    </purpose>
+
+    <conversion_rules>
+      <rule>string → str</rule>
+      <rule>integer → int</rule>
+      <rule>float → float</rule>
+      <rule>boolean → bool</rule>
+      <rule>array → List[type]</rule>
+      <rule>object → nested BaseModel</rule>
+      <rule>optional → Optional[type]</rule>
+    </conversion_rules>
+
+    <example_conversion>
+      <user_specification>
+        <![CDATA[
+Input Schema:
+- truck_id (string, required): Truck identifier
+- temperature (float, required): Current temperature
+- alerts (array of strings, optional): List of alerts
+- location (object, required):
+  - latitude (float): Latitude
+  - longitude (float): Longitude
+        ]]>
+      </user_specification>
+
+      <pydantic_model>
+        <![CDATA[
+from typing import List, Optional
+from pydantic import BaseModel, Field
+
+class Location(BaseModel):
+    """Location coordinates"""
+    latitude: float = Field(description="Latitude")
+    longitude: float = Field(description="Longitude")
+
+class ToolInput(BaseModel):
+    """Input schema for the tool"""
+    truck_id: str = Field(description="Truck identifier")
+    temperature: float = Field(description="Current temperature")
+    alerts: Optional[List[str]] = Field(None, description="List of alerts")
+    location: Location = Field(description="Current location")
+        ]]>
+      </pydantic_model>
+    </example_conversion>
+  </schema_to_pydantic_conversion>
+
+  <best_practices>
+    <practice>CRITICAL: Always ask users to define input/output schemas - never assume</practice>
+    <practice>Create Pydantic models based on user specifications, not existing patterns</practice>
+    <practice>Use clear, descriptive agent names in snake_case</practice>
+    <practice>Write comprehensive instructions with examples</practice>
+    <practice>Always specify exact JSON output format matching user's schema</practice>
+    <practice>Include error handling instructions</practice>
+    <practice>Document tool usage patterns clearly</practice>
+    <practice>Use enable_cot: true for complex reasoning agents</practice>
+    <practice>Use enable_cot: false for simple pass-through agents</practice>
+    <practice>Test JSON output format specifications</practice>
+    <practice>Include data passthrough rules for agents in chains</practice>
+    <practice>Provide retry logic for tool failures</practice>
+    <practice>Validate that generated schemas match user specifications exactly</practice>
+  </best_practices>
+</agent_development_patterns>
+
+<!-- Made with Bob -->

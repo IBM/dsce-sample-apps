@@ -1,0 +1,36 @@
+# FleetOps Core API Connection
+#
+# This key-value connection injects the FleetOps backend base URL into the
+# tools that call the core FleetOps API:
+#   - station_tool/station_search_tool.py  (key: FLEETOPS_API_BASE_URL)
+#   - weather_forecast/weather_forecast_tool.py  (key: FLEETOPS_API_URL)
+#
+# Both keys are stored in a single connection so you only manage one set of
+# credentials for the FleetOps core backend.
+#
+# Import this file:
+#   orchestrate connections import -f tools/connections/fleetops_api.yaml
+#
+# Then set credentials for each environment:
+#   orchestrate connections set-credentials -a fleetops_api --env draft \
+#     -e "FLEETOPS_API_URL=https://<your-host>" \
+#     -e "FLEETOPS_API_BASE_URL=https://<your-host>"
+#   orchestrate connections set-credentials -a fleetops_api --env live \
+#     -e "FLEETOPS_API_URL=https://<your-host>" \
+#     -e "FLEETOPS_API_BASE_URL=https://<your-host>"
+#
+# Local emulation (no orchestrate server needed):
+#   export WXO_SECURITY_SCHEMA_fleetops_api=key_value_creds
+#   export WXO_CONNECTION_fleetops_api_FLEETOPS_API_URL=https://<your-host>
+#   export WXO_CONNECTION_fleetops_api_FLEETOPS_API_BASE_URL=https://<your-host>
+
+spec_version: v1
+kind: connection
+app_id: fleetops_api
+environments:
+    draft:
+        kind: key_value
+        type: team
+    live:
+        kind: key_value
+        type: team

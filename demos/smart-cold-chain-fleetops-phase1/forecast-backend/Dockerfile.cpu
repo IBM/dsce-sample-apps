@@ -1,0 +1,46 @@
+FROM --platform=linux/amd64 python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc g++ git curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# 1. Install CPU-only PyTorch globally first
+RUN pip install --no-cache-dir \
+    torch==2.4.0+cpu \
+    --index-url https://download.pytorch.org/whl/cpu
+
+# 2. Setup Permissions for OpenShift (The 'Root Group' Trick)
+# We create the cache dir and ensure the root group (GID 0) owns it
+RUN mkdir -p /app/.cache/huggingface && \
+    chmod -R g+w /app && \
+    chgrp -R 0 /app
+
+COPY requirements.txt .
+
+# 3. Install remaining deps
+# Using --extra-index-url ensures if any dep wants 'torch', it sees the CPU one first
+RUN pip install --no-cache-dir \
+    --extra-index-url https://download.pytorch.org/whl/cpu \
+    -r requirements.txt
+
+COPY . .
+
+# Environment variables
+ENV HF_HOME=/app/.cache/huggingface \
+    TRANSFORMERS_CACHE=/app/.cache/huggingface \
+    CUDA_VISIBLE_DEVICES="" \
+    PYTHONUNBUFFERED=1
+
+# OpenShift compatible user (still good to define, but permissions rely on GID 0)
+USER 1001
+
+EXPOSE 5001
+
+# Refined Healthcheck: Use curl (installed above) as it's more standard than a python script
+HEALTHCHECK --interval=30s --timeout=10s --start-period=180s --retries=3 \
+    CMD curl -f http://localhost:5001/health || exit 1
+
+CMD ["python", "main.py"]

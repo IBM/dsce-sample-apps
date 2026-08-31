@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  CONTEXT_LENGTH: "512"
+  CORS_ORIGINS: http://localhost:3000,http://localhost:8080
+  DEVICE: cpu
+  FLEETOPS_API_BASE_URL: https://fleetops-api-fleetops-backend.apps.itz-uv3vvn.hub01-lb.techzone.ibm.com
+  FREQUENCY: 1min
+  LOG_FILE: logs/forecasting-service.log
+  LOG_LEVEL: INFO
+  PREDICTION_LENGTH: "48"
+  SERVER_HOST: 0.0.0.0
+  SERVER_PORT: "5001"
+  TTM_MODEL_PATH: ibm-granite/granite-timeseries-ttm-r2
+  TTM_MODEL_REVISION: main
+  USE_TTM_MODEL: "True"
+kind: ConfigMap
+metadata:
+  name: fleetops-forecasting-config

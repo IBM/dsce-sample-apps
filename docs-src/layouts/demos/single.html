@@ -134,10 +134,10 @@
                     </div>
                   </div>
                   <div class="info-box-subtitle">Watch this short overview</div>
-                  {{ $externalVideoURL := $demo.video.externalVideoURL | default "" }}
-                  {{ if $externalVideoURL }}
+                  {{ $youTubeURL := $demo.video.youTubeURL | default "" }}
+                  {{ if $youTubeURL }}
                     {{/* YouTube only — convert watch URL to embed URL */}}
-                    {{ $ytEmbed := $externalVideoURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
+                    {{ $ytEmbed := $youTubeURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
                     <iframe
                       class="demo-video-iframe"
                       src="{{ $ytEmbed }}"

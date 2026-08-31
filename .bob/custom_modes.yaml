@@ -89,7 +89,7 @@ customModes:
                                   is non-empty, otherwise "".
         video           (object)  The single.html template supports TWO video
                                   rendering modes chosen by this priority order:
-                                  1. externalVideoURL (YouTube only) — if present
+                                  1. youTubeURL (YouTube only) — if present
                                      and non-empty, renders an embedded YouTube
                                      iframe. Only set this field for YouTube URLs.
                                   2. cosFileName — renders a native HTML5 <video>
@@ -101,8 +101,8 @@ customModes:
                                   Fields to set in the demos.json video object:
                                   - cosFileName: "<slug>-video.mp4" for all
                                     non-YouTube videos (Box/OneDrive/SharePoint).
-                                    Set to "" only when externalVideoURL is used.
-                                  - externalVideoURL: YouTube watch URL only
+                                    Set to "" only when youTubeURL is used.
+                                  - youTubeURL: YouTube watch URL only
                                     (youtube.com/watch or youtu.be). Set to ""
                                     for all other video sources. Omit entirely
                                     for existing COS-only entries (backward-
@@ -110,11 +110,11 @@ customModes:
                                   - thumbnail: relevant for COS videos only.
                                     Download via YouTube API if source was YT,
                                     otherwise set to "". Set to "" when using
-                                    externalVideoURL.
+                                    youTubeURL.
 
                                   Decision logic when processing an issue:
                                   - Video URL is YouTube (youtube.com/youtu.be)
-                                    → set externalVideoURL, leave cosFileName "".
+                                    → set youTubeURL, leave cosFileName "".
                                     No COS upload needed.
                                   - Video URL is Box/OneDrive/SharePoint → must
                                     upload to COS bucket "dsce2-demo-videos"
@@ -122,7 +122,7 @@ customModes:
                                     COS_ACCESS_KEY_ID, COS_SECRET_ACCESS_KEY,
                                     and COS_ENDPOINT env vars. If not set, STOP
                                     and tell the user to export those vars.
-                                    Do not set externalVideoURL for
+                                    Do not set youTubeURL for
                                     Box/OneDrive/SharePoint.
         screenshots     (array)   Populated from images attached to the issue
                                   "Screenshots (2-5 images)" section. Download
@@ -235,7 +235,7 @@ customModes:
 
       ### Path A — YouTube URL
       The template embeds YouTube directly as an iframe. No COS needed.
-      1. Set externalVideoURL to the YouTube URL from the issue.
+      1. Set youTubeURL to the YouTube URL from the issue.
       2. Set cosFileName to "" and thumbnail to "".
       3. No download, no upload, no manual steps.
 
@@ -269,7 +269,7 @@ customModes:
              "https://$COS_ENDPOINT/dsce2-demo-videos/<slug>-video.mp4" \
              --upload-file /tmp/<slug>-video.mp4
          Verify the upload returned HTTP 200.
-      3. Set cosFileName to "<slug>-video.mp4", externalVideoURL to "".
+      3. Set cosFileName to "<slug>-video.mp4", youTubeURL to "".
       4. Set thumbnail to "" (no thumbnail for Box/OneDrive source).
 
       If the user provides a local file path instead of a URL, skip step 1
