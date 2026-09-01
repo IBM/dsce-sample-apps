@@ -98,6 +98,28 @@
       "shortDescription": "Detect exposed credentials, securely migrate them to centralized vaults, and automate remediation using AI — reducing risk and enabling secret rotation without code changes.",
       "extrasBoxUrl": "",
       "isLive": true
+    },
+    {
+      "name": "Intelligent Asset Management Knowledge Hub with Bob and Maximo",
+      "slug": "intelligent-asset-management-knowledge-hub-with-bob-and-maximo",
+      "products": ["IBM Bob", "IBM watsonx.ai", "IBM Maximo Application Suite", "IBM COS"],
+      "buildingBlocks": ["ai.agents", "data.integration", "data.retrieval"],
+      "skills": ["Agent-builder", "Data-streaming: Confluent", "RAG"],
+      "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/build-and-deploy/asset-management/assets/asset-management-knowledge-hub",
+      "workingDemoURL": "https://maximo-knowledge-hub.25flzevluudl.eu-de.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "video": {
+        "cosFileName": "",
+        "youTubeURL": "https://www.youtube.com/watch?v=Vo31nxBUcRw",
+        "thumbnail": ""
+      },
+      "screenshots": ["home_page.png", "screenshot-01.png"],
+      "longDescription": "Asset-intensive operations depend on information distributed across asset records, maintenance history, work orders, procedures, and technical knowledge. Engineers and maintenance teams can spend valuable time searching different systems before they have enough context to diagnose an issue or plan the next action. The Asset Management Knowledge Hub demo presents a unified, conversational experience around asset knowledge for Oil & Gas and other asset-intensive industries.\n\nIBM Bob is used to build and integrate the experience with IBM Maximo so users can ask business questions in natural language and receive context grounded in asset-management information. The demo is positioned as a knowledge and decision-support layer rather than another system of record: Maximo remains the authoritative asset platform while the hub simplifies discovery and understanding for maintenance personas. The pattern can be extended to troubleshooting, work-order preparation, maintenance planning, reliability analysis, and technician enablement.",
+      "shortDescription": "Gives maintenance teams a single conversational entry point to asset and maintenance knowledge, reducing time spent searching systems and improving the speed of informed maintenance decisions.",
+      "extrasBoxUrl": "",
+      "isLive": true
     }
   ]
 }

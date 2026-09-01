@@ -3,3 +3,5 @@ client-env/
 .DS_Store
 __pycache__
 *node_modules
+AGENTS.md
+./bob/mcp.json
