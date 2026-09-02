@@ -336,20 +336,20 @@
   <script>
   (function () {
     var meta = window.__DSCE_DEMO__ || {};
-    var base = { demo_name: meta.name, demo_slug: meta.slug, productCodeType: 'ibm build engineering', productCode: 'dsce2' };
+    var base = { channel: 'webpage', type: 'Button', location: 'demo detail page', objectType: 'CTA', demo_name: meta.name, demo_slug: meta.slug, productCode: 'dsce2', productCodeType: 'ibm build engineering' };
 
-    function tl(id, event, extra) {
+    function tl(id, text, extraType) {
       var el = document.getElementById(id);
       if (!el || !window.analytics) return;
-      window.analytics.trackLink(el, event, Object.assign({}, base, extra || {}));
+      window.analytics.trackLink(el, 'CTA Clicked', Object.assign({}, base, { text: text, type: extraType || 'Button', CTA: text }));
     }
 
-    tl('tryDemoBtn',           'Demo CTA Clicked',          {});
-    tl('extraAssetsBtn',       'Demo Extra Assets Clicked',  {});
-    tl('specsRepoBtn',         'Specifications Clicked',     {});
-    tl('sourceCodeBtn',        'Source Code Clicked',        {});
-    tl('demoContactBtn',       'Demo Contact Requested',     {});
-    tl('demoScriptDownloadBtn','Demo Script Downloaded',     {});
+    tl('tryDemoBtn',            'Try the demo');
+    tl('extraAssetsBtn',        'Extra demo assets');
+    tl('specsRepoBtn',          'Specifications');
+    tl('sourceCodeBtn',         'Source Code');
+    tl('demoContactBtn',        'Submit a request', 'Link');
+    tl('demoScriptDownloadBtn', 'Download Script');
   })();
   </script>
   {{- end }}

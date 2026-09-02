@@ -167,16 +167,16 @@
   {{- if $segmentKey }}
   <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var base = { productCodeType: 'ibm build engineering', productCode: 'dsce2' };
+    var base = { channel: 'webpage', type: 'Button', objectType: 'CTA', location: 'demo listing sidebar', productCode: 'dsce2', productCodeType: 'ibm build engineering' };
     var links = [
-      { id: 'buildingBlocksDocsBtn', event: 'Building Blocks Docs Clicked' },
-      { id: 'tryBobBtn',             event: 'Try Bob Clicked'               },
-      { id: 'sidebarSubmitDemoBtn',  event: 'Submit Demo Clicked', extra: { source: 'sidebar' } }
+      { id: 'buildingBlocksDocsBtn', text: 'Building Blocks Docs' },
+      { id: 'tryBobBtn',             text: 'Try Bob'               },
+      { id: 'sidebarSubmitDemoBtn',  text: 'Submit your demo', type: 'Link' }
     ];
     links.forEach(function (cfg) {
       var el = document.getElementById(cfg.id);
       if (!el || !window.analytics) return;
-      window.analytics.trackLink(el, cfg.event, Object.assign({}, base, cfg.extra || {}));
+      window.analytics.trackLink(el, 'CTA Clicked', Object.assign({}, base, { CTA: cfg.text, text: cfg.text, type: cfg.type || base.type }));
     });
   });
   </script>

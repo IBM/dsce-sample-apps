@@ -78,7 +78,14 @@
       const imageType = alt.includes('architecture') ? 'architecture'
         : alt.includes('specifications') ? 'specifications-workflow'
         : 'screenshot';
-      segmentTrack('Screenshot Expanded', { image_type: imageType, image_alt: alt });
+      segmentTrack('UI Interaction', {
+        channel: 'webpage',
+        namespace: 'slideshow',
+        CTA: 'Screenshot Expanded',
+        elementId: 'demo-slide-zoom',
+        platformTitle: 'DSCE',
+        payload: { image_type: imageType, image_alt: alt }
+      });
     });
   });
 
@@ -93,13 +100,31 @@
     if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
   });
 
-  // Video play tracking
+  // Video playback tracking (IBM-Common: Video Playback Started / Completed)
   document.querySelectorAll('video').forEach(video => {
-    let tracked = false;
+    let started = false;
+
+    function videoProps() {
+      return {
+        title: demoMeta.name || document.title,
+        videoTitle: demoMeta.name || document.title,
+        videoPlayer: 'html5',
+        totalLength: isFinite(video.duration) ? Math.round(video.duration) : null,
+        position: Math.round(video.currentTime || 0)
+      };
+    }
+
     video.addEventListener('play', () => {
-      if (tracked) return;
-      tracked = true;
-      segmentTrack('Demo Video Played', {});
+      if (!started) {
+        started = true;
+        segmentTrack('Video Playback Started', videoProps());
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      segmentTrack('Video Playback Completed', Object.assign(videoProps(), {
+        position: isFinite(video.duration) ? Math.round(video.duration) : 0
+      }));
     });
   });
 })();

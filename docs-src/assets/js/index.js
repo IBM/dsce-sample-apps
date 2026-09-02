@@ -7,7 +7,7 @@ function isDebugMode() { return localStorage.getItem(DEBUG_KEY) === 'true'; }
 function segmentTrack(event, props) {
   if (window.analytics) {
     window.analytics.track(event, Object.assign(
-      { productCodeType: 'ibm build engineering', productCode: 'dsce2' },
+      { productCode: 'dsce2', productCodeType: 'ibm build engineering' },
       props
     ));
   }
@@ -66,7 +66,15 @@ function applyFilter() {
 checkboxes.forEach(cb => cb.addEventListener('change', () => {
   applyFilter();
   const active = getActiveFilters();
-  segmentTrack('Filter Applied', { filter_values: active, result_count: parseInt(resultsCount?.textContent) || 0 });
+  const count = parseInt(resultsCount?.textContent) || 0;
+  segmentTrack('UI Interaction', {
+    channel: 'webpage',
+    namespace: 'filter',
+    CTA: 'Filter Applied',
+    elementId: 'filter-checkbox',
+    platformTitle: 'DSCE',
+    payload: { filter_values: active, result_count: count }
+  });
 }));
 
 const clearBtn = document.getElementById('clearAllBtn');
@@ -74,7 +82,14 @@ if (clearBtn) {
   clearBtn.addEventListener('click', () => {
     checkboxes.forEach(cb => { cb.checked = false; });
     applyFilter();
-    segmentTrack('Filter Cleared', {});
+    segmentTrack('UI Interaction', {
+      channel: 'webpage',
+      namespace: 'filter',
+      CTA: 'Filter Cleared',
+      elementId: 'clearAllBtn',
+      platformTitle: 'DSCE',
+      payload: {}
+    });
   });
 }
 
@@ -84,8 +99,16 @@ allCards.forEach(card => {
     const name = card.querySelector('.card-item-description div')?.textContent?.trim();
     const href = card.getAttribute('href') || '';
     const slug = href.replace(/.*\/demos\//, '').replace(/\/$/, '');
-    const buildingBlocks = (card.dataset.buildingBlocks || '').split(' ').filter(Boolean);
-    segmentTrack('Demo Card Clicked', { demo_name: name, demo_slug: slug, building_blocks: buildingBlocks });
+    segmentTrack('CTA Clicked', {
+      channel: 'webpage',
+      CTA: name,
+      text: name,
+      type: 'Card',
+      location: 'demo listing',
+      objectType: 'CTA',
+      demo_name: name,
+      demo_slug: slug
+    });
   });
 });
 
