@@ -1,20 +1,47 @@
 {
-    "ai.agents" : [ { "name": "agent", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" }],
-    "ai.trust" : [  { "name": "agent-ops", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" },
-                    { "name": "real-time-guardrails", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" },
-                    { "name": "build-time-gen-ai-evals", "product": "IBM watsonX Orchestrate", "product url": "https://www.ibm.com/products/watsonx-orchestrate" }
-                ],
-    "data.integration" : [   { "name": "data-streaming-confluent", "product": "IBM Confluent", "product url": "https://www.ibm.com/products/confluent" },
-                        { "name": "data-streaming-confluent-terraform", "product": "IBM Confluent", "product url": "https://www.ibm.com/products/confluent" },
-                        { "name": "udi-opensearch", "product": "Open Search", "product url": "https://opensearch.org/" }
-                    ],
-    "data.intelligence" : [{ "name": "xxx", "product": "IBM watsonX.data", "product url": "https://www.ibm.com/products/watsonx-data" }],
-    "data.retrieval" : [{ "name": "xxx", "product": "IBM watsonX.data", "product url": "https://www.ibm.com/products/watsonx-data" }],
-    "automation.build" : [ { "name": "infrastructure-as-code-ansible", "product": "Red Hat Ansible", "product url": "https://www.redhat.com/en/technologies/management/ansible" },
-                { "name": "infrastructure-as-code-terraform", "product": "xxx", "product url": "https://developer.hashicorp.com/terraform" },
-                { "name": "ibm-cloud", "product": "IBM Cloud", "product url": "http://cloud.ibm.com/" },
-                { "name": "maximo-code-optimization", "product": "IBM Maximo", "product url": "https://www.ibm.com/products/maximo/ai-asset-management" }
-            ],
-    "automation.optimize" : [{ "name": "automated-resource-mgmt-turbonomic", "product": "IBM Turbonomic", "product url": "https://www.ibm.com/products/turbonomic" }],
-    "automation.secure" : [{ "name": "non-human-identity-vault", "product": "Hashicorp Vault", "product url": "https://www.hashicorp.com/en/products/vault" }]
+    "ai.agents" : [
+        { "name": "agent", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/agent" },
+        { "name": "agent-ops", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/agent-ops" },
+        { "name": "application-observability", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/application-observability" }
+    ],
+    "ai.trust" : [
+        { "name": "real-time-guardrails", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/real-time-guardrails" },
+        { "name": "build-time-gen-ai-evals", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/build-time-gen-ai-evals" }
+    ],
+    "data.context" : [
+        { "name": "data-streaming-confluent", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-streaming-confluent" },
+        { "name": "data-streaming-confluent-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-streaming-confluent-terraform" },
+        { "name": "confluent-iac-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/confluent-iac-terraform" },
+        { "name": "udi-opensearch", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/udi-opensearch" },
+        { "name": "opensearch-vector-search", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/opensearch-vector-search" },
+        { "name": "astradb-nosql-design", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/astradb-nosql-design" }
+    ],
+    "data.pipelines" : [
+        { "name": "data-ingestion-structured", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-ingestion-structured" },
+        { "name": "data-ingestion-unstructured", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-ingestion-unstructured" },
+        { "name": "data-quality-rules", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-quality-rules" },
+        { "name": "rag-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/rag-pipeline-builder" },
+        { "name": "rag-mcp-server-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/rag-mcp-server-builder" },
+        { "name": "pipeline-standards", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/pipeline-standards" },
+        { "name": "sdd-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/sdd-pipeline-builder" }
+    ],
+    "data.query-engines" : [
+        { "name": "text2sql-metadata-enrichment", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/text2sql-metadata-enrichment" },
+        { "name": "text2sql-query-optimizer", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/text2sql-query-optimizer" },
+        { "name": "watsonxdata-lakehouse", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/watsonxdata-lakehouse" }
+    ],
+    "automation.operate" : [
+        { "name": "infrastructure-as-code-ansible", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/infrastructure-as-code-ansible" },
+        { "name": "infrastructure-as-code-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/infrastructure-as-code-terraform" },
+        { "name": "ibm-cloud", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/ibm-cloud" },
+        { "name": "maximo-code-optimization", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/maximo-code-optimization" },
+        { "name": "code-modernization-expert", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/code-modernization-expert" },
+        { "name": "code-modernization-java", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/code-modernization-java" }
+    ],
+    "automation.optimize" : [
+        { "name": "automated-resource-mgmt-turbonomic", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/automated-resource-mgmt-turbonomic" }
+    ],
+    "automation.secure" : [
+        { "name": "non-human-identity-vault", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/non-human-identity-vault" }
+    ]
 }

@@ -56,26 +56,18 @@ customModes:
       Top-level key "demos" holds an array of demo objects. Each object has these
       fields — all required unless marked optional:
 
-        name            (string)  Full display name from issue "Demo name" field.
+        name            (string)  Full display name from issue field id="demo_name".
         slug            (string)  Derived from name as described above.
-        products        (array)   From issue "IBM products used". Must use exact
+        products        (array)   From issue field id="products". Must use exact
                                   strings that match keys in products.json.
                                   Unknown products must also be added to
                                   products.json.
-        buildingBlocks  (array)   Dot-notation strings from building_blocks.json.
-                                  Valid values: "ai.agents", "ai.ai-trust",
-                                  "data.integration", "data.intelligence",
-                                  "data.retrieval", "automation.build",
-                                  "automation.optimize", "automation.secure".
-                                  Derive these from the skills listed in the
-                                  issue by looking them up in skills.json where
-                                  each building block key maps to an array of
-                                  skill objects with a "name" field.
-        skills          (array)   From issue "IBM Bob Building Block skills used".
+        buildingBlocks  (array)   From issue field with id = "building_blocks". 
+        skills          (array)   From issue field with id = "skills". 
                                   One string per skill, one per line in the issue.
-        codeRepo        (string)  From issue "Link to source code repository".
+        codeRepo        (string)  From issue field with id = "code_repo_url". 
                                   Empty string "" if not provided.
-        workingDemoURL  (string)  From issue "Link to functional demo". Use the
+        workingDemoURL  (string)  From issue field with id = "working_demo_url". Use the
                                   URL as-is ONLY if it points to a live
                                   interactive application. If the URL is a video
                                   link (contains youtube.com, youtu.be,
@@ -83,7 +75,7 @@ customModes:
                                   to "" and record the video URL in the video
                                   object instead (see video field below).
         architecture    (string)  Always "architecture.png".
-        specificationsRepo (string) From issue "Link to specifications repository".
+        specificationsRepo (string) From issue field with id = "specifications_repo_url".
                                   Empty string "" if "_No response_" or blank.
         specificationsFlow (string) Always "specs-flow.png" if specificationsRepo
                                   is non-empty, otherwise "".
@@ -134,12 +126,11 @@ customModes:
                                   GitHub CDN URLs (user-attachments/assets/...)
                                   are publicly accessible and can be curl'd
                                   directly.
-        longDescription (string)  From issue "Long description". Preserve
+        longDescription (string)  From issue field with id = "long_description". Preserve
                                   paragraph breaks as \n\n. Do not truncate.
-        shortDescription (string) From issue "Short description". Trim to under
+        shortDescription (string) From issue field with id = "short_description". Trim to under
                                   30 words if the submitter exceeded the limit.
-        extrasBoxUrl    (string)  Optional. From issue "Link to documents on Box
-                                  or One Drive" (field id: box_one_drive_link).
+        extrasBoxUrl    (string)  Optional. From issue field with id = "box_one_drive_link".
                                   Use the URL as-is if provided. Empty string ""
                                   if "_No response_", blank, or not present.
         isLive          (boolean) Always set to false for new submissions. A

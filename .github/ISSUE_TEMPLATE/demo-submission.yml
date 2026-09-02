@@ -27,6 +27,18 @@ body:
     validations:
       required: true
 
+  - type: textarea
+    id: long_description
+    attributes:
+      label: Long description
+      description: "2-3 paragraphs (3-5 sentences each sentences). Used on the demo detail page. Describe the problem, solution, key capabilities, and personas involved."
+      placeholder: |
+        Paragraph 1 — the business problem and context...
+
+        Paragraph 2 — the technical approach, key AI/automation components, and outcome...
+    validations:
+      required: true
+
   - type: dropdown
     id: industry
     attributes:
@@ -44,19 +56,25 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: long_description
+  # ── Building Blocks, Skills & Products ─────────────────────────────────────
+  - type: checkboxes
+    id: building_blocks
     attributes:
-      label: Long description
-      description: "2-3 paragraphs (3-5 sentences each sentences). Used on the demo detail page. Describe the problem, solution, key capabilities, and personas involved."
-      placeholder: |
-        Paragraph 1 — the business problem and context...
-
-        Paragraph 2 — the technical approach, key AI/automation components, and outcome...
+      label: IBM Building Blocks focused on during this demo
+      description: Select from available [IBM Building Blocks](https://ibm-self-serve-assets.github.io/building-blocks-docs/)
+      options:
+        - label: ai.agents
+        - label: ai.ai-engineering
+        - label: ai.ai-control-plane
+        - label: automation.operate
+        - label: automation.optimize
+        - label: automation.secure
+        - label: data.context
+        - label: data.pipelines
+        - label: data.query-engines
     validations:
       required: true
 
-  # ── Skills & Products ─────────────────────────────────────
   - type: textarea
     id: skills
     attributes:
@@ -94,7 +112,7 @@ body:
       required: true
 
   - type: input
-    id: code_repo
+    id: code_repo_url
     attributes:
       label: Link to source code repository
       description: GitHub (or GitHub Enterprise) repo containing the demo application source code.
@@ -103,7 +121,7 @@ body:
       required: true
 
   - type: input
-    id: specifications_repo
+    id: specifications_repo_url
     attributes:
       label: Link to specifications repository (if available)
       description: GitHub repo containing the natural language specifications used by IBM Bob to build this demo. Leave blank if not applicable.
