@@ -73,5 +73,13 @@
     "Red Hat OpenShift" : {
         "url" : "https://www.ibm.com/products/openshift",
         "image" : "openshift-2.svg"
+    },
+    "IBM Maximo Application Suite" : {
+        "url" : "https://www.ibm.com/products/maximo/ai-asset-management",
+        "image" : "ibm-maximo-application-suite.svg"
+    },
+    "IBM COS" : {
+        "url" : "https://www.ibm.com/products/cloud-object-storage",
+        "image" : "ibm-cos.svg"
     }
 }

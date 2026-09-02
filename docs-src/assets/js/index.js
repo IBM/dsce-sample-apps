@@ -1,8 +1,8 @@
 // ==================== HOMEPAGE FILTER ====================
 // Cards are rendered at build time by Hugo. JS only handles show/hide filtering.
 
-const DEBUG_KEY = 'dsce_isDebugMode';
-function isDebugMode() { return localStorage.getItem(DEBUG_KEY) === 'true'; }
+const ADMIN_KEY = 'dsce_isAdminMode';
+function isAdminMode() { return localStorage.getItem(ADMIN_KEY) === 'true'; }
 
 function segmentTrack(event, props) {
   if (window.analytics) {
@@ -26,7 +26,7 @@ function getActiveFilters() {
 
 function applyFilter() {
   const active = getActiveFilters();
-  const debugOn = isDebugMode();
+  const debugOn = isAdminMode();
   let visibleCount = 0;
 
   allCards.forEach(card => {

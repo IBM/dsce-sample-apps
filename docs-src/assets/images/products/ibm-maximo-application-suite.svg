@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Build_icon_here" data-name="Build icon here" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .cls-1 {
+        mask: url(#mask);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+
+      .cls-6 {
+        fill: #001d6c;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="718.81" y1="220.82" x2="718.81" y2="209.82" gradientTransform="translate(-704.31 -187.63)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".9" stop-color="#000"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-196" y1="734.51" x2="-196" y2="723.51" gradientTransform="translate(213.5 -724.18)" xlink:href="#linear-gradient"/>
+    <mask id="mask" x="0" y="0" width="32" height="32" maskUnits="userSpaceOnUse">
+      <g>
+        <g>
+          <path class="cls-5" d="M8.39,25.07l-5.21-9.05,6.34-11.05,13.46.03v-2s-14.03-.03-14.03-.03c-.36,0-.7.19-.87.5L1.17,15.52c-.18.31-.18.69,0,1l5.51,9.58,1.72-1.03Z"/>
+          <path class="cls-5" d="M30.87,15.45l-5.48-9.54-1.73,1,5.2,9.04-6.34,11.05h-12.32v2h12.9c.18,0,.35-.05.5-.13.15-.09.28-.21.37-.37l6.91-12.05c.18-.31.18-.69,0-1Z"/>
+        </g>
+        <rect class="cls-2" x="12" y="22.19" width="5" height="11" transform="translate(-13.19 42.19) rotate(-90)"/>
+        <rect class="cls-3" x="15" y="-.68" width="5" height="11" transform="translate(22.32 -12.68) rotate(90)"/>
+        <path class="cls-5" d="M29.11,8.3l.47-1.42-5.7-1.88-1.88,5.7,1.42.47,1.4-4.23s4.29,1.37,4.29,1.37Z"/>
+        <path class="cls-5" d="M3,23.92l-.41,1.44,5.77,1.64,1.64-5.77-1.44-.41-1.22,4.29s-4.34-1.19-4.34-1.19Z"/>
+      </g>
+    </mask>
+    <linearGradient id="linear-gradient-3" x1="0" y1="16" x2="32" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset=".1" stop-color="#a56eff"/>
+      <stop offset=".9" stop-color="#0f62fe"/>
+    </linearGradient>
+  </defs>
+  <g class="cls-1">
+    <rect class="cls-4" width="32" height="32"/>
+  </g>
+  <path class="cls-6" d="M16,21c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5ZM16,13.22c-1.53,0-2.78,1.25-2.78,2.78s1.25,2.78,2.78,2.78,2.78-1.25,2.78-2.78-1.25-2.78-2.78-2.78Z"/>
+</svg>
