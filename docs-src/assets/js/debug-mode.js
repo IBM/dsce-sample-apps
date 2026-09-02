@@ -2,47 +2,47 @@
 // Triple-click the IBM logo within 2 seconds to toggle debug mode.
 // State is stored in localStorage so it persists across all pages.
 
-const DEBUG_KEY = 'dsce_isDebugMode';
+const ADMIN_KEY = 'dsce_isAdminMode';
 const CLICK_WINDOW_MS = 2000;
 const CLICKS_REQUIRED = 3;
 
 // ── State helpers ────────────────────────────────────────────────────────────
-export function isDebugMode() {
-  return localStorage.getItem(DEBUG_KEY) === 'true';
+export function isAdminMode() {
+  return localStorage.getItem(ADMIN_KEY) === 'true';
 }
 
 function setDebugMode(value) {
-  localStorage.setItem(DEBUG_KEY, String(value));
-  applyDebugMode(value);
+  localStorage.setItem(ADMIN_KEY, String(value));
+  applyAdminMode(value);
 }
 
 // ── Badge ────────────────────────────────────────────────────────────────────
-function applyDebugMode(active) {
-  let badge = document.getElementById('debug-mode-badge');
+function applyAdminMode(active) {
+  let badge = document.getElementById('admin-mode-badge');
   if (active) {
     if (!badge) {
       badge = document.createElement('span');
-      badge.id = 'debug-mode-badge';
-      badge.className = 'debug-mode-badge';
-      badge.textContent = 'Debug Mode';
+      badge.id = 'admin-mode-badge';
+      badge.className = 'admin-mode-badge';
+      badge.textContent = 'Admin Mode';
       // Insert immediately after the Contact us link (last child of .header-actions)
       const headerActions = document.querySelector('.header-actions');
       if (headerActions) {
         const divider = document.createElement('span');
         divider.className = 'header-actions-divider';
         divider.setAttribute('aria-hidden', 'true');
-        divider.id = 'debug-mode-divider';
+        divider.id = 'admin-mode-divider';
         divider.textContent = '|';
         headerActions.appendChild(divider);
         headerActions.appendChild(badge);
       }
     }
     badge.style.display = '';
-    document.getElementById('debug-mode-divider')?.style.setProperty('display', '');
+    document.getElementById('admin-mode-divider')?.style.setProperty('display', '');
   } else {
     if (badge) {
       badge.style.display = 'none';
-      document.getElementById('debug-mode-divider')?.style.setProperty('display', 'none');
+      document.getElementById('admin-mode-divider')?.style.setProperty('display', 'none');
     }
   }
 }
@@ -50,7 +50,7 @@ function applyDebugMode(active) {
 // ── Logo click tracker ───────────────────────────────────────────────────────
 let clickTimes = [];
 
-function handleLogoClick() {
+function handleAdminModeClick() {
   const now = Date.now();
   // Drop clicks older than the window
   clickTimes = clickTimes.filter(t => now - t < CLICK_WINDOW_MS);
@@ -58,7 +58,7 @@ function handleLogoClick() {
 
   if (clickTimes.length >= CLICKS_REQUIRED) {
     clickTimes = [];
-    const next = !isDebugMode();
+    const next = !isAdminMode();
     setDebugMode(next);
     console.info(`[DSCE] Debug mode ${next ? 'enabled' : 'disabled'}`);
     // Dispatch a custom event so other modules (e.g. index.js) can react
@@ -68,11 +68,11 @@ function handleLogoClick() {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  const titleEl = document.getElementById('debug-trigger');
+  const titleEl = document.getElementById('admin-mode-trigger');
   if (titleEl) {
-    titleEl.addEventListener('click', () => handleLogoClick());
+    titleEl.addEventListener('click', () => handleAdminModeClick());
     titleEl.style.cursor = 'pointer';
   }
   // Reflect persisted state on every page load
-  applyDebugMode(isDebugMode());
+  applyAdminMode(isAdminMode());
 });
