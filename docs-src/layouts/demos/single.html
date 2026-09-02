@@ -56,9 +56,21 @@
               </div>
               <div class="demo-metadata">
                 <ul class="demo-metadata-list demo-metadata-list-bullets">
+                  {{- $skillsData := hugo.Data.skills -}}
+                  {{- $skillUrlMap := dict -}}
+                  {{- range $skillsData -}}
+                    {{- range . -}}
+                      {{- $skillUrlMap = merge $skillUrlMap (dict .name .url) -}}
+                    {{- end -}}
+                  {{- end -}}
                   {{ range $demo.skills }}
                     {{ $skillName := . }}
-                    <li><a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/" target="_blank" rel="noopener">{{ $skillName }}</a></li>
+                    {{ $skillUrl := index $skillUrlMap $skillName }}
+                    {{ if $skillUrl }}
+                      <li><a href="{{ $skillUrl }}" target="_blank" rel="noopener">{{ $skillName }}</a></li>
+                    {{ else }}
+                      <li>{{ $skillName }}</li>
+                    {{ end }}
                   {{ end }}
                 </ul>
               </div>

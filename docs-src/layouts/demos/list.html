@@ -37,7 +37,8 @@
                 <div class="section-title">AI</div>
                 <div class="accordion-content">
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Trust <span class="filter-count">{{ index $bbCounts "ai-trust" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Control Plane <span class="filter-count">{{ index $bbCounts "ai-control-plane" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="ai-trust">AI Engineering <span class="filter-count">{{ index $bbCounts "ai-engineering" | default 0 }}</span></label>
                 </div>
               </div>
 
@@ -45,9 +46,9 @@
               <div class="nav-section">
                 <div class="section-title">Data</div>
                 <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Integration <span class="filter-count">{{ index $bbCounts "integration" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Intelligence <span class="filter-count">{{ index $bbCounts "intelligence" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Retrieval <span class="filter-count">{{ index $bbCounts "query" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="integration">Context <span class="filter-count">{{ index $bbCounts "context" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="intelligence">Pipelines <span class="filter-count">{{ index $bbCounts "pipelines" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="query">Query Engines <span class="filter-count">{{ index $bbCounts "query-engines" | default 0 }}</span></label>
                 </div>
               </div>
 
@@ -55,9 +56,9 @@
               <div class="nav-section">
                 <div class="section-title">Automation</div>
                 <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Build <span class="filter-count">{{ index $bbCounts "build" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="build">Operate <span class="filter-count">{{ index $bbCounts "operate" | default 0 }}</span></label>
                   <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
+                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
                 </div>
               </div>
 

@@ -3,19 +3,20 @@
     [
         { "ai" : [
                 { "agents" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/agents/" },
-                { "ai-trust" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-trust/" }
+                { "ai-control-plane" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-control-plane/" },
+                { "ai-engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-engineering/" }
             ]
         },
         { "data" : [
-                { "integration" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/integration/" },
-                { "intelligence" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/intelligence/" },
-                { "retrieval" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/retrieval/" }
+                { "context" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/context/" },
+                { "pipelines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/pipelines/" },
+                { "query-engines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/query-engines/" }
             ]
         },
         { "automation" : [
-                { "build" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/build/" },
+                { "operate" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/operate/" },
                 { "optimize" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/optimize/" },
-                { "secure" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/optimize/" }
+                { "secure" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/automation-core/secure/" }
             ]
         }
     ]
