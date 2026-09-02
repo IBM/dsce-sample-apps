@@ -17,11 +17,17 @@ function bindDrawer(options) {
     trigger.setAttribute('aria-expanded', 'true');
     document.body.classList.add('drawer-open');
     if (window.analytics) {
-      window.analytics.track('Demo Script Opened', {
+      window.analytics.track('UI Interaction', {
+        channel: 'webpage',
+        namespace: 'drawer',
+        CTA: 'Demo Script Opened',
+        elementId: 'demoExplainerBtn',
+        platformTitle: 'DSCE',
+        payload: {},
         demo_name: demoMeta.name,
         demo_slug: demoMeta.slug,
-        productCodeType: 'ibm build engineering',
-        productCode: 'dsce2'
+        productCode: 'dsce2',
+        productCodeType: 'ibm build engineering'
       });
     }
   }

@@ -8,7 +8,7 @@
       <span class="global-header-brand-divider" aria-hidden="true"></span>
       <span class="global-header-brand-title">Digital Self-Serve Co-Create Experience</span>
     </div>
-    {{- $segmentKey := .page.Site.Params.segmentApiKey -}}
+    {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .page.Site.Params.segmentApiKey -}}
     <nav class="header-actions" aria-label="Header actions">
       {{ $repoOwner := .page.Site.Params.githubRepoOwner }}
       {{ $repoName := .page.Site.Params.githubRepoName }}
@@ -21,12 +21,15 @@
     {{- if $segmentKey }}
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var base = { source: 'header', productCodeType: 'ibm build engineering', productCode: 'dsce2' };
-      ['headerSubmitDemoBtn', 'headerContactUsBtn'].forEach(function (id) {
-        var el = document.getElementById(id);
+      var base = { channel: 'webpage', type: 'Link', location: 'header', objectType: 'CTA', productCode: 'dsce2', productCodeType: 'ibm build engineering' };
+      var links = [
+        { id: 'headerSubmitDemoBtn', text: 'Submit your demo' },
+        { id: 'headerContactUsBtn',  text: 'Contact us' }
+      ];
+      links.forEach(function (cfg) {
+        var el = document.getElementById(cfg.id);
         if (!el || !window.analytics) return;
-        var event = id === 'headerSubmitDemoBtn' ? 'Submit Demo Clicked' : 'Contact Us Clicked';
-        window.analytics.trackLink(el, event, base);
+        window.analytics.trackLink(el, 'CTA Clicked', Object.assign({}, base, { CTA: cfg.text, text: cfg.text }));
       });
     });
     </script>

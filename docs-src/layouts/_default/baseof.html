@@ -19,6 +19,12 @@
   </script>
   {{- end }}
 
+  {{- if $segmentKey }}
+  {{ $identify := resources.Get "js/identify.js" | fingerprint }}
+  <script src="{{ $identify.RelPermalink }}" integrity="{{ $identify.Data.Integrity }}" crossorigin="anonymous"></script>
+  {{- end }}
+</head>
+<body>
   {{ partial "global-header.html" (dict "page" . "showBack" (.Params.showBack | default false) "showUseCases" (.Params.showUseCases | default false) "title" .Title) }}
 
   {{ block "main" . }}{{ end }}
