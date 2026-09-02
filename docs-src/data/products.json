@@ -24,6 +24,10 @@
         "url" : "http://cloud.ibm.com/",
         "image" : "ibm-cloud.svg"
     },
+    "Confluent Cloud" : {
+        "url" : "https://www.confluent.io/confluent-cloud/",
+        "image" : "confluent-cloud.svg"
+    },
     "IBM Confluent" : {
         "url" : "https://www.ibm.com/products/confluent",
         "image" : "ibm-confluent.svg"

@@ -98,6 +98,28 @@
       "shortDescription": "Detect exposed credentials, securely migrate them to centralized vaults, and automate remediation using AI — reducing risk and enabling secret rotation without code changes.",
       "extrasBoxUrl": "",
       "isLive": true
+    },
+    {
+      "name": "Real-Time Supply Chain Risk Control Tower with Bob and Confluent",
+      "slug": "real-time-supply-chain-risk-control-tower-with-bob-and-confluent",
+      "products": ["IBM Bob", "IBM watsonx.ai", "Confluent Cloud"],
+      "buildingBlocks": ["ai.agents", "data.context", "data.pipelines"],
+      "skills": ["agent", "data-streaming-confluent", "rag-pipeline-builder"],
+      "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/integration/data-streaming/assets/supply-chain-risk-control-tower",
+      "workingDemoURL": "",
+      "architecture": "architecture.png",
+      "specificationsRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/integration/data-streaming/assets/supply-chain-risk-control-tower/docs/specs",
+      "specificationsFlow": "",
+      "video": {
+        "cosFileName": "",
+        "youTubeURL": "https://www.youtube.com/watch?v=NAWuitphG7k",
+        "thumbnail": ""
+      },
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png", "screenshot-03.png"],
+      "longDescription": "Supply-chain risk rarely exists in one application. Inventory, supplier, logistics, and external-risk signals are usually fragmented across systems, so teams discover issues through batch reports, spreadsheets, and email after the disruption has already grown. In the demo, NorthStar Energy Systems has a strategic 900-unit order worth $750K with a four-day ship window and a critical part, BRG-9004, at risk.\n\nIBM Bob orchestrates a reusable Confluent Building Block that streams inventory, shipment, and port-risk events, while a risk engine correlates the signals and continuously recalculates the business risk. The scenario progresses from MEDIUM to HIGH to CRITICAL and then back to MEDIUM as conditions recover. When risk becomes critical, the solution publishes risk and alert events, recommends actions such as activating an alternate supplier and expediting the shipment, and uses IBM watsonx.ai to draft an executive summary and supplier escalation communication for human approval.",
+      "shortDescription": "Correlates live inventory, shipment, and external-risk signals to detect supply-chain disruption early, score business risk continuously, and recommend mitigation before customers are impacted.",
+      "extrasBoxUrl": "",
+      "isLive": true
     }
   ]
 }

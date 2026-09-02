@@ -77,8 +77,14 @@ customModes:
         architecture    (string)  Always "architecture.png".
         specificationsRepo (string) From issue field with id = "specifications_repo_url".
                                   Empty string "" if "_No response_" or blank.
-        specificationsFlow (string) Always "specs-flow.png" if specificationsRepo
-                                  is non-empty, otherwise "".
+        specificationsFlow (string) ONLY set to a filename (e.g. "specs-flow.png")
+                                  if the issue body contains an explicit <img> tag
+                                  inside the specifications section that provides
+                                  an actual flow diagram image. Download that image
+                                  and use its saved filename here. If no such
+                                  <img> tag is present — even when specificationsRepo
+                                  is non-empty — set this to "". Never invent a
+                                  filename for a file that has not been downloaded.
         video           (object)  The single.html template supports TWO video
                                   rendering modes chosen by this priority order:
                                   1. youTubeURL (YouTube only) — if present
