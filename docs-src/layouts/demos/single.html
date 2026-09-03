@@ -185,7 +185,7 @@
                       {{ if $img }}
                         {{ $img = $img | fingerprint }}
                         <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
-                          <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $img.RelPermalink }}" data-alt="{{ $demo.name }} screenshot {{ add $i 1 }}">
+                          <button class="image-full-size" aria-label="View full size" data-src="{{ $img.RelPermalink }}" data-alt="{{ $demo.name }} screenshot {{ add $i 1 }}">
                             <img src="{{ $img.RelPermalink }}" alt="{{ $demo.name }} screenshot {{ add $i 1 }}" />
                           </button>
                         </div>
@@ -259,8 +259,13 @@
               <div class="demo-step-title">
                 <span class="step-circle">3</span> Explore how it was built
               </div>
+              {{ if $demo.architecture_description }}
+                {{ $demo.architecture_description}}
+              {{ else }}
+                High level overview of major demo components
+              {{ end }}
               <div class="info-boxes-wrapper">
-                <div class="info-box">    
+                <div class="how-built-box"> 
                   {{ $cubeComponentsIcon := resources.Get "images/cube-components.svg" | fingerprint }}
                   <div class="info-box-header">
                     <img src="{{ $cubeComponentsIcon.RelPermalink }}"/>
@@ -268,18 +273,15 @@
                       Architecture
                     </div>
                   </div>
-                  <div class="info-box-subtitle">
-                    High level overview of major demo components
-                  </div>
                   {{ $hasWorkingDemo := and $demo.workingDemoURL (gt (len $demo.workingDemoURL) 0) }}
                   {{ $architectureImgPath := printf "demos/%s/%s" $demo.slug $demo.architecture }}
                   {{ $architectureImg := resources.Get $architectureImgPath }}
-                  <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $architectureImg.RelPermalink }}" data-alt="{{ $demo.name }} architecture diagram">
+                  <button class="image-full-size" aria-label="View full size" data-src="{{ $architectureImg.RelPermalink }}" data-alt="{{ $demo.name }} architecture diagram">
                     <img src="{{ $architectureImg.RelPermalink }}" />
                   </button>
                 </div>
                 {{ if and $demo.specificationsFlow (gt (len $demo.specificationsFlow) 0) }}
-                  <div class="info-box">
+                  <div class="how-built-box">
                     {{ $specImgPath := printf "demos/%s/%s" $demo.slug $demo.specificationsFlow }}
                     {{ $specImg := resources.Get $specImgPath }}
                     {{ $specImg = $specImg | fingerprint }}
@@ -290,10 +292,7 @@
                         Specifications Workflow
                       </div>
                     </div>
-                    <div class="info-box-subtitle">
-                      IBM Bob executes these Specifications to build this demo.
-                    </div>
-                    <button class="demo-slide-zoom" aria-label="View full size" data-src="{{ $specImg.RelPermalink }}" data-alt="{{ $demo.name }} specifications workflow">
+                    <button class="image-full-size" aria-label="View full size" data-src="{{ $specImg.RelPermalink }}" data-alt="{{ $demo.name }} specifications workflow">
                       <img src="{{ $specImg.RelPermalink }}" />
                     </button>
                   </div>
