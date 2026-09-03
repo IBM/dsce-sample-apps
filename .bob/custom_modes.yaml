@@ -85,7 +85,11 @@ customModes:
                                   <img> tag is present — even when specificationsRepo
                                   is non-empty — set this to "". Never invent a
                                   filename for a file that has not been downloaded.
-        video           (object)  The single.html template supports TWO video
+        videos          (array)   An array of video objects. Supports one OR
+                                  more videos per demo. The single.html template
+                                  renders all videos in a slideshow with prev/next
+                                  arrows and dot-navigation when more than one
+                                  video is present. Each video object supports TWO
                                   rendering modes chosen by this priority order:
                                   1. youTubeURL (YouTube only) — if present
                                      and non-empty, renders an embedded YouTube
@@ -96,10 +100,12 @@ customModes:
                                      SharePoint) — the mode downloads the video
                                      file and uploads it to COS.
 
-                                  Fields to set in the demos.json video object:
-                                  - cosFileName: "<slug>-video.mp4" for all
-                                    non-YouTube videos (Box/OneDrive/SharePoint).
-                                    Set to "" only when youTubeURL is used.
+                                  Fields to set in each demos.json video object:
+                                  - cosFileName: "<slug>-video-<n>.mp4" for all
+                                    non-YouTube videos (Box/OneDrive/SharePoint),
+                                    where <n> is 1-based (e.g. "-video-1.mp4",
+                                    "-video-2.mp4"). Set to "" only when
+                                    youTubeURL is used.
                                   - youTubeURL: YouTube watch URL only
                                     (youtube.com/watch or youtu.be). Set to ""
                                     for all other video sources. Omit entirely
@@ -110,7 +116,28 @@ customModes:
                                     otherwise set to "". Set to "" when using
                                     youTubeURL.
 
-                                  Decision logic when processing an issue:
+                                  The issue template has a single "Demo overview
+                                  video" field (id="video_url"). If the submitter
+                                  provides only one URL the videos array will have
+                                  exactly one object. If the issue body contains
+                                  multiple video URLs (e.g. listed one per line),
+                                  create one video object per URL in the array.
+
+                                  ORDERING RULE — shortest video must be first:
+                                  The first entry in the videos array is shown by
+                                  default in the slideshow (index 0 = active slide).
+                                  Always place the shortest video first. When the
+                                  submitter provides multiple URLs, ask them to
+                                  confirm which is the shortest/overview video if
+                                  the order is not clear from the issue text. If
+                                  duration cannot be determined (e.g. YouTube URLs
+                                  where duration requires an API call), insert a
+                                  confirmation step in the plan summary asking the
+                                  user to confirm the intended order before writing
+                                  demos.json. Never silently assume submission order
+                                  is shortest-first when multiple videos exist.
+
+                                  Decision logic when processing each video URL:
                                   - Video URL is YouTube (youtube.com/youtu.be)
                                     → set youTubeURL, leave cosFileName "".
                                     No COS upload needed.
@@ -136,6 +163,12 @@ customModes:
                                   paragraph breaks as \n\n. Do not truncate.
         shortDescription (string) From issue field with id = "short_description". Trim to under
                                   30 words if the submitter exceeded the limit.
+        architecture_description (string) From issue field with id =
+                                  "architecture_description". A short paragraph
+                                  describing the major components shown in the
+                                  diagram and how they interact. Preserve the
+                                  submitter's text verbatim; do not truncate.
+                                  Empty string "" if "_No response_" or blank.
         extrasBoxUrl    (string)  Optional. From issue field with id = "box_one_drive_link".
                                   Use the URL as-is if provided. Empty string ""
                                   if "_No response_", blank, or not present.
@@ -232,19 +265,23 @@ customModes:
 
       ## Video Handling Rules
 
-      ### Path A — YouTube URL
-      The template embeds YouTube directly as an iframe. No COS needed.
-      1. Set youTubeURL to the YouTube URL from the issue.
-      2. Set cosFileName to "" and thumbnail to "".
-      3. No download, no upload, no manual steps.
+       Both paths below apply per video object. When multiple videos are present,
+       each is processed independently using its own index (1-based) suffix for
+       COS filenames. Mixed arrays (some YouTube, some COS) are fully supported.
 
-      ### Path B — Box / OneDrive / SharePoint URL → COS upload
-      The template requires a direct MP4 stream; Box/OneDrive/SharePoint
-      URLs cannot be embedded. The mode must download the video and upload
-      it to IBM COS. The COS bucket is always "dsce2-demo-videos" (hardcoded).
-      Requires only two env vars to be set in the user's terminal:
-        export COS_ACCESS_KEY_ID=<hmac-access-key>
-        export COS_SECRET_ACCESS_KEY=<hmac-secret-key>
+       ### Path A — YouTube URL
+       The template embeds YouTube directly as an iframe. No COS needed.
+       1. Set youTubeURL to the YouTube URL from the issue.
+       2. Set cosFileName to "" and thumbnail to "".
+       3. No download, no upload, no manual steps.
+
+       ### Path B — Box / OneDrive / SharePoint URL → COS upload
+       The template requires a direct MP4 stream; Box/OneDrive/SharePoint
+       URLs cannot be embedded. The mode must download the video and upload
+       it to IBM COS. The COS bucket is always "dsce2-demo-videos" (hardcoded).
+       Requires only two env vars to be set in the user's terminal:
+         export COS_ACCESS_KEY_ID=<hmac-access-key>
+         export COS_SECRET_ACCESS_KEY=<hmac-secret-key>
 
       COS_ENDPOINT defaults to s3.us-south.cloud-object-storage.appdomain.cloud
       unless the user explicitly provides a different one.
@@ -253,26 +290,27 @@ customModes:
       immediately and tell the user to export exactly those two vars.
       Do not proceed with any file writes.
 
-      Steps when env vars are present:
-      1. Attempt direct download with curl -L:
-           curl -L -o "/tmp/<slug>-video.mp4" "<box-or-onedrive-url>"
-         Check file size after download. If the file is zero bytes or curl
-         returned non-200, STOP and tell the user the URL requires
-         authentication — ask them to either provide a direct download link
-         or a local file path to the video.
-      2. Upload to COS using curl HMAC auth (bucket always dsce2-demo-videos):
-           COS_ENDPOINT="${COS_ENDPOINT:-s3.us-south.cloud-object-storage.appdomain.cloud}"
-           curl -X PUT \
-             --aws-sigv4 "aws:amz:us-south:s3" \
-             --user "$COS_ACCESS_KEY_ID:$COS_SECRET_ACCESS_KEY" \
-             "https://$COS_ENDPOINT/dsce2-demo-videos/<slug>-video.mp4" \
-             --upload-file /tmp/<slug>-video.mp4
-         Verify the upload returned HTTP 200.
-      3. Set cosFileName to "<slug>-video.mp4", youTubeURL to "".
-      4. Set thumbnail to "" (no thumbnail for Box/OneDrive source).
+      Steps when env vars are present (repeat for each COS video, using
+       index suffix -1, -2, … when multiple COS videos exist):
+       1. Attempt direct download with curl -L:
+            curl -L -o "/tmp/<slug>-video-<n>.mp4" "<box-or-onedrive-url>"
+          Check file size after download. If the file is zero bytes or curl
+          returned non-200, STOP and tell the user the URL requires
+          authentication — ask them to either provide a direct download link
+          or a local file path to the video.
+       2. Upload to COS using curl HMAC auth (bucket always dsce2-demo-videos):
+            COS_ENDPOINT="${COS_ENDPOINT:-s3.us-south.cloud-object-storage.appdomain.cloud}"
+            curl -X PUT \
+              --aws-sigv4 "aws:amz:us-south:s3" \
+              --user "$COS_ACCESS_KEY_ID:$COS_SECRET_ACCESS_KEY" \
+              "https://$COS_ENDPOINT/dsce2-demo-videos/<slug>-video-<n>.mp4" \
+              --upload-file /tmp/<slug>-video-<n>.mp4
+          Verify the upload returned HTTP 200.
+       3. Set cosFileName to "<slug>-video-<n>.mp4", youTubeURL to "".
+       4. Set thumbnail to "" (no thumbnail for Box/OneDrive source).
 
-      If the user provides a local file path instead of a URL, skip step 1
-      and use that path directly in step 2.
+       If the user provides a local file path instead of a URL, skip step 1
+       and use that path directly in step 2.
 
 
       ## Your Workflow For Every Issue
@@ -291,15 +329,22 @@ customModes:
          Report any missing required fields before proceeding.
 
       3. Extract every field. Apply these normalisation rules:
-         - "_No response_" means the field is empty — use "".
-         - Strip leading/trailing whitespace from all values.
-         - Detect video URLs (youtube.com, youtu.be, sharepoint.com, vimeo.com,
-           box.com) in "Link to functional demo" and set workingDemoURL to "".
-         - Extract "Link to documents on Box or One Drive" (box_one_drive_link)
-           into extrasBoxUrl. Use "" if "_No response_" or blank.
-         - Split multi-line fields (products, skills) on newlines.
-         - Extract all <img src="..."> URLs from the Screenshots and Architecture
-           sections.
+          - "_No response_" means the field is empty — use "".
+          - Strip leading/trailing whitespace from all values.
+          - Detect video URLs (youtube.com, youtu.be, sharepoint.com, vimeo.com,
+            box.com) in "Link to functional demo" and set workingDemoURL to "".
+          - Extract "Link to documents on Box or One Drive" (box_one_drive_link)
+            into extrasBoxUrl. Use "" if "_No response_" or blank.
+          - Split multi-line fields (products, skills, video_url) on newlines.
+            If the "Demo overview video" field (id="video_url") contains
+            multiple lines, each line is a separate video — build one video
+            object per line in the videos array. If only one line is present,
+            the videos array contains exactly one object.
+          - Extract all <img src="..."> URLs from the Screenshots and Architecture
+            sections.
+          - Map issue field id="architecture_description" →
+            demos.json field "architecture_description". Use "" if
+            "_No response_" or blank.
 
       4. Derive slug from the demo name.
 
@@ -309,23 +354,25 @@ customModes:
 
       7. Run the three-way slug check against demos.json and content/demos/.
 
-      8. Present a full summary of all planned changes including which images
-         will be downloaded to which paths, and ask the user to confirm.
+      8. Present a full summary of all planned changes including how many
+          videos were detected, which images will be downloaded to which paths,
+          and ask the user to confirm.
 
-      9. After confirmation, execute in this order:
-         a. mkdir the asset folder:
-            docs-src/assets/demos/<slug>/
-         b. Download all images via curl into the asset folder.
-         c. Write docs-src/assets/demos/<slug>/demo_script.md
-         d. Append new entry to docs-src/data/demos.json
-         e. Add missing products to docs-src/data/products.json
-         f. Write docs-src/content/demos/<slug>.md
+       9. After confirmation, execute in this order:
+          a. mkdir the asset folder:
+             docs-src/assets/demos/<slug>/
+          b. Download all images via curl into the asset folder.
+          c. For each YouTube video: set youTubeURL (no download needed).
+          d. For each COS video: download then upload to COS as described
+             in Path B above.
+          e. Write docs-src/assets/demos/<slug>/demo_script.md
+          f. Append new entry to docs-src/data/demos.json (videos array)
+          g. Add missing products to docs-src/data/products.json
+          h. Write docs-src/content/demos/<slug>.md
 
-      10. After all files are written, output a single remaining manual step:
-          - Upload the source video (provide the original URL from the issue)
-            to IBM COS bucket "dsce2-demo-videos" as "<slug>-video.mp4".
-          - Then set isLive to true in demos.json.
-          Nothing else should remain manual.
+       10. After all files are written, list any COS video filenames that were
+           uploaded, and instruct the maintainer to set isLive to true in
+           demos.json when ready. Nothing else should remain manual.
 
       11. If any SharePoint/Box/Vimeo image or thumbnail could not be downloaded
           automatically, list only those specific files as requiring manual upload.
@@ -345,10 +392,11 @@ customModes:
       fetch it via the GitHub REST API (no authentication needed for public
       repos). Download all images from the issue automatically using curl — never
       ask the user to manually copy images that are on publicly accessible URLs.
-      The only step that cannot be automated is the COS video upload; be explicit
-      about that one remaining manual action and provide the source video URL so
-      the maintainer can action it immediately. After all files are written,
-      output a concise done checklist showing what was automated vs what remains.
+      All video URLs are processed automatically — YouTube as iframes, COS
+       uploads for Box/OneDrive/SharePoint. Multiple videos from a single issue
+       are fully supported: build one video object per URL in the videos array.
+       After all files are written, output a concise done checklist showing what
+       was automated vs what remains manual.
     groups:
       - read
       - edit

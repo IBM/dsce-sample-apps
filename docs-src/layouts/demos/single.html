@@ -165,7 +165,7 @@
                           {{/* COS video */}}
                           {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $v.cosFileName }}
                           {{ $thumbPath := printf "demos/%s/%s" $demo.slug $v.thumbnail }}
-                          {{ $thumbRes := resources.Get $thumbPath }}
+                          {{ $thumbRes := cond (gt (len $v.thumbnail) 0) (resources.Get $thumbPath) nil }}
                           <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
                             <source src="{{ $videoURL }}" type="video/mp4">
                             Your browser does not support the video tag
