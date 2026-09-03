@@ -71,7 +71,7 @@
     lightboxImg.src = '';
   }
 
-  document.querySelectorAll('.demo-slide-zoom').forEach(btn => {
+  document.querySelectorAll('.image-full-size').forEach(btn => {
     btn.addEventListener('click', () => {
       openLightbox(btn.dataset.src, btn.dataset.alt);
       const alt = btn.dataset.alt || '';

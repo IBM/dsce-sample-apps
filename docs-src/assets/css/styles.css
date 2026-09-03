@@ -760,7 +760,7 @@ a.card-item {
 }
 
 /* Slide zoom trigger */
-.demo-slide-zoom {
+.image-full-size {
   display: block;
   width: 100%;
   padding: 0;
@@ -1115,18 +1115,6 @@ a.card-item {
 }
 
 /* =============================================================================
-   info-box > a > img / info-box > button.demo-slide-zoom > img
-   (architecture / spec flow images)
-   ============================================================================= */
-
-.info-box > a > img,
-.info-box > button.demo-slide-zoom,
-.info-box > button.demo-slide-zoom > img {
-  width: 100%;
-  border: 2px solid #c1c7cd;
-}
-
-/* =============================================================================
    DEMO CARD LIST PAGE
    ============================================================================= */
 
@@ -1210,7 +1198,7 @@ a.card-item {
 
 
 /* =============================================================================
-   STEP 1  — info boxes (video + slideshow)
+   info boxes
    ============================================================================= */
 
 .info-boxes-wrapper {
@@ -1256,6 +1244,32 @@ a.card-item {
   width: 30px;
   min-width: 30px;
 }
+
+.info-box > a > img,
+.info-box > button.image-full-size,
+.info-box > button.image-full-size > img {
+  width: 100%;
+  border: 2px solid #c1c7cd;
+}
+
+.how-built-box {
+  flex: 0 0 calc(50% - 32px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #ffffff;
+  margin-bottom: 8px;
+}
+
+.how-built-box > button.image-full-size > img {
+  width: 100%;
+  border: 2px solid #c1c7cd;
+}
+
+/* =============================================================================
+   Demo Sections
+   ============================================================================= */
 
 .demo-section-nav {
   gap: 6px;
