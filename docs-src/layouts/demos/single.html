@@ -2,10 +2,10 @@
   {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .Site.Params.segmentApiKey -}}
   {{ $slug := .Params.slug }}
   {{ $demo := index (where hugo.Data.demos.demos "slug" $slug) 0 }}
-  {{ $mdSrc := printf "demos/%s/demo_script.md" $demo.slug }}
-  {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/demo_script.md" $demo.slug) }}
-  {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}            
+  {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}
   {{ if $demo }}
+    {{ $mdSrc := printf "demos/%s/demo_script.md" $demo.slug }}
+    {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/demo_script.md" $demo.slug) }}
     {{ $images := $demo.screenshots }}
     {{ $assetTypes := slice }}
     {{- if $segmentKey }}
@@ -146,28 +146,47 @@
                     </div>
                   </div>
                   <div class="info-box-subtitle">Watch this short overview</div>
-                  {{ $youTubeURL := $demo.video.youTubeURL | default "" }}
-                  {{ if $youTubeURL }}
-                    {{/* YouTube only — convert watch URL to embed URL */}}
-                    {{ $ytEmbed := $youTubeURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
-                    <iframe
-                      class="demo-video-iframe"
-                      src="{{ $ytEmbed }}"
-                      title="{{ $demo.name }} overview video"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen>
-                    </iframe>
-                  {{ else if $demo.video.cosFileName }}
-                    {{/* COS — existing behaviour, unchanged */}}
-                    {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo.video.cosFileName }}
-                    {{ $thumbPath := printf "demos/%s/%s" $demo.slug $demo.video.thumbnail }}
-                    {{ $thumbRes := resources.Get $thumbPath }}
-                    <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
-                      <source src="{{ $videoURL }}" type="video/mp4">
-                      Your browser does not support the video tag
-                    </video>
-                  {{ end }}
+                  <div class="demo-slideshow">
+                    {{ range $i, $v := $demo.videos }}
+                      <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
+                        {{ $youTubeURL := $v.youTubeURL | default "" }}
+                        {{ if $youTubeURL }}
+                          {{/* YouTube — convert watch URL to embed URL */}}
+                          {{ $ytEmbed := $youTubeURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
+                          <iframe
+                            class="demo-video-iframe"
+                            src="{{ $ytEmbed }}"
+                            title="{{ $demo.name }} overview video {{ add $i 1 }}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                          </iframe>
+                        {{ else if $v.cosFileName }}
+                          {{/* COS video */}}
+                          {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $v.cosFileName }}
+                          {{ $thumbPath := printf "demos/%s/%s" $demo.slug $v.thumbnail }}
+                          {{ $thumbRes := resources.Get $thumbPath }}
+                          <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
+                            <source src="{{ $videoURL }}" type="video/mp4">
+                            Your browser does not support the video tag
+                          </video>
+                        {{ end }}
+                      </div>
+                    {{ end }}
+                    {{ if gt (len $demo.videos) 1 }}
+                      <button class="demo-slide-prev" aria-label="Previous video">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="16,4 6,12 16,20"/></svg>
+                      </button>
+                      <button class="demo-slide-next" aria-label="Next video">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="8,4 18,12 8,20"/></svg>
+                      </button>
+                      <div class="demo-slide-dots">
+                        {{ range $i, $v := $demo.videos }}
+                          <button class="demo-slide-dot{{ if eq $i 0 }} is-active{{ end }}" aria-label="Go to video {{ add $i 1 }}"></button>
+                        {{ end }}
+                      </div>
+                    {{ end }}
+                  </div>
                 </div>
                 <div class="info-box">
                   {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
