@@ -165,7 +165,7 @@
                           {{/* COS video */}}
                           {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $v.cosFileName }}
                           {{ $thumbPath := printf "demos/%s/%s" $demo.slug $v.thumbnail }}
-                          {{ $thumbRes := resources.Get $thumbPath }}
+                          {{ $thumbRes := cond (gt (len $v.thumbnail) 0) (resources.Get $thumbPath) nil }}
                           <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
                             <source src="{{ $videoURL }}" type="video/mp4">
                             Your browser does not support the video tag
@@ -173,7 +173,7 @@
                         {{ end }}
                       </div>
                     {{ end }}
-                    {{ if gt (len $demo.videos) 1 }}
+                    {{ if and $demo.videos (gt (len $demo.videos) 1) }}
                       <button class="demo-slide-prev" aria-label="Previous video">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="16,4 6,12 16,20"/></svg>
                       </button>

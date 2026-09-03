@@ -81,5 +81,13 @@
     "IBM COS" : {
         "url" : "https://www.ibm.com/products/cloud-object-storage",
         "image" : "ibm-cos.svg"
+    },
+    "IBM Cloud Object Storage" : {
+        "url" : "https://www.ibm.com/products/cloud-object-storage",
+        "image" : "ibm-cloud-object-storage.svg"
+    },
+    "IBM Cloud Code Engine" : {
+        "url" : "https://www.ibm.com/products/code-engine",
+        "image" : "ibm-cloud-code-engine.svg"
     }
 }

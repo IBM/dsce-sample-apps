@@ -102,12 +102,14 @@ After you confirm, the mode runs in this order:
 | 1 | Create `assets/demos/<slug>/` folder | ✅ |
 | 2 | Download architecture diagram from GitHub CDN | ✅ |
 | 3 | Download screenshots from GitHub CDN | ✅ |
-| 4 | For YouTube video: set `youTubeURL` (no upload) | ✅ |
-| 5 | For Box/OneDrive video: download + upload to COS | ✅ |
+| 4 | For each YouTube video URL: set `youTubeURL` in the `videos` array (no upload) | ✅ |
+| 5 | For each Box/OneDrive video URL: download + upload to COS, add object to `videos` array | ✅ |
 | 6 | Write `demo_script.md` from the demo script field | ✅ |
-| 7 | Append new entry to `demos.json` | ✅ |
+| 7 | Append new entry to `demos.json` (with `videos` array) | ✅ |
 | 8 | Add missing products to `products.json` | ✅ |
 | 9 | Write `content/demos/<slug>.md` front-matter stub | ✅ |
+
+Multiple videos submitted in the "Demo overview video" field (one URL per line) are each processed as a separate entry in the `videos` array. Mixed arrays — some YouTube, some COS — are fully supported.
 
 ---
 
@@ -128,11 +130,17 @@ every push to `main`.
 
 ## Video Handling Reference
 
+The `videos` field in `demos.json` is always an **array**. One video = one-element array. Multiple videos = multiple objects in the array. The detail page renders a slideshow with prev/next arrows and dot-navigation automatically when more than one video is present.
+
+> **Ordering rule:** the first video in the array is the default active slide. Always place the **shortest video first** (the quick overview / teaser). When multiple URLs are submitted and the order is ambiguous, the mode will pause during the plan step and ask you to confirm the intended order before writing any files.
+
 | Video source in issue | How it renders on site | What mode does |
 |---|---|---|
-| `youtube.com` / `youtu.be` | Embedded `<iframe>` player | Sets `youTubeURL`, no upload |
-| Box / OneDrive / SharePoint | Native `<video>` streamed from COS | Downloads file → uploads to `dsce2-demo-videos` COS bucket |
-| Local file path (you provide) | Native `<video>` streamed from COS | Uploads directly from local path to COS |
+| `youtube.com` / `youtu.be` | Embedded `<iframe>` player | Adds `{ "youTubeURL": "<url>" }` object to `videos` array — no upload |
+| Box / OneDrive / SharePoint | Native `<video>` streamed from COS | Downloads file → uploads to `dsce2-demo-videos` as `<slug>-video-<n>.mp4`, adds `{ "cosFileName": "...", "thumbnail": "" }` to `videos` array |
+| Local file path (you provide) | Native `<video>` streamed from COS | Uploads directly from local path to COS, same COS object naming |
+
+When a demo has **multiple videos**, COS filenames are numbered: `<slug>-video-1.mp4`, `<slug>-video-2.mp4`, etc. YouTube videos in the same array require no numbering — each object just carries the `youTubeURL` field.
 
 ---
 
