@@ -48,7 +48,7 @@
       "screenshots": ["home_page.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
-      "isLive": true
+      "isLive": false
     },
     {
       "name": "NexusIQ - Intelligent Operations Platform",
