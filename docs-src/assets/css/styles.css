@@ -702,6 +702,14 @@ a.card-item {
   display: block;
 }
 
+.demo-slideshow iframe,
+.demo-slideshow video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+
 .demo-slide-prev,
 .demo-slide-next {
   position: absolute;
