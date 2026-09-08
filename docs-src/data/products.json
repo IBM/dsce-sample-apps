@@ -89,5 +89,25 @@
     "IBM Cloud Code Engine" : {
         "url" : "https://www.ibm.com/products/code-engine",
         "image" : "ibm-cloud-code-engine.svg"
+    },
+    "IBM Security Verify" : {
+        "url" : "https://www.ibm.com/products/verify-identity",
+        "image" : "ibm-security-verify.svg"
+    },
+    "IBM Guardium Discover and Classify" : {
+        "url" : "https://www.ibm.com/products/guardium-insights/discover-classify",
+        "image" : "ibm-guardium-discover-and-classify.svg"
+    },
+    "IBM Guardium Data Protection" : {
+        "url" : "https://www.ibm.com/products/ibm-guardium-data-protection",
+        "image" : "ibm-guardium-data-protection.svg"
+    },
+    "IBM QRadar SIEM" : {
+        "url" : "https://www.ibm.com/products/qradar-siem",
+        "image" : "ibm-qradar-siem.svg"
+    },
+    "IBM OpenPages" : {
+        "url" : "https://www.ibm.com/products/openpages",
+        "image" : "ibm-openpages.svg"
     }
 }
