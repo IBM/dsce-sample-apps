@@ -167,6 +167,25 @@
       "shortDescription": "Correlates live inventory, shipment, and external-risk signals to detect supply-chain disruption early, score business risk continuously, and recommend mitigation before customers are impacted.",
       "extrasBoxUrl": "",
       "isLive": true
+    },
+    {
+      "name": "Live Context with Bob, Confluent & watsonx Orchestrate for Turnaround Resilience",
+      "slug": "live-context-with-bob-confluent-watsonx-orchestrate-for-turnaround-resilience",
+      "products": ["IBM watsonX Orchestrate", "IBM watsonx.ai", "Confluent Cloud"],
+      "buildingBlocks": ["ai.agents", "data.context", "data.pipelines"],
+      "skills": ["agent-builder", "data-streaming-confluent", "udi-opensearch", "infrastructure-as-code-terraform"],
+      "codeRepo": "https://github.ibm.com/build-lab-wxo/oil-gas-turnaround-supply-chain-intelligence",
+      "workingDemoURL": "",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "live-context-with-bob-confluent-watsonx-orchestrate-for-turnaround-resilience-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "Supply-chain decisions are often made using information spread across procurement systems, supplier portals, inventory applications, logistics feeds, and static knowledge sources. In fast-moving situations, a supplier status, approved-vendor list, shipment position, or material-readiness condition can change after a report or RAG index was last refreshed. This creates a risk that planners and procurement teams make decisions using stale context.\n\nThis demo shows how Live Context can be brought into a supply-chain experience using Bob, Confluent, and IBM watsonx Orchestrate. Confluent provides the real-time event backbone and latest supply context, while watsonx Orchestrate exposes that context through an agent experience. IBM Bob is used to assemble and integrate the overall solution pattern, helping bring together streaming, agentic workflows, APIs, skills, and enterprise capabilities around the business problem.",
+      "shortDescription": "Use Bob, Confluent, watsonx Orchestrate, OpenSearch and RAG to detect critical material risks early, evaluate mitigation options, and protect Oil & Gas turnaround readiness.",
+      "architecture_description": "Supply-chain changes such as approved-vendor updates, shipment changes, inventory movements, and material-readiness events are published into Confluent as real-time business events. Confluent provides the latest supply context that can be retrieved at query time rather than relying only on static or periodically refreshed information.\n\nIBM watsonx Orchestrate provides the agent experience and coordinates the tools required to retrieve and use this fresh context. A user can ask about a critical material such as CVA-8842, and the agent can respond using the latest available supplier or sourcing state. IBM Bob sits at the build and integration layer, helping assemble the streaming, agent, API, skill, MCP, and user-experience components into a reusable solution pattern.\n\nThe objective is not only to show a single turnaround use case. The architecture demonstrates a reusable Live Context pattern that can be applied wherever business decisions depend on rapidly changing enterprise information.",
+      "extrasBoxUrl": "",
+      "isLive": false
     }
   ]
 }
