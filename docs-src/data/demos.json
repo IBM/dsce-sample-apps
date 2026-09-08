@@ -186,6 +186,44 @@
       "architecture_description": "Supply-chain changes such as approved-vendor updates, shipment changes, inventory movements, and material-readiness events are published into Confluent as real-time business events. Confluent provides the latest supply context that can be retrieved at query time rather than relying only on static or periodically refreshed information.\n\nIBM watsonx Orchestrate provides the agent experience and coordinates the tools required to retrieve and use this fresh context. A user can ask about a critical material such as CVA-8842, and the agent can respond using the latest available supplier or sourcing state. IBM Bob sits at the build and integration layer, helping assemble the streaming, agent, API, skill, MCP, and user-experience components into a reusable solution pattern.\n\nThe objective is not only to show a single turnaround use case. The architecture demonstrates a reusable Live Context pattern that can be applied wherever business decisions depend on rapidly changing enterprise information.",
       "extrasBoxUrl": "",
       "isLive": false
+    },
+    {
+      "name": "DPDP Act Compliance Journey",
+      "slug": "dpdp-act-compliance-journey",
+      "products": [
+        "IBM Security Verify",
+        "IBM Guardium Discover and Classify",
+        "IBM Guardium Data Protection",
+        "HashiCorp Vault",
+        "IBM QRadar SIEM",
+        "IBM OpenPages",
+        "IBM watsonX Orchestrate"
+      ],
+      "buildingBlocks": ["ai.agents", "automation.secure"],
+      "skills": ["agent", "non-human-identity-vault"],
+      "codeRepo": "https://github.ibm.com/Sagar-Padwal/DSCE_2.0-DPDP-Compliance-demo",
+      "workingDemoURL": "https://dpdp-compliance-demo.2dx52pbrd343.us-east.codeengine.appdomain.cloud",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "dpdp-act-compliance-journey-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "screenshots": [
+        "home_page.png",
+        "screenshot-01.png",
+        "screenshot-02.png",
+        "screenshot-03.png",
+        "screenshot-04.png",
+        "screenshot-05.png",
+        "screenshot-06.png",
+        "screenshot-07.png",
+        "screenshot-08.png",
+        "screenshot-09.png"
+      ],
+      "longDescription": "Cross-Industry — Data Privacy & Regulatory Compliance (India DPDP Act 2023)\nThis demo is industry-agnostic — it applies to any organization handling personal data under the DPDP Act, not one specific sector. If the form's dropdown doesn't offer a \"Cross-Industry\" option, pick the closest generic option it has (e.g. \"General\" / \"Other\") rather than naming a specific vertical.\n\nIndia's Digital Personal Data Protection (DPDP) Act, 2023 requires organizations to protect personal data across its lifecycle — from the moment it is collected through to its use, storage, and eventual disposal. In many enterprises, that responsibility is scattered across identity, security, and governance teams, making it hard to show, in one narrative, how a data subject's information is actually protected end to end. This demo tells that story: it follows a data subject's personal data as it moves through an organization, illustrates the kinds of DPDP-related risks that can emerge at each stage, and shows how IBM technology can help address them.\n\nThe demo is structured as six phases mapped to the data lifecycle — Collect, Discover, Protect, Use, Detect, and Govern — each paired with a relevant IBM capability: IBM Verify for consent management at the point of collection, IBM Guardium Discover and Classify for locating and classifying sensitive data, IBM Guardium Data Protection for access controls and data masking, HashiCorp Vault for key/secret management and encryption, IBM QRadar SIEM for breach detection and response, and IBM OpenPages for GRC reporting and compliance visibility. Interactive walkthroughs at each stage let a seller show how a compliance gap can be identified and addressed.\n\nThe demo is presented through four personas whose day-to-day actions map to DPDP-related responsibilities: the Data Principal / Customer, whose consent and data rights are central to the journey; the Security Admin / DB Admin, who is involved in discovering, classifying, and protecting sensitive data and managing encryption keys; the Data Analyst, whose access to customer data is shaped by masking and role-based policies; and the Data Protection Officer (DPO), who is involved in breach response and compliance reporting. Together these personas give sellers a role-based way to walk a customer through consent capture, data discovery, protection, breach detection, and governance.",
+      "shortDescription": "An end-to-end demo of India's DPDP Act 2023 compliance journey, showing how IBM technology helps close data-privacy risk gaps across the data subject's lifecycle.",
+      "architecture_description": "The application is a single-page app which has structured as a guided, six-stage story. A central stage-state layer drives navigation across the six DPDP lifecycle phases — Collect, Discover, Protect, Use, Detect, Govern — each rendered by its own stage component and themed around one IBM product: IBM Verify, IBM Guardium Discover and Classify, IBM Guardium Data Protection, HashiCorp Vault, IBM QRadar SIEM, and IBM OpenPages respectively. A left panel shows overall progress and persona context, while a right panel renders the active stage's interactive walkthrough, using synthetic demo data reflecting an Indian data context (names, ID formats, phone numbers), consistent with the DPDP Act's jurisdiction.\n\nEach stage captures user input (consent choices, scan triggers, role switches, encryption input, breach simulation, report generation) and updates the UI to reflect the resulting outcome, using simulated data for demo purposes. A floating \"IBM Bob\" assistant component sits on top of the app, letting a seller show how an Agentic SDLC platform can be used to create and deploy DPDP-focused compliance agents on IBM watsonx Orchestrate, connecting the lifecycle narrative to IBM's broader automation and agentic AI capabilities.",
+      "extrasBoxUrl": "https://ibm.ent.box.com/folder/395806936738?s=dfajs1n9oq8pvz66o1ndrzphbwmcc7vf",
+      "isLive": false
     }
   ]
 }
