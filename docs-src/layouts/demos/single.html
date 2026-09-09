@@ -146,7 +146,7 @@
                     </div>
                   </div>
                   <div class="info-box-subtitle">Watch this short overview</div>
-                  <div class="demo-slideshow">
+                  <div class="demo-slideshow demo-video-slideshow">
                     {{ range $i, $v := $demo.videos }}
                       <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
                         {{ $youTubeURL := $v.youTubeURL | default "" }}
