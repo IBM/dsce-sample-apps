@@ -27,6 +27,7 @@
       dots[current].classList.add('is-active');
     }
 
+    // Keep image slideshows rotating, but leave video slideshows manual so playback is not interrupted.
     function startTimer() {
       clearInterval(timer);
       timer = setInterval(() => goTo(current + 1), INTERVAL_MS);
@@ -34,22 +35,22 @@
 
     slideshow.querySelector('.demo-slide-prev').addEventListener('click', () => {
       goTo(current - 1);
-      startTimer();
+      if (!slideshow.classList.contains('demo-video-slideshow')) startTimer();
     });
 
     slideshow.querySelector('.demo-slide-next').addEventListener('click', () => {
       goTo(current + 1);
-      startTimer();
+      if (!slideshow.classList.contains('demo-video-slideshow')) startTimer();
     });
 
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
         goTo(i);
-        startTimer();
+        if (!slideshow.classList.contains('demo-video-slideshow')) startTimer();
       });
     });
 
-    startTimer();
+    if (!slideshow.classList.contains('demo-video-slideshow')) startTimer();
   });
 
   // Lightbox
