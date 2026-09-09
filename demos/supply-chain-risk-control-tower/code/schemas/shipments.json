@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "shipments",
+  "title": "Shipment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "shipment_id",
+    "po_id",
+    "supplier_id",
+    "component_id",
+    "carrier",
+    "status",
+    "current_location",
+    "eta",
+    "delay_hours",
+    "route_id",
+    "event_time"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "shipment_id": {
+      "type": "string"
+    },
+    "po_id": {
+      "type": "string"
+    },
+    "supplier_id": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "carrier": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "BOOKED",
+        "PICKED_UP",
+        "IN_TRANSIT",
+        "AT_PORT",
+        "CUSTOMS_HOLD",
+        "DELAYED",
+        "DELIVERED"
+      ]
+    },
+    "current_location": {
+      "type": "string"
+    },
+    "eta": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delay_hours": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "route_id": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

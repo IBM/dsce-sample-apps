@@ -1,0 +1,85 @@
+# =============================================================================
+# Maximo Knowledge Hub — Ingestion API Dockerfile
+# Single-stage build: UBI 9 Python 3.11 → install deps, run ingestion server
+#
+# Base image:
+#   registry.access.redhat.com/ubi9/python-311  (Red Hat UBI 9, Python 3.11)
+#
+# Exposed port:
+#   8080  (configured via BACKEND_PORT; default 8080)
+#
+# Build context must be the repo root:
+#   docker build -f deployment/Dockerfile.ingestion -t maximo-ingestion .
+#
+# All environment variables are injected at runtime (e.g. via Kubernetes
+# ConfigMap / Secret or docker run --env-file).  Required variables:
+#
+#   OpenSearch
+#     OPENSEARCH_HOST            OpenSearch cluster hostname / URL
+#     OPENSEARCH_USERNAME        Basic-auth username
+#     OPENSEARCH_PASSWORD        Basic-auth password
+#     OPENSEARCH_INDEX           Target index name
+#     OPENSEARCH_VERIFY_SSL      "true" / "false"
+#
+#   watsonx.ai
+#     WATSONX_API_KEY            IBM Cloud API key
+#     WATSONX_PROJECT_ID         watsonx project GUID
+#     WATSONX_URL                watsonx.ai endpoint URL
+#     WATSONX_EMBEDDING_MODEL_ID Embedding model identifier
+#
+#   IBM Cloud Object Storage
+#     COS_API_KEY                IBM Cloud API key for COS
+#     COS_BUCKET_NAME            Source bucket name
+#     COS_ENDPOINT               COS S3-compatible endpoint URL
+#     COS_BUCKET_INSTANCE_CRN    COS service instance CRN
+#     COS_REGION                 COS region (e.g. us-south)
+#
+#   Server
+#     BACKEND_PORT               Listening port (default: 8080)
+#     CORS_ORIGIN                Allowed CORS origin(s)
+# =============================================================================
+
+FROM registry.access.redhat.com/ubi9/python-311
+
+# ── Environment defaults ───────────────────────────────────────────────────────
+ENV BACKEND_PORT=8080 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# ── Dependencies ───────────────────────────────────────────────────────────────
+# Switch to root to install system-level packages and Python deps
+USER 0
+
+WORKDIR /app
+
+# Copy requirements first for layer-cache efficiency
+COPY backend/requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Install Playwright Chromium + system deps (used by the spiderbot web ingestion)
+RUN python -m playwright install chromium
+
+# ── Application source ─────────────────────────────────────────────────────────
+# Copy only the packages the Ingestion Pipeline depends on at runtime.
+# spiderbot/ is included because web_ingestion_service.py uses the crawler.
+# The .dockerignore (Dockerfile.ingestion.dockerignore) further trims the
+# build context, but explicit selective COPYs guarantee correctness.
+COPY backend/pyproject.toml        /app/backend/pyproject.toml
+COPY backend/shared/               /app/backend/shared/
+COPY backend/ingestion_pipeline/   /app/backend/ingestion_pipeline/
+COPY backend/spiderbot/            /app/backend/spiderbot/
+
+WORKDIR /app/backend
+
+# ── Runtime user ───────────────────────────────────────────────────────────────
+# Drop back to the default non-root UBI uid
+USER 1001
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD curl -fsS http://localhost:8080/health || exit 1
+
+CMD ["python", "-m", "ingestion_pipeline"]

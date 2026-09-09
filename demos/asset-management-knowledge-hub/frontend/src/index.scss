@@ -1,0 +1,33 @@
+@use '@carbon/react';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // Background image pinned to the viewport — shared by all pages after login
+  background: #0f1b2d url('/images/login_background.png') center center / cover no-repeat;
+  background-attachment: fixed;
+  color: var(--cds-text-primary);
+  min-height: 100vh;
+}
+
+code,
+pre {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

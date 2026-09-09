@@ -1,0 +1,28 @@
+{
+  "index_patterns": ["supply-chain-risk-*", "control-tower-alerts-*"],
+  "template": {
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    },
+    "mappings": {
+      "properties": {
+        "risk_id": { "type": "keyword" },
+        "recommendation_id": { "type": "keyword" },
+        "alert_id": { "type": "keyword" },
+        "component_id": { "type": "keyword" },
+        "supplier_id": { "type": "keyword" },
+        "customer_order_id": { "type": "keyword" },
+        "risk_score": { "type": "integer" },
+        "risk_band": { "type": "keyword" },
+        "severity": { "type": "keyword" },
+        "root_cause": { "type": "text" },
+        "business_impact": { "type": "text" },
+        "recommended_action": { "type": "text" },
+        "days_of_supply": { "type": "float" },
+        "max_delay_hours": { "type": "integer" },
+        "event_time": { "type": "date" }
+      }
+    }
+  }
+}

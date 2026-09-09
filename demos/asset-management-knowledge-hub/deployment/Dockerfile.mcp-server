@@ -1,0 +1,80 @@
+# =============================================================================
+# Maximo Knowledge Hub — MCP Server Dockerfile
+# Single-stage build:
+#   Stage 1 (runtime) : Python 3.11 UBI 9  → install deps, run mcp_server
+#
+# Base image:
+#   registry.access.redhat.com/ubi9/python-311  (Red Hat UBI 9, Python 3.11)
+#
+# Build context must be the REPO ROOT:
+#   podman build --file deployment/Dockerfile.mcp-server .
+#
+# Port: 6868  (override with ENV PORT=<n> at runtime)
+#
+# All secrets and runtime configuration are injected via environment variables
+# at container start — nothing sensitive is baked into the image.
+#
+# Runtime environment variables:
+#   OpenSearch
+#     OPENSEARCH_HOST              OpenSearch cluster URL
+#     OPENSEARCH_USERNAME          Basic-auth username
+#     OPENSEARCH_PASSWORD          Basic-auth password
+#     OPENSEARCH_INDEX             Index name to query
+#     OPENSEARCH_VERIFY_SSL        "true" / "false"  (default true)
+#
+#   watsonx.ai
+#     WATSONX_API_KEY              IBM Cloud API key
+#     WATSONX_PROJECT_ID           watsonx project / space ID
+#     WATSONX_URL                  watsonx.ai endpoint URL
+#     WATSONX_MODEL_ID             LLM model ID for generation
+#     WATSONX_EMBEDDING_MODEL_ID   Embedding model ID for retrieval
+#
+#   Server
+#     PORT                         Listening port (default: 6868)
+#     DEBUG_MCP                    Verbose debug logging  0 / 1  (default: 0)
+#     CORS_ORIGIN                  Allowed CORS origin(s)
+#     MCP_SERVER_NAME              Logical name reported by the server
+#     MCP_SERVER_VERSION           Version string reported by the server
+# =============================================================================
+
+# ── Runtime ───────────────────────────────────────────────────────────────────
+FROM registry.access.redhat.com/ubi9/python-311
+
+# UBI python-311 runs as uid 1001 by default — switch to root for installs
+USER 0
+
+WORKDIR /app
+
+# ── Python environment defaults ───────────────────────────────────────────────
+ENV PORT=6868 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# ── Dependencies ──────────────────────────────────────────────────────────────
+# Copy the requirements manifest first so this layer is cached independently
+# of any source-code changes.
+COPY backend/requirements.txt /app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# ── Application source ────────────────────────────────────────────────────────
+# Copy only the packages the MCP server depends on at runtime.
+# The .dockerignore (Dockerfile.mcp-server.dockerignore) further trims the
+# build context, but explicit selective COPYs guarantee correctness even if
+# the dockerignore is not applied (e.g. older tooling).
+COPY backend/pyproject.toml   /app/backend/pyproject.toml
+COPY backend/shared/          /app/backend/shared/
+COPY backend/mcp_server/      /app/backend/mcp_server/
+
+WORKDIR /app/backend
+
+# ── Runtime user ──────────────────────────────────────────────────────────────
+USER 1001
+
+EXPOSE 6868
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD curl -fsS http://localhost:6868/health || exit 1
+
+CMD ["python", "-m", "mcp_server"]

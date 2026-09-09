@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "supply-chain-risk-control-tower"
+version = "0.1.0"
+description = "Confluent Cloud building block for real-time supply chain risk detection and recommendations"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "confluent-kafka>=2.5.0",
+  "python-dotenv>=1.0.1",
+  "requests>=2.32.0",
+  "typer>=0.12.3",
+  "rich>=13.7.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "ruff>=0.5.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["code"]
+
+[project.scripts]
+scrc-producer        = "scrc.producer:app"
+scrc-risk-engine     = "scrc.risk_engine:app"
+scrc-register-schemas = "scrc.register_schemas:app"
+
+# ---------------------------------------------------------------------------
+# Pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["scripts/tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+
+# ---------------------------------------------------------------------------
+# Ruff (linter)
+# ---------------------------------------------------------------------------
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]

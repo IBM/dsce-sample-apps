@@ -1,0 +1,60 @@
+# =============================================================================
+# Dockerfile.mcp-server.dockerignore
+#
+# Applied automatically by Docker/Podman when building with:
+#   podman build --file deployment/Dockerfile.mcp-server .
+#
+# Goal: include only what the MCP Server container needs.
+# The build context is the REPO ROOT, so we exclude everything that is not
+# required by backend/mcp_server or backend/shared.
+# =============================================================================
+
+# ── Version control ───────────────────────────────────────────────────────────
+.git
+.gitignore
+.gitattributes
+
+# ── Frontend (not part of the backend image) ──────────────────────────────────
+frontend/
+
+# ── Backend subtrees not needed by the MCP server ────────────────────────────
+backend/ingestion_pipeline/
+backend/spiderbot/
+backend/opensearch/
+backend/scripts/
+
+# ── Dev / launch helpers — not needed in the container ───────────────────────
+backend/start.py
+backend/stop.py
+backend/requirements-dev.txt
+
+# ── Stale Node artefact inside mcp_server package ────────────────────────────
+backend/mcp_server/package-lock.json
+
+# ── Python byte-code cache — rebuilt inside the container ────────────────────
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# ── Deployment artefacts — not needed inside the image ───────────────────────
+deployment/
+
+# ── Secrets — never bake into an image ───────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Local dev data / volumes ──────────────────────────────────────────────────
+opensearch-data/
+ingestion_jobs.json
+myenv/
+
+# ── IDE / OS noise ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+_backup/

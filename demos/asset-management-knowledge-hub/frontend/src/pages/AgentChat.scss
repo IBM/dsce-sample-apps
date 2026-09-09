@@ -1,0 +1,1396 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '../components/shared';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// chat-page
+// Full-height flex column that fills the white main area.
+// The scroll area grows to fill; composer is pinned at the bottom.
+// ─────────────────────────────────────────────────────────────────────────────
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 3rem);   // viewport minus fixed header
+  background: transparent;       // background image comes from body
+  overflow: hidden;              // prevent double scrollbars
+}
+
+// ── Chat top header bar — instance picker + New chat ─────────────────────────
+// Sits at the very top of the chat area, above the scroll region.
+.chat-header-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-03 $spacing-07;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  min-height: 2.75rem;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-02 $spacing-05;
+  }
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  flex: 1;
+}
+
+.chat-header-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: $spacing-03;
+}
+
+// "+ New chat" button in the top-right of the header bar
+.chat-header-new {
+  background: none;
+  border: 1px solid var(--cds-interactive);
+  border-radius: 1rem;
+  padding: $spacing-02 $spacing-05;
+  @include type-style('label-01');
+  color: var(--cds-interactive);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--cds-interactive);
+    color: #ffffff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 2px;
+  }
+}
+
+// ── Scrollable conversation area ──────────────────────────────────────────────
+.chat-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  background: #ffffff;   // clean white — no grey page noise
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 2px; }
+}
+
+// ── Message list (once conversation starts) ───────────────────────────────────
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;               // tighter: 16px instead of 24px
+  padding: $spacing-06 $spacing-05; // slim sides: 16px instead of 48px
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-05 $spacing-04;
+  }
+
+  @include breakpoint-down(sm) {
+    padding: $spacing-04 $spacing-03;
+  }
+}
+
+// ── Welcome screen ────────────────────────────────────────────────────────────
+// Centred in the scroll area with generous top padding, matching AskHR layout.
+.welcome-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: $spacing-10 $spacing-09 $spacing-07;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-07 $spacing-06;
+  }
+}
+
+// Agent avatar + name row (shown above the "Hello" heading)
+.welcome-agent-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  margin-bottom: $spacing-06;
+}
+
+.welcome-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--cds-interactive);   // IBM Blue
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.welcome-agent-name {
+  @include type-style('body-compact-02');
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.welcome-time {
+  @include type-style('label-01');
+  color: var(--cds-text-helper);
+}
+
+// Large greeting heading — matches "Hello, I'm AskHR" sizing.
+// Using explicit sizes: display-01 uses fluid responsive values not
+// compatible with all SCSS build setups.
+.welcome-heading {
+  font-size: 3.375rem;
+  line-height: 1.19;
+  font-weight: 300;
+  letter-spacing: 0;
+  color: var(--cds-text-primary);
+  margin-bottom: $spacing-04;
+
+  @include breakpoint-down(md) {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  @include breakpoint-down(sm) {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+.welcome-description {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-secondary);
+  max-width: 680px;
+  margin-bottom: $spacing-08;
+}
+
+// ── Suggestion tiles row ──────────────────────────────────────────────────────
+// Entrance animation — tiles fade + slide up in a staggered sequence.
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Arrow nudge on hover
+@keyframes arrow-nudge {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+.suggestion-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-05;
+  width: 100%;
+
+  @include breakpoint-down(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-down(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.suggestion-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: $spacing-06 $spacing-05 $spacing-05;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  // Staggered entrance — nth-child delay keeps the `:nth-child` selector intact.
+  opacity: 0;
+  animation: tile-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.13s; }
+  &:nth-child(3) { animation-delay: 0.21s; }
+
+  // Lifted gradient shimmer that sweeps from left on hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 98, 254, 0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  // Accent top-edge glow line
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #0f62fe 0%, #4589ff 50%, transparent 100%);
+    border-radius: 10px 10px 0 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  transition:
+    border-color 0.22s ease,
+    box-shadow   0.22s ease,
+    transform    0.22s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    border-color: #4589ff;
+    box-shadow:
+      0 4px 16px rgba(15, 98, 254, 0.12),
+      0 1px 4px  rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+
+    &::before { opacity: 1; }
+    &::after  { transform: scaleX(1); }
+
+    .suggestion-tile-title { color: #0043ce; }
+
+    .suggestion-tile-arrow {
+      animation: arrow-nudge 0.45s ease forwards;
+      color: #0043ce;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(15, 98, 254, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 3px;
+  }
+}
+
+.suggestion-tile-title {
+  @include type-style('productive-heading-01');
+  color: var(--cds-link-primary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: $spacing-03;
+  transition: color 0.2s ease;
+  // Subtle underline drawn via border-bottom so we can animate it
+  padding-bottom: 1px;
+  border-bottom: 1px solid transparent;
+}
+
+.suggestion-tile-desc {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-secondary);
+  flex: 1;
+  margin-bottom: $spacing-08;
+  line-height: 1.5;
+}
+
+.suggestion-tile-arrow {
+  position: absolute;
+  bottom: $spacing-04;
+  right: $spacing-05;
+  color: var(--cds-link-primary);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  // A small circular tray behind the arrow
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(15, 98, 254, 0.07);
+  justify-content: center;
+}
+
+// ── Message rows ──────────────────────────────────────────────────────────────
+.msg-row {
+  display: flex;
+  flex-direction: column;
+}
+
+// User message — right-aligned pill bubble with avatar + name
+.msg-row.msg-user {
+  align-items: flex-end;
+}
+
+// Meta row: username (left) + time (right) — sits above the bubble
+.msg-user-meta {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-03;
+  margin-bottom: $spacing-02;
+  justify-content: flex-end;
+  padding-right: calc(1.75rem + #{$spacing-03});  // align with bubble, not avatar
+}
+
+.msg-user-name {
+  @include type-style('label-01');
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+// Row: bubble on the left, avatar on the right
+.msg-user-bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-03;
+  max-width: 88%;
+
+  @include breakpoint-down(md) {
+    max-width: 96%;
+  }
+}
+
+// Circular avatar — matches bot avatar but on the right
+.msg-user-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #4589ff;
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.msg-user-bubble {
+  background: var(--cds-interactive);   // IBM Blue
+  color: #ffffff;
+  padding: $spacing-04 $spacing-06;
+  border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;  // pill — flat bottom-right anchors to avatar
+  @include type-style('body-01');
+  word-break: break-word;
+  white-space: pre-wrap;
+  box-shadow: 0 2px 8px rgba(15, 98, 254, 0.22);
+}
+
+// Bot message — left-aligned, with avatar
+.msg-row.msg-bot {
+  align-items: flex-start;
+  gap: $spacing-02;
+}
+
+.msg-bot-meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  margin-bottom: $spacing-02;
+}
+
+.msg-bot-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--cds-interactive);
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.msg-bot-name {
+  @include type-style('label-01');
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+
+.msg-time {
+  @include type-style('label-01');
+  color: var(--cds-text-helper);
+}
+
+// Bot response body — card, flat top-left anchors to the avatar side
+.msg-bot-body {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px 8px 8px 8px;  // subtle — table-friendly
+  padding: $spacing-05 $spacing-05;
+  width: 100%;
+  max-width: 100%;   // fills the full message column width
+  box-sizing: border-box;
+  @include type-style('body-01');
+  word-break: break-word;
+  color: var(--cds-text-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+// Fallback prose block — plain text / headings / lists around a table
+.bot-fallback {
+  @include type-style('body-01');
+  color: var(--cds-text-primary);
+  padding: $spacing-02 0;
+  line-height: 1.65;
+
+  // Section headings get a blue left-accent bar
+  .markdown-text .md-h2,
+  .markdown-text .md-h3 {
+    padding-left: $spacing-04;
+    border-left: 3px solid #0f62fe;
+    border-bottom: none;
+    margin-top: $spacing-04;
+  }
+}
+
+// Table block — rendered as its own card, visually separated from prose
+.bot-table-block {
+  margin: $spacing-04 0;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #0f62fe;   // IBM Blue top accent
+  border-radius: 4px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+  // Let the table fill the card flush — no inner padding
+  .markdown-text {
+    display: block;
+  }
+
+  .markdown-text .md-table-wrap {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+
+  .markdown-text .md-table th {
+    background: #f4f4f4;
+  }
+}
+
+// Loading bubble — three-dot typing indicator
+.loading-bubble {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px 8px 8px 8px;
+  padding: $spacing-04 $spacing-05;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+// Three animated dots for the typing indicator
+.typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8d8d8d;
+  animation: typing-bounce 1.2s ease-in-out infinite;
+
+  &:nth-child(2) { animation-delay: 0.18s; }
+  &:nth-child(3) { animation-delay: 0.36s; }
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: translateY(0);    opacity: 0.45; }
+  40%            { transform: translateY(-5px); opacity: 1;    }
+}
+
+// ── Synthesised answer block ──────────────────────────────────────────────────
+.synthesis-block {
+  background: #f4f4f4;
+  border-left: 3px solid var(--cds-interactive);
+  padding: $spacing-04 $spacing-05;
+  margin-bottom: $spacing-05;
+}
+
+.synthesis-heading {
+  @include type-style('label-02');
+  font-weight: 700;
+  color: var(--cds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 $spacing-03 0;
+}
+
+// ── Source result cards ───────────────────────────────────────────────────────
+.source-cards {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+  margin-top: $spacing-04;
+}
+
+.source-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.18s ease;
+
+  &:hover {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  // Source identity — top accent bar replaces left-border
+  &.source-maximo    { border-top: 3px solid #24a148; }
+  &.source-documents { border-top: 3px solid #0f62fe; }
+  &.source-web       { border-top: 3px solid #009d9a; }
+}
+
+// Header: source label left, record count badge right
+.source-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-04 $spacing-05;
+  background: #f7f8fa;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+// Source icon + label group
+.source-card-label-group {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+// Coloured dot matching the top accent bar
+.source-card-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  .source-maximo    & { background: #24a148; }
+  .source-documents & { background: #0f62fe; }
+  .source-web       & { background: #009d9a; }
+}
+
+.source-card-label {
+  @include type-style('label-02');
+  font-weight: 700;
+  color: var(--cds-text-primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+// Record count — right side of header
+.source-card-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  @include type-style('label-01');
+  font-weight: 600;
+  color: var(--cds-text-secondary);
+  background: #e8e8e8;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+// Body padding — zero when a table fills the card directly
+.source-card-body {
+  padding: 0;
+
+  // Non-table content (fallback answer text, citations) gets normal padding
+  > .source-card-answer,
+  > .citations-block {
+    padding: $spacing-04 $spacing-05;
+  }
+}
+
+// Synthesised answer text — fallback when no table data
+.source-card-answer {
+  @include type-style('body-01');
+  color: var(--cds-text-primary);
+  line-height: 1.65;
+}
+
+// ── Maximo data table ─────────────────────────────────────────────────────────
+// Renders the raw Maximo records as a clean responsive table
+.maximo-data-table-wrap {
+  overflow-x: auto;
+  margin-top: 0;
+  border-radius: 0;                   // flush with card edges
+  border: none;
+  border-top: 1px solid #e8e8e8;     // only separator from header
+
+  &::-webkit-scrollbar       { height: 4px; }
+  &::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 2px; }
+}
+
+.maximo-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  @include type-style('body-compact-01');
+  font-size: 12.5px;
+
+  thead {
+    background: #f4f4f4;
+
+    th {
+      padding: $spacing-03 $spacing-04;
+      text-align: left;
+      font-weight: 700;
+      color: var(--cds-text-secondary);
+      text-transform: uppercase;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid #e0e0e0;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background 0.12s ease;
+
+      &:last-child { border-bottom: none; }
+      &:hover      { background: #f7f8fa; }
+    }
+
+    td {
+      padding: $spacing-03 $spacing-04;
+      color: var(--cds-text-primary);
+      vertical-align: middle;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+// Status badge — coloured pill rendered inside table cells
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+
+  &.status-wappr   { background: #ffd6ae; color: #7d3800; }
+  &.status-appr    { background: #defbe6; color: #044317; }
+  &.status-inprg   { background: #d0e2ff; color: #001d6c; }
+  &.status-comp    { background: #e8daff; color: #31135e; }
+  &.status-close   { background: #f4f4f4; color: #525252; }
+  &.status-can     { background: #fff1f1; color: #750e13; }
+  &.status-active  { background: #defbe6; color: #044317; }
+  &.status-inactive{ background: #f4f4f4; color: #525252; }
+  &.status-open    { background: #d0e2ff; color: #001d6c; }
+  &.status-default { background: #e8e8e8; color: #525252; }
+}
+
+// "Show more / less" toggle under the table
+.source-card-table-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #fafafa;
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  padding: $spacing-02 $spacing-04;
+  @include type-style('label-01');
+  color: var(--cds-link-primary);
+  cursor: pointer;
+  gap: $spacing-02;
+  margin-top: 0;
+
+  &:hover { background: #f0f0f0; }
+  &:focus-visible { outline: 2px solid var(--cds-focus); }
+}
+
+// ── Provenance / API trace panel ─────────────────────────────────────────────
+.provenance-block {
+  margin-bottom: $spacing-04;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  background: #f7f8fa;
+  overflow: hidden;
+}
+
+.provenance-toggle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: $spacing-02 $spacing-04;
+  cursor: pointer;
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  text-align: left;
+
+  // "API Trace" label
+  > span:first-of-type {
+    font-weight: 600;
+    color: var(--cds-text-primary);
+    margin-right: $spacing-02;
+  }
+
+  &:hover { background: #e8e8e8; }
+  &:focus-visible { outline: 2px solid var(--cds-focus); outline-offset: -2px; }
+}
+
+.provenance-summary-pills {
+  display: flex;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+  margin-left: $spacing-03;
+}
+
+.provenance-pill {
+  @include type-style('label-01');
+  background: #e0e0e0;
+  color: var(--cds-text-secondary);
+  padding: 1px $spacing-03;
+  border-radius: 10px;
+  white-space: nowrap;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.provenance-body {
+  border-top: 1px solid #e0e0e0;
+}
+
+.provenance-json {
+  margin: 0;
+  padding: $spacing-04 $spacing-05;
+  font-family: "SFMono-Regular", Consolas, "Courier New", monospace;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--cds-text-primary);
+  background: #f7f8fa;
+  overflow-x: auto;
+  white-space: pre;
+  max-height: 380px;
+  overflow-y: auto;
+
+  // scrollbar styling to match rest of UI
+  &::-webkit-scrollbar       { width: 4px; height: 4px; }
+  &::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 2px; }
+}
+
+// ── Citations ─────────────────────────────────────────────────────────────────
+.citations-block {
+  margin-top: $spacing-04;
+  border-top: 1px solid #e0e0e0;
+  padding-top: $spacing-03;
+}
+
+.citations-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  background: none;
+  border: 1px solid #c6c6c6;
+  padding: $spacing-02 $spacing-04;
+  @include type-style('label-01');
+  color: var(--cds-link-primary);
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: $spacing-02;
+
+  &:hover { background: #f4f4f4; }
+  &:focus-visible { outline: 2px solid var(--cds-focus); }
+}
+
+.citations-list {
+  list-style: none;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+}
+
+.citation-item {
+  padding: $spacing-03 $spacing-04;
+  border-bottom: 1px solid #f4f4f4;
+  @include type-style('body-compact-01');
+  &:last-child { border-bottom: none; }
+}
+
+.citation-link {
+  display: block;
+  color: var(--cds-link-primary);
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+.citation-filename { display: block; font-weight: 600; color: var(--cds-text-primary); }
+.citation-meta {
+  display: block;
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  margin-top: 2px;
+}
+.citation-excerpt {
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  font-style: italic;
+  border-left: 2px solid #e0e0e0;
+  padding-left: $spacing-03;
+  margin-top: $spacing-02;
+}
+
+// ── Sources searched footer ───────────────────────────────────────────────────
+.searched-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  margin-top: $spacing-05;
+  padding-top: $spacing-04;
+  border-top: 1px solid #f4f4f4;
+  flex-wrap: wrap;
+}
+
+.searched-label {
+  @include type-style('label-01');
+  font-weight: 700;
+  color: var(--cds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+// ── Error banner ──────────────────────────────────────────────────────────────
+.chat-error-bar {
+  flex-shrink: 0;
+}
+
+// ── Composer bar — pinned at the bottom ──────────────────────────────────────
+// Padding matches .chat-messages exactly so the input aligns with messages above.
+.composer-bar {
+  flex-shrink: 0;
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  padding: $spacing-04 $spacing-05;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-03;
+  width: 100%;
+  box-sizing: border-box;
+
+  @include breakpoint-down(md) {
+    padding: $spacing-04 $spacing-04;
+  }
+}
+
+// Pill-shaped input — full column width, aligns with message cards above
+.composer-pill {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 868px;  // 900px max-width minus 2×16px padding = flush with messages
+  background: #f4f4f4;
+  border: 1px solid #c6c6c6;
+  border-radius: 2rem;
+  overflow: hidden;
+  padding: 0 $spacing-02 0 $spacing-05;
+
+  &:focus-within {
+    border-color: var(--cds-focus);
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 0;
+  }
+}
+
+// Carbon TextInput inside the pill — remove its own border and background
+.composer-input {
+  flex: 1;
+
+  .cds--text-input-wrapper {
+    background: transparent;
+  }
+
+  .cds--text-input {
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding-left: 0;
+    @include type-style('body-01');
+    color: var(--cds-text-primary);
+  }
+
+  .cds--text-input:focus {
+    outline: none !important;
+  }
+
+  // Label hidden but present for screen readers
+  .cds--label { display: none; }
+}
+
+// Send icon button inside pill — circular, appears when input is active
+.composer-send-btn.cds--btn--ghost {
+  // Use logical properties to override Carbon's layout.size('height') token
+  // which has higher specificity than width/height.
+  block-size: 2rem !important;
+  inline-size: 2rem !important;
+  min-block-size: unset !important;
+  width: 2rem;
+  height: 2rem;
+  min-height: unset;
+
+  // Strip all padding — Carbon applies padding-inline via density tokens
+  // at a deeper selector level which survives a plain `padding: 0`.
+  padding: 0 !important;
+  padding-inline: 0 !important;
+  padding-block: 0 !important;
+
+  background: var(--cds-interactive);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #ffffff;
+
+  // Carbon already sets position:static + margin:0 on .cds--btn__icon for
+  // icon-only buttons, but re-assert here to be explicit.
+  .cds--btn__icon {
+    position: static !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    path:not([fill='none']) {
+      fill: #ffffff;
+    }
+  }
+
+  svg {
+    display: block;
+    fill: #ffffff;
+  }
+
+  &:hover:not([disabled]) {
+    background: #0050e6;
+  }
+
+  &:disabled {
+    background: #c6c6c6;
+    cursor: not-allowed;
+  }
+}
+
+// ── Instance picker — shown on welcome screen and in composer-instance-bar ──────
+// Inline flex row: label + Carbon Select (small) + status dot
+.instance-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-03;
+  flex-wrap: wrap;
+}
+
+.instance-picker-label {
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  white-space: nowrap;
+}
+
+// Constrain the Carbon Select to a sensible width
+.instance-picker-select {
+  .cds--select {
+    width: auto;
+    min-width: 14rem;
+    max-width: 22rem;
+  }
+
+  .cds--select-input {
+    min-width: 14rem;
+  }
+}
+
+// Coloured dot showing the active instance's connectivity status
+.instance-picker-status {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot-active   { background: #24a148; }
+.status-dot-inactive { background: #da1e28; }
+.status-dot-unknown  { background: #8d8d8d; }
+.status-dot-testing  { background: #f1c21b; }
+
+// ── Compact instance bar — appears above the composer once chat has started ──────
+.composer-instance-bar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  padding: $spacing-02 $spacing-09;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+  @include breakpoint-down(md) {
+    padding: $spacing-02 $spacing-06;
+  }
+}
+
+
+
+// "New chat" text link below the pill
+.composer-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  @include type-style('label-01');
+  color: var(--cds-link-primary);
+  text-decoration: underline;
+  padding: 0;
+
+  &:hover { color: var(--cds-link-primary-hover); }
+  &:focus-visible { outline: 2px solid var(--cds-focus); outline-offset: 2px; }
+}
+
+// ── History button in the header bar ─────────────────────────────────────────
+.chat-header-history {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+  padding: $spacing-02 $spacing-04;
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  svg { flex-shrink: 0; }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--cds-text-primary);
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 2px;
+  }
+}
+
+// ── History backdrop (semi-transparent overlay behind the panel) ──────────────
+.history-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 200;
+  animation: backdrop-in 0.2s ease forwards;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+// ── History slide-in panel ────────────────────────────────────────────────────
+.history-panel {
+  position: fixed;
+  top: 3rem;            // below the Carbon global header
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  // Hardcoded colours — panel is inside the g100 dark Theme wrapper so
+  // CSS custom properties resolve to dark-theme values (white text on dark bg).
+  // Using explicit hex avoids the theme bleed entirely.
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+  color: #161616;   // force all child text to dark regardless of theme
+
+  &.history-panel--open {
+    transform: translateX(0);
+  }
+}
+
+.history-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-04 $spacing-05;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f7f8fa;
+  flex-shrink: 0;
+}
+
+.history-panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161616;
+}
+
+.history-panel-header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.history-clear-all {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #0f62fe;
+  padding: $spacing-01 $spacing-03;
+  border-radius: 4px;
+
+  &:hover { background: #e8e8e8; text-decoration: underline; }
+  &:focus-visible { outline: 2px solid #0f62fe; }
+}
+
+.history-panel-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #525252;
+  padding: $spacing-02;
+  border-radius: 4px;
+
+  &:hover { background: #e8e8e8; color: #161616; }
+  &:focus-visible { outline: 2px solid #0f62fe; }
+}
+
+.history-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-03 0;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 2px; }
+}
+
+.history-empty {
+  padding: $spacing-06 $spacing-05;
+  font-size: 0.8125rem;
+  color: #525252;
+  line-height: 1.6;
+}
+
+.history-group {
+  margin-bottom: $spacing-03;
+}
+
+.history-group-label {
+  padding: $spacing-02 $spacing-05;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #525252;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.history-item {
+  position: relative;
+  padding: $spacing-03 $spacing-08 $spacing-03 $spacing-05;
+  cursor: pointer;
+  border-right: 3px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease;
+
+  &:hover {
+    background: #f4f4f4;
+    border-right-color: #0f62fe;
+
+    .history-item-delete {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0f62fe;
+    outline-offset: -2px;
+  }
+}
+
+.history-item-title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #161616;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  margin-bottom: 3px;
+  padding-right: $spacing-05;
+}
+
+.history-item-meta {
+  font-size: 11px;
+  color: #525252;
+}
+
+.history-item-delete {
+  position: absolute;
+  top: 50%;
+  right: $spacing-03;
+  transform: translateY(-50%);
+  opacity: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #525252;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-02;
+  border-radius: 4px;
+  transition: opacity 0.15s ease, background 0.12s ease, color 0.12s ease;
+
+  &:hover {
+    background: #ffd7d9;
+    color: #da1e28;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    opacity: 1;
+  }
+}
+
+// ── Demo action creation card ──────────────────────────────────────────────────
+.demo-action-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  background: #f4f4f4;
+  border-left: 3px solid #0f62fe;
+  border-radius: 0;
+
+  &__prompt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
+    flex-wrap: wrap;        // allow tag + title to wrap on narrow widths
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #161616;
+    line-height: 1.4;
+    white-space: normal;    // allow wrapping — no truncation
+    word-break: break-word;
+  }
+
+  // Native button — no Carbon weight, matches the card style
+  &__btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    background: #0f62fe;
+    border: 1px solid #0f62fe;
+    color: #ffffff;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.16px;
+    cursor: pointer;
+    transition: background 0.11s, border-color 0.11s;
+
+    &:hover  { background: #0043ce; border-color: #0043ce; }
+    &:active { background: #002d9c; border-color: #002d9c; }
+    &:focus-visible { outline: 2px solid var(--cds-focus); outline-offset: 2px; }
+  }
+
+  // Confirmation state
+  &--created {
+    background: #defbe6;
+    border-left-color: #24a148;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__confirm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    color: #044317;
+  }
+
+  &__check {
+    fill: #24a148;
+    flex-shrink: 0;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #0f62fe;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+
+    &:hover { text-decoration: underline; color: #0043ce; }
+    &:focus-visible { outline: 2px solid var(--cds-focus); outline-offset: 2px; }
+  }
+}

@@ -1,0 +1,98 @@
+version: "1.0"
+
+principle: >
+  LLMs may explain and synthesize. Feasibility and mitigation ranking must use
+  explicit deterministic inputs for the demo.
+
+risk_severity:
+  CRITICAL:
+    conditions:
+      - mandatory_material == true
+      - shortage_quantity > 0
+      - hours_until_required <= 72
+  HIGH:
+    conditions:
+      - mandatory_material == true
+      - shortage_quantity > 0
+      - hours_until_required <= 168
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SUPPLY CHAIN RESILIENCE SCORING
+# Resilience score is calculated before feasibility is evaluated.
+# It describes the overall health of the supply network for the material.
+# Lower score = better resilience posture.
+# ─────────────────────────────────────────────────────────────────────────────
+resilience_scoring:
+  direction: lower_is_better
+  normalized_range: [0, 100]
+  dimensions:
+    # D1: Supplier tier coverage — how many unconstrained approved suppliers exist
+    supplier_coverage:
+      weight: 0.30
+      scoring:
+        ">=3 unconstrained approved suppliers": 0
+        "2 unconstrained approved suppliers": 25
+        "1 unconstrained approved supplier": 60
+        "0 unconstrained approved suppliers": 100
+
+    # D2: Inventory buffer — coverage at destination and near-by transfer locations
+    inventory_buffer:
+      weight: 0.25
+      scoring:
+        "available >= required": 0
+        "transfer covers shortfall": 30
+        "partial coverage only": 70
+        "zero coverage": 100
+
+    # D3: Primary shipment exposure — days late vs required-by
+    shipment_exposure:
+      weight: 0.25
+      scoring:
+        "on_time or early": 0
+        "1-3 days late": 30
+        "4-7 days late": 60
+        ">7 days late": 100
+
+    # D4: Port/logistics disruption at known routing hubs
+    port_disruption:
+      weight: 0.20
+      scoring:
+        "no active disruption": 0
+        "LOW severity disruption": 20
+        "MEDIUM severity disruption": 50
+        "HIGH or CRITICAL disruption": 100
+
+  thresholds:
+    CONFIRMED: "resilienceScore <= 25"
+    AT_RISK: "resilienceScore 26..60"
+    CRITICAL: "resilienceScore > 60"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MITIGATION SCORING
+# Applied only to feasible options after hard constraints are evaluated.
+# ─────────────────────────────────────────────────────────────────────────────
+mitigation_scoring:
+  direction: lower_is_better
+  normalized_range: [0, 100]
+  weights:
+    scheduleRisk: 0.45
+    technicalRisk: 0.25
+    supplyRisk: 0.20
+    incrementalCost: 0.10
+
+hard_constraints:
+  - TRANSFER infeasible if available source inventory < required quantity
+  - TRANSFER infeasible if source next requirement would be jeopardized
+  - ALTERNATE_SUPPLIER infeasible if supplier not in AVL or AVL status is SUSPENDED or REVOKED
+  - ALTERNATE_SUPPLIER infeasible if supplier has active QUALITY_HOLD, FORCE_MAJEURE, or CAPACITY_CONSTRAINT at HIGH or CRITICAL severity
+  - EXPEDITE infeasible if the primary shipment supplier has an active constraint that prevents delivery improvement
+  - SUBSTITUTE infeasible without approved engineering evidence
+  - any option infeasible if estimated ready date is after a hard required-by deadline unless explicitly presented as a schedule-impact option
+
+recommendation_rule:
+  - remove infeasible options
+  - rank remaining options by totalScore ascending
+  - if top two scores differ by less than 5 points, present both as near-equivalent
+  - surface all hard constraints and assumptions
+  - include resilience_context (primary supplier status, unconstrained supplier count, resilience score) in every recommendation
+  - require human approval before execution

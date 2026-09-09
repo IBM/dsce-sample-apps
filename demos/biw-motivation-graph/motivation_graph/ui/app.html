@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevate — Close Strong</title>
+<style>
+/* ── Reset & tokens ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Elevate-style palette — white-labeled, no IBM marks */
+  --bg:        #f4f2fb;
+  --surface:   #ffffff;
+  --card:      #ffffff;
+  --border:    #e8e5f3;
+  --accent:    #6c43e0;
+  --accent2:   #10b39e;
+  --warn:      #f5a800;
+  --text:      #1c1a2e;
+  --muted:     #6c6a86;
+  --sim-bg:    #fff3d4;
+  --sim-text:  #7a5200;
+  --font:      -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+
+body { background:var(--bg); color:var(--text); font-family:var(--font);
+       font-size:14px; line-height:1.6; min-height:100vh; }
+
+/* ── Top bar ────────────────────────────────────────────────────────── */
+.topbar { display:flex; align-items:center; justify-content:space-between;
+          padding:0 24px; height:52px; background:var(--surface);
+          border-bottom:1px solid var(--border); }
+.logo { font-size:17px; font-weight:700; color:var(--accent); letter-spacing:-.5px; }
+.sim-badge { background:var(--sim-bg); color:var(--sim-text); border:1px solid #f5a800;
+             border-radius:4px; padding:2px 8px; font-size:10px; font-weight:700;
+             letter-spacing:1px; text-transform:uppercase; }
+
+/* ── Layout ─────────────────────────────────────────────────────────── */
+.container { max-width:900px; margin:32px auto; padding:0 20px; }
+
+/* ── Seller selector ────────────────────────────────────────────────── */
+.seller-tabs { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+.seller-tab { padding:8px 18px; border-radius:999px; border:1px solid var(--border);
+              background:var(--card); color:var(--muted); cursor:pointer;
+              font-size:13px; font-weight:500; transition:all .15s; }
+.seller-tab:hover { border-color:var(--accent); color:var(--text); }
+.seller-tab.active { background:var(--card); border-color:var(--accent);
+                     color:var(--accent); font-weight:700; box-shadow:0 0 0 3px #efeafc; }
+
+/* ── Nudge card ─────────────────────────────────────────────────────── */
+.nudge-card { background:var(--card); border:1px solid var(--border);
+              border-radius:20px; padding:28px 32px; margin-bottom:24px; }
+.nudge-framing { display:inline-block; background:#efeafc;
+                 color:var(--accent); border-radius:20px; padding:3px 12px;
+                 font-size:11px; font-weight:700; text-transform:uppercase;
+                 letter-spacing:.8px; margin-bottom:14px; }
+.nudge-headline { font-size:22px; font-weight:700; margin-bottom:10px; line-height:1.3; }
+.nudge-body { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:20px; }
+
+/* ── wx.ai attribution badge ────────────────────────────────────────── */
+.ai-badge-row { display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+.ai-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  background:#e8f4fd; color:#1a6fa8;
+  border:1px solid #b3d8f5; border-radius:4px;
+  padding:3px 9px; font-size:11px; font-weight:700;
+  letter-spacing:.6px; text-transform:uppercase; font-family:monospace;
+}
+.ai-badge .ai-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:#1a6fa8; display:inline-block;
+}
+.ai-meta { font-size:10px; color:var(--muted); opacity:.75; }
+.rules-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  background:#f7f8fa; color:var(--muted);
+  border:1px solid var(--border); border-radius:4px;
+  padding:3px 9px; font-size:11px; font-weight:600; letter-spacing:.4px;
+}
+
+/* ── Sources ────────────────────────────────────────────────────────── */
+.sources-label { font-size:11px; font-weight:700; text-transform:uppercase;
+                 letter-spacing:.8px; color:var(--muted); margin-bottom:8px; }
+.sources-list { display:flex; flex-direction:column; gap:6px; }
+.source-item { display:flex; align-items:center; gap:8px; font-size:12px; }
+.source-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.source-dot.live    { background:#00c9a7; }
+.source-dot.history { background:#6c63ff; }
+.source-dot.federated { background:#f5a623; }
+.source-tag { color:var(--muted); }
+
+/* ── Signals row ────────────────────────────────────────────────────── */
+.signals-row { display:flex; gap:16px; flex-wrap:wrap; margin-top:20px;
+               padding-top:20px; border-top:1px solid var(--border); }
+.signal-box { background:#faf9fe; border:1px solid var(--border);
+              border-radius:12px; padding:12px 16px; flex:1; min-width:130px; }
+.signal-value { font-size:24px; font-weight:700; color:var(--accent2); }
+.signal-label { font-size:11px; color:var(--muted); margin-top:2px; }
+.signal-source { font-size:10px; color:var(--muted); margin-top:4px;
+                 font-style:italic; opacity:.7; }
+
+/* ── Sim disclaimer ─────────────────────────────────────────────────── */
+.sim-bar { background:var(--sim-bg); border:1px solid rgba(245,166,35,.25);
+           border-radius:6px; padding:8px 14px; font-size:11px; color:var(--sim-text);
+           margin-top:8px; }
+
+/* ── Loading / error ────────────────────────────────────────────────── */
+.loading { color:var(--muted); font-size:13px; padding:32px 0; text-align:center; }
+.error-box { background:rgba(232,81,127,.08); border:1px solid rgba(232,81,127,.24);
+             border-radius:12px; padding:12px 16px; color:#8a2142; font-size:13px; }
+</style>
+</head>
+<body>
+
+<!-- Top bar — no IBM marks (white-labeled per §A6) -->
+<div class="topbar">
+  <div class="logo">elevate</div>
+  <div class="sim-badge">Simulated</div>
+</div>
+
+<div class="container">
+
+  <!-- Seller selector -->
+  <div class="seller-tabs" id="sellerTabs"></div>
+
+  <!-- Nudge output area -->
+  <div id="nudgeArea"><div class="loading">Loading…</div></div>
+
+  <!-- Persistent simulated data disclosure -->
+  <div class="sim-bar">
+    ⓘ All seller data is 100% synthetic (SEED=20260812). Numbers shown are simulated
+    for demonstration purposes. The underlying pipeline (Kafka → Cassandra + Iceberg → Trino federation)
+    processes real engines.
+  </div>
+
+</div>
+
+<script>
+const API = `${window.location.protocol}//${window.location.hostname || 'localhost'}:5050`;
+
+const SELLERS = [
+  { id: "seller-rachel-001", label: "Rachel" },
+  { id: "seller-marcus-001", label: "Marcus" },
+  { id: "seller-maya-001",   label: "Maya"   },
+];
+
+let activeSeller = SELLERS[0].id;
+
+function sourceClass(text) {
+  const t = text.toLowerCase();
+  if (t.includes("databricks")) return "federated";
+  if (t.includes("history") || t.includes("iceberg")) return "history";
+  return "live";
+}
+
+function renderSources(sources) {
+  return sources.map(s => `
+    <div class="source-item">
+      <div class="source-dot ${sourceClass(s)}"></div>
+      <span class="source-tag">${s}</span>
+    </div>
+  `).join("");
+}
+
+function renderSignals(sigs) {
+  const items = [
+    { val: sigs.salesforce_deals_closed,      label: "Deals closed",         src: "Salesforce CDC" },
+    { val: sigs.salesforce_crm_updates,       label: "CRM updates",          src: "Salesforce CDC" },
+    { val: sigs.slack_recognitions,           label: "Peer recognitions",    src: "Slack Events" },
+    { val: sigs.databricks_deal_velocity_90d, label: "90-day deal velocity", src: "Databricks (federated)" },
+  ];
+  return items.map(i => `
+    <div class="signal-box">
+      <div class="signal-value">${i.val}</div>
+      <div class="signal-label">${i.label}</div>
+      <div class="signal-source">${i.src}</div>
+    </div>
+  `).join("");
+}
+
+function renderAiBadge(n) {
+  if (n.ai_generated) {
+    const model = n.ai_model_id ? `<span class="ai-meta">${n.ai_model_id}</span>` : "";
+    const reqId = n.ai_request_id
+      ? `<span class="ai-meta" title="watsonx.ai request id">req:${n.ai_request_id.slice(0,8)}…</span>`
+      : "";
+    return `<div class="ai-badge-row">
+      <span class="ai-badge"><span class="ai-dot"></span>wx.ai</span>
+      ${model}${reqId}
+      <span class="ai-meta">Generated by IBM watsonx.ai · Granite</span>
+    </div>`;
+  }
+  return `<div class="ai-badge-row">
+    <span class="rules-badge">SQL rules</span>
+    <span class="ai-meta">Rule-based · wx.ai not reachable</span>
+  </div>`;
+}
+
+function renderNudge(n) {
+  document.getElementById("nudgeArea").innerHTML = `
+    <div class="nudge-card">
+      <div class="nudge-framing">${n.framing}</div>
+      ${renderAiBadge(n)}
+      <div class="nudge-headline">${n.headline}</div>
+      <div class="nudge-body">${n.body}</div>
+
+      <div class="sources-label">Unified sources (${n.unified_sources.length} — §B5)</div>
+      <div class="sources-list">${renderSources(n.unified_sources)}</div>
+
+      <div class="signals-row">${renderSignals(n.source_signals)}</div>
+    </div>
+  `;
+}
+
+function loadNudge(sellerId) {
+  document.getElementById("nudgeArea").innerHTML = '<div class="loading">Loading…</div>';
+  fetch(`${API}/api/nudge/${sellerId}`)
+    .then(async r => {
+      const text = await r.text();
+      try {
+        return JSON.parse(text);
+      } catch {
+        throw new Error(text.trim() || `HTTP ${r.status}`);
+      }
+    })
+    .then(n => {
+      if (n.error) throw new Error(n.error);
+      renderNudge(n);
+    })
+    .catch(err => {
+      document.getElementById("nudgeArea").innerHTML =
+        `<div class="error-box">Could not load nudge: ${err.message}<br>
+         Is the API server running? <code>python api.py</code></div>`;
+    });
+}
+
+// Build seller tabs
+const tabContainer = document.getElementById("sellerTabs");
+SELLERS.forEach(s => {
+  const btn = document.createElement("button");
+  btn.className = "seller-tab" + (s.id === activeSeller ? " active" : "");
+  btn.textContent = s.label;
+  btn.onclick = () => {
+    activeSeller = s.id;
+    document.querySelectorAll(".seller-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    loadNudge(activeSeller);
+  };
+  tabContainer.appendChild(btn);
+});
+
+loadNudge(activeSeller);
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "customer_orders",
+  "title": "CustomerOrder",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "customer_order_id",
+    "customer_name",
+    "component_id",
+    "required_qty",
+    "committed_ship_date",
+    "priority",
+    "revenue_at_risk",
+    "event_time"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "customer_order_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "required_qty": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "committed_ship_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "STRATEGIC"
+      ]
+    },
+    "revenue_at_risk": {
+      "type": "number",
+      "minimum": 0
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

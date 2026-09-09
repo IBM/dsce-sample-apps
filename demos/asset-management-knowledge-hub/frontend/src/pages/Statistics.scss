@@ -1,0 +1,438 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── KPI tile entrance (staggered) ────────────────────────────────────────────
+@keyframes kpi-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Number count-up shimmer ──────────────────────────────────────────────────
+@keyframes value-shimmer {
+  from { opacity: 0.3; }
+  to   { opacity: 1;   }
+}
+
+// ── Chart tile entrance ──────────────────────────────────────────────────────
+@keyframes chart-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Page shell
+// ─────────────────────────────────────────────────────────────────────────────
+.stats-page {
+  padding: $spacing-07 $spacing-08;
+  background: transparent;
+}
+
+// ── Page header ───────────────────────────────────────────────────────────────
+.stats-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: $spacing-06;
+  border-bottom: 2px solid var(--cds-border-subtle-01);
+  margin-bottom: $spacing-08;
+
+  h2 {
+    @include type-style('productive-heading-04');
+    margin-bottom: $spacing-02;
+    color: var(--cds-text-primary);
+  }
+  p {
+    @include type-style('body-01');
+    color: var(--cds-text-secondary);
+  }
+}
+
+.stats-controls {
+  display: flex;
+  gap: $spacing-03;
+  align-items: flex-end;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// KPI tiles — four lifted cards with coloured top accent and stagger animation
+// ─────────────────────────────────────────────────────────────────────────────
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-05;
+  margin-bottom: $spacing-08;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.kpi-tile {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 10px !important;
+  border-top: 3px solid #0f62fe !important;
+  padding: $spacing-05 $spacing-06 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  position: relative;
+  overflow: hidden;
+
+  // Staggered entrance
+  opacity: 0;
+  animation: kpi-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  &:nth-child(1) { animation-delay: 0.04s; }
+  &:nth-child(2) { animation-delay: 0.1s;  }
+  &:nth-child(3) { animation-delay: 0.16s; }
+  &:nth-child(4) { animation-delay: 0.22s; }
+
+  // Subtle blue tint wash on hover
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 98, 254, 0.03) 0%, transparent 60%);
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  transition: box-shadow 0.22s ease, border-color 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1) !important;
+
+  &:hover {
+    border-color: #4589ff !important;
+    box-shadow: 0 4px 14px rgba(15, 98, 254, 0.11), 0 1px 4px rgba(0,0,0,0.07) !important;
+    transform: translateY(-2px);
+
+    &::after { opacity: 1; }
+  }
+}
+
+.kpi-label {
+  @include type-style('label-01');
+  font-weight: 600;
+  color: var(--cds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: $spacing-03;
+}
+
+.kpi-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--cds-text-primary);
+  margin-bottom: $spacing-02;
+  font-feature-settings: "tnum";
+  animation: value-shimmer 0.5s ease 0.3s both;
+}
+
+.kpi-delta {
+  @include type-style('label-01');
+  font-weight: 600;
+
+  &.kpi-up   { color: #24a148; }
+  &.kpi-down { color: #da1e28; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Section separator between chart rows
+// ─────────────────────────────────────────────────────────────────────────────
+.stats-section-label {
+  @include type-style('label-02');
+  font-weight: 700;
+  color: var(--cds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+  margin-bottom: $spacing-05;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 1em;
+    background: #0f62fe;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}
+
+// ── Chart rows ────────────────────────────────────────────────────────────────
+.stats-row-2 {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: $spacing-05;
+  margin-bottom: $spacing-08;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Chart tiles — lifted white cards with separator under the title
+// ─────────────────────────────────────────────────────────────────────────────
+.chart-tile {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 10px !important;
+  padding: $spacing-05 $spacing-06 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  transition: box-shadow 0.22s ease !important;
+
+  opacity: 0;
+  animation: chart-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09) !important;
+  }
+}
+
+.chart-tile-title {
+  @include type-style('productive-heading-02');
+  color: var(--cds-text-primary);
+  padding-bottom: $spacing-04;
+  margin-bottom: $spacing-05;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+
+  // Small coloured pip before each title
+  &::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 1em;
+    background: #0f62fe;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}
+
+// ── Table-based horizontal stacked bar chart ──────────────────────────────────
+.bar-chart-wrap {
+  width: 100%;
+}
+
+.bar-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  td {
+    padding: 3px 0;
+    vertical-align: middle;
+  }
+}
+
+// Fixed-width label column — wide enough for "Wk to Mon" without clipping
+.bar-label {
+  width: 80px;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  color: var(--cds-text-secondary);
+  padding-right: $spacing-03 !important;
+  text-align: right;
+}
+
+// Bar column takes remaining space
+.bar-cell {
+  width: auto;
+}
+
+// Fixed-width count column on the right
+.bar-count {
+  width: 52px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+  padding-left: $spacing-02 !important;
+  white-space: nowrap;
+}
+
+// The bar itself: flex so query+error segments sit side-by-side
+.bar-track {
+  display: flex;
+  height: 18px;
+  background: #f4f4f4;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+
+  &--query { background: #0f62fe; }
+  &--error  { background: #da1e28; }
+}
+
+.chart-legend {
+  display: flex;
+  gap: $spacing-05;
+  margin-top: $spacing-04;
+  padding-top: $spacing-03;
+  border-top: 1px solid #f0f0f0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+// ── Source distribution ───────────────────────────────────────────────────────
+.source-dist-wrap {
+  margin-top: $spacing-04;
+}
+
+.source-dist-legend {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+}
+
+.dist-row {
+  display: grid;
+  grid-template-columns: 12px 1fr auto auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 $spacing-03;
+
+  .dist-bar-track {
+    grid-column: 1 / -1;
+    margin-top: $spacing-01;
+    background: #f0f0f0;
+    height: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .dist-bar-fill {
+    height: 5px;
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.dist-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dist-label {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-primary);
+}
+
+.dist-count {
+  @include type-style('body-compact-01');
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+
+.dist-pct {
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Data table — zebra striping, clear column headers with separators
+// ─────────────────────────────────────────────────────────────────────────────
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  @include type-style('body-compact-01');
+  border-radius: 6px;
+  overflow: hidden;
+
+  thead {
+    background: #f4f5f7;
+  }
+
+  th {
+    @include type-style('label-01');
+    font-weight: 700;
+    color: var(--cds-text-secondary);
+    text-align: left;
+    padding: $spacing-03 $spacing-04;
+    border-bottom: 2px solid #d1d5db;
+    border-right: 1px solid #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+
+    &:last-child { border-right: none; }
+  }
+
+  td {
+    padding: $spacing-03 $spacing-04;
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f4f4f4;
+    color: var(--cds-text-primary);
+    font-feature-settings: "tnum";
+
+    &:last-child { border-right: none; }
+  }
+
+  tbody tr {
+    transition: background 0.12s ease;
+
+    &:hover td {
+      background: #f8f9ff;
+    }
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .col-bar { width: 30%; }
+
+  .truncate-cell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+
+// ── Mini progress bar ─────────────────────────────────────────────────────────
+.mini-bar-track {
+  background: #e8e8e8;
+  height: 6px;
+  width: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mini-bar-fill {
+  height: 6px;
+  background: var(--cds-interactive);
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}

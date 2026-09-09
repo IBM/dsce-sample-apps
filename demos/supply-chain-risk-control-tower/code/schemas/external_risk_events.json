@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "external_risk_events",
+  "title": "ExternalRiskEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "risk_event_id",
+    "event_type",
+    "region",
+    "country",
+    "route_id",
+    "severity",
+    "description",
+    "expected_delay_hours",
+    "event_time"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "risk_event_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "WEATHER",
+        "PORT",
+        "TARIFF",
+        "GEOPOLITICAL",
+        "SUPPLIER_CAPACITY",
+        "TRANSPORT",
+        "FUEL_COST"
+      ]
+    },
+    "region": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "route_id": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "description": {
+      "type": "string"
+    },
+    "expected_delay_hours": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

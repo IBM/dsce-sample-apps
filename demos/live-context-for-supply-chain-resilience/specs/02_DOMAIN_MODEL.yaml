@@ -1,0 +1,233 @@
+version: "1.0"
+domain: turnaround-supply-chain
+
+entities:
+  Material:
+    key: materialId
+    fields:
+      materialId: string
+      description: string
+      materialClass: string
+      manufacturer: string
+      manufacturerPartNumber: string
+      criticality: [LOW, MEDIUM, HIGH, CRITICAL]
+      unitOfMeasure: string
+      # Supply chain resilience fields
+      minimumApprovedSupplierCount: integer  # required to maintain resilience posture
+      hasApprovedSubstitute: boolean
+      substituteRequiresEngineeringApproval: boolean
+
+  PurchaseOrder:
+    key: poId
+    fields:
+      poId: string
+      supplierId: string
+      orderDate: date
+      status: [OPEN, CONFIRMED, PARTIALLY_SHIPPED, SHIPPED, CLOSED, CANCELLED]
+      currency: string
+
+  PurchaseOrderLine:
+    key: [poId, lineId]
+    fields:
+      poId: string
+      lineId: string
+      materialId: string
+      quantity: number
+      requiredDeliveryDate: date
+      agreedDeliveryDate: date
+
+  Shipment:
+    key: shipmentId
+    fields:
+      shipmentId: string
+      poId: string
+      poLineId: string
+      materialId: string
+      quantity: number
+      status: [PLANNED, IN_TRANSIT, DELAYED, CUSTOMS, DELIVERED, CANCELLED]
+      originalEta: datetime
+      currentEta: datetime
+      logisticsProvider: string
+      destinationLocationId: string
+      portOfDeparture: string|null
+      portOfEntry: string|null
+
+  InventoryPosition:
+    key: [locationId, materialId]
+    fields:
+      locationId: string
+      materialId: string
+      onHand: number
+      reserved: number
+      available: number
+      nextKnownRequirementDate: date|null
+
+  WorkPackage:
+    key: workPackageId
+    fields:
+      workPackageId: string
+      turnaroundId: string
+      locationId: string
+      assetId: string
+      plannedStart: datetime
+      plannedEnd: datetime
+      status: [PLANNED, READY, AT_RISK, RELEASED, COMPLETE]
+
+  MaterialRequirement:
+    key: requirementId
+    fields:
+      requirementId: string
+      workPackageId: string
+      materialId: string
+      quantityRequired: number
+      requiredBy: datetime
+      mandatory: boolean
+
+  Supplier:
+    key: supplierId
+    fields:
+      supplierId: string
+      name: string
+      approved: boolean
+      supportedMaterials: array
+      standardLeadTimeDays: integer
+      # Supply chain resilience fields
+      tier: [PRIMARY, SECONDARY, TERTIARY, SPOT]
+      activeConstraint: SupplierConstraint|null
+      qualityRating: number|null         # 0..100
+      onTimeDeliveryRate: number|null    # 0..1
+
+  # ── New entity: SupplierConstraint ───────────────────────────────────────────
+  # Tracks live constraint signals received from supply.supplier.status.changed.
+  # Consumed by the resilience engine and ProcurementAgent.
+  SupplierConstraint:
+    key: [supplierId, materialId]
+    fields:
+      supplierId: string
+      materialId: string|null            # null = all materials
+      constraintType:
+        enum: [QUALITY_HOLD, CAPACITY_CONSTRAINT, PORT_CONGESTION,
+               FORCE_MAJEURE, LEAD_TIME_EXTENSION, CLEARED]
+      constraintSeverity: [LOW, MEDIUM, HIGH, CRITICAL]
+      affectedFromDate: datetime
+      estimatedResolutionDate: datetime|null
+      sourceEventId: string              # correlates to supply.supplier.status.changed
+
+  # ── New entity: PortStatus ───────────────────────────────────────────────────
+  # Tracks live port-disruption signals received from supply.port.status.changed.
+  PortStatus:
+    key: portCode
+    fields:
+      portCode: string
+      portName: string
+      disruptionType:
+        enum: [CONGESTION, STRIKE, CLOSURE, WEATHER, CUSTOMS_DELAY, CLEARED]
+      severity: [LOW, MEDIUM, HIGH, CRITICAL]
+      affectedFromDate: datetime
+      estimatedClearDate: datetime|null
+      sourceEventId: string
+
+  # ── New entity: ApprovedVendorEntry ─────────────────────────────────────────
+  # Master record of supplier approval status per material.
+  # Updated by supply.approved_vendor.changed events.
+  ApprovedVendorEntry:
+    key: [supplierId, materialId]
+    fields:
+      supplierId: string
+      materialId: string
+      status: [APPROVED, SUSPENDED, REVOKED]
+      effectiveDate: date
+      reason: string|null
+
+  # ── New entity: SupplyChainResilienceProfile ─────────────────────────────────
+  # Computed resilience posture for a critical material against a specific
+  # work package requirement. Updated whenever contributing events arrive.
+  SupplyChainResilienceProfile:
+    key: [workPackageId, materialId]
+    fields:
+      workPackageId: string
+      materialId: string
+      requirementId: string
+      assessedAt: datetime
+      readinessStatus: [CONFIRMED, AT_RISK, CRITICAL, UNKNOWN]
+      daysToRequired: integer
+      availableAtDestination: number
+      shortfall: number
+      unconstrainedApprovedSupplierCount: integer
+      feasibleTransferLocationCount: integer
+      feasibleAlternateSupplierCount: integer
+      resilienceScore: number            # 0..100, lower = better resilience posture
+      primarySupplierStatus: string
+      secondarySupplierStatus: string|null
+      lastContributingEventId: string    # correlationId traceability
+
+  RiskEvent:
+    key: riskId
+    fields:
+      riskId: string
+      correlationId: string
+      eventTime: datetime
+      materialId: string
+      shipmentId: string
+      requirementId: string
+      workPackageId: string
+      riskType: [LATE_DELIVERY, STOCKOUT, SUPPLIER_FAILURE, QUALITY_HOLD]
+      severity: [LOW, MEDIUM, HIGH, CRITICAL]
+      status: [OPEN, INVESTIGATING, MITIGATION_PROPOSED, APPROVED, MITIGATED, CLOSED]
+      facts: object
+      # Supply chain resilience context (populated from SupplyChainResilienceProfile)
+      resilienceFlags:
+        primarySupplierConstrained: boolean
+        secondarySupplierConstrained: boolean
+        alternateInventoryAvailable: boolean
+        approvedSubstituteDocumentExists: boolean
+        constrainedSupplierCount: integer
+        activeSourcingTiers: integer
+
+  MitigationOption:
+    key: optionId
+    fields:
+      optionId: string
+      riskId: string
+      type: [WAIT, EXPEDITE, TRANSFER, ALTERNATE_SUPPLIER, SUBSTITUTE]
+      feasible: boolean
+      estimatedReadyDate: datetime|null
+      incrementalCost: number|null
+      scheduleRiskScore: number
+      technicalRiskScore: number
+      supplyRiskScore: number
+      totalScore: number
+      requiresEngineeringApproval: boolean
+      requiresProcurementApproval: boolean
+      evidenceIds: array
+      constraints: array
+
+relationships:
+  - PurchaseOrder has_many PurchaseOrderLine
+  - PurchaseOrderLine references Material
+  - Shipment references PurchaseOrderLine
+  - MaterialRequirement references WorkPackage
+  - MaterialRequirement references Material
+  - RiskEvent references Shipment
+  - RiskEvent references MaterialRequirement
+  - MitigationOption references RiskEvent
+  # Supply chain resilience relationships
+  - Supplier has_one_or_none SupplierConstraint per material
+  - Shipment references PortStatus via portOfDeparture and portOfEntry
+  - SupplyChainResilienceProfile references MaterialRequirement
+  - SupplyChainResilienceProfile references Supplier (multiple)
+  - ApprovedVendorEntry references Supplier
+  - ApprovedVendorEntry references Material
+  - RiskEvent references SupplyChainResilienceProfile
+
+invariants:
+  - InventoryPosition.available = max(onHand - reserved, 0)
+  - A SUBSTITUTE option requires engineering evidence and approval
+  - No action may be executed for an unapproved RiskEvent
+  - RiskEvent.correlationId must be propagated to all downstream calls and events
+  # Supply chain resilience invariants
+  - A Supplier with activeConstraint.constraintSeverity in [HIGH, CRITICAL] must not be scored as an unconstrained sourcing option
+  - SupplyChainResilienceProfile.unconstrainedApprovedSupplierCount must exclude suppliers with active QUALITY_HOLD, FORCE_MAJEURE, or CAPACITY_CONSTRAINT
+  - PortStatus.CLEARED removes the disruption record; shipment ETAs must be re-evaluated
+  - ApprovedVendorEntry.status == REVOKED or SUSPENDED excludes that supplier from feasible mitigation options
+  - SupplyChainResilienceProfile must be recomputed whenever a SupplierConstraint, PortStatus, InventoryPosition, or Shipment changes for its material/work package combination

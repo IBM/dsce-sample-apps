@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>elevate® — Seller View</title>
+<link rel="stylesheet" href="seller_surfaces.css">
+<style>
+:root {
+  --ground: #f4f2fb; --surface: #fff; --ink: #1c1a2e; --muted: #6c6a86;
+  --faint: #9a97b5; --border: #e8e5f3; --purple: #6c43e0; --purple-soft: #efeafc;
+  --gold: #f5a800; --gold-soft: #fff3d4;
+  --grad: linear-gradient(135deg, #6c43e0 0%, #9a5ce6 55%, #c86fd6 100%);
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--ground); color: var(--ink);
+       font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px; height: 58px; background: var(--surface);
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 30px; height: 30px; border-radius: 9px; background: var(--grad);
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 17px;
+  box-shadow: 0 4px 12px rgba(108,67,224,.35); }
+.brand-name { font-size: 19px; font-weight: 800; letter-spacing: -.5px; }
+.brand-name .reg { font-size: 10px; vertical-align: super; font-weight: 600; color: var(--muted); }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.sim { background: var(--gold-soft); color: var(--gold); border: 1px solid var(--gold);
+  border-radius: 6px; padding: 3px 9px; font-size: 10px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; }
+.backlink { font-size: 12px; color: var(--muted); text-decoration: none; }
+.backlink:hover { color: var(--purple); }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 26px 22px 60px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--purple); }
+h1 { font-size: clamp(22px, 3vw, 32px); font-weight: 800; letter-spacing: -.7px;
+  margin: 8px 0 8px; line-height: 1.2; }
+.sub { color: var(--muted); font-size: 14px; max-width: 760px; line-height: 1.65; }
+
+.sellers { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0 18px; }
+.stab { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px;
+  border-radius: 999px; border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; font-family: inherit; text-align: left; transition: border-color .15s, box-shadow .15s; }
+.stab:hover { border-color: var(--purple); }
+.stab.on { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.ava { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; font-weight: 800; font-size: 13px; }
+.stab .nm { display: block; font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.stab .rl { display: block; font-size: 10.5px; color: var(--faint); }
+
+.glass-note { display: inline-flex; align-items: center; gap: 8px; background: var(--purple-soft);
+  border: 1px solid #ded5f8; color: var(--purple); border-radius: 8px; padding: 8px 13px;
+  font-size: 11.5px; font-weight: 600; margin-bottom: 20px; }
+.made-footer { text-align: center; color: var(--faint); font-size: 11px; padding: 26px 0 40px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">E</div>
+    <div class="brand-name">elevate<span class="reg">®</span></div>
+  </div>
+  <div class="topbar-right">
+    <a class="backlink" href="/console">← demo console</a>
+    <span class="sim">Simulated</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Seller persona · through the glass</div>
+  <h1>The nudge arrives where the seller already works</h1>
+  <p class="sub">
+    Same nudge, same action list, three surfaces — including Thanks@IBM, the live Elevate
+    deployment. Each task is priced in points, justified by the signal that produced it, and the
+    four together add up to exactly the gap between the seller and their next reward — so the goal
+    is always closeable. Pick a seller, pick a channel, send it.
+  </p>
+
+  <div class="sellers" id="sellerTabs"></div>
+
+  <div class="glass-note">🔒 Seller-facing — the platform stack (watsonx.data · Kafka · Trino) never appears on these surfaces</div>
+
+  <div id="surfaceHost"></div>
+</div>
+
+<div class="made-footer">Made with IBM Bob</div>
+
+<script src="seller_surfaces.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var API_BASE = window.location.protocol === "file:"
+    ? "http://localhost:5050"
+    : window.location.protocol + "//" + (window.location.hostname || "localhost") +
+      ":" + (window.location.port || "5050");
+
+  var SELLERS = [
+    { id: "seller-rachel-001", nm: "Rachel", rl: "Veteran Expert",         color: "#6c43e0" },
+    { id: "seller-marcus-001", nm: "Marcus", rl: "Developing Contributor", color: "#10b39e" },
+    { id: "seller-maya-001",   nm: "Maya",   rl: "Team Transitioner",      color: "#e8517f" },
+  ];
+
+  var params = new URLSearchParams(window.location.search);
+  var active = params.get("seller") || SELLERS[0].id;
+  if (!SELLERS.some(function (s) { return s.id === active; })) active = SELLERS[0].id;
+
+  var tabs = document.getElementById("sellerTabs");
+  SELLERS.forEach(function (s) {
+    var b = document.createElement("button");
+    b.className = "stab" + (s.id === active ? " on" : "");
+    b.dataset.sid = s.id;
+    b.innerHTML = '<span class="ava" style="background:' + s.color + '">' + s.nm[0] + '</span>' +
+                  '<span><span class="nm">' + s.nm + '</span><span class="rl">' + s.rl + '</span></span>';
+    tabs.appendChild(b);
+  });
+
+  var CHANNELS = ["salesforce", "slack", "bluepoints"];
+  var channel = params.get("channel");
+  if (CHANNELS.indexOf(channel) < 0) channel = "salesforce";
+
+  var surface = window.SellerSurfaces.mount(document.getElementById("surfaceHost"), {
+    apiBase: API_BASE,
+    sellerId: active,
+    channel: channel,
+  });
+
+  tabs.addEventListener("click", function (e) {
+    var b = e.target.closest(".stab");
+    if (!b || b.dataset.sid === active) return;
+    active = b.dataset.sid;
+    tabs.querySelectorAll(".stab").forEach(function (x) { x.classList.toggle("on", x === b); });
+    surface.setSeller(active);
+  });
+})();
+</script>
+</body>
+</html>

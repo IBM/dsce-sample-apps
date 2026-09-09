@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "supply_chain_risk_scores",
+  "title": "SupplyChainRiskScore",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "risk_id",
+    "component_id",
+    "risk_score",
+    "risk_band",
+    "root_cause",
+    "days_of_supply",
+    "max_delay_hours",
+    "scoring_factors",
+    "event_time"
+  ],
+  "properties": {
+    "risk_id": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "supplier_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "customer_order_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "risk_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "risk_band": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "root_cause": {
+      "type": "string"
+    },
+    "days_of_supply": {
+      "type": "number"
+    },
+    "max_delay_hours": {
+      "type": "integer"
+    },
+    "scoring_factors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "integer",
+          "number",
+          "string",
+          "boolean",
+          "null"
+        ]
+      }
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

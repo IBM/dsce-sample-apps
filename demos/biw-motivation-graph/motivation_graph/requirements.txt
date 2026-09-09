@@ -1,0 +1,36 @@
+duckdb==1.2.2
+pandas==2.2.3
+faker==37.1.0
+flask==3.1.1
+flask-cors==5.0.1
+ibm-watsonx-ai==1.3.11
+python-dotenv==1.1.0
+rich>=13.0.0,<14.0.0
+pytest==8.3.5
+
+# ── v2 DataFabric — Streaming / Kafka ─────────────────────────────────────────
+# IBM product: IBM Confluent (Kafka)
+# OSS fallback: confluent-kafka or kafka-python
+confluent-kafka==2.8.0 ; sys_platform != "win32"   # preferred (same client as IBM Confluent)
+kafka-python==2.0.5                                  # fallback / CI-friendly pure Python
+
+# ── v2 DataFabric — Cassandra / IBM DataStax ──────────────────────────────────
+# IBM product: IBM DataStax Enterprise
+# OSS fallback: Apache Cassandra
+cassandra-driver==3.29.2
+
+# ── v2 DataFabric — Iceberg + Object Store ───────────────────────────────────
+# IBM product: watsonx.data lakehouse on IBM COS (S3-compatible)
+# OSS fallback: Apache Iceberg on MinIO
+pyiceberg[s3fs]==0.8.1
+pyarrow>=14.0.0,<19.0.0
+boto3==1.38.25              # S3-compatible client for MinIO or IBM COS
+minio==7.2.15               # MinIO Python SDK (OSS / local dev)
+
+# ── v2 DataFabric — Trino / watsonx.data Presto ──────────────────────────────
+# IBM product: watsonx.data (Presto engine — same Trino lineage)
+# OSS fallback: local Trino container
+trino==0.335.0
+
+# ── v2 DataFabric — Optional AI tier (off by default) ────────────────────────
+# openai==1.82.1              # optional — for Ollama / watsonx.ai BYOM endpoint

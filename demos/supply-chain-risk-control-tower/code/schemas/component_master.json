@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "component_master",
+  "title": "ComponentMaster",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "component_id",
+    "component_name",
+    "criticality",
+    "lead_time_days",
+    "approved_suppliers",
+    "safety_stock_qty",
+    "last_updated"
+  ],
+  "properties": {
+    "component_id": {
+      "type": "string"
+    },
+    "component_name": {
+      "type": "string"
+    },
+    "criticality": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "lead_time_days": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "approved_suppliers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "safety_stock_qty": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

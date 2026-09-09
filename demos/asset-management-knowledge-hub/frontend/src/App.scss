@@ -1,0 +1,242 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Carbon Theme wrapper — transparent so body background image shows through
+// The <Theme> div inherits background from the Carbon token — make it transparent
+// so the login background image is always visible underneath.
+// IMPORTANT: scope this only to Theme wrapper divs, NOT to the Header.
+// The Header gets its own explicit solid background below.
+.cds--white,
+.cds--g100,
+.cds--g10,
+.cds--g90 {
+  background-color: transparent !important;
+}
+
+// ── Header — restore solid Carbon g100 background (#161616) ──────────────────
+// The blanket .cds--g100 transparent override above would also make the Header
+// invisible. Carbon's Header renders with .cds--header — give it back its
+// correct solid dark background so the hamburger button and title are visible.
+.cds--header {
+  background-color: #161616 !important;
+  border-bottom: 1px solid #393939 !important;
+}
+
+// ── Hamburger menu button — always visible ────────────────────────────────────
+// Carbon v1.112: HeaderMenuButton adds cds--header__menu-toggle__hidden when
+// isCollapsible is not set. Override both the hidden class and the action class
+// to ensure the button is always visible so users can toggle the sidebar.
+.cds--header__menu-toggle,
+.cds--header__menu-toggle__hidden,
+.cds--header__action--menu {
+  display: inline-flex !important;
+}
+
+// ── Header user-initials avatar ───────────────────────────────────────────────
+// The HeaderGlobalAction button that holds the user's initials circle.
+.header-user-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #4589ff;
+  color: #ffffff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  flex-shrink: 0;
+  pointer-events: none;   // clicks go to the button wrapper
+}
+
+// ── Side navigation (dark, g100 theme) ───────────────────────────────────────
+// Carbon's isFixedNav SideNav always occupies DOM space — it does NOT slide
+// off-screen by itself. We use translateX to physically move it in/out,
+// controlled by our --open / --closed modifier classes.
+.app-sidenav {
+  top: 3rem !important;              // sit below fixed 48px header
+  height: calc(100vh - 3rem) !important;
+  background-color: #262626 !important;
+
+  .cds--side-nav__navigation { background-color: #262626; }
+
+  // Slide transition — Carbon standard easing, matches content shift
+  transition: transform 0.11s cubic-bezier(0.2, 0, 1, 0.9) !important;
+
+  // Open: fully visible
+  &.app-sidenav--open {
+    transform: translateX(0) !important;
+  }
+
+  // Closed: slide entirely off-screen to the left
+  &.app-sidenav--closed {
+    transform: translateX(-100%) !important;
+  }
+
+  // ── SideNavMenu group header ───────────────────────────────────────────────
+  // The clickable row that expands/collapses the group. Carbon renders it as
+  // .cds--side-nav__submenu — a <button> element with a built-in chevron icon.
+  .cds--side-nav__submenu {
+    height: 2.75rem !important;        // slightly shorter than child rows (44px)
+    padding: 0 1rem !important;
+    background-color: transparent !important;
+    color: #a8a8a8 !important;         // $text-secondary G100 — muted but readable
+    font-size: 0.75rem !important;     // 12px — visually distinct from child items
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+
+    // Chevron icon Carbon renders on the right
+    .cds--side-nav__submenu-chevron {
+      color: #6f6f6f !important;
+      > svg { fill: #6f6f6f !important; }
+    }
+
+    &:hover {
+      background-color: #2d2d2d !important;
+      color: #c6c6c6 !important;
+    }
+  }
+
+  // Group header when it contains the active child (isActive=true on SideNavMenu)
+  .cds--side-nav__item--active > .cds--side-nav__submenu {
+    color: #c6c6c6 !important;
+  }
+
+  // ── SideNavLink child rows (nested inside SideNavMenu) ────────────────────
+  // SideNavLink renders: li.cds--side-nav__item > a.cds--side-nav__link
+  //   containing: span.cds--side-nav__icon--small  +  span.cds--side-nav__link-text
+  // Target them via the .cds--side-nav__menu wrapper Carbon adds to SideNavMenu.
+  .cds--side-nav__menu {
+    // Collapse Carbon's default extra spacing between child items
+    .cds--side-nav__item {
+      margin: 0 !important;
+    }
+
+    .cds--side-nav__link {
+      height: 2.5rem !important;          // 40px compact child rows
+      padding: 0 1rem 0 1.5rem !important; // 24px left indent under group label
+      display: flex !important;
+      align-items: center !important;
+      color: #c6c6c6 !important;
+      background-color: transparent !important;
+
+      // Carbon hides .cds--side-nav__icon (and its --small modifier) inside
+      // submenus in non-rail mode — force both visible and properly sized.
+      .cds--side-nav__icon,
+      .cds--side-nav__icon--small {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        width: 1rem !important;
+        height: 1rem !important;
+        margin-right: 0.75rem !important;
+        color: #8d8d8d !important;
+        > svg {
+          width: 1rem !important;
+          height: 1rem !important;
+          fill: currentColor !important;
+        }
+      }
+
+      .cds--side-nav__link-text {
+        font-size: 0.875rem !important;   // 14px body-short-01
+        font-weight: 400 !important;
+        color: #c6c6c6 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &:hover {
+        background-color: #333333 !important;
+        .cds--side-nav__icon,
+        .cds--side-nav__icon--small { color: #f4f4f4 !important; }
+        .cds--side-nav__link-text   { color: #f4f4f4 !important; }
+      }
+    }
+
+    // Active child: #393939 fill, 3px Blue left border, white text + icon
+    .cds--side-nav__link--current,
+    .cds--side-nav__link[aria-current='page'] {
+      background-color: #393939 !important;
+      border-left: 3px solid #0f62fe !important;
+      padding-left: calc(1.5rem - 3px) !important;
+
+      .cds--side-nav__icon,
+      .cds--side-nav__icon--small { color: #ffffff !important; }
+      .cds--side-nav__link-text   { color: #ffffff !important; font-weight: 600 !important; }
+      &::before { display: none !important; }
+    }
+  }
+}
+
+// ── Side nav group dividers (thin horizontal rule between groups) ─────────────
+// Matches the IBM Cloud console thin separator between nav sections.
+.app-sidenav__divider {
+  list-style: none;
+  height: 1px;
+  margin: 0.25rem 1rem;
+  background-color: #393939;          // $border-subtle-01 in G100 theme
+  border: none;
+}
+
+
+// ── Mobile nav overlay (dims content when drawer is open) ────────────────────
+.app-nav-overlay {
+  position: fixed;
+  inset: 0;
+  top: 3rem;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 6000;
+
+  @media (min-width: 1056px) { display: none; }
+}
+
+// ── Main content area ─────────────────────────────────────────────────────────
+.app-main {
+  margin-top: 3rem;                  // below fixed 48px header
+  min-height: calc(100vh - 3rem);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // Shift right in sync with the nav sliding in — Carbon standard easing
+  transition: margin-left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
+
+  // Dark veil behind the frosted layer
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    z-index: -2;
+  }
+
+  // Frosted-glass layer — keeps content readable over the background image
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    margin-top: 3rem;
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  // Wide screen: shift right when nav is open, full-width when closed
+  @media (min-width: 1056px) {
+    &.app-main--nav-open   { margin-left: 16rem; }  // 256px — Carbon SideNav width
+    &.app-main--nav-closed { margin-left: 0; }
+  }
+
+  // Narrow screen: always full-width (nav slides over as a drawer)
+  @media (max-width: 1055px) {
+    margin-left: 0 !important;
+  }
+}

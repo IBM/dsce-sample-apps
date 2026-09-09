@@ -1,0 +1,226 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Markdown rendered text ────────────────────────────────────────────────────
+.markdown-text {
+  @include type-style('body-01');
+  line-height: 1.6;
+
+  // ── Paragraphs ───────────────────────────────────────────────────────────────
+  .md-p {
+    margin: 0 0 $spacing-04 0;
+    &:last-child { margin-bottom: 0; }
+  }
+
+  // ── Headings ─────────────────────────────────────────────────────────────────
+  .md-h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #161616;
+    margin: $spacing-06 0 $spacing-03 0;
+    padding-bottom: $spacing-02;
+    border-bottom: 2px solid #e0e0e0;
+    &:first-child { margin-top: 0; }
+  }
+
+  .md-h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #161616;
+    margin: $spacing-06 0 $spacing-03 0;
+    padding-bottom: $spacing-02;
+    border-bottom: 2px solid #e0e0e0;
+    &:first-child { margin-top: 0; }
+  }
+
+  .md-h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #161616;
+    margin: $spacing-05 0 $spacing-02 0;
+    &:first-child { margin-top: 0; }
+  }
+
+  .md-h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #161616;
+    margin: $spacing-04 0 $spacing-02 0;
+    &:first-child { margin-top: 0; }
+  }
+
+  // ── Lists ─────────────────────────────────────────────────────────────────────
+  .md-ul {
+    margin: $spacing-02 0 $spacing-04 $spacing-06;
+    list-style: disc;
+    li { margin-bottom: $spacing-02; line-height: 1.5; }
+  }
+
+  .md-ol {
+    margin: $spacing-02 0 $spacing-04 $spacing-06;
+    list-style: decimal;
+    li { margin-bottom: $spacing-02; line-height: 1.5; }
+  }
+
+  // keep legacy bare ul/ol working too
+  ul, ol {
+    margin: $spacing-02 0 $spacing-04 $spacing-06;
+    li { margin-bottom: $spacing-02; }
+  }
+
+  // ── Horizontal rule ───────────────────────────────────────────────────────────
+  .md-hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: $spacing-05 0;
+  }
+
+  // ── Tables ────────────────────────────────────────────────────────────────────
+  .md-table-wrap {
+    overflow-x: auto;
+    margin: $spacing-03 0 $spacing-05 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+
+    &::-webkit-scrollbar       { height: 4px; }
+    &::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 2px; }
+  }
+
+  .md-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    line-height: 1.4;
+
+    th {
+      background: #f4f4f4;
+      font-weight: 700;
+      text-align: left;
+      padding: $spacing-03 $spacing-04;
+      border-bottom: 2px solid #e0e0e0;
+      border-right: 1px solid #e8e8e8;
+      white-space: nowrap;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #525252;
+      &:last-child { border-right: none; }
+    }
+
+    td {
+      padding: $spacing-03 $spacing-04;
+      border-bottom: 1px solid #f0f0f0;
+      border-right: 1px solid #f0f0f0;
+      vertical-align: middle;
+      color: #161616;
+      &:last-child { border-right: none; }
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7f8fa; }
+  }
+
+  // ── Inline ────────────────────────────────────────────────────────────────────
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: #f4f4f4;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 0 4px;
+    font-size: 0.85em;
+  }
+
+  a {
+    color: var(--cds-link-primary);
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// ── Source section cards ──────────────────────────────────────────────────────
+.source-section-card {
+  margin-top: $spacing-04;
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 4px;
+  overflow: hidden;
+
+  .section-card-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-03;
+    padding: $spacing-03 $spacing-04;
+    background: var(--cds-layer-02);
+    border-bottom: 1px solid var(--cds-border-subtle-01);
+    font-weight: 600;
+    @include type-style('label-01');
+  }
+
+  .section-card-body {
+    padding: $spacing-04;
+  }
+}
+
+// Source colours
+.source-maximo .section-card-header  { border-left: 4px solid #24a148; }
+.source-documents .section-card-header { border-left: 4px solid #0f62fe; }
+.source-web .section-card-header    { border-left: 4px solid #8a3ffc; }
+
+// ── Citations ─────────────────────────────────────────────────────────────────
+.citations-toggle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  margin-top: $spacing-03;
+  padding: $spacing-02 $spacing-03;
+  background: var(--cds-layer-accent-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--cds-text-secondary);
+  width: 100%;
+  text-align: left;
+
+  &:hover { background: var(--cds-layer-hover); }
+}
+
+.citations-list {
+  list-style: none;
+  margin-top: $spacing-02;
+  border: 1px solid var(--cds-border-subtle-01);
+  border-radius: 2px;
+  overflow: hidden;
+
+  li {
+    padding: $spacing-03 $spacing-04;
+    border-bottom: 1px solid var(--cds-border-subtle-00);
+    font-size: 12px;
+    &:last-child { border-bottom: none; }
+  }
+
+  .citation-link {
+    display: block;
+    color: var(--cds-link-primary);
+    font-weight: 600;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+
+  .citation-file { font-weight: 600; color: var(--cds-text-primary); display: block; }
+  .citation-meta { color: var(--cds-text-secondary); font-size: 11px; display: block; margin-top: 2px; }
+  .citation-highlight {
+    color: var(--cds-text-secondary);
+    font-style: italic;
+    margin-top: $spacing-02;
+    border-left: 2px solid var(--cds-border-subtle-01);
+    padding-left: $spacing-03;
+  }
+}

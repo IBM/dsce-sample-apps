@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output (built inside Docker, not needed from host)
+dist/
+
+# Vite cache
+.vite/
+
+# Environment files
+.env
+.env.*
+
+# Bob IDE config
+.bob/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Python virtualenv
+venv/
+__pycache__/
+
+# Git
+.git/
+.gitignore
+
+# Docs
+README.md

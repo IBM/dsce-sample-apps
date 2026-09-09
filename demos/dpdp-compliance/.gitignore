@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Vite cache
+.vite/
+
+# Environment files - never commit
+.env
+.env.*
+!.env.example
+
+# Bob IDE config - contains local machine absolute paths
+.bob/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Python virtualenv
+venv/
+__pycache__/
+*.pyc

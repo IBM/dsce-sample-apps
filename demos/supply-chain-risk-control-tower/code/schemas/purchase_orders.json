@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "purchase_orders",
+  "title": "PurchaseOrder",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "po_id",
+    "component_id",
+    "supplier_id",
+    "ordered_qty",
+    "committed_eta",
+    "status",
+    "event_time"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "po_id": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "supplier_id": {
+      "type": "string"
+    },
+    "ordered_qty": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "committed_eta": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "CONFIRMED",
+        "IN_TRANSIT",
+        "DELAYED",
+        "RECEIVED",
+        "CANCELLED"
+      ]
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

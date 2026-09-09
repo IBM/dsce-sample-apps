@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "inventory_levels",
+  "title": "InventoryLevel",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "component_id",
+    "site_id",
+    "on_hand_qty",
+    "reserved_qty",
+    "safety_stock_qty",
+    "daily_usage_qty",
+    "event_time"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "site_id": {
+      "type": "string"
+    },
+    "on_hand_qty": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "reserved_qty": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "safety_stock_qty": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "daily_usage_qty": {
+      "type": "number",
+      "minimum": 0
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
