@@ -39,10 +39,10 @@
 
 ### Environment Variables
 ```
-WATSONX_APIKEY: Jp2M5hW2pOMNr0Wo5_gUIXg-gezGVHNjFFvETYJa0x17
-WXG_SERVICE_INSTANCE_ID: b98f7b3a-27f4-4d77-b5a7-e41785182aeb
-WATSONX_URL: https://us-south.ml.cloud.ibm.com
-WXG_PROJECT_ID: 8ddd7a9e-f39d-4ad4-8e4a-1846673c7aa2
+WATSONX_APIKEY: <insert-API-Keys>
+WXG_SERVICE_INSTANCE_ID: <insert-service-instance-id>
+WATSONX_URL: <insert url>
+WXG_PROJECT_ID: <insert-gov-project-id>
 DEBUG_MODE: False
 ```
 
