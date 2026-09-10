@@ -1,0 +1,3943 @@
+{
+  "totalObjectStructures": 293,
+  "objectStructures": [
+    {
+      "name": "AHEAMSR",
+      "path": "/os/aheamsr",
+      "description": "Get a (paged) collection of AHEAMSR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "AHEAMWODETAIL",
+      "path": "/os/aheamwodetail",
+      "description": "Get a (paged) collection of AHEAMWODETAIL",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "APPTIOASSETEXP",
+      "path": "/os/apptioassetexp",
+      "description": "Get a APPTIOASSETEXP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "APPTIOLOCEXP",
+      "path": "/os/apptiolocexp",
+      "description": "Get a (paged) collection of APPTIOLOCEXP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "APPTIOORGEXP",
+      "path": "/os/apptioorgexp",
+      "description": "Get a (paged) collection of APPTIOORGEXP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "APPTIOSITEEXP",
+      "path": "/os/apptiositeexp",
+      "description": "Get a (paged) collection of APPTIOSITEEXP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "APPTIOWOEXP",
+      "path": "/os/apptiowoexp",
+      "description": "Get a (paged) collection of APPTIOWOEXP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "KPITEMPLATE",
+      "path": "/os/kpitemplate",
+      "description": "Get a KPITEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MASAPIGROUP",
+      "path": "/os/masapigroup",
+      "description": "Get a (paged) collection of MASAPIGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MASAPIGROUPLIST",
+      "path": "/os/masapigrouplist",
+      "description": "Get a (paged) collection of MASAPIGROUPLIST",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MASAPIUSER",
+      "path": "/os/masapiuser",
+      "description": "Get a MASAPIUSER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MASGROUP",
+      "path": "/os/masgroup",
+      "description": "Get a (paged) collection of MASGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MASPERUSER",
+      "path": "/os/masperuser",
+      "description": "Get a MASPERUSER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHAHCONTAINERCFG",
+      "path": "/os/mhahcontainercfg",
+      "description": "Get a MHAHCONTAINERCFG",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHASSET",
+      "path": "/os/mhasset",
+      "description": "Get a (paged) collection of MHASSET",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHASSETLOAD",
+      "path": "/os/mhassetload",
+      "description": "Get a (paged) collection of MHASSETLOAD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHCLASSSTRUCTURE",
+      "path": "/os/mhclassstructure",
+      "description": "Get a MHCLASSSTRUCTURE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHCLASSSTRUCTURELOAD",
+      "path": "/os/mhclassstructureload",
+      "description": "Get a MHCLASSSTRUCTURELOAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHFAILURELIST",
+      "path": "/os/mhfailurelist",
+      "description": "Get a (paged) collection of MHFAILURELIST",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHINSPECTION",
+      "path": "/os/mhinspection",
+      "description": "Get a MHINSPECTION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHINSPECTIONRES",
+      "path": "/os/mhinspectionres",
+      "description": "Get a MHINSPECTIONRES",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHJOBPLAN",
+      "path": "/os/mhjobplan",
+      "description": "Get a MHJOBPLAN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHLOCSYSTEM",
+      "path": "/os/mhlocsystem",
+      "description": "Get a (paged) collection of MHLOCSYSTEM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHMEASUREPOINT",
+      "path": "/os/mhmeasurepoint",
+      "description": "Get a (paged) collection of MHMEASUREPOINT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHMEASUREUNIT",
+      "path": "/os/mhmeasureunit",
+      "description": "Get a (paged) collection of MHMEASUREUNIT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHMETER",
+      "path": "/os/mhmeter",
+      "description": "Get a MHMETER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHMETERGROUP",
+      "path": "/os/mhmetergroup",
+      "description": "Get a (paged) collection of MHMETERGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHOPERLOC",
+      "path": "/os/mhoperloc",
+      "description": "Get a (paged) collection of MHOPERLOC",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHOPERLOCLOAD",
+      "path": "/os/mhoperlocload",
+      "description": "Get a MHOPERLOCLOAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHORGANIZATION",
+      "path": "/os/mhorganization",
+      "description": "Get a MHORGANIZATION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHPM",
+      "path": "/os/mhpm",
+      "description": "Get a MHPM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHQUERY",
+      "path": "/os/mhquery",
+      "description": "Get a MHQUERY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MHSERVICEADDRESS",
+      "path": "/os/mhserviceaddress",
+      "description": "Get a (paged) collection of MHSERVICEADDRESS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MHWO",
+      "path": "/os/mhwo",
+      "description": "Get a MHWO",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXACTION",
+      "path": "/os/mxaction",
+      "description": "Get a MXACTION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAMCREW",
+      "path": "/os/mxamcrew",
+      "description": "Get a (paged) collection of MXAMCREW",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAMCREWT",
+      "path": "/os/mxamcrewt",
+      "description": "Get a MXAMCREWT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIACTION",
+      "path": "/os/mxapiaction",
+      "description": "Get a MXAPIACTION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIADDRESS",
+      "path": "/os/mxapiaddress",
+      "description": "Get a (paged) collection of MXAPIADDRESS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIADMIN",
+      "path": "/os/mxapiadmin",
+      "description": "Get a MXAPIADMIN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHASSETAPMVAL",
+      "path": "/os/mxapiahassetapmval",
+      "description": "Get a (paged) collection of MXAPIAHASSETAPMVAL",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHBLTHRESHOLD",
+      "path": "/os/mxapiahblthreshold",
+      "description": "Get a (paged) collection of MXAPIAHBLTHRESHOLD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHCAPAD",
+      "path": "/os/mxapiahcapad",
+      "description": "Get a MXAPIAHCAPAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHCLASSIFICATN",
+      "path": "/os/mxapiahclassificatn",
+      "description": "Get a (paged) collection of MXAPIAHCLASSIFICATN",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHCONTAINERCFG",
+      "path": "/os/mxapiahcontainercfg",
+      "description": "Get a MXAPIAHCONTAINERCFG",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHDRIVERLIB",
+      "path": "/os/mxapiahdriverlib",
+      "description": "Get a MXAPIAHDRIVERLIB",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHFACTORLIB",
+      "path": "/os/mxapiahfactorlib",
+      "description": "Get a MXAPIAHFACTORLIB",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHHISTORY",
+      "path": "/os/mxapiahhistory",
+      "description": "Get a (paged) collection of MXAPIAHHISTORY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHLOCAPMVAL",
+      "path": "/os/mxapiahlocapmval",
+      "description": "Get a MXAPIAHLOCAPMVAL",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHMATRIXCFG",
+      "path": "/os/mxapiahmatrixcfg",
+      "description": "Get a (paged) collection of MXAPIAHMATRIXCFG",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHMEASUREPOINT",
+      "path": "/os/mxapiahmeasurepoint",
+      "description": "Get a MXAPIAHMEASUREPOINT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHMETHODOLOGY",
+      "path": "/os/mxapiahmethodology",
+      "description": "Get a (paged) collection of MXAPIAHMETHODOLOGY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAHRRPLAN",
+      "path": "/os/mxapiahrrplan",
+      "description": "Get a MXAPIAHRRPLAN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAHTHRESHOLD",
+      "path": "/os/mxapiahthreshold",
+      "description": "Get a (paged) collection of MXAPIAHTHRESHOLD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAIDOMAINRULE",
+      "path": "/os/mxapiaidomainrule",
+      "description": "Get a (paged) collection of MXAPIAIDOMAINRULE",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPIAIOASSET",
+      "path": "/os/mxapiaioasset",
+      "description": "Get a MXAPIAIOASSET",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAIOASSETSCORE",
+      "path": "/os/mxapiaioassetscore",
+      "description": "Get a MXAPIAIOASSETSCORE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAIOPROJECT",
+      "path": "/os/mxapiaioproject",
+      "description": "Get a MXAPIAIOPROJECT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAIOSCHEDASSET",
+      "path": "/os/mxapiaioschedasset",
+      "description": "Get a MXAPIAIOSCHEDASSET",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAIOSCHEDULE",
+      "path": "/os/mxapiaioschedule",
+      "description": "Get a (paged) collection of MXAPIAIOSCHEDULE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAIOSTRATEGY",
+      "path": "/os/mxapiaiostrategy",
+      "description": "Get a MXAPIAIOSTRATEGY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAIOTEMPLATE",
+      "path": "/os/mxapiaiotemplate",
+      "description": "Get a (paged) collection of MXAPIAIOTEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIALLPRODUCTS",
+      "path": "/os/mxapiallproducts",
+      "description": "Get a (paged) collection of MXAPIALLPRODUCTS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAMCREW",
+      "path": "/os/mxapiamcrew",
+      "description": "Get a (paged) collection of MXAPIAMCREW",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAMCREWT",
+      "path": "/os/mxapiamcrewt",
+      "description": "Get a MXAPIAMCREWT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIANALYTICDATASET",
+      "path": "/os/mxapianalyticdataset",
+      "description": "Get a (paged) collection of MXAPIANALYTICDATASET",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAPIKEY",
+      "path": "/os/mxapiapikey",
+      "description": "Get a MXAPIAPIKEY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAPMOBJECTATTR",
+      "path": "/os/mxapiapmobjectattr",
+      "description": "Get a MXAPIAPMOBJECTATTR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAPMVALUE",
+      "path": "/os/mxapiapmvalue",
+      "description": "Get a (paged) collection of MXAPIAPMVALUE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAPMVALUEATTR",
+      "path": "/os/mxapiapmvalueattr",
+      "description": "Get a (paged) collection of MXAPIAPMVALUEATTR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAPMVALUEMETHOD",
+      "path": "/os/mxapiapmvaluemethod",
+      "description": "Get a MXAPIAPMVALUEMETHOD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAPPDOCTYPE",
+      "path": "/os/mxapiappdoctype",
+      "description": "Get a MXAPIAPPDOCTYPE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIAPPPROPCFG",
+      "path": "/os/mxapiapppropcfg",
+      "description": "Get a MXAPIAPPPROPCFG",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIASSET",
+      "path": "/os/mxapiasset",
+      "description": "Get a (paged) collection of MXAPIASSET",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIASSETATTRIBUTE",
+      "path": "/os/mxapiassetattribute",
+      "description": "Get a (paged) collection of MXAPIASSETATTRIBUTE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIASSETMETER",
+      "path": "/os/mxapiassetmeter",
+      "description": "Get a (paged) collection of MXAPIASSETMETER",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIASSETRRPLAN",
+      "path": "/os/mxapiassetrrplan",
+      "description": "Get a MXAPIASSETRRPLAN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIASSETSPARE",
+      "path": "/os/mxapiassetspare",
+      "description": "Get a MXAPIASSETSPARE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIASSETSTATUS",
+      "path": "/os/mxapiassetstatus",
+      "description": "Get a MXAPIASSETSTATUS",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPIASSIGNMENT",
+      "path": "/os/mxapiassignment",
+      "description": "Get a (paged) collection of MXAPIASSIGNMENT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIAUTHCI",
+      "path": "/os/mxapiauthci",
+      "description": "Get a MXAPIAUTHCI",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIBILLTOSHIPTO",
+      "path": "/os/mxapibilltoshipto",
+      "description": "Get a MXAPIBILLTOSHIPTO",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIBOOKMARK",
+      "path": "/os/mxapibookmark",
+      "description": "Get a MXAPIBOOKMARK",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICAASSETWO",
+      "path": "/os/mxapicaassetwo",
+      "description": "Get a (paged) collection of MXAPICAASSETWO",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPICALOCATIONWO",
+      "path": "/os/mxapicalocationwo",
+      "description": "Get a MXAPICALOCATIONWO",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICLASSSTRUCTURE",
+      "path": "/os/mxapiclassstructure",
+      "description": "Get a MXAPICLASSSTRUCTURE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICNTBOOK",
+      "path": "/os/mxapicntbook",
+      "description": "Get a (paged) collection of MXAPICNTBOOK",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPICNTBOOKLINE",
+      "path": "/os/mxapicntbookline",
+      "description": "Get a (paged) collection of MXAPICNTBOOKLINE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPICOA",
+      "path": "/os/mxapicoa",
+      "description": "Get a MXAPICOA",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICOLLECTAUTH",
+      "path": "/os/mxapicollectauth",
+      "description": "Get a MXAPICOLLECTAUTH",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICOLLECTION",
+      "path": "/os/mxapicollection",
+      "description": "Get a (paged) collection of MXAPICOLLECTION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPICOMMODITY",
+      "path": "/os/mxapicommodity",
+      "description": "Get a MXAPICOMMODITY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICONTRACT",
+      "path": "/os/mxapicontract",
+      "description": "Get a MXAPICONTRACT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICONVERSION",
+      "path": "/os/mxapiconversion",
+      "description": "Get a MXAPICONVERSION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICRAFT",
+      "path": "/os/mxapicraft",
+      "description": "Get a MXAPICRAFT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPICTEMPLATE",
+      "path": "/os/mxapictemplate",
+      "description": "Get a (paged) collection of MXAPICTEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIDATAPROFILE",
+      "path": "/os/mxapidataprofile",
+      "description": "Get a (paged) collection of MXAPIDATAPROFILE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIDATARESTRICTION",
+      "path": "/os/mxapidatarestriction",
+      "description": "Get a (paged) collection of MXAPIDATARESTRICTION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIDOCINFO",
+      "path": "/os/mxapidocinfo",
+      "description": "Get a (paged) collection of MXAPIDOCINFO",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIDOCTYPE",
+      "path": "/os/mxapidoctype",
+      "description": "Get a MXAPIDOCTYPE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIDOCTYPES",
+      "path": "/os/mxapidoctypes",
+      "description": "Get a (paged) collection of MXAPIDOCTYPES",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIEMPACT",
+      "path": "/os/mxapiempact",
+      "description": "Get a (paged) collection of MXAPIEMPACT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIEXPGROUP",
+      "path": "/os/mxapiexpgroup",
+      "description": "Get a MXAPIEXPGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIFAILURECODE",
+      "path": "/os/mxapifailurecode",
+      "description": "Get a MXAPIFAILURECODE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIFAILURELIST",
+      "path": "/os/mxapifailurelist",
+      "description": "Get a (paged) collection of MXAPIFAILURELIST",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIGLCOMP",
+      "path": "/os/mxapiglcomp",
+      "description": "Get a (paged) collection of MXAPIGLCOMP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIGLCONFIGURE",
+      "path": "/os/mxapiglconfigure",
+      "description": "Get a (paged) collection of MXAPIGLCONFIGURE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIGLTXN",
+      "path": "/os/mxapigltxn",
+      "description": "Get a MXAPIGLTXN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIGROUP",
+      "path": "/os/mxapigroup",
+      "description": "Get a (paged) collection of MXAPIGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIHAZARD",
+      "path": "/os/mxapihazard",
+      "description": "Get a (paged) collection of MXAPIHAZARD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINCIDENT",
+      "path": "/os/mxapiincident",
+      "description": "Get a (paged) collection of MXAPIINCIDENT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINSIGHT",
+      "path": "/os/mxapiinsight",
+      "description": "Get a MXAPIINSIGHT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINSIGHTFACTOR",
+      "path": "/os/mxapiinsightfactor",
+      "description": "Get a MXAPIINSIGHTFACTOR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINSPECTIONRES",
+      "path": "/os/mxapiinspectionres",
+      "description": "Get a MXAPIINSPECTIONRES",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINSPFIELD",
+      "path": "/os/mxapiinspfield",
+      "description": "Get a MXAPIINSPFIELD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINSPFORM",
+      "path": "/os/mxapiinspform",
+      "description": "Get a MXAPIINSPFORM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINSPFORMSTATUS",
+      "path": "/os/mxapiinspformstatus",
+      "description": "Get a (paged) collection of MXAPIINSPFORMSTATUS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINSPFORMUSEWITH",
+      "path": "/os/mxapiinspformusewith",
+      "description": "Get a (paged) collection of MXAPIINSPFORMUSEWITH",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINSPRESULT",
+      "path": "/os/mxapiinspresult",
+      "description": "Get a (paged) collection of MXAPIINSPRESULT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVBAL",
+      "path": "/os/mxapiinvbal",
+      "description": "Get a (paged) collection of MXAPIINVBAL",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVENTORY",
+      "path": "/os/mxapiinventory",
+      "description": "Get a (paged) collection of MXAPIINVENTORY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVISSUE",
+      "path": "/os/mxapiinvissue",
+      "description": "Get a (paged) collection of MXAPIINVISSUE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVOICE",
+      "path": "/os/mxapiinvoice",
+      "description": "Get a (paged) collection of MXAPIINVOICE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVPICKLIST",
+      "path": "/os/mxapiinvpicklist",
+      "description": "Get a MXAPIINVPICKLIST",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINVRES",
+      "path": "/os/mxapiinvres",
+      "description": "Get a MXAPIINVRES",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINVRESVIEW",
+      "path": "/os/mxapiinvresview",
+      "description": "Get a MXAPIINVRESVIEW",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIINVUSE",
+      "path": "/os/mxapiinvuse",
+      "description": "Get a (paged) collection of MXAPIINVUSE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIINVVENDOR",
+      "path": "/os/mxapiinvvendor",
+      "description": "Get a MXAPIINVVENDOR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIITEM",
+      "path": "/os/mxapiitem",
+      "description": "Get a (paged) collection of MXAPIITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIITEMCONDITION",
+      "path": "/os/mxapiitemcondition",
+      "description": "Get a (paged) collection of MXAPIITEMCONDITION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIJOBPLAN",
+      "path": "/os/mxapijobplan",
+      "description": "Get a MXAPIJOBPLAN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIKPIHISTORY",
+      "path": "/os/mxapikpihistory",
+      "description": "Get a MXAPIKPIHISTORY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIKPIMAIN",
+      "path": "/os/mxapikpimain",
+      "description": "Get a MXAPIKPIMAIN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILABOR",
+      "path": "/os/mxapilabor",
+      "description": "Get a (paged) collection of MXAPILABOR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILABORCRAFTRATE",
+      "path": "/os/mxapilaborcraftrate",
+      "description": "Get a MXAPILABORCRAFTRATE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILAUNCHPOINT",
+      "path": "/os/mxapilaunchpoint",
+      "description": "Get a MXAPILAUNCHPOINT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILBSLOCATION",
+      "path": "/os/mxapilbslocation",
+      "description": "Get a (paged) collection of MXAPILBSLOCATION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILBSLOCHISTORY",
+      "path": "/os/mxapilbslochistory",
+      "description": "Get a (paged) collection of MXAPILBSLOCHISTORY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILICENSE",
+      "path": "/os/mxapilicense",
+      "description": "Get a MXAPILICENSE",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPILINEARREFMETHOD",
+      "path": "/os/mxapilinearrefmethod",
+      "description": "Get a (paged) collection of MXAPILINEARREFMETHOD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILOCANCESTOR",
+      "path": "/os/mxapilocancestor",
+      "description": "Get a (paged) collection of MXAPILOCANCESTOR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILOCATION",
+      "path": "/os/mxapilocation",
+      "description": "Get a (paged) collection of MXAPILOCATION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPILOCATIONMETER",
+      "path": "/os/mxapilocationmeter",
+      "description": "Get a MXAPILOCATIONMETER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILOCATIONS",
+      "path": "/os/mxapilocations",
+      "description": "Get a (paged) collection of MXAPILOCATIONS",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPILOCRRPLAN",
+      "path": "/os/mxapilocrrplan",
+      "description": "Get a MXAPILOCRRPLAN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILOCSYS",
+      "path": "/os/mxapilocsys",
+      "description": "Get a MXAPILOCSYS",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPILOCSYSTEM",
+      "path": "/os/mxapilocsystem",
+      "description": "Get a (paged) collection of MXAPILOCSYSTEM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIMAPMANAGER",
+      "path": "/os/mxapimapmanager",
+      "description": "Get a MXAPIMAPMANAGER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIMAXAIINFERENCE",
+      "path": "/os/mxapimaxaiinference",
+      "description": "Get a (paged) collection of MXAPIMAXAIINFERENCE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIMEASUREMENTCBM",
+      "path": "/os/mxapimeasurementcbm",
+      "description": "Get a (paged) collection of MXAPIMEASUREMENTCBM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIMEASUREUNIT",
+      "path": "/os/mxapimeasureunit",
+      "description": "Get a (paged) collection of MXAPIMEASUREUNIT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIMETER",
+      "path": "/os/mxapimeter",
+      "description": "Get a MXAPIMETER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIMETERDATA",
+      "path": "/os/mxapimeterdata",
+      "description": "Get a MXAPIMETERDATA",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIMOBPROPGROUP",
+      "path": "/os/mxapimobpropgroup",
+      "description": "Get a (paged) collection of MXAPIMOBPROPGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIMPFORMULA",
+      "path": "/os/mxapimpformula",
+      "description": "Get a MXAPIMPFORMULA",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIMSGTRACK",
+      "path": "/os/mxapimsgtrack",
+      "description": "Get a MXAPIMSGTRACK",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIOPERLOC",
+      "path": "/os/mxapioperloc",
+      "description": "Get a MXAPIOPERLOC",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIORGANIZATION",
+      "path": "/os/mxapiorganization",
+      "description": "Get a MXAPIORGANIZATION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIPC",
+      "path": "/os/mxapipc",
+      "description": "Get a (paged) collection of MXAPIPC",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPERGROUP",
+      "path": "/os/mxapipergroup",
+      "description": "Get a (paged) collection of MXAPIPERGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPERSON",
+      "path": "/os/mxapiperson",
+      "description": "Get a (paged) collection of MXAPIPERSON",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPERSONGROUP",
+      "path": "/os/mxapipersongroup",
+      "description": "Get a MXAPIPERSONGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIPERSONGROUPVIEW",
+      "path": "/os/mxapipersongroupview",
+      "description": "Get a (paged) collection of MXAPIPERSONGROUPVIEW",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPERUSER",
+      "path": "/os/mxapiperuser",
+      "description": "Get a MXAPIPERUSER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIPLUSCASSETSTAT",
+      "path": "/os/mxapipluscassetstat",
+      "description": "Get a MXAPIPLUSCASSETSTAT",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPIPM",
+      "path": "/os/mxapipm",
+      "description": "Get a (paged) collection of MXAPIPM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPO",
+      "path": "/os/mxapipo",
+      "description": "Get a (paged) collection of MXAPIPO",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPR",
+      "path": "/os/mxapipr",
+      "description": "Get a (paged) collection of MXAPIPR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPROBLEM",
+      "path": "/os/mxapiproblem",
+      "description": "Get a MXAPIPROBLEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIPROJ",
+      "path": "/os/mxapiproj",
+      "description": "Get a (paged) collection of MXAPIPROJ",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIPROP",
+      "path": "/os/mxapiprop",
+      "description": "Get a MXAPIPROP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIQTOSLCREF",
+      "path": "/os/mxapiqtoslcref",
+      "description": "Get a (paged) collection of MXAPIQTOSLCREF",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIQUERY",
+      "path": "/os/mxapiquery",
+      "description": "Get a (paged) collection of MXAPIQUERY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIQUERYRECSTATE",
+      "path": "/os/mxapiqueryrecstate",
+      "description": "Get a (paged) collection of MXAPIQUERYRECSTATE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIQUERYTEMPLATE",
+      "path": "/os/mxapiquerytemplate",
+      "description": "Get a (paged) collection of MXAPIQUERYTEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIRCVROTITM",
+      "path": "/os/mxapircvrotitm",
+      "description": "Get a (paged) collection of MXAPIRCVROTITM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIRECEIPT",
+      "path": "/os/mxapireceipt",
+      "description": "Get a (paged) collection of MXAPIRECEIPT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIROUTES",
+      "path": "/os/mxapiroutes",
+      "description": "Get a MXAPIROUTES",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISCORINGRANGE",
+      "path": "/os/mxapiscoringrange",
+      "description": "Get a (paged) collection of MXAPISCORINGRANGE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISERADDRESS",
+      "path": "/os/mxapiseraddress",
+      "description": "Get a MXAPISERADDRESS",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISERVITEM",
+      "path": "/os/mxapiservitem",
+      "description": "Get a MXAPISERVITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISETS",
+      "path": "/os/mxapisets",
+      "description": "Get a MXAPISETS",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISHIFT",
+      "path": "/os/mxapishift",
+      "description": "Get a (paged) collection of MXAPISHIFT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISHIPMENT",
+      "path": "/os/mxapishipment",
+      "description": "Get a MXAPISHIPMENT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISITE",
+      "path": "/os/mxapisite",
+      "description": "Get a (paged) collection of MXAPISITE",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPISKDODMERUN",
+      "path": "/os/mxapiskdodmerun",
+      "description": "Get a MXAPISKDODMERUN",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISKDPROJACTIVITY",
+      "path": "/os/mxapiskdprojactivity",
+      "description": "Get a MXAPISKDPROJACTIVITY",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISKDPROJECT",
+      "path": "/os/mxapiskdproject",
+      "description": "Get a (paged) collection of MXAPISKDPROJECT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISOLUTION",
+      "path": "/os/mxapisolution",
+      "description": "Get a MXAPISOLUTION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISR",
+      "path": "/os/mxapisr",
+      "description": "Get a (paged) collection of MXAPISR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISRGUESTDOMAIN",
+      "path": "/os/mxapisrguestdomain",
+      "description": "Get a (paged) collection of MXAPISRGUESTDOMAIN",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISRGUESTEMAIL",
+      "path": "/os/mxapisrguestemail",
+      "description": "Get a (paged) collection of MXAPISRGUESTEMAIL",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISRGUESTPOLICY",
+      "path": "/os/mxapisrguestpolicy",
+      "description": "Get a (paged) collection of MXAPISRGUESTPOLICY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISRVAD",
+      "path": "/os/mxapisrvad",
+      "description": "Get a MXAPISRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISRWATCHLIST",
+      "path": "/os/mxapisrwatchlist",
+      "description": "Get a (paged) collection of MXAPISRWATCHLIST",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPISRWATCHLISTDTS",
+      "path": "/os/mxapisrwatchlistdts",
+      "description": "Get a MXAPISRWATCHLISTDTS",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPISTORELOC",
+      "path": "/os/mxapistoreloc",
+      "description": "Get a (paged) collection of MXAPISTORELOC",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPITABLEDOMAIN",
+      "path": "/os/mxapitabledomain",
+      "description": "Get a (paged) collection of MXAPITABLEDOMAIN",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPITKCLASS",
+      "path": "/os/mxapitkclass",
+      "description": "Get a (paged) collection of MXAPITKCLASS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPITKSRVAD",
+      "path": "/os/mxapitksrvad",
+      "description": "Get a MXAPITKSRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPITKTEMPLATE",
+      "path": "/os/mxapitktemplate",
+      "description": "Get a MXAPITKTEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPITOOLINV",
+      "path": "/os/mxapitoolinv",
+      "description": "Get a MXAPITOOLINV",
+      "operations": [
+        "GET",
+        "GET"
+      ]
+    },
+    {
+      "name": "MXAPITOOLITEM",
+      "path": "/os/mxapitoolitem",
+      "description": "Get a MXAPITOOLITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIUSERQUERY",
+      "path": "/os/mxapiuserquery",
+      "description": "Get a (paged) collection of MXAPIUSERQUERY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIUSERTEAM",
+      "path": "/os/mxapiuserteam",
+      "description": "Get a MXAPIUSERTEAM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIVENDOR",
+      "path": "/os/mxapivendor",
+      "description": "Get a MXAPIVENDOR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIVENDORMSTR",
+      "path": "/os/mxapivendormstr",
+      "description": "Get a MXAPIVENDORMSTR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWEATHERGROUP",
+      "path": "/os/mxapiweathergroup",
+      "description": "Get a MXAPIWEATHERGROUP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWEATHERORG",
+      "path": "/os/mxapiweatherorg",
+      "description": "Get a (paged) collection of MXAPIWEATHERORG",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWEATHERPRODUCT",
+      "path": "/os/mxapiweatherproduct",
+      "description": "Get a MXAPIWEATHERPRODUCT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWEATHERZONE",
+      "path": "/os/mxapiweatherzone",
+      "description": "Get a MXAPIWEATHERZONE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWFASSIGNMENT",
+      "path": "/os/mxapiwfassignment",
+      "description": "Get a MXAPIWFASSIGNMENT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWFPROCESS",
+      "path": "/os/mxapiwfprocess",
+      "description": "Get a (paged) collection of MXAPIWFPROCESS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWMASSIGNMENT",
+      "path": "/os/mxapiwmassignment",
+      "description": "Get a MXAPIWMASSIGNMENT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWO",
+      "path": "/os/mxapiwo",
+      "description": "Get a (paged) collection of MXAPIWO",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWOASSETTYPE",
+      "path": "/os/mxapiwoassettype",
+      "description": "Get a MXAPIWOASSETTYPE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWODETAIL",
+      "path": "/os/mxapiwodetail",
+      "description": "Get a MXAPIWODETAIL",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWOHIER",
+      "path": "/os/mxapiwohier",
+      "description": "Get a MXAPIWOHIER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWORKLOG",
+      "path": "/os/mxapiworklog",
+      "description": "Get a MXAPIWORKLOG",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWORKQUEUE",
+      "path": "/os/mxapiworkqueue",
+      "description": "Get a MXAPIWORKQUEUE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWORKSCAPELAYOUT",
+      "path": "/os/mxapiworkscapelayout",
+      "description": "Get a (paged) collection of MXAPIWORKSCAPELAYOUT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWORKTYPE",
+      "path": "/os/mxapiworktype",
+      "description": "Get a (paged) collection of MXAPIWORKTYPE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWORKVIEW",
+      "path": "/os/mxapiworkview",
+      "description": "Get a (paged) collection of MXAPIWORKVIEW",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWORKZONE",
+      "path": "/os/mxapiworkzone",
+      "description": "Get a (paged) collection of MXAPIWORKZONE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPIWOSRVAD",
+      "path": "/os/mxapiwosrvad",
+      "description": "Get a MXAPIWOSRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAPIWPEDITSETTING",
+      "path": "/os/mxapiwpeditsetting",
+      "description": "Get a (paged) collection of MXAPIWPEDITSETTING",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXAPPTIOINPT",
+      "path": "/os/mxapptioinpt",
+      "description": "Get a (paged) collection of MXAPPTIOINPT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXASSET",
+      "path": "/os/mxasset",
+      "description": "Get a MXASSET",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXASSETPARTIUM",
+      "path": "/os/mxassetpartium",
+      "description": "Get a MXASSETPARTIUM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXAUTHCI",
+      "path": "/os/mxauthci",
+      "description": "Get a (paged) collection of MXAUTHCI",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXBIMASSETWO",
+      "path": "/os/mxbimassetwo",
+      "description": "Get a MXBIMASSETWO",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXBIMFILTER",
+      "path": "/os/mxbimfilter",
+      "description": "Get a (paged) collection of MXBIMFILTER",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXBIMPROJECT",
+      "path": "/os/mxbimproject",
+      "description": "Get a MXBIMPROJECT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXBUDGET",
+      "path": "/os/mxbudget",
+      "description": "Get a MXBUDGET",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXCLASSIFICATION",
+      "path": "/os/mxclassification",
+      "description": "Get a MXCLASSIFICATION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXCOA",
+      "path": "/os/mxcoa",
+      "description": "Get a (paged) collection of MXCOA",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXCOLLECTAUTH",
+      "path": "/os/mxcollectauth",
+      "description": "Get a (paged) collection of MXCOLLECTAUTH",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXCOLLECTION",
+      "path": "/os/mxcollection",
+      "description": "Get a MXCOLLECTION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXCRAFT",
+      "path": "/os/mxcraft",
+      "description": "Get a (paged) collection of MXCRAFT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXCTEMPLATE",
+      "path": "/os/mxctemplate",
+      "description": "Get a MXCTEMPLATE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXEMPACT",
+      "path": "/os/mxempact",
+      "description": "Get a MXEMPACT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXGLCOMP",
+      "path": "/os/mxglcomp",
+      "description": "Get a (paged) collection of MXGLCOMP",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXGLTXN",
+      "path": "/os/mxgltxn",
+      "description": "Get a (paged) collection of MXGLTXN",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXINCIDENT",
+      "path": "/os/mxincident",
+      "description": "Get a (paged) collection of MXINCIDENT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXINVBAL",
+      "path": "/os/mxinvbal",
+      "description": "Get a MXINVBAL",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXINVENTORY",
+      "path": "/os/mxinventory",
+      "description": "Get a (paged) collection of MXINVENTORY",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXINVISSUE",
+      "path": "/os/mxinvissue",
+      "description": "Get a (paged) collection of MXINVISSUE",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXINVOICE",
+      "path": "/os/mxinvoice",
+      "description": "Get a MXINVOICE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXINVRES",
+      "path": "/os/mxinvres",
+      "description": "Get a (paged) collection of MXINVRES",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXINVUSE",
+      "path": "/os/mxinvuse",
+      "description": "Get a MXINVUSE",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXINVVENDOR",
+      "path": "/os/mxinvvendor",
+      "description": "Get a (paged) collection of MXINVVENDOR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXITEM",
+      "path": "/os/mxitem",
+      "description": "Get a MXITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXITEMPARTIUM",
+      "path": "/os/mxitempartium",
+      "description": "Get a (paged) collection of MXITEMPARTIUM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXLABOR",
+      "path": "/os/mxlabor",
+      "description": "Get a MXLABOR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXLAUNCHPOINT",
+      "path": "/os/mxlaunchpoint",
+      "description": "Get a MXLAUNCHPOINT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXLBSLOCATION",
+      "path": "/os/mxlbslocation",
+      "description": "Get a (paged) collection of MXLBSLOCATION",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXMAPMAN",
+      "path": "/os/mxmapman",
+      "description": "Get a (paged) collection of MXMAPMAN",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXMETERDATA",
+      "path": "/os/mxmeterdata",
+      "description": "Get a MXMETERDATA",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXOMP",
+      "path": "/os/mxomp",
+      "description": "Get a MXOMP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXOPERLOC",
+      "path": "/os/mxoperloc",
+      "description": "Get a (paged) collection of MXOPERLOC",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXORGANIZATION",
+      "path": "/os/mxorganization",
+      "description": "Get a MXORGANIZATION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXPC",
+      "path": "/os/mxpc",
+      "description": "Get a MXPC",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXPERSON",
+      "path": "/os/mxperson",
+      "description": "Get a MXPERSON",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXPERUSER",
+      "path": "/os/mxperuser",
+      "description": "Get a (paged) collection of MXPERUSER",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPM",
+      "path": "/os/mxpm",
+      "description": "Get a MXPM_WORKORDER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPMIPM",
+      "path": "/os/mxpmipm",
+      "description": "Get a (paged) collection of MXPMIPM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPO",
+      "path": "/os/mxpo",
+      "description": "Get a (paged) collection of MXPO",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPR",
+      "path": "/os/mxpr",
+      "description": "Get a (paged) collection of MXPR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPROBLEM",
+      "path": "/os/mxproblem",
+      "description": "Get a (paged) collection of MXPROBLEM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXPROJ",
+      "path": "/os/mxproj",
+      "description": "Get a MXPROJ",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXPROP",
+      "path": "/os/mxprop",
+      "description": "Get a MXPROP",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXRCVROTITM",
+      "path": "/os/mxrcvrotitm",
+      "description": "Get a MXRCVROTITM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXRECEIPT",
+      "path": "/os/mxreceipt",
+      "description": "Get a (paged) collection of MXRECEIPT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXSERVITEM",
+      "path": "/os/mxservitem",
+      "description": "Get a MXSERVITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXSR",
+      "path": "/os/mxsr",
+      "description": "Get a MXSR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXSRVAD",
+      "path": "/os/mxsrvad",
+      "description": "Get a (paged) collection of MXSRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXSTORELOC",
+      "path": "/os/mxstoreloc",
+      "description": "Get a (paged) collection of MXSTORELOC",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXTKSRVAD",
+      "path": "/os/mxtksrvad",
+      "description": "Get a MXTKSRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXTOOLITEM",
+      "path": "/os/mxtoolitem",
+      "description": "Get a MXTOOLITEM",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXVENDOR",
+      "path": "/os/mxvendor",
+      "description": "Get a (paged) collection of MXVENDOR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXVENDORMSTR",
+      "path": "/os/mxvendormstr",
+      "description": "Get a (paged) collection of MXVENDORMSTR",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXWEATHERALERT",
+      "path": "/os/mxweatheralert",
+      "description": "Get a (paged) collection of MXWEATHERALERT",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXWFPROCESS",
+      "path": "/os/mxwfprocess",
+      "description": "Get a (paged) collection of MXWFPROCESS",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXWO",
+      "path": "/os/mxwo",
+      "description": "Get a MXWO",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXWODETAIL",
+      "path": "/os/mxwodetail",
+      "description": "Get a MXWODETAIL",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXWOHIER",
+      "path": "/os/mxwohier",
+      "description": "Get a MXWOHIER",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "MXWOSRVAD",
+      "path": "/os/mxwosrvad",
+      "description": "Get a (paged) collection of MXWOSRVAD",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "MXWOTASKRELATION",
+      "path": "/os/mxwotaskrelation",
+      "description": "Get a MXWOTASKRELATION",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "TAMITINTSW",
+      "path": "/os/tamitintsw",
+      "description": "Get a (paged) collection of TAMITINTSW",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "TAMITINTSWCAT",
+      "path": "/os/tamitintswcat",
+      "description": "Get a TAMITINTSWCAT",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "name": "TAMITINTSWPRTNUM",
+      "path": "/os/tamitintswprtnum",
+      "description": "Get a (paged) collection of TAMITINTSWPRTNUM",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "TAMITINTSWREL",
+      "path": "/os/tamitintswrel",
+      "description": "Get a (paged) collection of TAMITINTSWREL",
+      "operations": [
+        "GET",
+        "POST",
+        "GET",
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "name": "TAMITINTSWVAR",
+      "path": "/os/tamitintswvar",
+      "description": "Get a TAMITINTSWVAR",
+      "operations": [
+        "GET",
+        "POST",
+        "DELETE",
+        "GET",
+        "POST"
+      ]
+    }
+  ],
+  "keywordMapping": {
+    "work order": [
+      "MXAPIWO"
+    ],
+    "workorder": [
+      "MXAPIWO"
+    ],
+    "wo ": [
+      "MXAPIWO"
+    ],
+    "work orders": [
+      "MXAPIWO"
+    ],
+    "all work orders": [
+      "MXAPIWO"
+    ],
+    "list work orders": [
+      "MXAPIWO"
+    ],
+    "how many work orders": [
+      "MXAPIWO"
+    ],
+    "work order detail": [
+      "MXAPIWODETAIL"
+    ],
+    "specific work order": [
+      "MXAPIWODETAIL"
+    ],
+    "single work order": [
+      "MXAPIWODETAIL"
+    ],
+    "work order details": [
+      "MXAPIWODETAIL"
+    ],
+    "asset": [
+      "MXAPIASSET"
+    ],
+    "equipment": [
+      "MXAPIASSET"
+    ],
+    "assets": [
+      "MXAPIASSET"
+    ],
+    "service request": [
+      "MXAPISR"
+    ],
+    "sr ": [
+      "MXAPISR"
+    ],
+    "ticket": [
+      "MXAPISR"
+    ],
+    "service requests": [
+      "MXAPISR"
+    ],
+    "incident": [
+      "MXAPIINCIDENT"
+    ],
+    "incidents": [
+      "MXAPIINCIDENT"
+    ],
+    "problem": [
+      "MXAPIPROBLEM"
+    ],
+    "problems": [
+      "MXAPIPROBLEM"
+    ],
+    "location": [
+      "MXAPILOCATION"
+    ],
+    "locations": [
+      "MXAPILOCATIONS"
+    ],
+    "site": [
+      "MXAPILOCATION"
+    ],
+    "person": [
+      "MXAPIPERSON"
+    ],
+    "people": [
+      "MXAPIPERSON"
+    ],
+    "user": [
+      "MXAPIPERSON"
+    ],
+    "users": [
+      "MXAPIPERSON"
+    ],
+    "personnel": [
+      "MXAPIPERSON"
+    ],
+    "labor": [
+      "MXAPILABOR"
+    ],
+    "labour": [
+      "MXAPILABOR"
+    ],
+    "worker": [
+      "MXAPILABOR"
+    ],
+    "workers": [
+      "MXAPILABOR"
+    ],
+    "craft": [
+      "MXAPICRAFT"
+    ],
+    "crafts": [
+      "MXAPICRAFT"
+    ],
+    "skill": [
+      "MXAPICRAFT"
+    ],
+    "meter": [
+      "MXAPIMETER"
+    ],
+    "meters": [
+      "MXAPIMETER"
+    ],
+    "measurement": [
+      "MXAPIMETER"
+    ],
+    "asset meter": [
+      "MXAPIASSETMETER"
+    ],
+    "equipment meter": [
+      "MXAPIASSETMETER"
+    ],
+    "location meter": [
+      "MXAPILOCATIONMETER"
+    ],
+    "site meter": [
+      "MXAPILOCATIONMETER"
+    ],
+    "work log": [
+      "MXAPIWORKLOG"
+    ],
+    "worklog": [
+      "MXAPIWORKLOG"
+    ],
+    "log entry": [
+      "MXAPIWORKLOG"
+    ],
+    "organization": [
+      "MXAPIORGANIZATION"
+    ],
+    "org": [
+      "MXAPIORGANIZATION"
+    ],
+    "company": [
+      "MXAPIORGANIZATION"
+    ],
+    "failure code": [
+      "MXAPIFAILURECODE"
+    ],
+    "failure": [
+      "MXAPIFAILURECODE"
+    ],
+    "fault code": [
+      "MXAPIFAILURECODE"
+    ],
+    "inspection form": [
+      "MXAPIINSPFORM"
+    ],
+    "inspection": [
+      "MXAPIINSPFORM"
+    ],
+    "checklist": [
+      "MXAPIINSPFORM"
+    ],
+    "inspection result": [
+      "MXAPIINSPRESULT"
+    ],
+    "inspection outcome": [
+      "MXAPIINSPRESULT"
+    ],
+    "document type": [
+      "MXAPIDOCTYPE"
+    ],
+    "document": [
+      "MXAPIDOCTYPE"
+    ],
+    "shift": [
+      "MXAPISHIFT"
+    ],
+    "shifts": [
+      "MXAPISHIFT"
+    ],
+    "work shift": [
+      "MXAPISHIFT"
+    ],
+    "crew": [
+      "MXAPIAMCREW"
+    ],
+    "crews": [
+      "MXAPIAMCREW"
+    ],
+    "team": [
+      "MXAPIAMCREW"
+    ],
+    "assignment": [
+      "MXAPIASSIGNMENT"
+    ],
+    "assignments": [
+      "MXAPIASSIGNMENT"
+    ],
+    "assigned": [
+      "MXAPIASSIGNMENT"
+    ],
+    "license": [
+      "MXAPILICENSE"
+    ],
+    "licenses": [
+      "MXAPILICENSE"
+    ],
+    "licensing": [
+      "MXAPILICENSE"
+    ],
+    "address": [
+      "MXAPIADDRESS"
+    ],
+    "addresses": [
+      "MXAPIADDRESS"
+    ],
+    "conversion": [
+      "MXAPICONVERSION"
+    ],
+    "unit conversion": [
+      "MXAPICONVERSION"
+    ],
+    "class structure": [
+      "MXAPICLASSSTRUCTURE"
+    ],
+    "classification": [
+      "MXAPICLASSSTRUCTURE"
+    ],
+    "bookmark": [
+      "MXAPIBOOKMARK"
+    ],
+    "bookmarks": [
+      "MXAPIBOOKMARK"
+    ],
+    "favorite": [
+      "MXAPIBOOKMARK"
+    ],
+    "kpi": [
+      "MXAPIKPIMAIN"
+    ],
+    "key performance indicator": [
+      "MXAPIKPIMAIN"
+    ],
+    "metric": [
+      "MXAPIKPIMAIN"
+    ],
+    "weather zone": [
+      "MXAPIWEATHERZONE"
+    ],
+    "weather": [
+      "MXAPIWEATHERZONE"
+    ],
+    "weather group": [
+      "MXAPIWEATHERGROUP"
+    ],
+    "weather organization": [
+      "MXAPIWEATHERORG"
+    ],
+    "weather product": [
+      "MXAPIWEATHERPRODUCT"
+    ],
+    "employee action": [
+      "MXAPIEMPACT"
+    ],
+    "employee activity": [
+      "MXAPIEMPACT"
+    ],
+    "locations list": [
+      "MXAPILOCATIONS"
+    ],
+    "all locations": [
+      "MXAPILOCATIONS"
+    ],
+    "location system": [
+      "MXAPILOCSYSTEM",
+      "MXAPILOCSYS"
+    ],
+    "location hierarchy": [
+      "MXAPILOCSYSTEM"
+    ],
+    "location ancestor": [
+      "MXAPILOCANCESTOR"
+    ],
+    "parent location": [
+      "MXAPILOCANCESTOR"
+    ],
+    "operating location": [
+      "MXAPIOPERLOC"
+    ],
+    "service address": [
+      "MXAPISERADDRESS",
+      "MXAPISRVAD"
+    ],
+    "service request guest email": [
+      "MXAPISRGUESTEMAIL"
+    ],
+    "service request guest domain": [
+      "MXAPISRGUESTDOMAIN"
+    ],
+    "service request guest policy": [
+      "MXAPISRGUESTPOLICY"
+    ],
+    "ticket service address": [
+      "MXAPITKSRVAD"
+    ],
+    "ticket class": [
+      "MXAPITKCLASS"
+    ],
+    "ticket template": [
+      "MXAPITKTEMPLATE"
+    ],
+    "work order hierarchy": [
+      "MXAPIWOHIER"
+    ],
+    "wo hierarchy": [
+      "MXAPIWOHIER"
+    ],
+    "work order service address": [
+      "MXAPIWOSRVAD"
+    ],
+    "work view": [
+      "MXAPIWORKVIEW"
+    ],
+    "work order view": [
+      "MXAPIWORKVIEW"
+    ],
+    "workscape layout": [
+      "MXAPIWORKSCAPELAYOUT"
+    ],
+    "work plan edit setting": [
+      "MXAPIWPEDITSETTING"
+    ],
+    "map manager": [
+      "MXAPIMAPMANAGER"
+    ],
+    "mapping": [
+      "MXAPIMAPMANAGER"
+    ],
+    "person group": [
+      "MXAPIPERSONGROUP",
+      "MXAPIPERGROUP"
+    ],
+    "user group": [
+      "MXAPIPERSONGROUP"
+    ],
+    "labor craft rate": [
+      "MXAPILABORCRAFTRATE"
+    ],
+    "labor rate": [
+      "MXAPILABORCRAFTRATE"
+    ],
+    "asset attribute": [
+      "MXAPIASSETATTRIBUTE"
+    ],
+    "asset property": [
+      "MXAPIASSETATTRIBUTE"
+    ],
+    "meter data": [
+      "MXAPIMETERDATA"
+    ],
+    "meter reading": [
+      "MXAPIMETERDATA"
+    ],
+    "solution": [
+      "MXAPISOLUTION"
+    ],
+    "solutions": [
+      "MXAPISOLUTION"
+    ],
+    "resolution": [
+      "MXAPISOLUTION"
+    ],
+    "failure list": [
+      "MXAPIFAILURELIST"
+    ],
+    "inspection field": [
+      "MXAPIINSPFIELD"
+    ],
+    "inspection form use with": [
+      "MXAPIINSPFORMUSEWITH"
+    ],
+    "inspection form status": [
+      "MXAPIINSPFORMSTATUS"
+    ],
+    "insight": [
+      "MXAPIINSIGHT"
+    ],
+    "insights": [
+      "MXAPIINSIGHT"
+    ],
+    "analytics": [
+      "MXAPIINSIGHT"
+    ],
+    "insight factor": [
+      "MXAPIINSIGHTFACTOR"
+    ],
+    "scoring range": [
+      "MXAPISCORINGRANGE"
+    ],
+    "score range": [
+      "MXAPISCORINGRANGE"
+    ],
+    "asset health methodology": [
+      "MXAPIAHMETHODOLOGY"
+    ],
+    "asset health driver library": [
+      "MXAPIAHDRIVERLIB"
+    ],
+    "asset health baseline threshold": [
+      "MXAPIAHBLTHRESHOLD"
+    ],
+    "all products": [
+      "MXAPIALLPRODUCTS"
+    ],
+    "products": [
+      "MXAPIALLPRODUCTS"
+    ],
+    "communication template": [
+      "MXAPICTEMPLATE"
+    ],
+    "comm template": [
+      "MXAPICTEMPLATE"
+    ],
+    "admin": [
+      "MXAPIADMIN"
+    ],
+    "administration": [
+      "MXAPIADMIN"
+    ],
+    "administrator": [
+      "MXAPIADMIN"
+    ]
+  },
+  "generatedAt": "2026-06-03T09:59:12.421Z"
+}

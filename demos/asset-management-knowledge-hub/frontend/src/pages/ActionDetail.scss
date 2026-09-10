@@ -1,0 +1,1464 @@
+// ── Shared Action Detail page styles ─────────────────────────────────────
+// Used by all 5 detail page types + Evidence Side Panel
+
+.ad-page {
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f4;
+  min-height: calc(100vh - 3rem);
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: #161616;
+  * { box-sizing: border-box; }
+}
+
+// ── Breadcrumb navigation ─────────────────────────────────────────────────
+.ad-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.75rem 1.5rem 0;
+  background: #ffffff;
+  font-size: 0.8125rem;
+  color: #525252;
+  line-height: 1;
+}
+
+.ad-breadcrumb__link {
+  color: #0f62fe;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-family: inherit;
+  &:hover { text-decoration: underline; }
+}
+
+.ad-breadcrumb__separator {
+  color: #8d8d8d;
+  user-select: none;
+  font-size: 0.8125rem;
+}
+
+.ad-breadcrumb__current {
+  color: #525252;
+  font-size: 0.8125rem;
+}
+
+// ── Page header ───────────────────────────────────────────────────────────
+.ad-header {
+  background: #ffffff;
+  padding: 0.625rem 1.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ad-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.ad-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.ad-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #161616;
+  line-height: 1.2;
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+// Action number badge — monospace prefix in the page title and list
+.ad-action-number {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #0f62fe;
+  background: #e8f0fe;
+  border: 1px solid #a8c4f8;
+  border-radius: 3px;
+  padding: 1px 6px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+
+.ad-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.ad-description {
+  margin: 0 0 0.375rem;
+  font-size: 0.875rem;
+  color: #525252;
+  line-height: 1.5;
+}
+
+.ad-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: #8d8d8d;
+  padding-bottom: 0.75rem;
+}
+
+.ad-meta__separator {
+  color: #c6c6c6;
+  user-select: none;
+}
+
+// ── Detail tabs ───────────────────────────────────────────────────────────
+.ad-tabs-wrapper {
+  background: #ffffff;
+
+  // Carbon v11 uses cds-- prefix; also include bx-- for safety
+  .cds--tab-content,
+  .bx--tab-content { padding: 0 !important; }
+}
+
+.ad-tablist {
+  padding: 0 1.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  // Carbon v11 active tab — cds-- prefix
+  .cds--tabs__nav-item--selected .cds--tabs__nav-link,
+  .bx--tabs__nav-item--selected  .bx--tabs__nav-item-label {
+    color: #0f62fe;
+    font-weight: 600;
+    border-bottom-color: #0f62fe;
+  }
+
+  .cds--tabs__nav-link,
+  .bx--tabs__nav-item-label {
+    font-size: 0.875rem;
+    color: #525252;
+    white-space: nowrap;
+  }
+}
+
+// Plain-button tabs (used by detail pages that don't use Carbon Tabs)
+.ad-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #525252;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: color 0.1s, border-color 0.1s;
+
+  &:hover {
+    color: #161616;
+    background: #f4f4f4;
+  }
+
+  &--active {
+    color: #0f62fe;
+    border-bottom-color: #0f62fe;
+    font-weight: 500;
+  }
+}
+
+// ── Content canvas ────────────────────────────────────────────────────────
+.ad-content {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+// ── KPI tiles ─────────────────────────────────────────────────────────────
+.ad-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 1.5rem;
+}
+
+.ad-kpi {
+  background: #ffffff;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ad-kpi__value {
+  font-size: 2rem;
+  font-weight: 300;
+  color: #161616;
+  line-height: 1;
+  &--warn { color: #da1e28; }
+  &--good { color: #198038; }
+}
+
+.ad-kpi__label {
+  font-size: 0.75rem;
+  color: #525252;
+}
+
+// ── Section cards ─────────────────────────────────────────────────────────
+.ad-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.ad-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f4f4f4;
+}
+
+.ad-card__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0;
+}
+
+.ad-card__body {
+  padding: 1rem;
+}
+
+// ── Data tables inside cards ──────────────────────────────────────────────
+.ad-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  th {
+    padding: 0.625rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.24px;
+    color: #525252;
+    background: #f4f4f4;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+    color: #161616;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tbody tr:hover { background: #e8e8e8; }
+}
+
+.ad-asset-link {
+  color: #0f62fe;
+  cursor: pointer;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  &:hover { text-decoration: underline; }
+}
+
+// ── Two-column layout (Report executive summary) ──────────────────────────
+.ad-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  @media (max-width: 860px) { grid-template-columns: 1fr; }
+}
+
+// ── Structured list (summary data) ───────────────────────────────────────
+.ad-struct-list {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  tr { border-bottom: 1px solid #e0e0e0; }
+  tr:last-child { border-bottom: none; }
+
+  td {
+    padding: 0.625rem 1rem;
+    vertical-align: top;
+    &:first-child { color: #525252; width: 55%; }
+    &:last-child  { color: #161616; font-weight: 500; }
+  }
+}
+
+// ── Bar chart (gap categories) ───────────────────────────────────────────
+.ad-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+
+  &__label { min-width: 140px; color: #525252; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  &__track { display: block; flex: 1; background: #e0e0e0; height: 8px; min-width: 0; }
+  &__fill  { display: block; height: 100%; background: #0f62fe; min-width: 0; }
+  &__count { min-width: 2rem; text-align: right; font-weight: 500; color: #161616; }
+}
+
+// ── Severity rows ────────────────────────────────────────────────────────
+.ad-severity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  &:last-child { border-bottom: none; }
+  &__label { color: #525252; }
+  &__count { font-weight: 600; color: #161616; }
+}
+
+// ── Implementation steps ─────────────────────────────────────────────────
+.ad-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ad-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  &:last-child { border-bottom: none; }
+
+  &__num {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: #0f62fe;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  &__text { font-size: 0.875rem; color: #161616; line-height: 1.5; padding-top: 0.2rem; }
+}
+
+// ── Activity list ────────────────────────────────────────────────────────
+.ad-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ad-activity-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.8rem;
+  &:last-child { border-bottom: none; }
+
+  &__text { color: #161616; flex: 1; }
+  &__time { color: #525252; white-space: nowrap; flex-shrink: 0; }
+}
+
+// ── Related Actions section ──────────────────────────────────────────────
+.ad-related {
+  margin-top: 1.5rem;
+}
+
+.ad-related__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24px;
+  color: #525252;
+  margin: 0 0 0.75rem;
+}
+
+.ad-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ad-related-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:hover { background: #edf5ff; border-color: #a6c8ff; }
+
+  &__label { color: #525252; font-size: 0.75rem; }
+  &__name  { color: #0f62fe; font-weight: 500; }
+  &__arrow { color: #525252; }
+}
+
+// ── Evidence Side Panel ──────────────────────────────────────────────────
+.ad-overlay {
+  position: fixed;
+  inset: 0;
+  top: 3rem;
+  background: rgba(22,22,22,0.32);
+  z-index: 4000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  &.is-open { opacity: 1; pointer-events: auto; }
+}
+
+.ad-panel {
+  position: fixed;
+  top: 3rem;
+  right: 0;
+  bottom: 0;
+  width: min(28rem, 100vw);
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.14);
+  transform: translateX(100%);
+  transition: transform 0.24s cubic-bezier(0.2,0,0.38,0.9);
+  z-index: 4500;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  &.is-open { transform: translateX(0); }
+}
+
+.ad-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.85rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f4f4f4;
+}
+
+.ad-panel__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0;
+}
+
+.ad-panel__subtitle {
+  font-size: 0.75rem;
+  color: #525252;
+  margin: 0.2rem 0 0;
+}
+
+.ad-panel__close {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #161616;
+  flex-shrink: 0;
+  &:hover { background: #e8e8e8; }
+}
+
+.ad-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ad-evidence-section {
+  border: 1px solid #e0e0e0;
+}
+
+.ad-evidence-section__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  background: #f4f4f4;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ad-evidence-section__badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24px;
+}
+.ad-badge--operational   { background: #defbe6; color: #198038; }
+.ad-badge--engineering   { background: #d0e2ff; color: #0043ce; }
+.ad-badge--ai            { background: #e8daff; color: #6929c4; }
+.ad-badge--action        { background: #fff3e6; color: #8a3800; }
+
+.ad-evidence-section__title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #161616;
+}
+
+.ad-evidence-section__body {
+  padding: 0.75rem;
+}
+
+.ad-ev-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.6rem;
+  &:last-child { margin-bottom: 0; }
+  &__label { font-size: 0.7rem; color: #525252; text-transform: uppercase; letter-spacing: 0.24px; font-weight: 600; }
+  &__value { font-size: 0.875rem; color: #161616; }
+}
+
+.ad-panel__footer {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  background: #f4f4f4;
+}
+
+// ── Ghost button ─────────────────────────────────────────────────────────
+.ad-btn-ghost {
+  background: none;
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #161616;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.15s;
+  &:hover { background: #e8e8e8; }
+}
+
+.ad-btn-primary {
+  background: #0f62fe;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.15s;
+  &:hover { background: #0043ce; }
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+// ── Tab panel empty padding fix ───────────────────────────────────────────
+.cds--tab-content,
+.bx--tab-content { padding: 0 !important; }
+
+// ── Evidence Panel (ep-*) — slide-in side panel with evidence details ────────
+// Always mounted in DOM; CSS transitions drive visibility.
+
+.ep-overlay {
+  position: fixed;
+  top: 3rem;           // sit below the fixed 48px app header
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s cubic-bezier(0.2, 0, 0.38, 0.9);
+  z-index: 999;
+
+  &.ep-overlay--open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.ep-panel {
+  position: fixed;
+  top: 3rem;           // sit below the fixed 48px app header
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  background: #ffffff;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.24s cubic-bezier(0.2, 0, 0.38, 0.9);
+  z-index: 1000;
+
+  &.ep-panel--open {
+    transform: translateX(0);
+  }
+}
+
+// ── Header: Carbon layer-01 bg, left blue accent, asset pill row ───────────
+.ep-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 3px solid #0f62fe;   // IBM Blue-60 — anchors the panel visually
+  flex-shrink: 0;
+  background: #f4f4f4;              // Carbon layer-01
+}
+
+.ep-header__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ep-header__title {
+  font-size: 0.6875rem;             // Carbon productive-heading-01
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+  margin: 0 0 0.5rem;
+  color: #525252;
+}
+
+// Asset ID + name shown as a prominent pill row
+.ep-header__asset {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  flex-wrap: wrap;
+  margin: 0 0 0.25rem;
+}
+
+.ep-header__asset-id {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #161616;
+  line-height: 1.3;
+}
+
+.ep-header__asset-sep {
+  margin: 0 0.4rem;
+  color: #c6c6c6;
+  font-size: 1.125rem;
+}
+
+.ep-header__asset-name {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: #525252;
+  line-height: 1.3;
+}
+
+.ep-header__topic {
+  display: inline-block;
+  margin: 0.375rem 0 0;
+  padding: 0.15rem 0.5rem;
+  background: #e0e0e0;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  color: #525252;
+  letter-spacing: 0.16px;
+}
+
+.ep-header__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #525252;
+  cursor: pointer;
+  transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+  flex-shrink: 0;
+
+  &:hover {
+    background: #e8e8e8;
+    color: #161616;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// ── Scrollable body ────────────────────────────────────────────────────────
+.ep-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;                           // sections control their own spacing via border
+  -webkit-overflow-scrolling: touch;
+  background: #f4f4f4;              // Carbon layer-01 canvas
+}
+
+// ── Section card: bordered block with coloured left accent ─────────────────
+// Each section is a full card with a tinted header row and white body.
+.ep-section {
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  margin-bottom: 1px;               // hairline gap = subtle grid separator
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Section header row — tinted bg matching category colour
+.ep-section__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+// Category badge pill (colour set per category)
+.ep-section__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+// Coloured left-border accent on each section card
+.ep-section--operational  { border-left: 3px solid #198038; }  // green-60
+.ep-section--engineering  { border-left: 3px solid #0043ce; }  // blue-70
+.ep-section--ai           { border-left: 3px solid #6929c4; }  // purple-70
+.ep-section--action       { border-left: 3px solid #8a3800; }  // orange-70
+// Work order panel sections
+.ep-section--wo-detail    { border-left: 3px solid #007d79; }  // teal-60
+.ep-section--wo-schedule  { border-left: 3px solid #0043ce; }  // blue-70
+.ep-section--wo-failure   { border-left: 3px solid #da1e28; }  // red-60
+.ep-section--wo-log       { border-left: 3px solid #525252; }  // gray-60
+.ep-section--wo-labour    { border-left: 3px solid #198038; }  // green-60
+.ep-section--wo-materials { border-left: 3px solid #f1c21b; }  // yellow-30 (Carbon warning)
+
+// Category badge colours (Carbon semantic tints)
+.ep-tag--operational   { background: #defbe6; color: #198038; }
+.ep-tag--engineering   { background: #d0e2ff; color: #0043ce; }
+.ep-tag--ai            { background: #e8daff; color: #6929c4; }
+.ep-tag--action        { background: #fff3e6; color: #8a3800; }
+// Work order badge colours
+.ep-tag--wo-detail     { background: #d9fbfb; color: #005d5d; }
+.ep-tag--wo-schedule   { background: #d0e2ff; color: #0043ce; }
+.ep-tag--wo-failure    { background: #fff1f1; color: #da1e28; }
+.ep-tag--wo-log        { background: #f4f4f4; color: #525252; }
+.ep-tag--wo-labour     { background: #defbe6; color: #198038; }
+.ep-tag--wo-materials  { background: #fcf4d6; color: #8e6a00; }
+
+// Section heading text — right of the badge
+.ep-section__heading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #161616;
+  line-height: 1.4;
+}
+
+// Section body — white card interior
+.ep-section__body {
+  padding: 0.875rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;                           // rows handle their own spacing
+}
+
+// ── Field row: inline label | value with divider between rows ─────────────
+.ep-field {
+  display: grid;
+  grid-template-columns: 9rem 1fr;  // fixed label column, flex value
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.4375rem 0;
+  border-bottom: 1px solid #f4f4f4;
+
+  &:last-child { border-bottom: none; }
+}
+
+.ep-field__label {
+  font-size: 0.6875rem;
+  color: #525252;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-top: 0.05rem;             // optical alignment with value
+}
+
+.ep-field__value {
+  font-size: 0.875rem;
+  color: #161616;
+  word-break: break-word;
+  line-height: 1.4;
+
+  &--mono {
+    font-family: 'IBM Plex Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 0.8125rem;
+    color: #393939;
+  }
+}
+
+.ep-field__link {
+  font-size: 0.875rem;
+  color: #0f62fe;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1.4;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Tags row: Carbon Tags for gap status + priority ────────────────────────
+.ep-tags-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.375rem 0 0.25rem;
+}
+
+// ── Work log entry ────────────────────────────────────────────────────────
+.wo-log-entry {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f4f4f4;
+
+  &:last-child { border-bottom: none; }
+}
+
+.wo-log-entry__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.wo-log-entry__date {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #525252;
+  font-family: 'IBM Plex Mono', 'Consolas', 'Courier New', monospace;
+  white-space: nowrap;
+}
+
+.wo-log-entry__by {
+  font-size: 0.6875rem;
+  color: #8d8d8d;
+  font-weight: 500;
+
+  &::before { content: '· '; }
+}
+
+.wo-log-entry__text {
+  font-size: 0.875rem;
+  color: #161616;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+}
+
+// ── Analysis / recommendation prose ───────────────────────────────────────
+.ep-analysis-text,
+.ep-recommended-text {
+  font-size: 0.875rem;
+  color: #161616;
+  line-height: 1.6;
+  margin: 0.5rem 0 0;
+  word-break: break-word;
+  padding: 0.625rem 0.75rem;
+  background: #f4f4f4;
+  border-left: 2px solid #0f62fe;
+}
+
+// ── Sticky footer with action buttons ────────────────────────────────────
+.ep-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  background: #f4f4f4;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Primary CTA: "Update Job Plan in Maximo"
+.ep-footer__update-maximo {
+  width: 100%;
+  padding: 0.6875rem 1rem;
+  background: #0f62fe;
+  border: 1px solid #0f62fe;
+  color: #ffffff;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9),
+              border-color 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &:hover  { background: #0043ce; border-color: #0043ce; }
+  &:active { background: #002d9c; border-color: #002d9c; }
+}
+
+// Success state: "Job plan updated in Maximo" confirmation row
+.ep-footer__updated {
+  width: 100%;
+  padding: 0.5625rem 1rem;
+  background: #defbe6;
+  border: 1px solid #a7f0ba;
+  color: #198038;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+// Ghost secondary: "Create task"
+.ep-footer__create {
+  width: 100%;
+  padding: 0.6875rem 1rem;
+  background: transparent;
+  border: 1px solid #8d8d8d;
+  color: #161616;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.16px;
+  cursor: pointer;
+  transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9),
+              border-color 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &:hover  { background: #e8e8e8; border-color: #6f6f6f; }
+  &:active { background: #c6c6c6; }
+}
+
+// ── Header right slot (badge + close) ─────────────────────────────────────
+.ep-header__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.ep-header__updated-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  background: #defbe6;
+  border: 1px solid #a7f0ba;
+  color: #198038;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16px;
+  white-space: nowrap;
+}
+
+// ── Maximo update diff modal ───────────────────────────────────────────────
+.ep-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  top: 3rem;
+  background: rgba(22, 22, 22, 0.72);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ep-modal {
+  background: #ffffff;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+}
+
+.ep-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #f4f4f4;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 3px solid #0f62fe;
+}
+
+.ep-modal__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ep-modal__badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: #d0e2ff;
+  color: #0043ce;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+}
+
+.ep-modal__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #161616;
+  margin: 0;
+}
+
+.ep-modal__body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ep-modal__jobplan {
+  font-size: 0.875rem;
+  color: #161616;
+  margin: 0;
+}
+
+.ep-modal__subtitle {
+  font-size: 0.8125rem;
+  color: #525252;
+  margin: 0;
+}
+
+// Diff table header row
+.ep-modal__diff-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr auto 1fr 0.8fr;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: #f4f4f4;
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #525252;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+}
+
+// Diff row — one changed field
+.ep-diff-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr auto 1fr 0.8fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  background: #ffffff;
+  font-size: 0.8125rem;
+
+  &__label  { color: #161616; font-weight: 500; }
+  &__values { display: contents; }
+  &__current {
+    color: #da1e28;
+    text-decoration: line-through;
+    font-size: 0.8125rem;
+  }
+  &__arrow  { color: #8d8d8d; font-size: 0.75rem; justify-self: center; }
+  &__updated {
+    color: #198038;
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+  &__source {
+    color: #525252;
+    font-size: 0.75rem;
+  }
+}
+
+// diff container (wraps header + rows)
+.ep-modal__diff {
+  border-radius: 0;
+}
+
+.ep-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  background: #f4f4f4;
+}
+
+.ep-modal__cancel {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  border: 1px solid #8d8d8d;
+  color: #161616;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  &:hover:not(:disabled) { background: #e8e8e8; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.ep-modal__confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: #0f62fe;
+  border: 1px solid #0f62fe;
+  color: #ffffff;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 10rem;
+  justify-content: center;
+  &:hover:not(:disabled)  { background: #0043ce; border-color: #0043ce; }
+  &:active:not(:disabled) { background: #002d9c; }
+  &:disabled              { opacity: 0.6; cursor: not-allowed; }
+
+  &--loading { opacity: 0.85; }
+}
+
+// Inline CSS spinner for the loading state
+.ep-modal__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: ep-spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ep-spin {
+  to { transform: rotate(360deg); }
+}
+
+// Inline error message displayed inside the modal body
+.ep-modal__error {
+  margin-top: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  background: #fff1f1;
+  border: 1px solid #ffb3b8;
+  border-left: 3px solid #da1e28;
+  color: #da1e28;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+// ── Success toast notification ────────────────────────────────────────────
+.ep-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  min-width: 280px;
+  max-width: 400px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  animation: ep-toast-in 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &--success {
+    background: #198038;
+    border-left: 4px solid #0e6027;
+    color: #ffffff;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: #ffffff;
+  }
+
+  &__text {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #ffffff;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    &:hover { color: #ffffff; }
+  }
+}
+
+@keyframes ep-toast-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── ServiceNow ticket toast ────────────────────────────────────────────────
+.sn-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  min-width: 280px;
+  max-width: 420px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+  animation: ep-toast-in 0.2s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &--success {
+    background: #198038;
+    border-left: 4px solid #0e6027;
+    color: #ffffff;
+  }
+
+  &--error {
+    background: #da1e28;
+    border-left: 4px solid #a2191f;
+    color: #ffffff;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: #ffffff;
+  }
+
+  &__text {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #ffffff;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    &:hover { color: #ffffff; }
+  }
+}
+
+// ── Responsive: panel on mobile ───────────────────────────────────────────
+@media (max-width: 768px) {
+  .ep-panel    { width: 100vw; }
+  .ep-header   { padding: 0.875rem 1rem; }
+  .ep-body     { padding: 1rem; }
+  .ep-footer   { padding: 0.75rem 1rem; }
+
+  .ep-field {
+    grid-template-columns: 7.5rem 1fr;
+  }
+}
+// ── Action Footer (ad-footer*) — Shared related actions section ──────────────────
+
+.ad-footer {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.ad-footer__related {
+  margin: 0;
+}
+
+.ad-footer__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #525252;
+  text-transform: uppercase;
+  letter-spacing: 0.24px;
+  margin: 0 0 1rem;
+}
+
+.ad-footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ad-footer__item {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.11s cubic-bezier(0.2, 0, 0.38, 0.9),
+              border-color 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  &:hover {
+    background: #e8e8e8;
+    border-color: #a6c8ff;
+  }
+
+  &:active {
+    background: #edf5ff;
+  }
+}
+
+.ad-footer__item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ad-footer__item-type {
+  font-size: 0.7rem;
+  color: #525252;
+  text-transform: uppercase;
+  letter-spacing: 0.24px;
+  font-weight: 600;
+}
+
+.ad-footer__item-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ad-footer__item-title {
+  font-size: 0.9375rem;
+  color: #0f62fe;
+  font-weight: 500;
+  flex: 1;
+  word-break: break-word;
+}
+
+.ad-footer__item-arrow {
+  color: #525252;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.ad-footer__item-desc {
+  font-size: 0.8125rem;
+  color: #525252;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+// ── Responsive footer ─────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .ad-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .ad-footer__title {
+    font-size: 0.8rem;
+  }
+
+  .ad-footer__item {
+    padding: 0.875rem;
+  }
+
+  .ad-footer__item-title {
+    font-size: 0.875rem;
+  }
+
+  .ad-footer__item-desc {
+    font-size: 0.75rem;
+  }
+}
+
+
+
+
+
+// ── Responsive ───────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .ad-content { padding: 1rem; }
+  .ad-header { padding: 0.5rem 1rem 0; }
+  .ad-breadcrumb { padding: 0.5rem 1rem 0; }
+  .ad-kpis { grid-template-columns: repeat(2, 1fr); }
+  .ad-kpi__value { font-size: 1.5rem; }
+  .ad-title { font-size: 1.25rem; }
+  .ad-tablist { padding: 0 0.5rem; overflow-x: auto; }
+  .ad-table th, .ad-table td { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+  .ad-panel { width: 100vw; }
+}
+

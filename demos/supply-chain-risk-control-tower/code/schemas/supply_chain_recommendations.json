@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "supply_chain_recommendations",
+  "title": "SupplyChainRecommendation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "recommendation_id",
+    "risk_id",
+    "component_id",
+    "risk_band",
+    "business_impact",
+    "recommended_action",
+    "confidence",
+    "event_time"
+  ],
+  "properties": {
+    "recommendation_id": {
+      "type": "string"
+    },
+    "risk_id": {
+      "type": "string"
+    },
+    "component_id": {
+      "type": "string"
+    },
+    "customer_order_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "risk_band": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "business_impact": {
+      "type": "string"
+    },
+    "recommended_action": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

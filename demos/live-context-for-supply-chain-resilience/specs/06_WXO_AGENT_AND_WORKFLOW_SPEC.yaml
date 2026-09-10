@@ -1,0 +1,147 @@
+version: "1.0"
+platform: IBM watsonx Orchestrate
+
+primary_agent:
+  name: Turnaround Supply Chain Risk Agent
+  objective: >
+    Investigate supply-chain risks affecting turnaround material readiness,
+    coordinate specialized tools/agents, explain business impact including the
+    full supply chain resilience posture across the approved vendor network,
+    recommend evidence-backed mitigation, and request human approval for actions.
+  never:
+    - fabricate inventory
+    - fabricate supplier lead times
+    - claim engineering compatibility without evidence
+    - execute write tools without approval
+    - hide conflicting evidence
+    - present a constrained supplier as an unconstrained sourcing option
+    - omit resilience posture context from a recommendation
+
+collaborators:
+  RiskInvestigationAgent:
+    responsibilities:
+      - retrieve risk, shipment, requirement, work package
+      - establish timeline and shortage
+    tools:
+      - get_risk
+      - get_shipment
+      - get_work_package
+
+  InventoryAgent:
+    responsibilities:
+      - find available inventory
+      - exclude reserved/unavailable quantities
+      - identify future demand conflicts
+    tools:
+      - get_inventory_options
+
+  ProcurementAgent:
+    responsibilities:
+      - find approved supplier alternatives with live constraint status
+      - exclude suppliers with active HIGH/CRITICAL constraints from feasible set
+      - surface constrained supplier status with reason and estimated resolution
+      - identify expediting possibilities for unconstrained suppliers only
+    tools:
+      - get_supplier_options
+      - get_supplier_resilience_status
+
+  ResilienceMonitorAgent:
+    responsibilities: >
+      Provide the complete supply chain resilience picture for a critical material.
+      This agent consumes the live SupplyChainResilienceProfile and answers
+      questions about the full supplier network, not just the primary shipment.
+    tools:
+      - get_resilience_profile
+      - get_avl_status
+      - get_port_status
+    routing_triggers:
+      - user asks about supply network resilience
+      - user asks why all suppliers are constrained
+      - user asks about port congestion impact
+      - user asks about AVL status changes
+      - user asks which suppliers remain unconstrained
+
+  EngineeringKnowledgeAgent:
+    responsibilities:
+      - retrieve engineering and procurement evidence
+      - validate whether substitution can be considered
+    tools:
+      - retrieve_enterprise_knowledge
+
+  MitigationAgent:
+    responsibilities:
+      - build feasible options using only unconstrained approved sources
+      - call deterministic scoring service
+      - summarize tradeoffs including resilience dimension
+    tools:
+      - evaluate_mitigation_options
+
+routing:
+  - condition: user asks why risk matters
+    delegate: RiskInvestigationAgent
+  - condition: user asks where material exists
+    delegate: InventoryAgent
+  - condition: user asks supplier/expedite options
+    delegate: ProcurementAgent
+  - condition: user asks about resilience posture, supply network, constrained suppliers, port congestion
+    delegate: ResilienceMonitorAgent
+  - condition: user asks compatibility/substitution/policy
+    delegate: EngineeringKnowledgeAgent
+  - condition: user asks what should we do
+    orchestration:
+      - RiskInvestigationAgent
+      - InventoryAgent
+      - ProcurementAgent
+      - ResilienceMonitorAgent           # always included for resilience context
+      - EngineeringKnowledgeAgent_if_required
+      - MitigationAgent
+
+deterministic_workflow:
+  name: Approved Mitigation Execution
+  input:
+    riskId: string
+    optionId: string
+  steps:
+    - revalidate_current_risk_state
+    - revalidate_option_feasibility
+    - revalidate_supplier_constraint_status   # new: re-check live constraint state
+    - revalidate_avl_status                   # new: re-check AVL for chosen supplier
+    - request_mitigation_approval
+    - wait_for_human_approval
+    - branch:
+        TRANSFER:
+          - recheck_source_inventory
+          - execute_inventory_transfer
+        EXPEDITE:
+          - recheck_supplier_constraint_is_cleared  # new: must be cleared before expedite
+          - execute_supplier_expedite
+        SUBSTITUTE:
+          - stop_and_require_engineering_approval
+        WAIT:
+          - record_decision_only
+    - publish_risk_status_change
+    - return_execution_summary
+
+agent_response_standard:
+  sections:
+    - Risk
+    - Why_it_matters
+    - Facts
+    - Resilience_posture              # new: supplier-tier picture, port status, AVL changes
+    - Evidence
+    - Options
+    - Recommendation
+    - Required_approval
+  recommendation_must_include:
+    - chosen_option
+    - reasons
+    - major_tradeoffs
+    - evidence_ids
+    - score_breakdown
+    - uncertainties
+    - resilience_context:
+        primary_supplier_status: string
+        secondary_supplier_status: string|null
+        unconstrained_approved_supplier_count: integer
+        resilience_score: number
+        port_disruptions_affecting_supply: array

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "/Users/shivamsolanki/.pyenv/versions/3.11.12/bin/python",
+      "runtimeArgs": ["motivation_graph/api.py"],
+      "port": 5050
+    }
+  ]
+}

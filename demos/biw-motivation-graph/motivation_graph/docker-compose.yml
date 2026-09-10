@@ -1,0 +1,187 @@
+# BIW Motivation Graph — v2 DataFabric local OSS stack
+#
+# Maps 1:1 to IBM enterprise products per §6 of the spec:
+#
+#   Container            OSS engine           IBM enterprise product
+#   ──────────────────   ──────────────────   ────────────────────────────────
+#   kafka + zookeeper    Apache Kafka         IBM Confluent (Kafka)
+#   cassandra            Apache Cassandra     IBM DataStax Enterprise
+#   minio                MinIO                IBM Cloud Object Storage (COS)
+#   iceberg-rest         Iceberg REST catalog watsonx.data catalog service
+#   trino                Apache Trino         watsonx.data (Presto engine)
+#
+# Usage:
+#   docker compose up -d          # start all OSS services
+#   docker compose down -v        # tear down (removes volumes)
+
+services:
+
+  # ── B1: Kafka / IBM Confluent ─────────────────────────────────────────────
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      KAFKA_HEAP_OPTS: "-Xmx128M -Xms64M"
+    ports:
+      - "2181:2181"
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 10s
+      retries: 5
+
+  kafka:
+    image: confluentinc/cp-kafka:7.9.0
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    mem_limit: 768m
+    environment:
+      KAFKA_HEAP_OPTS: "-Xmx512M -Xms256M"
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_RETENTION_HOURS: 12
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 15s
+      retries: 5
+
+  # Pre-create the 3 BIW topics
+  kafka-init:
+    image: confluentinc/cp-kafka:7.9.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c",
+      "kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic biw.salesforce.cdc  --partitions 3 --replication-factor 1 &&
+       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic biw.slack.events    --partitions 3 --replication-factor 1 &&
+       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic biw.batch.ingest    --partitions 3 --replication-factor 1 &&
+       echo 'Topics created ✓'"]
+    restart: "no"
+
+  # ── B2a: Cassandra / IBM DataStax ─────────────────────────────────────────
+  cassandra:
+    image: cassandra:5.0
+    ports:
+      - "9042:9042"
+    mem_limit: 640m
+    environment:
+      CASSANDRA_CLUSTER_NAME: biw-demo
+      CASSANDRA_DC: datacenter1
+      CASSANDRA_ENDPOINT_SNITCH: SimpleSnitch
+      # Reduced heap: 192M + off-heap within 640 MB container limit
+      MAX_HEAP_SIZE: "192M"
+      HEAP_NEWSIZE: "48M"
+    healthcheck:
+      # nodetool status is available in every Cassandra image and doesn't
+      # require cqlsh to be ready. UN = Up/Normal = node is fully joined.
+      test: ["CMD-SHELL", "nodetool status 2>/dev/null | grep -qE '^UN' || exit 1"]
+      interval: 20s
+      timeout: 15s
+      retries: 12
+      start_period: 60s   # give JVM time to warm up before first health check
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+
+  # ── B2b: MinIO / IBM COS (Iceberg warehouse) ──────────────────────────────
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: server /data --console-address ":9001"
+    ports:
+      - "18002:9000"   # host 18002 → container 9000 (ports 9000-9014 occupied by Rancher Desktop proxy)
+      - "18003:9001"   # MinIO console on 18003
+    mem_limit: 384m
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      retries: 5
+      # Note: healthcheck runs inside the container where MinIO still listens on 9000
+
+  # Create biw-lakehouse bucket on MinIO startup
+  minio-init:
+    image: minio/mc:RELEASE.2025-04-03T17-07-56Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c",
+      "mc alias set myminio http://minio:9000 minioadmin minioadmin &&
+       mc mb --ignore-existing myminio/biw-lakehouse &&
+       mc anonymous set public myminio/biw-lakehouse &&
+       echo 'Bucket biw-lakehouse created ✓'"]
+    restart: "no"
+
+  # ── Iceberg REST catalog (for pyiceberg / Trino) ───────────────────────────
+  iceberg-rest:
+    image: tabulario/iceberg-rest:1.6.0
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+    ports:
+      - "8181:8181"
+    mem_limit: 256m
+    environment:
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin
+      AWS_REGION: us-east-1
+      CATALOG_WAREHOUSE: s3://biw-lakehouse/warehouse
+      CATALOG_IO__IMPL: org.apache.iceberg.aws.s3.S3FileIO
+      CATALOG_S3_ENDPOINT: http://minio:9000
+      # Force path-style S3 access: double-underscore (__) maps to hyphen (-) in property name
+      # CATALOG_S3_PATH__STYLE__ACCESS -> s3.path-style-access
+      CATALOG_S3_PATH__STYLE__ACCESS: "true"
+    healthcheck:
+      # tabulario/iceberg-rest:1.6.0 has no curl/wget/nc/bash — only Java.
+      # kill -0 1 checks whether PID 1 (the java process) is alive.
+      # Trino depends on service_started, not service_healthy, so this
+      # never blocks any dependent container.
+      test: ["CMD-SHELL", "kill -0 1 2>/dev/null && exit 0 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  # ── B3/B4: Trino / watsonx.data Presto ────────────────────────────────────
+  trino:
+    image: trinodb/trino:476
+    depends_on:
+      # service_started (not service_healthy) — iceberg-rest is up in <2s
+      # but its image has no curl/wget so the health check always fails.
+      # Trino connects to it at catalog-load time; if iceberg-rest isn't ready
+      # yet Trino retries automatically.
+      iceberg-rest:
+        condition: service_started
+    ports:
+      - "8090:8080"   # host 8090 → container 8080 (8080 may be in use by SSH tunnels)
+    mem_limit: 768m
+    restart: on-failure
+    volumes:
+      - ./trino-config/catalog:/etc/trino/catalog:ro
+      - ./trino-config/etc/config.properties:/etc/trino/config.properties:ro
+      - ./trino-config/etc/jvm.config:/etc/trino/jvm.config:ro
+    healthcheck:
+      # curl is available in the trinodb/trino image
+      # Trino needs ~40s to load all catalogs; start_period gives it headroom
+      # before the health check count begins.
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/v1/info"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  cassandra_data:
+  minio_data:

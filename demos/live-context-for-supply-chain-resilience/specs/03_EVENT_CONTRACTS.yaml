@@ -1,0 +1,245 @@
+version: "1.0"
+format: json-schema
+schema_registry:
+  required: true
+  recommended_compatibility: BACKWARD_TRANSITIVE
+  subject_strategy: topic-record
+  validation: required
+
+# ─────────────────────────────────────────────────────────────────────────────
+# All events carry these headers to enable end-to-end correlation and audit.
+# ─────────────────────────────────────────────────────────────────────────────
+common_headers:
+  eventId: uuid
+  eventType: string
+  eventVersion: string
+  occurredAt: datetime
+  correlationId: uuid
+  sourceSystem: string
+  producer: string
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TOPIC DEFINITIONS
+# ─────────────────────────────────────────────────────────────────────────────
+topics:
+
+  # ── Shipment & logistics ────────────────────────────────────────────────────
+  supply.shipment.updated:
+    key: shipmentId
+    purpose: Supplier/logistics shipment-state changes
+    payload:
+      shipmentId: string
+      poId: string
+      poLineId: string
+      materialId: string
+      destinationLocationId: string
+      originalEta: datetime
+      currentEta: datetime
+      status: string
+      delayReasonCode: string|null
+    acceptance:
+      - duplicate eventId is ignored idempotently
+      - invalid schema is rejected or routed to governed error handling
+      - currentEta change is persisted before risk evaluation
+
+  # ── Inventory ───────────────────────────────────────────────────────────────
+  supply.inventory.changed:
+    key: "locationId:materialId"
+    payload:
+      locationId: string
+      materialId: string
+      onHand: number
+      reserved: number
+      available: number
+      effectiveAt: datetime
+
+  # ── Turnaround demand ────────────────────────────────────────────────────────
+  turnaround.material.required:
+    key: requirementId
+    payload:
+      requirementId: string
+      workPackageId: string
+      materialId: string
+      quantityRequired: number
+      requiredBy: datetime
+      locationId: string
+      mandatory: boolean
+
+  # ── Risk signals ─────────────────────────────────────────────────────────────
+  supply.risk.detected:
+    key: riskId
+    payload:
+      riskId: string
+      correlationId: string
+      riskType: string
+      severity: string
+      shipmentId: string
+      materialId: string
+      requirementId: string
+      workPackageId: string
+      requiredBy: datetime
+      currentEta: datetime
+      availableAtDestination: number
+      shortageQuantity: number
+      detectedAt: datetime
+      # Supply chain resilience context
+      resilienceFlags:
+        primarySupplierConstrained: boolean
+        secondarySupplierConstrained: boolean
+        alternateInventoryAvailable: boolean
+        approvedSubstituteDocumentExists: boolean
+        constrainedSupplierCount: integer
+        activeSourcingTiers: integer
+
+  supply.risk.status.changed:
+    key: riskId
+    payload:
+      riskId: string
+      correlationId: string
+      oldStatus: string
+      newStatus: string
+      changedAt: datetime
+      actorType: [SYSTEM, AGENT, HUMAN]
+      actorId: string
+
+  # ── Supply Chain Resilience: Supplier-tier status ────────────────────────────
+  # Confluent streams real-time supplier constraint events from logistics and
+  # procurement systems. These feed the resilience correlation engine and the
+  # ResilienceMonitorAgent.
+  supply.supplier.status.changed:
+    key: "supplierId:materialId"
+    purpose: >
+      Real-time supplier constraint signals enabling multi-tier resilience
+      assessment. Produced by procurement/logistics adapters whenever a
+      supplier's ability to fulfill is affected.
+    payload:
+      supplierId: string
+      materialId: string|null          # null = all materials for this supplier
+      constraintType:
+        enum: [QUALITY_HOLD, CAPACITY_CONSTRAINT, PORT_CONGESTION,
+               FORCE_MAJEURE, LEAD_TIME_EXTENSION, CLEARED]
+      constraintSeverity: [LOW, MEDIUM, HIGH, CRITICAL]
+      affectedFromDate: datetime
+      estimatedResolutionDate: datetime|null
+      impactedPOIds: array              # optional, populated when known
+      sourceReference: string|null      # e.g., logistics provider incident ID
+      notes: string|null
+    acceptance:
+      - CLEARED status removes active constraint record for supplierId:materialId
+      - duplicate eventId is ignored idempotently
+      - constraintType changes for same supplierId:materialId supersede prior open constraint
+
+  # ── Supply Chain Resilience: Port / logistics hub status ─────────────────────
+  supply.port.status.changed:
+    key: portCode
+    purpose: >
+      Port-congestion and disruption signals that affect ETA calculations
+      and supplier-tier availability. Feeds the resilience correlation engine.
+    payload:
+      portCode: string
+      portName: string
+      disruptionType:
+        enum: [CONGESTION, STRIKE, CLOSURE, WEATHER, CUSTOMS_DELAY, CLEARED]
+      severity: [LOW, MEDIUM, HIGH, CRITICAL]
+      affectedFromDate: datetime
+      estimatedClearDate: datetime|null
+      impactedShipmentIds: array        # optional, populated when known
+      affectedLogisticsProviders: array # optional
+    acceptance:
+      - CLEARED status removes active disruption for portCode
+      - duplicate eventId is ignored idempotently
+
+  # ── Supply Chain Resilience: Material readiness status ───────────────────────
+  supply.material.readiness.assessed:
+    key: "workPackageId:materialId"
+    purpose: >
+      Summarised readiness posture for a critical material against a specific
+      work package, produced by the resilience correlation engine after
+      evaluating all supplier-tier, shipment, and inventory signals.
+    payload:
+      assessmentId: string
+      correlationId: string
+      workPackageId: string
+      materialId: string
+      requirementId: string
+      assessedAt: datetime
+      readinessStatus:
+        enum: [CONFIRMED, AT_RISK, CRITICAL, UNKNOWN]
+      readinessSummary:
+        daysToRequired: integer
+        availableAtDestination: number
+        quantityRequired: number
+        shortfall: number
+        primaryShipmentEta: datetime|null
+        primaryShipmentDelayDays: integer|null
+      supplierResilienceStatus:
+        primarySupplierId: string
+        primarySupplierStatus: string    # mirrors constraintType or ACTIVE
+        secondarySupplierId: string|null
+        secondarySupplierStatus: string|null
+        unconstrainedApprovedSupplierCount: integer
+      alternativeSources:
+        feasibleTransferLocations: array
+        feasibleAlternateSuppliers: array
+      resilienceScore: number            # 0..100, lower = better resilience posture
+    acceptance:
+      - assessedAt must be later than all contributing events
+      - assessmentId must carry the same correlationId as the triggering risk
+
+  # ── Approved Vendor List (AVL) changes ───────────────────────────────────────
+  supply.approved_vendor.changed:
+    key: "supplierId:materialId"
+    purpose: >
+      Signals addition, removal, or status changes in the approved vendor list
+      (AVL). Consumed by the resilience engine and the ProcurementAgent to
+      maintain an accurate view of approved sourcing options.
+    payload:
+      supplierId: string
+      materialId: string
+      changeType: [APPROVED, SUSPENDED, REVOKED, REINSTATED]
+      effectiveDate: date
+      reason: string|null
+      authorisedBy: string|null
+    acceptance:
+      - AVL status must be re-evaluated for any open risk when this event arrives
+      - duplicate eventId is ignored idempotently
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RISK DETECTION RULES
+# ─────────────────────────────────────────────────────────────────────────────
+risk_rule_v1:
+  name: late-critical-material
+  conditions:
+    - shipment.currentEta > requirement.requiredBy
+    - destination.available < requirement.quantityRequired
+    - requirement.mandatory == true
+  output: supply.risk.detected
+
+# Resilience-enhanced rule: triggers even before a shipment delay is confirmed
+# when the supplier tier shows critical constraints.
+risk_rule_v2:
+  name: supplier-tier-critical-constraint
+  conditions:
+    - supplier.constraintSeverity == CRITICAL
+    - requirement.mandatory == true
+    - no_unconstrained_approved_supplier_can_deliver_by_requiredBy == true
+    - destination.available < requirement.quantityRequired
+  output: supply.risk.detected
+  note: >
+    Allows the system to detect and surface material-readiness risk before a
+    shipment delay event arrives — important for early resilience intervention.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ERROR HANDLING
+# ─────────────────────────────────────────────────────────────────────────────
+error_handling:
+  poison_message_policy: quarantine
+  connector_dlq: enabled_where_supported
+  retry:
+    transient:
+      max_attempts: 5
+      backoff: exponential
+    permanent:
+      action: dead_letter_or_quarantine
+  idempotency_store: required
+  replay_safe: true

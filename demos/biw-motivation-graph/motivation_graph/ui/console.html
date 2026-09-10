@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>elevate® — Demo Console</title>
+<link rel="stylesheet" href="seller_surfaces.css">
+<style>
+/* ── Design tokens (Elevate Mockup §B8) ─────────────────────────────────── */
+:root {
+  --ground:       #f4f2fb;
+  --surface:      #ffffff;
+  --surface-2:    #faf9fe;
+  --ink:          #1c1a2e;
+  --muted:        #6c6a86;
+  --faint:        #9a97b5;
+  --border:       #e8e5f3;
+  --border-2:     #d8d3ec;
+  --purple:       #6c43e0;
+  --purple-d:     #5834c4;
+  --purple-soft:  #efeafc;
+  --violet:       #9a5ce6;
+  --gold:         #f5a800;
+  --gold-soft:    #fff3d4;
+  --teal:         #10b39e;
+  --teal-soft:    #d7f4ef;
+  --rose:         #e8517f;
+  --grad:         linear-gradient(135deg, #6c43e0 0%, #9a5ce6 55%, #c86fd6 100%);
+  --shadow:       0 1px 2px rgba(28,26,46,.05), 0 8px 26px rgba(108,67,224,.09);
+  --shadow-lg:    0 12px 40px rgba(108,67,224,.16);
+  --radius:       16px;
+  --sans:         ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono:         ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+body { font-family: var(--sans); background: var(--ground); color: var(--ink);
+       line-height: 1.5; -webkit-font-smoothing: antialiased; font-size: 14px; }
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.topbar { display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px; height: 58px; background: var(--surface);
+  border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 30px; height: 30px; border-radius: 9px; background: var(--grad);
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 17px;
+  box-shadow: 0 4px 12px rgba(108,67,224,.35); }
+.brand-name { font-size: 19px; font-weight: 800; letter-spacing: -.5px; }
+.brand-name .reg { font-size: 10px; vertical-align: super; font-weight: 600; color: var(--muted); }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.sim { background: var(--gold-soft); color: var(--gold); border: 1px solid var(--gold);
+  border-radius: 6px; padding: 3px 9px; font-size: 10px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; }
+.hood { font-family: var(--mono); font-size: 10.5px; color: var(--faint); }
+
+/* ── Act stepper ──────────────────────────────────────────────────────────── */
+.stepper { display: flex; gap: 6px; padding: 16px 22px 0;
+  max-width: 1180px; margin: 0 auto; flex-wrap: wrap; }
+.step { flex: 1; min-width: 210px; display: flex; align-items: center; gap: 11px;
+  padding: 12px 15px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; cursor: pointer; transition: all .18s; text-align: left;
+  font-family: var(--sans); color: var(--ink); }
+.step:hover { border-color: var(--border-2); }
+.step.active { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--purple-soft);
+  color: var(--purple); display: grid; place-items: center;
+  font-weight: 800; font-size: 13px; flex: none; }
+.step.active .step-num { background: var(--purple); color: #fff; }
+.step-t { font-weight: 700; font-size: 13.5px; display: block; }
+.step-s { font-size: 11px; color: var(--muted); display: block; }
+
+/* ── Stage / acts ─────────────────────────────────────────────────────────── */
+.stage { max-width: 1180px; margin: 0 auto; padding: 20px 22px 44px; }
+.act { display: none; animation: fade .35s ease; }
+.act.show { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .act { animation: none; } * { animation-duration: .01ms !important; } }
+
+.act-head { margin-bottom: 18px; }
+.act-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--purple); }
+.act-title { font-size: 25px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 3px; }
+.act-sub { color: var(--muted); font-size: 14px; max-width: 70ch; }
+
+/* ── Act 1 — Sources ──────────────────────────────────────────────────────── */
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 18px; box-shadow: var(--shadow); }
+.stat-v { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+.stat-v .u { font-size: 13px; font-weight: 600; color: var(--muted); }
+.stat-l { font-size: 11.5px; color: var(--muted); }
+
+.src-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(184px, 1fr)); gap: 11px; }
+.src { background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+  padding: 13px 14px; box-shadow: var(--shadow); position: relative; }
+.src-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.src-name { font-weight: 700; font-size: 13.5px; }
+.src-badge { font-family: var(--mono); font-size: 9px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 5px; }
+.b-live   { background: var(--teal-soft); color: var(--teal); }
+.b-fed    { background: var(--gold-soft); color: var(--gold); }
+.b-batch  { background: var(--purple-soft); color: var(--muted); }
+.src-meta { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+.pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+  display: inline-block; margin-right: 5px;
+  box-shadow: 0 0 0 0 rgba(16,179,158,.6); animation: pulse-ring 1.8s infinite; }
+@keyframes pulse-ring {
+  0%  { box-shadow: 0 0 0 0   rgba(16,179,158,.5); }
+  70% { box-shadow: 0 0 0 7px rgba(16,179,158,0);  }
+  100%{ box-shadow: 0 0 0 0   rgba(16,179,158,0);  }
+}
+.src.federated { border-color: var(--gold); }
+
+/* ── Act 2 — Federation Theater ──────────────────────────────────────────── */
+.theater { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.inject-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+  padding: 14px 16px; box-shadow: var(--shadow); }
+.inject-label { font-weight: 700; font-size: 13px; margin-right: 4px; }
+.btn { border: none; border-radius: 10px; padding: 10px 16px;
+  font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--sans);
+  transition: transform .1s, box-shadow .15s; }
+.btn:disabled { opacity: .55; cursor: default; transform: none !important; }
+.btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 14px rgba(108,67,224,.3); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(108,67,224,.4); }
+.btn-ghost { background: var(--surface-2); color: var(--ink); border: 1px solid var(--border-2); }
+.btn-ghost:hover:not(:disabled) { border-color: var(--purple); color: var(--purple); }
+.latency { margin-left: auto; font-family: var(--mono); font-size: 13px; color: var(--teal); font-weight: 700; min-width: 120px; text-align: right; }
+
+.flow { display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center; gap: 0; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 15px;
+  padding: 22px 16px; box-shadow: var(--shadow); overflow-x: auto; }
+.node { display: flex; flex-direction: column; align-items: center; gap: 6px;
+  min-width: 120px; opacity: .45; transition: opacity .3s, transform .3s; }
+.node.lit { opacity: 1; transform: scale(1.04); }
+.node-box { width: 100%; border-radius: 11px; padding: 11px 8px; text-align: center;
+  border: 1.5px solid var(--border-2); background: var(--surface-2); }
+.node.lit .node-box { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.node-oss  { font-weight: 700; font-size: 13px; }
+.node-ibm  { font-size: 10px; color: var(--purple); font-weight: 600; }
+.node-role { font-size: 10px; color: var(--muted); }
+.conn { color: var(--faint); font-size: 20px; padding: 0 6px; }
+.stackwrap { display: flex; flex-direction: column; gap: 8px; min-width: 130px; }
+
+/* result panel */
+.result { background: var(--surface); border: 1px solid var(--border); border-radius: 15px;
+  padding: 0; box-shadow: var(--shadow); overflow: hidden; opacity: 0; max-height: 0;
+  transition: opacity .4s, max-height .4s; }
+.result.show { opacity: 1; max-height: 800px; }
+.result-head { display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 18px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+.result-title { font-weight: 700; font-size: 13.5px; }
+.zerocopy { background: var(--gold-soft); color: var(--gold); border: 1px solid var(--gold);
+  border-radius: 8px; padding: 5px 11px; font-size: 11.5px; font-weight: 800;
+  display: inline-flex; align-items: center; gap: 6px; }
+.sql { font-family: var(--mono); font-size: 11.5px; padding: 14px 18px;
+  color: var(--muted); background: var(--surface-2); overflow-x: auto; line-height: 1.7; }
+.sql .kw  { color: var(--purple); font-weight: 700; }
+.sql .tbl { color: var(--teal); }
+.sql .fed { color: var(--gold); font-weight: 700; }
+.rows { padding: 6px 10px 14px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th { font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--faint); font-weight: 700; }
+td .prov { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.p-live { background: var(--teal); }
+.p-hist { background: var(--purple); }
+.p-fed  { background: var(--gold); }
+
+/* offline badge for Act 2 */
+.offline-note { background: var(--gold-soft); border: 1px solid var(--gold);
+  border-radius: 8px; padding: 8px 14px; font-size: 12px; color: #7a5200;
+  margin-top: 8px; }
+
+/* ── Act 3 — Elevate Nudge ────────────────────────────────────────────────── */
+.glass-note { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px;
+  color: var(--muted); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 12px; margin-bottom: 14px; }
+.seller-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+.seller-tab { display: flex; align-items: center; gap: 9px; padding: 8px 14px 8px 8px;
+  border-radius: 40px; border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; transition: all .15s; box-shadow: var(--shadow);
+  font-family: var(--sans); color: var(--ink); }
+.seller-tab.active { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.avatar { width: 30px; height: 30px; border-radius: 50%; display: grid;
+  place-items: center; color: #fff; font-weight: 800; font-size: 12px; flex: none; }
+.seller-tab .nm { font-weight: 700; font-size: 13px; display: block; }
+.seller-tab .rl { font-size: 10.5px; color: var(--muted); display: block; }
+
+/* delivery-surface picker — where the nudge lands */
+.surf-label { font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+.surf-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 5px; }
+.surf-btn { display: flex; align-items: center; gap: 9px; padding: 8px 15px;
+  border-radius: 9px; border: 1px solid transparent; background: transparent;
+  cursor: pointer; font-family: var(--sans); color: var(--muted); text-align: left;
+  transition: background .15s, color .15s, box-shadow .15s; }
+.surf-btn:hover { color: var(--ink); }
+.surf-btn.on { background: var(--surface); color: var(--ink);
+  border-color: var(--border); box-shadow: var(--shadow); }
+.surf-btn .t { font-weight: 700; font-size: 13px; display: block; }
+.surf-btn .s { font-size: 10.5px; color: var(--faint); display: block; }
+.surf-mark { width: 19px; height: 19px; flex: none; display: grid; place-items: center; }
+.surf-mark svg { width: 100%; height: 100%; display: block; }
+.surf-mark .e { width: 19px; height: 19px; border-radius: 6px; background: var(--grad);
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 11px; }
+
+/* nudge card */
+.nudge { background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
+.nudge-hero { background: var(--grad); color: #fff; padding: 24px 28px;
+  position: relative; overflow: hidden; }
+.nudge-hero::after { content: ""; position: absolute; right: -40px; top: -40px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(255,255,255,.22), transparent 70%); }
+.framing { display: inline-block; background: rgba(255,255,255,.2); border-radius: 20px;
+  padding: 3px 12px; font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .08em; margin-bottom: 12px; }
+
+/* ── wx.ai attribution badge (inside nudge hero) ── */
+.ai-badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  flex-wrap: wrap; }
+.ai-badge-pill { display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,.18); color: #fff;
+  border: 1px solid rgba(255,255,255,.45); border-radius: 4px;
+  padding: 3px 9px; font-size: 10px; font-weight: 800;
+  letter-spacing: .7px; text-transform: uppercase; font-family: var(--mono); }
+.ai-dot { width: 7px; height: 7px; border-radius: 50%;
+  background: #7dd3fc; display: inline-block; flex: none; }
+.ai-meta-txt { font-size: 10px; color: rgba(255,255,255,.7); }
+.rules-pill { display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,.12); color: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.25); border-radius: 4px;
+  padding: 3px 9px; font-size: 10px; font-weight: 700; letter-spacing: .4px; }
+
+.headline { font-size: 24px; font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.25; max-width: 26ch; position: relative; }
+.nudge-body { padding: 22px 28px; }
+.nudge-text { font-size: 15px; color: var(--ink); line-height: 1.65; margin-bottom: 20px; }
+
+.reward { display: flex; align-items: center; gap: 14px; background: var(--gold-soft);
+  border: 1px solid var(--gold); border-radius: 14px; padding: 14px 18px;
+  margin-bottom: 22px; }
+.reward-medal { width: 42px; height: 42px; border-radius: 12px; background: var(--gold);
+  display: grid; place-items: center; font-size: 22px; flex: none; }
+.reward-t { font-weight: 800; font-size: 15px; }
+.reward-s { font-size: 12px; color: var(--muted); }
+.reward-cta { margin-left: auto; }
+
+/* provenance / why this */
+.why { border-top: 1px dashed var(--border-2); padding-top: 18px; }
+.why-h { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+.why-h .q { width: 20px; height: 20px; border-radius: 50%; background: var(--purple);
+  color: #fff; display: grid; place-items: center; font-size: 12px; }
+.why-sub { font-size: 11.5px; color: var(--muted); margin-bottom: 14px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; border-radius: 30px;
+  padding: 6px 13px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border-2); background: var(--surface-2); }
+.chip .d { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.signals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.sig { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: var(--surface-2); }
+.sig-v { font-size: 21px; font-weight: 800; color: var(--purple); letter-spacing: -.02em; }
+.sig-l { font-size: 11.5px; color: var(--ink); margin-top: 1px; font-weight: 600; }
+.sig-src { font-size: 10px; color: var(--faint); margin-top: 4px; display: flex; align-items: center; gap: 5px; }
+.sig-src-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+
+/* nudge loading / error */
+.nudge-loading { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+.nudge-error { background: rgba(232,81,127,.08); border: 1px solid rgba(232,81,127,.3);
+  border-radius: 12px; padding: 16px 20px; color: #8a2142; font-size: 13px; }
+
+.footer-note { font-size: 11px; color: var(--faint); margin-top: 18px; font-family: var(--mono); }
+.sim-bar { background: var(--gold-soft); border: 1px solid rgba(245,168,0,.3);
+  border-radius: 8px; padding: 8px 14px; font-size: 11.5px; color: #7a5200; margin-top: 16px; }
+
+/* Made with IBM Bob */
+.made-footer { text-align: center; font-size: 11px; color: var(--faint); padding: 20px 0 24px;
+  border-top: 1px solid var(--border); margin-top: 12px; }
+
+/* ── Act 4 — Live Kafka Stream ────────────────────────────────────────────── */
+.stream-layout { display: grid; grid-template-columns: 260px 1fr; gap: 18px; }
+.stream-sidebar { display: flex; flex-direction: column; gap: 12px; }
+
+.kafka-topic-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+  padding: 13px 16px; box-shadow: var(--shadow);
+}
+.ktc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.ktc-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; margin-right: 8px; }
+.ktc-name { font-family: var(--mono); font-size: 11px; font-weight: 700; flex: 1; }
+.ktc-count { font-family: var(--mono); font-size: 18px; font-weight: 800; color: var(--teal); }
+.ktc-sub { font-size: 11px; color: var(--muted); }
+
+.seller-stream-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+  padding: 13px 16px; box-shadow: var(--shadow);
+}
+.ssc-head { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.ssc-avatar { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  color: #fff; font-weight: 800; font-size: 11px; flex: none; }
+.ssc-name { font-weight: 700; font-size: 13px; flex: 1; }
+.ssc-total { font-family: var(--mono); font-size: 14px; font-weight: 800; color: var(--teal); }
+.ssc-bars { display: flex; flex-direction: column; gap: 5px; }
+.ssc-bar-row { display: flex; align-items: center; gap: 8px; }
+.ssc-bar-lbl { font-size: 10px; color: var(--muted); width: 74px; flex: none; }
+.ssc-bar-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.ssc-bar-fill { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.ssc-bar-num { font-family: var(--mono); font-size: 10px; color: var(--muted); width: 18px; text-align: right; flex: none; }
+
+.stream-feed-wrap {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 15px;
+  overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  max-height: 560px;
+}
+.stream-feed-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 18px; border-bottom: 1px solid var(--border); flex: none;
+}
+.stream-feed-title { font-weight: 700; font-size: 13.5px; }
+.stream-feed-meta { font-family: var(--mono); font-size: 11px; color: var(--teal); }
+.stream-feed-list { flex: 1; overflow-y: auto; padding: 10px 12px; }
+.stream-feed-list::-webkit-scrollbar { width: 4px; }
+.stream-feed-list::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+
+.sf-row {
+  display: grid; grid-template-columns: 38px 1fr auto;
+  gap: 0 11px; align-items: center;
+  padding: 9px 10px; border-radius: 10px; margin-bottom: 6px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  animation: sf-in .22s ease;
+}
+.sf-row.fresh { border-color: var(--purple); }
+@keyframes sf-in  { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+@keyframes feedIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.sf-icon { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+  font-size: 15px; }
+.sf-icon.salesforce { background: rgba(0,161,224,.12); }
+.sf-icon.teams      { background: var(--purple-soft); }
+.sf-icon.workday    { background: var(--teal-soft); }
+.sf-icon.other      { background: var(--surface); }
+.sf-src-badge { font-family: var(--mono); font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; padding: 2px 6px; border-radius: 5px; }
+.sf-src-sf { background: rgba(0,161,224,.15); color: #4db8f0; }
+.sf-src-tm { background: var(--purple-soft); color: var(--violet); }
+.sf-src-wd { background: var(--teal-soft); color: var(--teal); }
+.sf-src-ot { background: var(--surface); color: var(--muted); }
+.sf-type { font-size: 12px; font-weight: 600; }
+.sf-seller { font-size: 11px; color: var(--muted); }
+.sf-ts { font-family: var(--mono); font-size: 10px; color: var(--faint); white-space: nowrap; }
+
+.stream-empty { text-align: center; padding: 50px 20px; color: var(--muted); }
+.stream-empty .se-hint { font-size: 12px; color: var(--faint); margin-top: 8px; }
+
+.stream-status-bar {
+  padding: 9px 18px; border-top: 1px solid var(--border); flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--mono); font-size: 10.5px; color: var(--muted);
+}
+.ss-left { display: flex; align-items: center; gap: 10px; }
+.ss-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: none; }
+.ss-dot.live { background: var(--teal); animation: pulse-ring 1.8s infinite; }
+
+.stream-launch-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 13px;
+  padding: 14px 18px; box-shadow: var(--shadow); margin-bottom: 18px;
+}
+.stream-launch-label { font-size: 13px; font-weight: 700; }
+.stream-launch-sub { font-size: 11.5px; color: var(--muted); }
+.stream-timer { margin-left: auto; font-family: var(--mono); font-size: 13px;
+  color: var(--teal); font-weight: 700; min-width: 90px; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ── Top bar ─────────────────────────────────────────────────────────── -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">E</div>
+    <div class="brand-name">elevate<span class="reg">®</span></div>
+  </div>
+  <div class="topbar-right">
+    <span class="hood" id="hoodTag">under the hood — IBM platform visible</span>
+    <span class="sim">Simulated</span>
+  </div>
+</div>
+
+<!-- ── Stepper ────────────────────────────────────────────────────────── -->
+<div class="stepper" id="stepper">
+  <button class="step active" data-act="1">
+    <span class="step-num">1</span>
+    <span><span class="step-t">The Tangle</span><span class="step-s">18+ sources, every velocity</span></span>
+  </button>
+  <button class="step" data-act="2">
+    <span class="step-num">2</span>
+    <span><span class="step-t">The Unification</span><span class="step-s">inject an event · live Kafka stream</span></span>
+  </button>
+  <button class="step" data-act="3">
+    <span class="step-num">3</span>
+    <span><span class="step-t">The Payoff</span><span class="step-s">one nudge, from every source</span></span>
+  </button>
+</div>
+
+<!-- ── Stage ──────────────────────────────────────────────────────────── -->
+<div class="stage">
+
+  <!-- ═══════════════════════ ACT 1 ═══════════════════════════════════════ -->
+  <section class="act show" id="act1">
+    <div class="act-head">
+      <div class="act-eyebrow">Act 1 · under the hood</div>
+      <h1 class="act-title">BIW's data lives in 18+ places, and none of them agree</h1>
+      <p class="act-sub">Real-time streams, change-data-capture, nightly batch, dropped files, and an existing Databricks lakehouse. A single warehouse load can't touch this. An open lakehouse can.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-v" id="stat-sources">18<span class="u"> sources</span></div>
+        <div class="stat-l">across the sales org</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v">4<span class="u"> velocities</span></div>
+        <div class="stat-l">stream · CDC · batch · file</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v">1<span class="u"> open lakehouse</span></div>
+        <div class="stat-l">watsonx.data (Iceberg + Trino)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-v" style="color:var(--gold)">0<span class="u"> migrations</span></div>
+        <div class="stat-l">Databricks stays put</div>
+      </div>
+    </div>
+
+    <div class="src-grid" id="srcGrid">
+      <!-- populated by JS from /api/v2/sources or static fallback -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ACT 2 ═══════════════════════════════════════ -->
+  <section class="act" id="act2">
+    <div class="act-head">
+      <div class="act-eyebrow">Act 2 · under the hood</div>
+      <h1 class="act-title">One event, live — then joined with data we never moved</h1>
+      <p class="act-sub">Inject a source event and watch it stream through Kafka, dual-write to the live store and the lakehouse, and get joined — zero-copy — with a table that stays inside Databricks. Then start the live stream to see Salesforce CDC and Slack events landing in real time.</p>
+    </div>
+
+    <div class="theater">
+      <!-- Inject bar -->
+      <div class="inject-bar">
+        <span class="inject-label">Inject an event:</span>
+        <button class="btn btn-ghost"   id="btnSlack">＋ Slack recognition</button>
+        <button class="btn btn-ghost"   id="btnSF">＋ Salesforce deal update</button>
+        <span class="latency" id="latency"></span>
+      </div>
+
+      <!-- Pipeline flow diagram -->
+      <div class="flow" id="flow">
+        <div class="node" data-n="src">
+          <div class="node-box">
+            <div class="node-oss" id="srcName">Source</div>
+            <div class="node-role">Slack / Salesforce</div>
+          </div>
+        </div>
+        <div class="conn">→</div>
+        <div class="node" data-n="kafka">
+          <div class="node-box">
+            <div class="node-oss">Kafka</div>
+            <div class="node-ibm">IBM Confluent</div>
+            <div class="node-role">3 topics</div>
+          </div>
+        </div>
+        <div class="conn">→</div>
+        <div class="node" data-n="proc">
+          <div class="node-box">
+            <div class="node-oss">Dual-write</div>
+            <div class="node-ibm">watsonx.data</div>
+            <div class="node-role">consumer</div>
+          </div>
+        </div>
+        <div class="conn">→</div>
+        <div class="stackwrap">
+          <div class="node" data-n="cass">
+            <div class="node-box">
+              <div class="node-oss">Cassandra</div>
+              <div class="node-ibm">IBM DataStax</div>
+              <div class="node-role">live "now"</div>
+            </div>
+          </div>
+          <div class="node" data-n="ice">
+            <div class="node-box">
+              <div class="node-oss">Iceberg</div>
+              <div class="node-ibm">watsonx.data</div>
+              <div class="node-role">history "always"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Federated result panel -->
+      <div class="result" id="result">
+        <div class="result-head">
+          <span class="result-title">⋈ Trino federated join — live + history + Databricks</span>
+          <span class="zerocopy">◆ Databricks — read in place · 0 rows copied</span>
+        </div>
+        <div class="sql">
+          <span class="kw">SELECT</span> s.seller_id, live.event_type, live.event_ts, hist.event_ts <span class="kw">AS</span> history_ts, <span class="fed">db.event_ts AS databricks_ts</span><br>
+          <span class="kw">FROM</span> <span class="tbl">cassandra.biw_live</span>.biw_live_events live<br>
+          <span class="kw">FULL OUTER JOIN</span> <span class="tbl">iceberg.biw</span>.live_events hist <span class="kw">ON</span> live.seller_id = hist.seller_id<br>
+          <span class="kw">FULL OUTER JOIN</span> <span class="fed">databricks.main.biw_demo.seller_history db</span> <span class="kw">ON</span> live.seller_id = db.seller_id
+          <span style="color:var(--gold)"> -- in place, 0 rows copied</span>
+        </div>
+        <div class="rows" id="resultRows">
+          <!-- populated after injection -->
+        </div>
+        <div id="resultMeta" style="padding:0 18px 14px;font-size:11.5px;color:var(--muted);font-family:var(--mono)"></div>
+      </div>
+
+      <!-- Offline fallback note (shown when API unavailable) -->
+      <div class="offline-note" id="offlineNote" style="display:none"></div>
+    </div>
+
+    <!-- ── Live Kafka Stream ─────────────────────────────────────────────── -->
+    <div class="act-head" style="margin-top:40px">
+      <div class="act-eyebrow">Live Kafka stream · Confluent</div>
+      <h1 class="act-title" style="font-size:clamp(18px,2.2vw,26px)">Salesforce CDC and Slack — arriving now</h1>
+      <p class="act-sub">Watch real events land in two Confluent topics in real time. Every row below is a message that just hit Kafka.</p>
+    </div>
+
+    <!-- Launch bar -->
+    <div class="stream-launch-bar" id="streamLaunchBar">
+      <div>
+        <div class="stream-launch-label">Stream 30 seconds of live events into Confluent Kafka</div>
+        <div class="stream-launch-sub">Salesforce CDC · Slack &nbsp;·&nbsp; sellers: Rachel, Marcus, Maya</div>
+      </div>
+      <button class="btn btn-primary" id="btnStartStream">▶ Start 30-second stream</button>
+      <span class="stream-timer" id="streamTimer"></span>
+    </div>
+
+    <div class="stream-layout">
+
+      <!-- Left sidebar: topic counters + seller breakdown -->
+      <div class="stream-sidebar">
+
+        <div class="kafka-topic-card">
+          <div class="ktc-top">
+            <div class="ktc-dot" style="background:#4db8f0"></div>
+            <span class="ktc-name">biw.salesforce.cdc</span>
+            <span class="ktc-count" id="kc-sf">0</span>
+          </div>
+          <div class="ktc-sub">Salesforce CDC</div>
+        </div>
+
+        <div class="kafka-topic-card">
+          <div class="ktc-top">
+            <div class="ktc-dot" style="background:#a66ce6"></div>
+            <span class="ktc-name">biw.slack.events</span>
+            <span class="ktc-count" id="kc-tm">0</span>
+          </div>
+          <div class="ktc-sub">Slack / collaboration</div>
+        </div>
+
+        <div class="seller-stream-card" id="ssc-rachel">
+          <div class="ssc-head">
+            <div class="ssc-avatar" style="background:#6c43e0">R</div>
+            <span class="ssc-name">Rachel</span>
+            <span class="ssc-total" id="st-rachel">0</span>
+          </div>
+          <div class="ssc-bars">
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">salesforce</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-rachel-sf" style="width:0%;background:#4db8f0"></div></div><span class="ssc-bar-num" id="sn-rachel-sf">0</span></div>
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">slack</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-rachel-tm" style="width:0%;background:#a66ce6"></div></div><span class="ssc-bar-num" id="sn-rachel-tm">0</span></div>
+          </div>
+        </div>
+
+        <div class="seller-stream-card" id="ssc-marcus">
+          <div class="ssc-head">
+            <div class="ssc-avatar" style="background:#10b39e">M</div>
+            <span class="ssc-name">Marcus</span>
+            <span class="ssc-total" id="st-marcus">0</span>
+          </div>
+          <div class="ssc-bars">
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">salesforce</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-marcus-sf" style="width:0%;background:#4db8f0"></div></div><span class="ssc-bar-num" id="sn-marcus-sf">0</span></div>
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">slack</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-marcus-tm" style="width:0%;background:#a66ce6"></div></div><span class="ssc-bar-num" id="sn-marcus-tm">0</span></div>
+          </div>
+        </div>
+
+        <div class="seller-stream-card" id="ssc-maya">
+          <div class="ssc-head">
+            <div class="ssc-avatar" style="background:#e8517f">M</div>
+            <span class="ssc-name">Maya</span>
+            <span class="ssc-total" id="st-maya">0</span>
+          </div>
+          <div class="ssc-bars">
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">salesforce</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-maya-sf" style="width:0%;background:#4db8f0"></div></div><span class="ssc-bar-num" id="sn-maya-sf">0</span></div>
+            <div class="ssc-bar-row"><span class="ssc-bar-lbl">slack</span><div class="ssc-bar-track"><div class="ssc-bar-fill" id="sb-maya-tm" style="width:0%;background:#a66ce6"></div></div><span class="ssc-bar-num" id="sn-maya-tm">0</span></div>
+          </div>
+        </div>
+
+      </div><!-- /stream-sidebar -->
+
+      <!-- Right: live event feed -->
+      <div class="stream-feed-wrap">
+        <div class="stream-feed-head">
+          <span class="stream-feed-title">Live event feed</span>
+          <span class="stream-feed-meta" id="streamFeedMeta">waiting…</span>
+        </div>
+        <div class="stream-feed-list" id="streamFeedList">
+          <div class="stream-empty" id="streamEmpty">
+            <div>Click <strong>Start 30-second stream</strong> to begin</div>
+            <div class="se-hint">Events from Salesforce CDC · Slack will appear here as they land in Kafka</div>
+          </div>
+        </div>
+        <div class="stream-status-bar">
+          <div class="ss-left">
+            <div class="ss-dot" id="ssDot"></div>
+            <span id="ssLabel">not started</span>
+          </div>
+          <span>cluster: pkc-zgp5j7.us-south1.gcp.confluent.cloud · SASL_SSL</span>
+        </div>
+      </div>
+
+    </div><!-- /stream-layout -->
+  </section>
+
+  <!-- ═══════════════════════ ACT 3 ═══════════════════════════════════════ -->
+  <section class="act" id="act3">
+    <div class="act-head">
+      <div class="act-eyebrow">Act 3 · through the glass</div>
+      <h1 class="act-title">The seller sees one thing: a nudge that finally fits</h1>
+      <p class="act-sub">One nudge, one action list — priced in points, justified by the signals that produced it, and delivered to the surface the seller already works in. Pick a seller, then pick where it lands.</p>
+    </div>
+
+    <div class="glass-note">🔒 Seller-facing — the platform stack (watsonx.data · Kafka · Trino) never appears on these surfaces</div>
+
+    <div class="seller-tabs" id="sellerTabs"></div>
+
+    <div class="surf-label">Where the nudge lands</div>
+    <div class="surf-nav" id="surfNav">
+      <button class="surf-btn on" data-surf="app">
+        <span class="surf-mark"><span class="e">E</span></span>
+        <span><span class="t">Elevate app</span><span class="s">the program's own UI</span></span>
+      </button>
+      <button class="surf-btn" data-surf="salesforce">
+        <span class="surf-mark" id="surfMarkSf"></span>
+        <span><span class="t">Salesforce</span><span class="s">Lightning component + bell</span></span>
+      </button>
+      <button class="surf-btn" data-surf="slack">
+        <span class="surf-mark" id="surfMarkSlack"></span>
+        <span><span class="t">Slack</span><span class="s">Block Kit DM from Elevate</span></span>
+      </button>
+      <button class="surf-btn" data-surf="bluepoints">
+        <span class="surf-mark" id="surfMarkBp"></span>
+        <span><span class="t">BluePoints</span><span class="s">Thanks@IBM home + Challenges</span></span>
+      </button>
+    </div>
+
+    <div id="nudgeArea"><div class="nudge-loading">Loading nudge…</div></div>
+    <div id="surfaceHost" style="display:none"></div>
+
+    <div class="sim-bar">
+      ⓘ All seller data is 100% synthetic (SEED=20260812). Numbers shown are simulated for demonstration purposes. The underlying pipeline (Kafka → Cassandra + Iceberg → Trino federation) processes real engines.
+    </div>
+  </section>
+
+</div><!-- /stage -->
+
+<div class="made-footer">Made with IBM Bob</div>
+
+<script src="seller_surfaces.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const API_BASE = window.location.protocol === "file:"
+    ? "http://localhost:5050"
+    : `${window.location.protocol}//${window.location.hostname || 'localhost'}:${window.location.port || '5050'}`;
+  const API  = API_BASE + "/api/v2";
+  const API0 = API_BASE;
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // STEPPER
+  // ─────────────────────────────────────────────────────────────────────────
+  const hood = document.getElementById("hoodTag");
+  document.getElementById("stepper").addEventListener("click", function (e) {
+    const btn = e.target.closest(".step");
+    if (!btn) return;
+    const a = btn.dataset.act;
+    document.querySelectorAll(".step").forEach(function (s) { s.classList.remove("active"); });
+    btn.classList.add("active");
+    document.querySelectorAll(".act").forEach(function (s) { s.classList.remove("show"); });
+    document.getElementById("act" + a).classList.add("show");
+    hood.textContent = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (a === "3" && !_nudgeLoaded) { loadNudge(_activeSeller); }
+    if (a === "2") { initStreamAct(); }
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACT 1 — SOURCE TILES
+  // ─────────────────────────────────────────────────────────────────────────
+  const STATIC_SOURCES = [
+    { n: "Salesforce",     v: "CDC",      b: "b-live",  live: true,  fed: false, meta: ["deals / pipeline",     "~real-time"]       },
+    { n: "Slack",          v: "Stream",   b: "b-live",  live: true,  fed: false, meta: ["recognition",          "real-time"]        },
+    { n: "Databricks",     v: "Federated",b: "b-fed",   live: false, fed: true,  meta: ["historical perf",      "query-in-place"]   },
+    { n: "Workday",        v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["role / tenure",        "nightly"]          },
+    { n: "S3 file drop",   v: "File",     b: "b-batch", live: false, fed: false, meta: ["partner extracts",     "micro-batch"]      },
+    { n: "MS Teams",       v: "Stream",   b: "b-live",  live: true,  fed: false, meta: ["collaboration",        "real-time"]        },
+    { n: "Elevate ledger", v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["points issued/redeemed","hourly"]          },
+    { n: "Rewards catalog",v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["items / points cost",  "daily"]            },
+    { n: "SuccessFactors", v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["performance",          "nightly"]          },
+    { n: "LMS",            v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["certs / enablement",   "daily"]            },
+    { n: "Clickstream",    v: "Stream",   b: "b-live",  live: true,  fed: false, meta: ["app / web events",     "real-time"]        },
+    { n: "Zendesk",        v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["support tickets",      "hourly"]           },
+    { n: "Marketo",        v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["campaign engage",      "daily"]            },
+    { n: "Google Workspace",v:"Batch",    b: "b-batch", live: false, fed: false, meta: ["calendar / meetings",  "daily"]            },
+    { n: "Qualtrics",      v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["survey / eNPS",        "weekly"]           },
+    { n: "NetSuite",       v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["finance / comp",       "nightly"]          },
+    { n: "PRM / partner",  v: "Batch",    b: "b-batch", live: false, fed: false, meta: ["channel deals",        "daily"]            },
+    { n: "Mobile events",  v: "Stream",   b: "b-live",  live: true,  fed: false, meta: ["push / in-app",        "real-time"]        },
+  ];
+
+  function renderSrcTile(s) {
+    return '<div class="src' + (s.fed ? ' federated' : '') + '">' +
+      '<div class="src-top">' +
+        '<span class="src-name">' + s.n + '</span>' +
+        '<span class="src-badge ' + s.b + '">' + s.v + '</span>' +
+      '</div>' +
+      '<div class="src-meta">' +
+        '<span>' + (s.live ? '<span class="pulse"></span>' : '') + s.meta[0] + '</span>' +
+        '<span>' + s.meta[1] + '</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderSources(apiData) {
+    var grid = document.getElementById("srcGrid");
+    if (!apiData) {
+      // Static fallback
+      grid.innerHTML = STATIC_SOURCES.map(renderSrcTile).join("");
+      return;
+    }
+    // Map API response to display tiles
+    var tiles = STATIC_SOURCES.map(function (s) {
+      // Match by name prefix
+      var match = apiData.find(function (a) {
+        return a.name.toLowerCase().startsWith(s.n.toLowerCase().split(" ")[0]);
+      });
+      var live = match ? (match.status.includes("streaming") || match.status === "live") : s.live;
+      var ts = match && match.last_landed ? match.last_landed.replace("T", " ").slice(0, 16) : null;
+      return Object.assign({}, s, {
+        live: live && s.live,
+        meta: [s.meta[0], ts || s.meta[1]],
+      });
+    });
+    grid.innerHTML = tiles.map(renderSrcTile).join("");
+    // Update source count
+    document.getElementById("stat-sources").innerHTML = apiData.length + '<span class="u"> sources</span>';
+  }
+
+  function loadSources() {
+    fetch(API + "/sources")
+      .then(function (r) { return r.json(); })
+      .then(function (d) { renderSources(d); })
+      .catch(function () { renderSources(null); });
+  }
+
+  loadSources();
+  setInterval(loadSources, 5000);
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACT 2 — INJECT & FEDERATED RESULT
+  // ─────────────────────────────────────────────────────────────────────────
+  var _injecting = false;
+  var _flow_order = ["src", "kafka", "proc", "cass", "ice"];
+
+  // Fallback rows match the B4 API column shape exactly:
+  // seller_id, live_ts, live_source, history_ts, history_source,
+  // databricks_ts, databricks_read_mode, copy_status, federation_mode
+  var FALLBACK_RESULTS = {
+    slack: {
+      seller_id:            "seller-rachel-001",
+      live_ts:              new Date().toISOString().slice(0, 23),
+      live_source:          "slack",
+      history_ts:           "2026-07-15T09:00:00",
+      history_source:       "iceberg/biw",
+      databricks_ts:        "2026-07-01T00:00:00",
+      databricks_read_mode: "query-in-place-simulated",
+      copy_status:          "zero-copy",
+      federation_mode:      "live+history+databricks",
+    },
+    salesforce: {
+      seller_id:            "seller-marcus-001",
+      live_ts:              new Date().toISOString().slice(0, 23),
+      live_source:          "salesforce",
+      history_ts:           "2026-07-20T10:00:00",
+      history_source:       "iceberg/biw",
+      databricks_ts:        "2026-07-01T00:00:00",
+      databricks_read_mode: "query-in-place-simulated",
+      copy_status:          "zero-copy",
+      federation_mode:      "live+history+databricks",
+    },
+  };
+
+  function animateFlow(callback) {
+    document.querySelectorAll(".node").forEach(function (n) { n.classList.remove("lit"); });
+    document.getElementById("result").classList.remove("show");
+    var i = 0;
+    function next() {
+      if (i >= _flow_order.length) { callback(); return; }
+      var id = _flow_order[i++];
+      var el = document.querySelector('.node[data-n="' + id + '"]');
+      if (el) el.classList.add("lit");
+      setTimeout(next, 340);
+    }
+    next();
+  }
+
+  // B4 API returns: seller_id, live_ts, live_source, history_ts, databricks_ts,
+  //   databricks_read_mode, copy_status, federation_mode
+  // Fallback rows use the same shape.
+  var RESULT_COLS = [
+    { key: "seller_id",          label: "Seller",                   prov: ""      },
+    { key: "live_ts",            label: "Live ts",                  prov: "live"  },
+    { key: "live_source",        label: "Live source",              prov: "live"  },
+    { key: "history_ts",         label: "History ts",               prov: "hist"  },
+    { key: "databricks_ts",      label: "Databricks (federated)",   prov: "fed"   },
+    { key: "databricks_read_mode", label: "Read mode",              prov: "fed"   },
+  ];
+
+  function showResult(rows, meta) {
+    var provDot = { live: "p-live", hist: "p-hist", fed: "p-fed" };
+    var thead = '<tr>' + RESULT_COLS.map(function (c) {
+      var dot = c.prov
+        ? '<span class="prov ' + provDot[c.prov] + '" style="margin-left:4px"></span>'
+        : "";
+      return '<th>' + c.label + dot + '</th>';
+    }).join("") + '</tr>';
+
+    var tbody = rows.slice(0, 5).map(function (r) {
+      return '<tr>' + RESULT_COLS.map(function (c) {
+        var v = r[c.key] != null ? String(r[c.key]).slice(0, 32) : '<span style="color:var(--faint)">—</span>';
+        return '<td>' + v + '</td>';
+      }).join("") + '</tr>';
+    }).join("");
+
+    document.getElementById("resultRows").innerHTML =
+      '<table><thead>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+    document.getElementById("resultMeta").innerHTML = meta || "";
+    document.getElementById("result").classList.add("show");
+  }
+
+  function inject(kind) {
+    if (_injecting) return;
+    _injecting = true;
+
+    var seller = kind === "slack" ? "seller-rachel-001" : "seller-marcus-001";
+    document.getElementById("srcName").textContent = kind === "slack" ? "Slack" : "Salesforce";
+    document.getElementById("offlineNote").style.display = "none";
+
+    var latEl = document.getElementById("latency");
+    latEl.textContent = "streaming…";
+    var started = performance.now();
+    var tick = setInterval(function () {
+      latEl.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
+    }, 80);
+
+    // Animate pipeline nodes
+    // Animate pipeline nodes, then fire the real pipeline
+    animateFlow(function () {
+      clearInterval(tick);
+      _doInject(kind, seller, started);
+    });
+  }
+
+  function _dualWriteLabel(log) {
+    // Determine from the dual_write_log whether writes hit real engines
+    if (!log || !log.length) return "";
+    // The log entries don't distinguish real vs in-memory at the field level,
+    // but the engine labels from federation tell us. Supplement with Kafka status
+    // from the inject response's produced count vs dual_written.
+    return "";
+  }
+
+  function _buildMeta(injectData, fedData, elapsed) {
+    // Kafka / dual-write provenance line — uses real cassandra_ok/iceberg_ok flags
+    // from the updated _dual_write() which checks _session/_table truthiness
+    var dwLog = injectData.dual_write_log || [];
+    var kafkaStatus;
+    if (injectData.produced === 0 && injectData.dual_written === 0) {
+      kafkaStatus = '<span style="color:var(--gold)">in-memory (no Kafka)</span>';
+    } else if (dwLog.length) {
+      var first = dwLog[0];
+      var cassLabel = first.cassandra_ok
+        ? '<span style="color:var(--teal)">Cassandra ✓</span>'
+        : '<span style="color:var(--gold)">Cassandra: ' + (first.cassandra_store || "in-memory") + '</span>';
+      var iceLabel = first.iceberg_ok
+        ? '<span style="color:var(--teal)">Iceberg ✓</span>'
+        : '<span style="color:var(--gold)">Iceberg: ' + (first.iceberg_store || "JSONL fallback") + '</span>';
+      kafkaStatus = '<span style="color:var(--teal)">Kafka ✓</span> · ' + cassLabel + ' · ' + iceLabel;
+    } else {
+      kafkaStatus = injectData.dual_written > 0
+        ? '<span style="color:var(--teal)">Kafka ✓ · dual-written ✓</span>'
+        : '<span style="color:var(--gold)">in-memory fallback</span>';
+    }
+
+    // Federation engine line
+    var fedEngine = "Engine: <strong style='color:var(--purple)'>" + (fedData.engine || "in-memory") + "</strong>" +
+      " &nbsp;(" + (fedData.is_real_engine
+        ? '<span style="color:var(--teal)">real Trino ✓</span>'
+        : '<span style="color:var(--gold)">DuckDB fallback</span>') + ")" +
+      " &nbsp;·&nbsp; " + (fedData.databricks_included
+        ? '<span style="color:var(--gold)">Databricks ✓ in-place</span>'
+        : "") +
+      " &nbsp;·&nbsp; Rows: " + (fedData.row_count || 0);
+
+    return kafkaStatus + " &nbsp;|&nbsp; " + fedEngine +
+      " &nbsp;|&nbsp; latency: <strong style='color:var(--teal)'>" + elapsed + "s</strong>";
+  }
+
+  function _readJson(r, label) {
+    return r.text().then(function (text) {
+      if (!r.ok) throw new Error(label + " failed: " + (text.trim() || ("HTTP " + r.status)));
+      try {
+        return JSON.parse(text);
+      } catch {
+        throw new Error(label + " returned non-JSON response");
+      }
+    });
+  }
+
+  function _doInject(kind, seller, started) {
+    var latEl = document.getElementById("latency");
+    var offlineNote = document.getElementById("offlineNote");
+    fetch(API + "/events/inject", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ seller_id: seller }),
+    })
+    .then(function (r) { return _readJson(r, "Event injection"); })
+    .then(function (injectData) {
+      var elapsed = ((performance.now() - started) / 1000).toFixed(2);
+      return fetch(API + "/federation/b4")
+        .then(function (r) { return _readJson(r, "B4 federation query"); })
+        .then(function (fedData) {
+          latEl.textContent = "landed in " + elapsed + "s ✓";
+          var rows = (fedData.rows && fedData.rows.length) ? fedData.rows : [FALLBACK_RESULTS[kind]];
+          showResult(rows, _buildMeta(injectData, fedData, elapsed));
+          _injecting = false;
+        });
+    })
+    .catch(function (err) {
+      var elapsed = ((performance.now() - started) / 1000).toFixed(2);
+      latEl.textContent = "simulated " + elapsed + "s ✓";
+      offlineNote.style.display = "block";
+      offlineNote.innerHTML = "⚠ Act 2 backend request failed — pipeline animation is simulated. <code>" + err.message + "</code>";
+      var fakeInject = { produced: 0, dual_written: 0, dual_write_log: [] };
+      var fakeFed    = { engine: "duckdb-fallback", is_real_engine: false, databricks_included: true, row_count: 1 };
+      showResult([FALLBACK_RESULTS[kind]], _buildMeta(fakeInject, fakeFed, elapsed) +
+        " &nbsp;|&nbsp; <span style='color:var(--gold)'>fallback shown</span>");
+      _injecting = false;
+    });
+  }
+
+  document.getElementById("btnSlack").addEventListener("click", function () {
+    document.getElementById("btnSlack").className = "btn btn-primary";
+    document.getElementById("btnSF").className    = "btn btn-ghost";
+    inject("slack");
+  });
+  document.getElementById("btnSF").addEventListener("click", function () {
+    document.getElementById("btnSF").className    = "btn btn-primary";
+    document.getElementById("btnSlack").className = "btn btn-ghost";
+    inject("salesforce");
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACT 3 — NUDGE (live from API, pinned fallback for determinism)
+  // ─────────────────────────────────────────────────────────────────────────
+  var _activeSeller = "seller-rachel-001";
+  var _nudgeLoaded  = false;
+
+  var SELLER_META = [
+    { id: "seller-rachel-001", nm: "Rachel", rl: "Veteran Expert",          color: "#6c43e0" },
+    { id: "seller-marcus-001", nm: "Marcus", rl: "Developing Contributor",  color: "#10b39e" },
+    { id: "seller-maya-001",   nm: "Maya",   rl: "Team Transitioner",       color: "#e8517f" },
+  ];
+
+  // Pinned nudges — hardcoded achievement congratulation + points-to-reward
+  var PINNED = {
+    "seller-rachel-001": {
+      framing: "Achievement unlocked 🏅", medal: "🏆",
+      headline: "Congrats Rachel — you just hit Platinum mentor status!",
+      body: "You've guided 14 reps to their first close this year. That's a new team record. Your Executive Summit pass is waiting — you're only 800 points away from unlocking the full VIP package.",
+      reward_t: "Executive Summit — VIP package", reward_s: "18,200 pts banked · 800 pts to go",
+      chips: [
+        { label: "Salesforce · deal closed",          cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Slack · kudos from manager",        cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Databricks · historical influence", cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sigs: [
+        { v: "14",     l: "Reps mentored / yr",  src: "Salesforce CDC",  cls: "p-live", dotColor: "var(--teal)"   },
+        { v: "18,200", l: "Points banked",        src: "Elevate ledger",  cls: "p-hist", dotColor: "var(--purple)" },
+        { v: "800",    l: "Points to reward",     src: "Rewards catalog", cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sources: ["Salesforce CDC (live → Cassandra/Iceberg via B2)", "Slack Events (real-time → Cassandra/Iceberg via B2)", "Databricks Delta (historical — query-in-place via B4)"],
+    },
+    "seller-marcus-001": {
+      framing: "Milestone achieved 🎯", medal: "⌚",
+      headline: "Congrats Marcus — 4-week CRM streak complete!",
+      body: "You've closed 10 deals and logged 38 CRM updates, great work Marcus! With 2 deals in the last 90 days, you're on a roll. Now, let's aim for 5 more deals in the next quarter. Your smartwatch is almost yours — just 1,600 points to go.",
+      reward_t: "Smartwatch — 14,000 pts", reward_s: "12,400 pts banked · 1,600 pts to go",
+      chips: [
+        { label: "Salesforce · $27K deal closed", cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Slack · streak reminder",       cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Databricks · 90-day trend",     cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sigs: [
+        { v: "4/4",  l: "CRM streak (weeks)",  src: "Salesforce CDC",  cls: "p-live", dotColor: "var(--teal)"   },
+        { v: "12,400", l: "Points banked",      src: "Elevate ledger",  cls: "p-hist", dotColor: "var(--purple)" },
+        { v: "1,600",  l: "Points to reward",   src: "Rewards catalog", cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sources: ["Salesforce CDC (live → Cassandra/Iceberg via B2)", "Slack Events (real-time → Cassandra/Iceberg via B2)", "Databricks Delta (historical — query-in-place via B4)"],
+    },
+    "seller-maya-001": {
+      framing: "First win 🎉", medal: "🎉",
+      headline: "Congrats Maya — your first deal on the new team just closed!",
+      body: "Three teammates recognized you this week and your first close is in the books. That's a huge milestone. You're only 2,100 points away from the team dinner experience — let's celebrate together.",
+      reward_t: "Team dinner experience — 6,000 pts", reward_s: "3,900 pts banked · 2,100 pts to go",
+      chips: [
+        { label: "Slack · 3 peer recognitions", cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Salesforce · first close",    cls: "p-live", dotColor: "var(--teal)"   },
+        { label: "Databricks · ramp curve",     cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sigs: [
+        { v: "3",    l: "Peer recognitions",  src: "Slack Events",    cls: "p-live", dotColor: "var(--teal)"   },
+        { v: "3,900", l: "Points banked",     src: "Elevate ledger",  cls: "p-hist", dotColor: "var(--purple)" },
+        { v: "2,100", l: "Points to reward",  src: "Rewards catalog", cls: "p-fed",  dotColor: "var(--gold)"   },
+      ],
+      sources: ["Salesforce CDC (live → Cassandra/Iceberg via B2)", "Slack Events (real-time → Cassandra/Iceberg via B2)", "Databricks Delta (historical — query-in-place via B4)"],
+    },
+  };
+
+  // Build seller tabs
+  var tabsEl = document.getElementById("sellerTabs");
+  SELLER_META.forEach(function (s, i) {
+    var btn = document.createElement("button");
+    btn.className = "seller-tab" + (i === 0 ? " active" : "");
+    btn.dataset.sid = s.id;
+    btn.innerHTML =
+      '<span class="avatar" style="background:' + s.color + '">' + s.nm[0] + '</span>' +
+      '<span><span class="nm">' + s.nm + '</span><span class="rl">' + s.rl + '</span></span>';
+    tabsEl.appendChild(btn);
+  });
+  tabsEl.addEventListener("click", function (e) {
+    var btn = e.target.closest(".seller-tab");
+    if (!btn) return;
+    tabsEl.querySelectorAll(".seller-tab").forEach(function (b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    _activeSeller = btn.dataset.sid;
+    loadNudge(_activeSeller);
+    if (_surface) _surface.setSeller(_activeSeller);
+  });
+
+  // ── Delivery surfaces — Salesforce / Slack (ui/seller_surfaces.js) ───────
+  // The Elevate app card above and these two surfaces render the *same*
+  // /api/actions/<seller> payload; only the chrome around it changes.
+  var _surface = null;
+  var _surfMode = "app";
+  var surfNav = document.getElementById("surfNav");
+  var nudgeArea = document.getElementById("nudgeArea");
+  var surfaceHost = document.getElementById("surfaceHost");
+
+  if (window.SellerSurfaces) {
+    document.getElementById("surfMarkSf").innerHTML = window.SellerSurfaces.SF_LOGO;
+    document.getElementById("surfMarkSlack").innerHTML = window.SellerSurfaces.SLACK_LOGO;
+    document.getElementById("surfMarkBp").innerHTML = window.SellerSurfaces.BP_LOGO;
+  }
+
+  surfNav.addEventListener("click", function (e) {
+    var btn = e.target.closest(".surf-btn");
+    if (!btn || btn.dataset.surf === _surfMode) return;
+    _surfMode = btn.dataset.surf;
+    surfNav.querySelectorAll(".surf-btn").forEach(function (b) { b.classList.toggle("on", b === btn); });
+
+    if (_surfMode === "app") {
+      nudgeArea.style.display = "";
+      surfaceHost.style.display = "none";
+      return;
+    }
+
+    nudgeArea.style.display = "none";
+    surfaceHost.style.display = "";
+    if (!window.SellerSurfaces) {
+      surfaceHost.innerHTML = '<div class="nudge-loading">seller_surfaces.js did not load — ' +
+        'serve the console from the API (<code>/console</code>) or keep the file alongside console.html.</div>';
+      return;
+    }
+    if (!_surface) {
+      _surface = window.SellerSurfaces.mount(surfaceHost, {
+        apiBase: API0,
+        sellerId: _activeSeller,
+        channel: _surfMode,
+        showChannels: false,     // this nav is the channel picker
+      });
+    } else {
+      _surface.setChannel(_surfMode);
+    }
+  });
+
+  function _sourceClass(text) {
+    var t = (text || "").toLowerCase();
+    if (t.includes("databricks")) return "p-fed";
+    if (t.includes("iceberg") || t.includes("history")) return "p-hist";
+    return "p-live";
+  }
+  function _dotColor(cls) {
+    if (cls === "p-fed")  return "var(--gold)";
+    if (cls === "p-hist") return "var(--purple)";
+    return "var(--teal)";
+  }
+
+  function _aiBadgeHtml(n) {
+    if (n.ai_generated) {
+      var modelTxt = n.ai_model_id
+        ? '<span class="ai-meta-txt">' + n.ai_model_id + '</span>' : "";
+      var reqTxt = n.ai_request_id
+        ? '<span class="ai-meta-txt" title="watsonx.ai request id">req:' + n.ai_request_id.slice(0, 8) + '…</span>' : "";
+      return '<div class="ai-badge-row">' +
+        '<span class="ai-badge-pill"><span class="ai-dot"></span>wx.ai</span>' +
+        modelTxt + reqTxt +
+        '<span class="ai-meta-txt">Generated by IBM watsonx.ai</span>' +
+        '</div>';
+    }
+    return '<div class="ai-badge-row">' +
+      '<span class="rules-pill">SQL rules</span>' +
+      '<span class="ai-meta-txt">Rule-based · wx.ai not reachable</span>' +
+      '</div>';
+  }
+
+  function renderNudgeFromAPI(n) {
+    // Map API response → Elevate card
+    var pinned = PINNED[n.seller_id] || PINNED["seller-rachel-001"];
+
+    // Use API signals to build signal boxes
+    var sigs = n.source_signals || {};
+    var dynamicSigs = [
+      { v: String(sigs.salesforce_deals_closed || "—"), l: "Deals closed",       src: "Salesforce CDC",  cls: "p-live", dotColor: "var(--teal)"   },
+      { v: String(sigs.slack_recognitions       || "—"), l: "Peer recognitions",  src: "Slack Events",    cls: "p-live", dotColor: "var(--teal)"   },
+      { v: String(sigs.salesforce_crm_updates   || "—"), l: "CRM updates",        src: "Iceberg history", cls: "p-hist", dotColor: "var(--purple)" },
+      { v: String(sigs.databricks_deal_velocity_90d || "—"), l: "90-day velocity", src: "Databricks",    cls: "p-fed",  dotColor: "var(--gold)"   },
+    ];
+    var sources = n.unified_sources || pinned.sources;
+    var chips = sources.map(function (src) {
+      var cls = _sourceClass(src);
+      return { label: src.split(" (")[0], cls: cls, dotColor: _dotColor(cls) };
+    });
+
+    renderNudgeCard({
+      framing:   n.framing  || pinned.framing,   // live from API
+      medal:     pinned.medal,
+      headline:  n.headline || pinned.headline,  // LLM text when ai_generated=true
+      body:      n.body     || pinned.body,       // LLM text when ai_generated=true
+      aiBadge:   _aiBadgeHtml(n),                // wx.ai attribution badge
+      reward_t:  pinned.reward_t,
+      reward_s:  pinned.reward_s,
+      chips:     chips,
+      sigs:      dynamicSigs,
+    });
+  }
+
+  function renderNudgeCard(d) {
+    var chipsHtml = d.chips.map(function (c) {
+      return '<span class="chip"><span class="d ' + c.cls + '" style="background:' + c.dotColor + '"></span>' + c.label + '</span>';
+    }).join("");
+    var sigsHtml = d.sigs.map(function (s) {
+      return '<div class="sig">' +
+        '<div class="sig-v">' + s.v + '</div>' +
+        '<div class="sig-l">' + s.l + '</div>' +
+        '<div class="sig-src"><span class="sig-src-dot" style="background:' + s.dotColor + '"></span>' + s.src + '</div>' +
+        '</div>';
+    }).join("");
+
+    document.getElementById("nudgeArea").innerHTML =
+      '<div class="nudge">' +
+        '<div class="nudge-hero">' +
+          '<div class="framing">' + d.framing + '</div>' +
+          (d.aiBadge || '') +
+          '<div class="headline">' + d.headline + '</div>' +
+        '</div>' +
+        '<div class="nudge-body">' +
+          '<div class="nudge-text">' + d.body + '</div>' +
+          '<div class="reward">' +
+            '<div class="reward-medal">' + d.medal + '</div>' +
+            '<div><div class="reward-t">' + d.reward_t + '</div><div class="reward-s">' + d.reward_s + '</div></div>' +
+            '<div class="reward-cta"><button class="btn btn-primary">Redeem</button></div>' +
+          '</div>' +
+          '<div class="why">' +
+            '<div class="why-h"><span class="q">?</span> Why this nudge?</div>' +
+            '<div class="why-sub">Assembled from three sources unified in the lakehouse — none of which live in the same system.</div>' +
+            '<div class="chips">' + chipsHtml + '</div>' +
+            '<div class="signals">' + sigsHtml + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function loadNudge(sellerId) {
+    // Always render from hardcoded PINNED values — no LLM / API call
+    var pinned = PINNED[sellerId] || PINNED["seller-rachel-001"];
+    renderNudgeCard(Object.assign({ aiBadge: "" }, pinned, { sigs: pinned.sigs, chips: pinned.chips }));
+    _nudgeLoaded = true;
+  }
+
+  // Pre-load Act 3 on first visit
+  loadNudge(_activeSeller);
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACT 4 — LIVE KAFKA STREAM
+  // ─────────────────────────────────────────────────────────────────────────
+
+  var _streamSse         = null;   // EventSource connection
+  var _streamRunning     = false;
+  var _streamTimer       = null;   // countdown setInterval handle
+  var _streamSecondsLeft = 30;
+  var _streamInitDone    = false;
+
+  // Per-source event counters (incremented as SSE events arrive)
+  var _cnt = {
+    sf:    0,  // biw.salesforce.cdc
+    tm:    0,  // biw.slack.events  (Slack / collab)
+    total: 0,
+  };
+
+  // Per-seller per-source counters
+  var _sel = {
+    rachel: { sf: 0, tm: 0 },
+    marcus: { sf: 0, tm: 0 },
+    maya:   { sf: 0, tm: 0 },
+  };
+
+  // Topic → source key + label
+  var _TOPIC_MAP = {
+    "biw.salesforce.cdc": { key: "sf", label: "Salesforce CDC", color: "#4db8f0" },
+    "biw.slack.events":   { key: "tm", label: "Slack",          color: "#a66ce6" },
+  };
+
+  // Seller ID → short key used for DOM IDs
+  var _SELLER_KEY = {
+    "seller-rachel-001": "rachel",
+    "seller-marcus-001": "marcus",
+    "seller-maya-001":   "maya",
+  };
+
+  function _topicForEvent(evt) {
+    // Determine topic from the event's source field or the topic field itself
+    var t = evt.topic || evt.source || "";
+    if (_TOPIC_MAP[t]) return t;
+    // Fuzzy match
+    if (/salesforce/i.test(t)) return "biw.salesforce.cdc";
+    if (/slack|teams|collab|message|presence|reaction/i.test(t)) return "biw.slack.events";
+    return null;
+  }
+
+  function _updateCounters(topic, sellerKey) {
+    var meta = _TOPIC_MAP[topic];
+    if (!meta) return;
+    var src = meta.key;
+
+    _cnt[src]++;
+    _cnt.total++;
+    if (sellerKey) _sel[sellerKey][src]++;
+
+    // Update topic counter pills
+    document.getElementById("kc-sf").textContent = _cnt.sf;
+    document.getElementById("kc-tm").textContent = _cnt.tm;
+    document.getElementById("streamFeedMeta").textContent =
+      _cnt.total + " events · " + _cnt.sf + " salesforce · " + _cnt.tm + " slack";
+
+    // Update seller cards
+    ["rachel", "marcus", "maya"].forEach(function (sk) {
+      var total = _sel[sk].sf + _sel[sk].tm;
+      document.getElementById("st-" + sk).textContent = total;
+
+      // Bars scale relative to max across this seller
+      var max = Math.max(_sel[sk].sf, _sel[sk].tm, 1);
+      ["sf", "tm"].forEach(function (s) {
+        var pct = Math.round((_sel[sk][s] / max) * 100);
+        document.getElementById("sb-" + sk + "-" + s).style.width = pct + "%";
+        document.getElementById("sn-" + sk + "-" + s).textContent = _sel[sk][s];
+      });
+    });
+  }
+
+  function _addFeedRow(evt, topic) {
+    var feedList = document.getElementById("streamFeedList");
+    var empty    = document.getElementById("streamEmpty");
+    if (empty) empty.style.display = "none";
+
+    var meta     = _TOPIC_MAP[topic] || { label: topic, color: "#9a97b5" };
+    var seller   = evt.seller_id || evt.event && evt.event.seller_id || "—";
+    var etype    = evt.event_type || evt.type || (evt.event && (evt.event.event_type || evt.event.record_type)) || "event";
+    var ts       = evt.dual_write_at || evt.event_ts || (evt.event && evt.event.event_ts) || new Date().toISOString();
+    var tsShort  = String(ts).slice(11, 23);   // HH:MM:SS.mmm
+
+    var row = document.createElement("div");
+    row.className = "stream-feed-row";
+    row.style.cssText = "display:flex;align-items:center;gap:10px;padding:7px 0;" +
+      "border-bottom:1px solid var(--border);animation:feedIn .25s ease;";
+    row.innerHTML =
+      '<span style="width:8px;height:8px;border-radius:50%;background:' + meta.color + ';flex:none;display:inline-block"></span>' +
+      '<span style="font-family:var(--mono);font-size:10.5px;color:var(--muted);flex:none;width:84px">' + tsShort + '</span>' +
+      '<span style="font-size:11px;color:var(--faint);flex:none;width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + meta.label + '</span>' +
+      '<span style="font-size:12px;font-weight:600;flex:none;width:66px;overflow:hidden;white-space:nowrap;color:var(--ink)">' +
+        (seller.replace("seller-", "").replace("-001", "")) + '</span>' +
+      '<span style="font-size:11.5px;color:var(--muted);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">' + etype + '</span>';
+
+    // Prepend so newest is at top; cap list at 80 rows to avoid DOM growth
+    feedList.insertBefore(row, feedList.firstChild);
+    while (feedList.children.length > 80) {
+      feedList.removeChild(feedList.lastChild);
+    }
+  }
+
+  function _flashSellerCard(sellerKey) {
+    var card = document.getElementById("ssc-" + sellerKey);
+    if (!card) return;
+    card.style.transition = "box-shadow .1s ease";
+    card.style.boxShadow  = "0 0 0 2px var(--purple)";
+    setTimeout(function () {
+      card.style.boxShadow = "";
+    }, 350);
+  }
+
+  function _onSseMessage(raw) {
+    var evt;
+    try { evt = JSON.parse(raw); } catch (e) { return; }
+
+    // Resolve topic
+    var topic = _topicForEvent(evt);
+    if (!topic) {
+      // Try inner event object
+      var inner = evt.event || {};
+      topic = _topicForEvent(inner);
+      if (!topic) return;
+    }
+
+    // Resolve seller
+    var sellerId  = evt.seller_id || (evt.event && evt.event.seller_id) || "";
+    var sellerKey = _SELLER_KEY[sellerId] || null;
+
+    _updateCounters(topic, sellerKey);
+    _addFeedRow(evt, topic);
+    if (sellerKey) _flashSellerCard(sellerKey);
+  }
+
+  function _setStreamState(running) {
+    _streamRunning = running;
+    var dot   = document.getElementById("ssDot");
+    var label = document.getElementById("ssLabel");
+    var btn   = document.getElementById("btnStartStream");
+
+    if (running) {
+      dot.style.background = "#10b39e";
+      dot.style.boxShadow  = "0 0 0 3px rgba(16,179,158,.25)";
+      dot.style.animation  = "pulse 1.4s ease-in-out infinite";
+      label.textContent    = "streaming live";
+      btn.disabled         = true;
+      btn.textContent      = "Streaming…";
+    } else {
+      dot.style.background = "#9a97b5";
+      dot.style.boxShadow  = "";
+      dot.style.animation  = "";
+      label.textContent    = _cnt.total > 0 ? "stream complete · " + _cnt.total + " events" : "not started";
+      btn.disabled         = false;
+      btn.textContent      = _cnt.total > 0 ? "▶ Stream again" : "▶ Start 30-second stream";
+    }
+  }
+
+  function _startCountdown(duration) {
+    _streamSecondsLeft = duration;
+    var timerEl = document.getElementById("streamTimer");
+    timerEl.textContent = duration + "s remaining";
+
+    _streamTimer = setInterval(function () {
+      _streamSecondsLeft--;
+      if (_streamSecondsLeft <= 0) {
+        clearInterval(_streamTimer);
+        _streamTimer = null;
+        timerEl.textContent = "complete ✓";
+        _setStreamState(false);
+      } else {
+        timerEl.textContent = _streamSecondsLeft + "s remaining";
+      }
+    }, 1000);
+  }
+
+  function _resetCounters() {
+    _cnt = { sf: 0, tm: 0, total: 0 };
+    _sel = {
+      rachel: { sf: 0, tm: 0 },
+      marcus: { sf: 0, tm: 0 },
+      maya:   { sf: 0, tm: 0 },
+    };
+    ["sf", "tm"].forEach(function (s) {
+      document.getElementById("kc-" + s).textContent = "0";
+    });
+    ["rachel", "marcus", "maya"].forEach(function (sk) {
+      document.getElementById("st-" + sk).textContent = "0";
+      ["sf", "tm"].forEach(function (s) {
+        document.getElementById("sb-" + sk + "-" + s).style.width = "0%";
+        document.getElementById("sn-" + sk + "-" + s).textContent = "0";
+      });
+    });
+    document.getElementById("streamFeedMeta").textContent = "waiting…";
+    document.getElementById("streamTimer").textContent = "";
+    // Clear feed rows but keep the empty-state placeholder
+    var feedList = document.getElementById("streamFeedList");
+    feedList.innerHTML =
+      '<div class="stream-empty" id="streamEmpty">' +
+        '<div>Click <strong>Start 30-second stream</strong> to begin</div>' +
+        '<div class="se-hint">Events from Salesforce CDC · Slack will appear here as they land in Kafka</div>' +
+      '</div>';
+  }
+
+  function initStreamAct() {
+    if (_streamInitDone) return;
+    _streamInitDone = true;
+
+    // Open persistent SSE connection — stays open for the whole session
+    function _connectSse() {
+      if (_streamSse) return;
+      try {
+        _streamSse = new EventSource(API + "/events/stream");
+        _streamSse.onmessage = function (e) { _onSseMessage(e.data); };
+        _streamSse.onerror   = function () {
+          // Auto-reconnect on error (browser will retry after 3 s)
+          _streamSse = null;
+          setTimeout(_connectSse, 3500);
+        };
+      } catch (e) {
+        // EventSource not supported or API offline — no-op
+      }
+    }
+    _connectSse();
+
+    // Wire the start button
+    document.getElementById("btnStartStream").addEventListener("click", function () {
+      if (_streamRunning) return;
+
+      // Reset visual state for a fresh run
+      _resetCounters();
+      _setStreamState(true);
+      _startCountdown(30);
+
+      fetch(API + "/stream/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ duration: 30, hz: 1.5 }),
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) {
+          // Already running — just ride the existing stream
+          document.getElementById("ssLabel").textContent = "stream already running";
+        }
+      })
+      .catch(function () {
+        // API offline — show fallback simulation so the UI still demonstrates
+        document.getElementById("ssLabel").textContent = "API offline — simulating";
+        _runSimulatedStream();
+      });
+    });
+  }
+
+  // ── Offline fallback simulation ────────────────────────────────────────────
+  // If the API is not running the demo still shows realistic events so the
+  // presenter is never left with a blank screen.
+  var _SIM_SELLERS = ["seller-rachel-001", "seller-marcus-001", "seller-maya-001"];
+  var _SIM_SOURCES = [
+    { topic: "biw.salesforce.cdc", events: ["opportunity.stage_change", "opportunity.amount_change", "opportunity.closed_won"] },
+    { topic: "biw.slack.events",   events: ["slack.message.recognition", "slack.presence.update", "slack.reaction.added"]       },
+  ];
+  var _simIdx = 0;
+
+  function _runSimulatedStream() {
+    var intervalMs = Math.round(1000 / 1.5);  // ~667ms between events
+    var elapsed    = 0;
+    var handle = setInterval(function () {
+      elapsed += intervalMs;
+      if (elapsed >= 30000) {
+        clearInterval(handle);
+        return;
+      }
+      var src      = _SIM_SOURCES[_simIdx % 2];
+      var seller   = _SIM_SELLERS[_simIdx % 3];
+      var etype    = src.events[Math.floor(Math.random() * src.events.length)];
+      _simIdx++;
+
+      var fakeEvt = {
+        seller_id:     seller,
+        event_type:    etype,
+        topic:         src.topic,
+        event_ts:      new Date().toISOString(),
+        dual_write_at: new Date().toISOString(),
+      };
+      _onSseMessage(JSON.stringify(fakeEvt));
+    }, intervalMs);
+  }
+
+})();
+</script>
+</body>
+</html>

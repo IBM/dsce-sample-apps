@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "supplier_profiles",
+  "title": "SupplierProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "supplier_id",
+    "supplier_name",
+    "region",
+    "country",
+    "reliability_score",
+    "risk_tier",
+    "preferred",
+    "alternate_for_components",
+    "last_updated"
+  ],
+  "properties": {
+    "supplier_id": {
+      "type": "string"
+    },
+    "supplier_name": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "reliability_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
+    "preferred": {
+      "type": "boolean"
+    },
+    "alternate_for_components": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

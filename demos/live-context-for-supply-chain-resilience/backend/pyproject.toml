@@ -1,0 +1,19 @@
+[project]
+name = "tsci-backend"
+version = "1.0.0"
+description = "Turnaround Supply Chain Intelligence – backend (Python/FastAPI)"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

@@ -1,0 +1,59 @@
+# =============================================================================
+# .dockerignore — Maximo Knowledge Hub  (Frontend / UI image only)
+#
+# This file is used by deployment/Dockerfile (the nginx frontend image).
+# It is NOT used by the backend images — those have their own:
+#   deployment/Dockerfile.mcp-server.dockerignore
+#   deployment/Dockerfile.ingestion.dockerignore
+# =============================================================================
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Python backend (not part of the frontend image)
+backend/
+myenv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Root-level Node artefacts (frontend deps are inside frontend/)
+node_modules/
+package-lock.json
+
+# Frontend build output and caches (rebuilt inside Docker)
+frontend/dist/
+frontend/node_modules/
+frontend/.vite/
+frontend/.eslintcache
+
+# Secrets — never bake into image
+.env
+.env.*
+!.env.example
+
+# Architecture docs, scripts, backups
+architecture/
+_backup/
+auto_approve_bob.py
+capture_approve_button.py
+ingestion_jobs.json
+
+# IDE / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# OpenSearch local volume data
+opensearch-data/
+
+# Test artefacts
+playwright-report/
+test-results/

@@ -1,0 +1,253 @@
+// ActionCenter.scss
+// Carbon v11 — cds-- prefix. Do NOT override cds--data-table headers;
+// let Carbon render them natively (bold, uppercase, grey bg).
+
+.ac-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #ffffff;
+
+  * { box-sizing: border-box; }
+}
+
+// ── Page header ────────────────────────────────────────────────────────────
+.ac-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ac-header__content { flex: 1; }
+
+.ac-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #161616;
+  line-height: 1.25;
+}
+
+.ac-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #525252;
+  line-height: 1.5;
+}
+
+.ac-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+// ── Tabs wrapper ───────────────────────────────────────────────────────────
+.ac-tabs-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+
+  // Zero out Carbon tab-panel padding — content is rendered outside panels
+  .cds--tab-content,
+  .bx--tab-content {
+    padding: 0 !important;
+  }
+}
+
+// ── Tab list ───────────────────────────────────────────────────────────────
+.ac-tablist {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 1.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  // Active tab: blue underline + blue text
+  .cds--tabs__nav-item--selected .cds--tabs__nav-link,
+  .bx--tabs__nav-item--selected  .bx--tabs__nav-item-label {
+    color: #0f62fe;
+    font-weight: 600;
+    border-bottom-color: #0f62fe;
+  }
+
+  // Default tab text
+  .cds--tabs__nav-link,
+  .bx--tabs__nav-item-label {
+    font-size: 0.875rem;
+    color: #525252;
+    white-space: nowrap;
+    padding: 0.75rem 0;
+  }
+}
+
+// ── Toolbar ────────────────────────────────────────────────────────────────
+.ac-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #f4f4f4;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+
+.ac-search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.ac-dropdown {
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+// ── Table wrapper — let Carbon DataTable render natively ───────────────────
+.ac-table-wrapper {
+  flex: 1;
+  overflow: auto;
+
+  // Sticky header
+  .cds--data-table thead,
+  .bx--data-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}
+
+// ── "Actions" column header — narrow, centred ──────────────────────────────
+.ac-actions-col {
+  width: 4rem;
+  text-align: center !important;
+}
+
+// ── Title cell ─────────────────────────────────────────────────────────────
+.ac-title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ac-title-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0f62fe;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  line-height: 1.4;
+
+  &:hover { text-decoration: underline; }
+}
+
+.ac-action-number {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0f62fe;
+  background: #e8f0fe;
+  border: 1px solid #a8c4f8;
+  border-radius: 3px;
+  padding: 0 5px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none !important; // don't underline the badge on link hover
+}
+
+.ac-title-desc {
+  font-size: 0.8125rem;
+  color: #525252;
+  line-height: 1.3;
+}
+
+// ── Overflow-menu cell — centred ───────────────────────────────────────────
+.ac-menu-cell {
+  text-align: center;
+  width: 4rem;
+
+  .cds--overflow-menu,
+  .bx--overflow-menu {
+    margin: 0 auto;
+  }
+}
+
+// ── Empty state ────────────────────────────────────────────────────────────
+.ac-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  flex: 1;
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #161616;
+  }
+
+  p {
+    margin: 0;
+    max-width: 400px;
+    font-size: 0.875rem;
+    color: #525252;
+  }
+}
+
+// ── Pagination — Carbon renders its own bar; remove the wrapper div ─────────
+// The <Pagination> component already has a top border and correct padding.
+// No custom styles needed.
+
+// ── Responsive ────────────────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .ac-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ac-search,
+  .ac-dropdown {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 768px) {
+  .ac-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .ac-title { font-size: 1.375rem; }
+
+  .ac-toolbar { padding: 0.75rem 1rem; }
+
+  .ac-tablist { padding: 0 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .ac-header { padding: 0.75rem; }
+  .ac-title  { font-size: 1.25rem; }
+  .ac-toolbar { padding: 0.5rem 0.75rem; gap: 0.5rem; }
+  .ac-tablist { padding: 0 0.5rem; }
+}

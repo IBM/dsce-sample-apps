@@ -1,0 +1,56 @@
+# =============================================================================
+# Dockerfile.ingestion.dockerignore
+#
+# Applied automatically by Docker/Podman when building with:
+#   podman build --file deployment/Dockerfile.ingestion .
+#
+# Goal: include only what the Ingestion Pipeline container needs.
+# The ingestion pipeline also bundles the spiderbot (shared Playwright
+# dependency) so backend/spiderbot/ is kept.
+# =============================================================================
+
+# ── Version control ───────────────────────────────────────────────────────────
+.git
+.gitignore
+.gitattributes
+
+# ── Frontend (not part of the backend image) ──────────────────────────────────
+frontend/
+
+# ── Backend subtrees not needed by the Ingestion Pipeline ────────────────────
+backend/mcp_server/
+backend/opensearch/
+backend/scripts/
+
+# ── Dev / launch helpers — not needed in the container ───────────────────────
+backend/start.py
+backend/stop.py
+backend/requirements-dev.txt
+
+# ── Python byte-code cache — rebuilt inside the container ────────────────────
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# ── Deployment artefacts — not needed inside the image ───────────────────────
+deployment/
+
+# ── Secrets — never bake into an image ───────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Local dev data / volumes ──────────────────────────────────────────────────
+opensearch-data/
+ingestion_jobs.json
+myenv/
+
+# ── IDE / OS noise ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+_backup/

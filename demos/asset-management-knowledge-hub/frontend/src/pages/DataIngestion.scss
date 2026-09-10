@@ -1,0 +1,425 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Entrance animation — mirrors config-tile-in in Configuration.scss ─────────
+@keyframes di-card-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Page shell
+// ─────────────────────────────────────────────────────────────────────────────
+.di-page {
+  background: #f4f4f4;
+  min-height: calc(100vh - 3rem);
+  padding: 0 0 $spacing-10;
+}
+
+// ── Page header ───────────────────────────────────────────────────────────────
+.di-page-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: $spacing-07 $spacing-08 $spacing-06;
+  margin-bottom: $spacing-07;
+
+  @media (max-width: 672px) {
+    padding: $spacing-05 $spacing-05 $spacing-05;
+    margin-bottom: $spacing-05;
+  }
+}
+
+.di-page-header__title {
+  @include type-style('productive-heading-04');
+  color: #161616;
+  margin: 0 0 $spacing-02;
+  font-weight: 400;
+}
+
+.di-page-header__sub {
+  @include type-style('body-01');
+  color: #525252;
+  margin: 0;
+}
+
+// ── Inline notification wrap ──────────────────────────────────────────────────
+.di-notice-wrap {
+  padding: 0 $spacing-08;
+  margin-bottom: $spacing-05;
+
+  @media (max-width: 672px) { padding: 0 $spacing-05; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Section
+// ─────────────────────────────────────────────────────────────────────────────
+.di-section {
+  padding: 0 $spacing-08;
+  margin-bottom: $spacing-09;
+
+  @media (max-width: 672px) { padding: 0 $spacing-05; }
+}
+
+.di-section--history {
+  margin-bottom: 0;
+}
+
+.di-section__heading {
+  @include type-style('productive-heading-02');
+  color: #161616;
+  font-weight: 600;
+  margin: 0 0 $spacing-05;
+  padding: 0;
+
+  &::before { display: none; }
+}
+
+.di-section__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-05;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Source cards — responsive 4→2→1 column grid
+// ─────────────────────────────────────────────────────────────────────────────
+.di-source-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-05;
+
+  @media (max-width: 1200px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 672px)  { grid-template-columns: 1fr; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Source card — matches Settings .config-tile visual language
+//   • rounded corners (10px), subtle border (#d1d5db), soft shadow
+//   • no blue top accent bar
+//   • three-zone layout: header / body / footer
+// ─────────────────────────────────────────────────────────────────────────────
+.di-source-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 0 0 0 transparent;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  // Staggered entrance — same timing as .config-tile
+  opacity: 0;
+  animation: di-card-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  &:nth-child(1) { animation-delay: 0.06s; }
+  &:nth-child(2) { animation-delay: 0.12s; }
+  &:nth-child(3) { animation-delay: 0.18s; }
+  &:nth-child(4) { animation-delay: 0.24s; }
+
+  &:hover {
+    border-color: #a8b0be;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+// ── Header zone ───────────────────────────────────────────────────────────────
+.di-source-card__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+  padding: $spacing-05 $spacing-06;
+  background: #f7f8fa;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+  border-radius: 10px 10px 0 0;
+}
+
+.di-source-card__icon-wrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { fill: #0f62fe; }
+}
+
+.di-source-card__meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.di-source-card__title {
+  @include type-style('body-compact-02');
+  font-weight: 600;
+  color: #161616;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.di-source-card__badge {
+  display: block;
+  line-height: 1;
+}
+
+// ── Body zone — description + controls ───────────────────────────────────────
+.di-source-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+  padding: $spacing-06;
+  background: #ffffff;
+}
+
+// Description text — matches .tile-intro styling in Settings
+.di-source-card__desc {
+  @include type-style('body-compact-01');
+  color: #525252;
+  margin: 0;
+  line-height: 1.6;
+  padding-bottom: $spacing-05;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+// When there are no controls (unconfigured), remove the bottom border from desc
+.di-source-card__body--no-controls .di-source-card__desc {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+// Summary line (bucket name, folder id, etc.)
+.di-source-card__summary {
+  @include type-style('label-01');
+  color: #525252;
+  padding: $spacing-03 $spacing-04;
+  background: #f7f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8125rem;
+    color: #161616;
+  }
+}
+
+// Inputs / toggles inside a configured card
+.di-source-card__controls {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+  margin-top: auto;
+
+  .cds--text-input-wrapper,
+  .cds--number,
+  .cds--form-item {
+    margin-bottom: 0;
+  }
+}
+
+.di-source-card__toggle {
+  .cds--toggle-input__label { margin-top: 0; }
+}
+
+// ── Footer zone — action button ───────────────────────────────────────────────
+.di-source-card__footer {
+  flex-shrink: 0;
+  padding: $spacing-05 $spacing-06;
+  background: #f7f8fa;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+
+  // Button fills footer width
+  .cds--btn {
+    flex: 1;
+    max-width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.di-source-card__footer--unconfigured {}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Ingestion history section
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Loading state
+.di-history-loading {
+  padding: $spacing-06 0;
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.di-history-empty {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: $spacing-10 $spacing-07;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-04;
+}
+
+.di-history-empty__icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-02;
+
+  svg { fill: #525252; }
+}
+
+.di-history-empty__title {
+  @include type-style('productive-heading-02');
+  color: #161616;
+  margin: 0;
+  font-weight: 600;
+}
+
+.di-history-empty__sub {
+  @include type-style('body-01');
+  color: #525252;
+  margin: 0;
+  max-width: 320px;
+}
+
+// ── History table wrap ────────────────────────────────────────────────────────
+.di-history-table {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+
+  // Carbon DataTable overrides — clean up default styles
+  .cds--data-table-container { padding: 0; }
+  .cds--toolbar-content      { background: #f4f4f4; }
+  .cds--table-toolbar         { background: #f4f4f4; border-bottom: 1px solid #e0e0e0; }
+  .cds--data-table            { border: none; }
+  .cds--data-table th         { background: #f4f4f4; border-bottom: 1px solid #e0e0e0; }
+  .cds--data-table td         { border-top: 1px solid #f4f4f4; }
+  .cds--data-table tr:last-child td { border-bottom: none; }
+}
+
+// Hint text below the table
+.di-history-hint {
+  @include type-style('label-01');
+  color: #8d8d8d;
+  padding: $spacing-03 $spacing-05;
+  margin: 0;
+  border-top: 1px solid #f4f4f4;
+  background: #fafafa;
+}
+
+// ── Clickable job rows ────────────────────────────────────────────────────────
+.di-job-row {
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover td { background: #f0f4ff !important; }
+
+  &--running td { background: #f0f7ff !important; }
+  &--running:hover td { background: #e5f0ff !important; }
+}
+
+.di-job-row__label {
+  display: block;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Job detail modal — progress log
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Meta row (source, started at, loading spinner)
+.jd-meta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  padding: $spacing-04 0 $spacing-05;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: $spacing-04;
+  flex-wrap: wrap;
+}
+
+.jd-meta__item {
+  @include type-style('label-01');
+  color: #525252;
+
+  strong { color: #161616; font-weight: 600; }
+}
+
+// Scrollable log container
+.jd-log {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.78125rem;
+  line-height: 1.7;
+  background: #161616;
+  color: #f4f4f4;
+  border-radius: 4px;
+  padding: $spacing-04 $spacing-05;
+  max-height: 360px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jd-log__waiting {
+  color: #8d8d8d;
+  font-style: italic;
+}
+
+// Individual log line
+.jd-log__line {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-03;
+  padding: 1px 0;
+
+  &--done  svg { fill: #42be65; }
+  &--error svg { fill: #ff8389; }
+  &--chunk svg { fill: #78a9ff; }
+  &--page  svg { fill: #be95ff; }
+  &--start svg { fill: #82cfff; }
+}
+
+.jd-log__msg {
+  flex: 1;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.jd-log__chunks {
+  @include type-style('label-01');
+  color: #78a9ff;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  background: rgba(120, 169, 255, 0.12);
+  padding: 0 $spacing-02;
+  border-radius: 2px;
+}

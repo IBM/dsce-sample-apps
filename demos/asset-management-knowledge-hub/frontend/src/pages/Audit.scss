@@ -1,0 +1,156 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Page entrance animation ──────────────────────────────────────────────────
+@keyframes audit-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Page shell
+// ─────────────────────────────────────────────────────────────────────────────
+.audit-page {
+  padding: $spacing-07 $spacing-08;
+  background: transparent;
+  animation: audit-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+// ── Page header — title + export button ──────────────────────────────────────
+.audit-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: $spacing-06;
+  border-bottom: 2px solid var(--cds-border-subtle-01);
+  margin-bottom: $spacing-07;
+
+  h2 {
+    @include type-style('productive-heading-04');
+    margin-bottom: $spacing-02;
+    color: var(--cds-text-primary);
+  }
+
+  p {
+    @include type-style('body-01');
+    color: var(--cds-text-secondary);
+  }
+}
+
+// ── Filter bar — sits between header and table, visually separated ────────────
+.filter-row {
+  display: flex;
+  gap: $spacing-04;
+  margin-bottom: $spacing-05;
+  align-items: flex-end;
+  padding: $spacing-04 $spacing-06;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  .cds--select { min-width: 160px; }
+}
+
+.filter-summary {
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  padding-bottom: 1.125rem;   // align with input baselines
+  white-space: nowrap;
+  font-weight: 600;
+
+  // Highlight the count in blue
+  strong {
+    color: #0f62fe;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DataTable wrapper — add outer border + radius around Carbon's table
+// ─────────────────────────────────────────────────────────────────────────────
+.audit-page .cds--data-table-container {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+// Toolbar separator line below search bar
+.audit-page .cds--toolbar-content {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+// Table head background — slightly tinted to separate from body
+.audit-page .cds--table-header-label {
+  @include type-style('label-01');
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cds-text-secondary);
+}
+
+.audit-page .cds--data-table thead {
+  background: #f4f5f7;
+}
+
+.audit-page .cds--data-table thead th {
+  border-bottom: 2px solid #d1d5db;
+  border-right: 1px solid #e5e7eb;
+
+  &:last-child { border-right: none; }
+}
+
+// Body rows — hover highlight
+.audit-page .cds--data-table tbody tr {
+  transition: background 0.12s ease;
+
+  &:hover td {
+    background: #f0f4ff;
+  }
+}
+
+// Cell borders — strong horizontal row separators + light column separators
+.audit-page .cds--data-table tbody td {
+  border-right: 1px solid #ebebeb;
+  border-bottom: 1px solid #d1d5db;    // visible, solid row separator
+
+  &:last-child { border-right: none; }
+}
+
+.audit-page .cds--data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+// Alternate row zebra tint to further distinguish rows
+.audit-page .cds--data-table tbody tr:nth-child(even) td {
+  background: #f9fafb;
+}
+
+.audit-page .cds--data-table tbody tr:nth-child(even):hover td {
+  background: #f0f4ff;
+}
+
+// ── Pagination — separated from table ────────────────────────────────────────
+.audit-page .cds--pagination {
+  border: 1px solid #d1d5db;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #f8f9fa;
+}
+
+// ── Query cell ────────────────────────────────────────────────────────────────
+.query-cell {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-primary);
+  display: block;
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

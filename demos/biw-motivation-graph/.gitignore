@@ -1,0 +1,34 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Secrets and local config
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# DuckDB databases (generated — re-run generate_seller_json.py / generator.py)
+*.duckdb
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+motivation_graph/secure-connect-biw-demo.zip
+/motivation_graph/evidence/watsonx_ai

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+  <!-- KPMG Logo -->
+  <rect x="30" y="10" width="15" height="15" fill="#00338D" stroke="#00338D" stroke-width="2"/>
+  <rect x="50" y="10" width="15" height="15" fill="none" stroke="#00338D" stroke-width="2"/>
+  <rect x="70" y="10" width="15" height="15" fill="none" stroke="#00338D" stroke-width="2"/>
+  <rect x="90" y="10" width="15" height="15" fill="none" stroke="#00338D" stroke-width="2"/>
+  
+  <text x="30" y="55" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#00338D">KPMG</text>
+</svg>
+
+<!-- Made with Bob -->

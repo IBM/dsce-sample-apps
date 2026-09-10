@@ -1,0 +1,736 @@
+openapi_target: "3.1"
+version: "1.1"
+
+principles:
+  - read_tools_are_separate_from_write_tools
+  - write_tools_require_approval_context
+  - all_requests_accept_correlation_id
+  - all_responses_return_source_timestamp
+  - errors_use_machine_readable_codes
+  - supply_chain_resilience_context_accompanies_supplier_results
+
+# ══════════════════════════════════════════════════════════════════════════════
+# READ TOOLS
+# ══════════════════════════════════════════════════════════════════════════════
+
+read_tools:
+
+  # ── Risk investigation ────────────────────────────────────────────────────
+
+  list_risks:
+    endpoint: "GET /api/risks"
+    input: {}
+    output:
+      risks: list[RiskEvent]
+      total: integer
+      source_timestamp: datetime
+
+  get_risk:
+    endpoint: "GET /api/risks/{risk_id}"
+    input:
+      risk_id: string
+    output:
+      risk: RiskEvent
+      source_timestamp: datetime
+
+  evaluate_mitigation_options:
+    endpoint: "GET /api/risks/{risk_id}/options"
+    description: >
+      Returns ranked mitigation options for a risk. Feasible options sorted
+      by total_score ascending (lower = better per spec/09). near_equivalent_top_two
+      is true when top two feasible options differ by < 5 score points.
+    input:
+      risk_id: string
+    output:
+      risk_id: string
+      ranked_options: list[MitigationOption]
+      near_equivalent_top_two: boolean
+      score_version: string     # "v1"
+      source_timestamp: datetime
+
+  # ── Shipments, work packages, inventory, suppliers ────────────────────────
+
+  get_shipment:
+    endpoint: "GET /api/shipments/{shipment_id}"
+    input:
+      shipment_id: string
+    output:
+      shipment: Shipment
+      source_timestamp: datetime
+
+  get_work_package:
+    endpoint: "GET /api/work-packages/{work_package_id}"
+    input:
+      work_package_id: string
+    output:
+      work_package: WorkPackage
+      requirements: list[MaterialRequirement]
+      source_timestamp: datetime
+
+  get_inventory_options:
+    endpoint: "GET /api/inventory/options"
+    input_params:
+      material_id: string
+      destination_location_id: string
+      quantity: number
+      required_by: datetime
+    output:
+      material_id: string
+      destination_location_id: string
+      candidates: array            # {position: InventoryPosition, transfer_feasible: bool, notes: list[string]}
+      evaluated_at: datetime
+
+  get_supplier_options:
+    endpoint: "GET /api/suppliers/options"
+    input_params:
+      material_id: string
+      required_by: datetime
+      quantity: number
+    output:
+      material_id: string
+      candidates: array            # only APPROVED, non-constrained suppliers
+      excludedDueToConstraint: array
+      evaluated_at: datetime
+
+  # ── Knowledge retrieval (RAG) ─────────────────────────────────────────────
+
+  retrieve_enterprise_knowledge:
+    endpoint: "POST /api/knowledge/retrieve"
+    description: >
+      Hybrid BM25 + semantic RAG retrieval. Substitution claims require at least
+      one current approved engineering/substitution source — grounded=false otherwise.
+    input:
+      query: string
+      filters: object
+      top_k: integer                # default 5
+    output:
+      answer: string
+      grounded: boolean
+      confidence: number            # 0..1
+      evidence: list[Evidence]
+      applied_filters: object
+      query_id: string
+
+  # ── Supply chain resilience ───────────────────────────────────────────────
+
+  get_resilience_profile:
+    endpoint: "GET /api/resilience/profile"
+    description: >
+      Returns full SupplyChainResilienceProfile for (work_package_id, material_id).
+      Serves from cache; recomputes on-demand if no cached profile exists.
+      Stale threshold: 300 seconds (spec/13 §6.2). Returns stale=true if exceeded.
+    input_params:
+      work_package_id: string
+      material_id: string
+    output:
+      profile: SupplyChainResilienceProfile
+        work_package_id: string
+        material_id: string
+        requirement_id: string
+        assessed_at: datetime
+        readiness_status: string     # CONFIRMED | AT_RISK | CRITICAL | UNKNOWN
+        days_to_required: integer
+        available_at_destination: number
+        shortfall: number
+        unconstrained_approved_supplier_count: integer
+        feasible_transfer_location_count: integer
+        feasible_alternate_supplier_count: integer
+        resilience_score: number     # 0..100, lower = better (spec/09)
+        primary_supplier_status: string
+        secondary_supplier_status: string|null
+        last_contributing_event_id: string
+        supplier_coverage_score: number   # D1 dimension, weight 0.30
+        inventory_buffer_score: number    # D2 dimension, weight 0.25
+        shipment_exposure_score: number   # D3 dimension, weight 0.25
+        port_disruption_score: number     # D4 dimension, weight 0.20
+      evaluated_at: datetime
+      profile_age_secs: integer      # staleness indicator for the UI
+      stale: boolean                 # true if age > 300 seconds
+
+  get_avl_status:
+    endpoint: "GET /api/resilience/avl"
+    description: >
+      Returns AVL entries for a material with live constraint context.
+      Sorted: unconstrained APPROVED first, then by tier (PRIMARY < SECONDARY < TERTIARY < SPOT).
+    input_params:
+      material_id: string
+    output:
+      material_id: string
+      entries: list[AvlEntryResponse]
+        # per entry:
+        supplier_id: string
+        supplier_name: string
+        tier: string                 # PRIMARY | SECONDARY | TERTIARY | SPOT
+        avl_status: string           # APPROVED | SUSPENDED | REVOKED
+        constrained: boolean
+        constraint_type: string|null
+        constraint_severity: string|null
+        constraint_source_event_id: string|null
+      unconstrained_approved_count: integer
+      evaluated_at: datetime
+
+  get_port_status:
+    endpoint: "GET /api/resilience/port-status"
+    description: >
+      Returns port disruption status and optionally counts impacted shipments
+      for a material routing through that port.
+    input_params:
+      port_code: string
+      material_id: string|null       # optional; filters impacted shipment count
+    output:
+      port_code: string
+      port_name: string
+      disruption_type: string|null
+      severity: string|null
+      estimated_clear_date: datetime|null
+      impacted_shipment_count: integer
+      evaluated_at: datetime
+
+  get_supplier_resilience_status:
+    endpoint: "GET /api/resilience/supplier-status"
+    description: >
+      Returns live constraint state (ACTIVE | CLEARED) for a specific supplier.
+      Used by ProcurementAgent and ResilienceMonitorAgent.
+    input_params:
+      supplier_id: string
+      material_id: string|null       # null = query across all materials
+    output:
+      supplier_id: string
+      supplier_name: string
+      material_id: string|null
+      status: string                 # ACTIVE | CLEARED
+      constraint_type: string|null
+      constraint_severity: string|null
+      affected_from_date: datetime|null
+      estimated_resolution_date: datetime|null
+      source_event_id: string|null
+      evaluated_at: datetime
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# WRITE TOOLS  (all require prior APPROVED approval)
+# ══════════════════════════════════════════════════════════════════════════════
+
+write_tools:
+
+  # ── Approval lifecycle ────────────────────────────────────────────────────
+
+  request_mitigation_approval:
+    endpoint: "POST /api/actions/approval-requests"
+    description: >
+      Creates PENDING approval request. Captures option_hash (SHA-256 snapshot)
+      for post-approval immutability verification. 24-hour expiry.
+    input:
+      risk_id: string
+      option_id: string
+      recommendation_summary: string
+    output:
+      approval_request_id: string
+      risk_id: string
+      option_id: string
+      option_hash: string
+      recommendation_summary: string
+      approver: string|null
+      approved_at: datetime|null
+      expiry: datetime
+      status: string                 # PENDING
+      created_at: datetime
+
+  approve_mitigation:
+    endpoint: "POST /api/actions/approval-requests/{approval_request_id}/approve"
+    description: Transitions PENDING → APPROVED; records approver name and timestamp.
+    input:
+      approval_request_id: string
+      approver: string
+    output: ApprovalRequest
+
+  reject_mitigation:
+    endpoint: "POST /api/actions/approval-requests/{approval_request_id}/reject"
+    description: Transitions to REJECTED; records approver name.
+    input:
+      approval_request_id: string
+      approver: string
+    output: ApprovalRequest
+
+  # ── Execution write tools ─────────────────────────────────────────────────
+
+  execute_inventory_transfer:
+    endpoint: "POST /api/actions/inventory-transfer"
+    preconditions:
+      - approvalRequest.status == "APPROVED"
+      - approvalRequest not expired (expiry > now)
+      - option_hash unchanged since approval
+      - source.available >= transfer.quantity
+    input:
+      approval_request_id: string
+      risk_id: string
+      option_id: string
+      source_location_id: string
+      destination_location_id: string
+      material_id: string
+      quantity: number
+    output:
+      transfer_request_id: string
+      status: string                 # CREATED | REJECTED
+      source_timestamp: datetime
+    error_codes:
+      - APPROVAL_REQUIRED
+      - APPROVAL_MISMATCH
+      - INSUFFICIENT_INVENTORY
+      - NOT_FOUND
+
+  execute_supplier_expedite:
+    endpoint: "POST /api/actions/supplier-expedite"
+    preconditions:
+      - approvalRequest.status == "APPROVED"
+      - approvalRequest not expired
+      - supplier has no active HIGH/CRITICAL constraint at execution time
+    input:
+      approval_request_id: string
+      risk_id: string
+      shipment_id: string
+      requested_eta: datetime
+    output:
+      expedite_request_id: string
+      status: string                 # CREATED | REJECTED
+      source_timestamp: datetime
+    error_codes:
+      - APPROVAL_REQUIRED
+      - SUPPLIER_CONSTRAINED
+      - NOT_FOUND
+
+  mark_mitigated:
+    endpoint: "POST /api/actions/mark-mitigated"
+    description: >
+      Mark risk MITIGATED for option types without a dedicated execute endpoint
+      (WAIT, ALTERNATE_SUPPLIER, SUBSTITUTE).
+    preconditions:
+      - approvalRequest.status == "APPROVED"
+      - approvalRequest not expired
+    input:
+      approval_request_id: string
+      risk_id: string
+      option_id: string
+    output:
+      risk_id: string
+      status: string
+    error_codes:
+      - APPROVAL_REQUIRED
+      - NOT_FOUND
+
+  # ── Resilience ingest (called by demo loop / Kafka consumers) ─────────────
+
+  upsert_supplier_constraint:
+    endpoint: "POST /api/resilience/supplier-constraint"
+    description: >
+      Ingest supplier constraint from Kafka consumer or demo loop.
+      Triggers resilience profile recomputation for all (workPackage, material) pairs
+      that reference the affected material.
+    input:
+      supplier_id: string
+      material_id: string|null
+      constraint_type: string        # ConstraintType literal
+      constraint_severity: string    # ConstraintSeverity literal
+      affected_from_date: string|null
+      estimated_resolution_date: string|null
+      source_reference: string|null
+      notes: string|null
+      event_id: string|null
+      correlation_id: string|null
+    output:
+      updated: boolean
+      supplier_id: string
+      constraint_type: string
+      constraint_severity: string
+
+  upsert_port_disruption:
+    endpoint: "POST /api/resilience/port-disruption"
+    description: >
+      Ingest port disruption from Kafka consumer or demo loop.
+      Updates port status in store.
+    input:
+      port_code: string
+      port_name: string|null
+      disruption_type: string        # PortDisruptionType literal
+      severity: string               # ConstraintSeverity literal
+      affected_from_date: string|null
+      estimated_clear_date: string|null
+      impacted_shipment_ids: list[string]
+      affected_logistics_providers: list[string]
+      event_id: string|null
+      correlation_id: string|null
+    output:
+      updated: boolean
+      port_code: string
+      disruption_type: string
+      severity: string
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# DEMO TOOLS  (SYNTHETIC DEMO ONLY — never in production)
+# ══════════════════════════════════════════════════════════════════════════════
+
+demo_tools:
+  DEMO_WARNING: "SYNTHETIC DATA ONLY — not real Shell or Pearl GTL operational data"
+
+  demo_reset:
+    endpoint: "POST /api/demo/reset"
+    description: Reset in-memory store to seed state; clear idempotency keys and audit trail.
+    input: {}
+    output:
+      message: string
+      demo_warning: string
+
+  simulate_delay:
+    endpoint: "POST /api/demo/simulate-delay"
+    description: >
+      Simulate a shipment delay and trigger LATE_DELIVERY risk detection
+      per spec/03 event contract.
+    input:
+      shipment_id: string
+      requirement_id: string
+      correlation_id: string|null
+    output:
+      risk_detected: boolean
+      risk_id: string|null
+      severity: string|null
+      correlation_id: string
+
+  get_audit_trail:
+    endpoint: "GET /api/demo/audit"
+    input_params:
+      correlation_id: string|null    # optional filter
+    output:
+      trail: list[object]
+
+  # ── Confluent trace bridge ────────────────────────────────────────────────
+  # Used by TraceBridgeReader when CONFLUENT_READ_MODE=trace or direct read unavailable.
+
+  get_confluent_trace:
+    endpoint: "GET /api/confluent/trace"
+    description: >
+      Returns synthetic Kafka events for a correlationId across all (or filtered)
+      TSCI topics. Events sorted: timestamp asc, offset asc within topic.
+      Called by TraceBridgeReader.trace_by_correlation().
+    input_params:
+      correlation_id: string         # required; exact match
+      lookback_minutes: integer      # 1..120, default 60 (not enforced in demo)
+      topics: string|null            # comma-separated topic filter; null = all topics
+      max_records_per_topic: integer # 1..100, default 50
+    output:
+      correlation_id: string
+      source: string                 # "TRACE_BRIDGE"
+      events: list[NormalizedEvent]
+      event_count: integer
+      demo_warning: string
+    normalized_event_fields:
+      topic: string
+      partition: integer
+      offset: integer
+      timestamp: string              # ISO-8601
+      key: string
+      correlationId: string
+      eventId: string
+      eventType: string
+      value: object
+
+  get_confluent_records:
+    endpoint: "GET /api/confluent/records"
+    description: >
+      Returns synthetic records for one topic, optionally filtered by correlation_id.
+      Called by TraceBridgeReader.recent_records().
+    input_params:
+      topic: string                  # required; exact topic name
+      correlation_id: string|null    # optional filter
+      lookback_minutes: integer      # 1..120, default 30 (not enforced in demo)
+      max_records: integer           # 1..100, default 50
+    output:
+      topic: string
+      correlation_id: string|null
+      source: string                 # "TRACE_BRIDGE"
+      records: list[NormalizedEvent]
+      count: integer
+      demo_warning: string
+
+  confluent_trace_bridge_event_log:
+    description: >
+      Synthetic 9-event log seeded at API startup. Fixed baseline timestamp
+      2026-09-25T08:00:00Z; offsets 0s–2100s. Always returns same events
+      for any matching correlationId. DEMO ONLY.
+    correlation_id: "DEMO-TW2047-001"
+    events:
+      - topic: turnaround.material.required
+        offset_secs: 0
+        event_id: EVT-MR-A1B2C3D4
+        description: Material requirement raised — CVA-8842 for TW-2047
+      - topic: supply.inventory.changed
+        offset_secs: 300
+        event_id: EVT-INV-E5F6G7H8
+        description: Inventory consumed — PEARL-DEMO on-hand 1→0
+      - topic: supply.supplier.status.changed
+        offset_secs: 600
+        event_id: EVT-SC-0001
+        description: SUP-101 QUALITY_HOLD CRITICAL activated
+      - topic: supply.supplier.status.changed
+        offset_secs: 660
+        event_id: EVT-SC-0002
+        description: SUP-203 PORT_CONGESTION HIGH activated (SGSIN)
+      - topic: supply.port.status.changed
+        offset_secs: 720
+        event_id: EVT-PT-0001
+        description: SGSIN CONGESTION HIGH
+      - topic: supply.approved_vendor.changed
+        offset_secs: 900
+        event_id: EVT-AVL-9I0J1K2L
+        description: SUP-205 TERTIARY approved (emergency qualification)
+      - topic: supply.shipment.updated
+        offset_secs: 1200
+        event_id: EVT-SHP-3M4N5O6P
+        description: SHP-90017 ETA delayed +7d (Oct 7 → Oct 14)
+      - topic: supply.risk.detected
+        offset_secs: 1800
+        event_id: EVT-RISK-7Q8R9S0T
+        description: RISK-001 LATE_DELIVERY CRITICAL
+      - topic: supply.material.readiness.assessed
+        offset_secs: 2100
+        event_id: EVT-MRA-U1V2W3X4
+        description: TW-2047/CVA-8842 AT_RISK (resilience_score 78)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# ERROR MODEL
+# ══════════════════════════════════════════════════════════════════════════════
+
+error_model:
+  description: >
+    All errors returned as ApiError with machine-readable code.
+    Exception handler at backend/app/core/errors.py maps codes to HTTP status.
+  fields:
+    code: string          # ApiErrorCode literal
+    message: string
+    retriable: boolean
+    correlation_id: string
+    details: object|null
+
+mandatory_error_codes:
+  # Generic
+  - NOT_FOUND                    # 404
+  - INVALID_INPUT                # 400
+  - CONFLICT                     # 409
+  # Staleness
+  - STALE_DATA                   # 409 (profile too old for safe decision)
+  # Approval lifecycle
+  - APPROVAL_REQUIRED            # 403 (write requires prior APPROVED approval)
+  - APPROVAL_MISMATCH            # 409 (option hash changed post-approval)
+  # Inventory
+  - INSUFFICIENT_INVENTORY       # 422
+  # Engineering evidence
+  - NO_ENGINEERING_EVIDENCE      # 422 (substitute recommendation requires evidence)
+  # Connectivity
+  - UPSTREAM_UNAVAILABLE         # 503
+  # Supply chain resilience (spec/13)
+  - SUPPLIER_CONSTRAINED         # 422 (supplier has HIGH/CRITICAL constraint at execution)
+  - AVL_STATUS_CHANGED           # 409 (AVL changed after recommendation was made)
+  - RESILIENCE_PROFILE_STALE     # 412 (profile age > 300s threshold)
+
+http_status_mapping:
+  NOT_FOUND: 404
+  INVALID_INPUT: 400
+  STALE_DATA: 409
+  CONFLICT: 409
+  APPROVAL_REQUIRED: 403
+  APPROVAL_MISMATCH: 409
+  INSUFFICIENT_INVENTORY: 422
+  NO_ENGINEERING_EVIDENCE: 422
+  UPSTREAM_UNAVAILABLE: 503
+  SUPPLIER_CONSTRAINED: 422
+  AVL_STATUS_CHANGED: 409
+  RESILIENCE_PROFILE_STALE: 412
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# STALENESS (spec/13 §6.2)
+# ══════════════════════════════════════════════════════════════════════════════
+
+staleness:
+  profile_stale_threshold_secs: 300
+  description: >
+    Resilience profiles considered stale when profile_age_secs > 300.
+    The get_resilience_profile endpoint recomputes on-demand when no cache exists.
+    UI shows stale warning when stale=true. Configurable via env in production.
+  stale_field: stale (boolean in ResilienceProfileResponse)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# RESILIENCE ENGINE: compute_resilience_profile (spec/13 §3, spec/09)
+# ══════════════════════════════════════════════════════════════════════════════
+
+resilience_engine:
+  entrypoint: "backend/app/services/resilience_engine.compute_resilience_profile"
+  description: >
+    Deterministic correlation engine computing SupplyChainResilienceProfile
+    for (workPackageId, materialId). Recomputed on every contributing event
+    (spec/13 §3.2) and on-demand for cache misses.
+
+  readiness_status_thresholds:
+    CONFIRMED: "resilience_score ≤ 25.0"
+    AT_RISK:   "25.0 < resilience_score ≤ 60.0"
+    CRITICAL:  "resilience_score > 60.0"
+
+  dimension_scores:
+    d1_supplier_coverage:
+      weight: 0.30
+      description: Unconstrained APPROVED supplier count
+      scoring:
+        "≥ 3 unconstrained": 0
+        "2 unconstrained": 25
+        "1 unconstrained": 60
+        "0 unconstrained": 100
+
+    d2_inventory_buffer:
+      weight: 0.25
+      description: Available inventory vs shortfall
+      scoring:
+        "available_at_destination >= required": 0
+        "inventory transfer covers shortfall": 30
+        "available > 0 but insufficient": 70
+        "no inventory available": 100
+
+    d3_shipment_exposure:
+      weight: 0.25
+      description: Shipment delay vs required date
+      scoring:
+        "on-time (days_late ≤ 0)": 0
+        "≤ 3 days late": 30
+        "≤ 7 days late": 60
+        "> 7 days late": 100
+
+    d4_port_disruption:
+      weight: 0.20
+      description: Port disruption severity for routes used by shipments
+      scoring:
+        "CLEARED": 0
+        "LOW severity": 20
+        "MEDIUM severity": 50
+        "HIGH or CRITICAL severity": 100
+
+  formula: "resilience_score = D1*0.30 + D2*0.25 + D3*0.25 + D4*0.20"
+
+  blocking_constraint_rules:
+    description: >
+      A supplier is blocked (unconstrained=false) when:
+        - constraint_type in {QUALITY_HOLD, FORCE_MAJEURE, CAPACITY_CONSTRAINT, PORT_CONGESTION}
+        - AND constraint_severity in {HIGH, CRITICAL}
+      LEAD_TIME_EXTENSION constraints do not block supplier use.
+      CLEARED always means unblocked.
+    blocking_types:
+      - QUALITY_HOLD
+      - FORCE_MAJEURE
+      - CAPACITY_CONSTRAINT
+      - PORT_CONGESTION
+    blocking_severities:
+      - HIGH
+      - CRITICAL
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SCORING & OPTION RANKING (spec/09)
+# ══════════════════════════════════════════════════════════════════════════════
+
+scoring:
+  rank_options:
+    description: >
+      Filter feasible options, sort by total_score ascending (lower = better).
+    algorithm:
+      - "feasible = [opt for opt in options if opt.feasible]"
+      - "return sorted(feasible, key=lambda o: o.total_score)"
+
+  are_near_equivalent:
+    description: >
+      Returns true when top two ranked feasible options score within 5 points.
+      UI must present both as nearly-tied rather than forcing a single recommendation.
+    formula: "abs(a.total_score - b.total_score) < 5.0"
+
+  calculate_total_score:
+    description: >
+      Weighted composite. Cost normalised to 0–100 scale (max $50,000 USD).
+      Lower total_score = better option.
+    weights:
+      schedule_risk_score: 0.45
+      technical_risk_score: 0.25
+      supply_risk_score: 0.20
+      incremental_cost: 0.10
+    cost_normalisation: "min((cost_usd / 50_000) * 100, 100)"
+    formula: >
+      total = (schedule * 0.45) + (technical * 0.25)
+            + (supply * 0.20) + (cost_normalised * 0.10)
+
+  hard_constraints:
+    TRANSFER:
+      - "source.available >= required_quantity"
+      - "source.next_known_requirement_date not jeopardised by transfer"
+      error_code: INSUFFICIENT_INVENTORY
+
+    ALTERNATE_SUPPLIER:
+      - "supplier.approved == true"
+      - "supplier has no blocking constraint"
+      error_code: SUPPLIER_CONSTRAINED
+
+    SUBSTITUTE:
+      - "engineering evidence present for substitute material"
+      error_code: NO_ENGINEERING_EVIDENCE
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# APPROVAL LIFECYCLE (spec/08)
+# ══════════════════════════════════════════════════════════════════════════════
+
+approval_lifecycle:
+  state_machine: "PENDING → {APPROVED | REJECTED}"
+
+  states:
+    PENDING:    Initial state on creation
+    APPROVED:   Human approved; write execution allowed
+    REJECTED:   Human rejected
+    EXPIRED:    Implied — approval.expiry < datetime.now(UTC)
+
+  create:
+    action: "POST /api/actions/approval-requests"
+    side_effects:
+      - "Captures option_hash = SHA-256(option snapshot excluding option_id and risk_id)"
+      - "Sets expiry = now + 24 hours"
+      - "Stores in in-memory store keyed by approval_request_id"
+
+  approve:
+    action: "POST /api/actions/approval-requests/{id}/approve"
+    preconditions:
+      - "approval.status == PENDING"
+    transition: "PENDING → APPROVED"
+    records: [approver, approved_at]
+
+  reject:
+    action: "POST /api/actions/approval-requests/{id}/reject"
+    transition: "→ REJECTED"
+    records: [approver]
+
+  validate_for_execution:
+    called_before:
+      - execute_inventory_transfer
+      - execute_supplier_expedite
+      - mark_mitigated
+    checks:
+      - "approval exists in store"
+      - "approval.status == APPROVED"
+      - "approval.expiry > datetime.now(UTC)"
+      - "SHA-256(current_option) == approval.option_hash"
+    errors:
+      NOT_FOUND:         "Approval or option not found"
+      APPROVAL_REQUIRED: "Approval status is not APPROVED (or expired)"
+      APPROVAL_MISMATCH: "Option mutated after approval was granted"
+
+  immutability:
+    mechanism: >
+      SHA-256 hash captured at approval creation from a snapshot of the option
+      (type, feasible, schedule_risk_score, technical_risk_score, supply_risk_score,
+      total_score, constraints, evidence_ids). Recomputed before every execution.
+    error_if_mismatch: APPROVAL_MISMATCH

@@ -1,0 +1,58 @@
+# backend/Dockerfile.ubi
+# Production image for the FastAPI backend — IBM Cloud Code Engine
+# Base: Red Hat UBI 9 / Python 3.12 (RHEL-certified, non-root uid 1001 by default)
+#
+# Build from project root:
+#   docker build -f backend/Dockerfile.ubi -t tsci-backend:latest backend/
+#
+# Runtime env vars required:
+#   PORT              – listening port (Code Engine injects 8080 automatically)
+#   DEMO_USERNAME     – demo login username
+#   DEMO_PASSWORD     – demo login password
+#   WXO_API_KEY       – watsonx Orchestrate API key  (backend-only, never exposed to browser)
+#   WXO_BASE_URL      – watsonx Orchestrate base URL (backend-only)
+#   WXO_AGENT_ID      – agent ID  (optional, auto-discovered if omitted)
+
+FROM registry.access.redhat.com/ubi9/python-312:latest AS base
+
+# ── System security updates ───────────────────────────────────────────────────
+USER root
+RUN microdnf upgrade -y --nodocs \
+    && microdnf clean all
+
+# ── Python dependencies (production only, no test packages) ──────────────────
+WORKDIR /app
+
+COPY requirements.txt .
+
+# Strip test/dev packages and install the rest
+RUN grep -v -E '^(pytest|pytest-asyncio)' requirements.txt > requirements.prod.txt \
+    && pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.prod.txt \
+    && rm requirements.prod.txt requirements.txt
+
+# ── Application code ──────────────────────────────────────────────────────────
+COPY app/ ./app/
+
+# ── Ownership — uid 1001 is the default non-root user in UBI python images ───
+RUN chown -R 1001:0 /app \
+    && chmod -R g=u /app
+
+# ── Switch to non-root ────────────────────────────────────────────────────────
+USER 1001
+
+# ── Runtime defaults ──────────────────────────────────────────────────────────
+# PORT is overridden to 8080 at runtime by Code Engine.
+# PYTHONUNBUFFERED ensures logs stream immediately to CE log collector.
+ENV PORT=8080 \
+    LOG_LEVEL=info \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')" || exit 1
+
+# uvicorn honours $PORT via shell expansion in CMD (uses sh -c)
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]

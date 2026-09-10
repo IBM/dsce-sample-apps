@@ -1,0 +1,27 @@
+# ── MCP Server ────────────────────────────────────────────────────────────────
+confluent-kafka>=2.4
+requests>=2.31
+python-dateutil>=2.9
+fastapi>=0.111
+uvicorn[standard]>=0.29
+pydantic>=2.7
+opensearch-py>=2.5
+python-dotenv>=1.0
+httpx>=0.27
+
+# ── watsonx AI ────────────────────────────────────────────────────────────────
+ibm-watsonx-ai>=1.1
+
+# ── Spiderbot ─────────────────────────────────────────────────────────────────
+playwright>=1.44
+
+# ── Ingestion Pipeline ────────────────────────────────────────────────────────
+ibm-cos-sdk>=1.14
+pdfplumber>=0.11
+mammoth>=1.7
+boto3>=1.34
+boxsdk>=3.9
+beautifulsoup4>=4.12
+
+# ── Development / testing ─────────────────────────────────────────────────────
+# Install with:  pip install -r requirements-dev.txt

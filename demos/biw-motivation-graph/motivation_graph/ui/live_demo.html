@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confluent Kafka — Live Streaming Demo</title>
+<style>
+:root {
+  --ground:      #0d0d1a;
+  --surface:     #13131f;
+  --surface-2:   #1a1a2e;
+  --ink:         #e8e6f4;
+  --muted:       #7a7895;
+  --faint:       #4a4865;
+  --border:      #252340;
+  --border-2:    #302e52;
+  --purple:      #7c5ce0;
+  --purple-d:    #6344c4;
+  --purple-soft: rgba(124,92,224,.15);
+  --violet:      #a66ce6;
+  --gold:        #f5a800;
+  --gold-soft:   rgba(245,168,0,.12);
+  --teal:        #13c9b4;
+  --teal-soft:   rgba(19,201,180,.12);
+  --rose:        #e8517f;
+  --rose-soft:   rgba(232,81,127,.12);
+  --green:       #22c55e;
+  --orange:      #f97316;
+  --blue:        #60a5fa;
+  --grad:        linear-gradient(135deg, #6c43e0 0%, #9a5ce6 55%, #c86fd6 100%);
+  --sans:        ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono:        ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --radius:      14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--sans);
+  background: var(--ground);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+}
+
+/* ── Top bar ───────────────────────────────────────────────────────────────── */
+.topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--grad); display: grid; place-items: center;
+  color: #fff; font-weight: 800; font-size: 15px;
+  box-shadow: 0 4px 12px rgba(108,67,224,.4);
+}
+.brand-name { font-size: 17px; font-weight: 800; letter-spacing: -.5px; }
+.brand-name .reg { font-size: 9px; vertical-align: super; color: var(--muted); }
+.brand-name .sub { font-size: 11px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.conn-badge {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  border-radius: 20px; padding: 5px 12px;
+  font-family: var(--mono); font-size: 11px;
+}
+.conn-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex: none; }
+.conn-dot.live { background: var(--teal); box-shadow: 0 0 0 0 rgba(19,201,180,.5); animation: pulse 1.8s infinite; }
+.conn-dot.err  { background: var(--rose); }
+.conn-label { color: var(--muted); }
+.conn-label.live { color: var(--teal); }
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(19,201,180,.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(19,201,180,0);  }
+  100% { box-shadow: 0 0 0 0   rgba(19,201,180,0);  }
+}
+
+.eps-badge {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: var(--teal); min-width: 72px; text-align: right;
+}
+.sim-pill {
+  background: var(--gold-soft); border: 1px solid rgba(245,168,0,.4);
+  border-radius: 20px; padding: 4px 10px;
+  font-size: 10px; font-weight: 700; color: var(--gold);
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.btn-inject {
+  background: var(--purple); border: none; border-radius: 8px;
+  color: #fff; font-weight: 700; font-size: 12px; padding: 7px 14px;
+  cursor: pointer; font-family: var(--sans);
+  transition: transform .1s, box-shadow .15s;
+  box-shadow: 0 4px 14px rgba(108,67,224,.35);
+}
+.btn-inject:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(108,67,224,.5); }
+.btn-inject:active { transform: none; }
+
+/* ── Left sidebar — Stats ──────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+.section-head {
+  padding: 14px 16px 8px;
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--faint); font-weight: 700;
+}
+
+/* ── Summary counters ──────────────────────────────────────────────────────── */
+.counters { padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 6px; }
+.counter-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px;
+}
+.counter-row .lbl { font-size: 12px; color: var(--muted); }
+.counter-row .val { font-size: 20px; font-weight: 800; letter-spacing: -.02em; font-family: var(--mono); }
+.val.teal   { color: var(--teal);   }
+.val.gold   { color: var(--gold);   }
+.val.purple { color: var(--purple); }
+
+/* ── Topic counter rows ────────────────────────────────────────────────────── */
+.counter-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex: none;
+  box-shadow: 0 0 0 0 rgba(255,255,255,.3); animation: pulse 1.8s infinite;
+}
+.counter-body { flex: 1; min-width: 0; }
+.counter-topic { display: block; font-size: 11px; font-weight: 700; font-family: var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.counter-sub   { display: block; font-size: 10px; color: var(--muted); }
+
+/* ── Seller breakdown ──────────────────────────────────────────────────────── */
+.seller-breakdown { padding: 4px 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.seller-row {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px;
+}
+.seller-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.seller-avatar {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  font-weight: 800; font-size: 10px; flex: none;
+}
+.seller-name  { font-size: 12px; font-weight: 700; margin-left: 7px; flex: 1; }
+.seller-total { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--teal); }
+.seller-src-bars { display: flex; flex-direction: column; gap: 4px; }
+.seller-src-row { display: flex; align-items: center; gap: 7px; }
+.seller-src-name { font-size: 10px; color: var(--muted); width: 68px; flex: none; }
+.seller-src-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.seller-src-bar { height: 100%; border-radius: 2px; transition: width .5s ease; min-width: 0; }
+.seller-src-count { font-family: var(--mono); font-size: 10px; color: var(--muted); width: 20px; text-align: right; flex: none; }
+
+/* ── Main area — Feed ─────────────────────────────────────────────────────── */
+.main { overflow: hidden; display: flex; flex-direction: column; }
+
+.feed-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex: none;
+}
+.feed-title { font-size: 15px; font-weight: 800; }
+.feed-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.feed-controls { display: flex; align-items: center; gap: 10px; }
+.toggle-btn {
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  border-radius: 7px; color: var(--muted); font-size: 11px;
+  padding: 5px 10px; cursor: pointer; font-family: var(--sans);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.toggle-btn.active { color: var(--purple); border-color: var(--purple); }
+
+/* ── Event feed list ──────────────────────────────────────────────────────── */
+.feed { flex: 1; overflow-y: auto; padding: 12px 16px; }
+.feed::-webkit-scrollbar { width: 4px; }
+.feed::-webkit-scrollbar-track { background: transparent; }
+.feed::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+
+.event-card {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 0 12px;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  transition: border-color .3s, transform .3s, opacity .3s;
+  animation: slide-in .25s ease;
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+.event-card.fresh { border-color: var(--purple); }
+
+.event-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 18px; flex: none;
+  grid-row: 1 / 3;
+}
+.event-icon.salesforce { background: rgba(0,161,224,.12); }
+.event-icon.workday    { background: var(--teal-soft); }
+.event-icon.teams      { background: var(--purple-soft); }
+.event-icon.slack      { background: rgba(74,21,75,.25); }
+.event-icon.other      { background: var(--surface-2); }
+
+.event-top { display: flex; align-items: center; gap: 8px; }
+.event-source {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+  padding: 2px 7px; border-radius: 5px;
+}
+.src-sf  { background: rgba(0,161,224,.15);  color: #4db8f0; }
+.src-wd  { background: var(--teal-soft);      color: var(--teal); }
+.src-tm  { background: var(--purple-soft);    color: var(--violet); }
+.src-sl  { background: rgba(74,21,75,.3);     color: #c77dff; }
+.src-ot  { background: var(--surface-2);      color: var(--muted); }
+
+.event-type { font-size: 12.5px; font-weight: 600; }
+.event-seller { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.event-meta { font-size: 10.5px; color: var(--muted); white-space: nowrap; font-family: var(--mono); }
+.event-sinks {
+  display: flex; gap: 5px; align-items: center;
+  font-size: 10px; color: var(--muted); margin-top: 3px;
+}
+.sink { padding: 2px 7px; border-radius: 5px; font-weight: 600; }
+.sink.ok  { background: var(--teal-soft);  color: var(--teal);  }
+.sink.off { background: var(--surface-2);  color: var(--faint); }
+
+/* ── Empty / connecting states ────────────────────────────────────────────── */
+.feed-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; gap: 14px; color: var(--muted); text-align: center;
+}
+.feed-empty .icon { font-size: 36px; opacity: .4; }
+.feed-empty .msg  { font-size: 14px; font-weight: 600; }
+.feed-empty .hint { font-size: 12px; color: var(--faint); font-family: var(--mono); }
+.feed-empty .spinner {
+  width: 28px; height: 28px; border: 2px solid var(--border-2);
+  border-top-color: var(--purple); border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Latency bar ──────────────────────────────────────────────────────────── */
+.latency-bar {
+  flex: none;
+  padding: 8px 20px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+}
+.latency-bar .highlight { color: var(--teal); font-weight: 700; }
+.latency-bar .dim       { color: var(--faint); }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer { text-align: center; font-size: 10px; color: var(--faint); padding: 6px 0 8px; background: var(--surface); border-top: 1px solid var(--border); grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Top bar ─────────────────────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">E</div>
+      <div class="brand-name">
+        elevate<span class="reg">®</span>
+        <span class="sub">/ Live Streaming Demo</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="conn-badge">
+        <div class="conn-dot" id="connDot"></div>
+        <span class="conn-label" id="connLabel">connecting…</span>
+      </div>
+      <span class="eps-badge" id="epsLabel">— ev/s</span>
+      <span class="sim-pill">Simulated</span>
+      <button class="btn-inject" id="btnInject">⚡ Inject event</button>
+    </div>
+  </header>
+
+  <!-- ── Left sidebar ─────────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <div class="section-head">Kafka topics</div>
+    <div class="counters">
+      <div class="counter-row">
+        <div class="counter-dot" style="background:#4db8f0"></div>
+        <div class="counter-body">
+          <span class="counter-topic">biw.salesforce.cdc</span>
+          <span class="counter-sub">Salesforce CDC</span>
+        </div>
+        <span class="val teal" id="countSalesforce">0</span>
+      </div>
+      <div class="counter-row">
+        <div class="counter-dot" style="background:#a66ce6"></div>
+        <div class="counter-body">
+          <span class="counter-topic">biw.slack.events</span>
+          <span class="counter-sub">Teams / collaboration</span>
+        </div>
+        <span class="val purple" id="countTeams">0</span>
+      </div>
+      <div class="counter-row">
+        <div class="counter-dot" style="background:#13c9b4"></div>
+        <div class="counter-body">
+          <span class="counter-topic">biw.batch.ingest</span>
+          <span class="counter-sub">Workday HR batch</span>
+        </div>
+        <span class="val teal" id="countWorkday">0</span>
+      </div>
+    </div>
+
+    <div class="section-head">Events by seller</div>
+    <div class="seller-breakdown" id="sellerBreakdown">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="section-head">Session</div>
+    <div class="counters">
+      <div class="counter-row">
+        <div class="counter-body">
+          <span class="counter-topic">Total events</span>
+          <span class="counter-sub">across all topics</span>
+        </div>
+        <span class="val teal" id="totalCount">0</span>
+      </div>
+      <div class="counter-row">
+        <div class="counter-body">
+          <span class="counter-topic">Running time</span>
+          <span class="counter-sub">this session</span>
+        </div>
+        <span class="val gold" id="sessionTime">0s</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── Main feed ────────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <div class="feed-head">
+      <div>
+        <div class="feed-title">Live event stream — 3 sources → Confluent Kafka</div>
+        <div class="feed-sub">Every record from <strong>Salesforce CDC</strong>, <strong>Teams</strong>, and <strong>Workday</strong> lands in Kafka the moment it's produced</div>
+      </div>
+      <div class="feed-controls">
+        <button class="toggle-btn active" id="togglePause">⏸ Pause</button>
+        <button class="toggle-btn" id="toggleClear">Clear</button>
+      </div>
+    </div>
+
+    <div class="feed" id="feed">
+      <div class="feed-empty" id="feedEmpty">
+        <div class="spinner"></div>
+        <div class="msg">Connecting to Confluent Kafka…</div>
+        <div class="hint">http://localhost:5050/api/v2/events/stream</div>
+      </div>
+    </div>
+
+    <div class="latency-bar">
+      <span>
+        Cluster: <span class="highlight">pkc-zgp5j7.us-south1.gcp.confluent.cloud</span>
+        &nbsp;·&nbsp; <span class="dim">3 topics · SASL_SSL</span>
+      </span>
+      <span>
+        Last event: <span class="highlight" id="lastTs">—</span>
+        &nbsp;|&nbsp; Rate: <span class="highlight" id="avgLatency">—</span>
+        &nbsp;|&nbsp; <span class="dim" id="subscriberNote">SSE connected</span>
+      </span>
+    </div>
+
+  </main>
+
+  <footer class="footer">Made with IBM Bob</footer>
+
+</div><!-- /layout -->
+
+<script>
+(function () {
+  "use strict";
+
+  var API_BASE   = "http://localhost:5050";
+  var SSE_URL    = API_BASE + "/api/v2/events/stream";
+  var INJECT_URL = API_BASE + "/api/v2/events/inject";
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  var totalCount   = 0;
+  var paused       = false;
+  var sessionStart = Date.now();
+  var pendingBuffer = [];
+  var recentEvents  = [];     // timestamps for EPS calc
+  var lastEventMs   = null;
+  var es            = null;
+
+  // Per-topic counters (maps to the 3 Kafka topics)
+  var topicCounts = { salesforce: 0, teams: 0, workday: 0 };
+
+  // Per-seller × per-source matrix
+  var SELLERS = [
+    { id: "seller-rachel-001", name: "Rachel", color: "#7c5ce0" },
+    { id: "seller-marcus-001", name: "Marcus", color: "#13c9b4" },
+    { id: "seller-maya-001",   name: "Maya",   color: "#e8517f" },
+  ];
+  // sellerData[sellerId][source] = count
+  var sellerData = {};
+  SELLERS.forEach(function (s) {
+    sellerData[s.id] = { salesforce: 0, teams: 0, workday: 0 };
+  });
+
+  var SOURCE_CONFIG = {
+    salesforce: { label: "Salesforce", dotColor: "#4db8f0", srcClass: "src-sf", iconClass: "salesforce", emoji: "📊" },
+    workday:    { label: "Workday",    dotColor: "#13c9b4", srcClass: "src-wd", iconClass: "workday",    emoji: "👤" },
+    teams:      { label: "Teams",      dotColor: "#a66ce6", srcClass: "src-tm", iconClass: "teams",      emoji: "💬" },
+    slack:      { label: "Slack",      dotColor: "#c77dff", srcClass: "src-sl", iconClass: "slack",      emoji: "💬" },
+  };
+
+  var EVENT_EMOJI = {
+    "opportunity.stage_changed":      "🔄",
+    "opportunity.updated":            "📊",
+    "opportunity.created":            "✨",
+    "opportunity.amount_changed":     "💰",
+    "opportunity.close_date_changed": "📅",
+    "employee.record.sync":           "👤",
+    "employee.promotion":             "🎖️",
+    "employee.compensation.update":   "💵",
+    "batch.started":                  "📦",
+    "message.posted":                 "💬",
+    "presence.changed":               "🟢",
+    "message.reaction_added":         "👍",
+    "recognition":                    "🏆",
+  };
+
+  function cfgFor(source) {
+    return SOURCE_CONFIG[source.toLowerCase()] || {
+      label: source, dotColor: "#6c6a86", srcClass: "src-ot", iconClass: "other", emoji: "•"
+    };
+  }
+
+  // ── DOM refs ───────────────────────────────────────────────────────────────
+  var feedEl    = document.getElementById("feed");
+  var feedEmpty = document.getElementById("feedEmpty");
+  var totalEl   = document.getElementById("totalCount");
+  var sessionEl = document.getElementById("sessionTime");
+  var epsEl     = document.getElementById("epsLabel");
+  var lastTsEl  = document.getElementById("lastTs");
+  var avgLatEl  = document.getElementById("avgLatency");
+  var connDot   = document.getElementById("connDot");
+  var connLabel = document.getElementById("connLabel");
+
+  function setConnState(state) {
+    connDot.className   = "conn-dot " + state;
+    connLabel.className = "conn-label " + (state === "live" ? "live" : "");
+    connLabel.textContent =
+      state === "live" ? "Confluent connected" :
+      state === "err"  ? "reconnecting…"       : "connecting…";
+  }
+
+  // ── Session timer + EPS ────────────────────────────────────────────────────
+  setInterval(function () {
+    sessionEl.textContent = Math.floor((Date.now() - sessionStart) / 1000) + "s";
+    var now = Date.now();
+    recentEvents = recentEvents.filter(function (t) { return now - t < 10000; });
+    epsEl.textContent = (recentEvents.length / 10).toFixed(1) + " ev/s";
+  }, 500);
+
+  // ── Render per-topic counters ──────────────────────────────────────────────
+  function renderTopicCounts() {
+    document.getElementById("countSalesforce").textContent = topicCounts.salesforce;
+    document.getElementById("countTeams").textContent      = topicCounts.teams;
+    document.getElementById("countWorkday").textContent    = topicCounts.workday;
+  }
+
+  // ── Render per-seller breakdown ────────────────────────────────────────────
+  var SOURCES_ORDER = ["salesforce", "teams", "workday"];
+  var SRC_COLORS    = { salesforce: "#4db8f0", teams: "#a66ce6", workday: "#13c9b4" };
+
+  function renderSellerBreakdown() {
+    var html = SELLERS.map(function (s) {
+      var data  = sellerData[s.id];
+      var total = SOURCES_ORDER.reduce(function (acc, k) { return acc + (data[k] || 0); }, 0);
+      var maxSrc = Math.max.apply(null, SOURCES_ORDER.map(function (k) { return data[k] || 0; })) || 1;
+
+      var bars = SOURCES_ORDER.map(function (src) {
+        var cnt = data[src] || 0;
+        var pct = Math.round((cnt / maxSrc) * 100);
+        return '<div class="seller-src-row">' +
+          '<span class="seller-src-name">' + src + '</span>' +
+          '<div class="seller-src-bar-wrap">' +
+            '<div class="seller-src-bar" style="width:' + pct + '%;background:' + SRC_COLORS[src] + '"></div>' +
+          '</div>' +
+          '<span class="seller-src-count">' + cnt + '</span>' +
+        '</div>';
+      }).join("");
+
+      return '<div class="seller-row">' +
+        '<div class="seller-row-top">' +
+          '<div class="seller-avatar" style="background:' + s.color + '">' + s.name[0] + '</div>' +
+          '<span class="seller-name">' + s.name + '</span>' +
+          '<span class="seller-total">' + total + '</span>' +
+        '</div>' +
+        '<div class="seller-src-bars">' + bars + '</div>' +
+      '</div>';
+    }).join("");
+    document.getElementById("sellerBreakdown").innerHTML = html;
+  }
+
+  // ── Build an event card DOM node ──────────────────────────────────────────
+  function buildCard(rec) {
+    var source    = (rec.source || "unknown").toLowerCase();
+    var eventType = rec.event_type || "data.sync";
+    var seller    = rec.seller_id  || "—";
+    var ts        = rec.dual_write_at || rec.event_ts || "";
+    var cfg       = cfgFor(source);
+    var emoji     = EVENT_EMOJI[eventType] || cfg.emoji;
+    var timeStr   = ts.length > 12 ? ts.slice(11, 23) : ts;
+
+    var card = document.createElement("div");
+    card.className = "event-card fresh";
+
+    card.innerHTML =
+      '<div class="event-icon ' + cfg.iconClass + '">' + emoji + '</div>' +
+      '<div>' +
+        '<div class="event-top">' +
+          '<span class="event-source ' + cfg.srcClass + '">' + cfg.label + '</span>' +
+          '<span class="event-type">' + eventType + '</span>' +
+        '</div>' +
+        '<div class="event-seller">' + seller + '</div>' +
+      '</div>' +
+      '<span class="event-meta">' + timeStr + '</span>';
+
+    setTimeout(function () { card.classList.remove("fresh"); }, 2000);
+    return card;
+  }
+
+  // ── Flush pending buffer into DOM ─────────────────────────────────────────
+  var MAX_CARDS = 120;
+  function flushCards() {
+    if (paused || pendingBuffer.length === 0) return;
+    if (feedEmpty.parentNode) feedEmpty.remove();
+
+    var fragment = document.createDocumentFragment();
+    pendingBuffer.forEach(function (rec) { fragment.prepend(buildCard(rec)); });
+    pendingBuffer = [];
+    feedEl.insertBefore(fragment, feedEl.firstChild);
+
+    var cards = feedEl.querySelectorAll(".event-card");
+    for (var i = MAX_CARDS; i < cards.length; i++) { cards[i].remove(); }
+  }
+  setInterval(flushCards, 100);
+
+  // ── Handle one incoming SSE event ─────────────────────────────────────────
+  function onEvent(rec) {
+    var source = (rec.source || "unknown").toLowerCase();
+    var seller = rec.seller_id || "";
+
+    // Total count
+    totalCount++;
+    totalEl.textContent = totalCount;
+
+    // Per-topic counts (slack maps to teams topic for display)
+    var topicKey = source === "slack" ? "teams" : (topicCounts[source] !== undefined ? source : null);
+    if (topicKey) {
+      topicCounts[topicKey]++;
+      renderTopicCounts();
+    }
+
+    // Per-seller × per-source matrix
+    if (sellerData[seller]) {
+      var srcKey = source === "slack" ? "teams" : source;
+      if (sellerData[seller][srcKey] !== undefined) {
+        sellerData[seller][srcKey]++;
+        renderSellerBreakdown();
+      }
+    }
+
+    // EPS + rate
+    var now = Date.now();
+    recentEvents.push(now);
+    if (lastEventMs !== null && now - lastEventMs < 10000) {
+      var gap = now - lastEventMs;
+      avgLatEl.textContent = gap + "ms gap";
+    }
+    lastEventMs = now;
+
+    var ts = rec.dual_write_at || rec.event_ts || "";
+    lastTsEl.textContent = ts.length > 12 ? ts.slice(11, 23) : ts;
+
+    pendingBuffer.push(rec);
+  }
+
+  // ── SSE connection ─────────────────────────────────────────────────────────
+  var reconnectMs = 2000;
+
+  function connect() {
+    if (es) { try { es.close(); } catch (e) {} }
+    setConnState("connecting");
+
+    es = new EventSource(SSE_URL);
+
+    es.onopen = function () {
+      setConnState("live");
+      reconnectMs = 2000;
+      document.getElementById("subscriberNote").textContent = "SSE connected · real-time push";
+    };
+
+    es.onmessage = function (e) {
+      try {
+        var rec = JSON.parse(e.data);
+        onEvent(rec);
+      } catch (err) { /* ignore malformed frames */ }
+    };
+
+    es.onerror = function () {
+      setConnState("err");
+      es.close();
+      document.getElementById("subscriberNote").textContent = "reconnecting in " + (reconnectMs / 1000) + "s…";
+      setTimeout(connect, reconnectMs);
+      reconnectMs = Math.min(reconnectMs * 1.5, 30000);
+    };
+  }
+
+  // ── Inject button ─────────────────────────────────────────────────────────
+  document.getElementById("btnInject").addEventListener("click", function () {
+    var sellers = ["seller-rachel-001", "seller-marcus-001", "seller-maya-001"];
+    var sid = sellers[Math.floor(Math.random() * sellers.length)];
+    fetch(INJECT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ seller_id: sid }),
+    }).catch(function () {});
+  });
+
+  // ── Pause / clear ─────────────────────────────────────────────────────────
+  var pauseBtn = document.getElementById("togglePause");
+  var clearBtn = document.getElementById("toggleClear");
+
+  pauseBtn.addEventListener("click", function () {
+    paused = !paused;
+    pauseBtn.textContent = paused ? "▶ Resume" : "⏸ Pause";
+    pauseBtn.classList.toggle("active", !paused);
+    if (!paused) flushCards();
+  });
+
+  clearBtn.addEventListener("click", function () {
+    feedEl.innerHTML  = "";
+    pendingBuffer     = [];
+    totalCount        = 0;
+    lastEventMs       = null;
+    recentEvents      = [];
+    sessionStart      = Date.now();
+    topicCounts       = { salesforce: 0, teams: 0, workday: 0 };
+    SELLERS.forEach(function (s) {
+      sellerData[s.id] = { salesforce: 0, teams: 0, workday: 0 };
+    });
+    totalEl.textContent  = "0";
+    lastTsEl.textContent = "—";
+    avgLatEl.textContent = "—";
+    renderTopicCounts();
+    renderSellerBreakdown();
+    feedEl.appendChild(feedEmpty);
+    feedEmpty.querySelector(".msg").textContent = "Cleared — waiting for next event…";
+  });
+
+  // Render seller cards immediately so they're visible before any events arrive
+  renderSellerBreakdown();
+  renderTopicCounts();
+
+  connect();
+
+}());
+</script>
+</body>
+</html>

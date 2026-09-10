@@ -1,0 +1,20 @@
+# ui/.dockerignore
+node_modules/
+dist/
+
+.env
+.env.*
+.env.local
+
+.git/
+.gitignore
+
+*.md
+THEME_CONSISTENCY.md
+
+.vite/
+coverage/
+
+Dockerfile
+.dockerignore
+nginx.conf

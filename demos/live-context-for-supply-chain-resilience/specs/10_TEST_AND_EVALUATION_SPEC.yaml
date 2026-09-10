@@ -1,0 +1,175 @@
+version: "1.0"
+
+unit_tests:
+  - inventory_available_calculation
+  - late_delivery_rule
+  - shortage_calculation
+  - risk_severity
+  - mitigation_feasibility
+  - deterministic_scoring
+  - approval_validation
+  - idempotency
+  # Supply chain resilience unit tests
+  - resilience_score_calculation
+  - supplier_constraint_exclusion_from_unconstrained_count
+  - avl_suspended_excludes_supplier_from_candidates
+  - port_congestion_marks_affected_shipments
+  - resilience_profile_recomputed_on_contributing_event
+  - risk_rule_v2_triggers_on_all_tiers_constrained
+
+contract_tests:
+  - event_schema_compatibility
+  - api_openapi_validation
+  - rag_response_contract
+  - wxo_tool_input_output_contract
+  # Supply chain resilience contract tests
+  - supplier_status_event_schema_compatibility
+  - port_status_event_schema_compatibility
+  - avl_changed_event_schema_compatibility
+  - material_readiness_assessed_event_schema_compatibility
+  - get_supplier_resilience_status_output_contract
+  - get_resilience_profile_output_contract
+  - get_avl_status_output_contract
+  - get_port_status_output_contract
+
+integration_scenarios:
+  on_time:
+    input: shipment ETA before requiredBy
+    expected: no open late-delivery risk
+
+  delayed_no_inventory:
+    input: shipment late, destination available=0
+    expected: risk detected
+
+  delayed_transfer_available:
+    input: shipment late, alternate location has safe excess stock
+    expected:
+      - transfer option feasible
+      - recommendation contains inventory evidence/facts
+
+  delayed_supplier_available:
+    input: shipment late, approved alternate supplier can deliver in time
+    expected:
+      - alternate supplier option feasible
+
+  substitute_with_evidence:
+    expected:
+      - substitute may be considered
+      - engineering evidence IDs returned
+      - engineering approval required
+
+  substitute_without_evidence:
+    expected:
+      - substitute infeasible
+      - response states insufficient engineering evidence
+
+  conflicting_engineering_docs:
+    expected:
+      - no autonomous compatibility conclusion
+      - escalation required
+
+  stale_inventory_after_recommendation:
+    expected:
+      - action revalidation fails or option is recalculated
+
+  duplicate_shipment_event:
+    expected:
+      - no duplicate risk side effects
+
+  action_without_approval:
+    expected:
+      - APPROVAL_REQUIRED
+
+  # ── Supply Chain Resilience integration scenarios ───────────────────────────
+
+  supplier_quality_hold_critical:
+    input: supply.supplier.status.changed (SUP-101, QUALITY_HOLD, CRITICAL)
+    expected:
+      - SupplierConstraint persisted for SUP-101
+      - SupplyChainResilienceProfile recomputed
+      - unconstrainedApprovedSupplierCount decremented
+      - supply.material.readiness.assessed emitted
+      - if no remaining unconstrained suppliers can cover shortfall: supply.risk.detected via risk_rule_v2
+
+  supplier_constraint_cleared:
+    input: supply.supplier.status.changed (SUP-101, CLEARED)
+    expected:
+      - SupplierConstraint removed for SUP-101
+      - SupplyChainResilienceProfile recomputed
+      - unconstrainedApprovedSupplierCount incremented
+      - supply.material.readiness.assessed emitted with improved readinessStatus
+
+  port_congestion_high:
+    input: supply.port.status.changed (SGSIN, CONGESTION, HIGH)
+    expected:
+      - PortStatus persisted
+      - all shipments with portOfDeparture=SGSIN re-evaluated for ETA impact
+      - SupplyChainResilienceProfile updated with port_disruption dimension scored HIGH
+      - supply.material.readiness.assessed emitted if readinessStatus changes
+
+  avl_supplier_suspended:
+    input: supply.approved_vendor.changed (SUP-205, SUSPENDED)
+    expected:
+      - ApprovedVendorEntry updated to SUSPENDED
+      - SUP-205 removed from feasible candidates
+      - SupplyChainResilienceProfile recomputed
+      - open risk options re-evaluated; SUP-205 option marked infeasible
+
+  avl_supplier_approved_new:
+    input: supply.approved_vendor.changed (SUP-999, APPROVED) for CVA-8842
+    expected:
+      - ApprovedVendorEntry created
+      - SUP-999 now appears in get_avl_status output
+      - if unconstrained: appears in get_supplier_options candidates
+
+  constrained_supplier_in_expedite:
+    input: EXPEDITE option chosen; supplier constraint still ACTIVE at execution time
+    expected:
+      - execute_supplier_expedite returns SUPPLIER_CONSTRAINED error
+      - action not recorded as executed
+      - workflow halts and returns to human
+
+  resilience_profile_stale_at_recommendation:
+    input: SupplyChainResilienceProfile age > configured threshold
+    expected:
+      - recommendation includes staleness warning
+      - get_resilience_profile returns profileAgeSecs > threshold
+      - RESILIENCE_PROFILE_STALE error surfaced to agent
+
+  all_tiers_constrained_no_inventory:
+    input: primary QUALITY_HOLD/CRITICAL, secondary PORT_CONGESTION/HIGH, destination available=0, no transfer stock
+    expected:
+      - resilienceScore = CRITICAL
+      - risk_rule_v2 fires: supply.risk.detected
+      - only WAIT and SUBSTITUTE options generated (SUBSTITUTE infeasible without evidence)
+      - agent surfaces escalation recommendation
+
+  resilience_agent_query:
+    input: user asks "What is the resilience posture of CVA-8842?"
+    expected:
+      - routed to ResilienceMonitorAgent
+      - get_resilience_profile called
+      - response includes: readinessStatus=CRITICAL, primarySupplierStatus=QUALITY_HOLD/CRITICAL, secondarySupplierStatus=PORT_CONGESTION/HIGH, unconstrainedApprovedCount=1, resilienceScore=75
+
+rag_evaluation:
+  minimum_questions: 30
+  targets:
+    retrieval_hit_rate_at_5: ">=0.90 on synthetic gold set"
+    evidence_correctness: ">=0.90"
+    no_answer_precision: ">=0.95"
+  note: targets are demo quality gates, not production SLA claims
+
+agent_evaluation:
+  checks:
+    - tool_selection_accuracy
+    - no_fabricated_inventory
+    - no_fabricated_supplier
+    - engineering_claim_has_evidence
+    - recommendation_contains_tradeoffs
+    - write_requires_approval
+    # Supply chain resilience agent checks
+    - constrained_supplier_not_presented_as_feasible
+    - resilience_posture_section_present_in_recommendation
+    - resilience_monitor_agent_routes_on_network_query
+    - port_disruption_context_included_when_relevant
+    - avl_check_performed_before_recommendation

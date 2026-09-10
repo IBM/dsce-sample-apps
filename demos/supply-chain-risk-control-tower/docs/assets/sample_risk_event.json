@@ -1,0 +1,21 @@
+{
+  "risk_id": "RISK-DEMO-0001",
+  "component_id": "BRG-9004",
+  "supplier_id": "SUP-1007",
+  "customer_order_id": "CO-10491",
+  "risk_score": 88,
+  "risk_band": "CRITICAL",
+  "root_cause": "Shipment delay exceeds available inventory coverage",
+  "days_of_supply": 2.2,
+  "max_delay_hours": 96,
+  "scoring_factors": {
+    "inventory_risk": 35,
+    "shipment_delay_risk": 30,
+    "supplier_risk": 15,
+    "customer_impact_risk": 20,
+    "external_event_risk": 18,
+    "mitigation_credit": 10,
+    "alternate_supplier_id": "SUP-221"
+  },
+  "event_time": "2026-06-19T10:15:00Z"
+}

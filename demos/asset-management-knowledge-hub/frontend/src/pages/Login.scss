@@ -1,0 +1,196 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Page entrance ────────────────────────────────────────────────────────────
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Login layout — background image already set on body, inherited here
+// ─────────────────────────────────────────────────────────────────────────────
+.login-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-07;
+  position: relative;
+
+  // Subtle dark veil so the card always pops regardless of image brightness.
+  // Same veil is applied to .app-main for consistency across all pages.
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// White card — sits above the veil, slightly frosted
+// ─────────────────────────────────────────────────────────────────────────────
+.login-card {
+  position: relative;
+  z-index: 1;               // above the ::before veil
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  width: 100%;
+  max-width: 400px;
+  padding: $spacing-09 $spacing-08;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.32),
+    0 2px 8px  rgba(0, 0, 0, 0.18);
+  animation: card-rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+// ── Title block ───────────────────────────────────────────────────────────────
+.login-title-block {
+  margin-bottom: $spacing-08;
+}
+
+.login-app-name {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.22;
+  color: #161616;
+  margin-bottom: $spacing-03;
+  letter-spacing: 0;
+}
+
+.login-app-sub {
+  @include type-style('body-01');
+  color: #525252;
+  margin: 0;
+}
+
+// ── Form ──────────────────────────────────────────────────────────────────────
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-06;
+}
+
+// ── Field (label + input) ─────────────────────────────────────────────────────
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.login-label {
+  @include type-style('label-01');
+  color: #525252;
+  font-weight: 400;
+}
+
+// Flat underline input — exactly like the screenshot (no full box border)
+.login-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #8d8d8d;
+  padding: $spacing-03 0;
+  @include type-style('body-01');
+  color: #161616;
+  outline: none;
+  transition: border-color 0.18s ease;
+  box-sizing: border-box;
+
+  &:focus {
+    border-bottom: 2px solid #0f62fe;
+    padding-bottom: calc(#{$spacing-03} - 1px);   // compensate 1→2px shift
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ── Password row (input + eye toggle) ────────────────────────────────────────
+.login-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  .login-input {
+    padding-right: 2.25rem;   // room for the eye icon
+  }
+}
+
+.login-eye-btn {
+  position: absolute;
+  right: 0;
+  bottom: $spacing-03;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #525252;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  line-height: 1;
+
+  &:hover { color: #161616; }
+  &:focus-visible {
+    outline: 2px solid #0f62fe;
+    outline-offset: 2px;
+  }
+}
+
+// ── Error message ─────────────────────────────────────────────────────────────
+.login-error {
+  @include type-style('label-01');
+  color: #da1e28;
+  margin: 0;
+}
+
+// ── Sign in button ────────────────────────────────────────────────────────────
+// Full-width, flat blue — matches the screenshot exactly
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: $spacing-04 $spacing-06;
+  background: #0f62fe;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  @include type-style('body-compact-02');
+  font-weight: 400;
+  transition: background 0.15s ease;
+  margin-top: $spacing-02;
+
+  &:hover:not(:disabled) { background: #0050e6; }
+  &:active:not(:disabled) { background: #003ecb; }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: #c6c6c6;
+    color: #8d8d8d;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: -4px;
+  }
+
+  &--loading {
+    justify-content: center;
+    gap: $spacing-03;
+  }
+
+  svg { flex-shrink: 0; }
+}

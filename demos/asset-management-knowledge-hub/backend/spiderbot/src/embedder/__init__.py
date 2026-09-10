@@ -1,0 +1,1 @@
+# spiderbot.src.embedder package

@@ -1,0 +1,22 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+.scheduled-jobs {
+  padding: $spacing-06;
+
+  &__title {
+    @include type-style('heading-04');
+    margin-bottom: $spacing-02;
+    color: #161616;
+  }
+
+  &__subtitle {
+    @include type-style('body-01');
+    color: #525252;
+    margin-bottom: $spacing-06;
+  }
+
+  &__tabs {
+    margin-bottom: $spacing-05;
+  }
+}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIW — Data Complexity Control View (B6)</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f2fb;--surface:#ffffff;--card:#ffffff;--border:#e8e5f3;
+  --accent:#6c43e0;--green:#10b39e;--yellow:#f5a800;--red:#e8517f;
+  --blue:#6c43e0;--purple:#9a5ce6;--muted:#6c6a86;--text:#1c1a2e;
+  --sim-bg:#fff3d4;--font:-apple-system,"Segoe UI",system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.6}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;
+  background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.5px}
+.logo span{color:var(--text)}
+.sim-badge{background:var(--sim-bg);color:var(--yellow);border:1px solid var(--yellow);
+  border-radius:4px;padding:2px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.main{max-width:1200px;margin:0 auto;padding:24px 16px}
+h2{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px}
+h2 .sub{font-size:11px;font-weight:400;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:16px;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;
+  padding:6px 10px;border-bottom:1px solid var(--border);text-align:left}
+td{padding:6px 10px;border-bottom:1px solid #f1eff8;font-size:12px}
+tr:hover td{background:#f7f4fe}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.badge-live,.badge-ok,.badge-streaming{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.4)}
+.badge-batch,.badge-off{background:rgba(107,122,184,.15);color:var(--muted);border:1px solid rgba(107,122,184,.3)}
+.badge-federated,.badge-configured{background:rgba(79,142,247,.15);color:var(--blue);border:1px solid rgba(79,142,247,.4)}
+.badge-fallback{background:rgba(245,166,35,.15);color:var(--yellow);border:1px solid rgba(245,166,35,.4)}
+.badge-simulated{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid rgba(167,139,250,.4)}
+.blocks{display:flex;flex-direction:column;gap:10px}
+.block{display:flex;align-items:flex-start;gap:12px;padding:12px;
+  background:#faf9fe;border-radius:12px;border:1px solid var(--border)}
+.block-id{min-width:64px;font-size:11px;font-weight:700;color:var(--accent)}
+.block-body{flex:1}
+.block-name{font-size:12px;font-weight:600;margin-bottom:2px}
+.block-detail{font-size:11px;color:var(--muted);line-height:1.5}
+.sql-box{background:#faf9fe;border:1px solid var(--border);border-radius:12px;padding:12px;
+  font-family:"SF Mono","Fira Code",monospace;font-size:11px;line-height:1.7;
+  color:#6c43e0;overflow-x:auto;white-space:pre}
+.sql-comment{color:#9a97b5}
+.event-log{max-height:200px;overflow-y:auto}
+.event-row{padding:6px 8px;border-radius:4px;margin-bottom:4px;
+  background:#f7f4fe;border-left:3px solid var(--accent);font-size:11px}
+.event-row.slack{border-color:var(--green)}
+.event-row.salesforce{border-color:var(--yellow)}
+.inject-btn{display:inline-block;background:var(--accent);color:#fff;border:none;
+  padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:12px}
+.inject-btn:disabled{background:var(--border);cursor:default;color:var(--muted)}
+.moneyshot{border:2px solid var(--yellow) !important;background:#fffdfa}
+.moneyshot .card-title{color:var(--yellow)}
+.ticker{display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.section-gap{margin-bottom:28px}
+.tip{color:var(--muted);font-size:11px;margin-top:8px}
+.nil{color:var(--muted);font-style:italic}
+.status-ok::before{content:"● ";color:var(--green)}
+.status-fallback::before{content:"◌ ";color:var(--yellow)}
+.status-off::before{content:"○ ";color:var(--muted)}
+.status-simulated::before{content:"◈ ";color:var(--purple)}
+.status-configured::before{content:"◉ ";color:var(--blue)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Elevate <span>Control View</span> · <span style="color:var(--muted);font-size:12px">B6 — Data Fabric</span></div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <span class="ticker"></span>
+    <span style="font-size:11px;color:var(--green);margin-left:4px">Live</span>
+    <span class="sim-badge">SIMULATED DATA</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 18+ sources -->
+  <div class="section-gap">
+    <h2>B6 Source Catalog <span class="sub">18+ heterogeneous sources — every velocity, every format</span></h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>ID</th><th>Source</th><th>System</th><th>Velocity</th><th>Mechanism</th><th>Status</th><th>Last landed</th></tr></thead>
+        <tbody id="sources-tbody"><tr><td colspan="7" style="color:var(--muted);padding:16px">Loading…</td></tr></tbody>
+      </table>
+      <p class="tip">Live sources tick in real time. Databricks shows "federated — query in place", never "loaded".</p>
+    </div>
+  </div>
+
+  <!-- Pipeline blocks -->
+  <div class="section-gap">
+    <h2>Pipeline Health <span class="sub">IBM product → OSS fallback mapping per §6</span></h2>
+    <div id="blocks-container" class="blocks">
+      <div class="block"><div class="block-id">…</div><div class="block-body"><div class="block-name" style="color:var(--muted)">Loading…</div></div></div>
+    </div>
+  </div>
+
+  <!-- B3 + B4 -->
+  <div class="section-gap">
+    <div class="grid-2">
+
+      <div class="card" id="b3-card">
+        <div class="card-title">B3 — Zero-copy federation: live + history</div>
+        <div class="sql-box"><span class="sql-comment">-- Engine: Trino (watsonx.data Presto) | SEED=20260812</span>
+SELECT seller_id,
+  live.event_ts   AS live_ts,
+  hist.event_ts   AS history_ts,
+  'live+history'  AS federation_mode,
+  'zero-copy'     AS copy_status
+FROM cassandra.biw_live.biw_live_events  AS live
+FULL OUTER JOIN iceberg.biw.live_events  AS hist
+  ON live.seller_id = hist.seller_id
+LIMIT 20</div>
+        <div id="b3-meta" style="margin-top:10px;font-size:11px;color:var(--muted)">Click Run to execute…</div>
+        <button class="inject-btn" id="b3-btn">▶ Run B3 Query</button>
+        <div id="b3-rows" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card moneyshot" id="b4-card">
+        <div class="card-title">🎯 B4 — MONEY SHOT: live + history + Databricks in place</div>
+        <div class="sql-box"><span class="sql-comment">-- 3-source zero-copy | Databricks READ IN PLACE — no copy</span>
+SELECT seller_id,
+  live.event_ts        AS live_ts,
+  hist.event_ts        AS history_ts,
+  db.event_ts          AS databricks_ts,
+  'query-in-place'     AS databricks_read_mode,
+  'zero-copy'          AS copy_status
+FROM cassandra.biw_live.biw_live_events  live
+FULL OUTER JOIN iceberg.biw.live_events  hist
+  ON live.seller_id = hist.seller_id
+FULL OUTER JOIN databricks.main.biw_demo.seller_history db
+  ON live.seller_id = db.seller_id</div>
+        <div style="margin-top:8px;padding:8px;background:rgba(245,166,35,.08);border-radius:4px;font-size:11px;color:var(--yellow)">
+          <strong>Commercial thesis:</strong> Keep Databricks. IBM wins integration + real-time — over open formats, nothing is ever trapped.
+        </div>
+        <div id="b4-meta" style="margin-top:10px;font-size:11px;color:var(--muted)">Click Run to execute…</div>
+        <button class="inject-btn" id="b4-btn">▶ Run B4 Money-Shot Query</button>
+        <div id="b4-rows" style="margin-top:12px"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Event injection -->
+  <div class="section-gap">
+    <h2>B1 — On-Camera Event Injection <span class="sub">Slack + Salesforce CDC → Kafka → dual-write → Cassandra + Iceberg</span></h2>
+    <div class="card">
+      <div class="card-title">Inject live event for seller</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select id="inject-seller" style="background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:6px 10px;font-size:12px">
+          <option value="seller-rachel-001">Rachel (Veteran Expert)</option>
+          <option value="seller-marcus-001">Marcus (Developing Contributor)</option>
+          <option value="seller-maya-001">Maya (Team Transitioner)</option>
+        </select>
+        <button class="inject-btn" id="inject-btn">⚡ Inject Live Event</button>
+        <span id="inject-status" style="font-size:11px;color:var(--muted)"></span>
+      </div>
+      <div id="event-log" class="event-log" style="margin-top:14px"></div>
+      <p class="tip" style="margin-top:10px">
+        Events flow: Kafka (IBM Confluent) → dual-write consumer → Cassandra (IBM DataStax) live state + Iceberg (watsonx.data) history.
+        If Kafka is not reachable, in-memory queue is used and labeled accordingly (Hardening Addendum §3).
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;font-size:11px;color:var(--muted);padding:18px 0 24px;border-top:1px solid var(--border)">Made with IBM Bob</p>
+
+<script>
+const API = "http://localhost:5050/api/v2";
+
+function ts(iso){if(!iso)return '<span class="nil">—</span>';return iso.replace("T"," ").slice(0,19);}
+function badge(s){
+  const k=s.replace(/[^a-z0-9]/gi,"-").replace(/streaming.*/,"streaming").replace(/batch.*/,"batch").replace(/federated.*/,"federated");
+  return `<span class="badge badge-${k}">${s}</span>`;
+}
+
+async function loadSources(){
+  const tbody=document.getElementById("sources-tbody");
+  try{
+    const d=await(await fetch(API+"/sources")).json();
+    tbody.innerHTML=d.map(s=>`<tr>
+      <td style="color:var(--muted)">${s.id}</td>
+      <td style="font-weight:600">${s.name}</td>
+      <td style="color:var(--muted)">${s.system}</td>
+      <td>${s.velocity}</td>
+      <td style="font-size:11px;color:var(--muted)">${s.mechanism}</td>
+      <td>${badge(s.status)}</td>
+      <td style="font-size:11px;color:var(--muted)">${ts(s.last_landed)}</td>
+    </tr>`).join("");
+  }catch{tbody.innerHTML="";renderStaticSources(tbody);}
+}
+function renderStaticSources(tbody){
+  const rows=[
+    ["S1","Salesforce","CRM","near-real-time","CDC → Kafka","live"],
+    ["S2","Slack","Collaboration","real-time stream","Events API → Kafka","live"],
+    ["S3","Workday","HRIS","nightly batch","Bulk load","batch"],
+    ["S4","Databricks Delta","Existing lakehouse","federated","Iceberg interop, zero-copy","federated — query in place"],
+    ["S5","S3 / file drop","Object storage","micro-batch","Parquet/CSV","batch"],
+    ["S6","Microsoft Teams","Collaboration","near-real-time","Graph API → Kafka","batch"],
+    ["S7","SAP SuccessFactors","HCM","nightly batch","REST bulk extract","batch"],
+    ["S8","Elevate Points Ledger","Loyalty","near-real-time","DB CDC → Kafka","batch"],
+    ["S9","Rewards Catalog","Marketplace","daily batch","API pull","batch"],
+    ["S10","LMS / Certs","Learning","nightly batch","SCORM API bulk extract","batch"],
+    ["S11","Zendesk / ServiceNow","Support","near-real-time","Webhook → Kafka","batch"],
+    ["S12","Marketo / HubSpot","Marketing","hourly micro-batch","API poll","batch"],
+    ["S13","Google Workspace","Calendar/Docs","hourly micro-batch","Pub/Sub → Kafka","batch"],
+    ["S14","Clickstream","Product analytics","real-time stream","Browser SDK → Kafka","batch"],
+    ["S15","Qualtrics / Medallia","Voice of Customer","daily batch","REST bulk export","batch"],
+    ["S16","NetSuite / ERP","Finance","nightly batch","JDBC bulk extract","batch"],
+    ["S17","PRM / Partner system","Partnerships","daily batch","SFTP / API pull","batch"],
+    ["S18","Mobile app events","Mobile","real-time stream","Mobile SDK → Kafka","batch"],
+  ];
+  tbody.innerHTML=rows.map(([id,name,sys,vel,mech,st])=>`<tr>
+    <td style="color:var(--muted)">${id}</td>
+    <td style="font-weight:600">${name}</td>
+    <td style="color:var(--muted)">${sys}</td>
+    <td>${vel}</td>
+    <td style="font-size:11px;color:var(--muted)">${mech}</td>
+    <td>${badge(st)}</td>
+    <td style="font-size:11px;color:var(--muted)"><span class="nil">—</span></td>
+  </tr>`).join("");
+}
+
+async function loadBlocks(){
+  const c=document.getElementById("blocks-container");
+  try{
+    const d=await(await fetch(API+"/pipeline/status")).json();
+    c.innerHTML=d.blocks.map(b=>`<div class="block">
+      <div class="block-id">${b.block}</div>
+      <div class="block-body">
+        <div class="block-name">${b.name}</div>
+        <div class="block-detail">IBM: <strong>${b.ibm_product}</strong> &nbsp;|&nbsp; OSS: ${b.oss_fallback}</div>
+        <div class="block-status status-${b.status}" style="font-size:10px;margin-top:4px">${b.status.toUpperCase()} — ${b.note||""}</div>
+      </div>
+    </div>`).join("");
+  }catch{c.innerHTML=staticBlocks();}
+}
+function staticBlocks(){
+  return [
+    ["B1","Kafka / IBM Confluent","IBM Confluent (Kafka)","Apache Kafka","fallback","docker compose up -d kafka"],
+    ["B2a","Cassandra / IBM DataStax","IBM DataStax Enterprise","Apache Cassandra","fallback","docker compose up -d cassandra"],
+    ["B2b","Object store / Iceberg","IBM Cloud Object Storage","MinIO","fallback","docker compose up -d minio"],
+    ["B3/B4","Trino / watsonx.data Presto","watsonx.data (Presto)","Apache Trino","fallback","docker compose up -d trino"],
+    ["B4-db","Databricks Delta (coexistence)","watsonx.data → Databricks Iceberg","Synthetic rows","simulated","Set DATABRICKS_HOST in .env"],
+    ["B5","AI tier (optional, off by default)","watsonx.ai / Orchestrate","Ollama / Langflow","off","Set WATSONX_AI_API_KEY to enable"],
+  ].map(([id,name,ibm,oss,st,note])=>`<div class="block">
+    <div class="block-id">${id}</div>
+    <div class="block-body">
+      <div class="block-name">${name}</div>
+      <div class="block-detail">IBM: <strong>${ibm}</strong> &nbsp;|&nbsp; OSS: ${oss}</div>
+      <div class="block-status status-${st}" style="font-size:10px;margin-top:4px">${st.toUpperCase()} — ${note}</div>
+    </div>
+  </div>`).join("");
+}
+
+function fedTable(rows,cols){
+  if(!rows||!rows.length) return '<span style="font-size:11px;color:var(--muted)">No rows</span>';
+  return`<table style="margin-top:8px"><thead><tr>${cols.map(c=>`<th>${c.replace(/_/g," ")}</th>`).join("")}</tr></thead>
+    <tbody>${rows.slice(0,6).map(r=>`<tr>${cols.map(c=>`<td style="font-size:11px">${r[c]!=null?String(r[c]).slice(0,26):'<span class="nil">—</span>'}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+
+document.getElementById("b3-btn").addEventListener("click",async function(){
+  this.disabled=true;this.textContent="Running…";
+  const meta=document.getElementById("b3-meta"),rows=document.getElementById("b3-rows");
+  try{
+    const d=await(await fetch(API+"/federation/b3")).json();
+    meta.innerHTML=`Engine: <strong style="color:var(--accent)">${d.engine}</strong> &nbsp;|&nbsp; Real: ${d.is_real_engine?'<span style="color:var(--green)">YES</span>':'<span style="color:var(--yellow)">fallback</span>'} &nbsp;|&nbsp; Rows: ${d.row_count}`;
+    rows.innerHTML=fedTable(d.rows,["seller_id","live_ts","hist_ts","federation_mode","copy_status"]);
+  }catch{
+    meta.innerHTML='<span style="color:var(--yellow)">API offline — start with ./run.sh</span>';
+    rows.innerHTML=fedTable([
+      {seller_id:"seller-rachel-001",live_ts:"2026-08-01T12:00:00Z",hist_ts:"2026-07-15T09:00:00Z",federation_mode:"live+history",copy_status:"zero-copy"},
+      {seller_id:"seller-marcus-001",live_ts:"2026-08-01T12:01:00Z",hist_ts:"2026-07-20T10:00:00Z",federation_mode:"live+history",copy_status:"zero-copy"},
+    ],["seller_id","live_ts","hist_ts","federation_mode","copy_status"]);
+  }finally{this.disabled=false;this.textContent="▶ Run B3 Query";}
+});
+
+document.getElementById("b4-btn").addEventListener("click",async function(){
+  this.disabled=true;this.textContent="Running…";
+  const meta=document.getElementById("b4-meta"),rows=document.getElementById("b4-rows");
+  try{
+    const d=await(await fetch(API+"/federation/b4")).json();
+    meta.innerHTML=`Engine: <strong style="color:var(--accent)">${d.engine}</strong> &nbsp;|&nbsp; Databricks: ${d.databricks_included?'<span style="color:var(--yellow)">INCLUDED — query-in-place</span>':'no'} &nbsp;|&nbsp; Rows: ${d.row_count}`;
+    rows.innerHTML=fedTable(d.rows,["seller_id","live_ts","hist_ts","databricks_ts","databricks_read_mode","copy_status"]);
+  }catch{
+    meta.innerHTML='<span style="color:var(--yellow)">API offline — start with ./run.sh</span>';
+    rows.innerHTML=fedTable([
+      {seller_id:"seller-rachel-001",live_ts:"2026-08-01T12:00:00Z",hist_ts:"2026-07-15T09:00:00Z",databricks_ts:"2026-07-01T00:00:00Z",databricks_read_mode:"query-in-place-simulated",copy_status:"zero-copy"},
+      {seller_id:"seller-marcus-001",live_ts:"2026-08-01T12:01:00Z",hist_ts:null,databricks_ts:"2026-07-01T00:00:00Z",databricks_read_mode:"query-in-place-simulated",copy_status:"zero-copy"},
+      {seller_id:"seller-maya-001",live_ts:null,hist_ts:null,databricks_ts:"2026-07-01T00:00:00Z",databricks_read_mode:"query-in-place-simulated",copy_status:"zero-copy"},
+    ],["seller_id","live_ts","hist_ts","databricks_ts","databricks_read_mode","copy_status"]);
+  }finally{this.disabled=false;this.textContent="▶ Run B4 Money-Shot Query";}
+});
+
+document.getElementById("inject-btn").addEventListener("click",async function(){
+  const sid=document.getElementById("inject-seller").value;
+  const status=document.getElementById("inject-status"),log=document.getElementById("event-log");
+  this.disabled=true;status.textContent="Injecting…";
+  try{
+    const d=await(await fetch(API+"/events/inject",{method:"POST",
+      headers:{"Content-Type":"application/json"},body:JSON.stringify({seller_id:sid})})).json();
+    status.innerHTML=`<span style="color:var(--green)">✓ ${d.produced} produced → ${d.dual_written} dual-written</span>`;
+    (d.events||[]).forEach(evt=>{
+      const div=document.createElement("div");
+      div.className=`event-row ${evt.source||""}`;
+      div.innerHTML=`<span style="font-size:10px;font-weight:700;margin-right:6px;color:${evt.source==="slack"?"var(--green)":"var(--yellow)"}">${(evt.source||"").toUpperCase()}</span>
+        ${evt.event_type} · seller: ${evt.seller_id||"—"} · <span style="color:var(--muted);font-size:10px">${(evt.event_ts||"").slice(0,23)}</span>
+        <span style="margin-left:8px;font-size:10px;color:var(--accent)">→ Kafka → Cassandra + Iceberg ✓</span>`;
+      log.prepend(div);
+    });
+  }catch{
+    status.innerHTML=`<span style="color:var(--yellow)">API offline — showing simulated event</span>`;
+    ["slack:recognition","salesforce:opportunity.updated"].forEach(pair=>{
+      const [src,type]=pair.split(":");
+      const div=document.createElement("div");
+      div.className=`event-row ${src}`;
+      div.innerHTML=`<span style="font-size:10px;font-weight:700;margin-right:6px;color:${src==="slack"?"var(--green)":"var(--yellow)"}">${src.toUpperCase()}</span>
+        ${type} · seller: ${sid} · <span style="color:var(--muted);font-size:10px">${new Date().toISOString().slice(0,23)}</span>
+        <span style="margin-left:8px;font-size:10px;color:var(--muted)">[simulated — API offline]</span>`;
+      log.prepend(div);
+    });
+  }finally{this.disabled=false;}
+});
+
+loadSources();loadBlocks();
+setInterval(loadSources,5000);
+</script>
+</body>
+</html>

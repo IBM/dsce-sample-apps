@@ -1,0 +1,473 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+
+// ── Entrance animation for config tiles ──────────────────────────────────────
+@keyframes config-tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Page shell
+// ─────────────────────────────────────────────────────────────────────────────
+.config-page {
+  padding: $spacing-07 $spacing-08;
+  max-width: 1080px;
+  background: transparent;
+}
+
+// ── Page header ───────────────────────────────────────────────────────────────
+.config-page-title {
+  padding-bottom: $spacing-06;
+  border-bottom: 2px solid var(--cds-border-subtle-01);
+  margin-bottom: $spacing-08;
+
+  h2 {
+    @include type-style('productive-heading-04');
+    margin-bottom: $spacing-02;
+    color: var(--cds-text-primary);
+  }
+
+  p {
+    @include type-style('body-01');
+    color: var(--cds-text-secondary);
+  }
+}
+
+.save-notification {
+  margin-bottom: $spacing-06;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Section wrapper — adds consistent vertical rhythm and section separator
+// ─────────────────────────────────────────────────────────────────────────────
+.config-section {
+  margin-bottom: $spacing-09;
+  padding-bottom: $spacing-09;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+// Section heading — pill accent left-border on the label
+.section-heading {
+  @include type-style('productive-heading-03');
+  color: var(--cds-text-primary);
+  margin-bottom: $spacing-06;
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+
+  // Accent left-bar
+  &::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 1.25em;
+    background: #0f62fe;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}
+
+.subsection-heading {
+  @include type-style('productive-heading-01');
+  font-weight: 700;
+  margin-bottom: $spacing-05;
+  padding-bottom: $spacing-03;
+  border-bottom: 1px dashed var(--cds-border-subtle-01);
+  color: var(--cds-text-primary);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Config tile — lifted white card with rounded corners
+// ─────────────────────────────────────────────────────────────────────────────
+.config-tile {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 10px !important;
+  padding: $spacing-06 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06), 0 0 0 0 transparent !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+
+  // Staggered entrance
+  opacity: 0;
+  animation: config-tile-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  &:hover {
+    border-color: #a8b0be !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  // Two-col tiles: stagger left then right
+  .two-col > &:nth-child(1) { animation-delay: 0.06s; }
+  .two-col > &:nth-child(2) { animation-delay: 0.14s; }
+
+  .tile-intro {
+    @include type-style('body-compact-01');
+    color: var(--cds-text-secondary);
+    margin-bottom: $spacing-05;
+    padding-bottom: $spacing-05;
+    border-bottom: 1px solid #e5e7eb;
+    line-height: 1.6;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Two-column grid
+// ─────────────────────────────────────────────────────────────────────────────
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-05;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Instance list — each row separated by a hairline, contained in a bordered box
+// ─────────────────────────────────────────────────────────────────────────────
+.instance-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;        // clip row corners to the parent radius
+  margin-bottom: $spacing-07;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.instance-row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  padding: $spacing-05 $spacing-06;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.15s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #f8f9ff;
+  }
+}
+
+// Animated status dot
+.status-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+
+  &.status-active {
+    background: #24a148;
+    // Soft pulse ring on active
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid rgba(36, 161, 72, 0.35);
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+  }
+  &.status-inactive { background: #8d8d8d; }
+  &.status-unknown  { background: #a0a0a0; }
+  &.status-error    { background: #da1e28; }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0; }
+}
+
+.instance-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.instance-name {
+  @include type-style('body-compact-02');
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  margin-bottom: $spacing-01;
+  color: var(--cds-text-primary);
+}
+
+.instance-url {
+  @include type-style('label-01');
+  color: var(--cds-text-secondary);
+  font-family: 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.instance-meta {
+  @include type-style('label-01');
+  color: var(--cds-text-placeholder);
+  margin-top: 2px;
+}
+
+.instance-actions {
+  display: flex;
+  gap: $spacing-02;
+  flex-shrink: 0;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Toggle list — each toggle in its own separated row inside a tile
+// ─────────────────────────────────────────────────────────────────────────────
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+// A single toggle row — separated by a 1px border-bottom
+.toggle-row {
+  padding: $spacing-05 $spacing-05;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  transition: background 0.12s ease;
+
+  &:hover { background: #f8f9ff; }
+
+  // No border on last child
+  &--last,
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Pull Carbon Toggle's default top margin back out — we own the spacing now
+  .cds--toggle-input__label {
+    margin-top: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Field list — same visual treatment for inputs / selects / number inputs
+// ─────────────────────────────────────────────────────────────────────────────
+.field-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.field-row {
+  padding: $spacing-05 $spacing-05;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  &--last,
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Remove Carbon component's outer border so the row border takes over
+  .cds--text-input-wrapper,
+  .cds--select,
+  .cds--number {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+// Active instance row highlight
+.instance-row--active {
+  background: #f0f4ff !important;
+  border-left: 3px solid #0f62fe;
+  padding-left: calc(#{$spacing-06} - 3px);  // compensate left border width
+}
+
+// ── Add instance form ─────────────────────────────────────────────────────────
+.add-instance-form {
+  border-top: 1px dashed #d1d5db;
+  padding-top: $spacing-06;
+  margin-top: $spacing-02;
+}
+
+.add-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-04;
+  align-items: flex-end;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+.add-row-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: $spacing-04;
+  align-items: flex-end;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Save / reset action bar — sticky-looking footer strip
+// ─────────────────────────────────────────────────────────────────────────────
+.config-actions {
+  display: flex;
+  gap: $spacing-04;
+  padding: $spacing-06 $spacing-07;
+  margin: $spacing-06 #{-$spacing-08} 0;  // bleed to page edges
+  background: #f8f9fa;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 8px 8px;
+  align-items: center;
+}
+
+// ── Stand-alone intro text between section heading and tiles ──────────────────
+.tile-intro-standalone {
+  @include type-style('body-compact-01');
+  color: var(--cds-text-secondary);
+  margin-bottom: $spacing-06;
+  line-height: 1.6;
+}
+
+// ── Ingestion source config block — inside the Ingestion Sources section ──────
+// Each source (COS / S3 / Web / Box) gets its own block separated by a dashed
+// border, mirrors the way Maximo instance rows are separated inside the tile.
+.ingest-source-config-block {
+  padding-bottom: $spacing-07;
+  margin-bottom: $spacing-07;
+  border-bottom: 1px dashed #d1d5db;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.ingest-source-config-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  margin-bottom: $spacing-05;
+
+  svg { fill: var(--cds-text-secondary); flex-shrink: 0; }
+}
+
+.ingest-source-config-title {
+  @include type-style('productive-heading-01');
+  font-weight: 700;
+  color: var(--cds-text-primary);
+  flex: 1;
+}
+
+.ingest-source-config-note {
+  @include type-style('helper-text-01');
+  color: var(--cds-text-secondary);
+  margin-bottom: $spacing-05;
+  line-height: 1.5;
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85em;
+    background: #f4f4f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+}
+
+// ── Presentation (demo) mode — compact footer strip ──────────────────────────
+.demo-mode-footer-strip {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  padding: $spacing-04 $spacing-07;
+  margin: $spacing-06 #{-$spacing-08} 0;
+  border-top: 1px solid var(--cds-border-subtle-01);
+  background: var(--cds-layer-01);
+}
+
+.demo-mode-footer-label {
+  font-size: 0.8125rem;
+  color: var(--cds-text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.demo-mode-footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #24a148;
+  svg { fill: #24a148; flex-shrink: 0; }
+}
+
+.demo-mode-footer-note {
+  margin: 0 #{-$spacing-08};
+  padding: $spacing-03 $spacing-07;
+  background: var(--cds-layer-01);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--cds-text-secondary);
+  border-top: 1px dashed var(--cds-border-subtle-01);
+
+  strong {
+    color: var(--cds-text-primary);
+    font-weight: 600;
+  }
+}
+
+// ── OpenSearch instance chip — shown below the status dot when connected ──────
+.os-instance-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-03;
+  background: #f0f4ff;
+  border: 1px solid #c9d4f5;
+  border-radius: 6px;
+  padding: $spacing-02 $spacing-04;
+  margin-bottom: $spacing-05;
+
+  &__label {
+    @include type-style('label-01');
+    color: var(--cds-text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  &__host {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8125rem;
+    color: #0043ce;
+    word-break: break-all;
+  }
+}

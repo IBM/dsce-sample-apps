@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Supply Chain Risk Control Tower · IBM Carbon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ─── Shell Header ──────────────────────────────────────────────────────── -->
+<header class="shell-header">
+  <button class="hamburger" onclick="toggleNav()" aria-label="Toggle navigation">
+    <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+      <rect x="4" y="8"  width="24" height="2"/><rect x="4" y="15" width="24" height="2"/><rect x="4" y="22" width="24" height="2"/>
+    </svg>
+  </button>
+
+  <div class="brand">
+    <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="2" fill="#0f62fe"/>
+      <path d="M8 10h16M8 14h16M8 18h10M8 22h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-name">Supply Chain Risk Control Tower</span>
+  </div>
+
+  <nav class="header-nav">
+    <a data-page="page-control-tower"   onclick="navigate('page-control-tower')">Control Tower</a>
+    <a data-page="page-scenarios"       onclick="navigate('page-scenarios')">Scenarios</a>
+    <a data-page="page-event-stream"    onclick="navigate('page-event-stream')">Event Stream</a>
+    <a data-page="page-analytics"       onclick="navigate('page-analytics')">Analytics</a>
+    <a data-page="page-architecture"    onclick="navigate('page-architecture')">Architecture</a>
+    <a data-page="page-ai"              onclick="navigate('page-ai')">AI Prompts</a>
+    <a data-page="page-topics"          onclick="navigate('page-topics')">Topics &amp; Schemas</a>
+  </nav>
+
+  <div class="header-actions">
+    <div class="live-badge" id="live-badge">
+      <div class="live-dot"></div>
+      <span class="badge-text">PAUSED</span>
+    </div>
+    <button class="icon-btn" title="Notifications">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M28 25h-2V15a10 10 0 00-20 0v10H4v2h24zm-4 0H8V15a8 8 0 0116 0zM16 30a3 3 0 003-3h-6a3 3 0 003 3z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ─── Side Navigation ───────────────────────────────────────────────────── -->
+<nav class="side-nav" id="side-nav">
+  <div class="nav-section">
+    <div class="nav-section-title">Dashboard</div>
+    <button class="nav-item active" data-page="page-control-tower" onclick="navigate('page-control-tower')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M4 20h10v8H4zm14 0h10v8H18zM4 4h10v14H4zm14 0h10v14H18z"/></svg>
+      <span class="nav-label">Control Tower</span>
+    </button>
+    <button class="nav-item" data-page="page-scenarios" onclick="navigate('page-scenarios')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 4a12 12 0 100 24A12 12 0 0016 4zm0 22a10 10 0 110-20 10 10 0 010 20zm1-10.59L21.59 10 23 11.41l-6 6-3-3L15.41 13z"/></svg>
+      <span class="nav-label">Scenarios</span>
+    </button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Live Data</div>
+    <button class="nav-item" data-page="page-event-stream" onclick="navigate('page-event-stream')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M28 24h-2v-8a6 6 0 00-12 0v8H4v2h24zM16 4a4 4 0 100 8 4 4 0 000-8z"/></svg>
+      <span class="nav-label">Event Stream</span>
+    </button>
+    <button class="nav-item" data-page="page-analytics" onclick="navigate('page-analytics')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M27 28H5a1 1 0 01-1-1V5h2v21h21zM9 20l5-6 4 4 5-7 4 4v5H9z"/></svg>
+      <span class="nav-label">Analytics</span>
+    </button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Architecture</div>
+    <button class="nav-item" data-page="page-architecture" onclick="navigate('page-architecture')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M29 10h-3V7a1 1 0 00-1-1H7a1 1 0 00-1 1v3H3a1 1 0 00-1 1v8a1 1 0 001 1h3v5a1 1 0 001 1h18a1 1 0 001-1v-5h3a1 1 0 001-1v-8a1 1 0 00-1-1zM8 8h16v2H8zm16 16H8v-4h16zm4-6H4v-6h3v2h2v-2h14v2h2v-2h3z"/></svg>
+      <span class="nav-label">Architecture</span>
+    </button>
+    <button class="nav-item" data-page="page-topics" onclick="navigate('page-topics')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M26 6H6a2 2 0 00-2 2v16a2 2 0 002 2h20a2 2 0 002-2V8a2 2 0 00-2-2zm0 2v4H6V8zm-20 4h6v4H6zm0 6h6v4H6zm14 4h-6v-4h6zm0-6h-6v-4h6zm6 6h-4v-4h4zm0-6h-4v-4h4z"/></svg>
+      <span class="nav-label">Topics &amp; Schemas</span>
+    </button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">AI &amp; Automation</div>
+    <button class="nav-item" data-page="page-ai" onclick="navigate('page-ai')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M21 28.5a2.5 2.5 0 000-5 2.5 2.5 0 000 5zM11 9a2.5 2.5 0 000-5 2.5 2.5 0 000 5zM26 8h-4.184A3.492 3.492 0 0018.5 5.5a3.5 3.5 0 000 7A3.492 3.492 0 0021.816 10H25v12a3 3 0 01-3 3h-1.184a3.5 3.5 0 100 2H22a5 5 0 005-5z"/></svg>
+      <span class="nav-label">AI Prompts</span>
+    </button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Demo Controls</div>
+    <button class="nav-item" data-page="page-workshop" onclick="navigate('page-workshop')">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M4 20h24v2H4zm0-6h24v2H4zm0-6h24v2H4z"/></svg>
+      <span class="nav-label">Workshop Guide</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── Main Content ──────────────────────────────────────────────────────── -->
+<main class="main-content" id="main-content">
+
+  <!-- ══ Page: Control Tower ══════════════════════════════════════════════ -->
+  <section class="page active" id="page-control-tower">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Control Tower</span></div>
+      <h1>Real-Time Supply Chain Risk Control Tower</h1>
+      <p>Correlates supplier, shipment, inventory, customer-order, and external-risk events to detect disruption risk and recommend next-best actions in real time.</p>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-row">
+      <div class="kpi-tile">
+        <div class="kpi-label">EVENTS PROCESSED</div>
+        <div class="kpi-value" id="kpi-events">0</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-label">CRITICAL RISKS</div>
+        <div class="kpi-value" id="kpi-critical" style="color:var(--risk-critical)">0</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-label">HIGH RISKS</div>
+        <div class="kpi-value" id="kpi-high" style="color:var(--risk-high)">0</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-label">AVG RISK SCORE</div>
+        <div class="kpi-value" id="kpi-avgscore">—</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-label">MAX SHIP DELAY</div>
+        <div class="kpi-value" id="kpi-delay">—</div>
+      </div>
+      <div class="kpi-tile" style="border-right:none;display:none">
+        <div class="kpi-label">DAYS OF SUPPLY</div>
+        <div class="kpi-value" id="kpi-dos">—</div>
+      </div>
+    </div>
+
+    <!-- Mode Bar -->
+    <div id="mode-bar"></div>
+
+    <!-- Quick Launch -->
+    <div class="tile tile-lg mb-3" style="border-left:4px solid var(--ibm-blue-60)">
+      <div class="flex-between mb-2">
+        <div>
+          <h2 style="font-size:1rem;font-weight:600">Quick Launch</h2>
+          <p class="text-secondary text-sm mt-1">Select a scenario and start the simulation to stream events into the control tower.</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="btn-start" onclick="uiStart();uiUpdateControls()">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M7 28L25 16 7 4z"/></svg>
+            <span id="btn-start-label">Start Simulation</span>
+          </button>
+          <button class="btn btn-secondary" id="btn-stop" disabled onclick="uiStop();uiUpdateControls()">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><rect x="7" y="7" width="18" height="18"/></svg>
+            Pause
+          </button>
+          <button class="btn btn-ghost" id="btn-reset" onclick="uiReset()">
+            <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M8 16a8 8 0 1114.93-4H20l4 4-4 4v-3a6 6 0 10-2.22 4.6l1.42 1.41A8 8 0 018 16z"/></svg>
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-c gap-2" style="flex-wrap:wrap">
+        <div class="flex-c gap-1">
+          <label class="text-xs text-secondary" style="white-space:nowrap">Scenario:</label>
+          <select id="scenario-select" onchange="selectScenario(this.value)" style="background:var(--cds-layer-02);border:1px solid #525252;color:var(--cds-text-primary);padding:.375rem .75rem;border-radius:var(--radius);font-size:.875rem;font-family:inherit;">
+            <option value="supplier_delay">Supplier Delay + Port Congestion</option>
+            <option value="port_congestion">Port Congestion</option>
+            <option value="inventory_drop">Rapid Inventory Drop</option>
+            <option value="recovery">Recovery Scenario</option>
+          </select>
+        </div>
+        <div class="flex-c gap-1">
+          <label class="text-xs text-secondary">Batches: <strong id="batch-slider-val">12</strong></label>
+          <input id="batch-slider" type="range" min="4" max="40" value="12"
+            style="accent-color:var(--ibm-blue-60);cursor:pointer"/>
+        </div>
+        <div class="flex-c gap-1">
+          <label class="text-xs text-secondary">Speed: <strong id="speed-slider-val">1.2s</strong></label>
+          <input id="speed-slider" type="range" min="300" max="4000" step="100" value="1200"
+            style="accent-color:var(--ibm-blue-60);cursor:pointer"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Cards Grid -->
+    <div class="flex-between mb-2">
+      <h2 style="font-size:1.125rem;font-weight:400">Active Disruption Risks</h2>
+      <span class="tag tag-blue text-xs" id="risk-count-badge">Live</span>
+    </div>
+    <div class="risk-cards-grid" id="risk-cards-grid">
+      <p class="text-secondary text-sm" style="padding:.5rem">No risk events yet. Start a scenario to begin.</p>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Scenarios ═══════════════════════════════════════════════════ -->
+  <section class="page" id="page-scenarios">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Scenarios</span></div>
+      <h1>Demo Scenarios</h1>
+      <p>Four pre-built scenarios cover the key supply chain disruption patterns. Each streams synthetic events that exactly mirror what a connected ERP, logistics system, and risk feed would produce.</p>
+    </div>
+
+    <div class="scenario-grid" id="scenario-grid"></div>
+
+    <div class="tile tile-lg">
+      <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Run Controls</h2>
+      <div class="btn-group mb-3">
+        <button class="btn btn-primary" onclick="navigate('page-control-tower');uiStart();uiUpdateControls()">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M7 28L25 16 7 4z"/></svg>
+          Start Selected Scenario
+        </button>
+        <button class="btn btn-ghost" onclick="uiReset()">Reset</button>
+      </div>
+      <div class="notif info">
+        <div>
+          <div class="notif-title">Presenter tip</div>
+          <div class="notif-body">Start with <strong>Supplier Delay + Port Congestion</strong> — it produces the highest risk score and the most complete demo story. Then run <strong>Recovery</strong> to show the risk band falling as alternate supplier activates.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Workshop Hands-On Tasks</h2>
+      <div class="accordion">
+        <div class="acc-item open">
+          <div class="acc-header"><h3>1 · Observe CRITICAL risk band with default scenario</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body">Run <strong>Supplier Delay + Port Congestion</strong> with 12 batches. Watch the risk score climb to 85–90. The root cause: shipment delay (96h) exceeds available inventory coverage (0.87 days of supply).<br/><br/>Scoring breakdown: Inventory 35 + Shipment 30 + Supplier 15 + Customer 20 + External 20 − Mitigation 10 = <strong>Score 90</strong></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>2 · Show the recovery transition</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body">Switch to the <strong>Recovery</strong> scenario and run with 20 batches. After batch 10, delay drops to 12h and inventory restores. Watch the risk band transition: CRITICAL → HIGH → MEDIUM. The alternate supplier (SUP-221, reliability 91) contributes −10 mitigation credit.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>3 · Examine per-factor scoring</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body">After running a scenario, open the <strong>Analytics</strong> tab. The factor breakdown chart shows exactly which driver (inventory, shipment, external) is contributing most to the score. The trend chart shows how risk evolved per event batch.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>4 · Generate an AI recommendation</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body">Open the <strong>AI Prompts</strong> tab after running a scenario. Click <em>Executive Summary</em>, <em>Supplier Email</em>, or <em>Procurement Escalation</em>. These templates use the live risk and recommendation data. In production, they would be sent to watsonx.ai for LLM generation.</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>5 · Inspect the Kafka topic model</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body">Open the <strong>Topics &amp; Schemas</strong> tab. It shows all 10 Kafka topics (7 input + 3 output), their keys, and the JSON schema for each. These schemas are deployable to Confluent Schema Registry with one command: <code style="font-family:monospace">python -m scrc.register_schemas</code></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Event Stream ════════════════════════════════════════════════ -->
+  <section class="page" id="page-event-stream">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Live Data</span><span>›</span><span>Event Stream</span></div>
+      <h1>Event Stream Monitor</h1>
+      <p>Real-time view of all events flowing through the 10 Kafka topics — 7 input topics from source systems and 3 output topics from the risk engine.</p>
+    </div>
+
+    <div class="flex-between mb-2">
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="uiStart();uiUpdateControls();navigate('page-event-stream')">
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M7 28L25 16 7 4z"/></svg> Start
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="uiStop();uiUpdateControls()">Pause</button>
+        <button class="btn btn-ghost btn-sm" onclick="uiReset()">Reset</button>
+      </div>
+      <span class="text-secondary text-sm">Events: <strong id="stream-event-count">0</strong></span>
+    </div>
+
+    <div id="stream-tabs">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="stream-tab-input">Input Topics (7)</button>
+        <button class="tab-btn" data-tab="stream-tab-output">Output Topics (3)</button>
+        <button class="tab-btn" data-tab="stream-tab-inspector">Topic Inspector</button>
+        <button class="tab-btn" data-tab="stream-tab-proclog">Process Log</button>
+      </div>
+
+      <div class="tab-panel active" id="stream-tab-input">
+        <div class="grid-2 mb-2">
+          <div>
+            <p class="text-xs text-secondary mb-1">Colour coding: <span style="color:var(--risk-critical)">■ CRITICAL events</span> &nbsp; <span style="color:var(--risk-high)">■ HIGH delay</span> &nbsp; <span style="color:var(--ibm-cyan-40)">■ standard topics</span></p>
+            <div class="stream-feed" id="stream-input"></div>
+          </div>
+          <div>
+            <p class="text-xs text-secondary mb-1">Input topic distribution</p>
+            <div class="tile" style="padding:.75rem">
+              <table class="data-table" style="font-size:.75rem">
+                <thead><tr><th>Topic</th><th>Type</th><th>Key</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono text-xs">supplier_profiles</td><td><span class="tag tag-blue">Reference</span></td><td class="mono text-xs">supplier_id</td></tr>
+                  <tr><td class="mono text-xs">component_master</td><td><span class="tag tag-blue">Reference</span></td><td class="mono text-xs">component_id</td></tr>
+                  <tr><td class="mono text-xs">purchase_orders</td><td><span class="tag tag-teal">Transactional</span></td><td class="mono text-xs">po_id</td></tr>
+                  <tr><td class="mono text-xs">shipments</td><td><span class="tag tag-teal">Transactional</span></td><td class="mono text-xs">shipment_id</td></tr>
+                  <tr><td class="mono text-xs">inventory_levels</td><td><span class="tag tag-teal">Transactional</span></td><td class="mono text-xs">component_id</td></tr>
+                  <tr><td class="mono text-xs">customer_orders</td><td><span class="tag tag-teal">Transactional</span></td><td class="mono text-xs">customer_order_id</td></tr>
+                  <tr><td class="mono text-xs">external_risk_events</td><td><span class="tag tag-purple">External</span></td><td class="mono text-xs">risk_event_id</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="stream-tab-output">
+        <div class="grid-2 mb-2">
+          <div>
+            <p class="text-xs text-secondary mb-1"><span style="color:var(--ibm-green-40)">■ Output events</span> from the risk engine</p>
+            <div class="stream-feed" id="stream-output"></div>
+          </div>
+          <div>
+            <p class="text-xs text-secondary mb-1">Output topic model</p>
+            <div class="tile" style="padding:.75rem">
+              <table class="data-table" style="font-size:.75rem">
+                <thead><tr><th>Topic</th><th>Key</th><th>Triggered by</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono text-xs">supply_chain_risk_scores</td><td class="mono text-xs">risk_id</td><td class="text-secondary text-xs">Any input update</td></tr>
+                  <tr><td class="mono text-xs">supply_chain_recommendations</td><td class="mono text-xs">recommendation_id</td><td class="text-secondary text-xs">Each risk score</td></tr>
+                  <tr><td class="mono text-xs">control_tower_alerts</td><td class="mono text-xs">alert_id</td><td class="text-secondary text-xs">HIGH + CRITICAL bands</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="notif info mt-2">
+              <div>
+                <div class="notif-title">In production</div>
+                <div class="notif-body">These output topics are consumed by OpenSearch connectors, Slack webhooks, watsonx.ai agents, Tableflow materializers, and any operational workflow system.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="stream-tab-inspector">
+        <div class="flex-between mb-2">
+          <h3 style="font-size:.9375rem;font-weight:400">Recent events log</h3>
+          <button class="btn btn-ghost btn-sm" onclick="renderEventTable()">Refresh</button>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Time</th><th>Topic</th><th>Key</th><th>Summary</th></tr></thead>
+            <tbody id="event-table-body"></tbody>
+          </table>
+        </div>
+        <p class="text-xs text-secondary mt-2">Showing last 30 events. <button class="btn btn-ghost btn-sm" onclick="renderEventTable()">Refresh table</button></p>
+      </div>
+
+      <div class="tab-panel" id="stream-tab-proclog">
+        <div class="flex-between mb-2">
+          <div>
+            <h3 style="font-size:.9375rem;font-weight:400">Process stdout log</h3>
+            <p class="text-secondary text-xs mt-1">Live output from <code style="font-family:monospace">scrc.producer</code> and <code style="font-family:monospace">scrc.risk_engine</code> managed by kafka_bridge.py. Only populated in Live mode.</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="const el=$('process-log');if(el)el.innerHTML=''">Clear</button>
+        </div>
+        <div class="stream-feed" id="process-log" style="height:400px"></div>
+        <div class="notif info mt-2">
+          <div>
+            <div class="notif-title">How this works</div>
+            <div class="notif-body">kafka_bridge.py captures stdout from both sub-processes and streams each line here as a <code style="font-family:monospace">process_log</code> SSE event. Producer logs one line per produced event. Risk Engine logs Kafka delivery confirmations.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Analytics ══════════════════════════════════════════════════ -->
+  <section class="page" id="page-analytics">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Live Data</span><span>›</span><span>Analytics</span></div>
+      <h1>Risk Analytics</h1>
+      <p>Risk score trend and factor breakdown charts update in real time as the simulation processes events.</p>
+    </div>
+
+    <div id="analytics-tabs">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="analytics-trend">Risk Score Trend</button>
+        <button class="tab-btn" data-tab="analytics-factors">Factor Breakdown</button>
+        <button class="tab-btn" data-tab="analytics-scoring">Scoring Logic</button>
+      </div>
+
+      <div class="tab-panel active" id="analytics-trend">
+        <div class="tile tile-lg">
+          <div class="flex-between mb-2">
+            <div>
+              <h2 style="font-size:1rem;font-weight:600">Risk Score Over Time</h2>
+              <p class="text-secondary text-sm">Per-component risk score at each event batch. Dashed lines show band thresholds.</p>
+            </div>
+            <div class="flex-c gap-1">
+              <span class="tag tag-critical text-xs">CRITICAL ≥ 85</span>
+              <span class="tag tag-high text-xs">HIGH ≥ 70</span>
+              <span class="tag tag-medium text-xs">MEDIUM ≥ 40</span>
+            </div>
+          </div>
+          <canvas id="trend-canvas" height="280" style="width:100%"></canvas>
+        </div>
+
+        <div class="tile tile-lg mt-3">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Current Risk Summary</h2>
+          <div class="risk-cards-grid" id="analytics-risk-cards" style="margin:0">
+            <!-- Will be populated by JS or show KPI -->
+          </div>
+          <p class="text-secondary text-sm mt-2">Risk cards are synchronised with the Control Tower page.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="analytics-factors">
+        <div class="tile tile-lg">
+          <div class="flex-between mb-2">
+            <div>
+              <h2 style="font-size:1rem;font-weight:600">Scoring Factor Breakdown</h2>
+              <p class="text-secondary text-sm">Contribution of each factor to the highest-scoring component's risk score.</p>
+            </div>
+          </div>
+          <canvas id="factor-canvas" height="240" style="width:100%"></canvas>
+        </div>
+
+        <div class="grid-2 mt-3">
+          <div class="tile tile-lg">
+            <h3 style="font-size:.9375rem;font-weight:600;margin-bottom:1rem">Factor Weights</h3>
+            <table class="data-table">
+              <thead><tr><th>Factor</th><th>Max Points</th><th>Trigger Condition</th></tr></thead>
+              <tbody>
+                <tr><td>Inventory Risk</td><td><strong style="color:var(--risk-critical)">35</strong></td><td class="text-secondary text-sm">Days of supply &lt; delay days or &lt; safety stock</td></tr>
+                <tr><td>Shipment Delay</td><td><strong style="color:var(--risk-high)">30</strong></td><td class="text-secondary text-sm">delay_hours ÷ 3 (capped at 30)</td></tr>
+                <tr><td>Supplier Risk</td><td><strong style="color:var(--risk-medium)">20</strong></td><td class="text-secondary text-sm">Reliability score &lt; 90</td></tr>
+                <tr><td>Customer Impact</td><td><strong style="color:var(--ibm-purple-40)">20</strong></td><td class="text-secondary text-sm">STRATEGIC priority order = 20 pts</td></tr>
+                <tr><td>External Event</td><td><strong style="color:var(--ibm-cyan-40)">20</strong></td><td class="text-secondary text-sm">severity × 4 + delay_hours ÷ 12</td></tr>
+                <tr><td>Mitigation Credit</td><td><strong style="color:var(--ibm-teal-40)">−10</strong></td><td class="text-secondary text-sm">Alternate supplier available</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tile tile-lg">
+            <h3 style="font-size:.9375rem;font-weight:600;margin-bottom:1rem">Current Scenario State</h3>
+            <table class="data-table" style="font-size:.8125rem">
+              <thead><tr><th>Entity</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Component</td><td class="mono">BRG-9004</td></tr>
+                <tr><td>Primary Supplier</td><td class="mono">SUP-1007 (reliability 74)</td></tr>
+                <tr><td>Alternate Supplier</td><td class="mono">SUP-221 (reliability 91)</td></tr>
+                <tr><td>Customer Order</td><td class="mono">CO-10491 (STRATEGIC)</td></tr>
+                <tr><td>Revenue at Risk</td><td class="mono">$750,000</td></tr>
+                <tr><td>Route</td><td class="mono">ROUTE-APAC-LAX-CHI</td></tr>
+                <tr><td>Safety Stock</td><td class="mono">600 units</td></tr>
+                <tr><td>Daily Usage</td><td class="mono">150 units/day</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="analytics-scoring">
+        <div class="tile tile-lg">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Risk Scoring Logic (Python → JavaScript)</h2>
+          <p class="text-secondary text-sm mb-2">The scoring formula is fully transparent. The same logic runs in <code style="font-family:monospace;background:#2e2e2e;padding:1px 4px;border-radius:2px">src/scrc/risk_logic.py</code>, Flink SQL, and this UI's JavaScript engine.</p>
+          <pre>score = inventory_risk       (0–35)
+      + shipment_delay_risk  (0–30)
+      + supplier_risk        (0–20)
+      + customer_impact_risk (0–20)
+      + external_event_risk  (0–20)
+      − mitigation_credit    (0–10)
+      → capped to [0, 100]
+
+RISK BAND
+  score ≥ 85  →  CRITICAL
+  score ≥ 70  →  HIGH
+  score ≥ 40  →  MEDIUM
+  score  < 40  →  LOW
+
+INVENTORY RISK
+  days_of_supply ≤ 0                       → 35
+  days_of_supply < max(delay_days, 1)      → 35
+  days_of_supply < 3                       → 25
+  days_of_supply < 7                       → 15
+  else                                     →  0
+
+SHIPMENT DELAY RISK
+  min(30, floor(delay_hours / 3))
+
+SUPPLIER RISK
+  reliability &lt; 70  → 20
+  reliability &lt; 80  → 15
+  reliability &lt; 90  →  8
+
+CUSTOMER IMPACT
+  priority = STRATEGIC           → 20
+  priority = HIGH                → 15
+  revenue_at_risk ≥ $250,000     → 10
+
+EXTERNAL EVENT RISK
+  min(20, severity × 4 + floor(expected_delay_hours / 12))
+
+MITIGATION CREDIT
+  alternate supplier available   → −10
+  component criticality LOW/MED  → −5</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Architecture ════════════════════════════════════════════════ -->
+  <section class="page" id="page-architecture">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Architecture</span></div>
+      <h1>Building Block Architecture</h1>
+      <p>End-to-end logical architecture from enterprise source systems through Confluent Cloud to downstream AI, analytics, and operational sinks.</p>
+    </div>
+
+    <div class="tile tile-lg mb-3">
+      <div id="arch-svg-container"></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="tile tile-lg">
+        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Design Principles</h2>
+        <div class="accordion">
+          <div class="acc-item open">
+            <div class="acc-header"><h3>Event-First</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body">Every change — supplier update, shipment delay, inventory movement, customer order — is treated as an event. This enables real-time correlation across systems that were never designed to talk to each other.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header"><h3>Transparent Scoring</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body">Risk scores are calculated from explainable factors, not a black-box ML model. Each factor is visible in the risk card. This makes the score easy to explain to a supply chain leader or procurement manager.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header"><h3>Governed</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body">JSON schemas and data contracts in Confluent Schema Registry enforce event shape, required fields, and valid enum values before data is consumed by the risk engine or any downstream system.</div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header"><h3>Composable</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body">Source systems are replaceable. The synthetic producers can be swapped for Confluent managed connectors (JDBC for Db2, MQ bridge for IBM MQ, HTTP source for supplier APIs) without changing the scoring layer.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tile tile-lg">
+        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">IBM Integration Points</h2>
+        <table class="data-table" style="font-size:.8125rem">
+          <thead><tr><th>IBM Product</th><th>Role in Architecture</th></tr></thead>
+          <tbody>
+            <tr><td><strong>watsonx.ai</strong></td><td class="text-secondary">Consume risk events, generate executive summaries, supplier emails, and planner guidance</td></tr>
+            <tr><td><strong>watsonx.data</strong></td><td class="text-secondary">Tableflow materialises risk-score topics into lakehouse tables for historical analytics</td></tr>
+            <tr><td><strong>Db2</strong></td><td class="text-secondary">CDC connector streams inventory and PO changes from ERP database into Kafka</td></tr>
+            <tr><td><strong>IBM MQ</strong></td><td class="text-secondary">MQ source connector bridges EDI and operational messages from MQ to Kafka topics</td></tr>
+            <tr><td><strong>OpenSearch</strong></td><td class="text-secondary">Sink connector indexes risk events for Kibana operational dashboard</td></tr>
+            <tr><td><strong>Maximo</strong></td><td class="text-secondary">Creates work orders if component risk affects maintenance or spare-parts availability</td></tr>
+            <tr><td><strong>Instana</strong></td><td class="text-secondary">Monitors risk engine, API sinks, and control tower services for SLA and latency</td></tr>
+            <tr><td><strong>Terraform</strong></td><td class="text-secondary">Provisions Confluent Cloud environment, cluster, topics, service accounts, and API keys</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: AI Prompts ══════════════════════════════════════════════════ -->
+  <section class="page" id="page-ai">
+    <div class="page-header">
+      <div class="breadcrumb"><span>AI &amp; Automation</span><span>›</span><span>AI Prompts</span></div>
+      <h1>watsonx.ai Prompt Templates</h1>
+      <p>Three prompt templates convert live risk and recommendation events into executive summaries, supplier emails, and procurement escalations. Run a scenario first to populate the risk data used below.</p>
+    </div>
+
+    <div class="notif info mb-3">
+      <div>
+        <div class="notif-title">How this works in production</div>
+        <div class="notif-body">These prompts are filled with the latest risk event data and sent to watsonx.ai (or any LLM). The output is sent to a Slack channel, procurement system, or dashboard. In this demo, the templates are pre-filled with live simulation data and rendered locally.</div>
+      </div>
+    </div>
+
+    <div class="grid-3 mb-3">
+      <button class="tile tile-clickable" onclick="runAIPrompt('executive_summary')" style="text-align:left;cursor:pointer">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">📋</div>
+        <h3 style="font-size:1rem;font-weight:600;margin-bottom:.375rem">Executive Summary</h3>
+        <p class="text-secondary text-sm">Situation, business impact, recommended actions, and owner — ready for VP-level briefing.</p>
+        <div class="mt-2"><span class="tag tag-blue">Risk Summary</span></div>
+      </button>
+      <button class="tile tile-clickable" onclick="runAIPrompt('supplier_email')" style="text-align:left;cursor:pointer">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">✉️</div>
+        <h3 style="font-size:1rem;font-weight:600;margin-bottom:.375rem">Supplier Email Draft</h3>
+        <p class="text-secondary text-sm">Professional escalation email requesting confirmed ETA, recovery plan, and partial shipment options.</p>
+        <div class="mt-2"><span class="tag tag-teal">Supplier Comms</span></div>
+      </button>
+      <button class="tile tile-clickable" onclick="runAIPrompt('procurement_escalation')" style="text-align:left;cursor:pointer">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">🚨</div>
+        <h3 style="font-size:1rem;font-weight:600;margin-bottom:.375rem">Procurement Escalation</h3>
+        <p class="text-secondary text-sm">Internal note for procurement leadership with risk level, impact, mitigation, decision needed, and deadline.</p>
+        <div class="mt-2"><span class="tag tag-critical">Escalation</span></div>
+      </button>
+    </div>
+
+    <div class="tile tile-lg">
+      <div class="flex-between mb-2">
+        <h2 style="font-size:1rem;font-weight:600">Generated Output</h2>
+        <div class="btn-group">
+          <button class="btn btn-ghost btn-sm" onclick="$('ai-output').textContent = ''; $('ai-output').classList.remove('typing-cursor')">Clear</button>
+          <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard && navigator.clipboard.writeText($('ai-output').textContent).then(()=>showToast('Copied','Output copied to clipboard','success'))">Copy</button>
+        </div>
+      </div>
+      <div class="prompt-output" id="ai-output">Run a scenario first, then click one of the prompt templates above to generate output.</div>
+    </div>
+
+    <div class="tile tile-lg mt-3">
+      <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Prompt Source Templates</h2>
+      <p class="text-secondary text-sm mb-2">The full prompt templates are in <code style="font-family:monospace;background:#2e2e2e;padding:1px 5px;border-radius:2px">agents/</code>. The placeholders <code style="font-family:monospace;background:#2e2e2e;padding:1px 5px;border-radius:2px">&#123;&#123;risk_event&#125;&#125;</code> are replaced with the live risk JSON before sending to the LLM.</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-header"><h3>agents/risk_summary_prompt.md</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body"><pre style="margin:0">You are a supply chain risk control tower assistant.
+Convert a streaming risk event into an executive-ready summary.
+Keep the output specific, action-oriented, and suitable for a
+procurement or operations leader.
+
+Output sections:
+  Situation · Business Impact · Recommended Action
+  Owner · Confidence</pre></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>agents/supplier_email_prompt.md</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body"><pre style="margin:0">You are helping a procurement manager write a supplier escalation email.
+Requirements:
+- Professional and collaborative tone
+- Ask for confirmed ETA, recovery plan, partial shipment option, escalation contact
+- Mention business impact without sounding accusatory
+- Keep under 180 words</pre></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header"><h3>agents/procurement_escalation_prompt.md</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+          <div class="acc-body"><pre style="margin:0">Create a short internal escalation note for procurement leadership.
+Output fields:
+  Risk Level · Component · Supplier · Customer/Order Impact
+  Recommended Mitigation · Decision Needed · Deadline</pre></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Topics & Schemas ════════════════════════════════════════════ -->
+  <section class="page" id="page-topics">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Architecture</span><span>›</span><span>Topics &amp; Schemas</span></div>
+      <h1>Kafka Topics &amp; Data Contracts</h1>
+      <p>10 Kafka topics with JSON Schema Draft 2020-12 definitions. All schemas enforce <code style="font-family:monospace;background:#2e2e2e;padding:1px 4px">additionalProperties: false</code> and are deployable to Confluent Schema Registry.</p>
+    </div>
+
+    <div id="topics-tabs">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="topics-input">Input Topics (7)</button>
+        <button class="tab-btn" data-tab="topics-output">Output Topics (3)</button>
+        <button class="tab-btn" data-tab="topics-flink">Flink SQL</button>
+        <button class="tab-btn" data-tab="topics-contracts">Data Contracts</button>
+      </div>
+
+      <div class="tab-panel active" id="topics-input">
+        <div class="data-table-wrap mb-3">
+          <table class="data-table">
+            <thead><tr><th>Topic</th><th>Key</th><th>Type</th><th>Required Fields</th><th>Schema</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="mono">supplier_profiles</td><td class="mono text-xs">supplier_id</td>
+                <td><span class="tag tag-blue">Reference</span></td>
+                <td class="text-sm text-secondary">supplier_id, supplier_name, region, country, reliability_score (0–100), risk_tier, preferred</td>
+                <td><span class="tag tag-teal">SupplierProfile</span></td>
+              </tr>
+              <tr>
+                <td class="mono">component_master</td><td class="mono text-xs">component_id</td>
+                <td><span class="tag tag-blue">Reference</span></td>
+                <td class="text-sm text-secondary">component_id, component_name, criticality, lead_time_days, approved_suppliers, safety_stock_qty</td>
+                <td><span class="tag tag-teal">ComponentMaster</span></td>
+              </tr>
+              <tr>
+                <td class="mono">purchase_orders</td><td class="mono text-xs">po_id</td>
+                <td><span class="tag tag-purple">Transactional</span></td>
+                <td class="text-sm text-secondary">event_id, po_id, component_id, supplier_id, ordered_qty, committed_eta, status</td>
+                <td><span class="tag tag-teal">PurchaseOrder</span></td>
+              </tr>
+              <tr>
+                <td class="mono">shipments</td><td class="mono text-xs">shipment_id</td>
+                <td><span class="tag tag-purple">Transactional</span></td>
+                <td class="text-sm text-secondary">event_id, shipment_id, po_id, supplier_id, component_id, carrier, status (enum), eta, delay_hours (≥0), route_id</td>
+                <td><span class="tag tag-teal">Shipment</span></td>
+              </tr>
+              <tr>
+                <td class="mono">inventory_levels</td><td class="mono text-xs">component_id</td>
+                <td><span class="tag tag-purple">Transactional</span></td>
+                <td class="text-sm text-secondary">event_id, component_id, site_id, on_hand_qty, reserved_qty, safety_stock_qty, daily_usage_qty</td>
+                <td><span class="tag tag-teal">InventoryLevel</span></td>
+              </tr>
+              <tr>
+                <td class="mono">customer_orders</td><td class="mono text-xs">customer_order_id</td>
+                <td><span class="tag tag-purple">Transactional</span></td>
+                <td class="text-sm text-secondary">event_id, customer_order_id, customer_name, component_id, required_qty, committed_ship_date, priority (enum), revenue_at_risk</td>
+                <td><span class="tag tag-teal">CustomerOrder</span></td>
+              </tr>
+              <tr>
+                <td class="mono">external_risk_events</td><td class="mono text-xs">risk_event_id</td>
+                <td><span class="tag tag-critical">External</span></td>
+                <td class="text-sm text-secondary">event_id, risk_event_id, event_type (enum), region, country, route_id, severity (1–5), description, expected_delay_hours</td>
+                <td><span class="tag tag-teal">ExternalRiskEvent</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="notif success">
+          <div>
+            <div class="notif-title">Register schemas with one command</div>
+            <div class="notif-body"><code style="font-family:monospace">python -m scrc.register_schemas --schema-dir schemas</code> — pushes all 10 JSON schemas to Confluent Schema Registry as <code style="font-family:monospace">topic-value</code> subjects with JSON Schema type.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="topics-output">
+        <div class="grid-3">
+          <div class="tile tile-lg" style="border-left:3px solid var(--risk-critical)">
+            <h3 style="font-size:.9375rem;font-weight:600;margin-bottom:.75rem">supply_chain_risk_scores</h3>
+            <p class="text-secondary text-sm mb-1">Key: <span class="mono">risk_id</span></p>
+            <pre style="font-size:.75rem;line-height:1.5">{
+  "risk_id":         "RISK-...",
+  "component_id":    "BRG-9004",
+  "supplier_id":     "SUP-1007",
+  "customer_order_id": "CO-10491",
+  "risk_score":      90,
+  "risk_band":       "CRITICAL",
+  "root_cause":      "...",
+  "days_of_supply":  0.87,
+  "max_delay_hours": 96,
+  "scoring_factors": { ... },
+  "event_time":      "2026-..."
+}</pre>
+          </div>
+          <div class="tile tile-lg" style="border-left:3px solid var(--ibm-green-40)">
+            <h3 style="font-size:.9375rem;font-weight:600;margin-bottom:.75rem">supply_chain_recommendations</h3>
+            <p class="text-secondary text-sm mb-1">Key: <span class="mono">recommendation_id</span></p>
+            <pre style="font-size:.75rem;line-height:1.5">{
+  "recommendation_id": "REC-...",
+  "risk_id":         "RISK-...",
+  "component_id":    "BRG-9004",
+  "risk_band":       "CRITICAL",
+  "business_impact": "CO-10491 is
+    STRATEGIC priority with
+    $750,000 revenue at risk.",
+  "recommended_action": "Allocate
+    current stock, source from
+    SUP-221, expedite shipment.",
+  "confidence":      0.86,
+  "event_time":      "2026-..."
+}</pre>
+          </div>
+          <div class="tile tile-lg" style="border-left:3px solid var(--ibm-yellow-30)">
+            <h3 style="font-size:.9375rem;font-weight:600;margin-bottom:.75rem">control_tower_alerts</h3>
+            <p class="text-secondary text-sm mb-1">Key: <span class="mono">alert_id</span></p>
+            <pre style="font-size:.75rem;line-height:1.5">{
+  "alert_id":     "ALERT-...",
+  "risk_id":      "RISK-...",
+  "severity":     "CRITICAL",
+  "title":        "CRITICAL supply
+    chain risk for BRG-9004",
+  "message":      "Shipment delay
+    exceeds inventory coverage.
+    Score 90. Days: 0.87.",
+  "recommended_action": "...",
+  "event_time":   "2026-..."
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="topics-flink">
+        <div class="notif info mb-3">
+          <div>
+            <div class="notif-title">Confluent Cloud for Apache Flink</div>
+            <div class="notif-body">The Python risk engine can be replaced with these Flink SQL statements in Confluent Cloud for a fully managed, auto-scaling streaming implementation. The scoring logic is identical.</div>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="acc-item open">
+            <div class="acc-header"><h3>01_enriched_supply_view.sql — Join all context</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body"><pre id="flink-sql-enriched"></pre></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-header"><h3>03_calculate_risk_scores.sql — Score and publish</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+            <div class="acc-body"><pre id="flink-sql-scores"></pre></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="topics-contracts">
+        <div class="grid-2">
+          <div>
+            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Contract Rules by Topic</h2>
+            <div class="accordion">
+              <div class="acc-item open">
+                <div class="acc-header"><h3>supplier_profiles</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+                <div class="acc-body">supplier_id required · reliability_score 0–100 · risk_tier must be LOW | MEDIUM | HIGH</div>
+              </div>
+              <div class="acc-item">
+                <div class="acc-header"><h3>shipments</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+                <div class="acc-body">shipment_id, po_id, component_id, supplier_id, eta, delay_hours (≥0), route_id required · status must be BOOKED | PICKED_UP | IN_TRANSIT | AT_PORT | CUSTOMS_HOLD | DELAYED | DELIVERED</div>
+              </div>
+              <div class="acc-item">
+                <div class="acc-header"><h3>external_risk_events</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+                <div class="acc-body">event_type must be WEATHER | PORT | TARIFF | GEOPOLITICAL | SUPPLIER_CAPACITY | TRANSPORT | FUEL_COST · severity must be integer 1–5</div>
+              </div>
+              <div class="acc-item">
+                <div class="acc-header"><h3>customer_orders</h3><svg class="acc-arrow" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 22L4 10l1.41-1.41L16 19.17l10.59-10.58L28 10z"/></svg></div>
+                <div class="acc-body">priority must be LOW | MEDIUM | HIGH | STRATEGIC · revenue_at_risk must be a number ≥ 0</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Schema Evolution Policy</h2>
+            <div class="notif success mb-2">
+              <div><div class="notif-title">Safe changes</div><div class="notif-body">Adding optional fields is always backward-compatible.</div></div>
+            </div>
+            <div class="notif warning mb-2">
+              <div><div class="notif-title">Requires versioning</div><div class="notif-body">Renaming or removing required fields. Changing enum values. Changing field semantics.</div></div>
+            </div>
+            <div class="notif error mb-2">
+              <div><div class="notif-title">Never do</div><div class="notif-body">Changing a required field's type without a transition period. Removing a field with existing downstream consumers.</div></div>
+            </div>
+            <div class="notif info">
+              <div><div class="notif-title">Production metadata to add</div><div class="notif-body">data owner · domain owner · freshness SLO · PII tags · downstream consumers · escalation contact</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ Page: Workshop Guide ══════════════════════════════════════════════ -->
+  <section class="page" id="page-workshop">
+    <div class="page-header">
+      <div class="breadcrumb"><span>Demo Controls</span><span>›</span><span>Workshop Guide</span></div>
+      <h1>Workshop &amp; Demo Guide</h1>
+      <p>60–90 minute workshop agenda for partner solution engineers, client architects, supply chain leaders, and AI builders.</p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="tile tile-lg mb-3">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Demo Talk Track</h2>
+          <ol style="padding-left:1.25rem;line-height:2;font-size:.875rem;color:var(--cds-text-secondary)">
+            <li><strong style="color:var(--cds-text-primary)">Set the business context</strong> — A critical bearing component is delayed while inventory sits at 0.87 days of supply and a $750K strategic customer order is at risk. Nobody knows yet.</li>
+            <li><strong style="color:var(--cds-text-primary)">Show the event stream</strong> — Events arriving simultaneously from 7 source systems. Without streaming correlation, these would never intersect.</li>
+            <li><strong style="color:var(--cds-text-primary)">Show the risk score</strong> — Control tower calculates 5 transparent factors. Score 90, band CRITICAL. Click the factor breakdown.</li>
+            <li><strong style="color:var(--cds-text-primary)">Show the recommendation</strong> — Allocate stock, use alternate supplier SUP-221, expedite shipment. One sentence of action, not a report.</li>
+            <li><strong style="color:var(--cds-text-primary)">Run Recovery scenario</strong> — Reset, switch to Recovery, run. Watch risk band fall as alternate supplier activates and delay reduces.</li>
+            <li><strong style="color:var(--cds-text-primary)">Generate AI output</strong> — Open AI Prompts, click Executive Summary. This is what goes to watsonx.ai in production.</li>
+            <li><strong style="color:var(--cds-text-primary)">Close with IBM value</strong> — "Confluent is the nervous system. IBM AI and automation turn streaming signals into recommended actions."</li>
+          </ol>
+        </div>
+
+        <div class="tile tile-lg">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Discovery Questions</h2>
+          <ul style="padding-left:1.25rem;line-height:2;font-size:.875rem;color:var(--cds-text-secondary)">
+            <li>Which components, suppliers, or routes cause the most disruption today?</li>
+            <li>Where is inventory visibility stored — ERP, WMS, or spreadsheet?</li>
+            <li>How are supplier delays communicated today?</li>
+            <li>How does the business quantify customer delivery risk?</li>
+            <li>What action should happen when risk becomes critical?</li>
+            <li>Are there existing IBM MQ, Db2, Maximo, or watsonx environments to connect?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="tile tile-lg mb-3">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Workshop Agenda (90 min)</h2>
+          <table class="data-table">
+            <thead><tr><th>Time</th><th>Activity</th></tr></thead>
+            <tbody>
+              <tr><td class="text-sm">0–10 min</td><td>Business problem and use case story</td></tr>
+              <tr><td class="text-sm">10–20 min</td><td>Architecture walkthrough</td></tr>
+              <tr><td class="text-sm">20–35 min</td><td>Run supplier_delay scenario live</td></tr>
+              <tr><td class="text-sm">35–50 min</td><td>Run against Confluent Cloud topics</td></tr>
+              <tr><td class="text-sm">50–65 min</td><td>Review Flink SQL and scoring logic</td></tr>
+              <tr><td class="text-sm">65–80 min</td><td>Add AI recommendation prompt</td></tr>
+              <tr><td class="text-sm">80–90 min</td><td>Partner / customer adaptation discussion</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tile tile-lg mb-3">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">CLI Commands (live Confluent Cloud)</h2>
+          <pre>// 1. Infrastructure
+./scripts/setup.sh --auto-approve
+
+// 2. Register schemas
+python -m scrc.register_schemas
+
+// 3. Start risk engine
+python -m scrc.risk_engine
+
+// 4. Produce events (new terminal)
+python -m scrc.producer \
+  --scenario supplier_delay \
+  --count 50 --interval 1
+
+// 5. Dry-run (no Kafka needed)
+python -m scrc.risk_engine --dry-run
+
+// 6. Carbon UI bridge
+python code/ui/kafka_bridge.py</pre>
+        </div>
+
+        <div class="tile tile-lg">
+          <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">IBM Positioning Statement</h2>
+          <blockquote style="border-left:3px solid var(--ibm-blue-40);padding:.75rem 1rem;background:rgba(69,137,255,.06);border-radius:0 4px 4px 0;font-style:italic;font-size:.9375rem;line-height:1.7;color:var(--cds-text-primary)">
+            Confluent Cloud acts as the real-time nervous system for supply chain events. IBM capabilities such as watsonx.ai, watsonx.data, Db2, MQ, OpenSearch, Maximo, Instana, Terraform, and Ansible help turn those events into governed insights, recommendations, automation, and operational action.
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── Risk Detail Drawer ──────────────────────────────────────────────── -->
+<div id="drawer-overlay" onclick="closeRiskDrawer()"></div>
+<aside id="risk-drawer" aria-label="Risk detail panel">
+
+  <!-- Drawer Header -->
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-breadcrumb">Control Tower › Risk Detail</div>
+      <div class="flex-c gap-2 mt-1">
+        <span id="drawer-component-id" class="drawer-title">—</span>
+        <span id="drawer-band-tag"></span>
+      </div>
+    </div>
+    <button class="drawer-close" onclick="closeRiskDrawer()" title="Close (Esc)">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+        <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Score strip -->
+  <div class="drawer-score-strip">
+    <div class="drawer-score-num" id="drawer-score-num">—</div>
+    <div style="flex:1">
+      <div class="drawer-score-label mb-1">RISK SCORE</div>
+      <div class="risk-score-bar-track" style="height:8px">
+        <div id="drawer-score-bar" class="risk-score-bar-fill" style="width:0%;transition:width .8s cubic-bezier(.2,0,.38,.9)"></div>
+      </div>
+    </div>
+    <div style="text-align:right;min-width:60px">
+      <div class="drawer-stat-val" id="drawer-dos">—</div>
+      <div class="drawer-score-label">DAYS SUPPLY</div>
+    </div>
+    <div style="text-align:right;min-width:60px">
+      <div class="drawer-stat-val" id="drawer-delay">—</div>
+      <div class="drawer-score-label">MAX DELAY</div>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="drawer-tab-bar">
+    <button class="drawer-tab active" data-dtab="dtab-overview" onclick="switchDrawerTab(this)">Overview</button>
+    <button class="drawer-tab" data-dtab="dtab-actions"  onclick="switchDrawerTab(this)">Actions</button>
+    <button class="drawer-tab" data-dtab="dtab-timeline" onclick="switchDrawerTab(this)">Timeline</button>
+    <button class="drawer-tab" data-dtab="dtab-ai"       onclick="switchDrawerTab(this)">AI Brief</button>
+    <button class="drawer-tab" data-dtab="dtab-raw"      onclick="switchDrawerTab(this)">Raw JSON</button>
+  </div>
+
+  <!-- ── Tab: Overview ── -->
+  <div class="drawer-body dtab active" id="dtab-overview">
+    <div class="drawer-section-title">Root Cause</div>
+    <div id="drawer-root-cause" class="drawer-root-cause-box">—</div>
+
+    <div class="drawer-section-title mt-2">Scoring Factors</div>
+    <div id="drawer-factors-detail" class="drawer-factors-detail"></div>
+
+    <div class="drawer-section-title mt-2">Supplier &amp; Order Context</div>
+    <div id="drawer-context-table"></div>
+  </div>
+
+  <!-- ── Tab: Actions ── -->
+  <div class="drawer-body dtab" id="dtab-actions">
+    <div class="drawer-section-title">Recommended Action</div>
+    <div id="drawer-rec-action" class="action-box mb-2" style="font-size:.9rem;line-height:1.7"></div>
+
+    <div class="drawer-section-title mt-2">Business Impact</div>
+    <div id="drawer-biz-impact" class="drawer-root-cause-box mb-2"></div>
+
+    <div class="drawer-section-title mt-2">One-click Actions</div>
+    <div class="drawer-action-buttons">
+      <button class="drawer-action-btn" onclick="drawerAction('acknowledge')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.4L8.6 16 7.2 17.4 14 24.2 26.8 11.4 25.4 10z"/></svg>
+        Acknowledge Risk
+      </button>
+      <button class="drawer-action-btn" onclick="drawerAction('escalate')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 4l-8 8h5v12h6V12h5z"/></svg>
+        Escalate to Procurement
+      </button>
+      <button class="drawer-action-btn" onclick="drawerAction('alternate')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M4 8h24v3H4zm0 7h24v3H4zm0 7h16v3H4z"/></svg>
+        Activate Alternate Supplier
+      </button>
+      <button class="drawer-action-btn" onclick="drawerAction('expedite')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M28 15H8.83l5.58-5.59L13 8l-8 8 8 8 1.41-1.42L8.83 17H28v-2z"/></svg>
+        Expedite Shipment
+      </button>
+      <button class="drawer-action-btn" onclick="drawerAction('slack')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M28 6H4a2 2 0 00-2 2v16a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2zm0 4.7L16 19 4 10.7V8l12 8.3L28 8z"/></svg>
+        Send Slack Alert
+      </button>
+      <button class="drawer-action-btn" onclick="drawerAction('watsonx')">
+        <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M21 28.5a2.5 2.5 0 000-5 2.5 2.5 0 000 5zM11 9a2.5 2.5 0 000-5 2.5 2.5 0 000 5zM26 8h-4.184A3.492 3.492 0 0018.5 5.5a3.5 3.5 0 000 7A3.492 3.492 0 0021.816 10H25v12a3 3 0 01-3 3h-1.184a3.5 3.5 0 100 2H22a5 5 0 005-5z"/></svg>
+        Ask watsonx.ai
+      </button>
+    </div>
+    <div id="drawer-action-log" class="drawer-action-log"></div>
+  </div>
+
+  <!-- ── Tab: Timeline ── -->
+  <div class="drawer-body dtab" id="dtab-timeline">
+    <div class="drawer-section-title">Risk Score History — <span id="drawer-tl-component">BRG-9004</span></div>
+    <p class="text-secondary text-xs mb-2">All recorded scores for this component since the scenario started.</p>
+    <div id="drawer-timeline-list" class="drawer-timeline-list"></div>
+  </div>
+
+  <!-- ── Tab: AI Brief ── -->
+  <div class="drawer-body dtab" id="dtab-ai">
+    <div class="drawer-section-title">Auto-generated Brief</div>
+    <p class="text-secondary text-xs mb-2">Templates built from live risk data. In production, submit to watsonx.ai for LLM enrichment.</p>
+    <div id="drawer-ai-output" class="prompt-output" style="min-height:180px;margin-bottom:1rem"></div>
+    <div class="btn-group">
+      <button class="btn btn-secondary btn-sm" onclick="drawerGenerateAI('exec')">Executive Summary</button>
+      <button class="btn btn-ghost btn-sm"     onclick="drawerGenerateAI('email')">Supplier Email Draft</button>
+      <button class="btn btn-ghost btn-sm"     onclick="drawerGenerateAI('slack')">Slack Message</button>
+    </div>
+  </div>
+
+  <!-- ── Tab: Raw JSON ── -->
+  <div class="drawer-body dtab" id="dtab-raw">
+    <div class="drawer-section-title">Risk Score Event</div>
+    <pre id="drawer-raw-risk" style="font-size:.72rem;max-height:240px;overflow:auto;margin-bottom:1rem"></pre>
+    <div class="drawer-section-title">Recommendation Event</div>
+    <pre id="drawer-raw-rec"  style="font-size:.72rem;max-height:240px;overflow:auto"></pre>
+  </div>
+
+</aside>
+
+<!-- ─── Toast Container ───────────────────────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+<script>
+  // Populate Flink SQL code blocks after DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const e1 = document.getElementById('flink-sql-enriched');
+    const e2 = document.getElementById('flink-sql-scores');
+    if (e1) e1.textContent = FLINK_SQL.enriched_view;
+    if (e2) e2.textContent = FLINK_SQL.risk_scores;
+
+    // Sync event table on stream page focus
+    document.querySelector('[data-page="page-event-stream"]')
+      .addEventListener('click', () => setTimeout(renderEventTable, 100));
+
+    // Update stream event count in realtime
+    setInterval(() => {
+      const el = document.getElementById('stream-event-count');
+      if (el) el.textContent = SIM.totalEvents;
+    }, 500);
+
+    // Mirror risk cards on analytics page
+    setInterval(() => {
+      const src = document.getElementById('risk-cards-grid');
+      const dst = document.getElementById('analytics-risk-cards');
+      if (src && dst && document.getElementById('page-analytics').classList.contains('active')) {
+        if (Object.keys(SIM.latestRisks).length > 0) {
+          dst.innerHTML = src.innerHTML;
+        }
+      }
+    }, 2000);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "maximo-knowledge-hub"
+version = "1.0.0"
+description = "Enterprise RAG system for IBM Maximo asset maintenance knowledge"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "IBM", email = "maximo@ibm.com" }]
+keywords = ["maximo", "rag", "opensearch", "watsonx", "ibm"]
+
+# ── Runtime dependencies ──────────────────────────────────────────────────────
+dependencies = [
+    # HTTP / networking
+    "requests>=2.31",
+    "httpx>=0.27",
+
+    # Web framework + server
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.29",
+    "pydantic>=2.7",
+
+    # OpenSearch
+    "opensearch-py>=2.5",
+
+    # IBM Cloud / WatsonX
+    "ibm-cos-sdk>=1.14",          # COS (ingestion pipeline)
+
+    # Document parsing
+    "pdfplumber>=0.11",           # PDF extraction
+    "mammoth>=1.7",               # DOCX extraction
+
+    # Web crawling
+    "playwright>=1.44",           # spiderbot
+
+    # Configuration & utilities
+    "python-dotenv>=1.0",
+    "zod-python>=0.1",            # optional schema validation
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.23",
+    "httpx>=0.27",               # async test client
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "types-requests",
+]
+
+# ── Entry points ──────────────────────────────────────────────────────────────
+[project.scripts]
+mcp-server       = "mcp_server.__main__:main"
+spiderbot        = "spiderbot.__main__:main"
+ingestion        = "ingestion_pipeline.__main__:main"
+
+# ── Tool configuration ────────────────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["shared*", "mcp_server*", "spiderbot*", "ingestion_pipeline*"]

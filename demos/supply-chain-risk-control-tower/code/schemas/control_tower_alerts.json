@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "control_tower_alerts",
+  "title": "ControlTowerAlert",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "alert_id",
+    "risk_id",
+    "severity",
+    "title",
+    "message",
+    "recommended_action",
+    "event_time"
+  ],
+  "properties": {
+    "alert_id": {
+      "type": "string"
+    },
+    "risk_id": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "INFO",
+        "WARNING",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "recommended_action": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

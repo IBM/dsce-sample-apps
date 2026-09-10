@@ -1,0 +1,45 @@
+# ============================================================
+# Supply Chain Risk Control Tower — Terraform variables
+# ============================================================
+# Copy this file to terraform.tfvars and fill in your values:
+#
+#   cp code/terraform/terraform.tfvars.example code/terraform/terraform.tfvars
+#
+# terraform.tfvars is gitignored and must never be committed.
+# scripts/setup.sh creates this file interactively — use that
+# for guided setup. Fill it in manually only if you prefer.
+# ============================================================
+
+# ------------------------------------------------------------
+# Confluent Cloud Resource Management API key
+# This is NOT a Kafka cluster API key.
+# Create it in: Confluent Cloud UI → API keys → Add API key
+#               → My account → Cloud resource management
+# ------------------------------------------------------------
+confluent_cloud_api_key    = "replace-me"
+confluent_cloud_api_secret = "replace-me"
+
+# ------------------------------------------------------------
+# Existing environment (optional)
+# Leave empty to let Terraform create a new environment.
+# Set to an existing env ID (e.g. env-yw5xkj) if your
+# Cloud Resource Management key cannot create new environments.
+# ------------------------------------------------------------
+existing_environment_id    = ""
+
+# ------------------------------------------------------------
+# Cluster configuration
+# ------------------------------------------------------------
+environment_name           = "scrc-building-block"
+cloud_provider             = "AWS"
+region                     = "us-east-2"
+cluster_name               = "scrc-demo-cluster"
+cluster_availability       = "SINGLE_ZONE"
+topic_partitions           = 3
+
+# ------------------------------------------------------------
+# Schema Registry (Confluent Stream Governance)
+# The Essentials tier is free. Set to false only if your
+# Confluent environment does not have Stream Governance enabled.
+# ------------------------------------------------------------
+schema_registry_enabled    = true
