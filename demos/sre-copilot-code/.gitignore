@@ -1,0 +1,43 @@
+# ── Secrets & credentials ─────────────────────────────────────────────────────
+.env
+*.key
+*.pem
+*.p12
+*.pfx
+
+# ── Python ────────────────────────────────────────────────────────────────────
+backend/.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.python-version
+*.egg-info/
+
+# ── Node ──────────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Build & cache ─────────────────────────────────────────────────────────────
+agent/tools/__pycache__/
+backend/__pycache__/
+
+# ── Bob AI assistant internals (not part of the demo) ────────────────────────
+.bob/
+
+# ── Planning / internal notes (not for public repo) ──────────────────────────
+incident-resolution-plan.md

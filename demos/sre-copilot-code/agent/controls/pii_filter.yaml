@@ -1,0 +1,54 @@
+spec_version: v1
+kind: control
+control:
+  # ── Artifact binding ────────────────────────────────────────────────────────
+  artifact_name: pii_filter          # exact internal name from `orchestrate controls list-types`
+  name: incident_pii_filter          # unique name for this control instance
+  display_name: Incident PII Filter
+  description: >
+    Masks personally identifiable information — IP addresses, email addresses,
+    and phone numbers — in incident logs and agent inputs/outputs before they
+    are processed or returned.
+
+  # ── Execution hooks ─────────────────────────────────────────────────────────
+  # agent_pre_invoke  → filter user input before it reaches the agent
+  # agent_post_invoke → filter agent output before it reaches the user
+  hooks:
+    - agent_pre_invoke
+    - agent_post_invoke
+
+  # Lower number fires first. 10 = early in the pipeline (before guardrails).
+  priority: 10
+
+  # ── Agent binding ────────────────────────────────────────────────────────────
+  # Uses the agent's internal name (snake_case), not the display name
+  agent_names:
+    - incident_resolution_agent
+
+  # ── Control configuration ────────────────────────────────────────────────────
+  # All detection flags default to false — must opt in explicitly.
+  # See: orchestrate controls get-type --name pii_filter
+  config:
+    # PII types relevant to IT incident logs
+    detect_email:       true    # email addresses in logs, config, stack traces
+    detect_ip_address:  true    # server IPs, client IPs, internal network addresses
+    detect_phone:       true    # on-call phone numbers in incident metadata
+
+    # Keep disabled — not typically present in IT incident data
+    detect_ssn:          false
+    detect_bsn:          false
+    detect_credit_card:  false
+    detect_date_of_birth: false
+    detect_passport:     false
+    detect_driver_license: false
+    detect_bank_account: false
+    detect_medical_record: false
+
+    # Masking behaviour
+    default_mask_strategy: redact    # replace detected PII with redaction_text
+    redaction_text: "[REDACTED]"
+    block_on_detection: false        # redact but don't block — keeps agent functional
+
+    # Audit
+    log_detections: true             # log to WXO audit trail
+    include_detection_details: false # don't expose detection metadata to client

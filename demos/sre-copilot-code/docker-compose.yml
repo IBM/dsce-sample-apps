@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: ./backend
+    container_name: incident-backend
+    ports:
+      - "8765:8765"
+    env_file: .env
+    networks:
+      - incident-net
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: incident-frontend
+    ports:
+      - "3000:8080"
+    depends_on:
+      - backend
+    networks:
+      - incident-net
+    restart: unless-stopped
+
+networks:
+  incident-net:
+    driver: bridge
