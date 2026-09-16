@@ -1,0 +1,42 @@
+spec_version: v1
+kind: control
+control:
+  # ── Artifact binding ────────────────────────────────────────────────────────
+  artifact_name: Guardrails          # exact internal name from `orchestrate controls list-types`
+  name: incident_guardrails          # unique name for this control instance
+  display_name: Incident Content Guardrails
+  description: >
+    Blocks jailbreak attempts, prompt injection, and harmful or off-topic
+    content. Keeps the agent focused on incident resolution tasks and prevents
+    misuse during client demonstrations.
+
+  # ── Execution hooks ─────────────────────────────────────────────────────────
+  # agent_pre_invoke  → inspect user prompt before it reaches the agent
+  # agent_post_invoke → inspect agent response before it reaches the user
+  hooks:
+    - agent_pre_invoke
+    - agent_post_invoke
+
+  # Priority 20 → fires after PII filter (10) but before secrets detector (30)
+  priority: 20
+
+  # ── Agent binding ────────────────────────────────────────────────────────────
+  agent_names:
+    - incident_resolution_agent
+
+  # ── Control configuration ────────────────────────────────────────────────────
+  # All detection flags default to false — must opt in explicitly.
+  # See: orchestrate controls get-type --name Guardrails
+  config:
+    enabled:
+      jailbreak:    true    # block prompt injection / jailbreak attempts
+      harm:         true    # block requests for harmful instructions
+      hap:          true    # block hate speech, abuse, profanity
+      violence:     false   # not relevant for IT ops context
+      sexual_content: false # not relevant for IT ops context
+      social_bias:  false   # not blocking bias — can affect technical responses
+
+    # Message shown to the user when content is blocked
+    block_message: >
+      This request was blocked by content safety controls.
+      Please ask a question related to incident analysis and remediation.

@@ -225,5 +225,25 @@
       "architecture_description": "The application is a single-page app which has structured as a guided, six-stage story. A central stage-state layer drives navigation across the six DPDP lifecycle phases — Collect, Discover, Protect, Use, Detect, Govern — each rendered by its own stage component and themed around one IBM product: IBM Verify, IBM Guardium Discover and Classify, IBM Guardium Data Protection, HashiCorp Vault, IBM QRadar SIEM, and IBM OpenPages respectively. A left panel shows overall progress and persona context, while a right panel renders the active stage's interactive walkthrough, using synthetic demo data reflecting an Indian data context (names, ID formats, phone numbers), consistent with the DPDP Act's jurisdiction.\n\nEach stage captures user input (consent choices, scan triggers, role switches, encryption input, breach simulation, report generation) and updates the UI to reflect the resulting outcome, using simulated data for demo purposes. A floating \"IBM Bob\" assistant component sits on top of the app, letting a seller show how an Agentic SDLC platform can be used to create and deploy DPDP-focused compliance agents on IBM watsonx Orchestrate, connecting the lifecycle narrative to IBM's broader automation and agentic AI capabilities.",
       "isLive": true
     }
+    ,
+    {
+      "name": "SRE Copilot",
+      "slug": "sre-copilot",
+      "products": ["IBM watsonX Orchestrate"],
+      "buildingBlocks": ["ai.agents", "ai.ai-control-plane"],
+      "skills": ["agent"],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/pull/212",
+      "workingDemoURL": "https://incident-frontend-sre-agent-bb-demo.automationbb-d01-2bef1f4b4097001da9502000c44fc2b2-0000.us-south.containers.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "sre-copilot-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "SRE Copilot is a full-stack demo that showcases watsonx Orchestrate's AI agent capabilities in an IT Operations context. The application presents a Kanban-style incident board where engineers can view, triage, and analyze infrastructure incidents across four severity levels (Critical, High, Medium, Low).\n\nClicking \"Analyze\" on any incident invokes the watsonx Orchestrate SRE Copilot agent, which performs:\n• Root cause analysis referencing specific log entries and timestamps\n• Severity classification with business impact justification\n• A 5-8 step remediation runbook with exact CLI commands\n\nEngineers can then ask follow-up questions in a conversational chat interface, with full incident context and prior analysis injected automatically.\n\nThe demo also includes an Admin Panel (password-gated) that demonstrates watsonx Orchestrate's Agent Controls feature — toggling PII Filter, Content Guardrails, and Secrets Detector on/off in real time, with changes immediately reflected on the live agent.",
+      "shortDescription": "An AI-powered SRE Copilot built on watsonx Orchestrate that analyzes IT infrastructure incidents in real time — performing root cause analysis, severity classification, and generating step-by-step remediation runbooks for on-call engineers.",
+      "architecture_description": "SRE Copilot is built on three layers. The SRE Copilot App is a React-based web interface where on-call engineers view, triage, and interact with incidents. It pulls contextual data from external monitoring and collaboration tools — PagerDuty, Datadog, Splunk, GitHub, and Confluence — to enrich each incident with alerts, metrics, logs, and runbook references. When an engineer clicks Analyze, the app calls the watsonx Orchestrate Agent — a native AI agent running on IBM Cloud — which invokes the analyze_incident tool, reasons over the incident data and logs, and returns a structured response containing the root cause, a validated severity classification, and a step-by-step remediation runbook. The agent is protected by a three-layer controls pipeline (PII Filter, Content Guardrails, Secrets Detector) enforced at the platform level. Engineers can then ask follow-up questions in a conversational chat interface, with the agent maintaining full incident context across the entire session.",
+      "extrasBoxUrl": "",
+      "isLive": false
+    }
   ]
 }
