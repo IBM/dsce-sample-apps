@@ -243,7 +243,7 @@
       "shortDescription": "An AI-powered SRE Copilot built on watsonx Orchestrate that analyzes IT infrastructure incidents in real time — performing root cause analysis, severity classification, and generating step-by-step remediation runbooks for on-call engineers.",
       "architecture_description": "SRE Copilot is built on three layers. The SRE Copilot App is a React-based web interface where on-call engineers view, triage, and interact with incidents. It pulls contextual data from external monitoring and collaboration tools — PagerDuty, Datadog, Splunk, GitHub, and Confluence — to enrich each incident with alerts, metrics, logs, and runbook references. When an engineer clicks Analyze, the app calls the watsonx Orchestrate Agent — a native AI agent running on IBM Cloud — which invokes the analyze_incident tool, reasons over the incident data and logs, and returns a structured response containing the root cause, a validated severity classification, and a step-by-step remediation runbook. The agent is protected by a three-layer controls pipeline (PII Filter, Content Guardrails, Secrets Detector) enforced at the platform level. Engineers can then ask follow-up questions in a conversational chat interface, with the agent maintaining full incident context across the entire session.",
       "extrasBoxUrl": "",
-      "isLive": false
+      "isLive": true
     }
   ]
 }
