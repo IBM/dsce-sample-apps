@@ -103,7 +103,32 @@ To get your credentials:
 python app.py
 ```
 
-The app will start on `http://localhost:8050`
+The app will start on `http://127.0.0.1:8050` (loopback only by default).
+
+Optional environment variables:
+
+- `SERVICE_PORT` — port to bind (default `8050`)
+- `SERVICE_HOST` — interface to bind. Defaults to `127.0.0.1`. Set to `0.0.0.0` only when you intentionally want to expose the app on all interfaces (e.g. inside a container).
+- `DEBUG_MODE` — set to `true` to enable Flask/Dash debug mode. Defaults to `false`. **Do not enable debug mode in any environment reachable from outside your machine** — it exposes an interactive Python console.
+
+## Security & Deployment Notes
+
+This application is provided as a **local sample** to demonstrate the Watsonx Governance SDK. It is intentionally scoped for a developer running it on their own machine via `python app.py`.
+
+It does **not** include the controls you would expect from a production service. Before exposing this app to any network beyond your loopback interface, you (or your platform team) should add:
+
+- **Authentication and authorization** in front of the app (e.g. via a reverse proxy such as nginx, an identity provider, or IBM Cloud IAM)
+- **TLS termination** at the proxy
+- **Rate limiting** to protect the IBM Watsonx API quotas this app consumes
+- **A secrets manager** (e.g. IBM Cloud Secrets Manager) instead of a `.env` file
+- **Centralized logging and monitoring**
+- **Dependency scanning** as part of your build pipeline (`pip-audit`, Snyk, or similar)
+
+Other notes:
+
+- User-entered text is passed to LLM-as-judge prompts. The prompts in this sample use delimiters and explicit "treat as data" framing to reduce prompt-injection risk, but no prompt-side mitigation is bulletproof. If you adapt this code to a higher-trust setting, also apply input validation and content filtering.
+- CSV exports are sanitized against spreadsheet formula injection (cells starting with `=`, `+`, `-`, `@`, tab, or CR are prefixed with `'`).
+- Exception details are logged server-side rather than rendered in the UI; check the server console when investigating evaluation failures.
 
 ## Key Components
 
