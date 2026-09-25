@@ -1,0 +1,888 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #e5e7eb;
+  font-size: 13px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  background: #0f172a;
+}
+
+.refreshNotification {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: #22c55e;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out, slideOut 0.3s ease-in 2.7s;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* MAIN TABS */
+.mainTabs {
+  display: flex;
+  gap: 0;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mainTab {
+  flex: 1;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #cbd5e1;
+  }
+  
+  &.mainTabActive {
+    color: #00d4ff;
+    border-bottom-color: #00d4ff;
+    background: rgba(0, 212, 255, 0.05);
+  }
+}
+
+.mainTabCount {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* DRONE LIST SECTION */
+.droneListSection {
+  padding: 12px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.droneListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.droneListTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.refreshButton {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e5e7eb;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  padding: 0;
+  
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+  
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &.refreshing {
+    border-color: #22c55e;
+    color: #22c55e;
+    
+    .refreshIcon {
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+  }
+}
+
+.refreshIcon {
+  display: inline-block;
+}
+
+.droneList {
+  max-height: 250px;
+  min-height: 100px;
+  overflow-y: auto;
+  padding-right: 3px;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+  }
+}
+
+.droneRow {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.1s ease;
+  border: 1px solid transparent;
+  
+  &:hover {
+    background: rgba(30, 64, 175, 0.4);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  &.droneRowSelected {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(59, 130, 246, 0.5));
+    border-color: rgba(59, 130, 246, 0.8);
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.droneRowMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.droneId {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 13px;
+  color: #f9fafb;
+  font-weight: 600;
+}
+
+.droneRowSub {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 8px currentColor;
+}
+
+.statusNormal {
+  background: #22c55e;
+  color: #22c55e;
+}
+
+.statusThreat {
+  background: #ef4444;
+  color: #ef4444;
+}
+.statusInactive {
+  background: #f97316;
+  color: #f97316;
+}
+
+
+// Inactive drone status - yellow/orange for historical drones
+.droneRow:has(.statusDot) {
+  // This will be overridden by specific inactive drone styling
+}
+
+/* DRONE DETAILS SECTION */
+.droneDetails {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+  }
+}
+
+.droneHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  margin-bottom: 16px;
+}
+
+.droneIcon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #00d4ff, #0088aa);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.droneInfo {
+  flex: 1;
+}
+
+.droneId {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f9fafb;
+  margin-bottom: 2px;
+}
+
+.droneModel {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.droneStatus {
+  display: flex;
+  align-items: center;
+}
+
+.statusIndicator {
+  font-size: 20px;
+  
+  &.statusNormal {
+    color: #22c55e;
+  }
+  
+  &.statusDanger {
+    color: #ef4444;
+  }
+}
+
+/* ACTION BUTTONS */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.actionButton {
+  flex: 1;
+  padding: 10px 12px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #00d4ff;
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* SUB TABS */
+.subTabs {
+  display: flex;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+.subTab {
+  flex: 1;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #cbd5e1;
+  }
+  
+  &.subTabActive {
+    background: #00d4ff;
+    color: #0f172a;
+  }
+}
+
+.incidentBadge {
+  background: #ef4444;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* TELEMETRY CONTENT */
+.telemetryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.telemetrySection {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.telemetrySectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.telemetryIcon {
+  font-size: 16px;
+}
+
+.telemetrySectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.telemetryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.telemetryItem {
+  text-align: center;
+}
+
+.telemetryValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00d4ff;
+  margin-bottom: 4px;
+}
+
+.telemetryLabel {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.telemetryAddress {
+  font-size: 12px;
+  color: #cbd5e1;
+  margin-bottom: 4px;
+}
+
+.telemetryCoords {
+  font-size: 11px;
+  color: #64748b;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* PROFILE TAB */
+.profileGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profileRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.profileLabel {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profileValue {
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 600;
+  
+  &.profileValueDanger {
+    color: #ef4444;
+  }
+}
+.riskExplanation {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid #3b82f6;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+
+/* INSIGHTS */
+.insightsBlock {
+  margin-top: 16px;
+  
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.insightsLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.insightsTitle {
+  flex: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.insightsValue {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* HEATMAP */
+.heatmapGrid {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.heatmapCell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.2);
+    z-index: 1;
+  }
+}
+
+.heatmapLabels {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  font-size: 10px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 4px;
+}
+.heatmapDescription {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 212, 255, 0.05);
+  border-left: 3px solid #00d4ff;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+
+/* COLLAPSIBLE SECTIONS */
+.collapsibleSection {
+  margin-top: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+  cursor: pointer;
+  
+  &:hover {
+    background: rgba(30, 41, 59, 0.4);
+  }
+}
+
+.sectionTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.expandIcon {
+  font-size: 10px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.sectionHint {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* IMAGE CARD */
+.imageCard {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* EMPTY STATE */
+.emptyState {
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px dashed rgba(148, 163, 184, 0.3);
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 13px;
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+.emptyText {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+/* DETAILS CARD (Legacy - for backward compatibility) */
+.detailsCard {
+  margin-top: 8px;
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(55, 65, 81, 0.6);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detailLabel {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.detailValue {
+  font-size: 12px;
+  color: #e5e7eb;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-all;
+  
+  &.detailValueDanger {
+    color: #f97316;
+    font-weight: 600;
+  }
+}
+
+/* FLIGHT HISTORY MODAL */
+.flightHistoryModal {
+  margin-top: 16px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flightHistoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(59, 130, 246, 0.1));
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.flightHistoryTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00d4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.closeButton {
+  background: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Made with Bob
+
+// Incident card styles
+.incidentCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.incidentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.incidentSeverity {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  
+  &.severitycritical {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+  }
+  
+  &.severityhigh {
+    background: rgba(249, 115, 22, 0.2);
+    color: #f97316;
+    border: 1px solid #f97316;
+  }
+  
+  &.severitymedium {
+    background: rgba(234, 179, 8, 0.2);
+    color: #eab308;
+    border: 1px solid #eab308;
+  }
+  
+  &.severitylow {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid #22c55e;
+  }
+}
+
+.incidentType {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.incidentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.incidentRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.incidentLabel {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.incidentValue {
+  color: rgba(255, 255, 255, 0.9);
+  text-align: right;
+  
+  &.statusopen {
+    color: #ef4444;
+  }
+  
+  &.statusinvestigating {
+    color: #eab308;
+  }
+  
+  &.statusclosed {
+    color: #22c55e;
+  }
+}

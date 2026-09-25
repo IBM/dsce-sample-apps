@@ -1,0 +1,77 @@
+[
+  {
+    "drone_id": "A2D2-INACT-01",
+    "id": "A2D2-INACT-01",
+    "flight_id": "FLT-INACT-01",
+    "drone_type": "Mavic Air 2",
+    "droneType": "Mavic Air 2",
+    "lat": 27.9506,
+    "lng": -82.4572,
+    "altitude": 0,
+    "speed": 0,
+    "azimuth": 0,
+    "has_payload": false,
+    "imagePath": "drone_images/Mavic Air 2.png",
+    "sensor_type": "dji",
+    "detection_type": "apolloshield_dji",
+    "last_seen": "2026-09-17T18:30:00.000Z",
+    "timestamp": 1773000000000,
+    "total_flights": 3,
+    "current_position": {
+      "lat": 27.9506,
+      "lng": -82.4572,
+      "altitude": 0,
+      "timestamp": 1773000000000
+    }
+  },
+  {
+    "drone_id": "A2D2-INACT-02",
+    "id": "A2D2-INACT-02",
+    "flight_id": "FLT-INACT-02",
+    "drone_type": "Mavic Pro",
+    "droneType": "Mavic Pro",
+    "lat": 26.1224,
+    "lng": -80.1373,
+    "altitude": 0,
+    "speed": 0,
+    "azimuth": 0,
+    "has_payload": false,
+    "imagePath": "drone_images/Mavic Pro.png",
+    "sensor_type": "camera",
+    "detection_type": "apolloshield_df",
+    "last_seen": "2026-09-17T14:15:00.000Z",
+    "timestamp": 1772985000000,
+    "total_flights": 5,
+    "current_position": {
+      "lat": 26.1224,
+      "lng": -80.1373,
+      "altitude": 0,
+      "timestamp": 1772985000000
+    }
+  },
+  {
+    "drone_id": "A2D2-INACT-03",
+    "id": "A2D2-INACT-03",
+    "flight_id": "FLT-INACT-03",
+    "drone_type": "Mini 3",
+    "droneType": "Mini 3",
+    "lat": 28.5383,
+    "lng": -81.3792,
+    "altitude": 0,
+    "speed": 0,
+    "azimuth": 0,
+    "has_payload": false,
+    "imagePath": "drone_images/Mini 3.png",
+    "sensor_type": "dji",
+    "detection_type": "apolloshield_dji",
+    "last_seen": "2026-09-17T10:00:00.000Z",
+    "timestamp": 1772970000000,
+    "total_flights": 2,
+    "current_position": {
+      "lat": 28.5383,
+      "lng": -81.3792,
+      "altitude": 0,
+      "timestamp": 1772970000000
+    }
+  }
+]
