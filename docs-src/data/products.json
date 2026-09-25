@@ -110,7 +110,7 @@
         "url" : "https://www.ibm.com/products/openpages",
         "image" : "ibm-openpages.svg"
     },
-    "IBM Cloud Database for MongoDB" : {
+    "Database for MongoDB" : {
         "url" : "https://www.ibm.com/products/databases-for-mongodb",
         "image" : "ibm-cloud-database-for-mongodb.svg"
     }
