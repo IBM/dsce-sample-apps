@@ -1,0 +1,127 @@
+.appShell {
+  height: 100vh;
+  width: 100vw;
+  background: #050711;
+  color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+}
+
+.topBar {
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: radial-gradient(circle at top left, #1f2937 0, #050711 55%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brandAccent {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #34d399, #22c55e);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
+}
+
+.brandText {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #34d399;
+}
+
+.brandSubtitle {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-top: 1px;
+  align-self: flex-end;
+  margin-bottom: 2px;
+}
+
+.demoTag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: 4px;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+.iconButton {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.iconButton:hover {
+  background: rgba(148, 163, 184, 0.18);
+  color: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.iconButton:active {
+  transform: translateY(0);
+}
+
+.mainLayout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: 0;
+  overflow: hidden;
+}
+
+.mapPane {
+  position: relative;
+  background: #020617;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar {
+  background: radial-gradient(circle at top, #0b1120 0, #020617 55%);
+  border-left: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 12px 12px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.loader {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+.loaderText {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

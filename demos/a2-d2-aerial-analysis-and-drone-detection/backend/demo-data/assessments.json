@@ -1,0 +1,237 @@
+{
+  "A2D2-3A8C": {
+    "drone_id": "A2D2-3A8C",
+    "threat_level": "GREEN",
+    "threat_score": 12,
+    "distance_to_center": 464767,
+    "bearing_to_center": 320,
+    "is_heading_towards_center": false,
+    "eta_minutes": null,
+    "current_speed": 14,
+    "current_altitude": 150,
+    "current_direction": 330,
+    "has_historical_breaches": false,
+    "has_payload": false,
+    "drone_type": "Mavic Pro",
+    "imagePath": "drone_images/Mavic Pro.png",
+    "region": "North Florida / Gainesville Corridor",
+    "risk_factors": [
+      "Operating outside restricted airspace",
+      "Cruise speed within standard limits",
+      "No payload detected",
+      "Trajectory clear of protected zone"
+    ],
+    "recommendations": [
+      "Maintain routine radar tracking",
+      "Log telemetry"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-F3A1": {
+    "drone_id": "A2D2-F3A1",
+    "threat_level": "GREEN",
+    "threat_score": 18,
+    "distance_to_center": 348230,
+    "bearing_to_center": 320,
+    "is_heading_towards_center": false,
+    "eta_minutes": null,
+    "current_speed": 12,
+    "current_altitude": 120,
+    "current_direction": 330,
+    "has_historical_breaches": false,
+    "has_payload": false,
+    "drone_type": "Mavic 3",
+    "imagePath": "drone_images/Mavic 3.png",
+    "region": "Tampa Bay / West Florida Coast",
+    "risk_factors": [
+      "Operating outside restricted airspace",
+      "Cruise speed within standard limits",
+      "No payload detected",
+      "Trajectory clear of protected zone"
+    ],
+    "recommendations": [
+      "Maintain routine radar tracking",
+      "Log telemetry"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-C9B2": {
+    "drone_id": "A2D2-C9B2",
+    "threat_level": "GREEN",
+    "threat_score": 24,
+    "distance_to_center": 273190,
+    "bearing_to_center": 320,
+    "is_heading_towards_center": false,
+    "eta_minutes": null,
+    "current_speed": 16,
+    "current_altitude": 140,
+    "current_direction": 330,
+    "has_historical_breaches": false,
+    "has_payload": false,
+    "drone_type": "Mavic 2",
+    "imagePath": "drone_images/Mavic 2.png",
+    "region": "Cape Canaveral / Space Coast",
+    "risk_factors": [
+      "Operating outside restricted airspace",
+      "Cruise speed within standard limits",
+      "No payload detected",
+      "Trajectory clear of protected zone"
+    ],
+    "recommendations": [
+      "Maintain routine radar tracking",
+      "Log telemetry"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-7E4D": {
+    "drone_id": "A2D2-7E4D",
+    "threat_level": "YELLOW",
+    "threat_score": 48,
+    "distance_to_center": 140737,
+    "bearing_to_center": 165,
+    "is_heading_towards_center": true,
+    "eta_minutes": 22,
+    "current_speed": 22,
+    "current_altitude": 190,
+    "current_direction": 160,
+    "has_historical_breaches": false,
+    "has_payload": false,
+    "drone_type": "Mavic Air 2",
+    "imagePath": "drone_images/Mavic Air 2.png",
+    "region": "Lake Okeechobee / Central Inland",
+    "risk_factors": [
+      "Operating within Florida surveillance polygon",
+      "Approaching warning zone perimeter",
+      "Payload confirmed on airframe"
+    ],
+    "recommendations": [
+      "Alert regional security teams",
+      "Track payload optical feed",
+      "Prepare directional countermeasures"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-B2F6": {
+    "drone_id": "A2D2-B2F6",
+    "threat_level": "YELLOW",
+    "threat_score": 65,
+    "distance_to_center": 179315,
+    "bearing_to_center": 320,
+    "is_heading_towards_center": false,
+    "eta_minutes": null,
+    "current_speed": 9,
+    "current_altitude": 160,
+    "current_direction": 330,
+    "has_historical_breaches": false,
+    "has_payload": true,
+    "drone_type": "Mini 3",
+    "imagePath": "drone_images/Mini 3_withpayload.png",
+    "region": "Naples / Southwest Gulf Coast",
+    "risk_factors": [
+      "Operating within Florida surveillance polygon",
+      "Approaching warning zone perimeter",
+      "Payload confirmed on airframe"
+    ],
+    "recommendations": [
+      "Alert regional security teams",
+      "Track payload optical feed",
+      "Prepare directional countermeasures"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-E5B7": {
+    "drone_id": "A2D2-E5B7",
+    "threat_level": "RED",
+    "threat_score": 82,
+    "distance_to_center": 45355,
+    "bearing_to_center": 165,
+    "is_heading_towards_center": true,
+    "eta_minutes": 7,
+    "current_speed": 28,
+    "current_altitude": 260,
+    "current_direction": 160,
+    "has_historical_breaches": true,
+    "has_payload": true,
+    "drone_type": "Mavic 2",
+    "imagePath": "drone_images/Mavic 2_withpayload.png",
+    "region": "Everglades / West Miami Approach",
+    "risk_factors": [
+      "Inner restricted zone boundary breach",
+      "High speed vector towards protected center",
+      "Confirmed attached payload",
+      "No commercial FAA authorization"
+    ],
+    "recommendations": [
+      "Deploy tactical interception team",
+      "Initiate perimeter lockdown",
+      "Authorize electronic countermeasure protocol"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-9D1E": {
+    "drone_id": "A2D2-9D1E",
+    "threat_level": "RED",
+    "threat_score": 88,
+    "distance_to_center": 60630,
+    "bearing_to_center": 165,
+    "is_heading_towards_center": true,
+    "eta_minutes": 4,
+    "current_speed": 34,
+    "current_altitude": 300,
+    "current_direction": 160,
+    "has_historical_breaches": true,
+    "has_payload": true,
+    "drone_type": "Mavic Air 2S",
+    "imagePath": "drone_images/Mavic Air 2S_withpayload.png",
+    "region": "Key Largo / South Ocean Corridor",
+    "risk_factors": [
+      "Inner restricted zone boundary breach",
+      "High speed vector towards protected center",
+      "Confirmed attached payload",
+      "No commercial FAA authorization"
+    ],
+    "recommendations": [
+      "Deploy tactical interception team",
+      "Initiate perimeter lockdown",
+      "Authorize electronic countermeasure protocol"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  },
+  "A2D2-4F2A": {
+    "drone_id": "A2D2-4F2A",
+    "threat_level": "CRITICAL",
+    "threat_score": 96,
+    "distance_to_center": 791,
+    "bearing_to_center": 165,
+    "is_heading_towards_center": true,
+    "eta_minutes": 1,
+    "current_speed": 42,
+    "current_altitude": 380,
+    "current_direction": 160,
+    "has_historical_breaches": true,
+    "has_payload": true,
+    "drone_type": "M300 RTK",
+    "imagePath": "drone_images/M300 RTK_withpayload.png",
+    "region": "Downtown Miami Ground Zero Approach",
+    "risk_factors": [
+      "Direct intercept trajectory to protected ground zero point",
+      "Confirmed heavy payload detected",
+      "Maximum operational speed in Red Zone",
+      "Immediate neutralization required"
+    ],
+    "recommendations": [
+      "Execute immediate electronic neutralize command",
+      "Evacuate center ground area",
+      "Notify law enforcement and tactical command"
+    ],
+    "ai_powered": false,
+    "demo_mode": true
+  }
+}

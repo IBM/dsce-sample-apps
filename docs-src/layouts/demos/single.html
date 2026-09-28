@@ -147,9 +147,9 @@
                   </div>
                   <div class="info-box-subtitle">Watch this short overview</div>
                   <div class="demo-slideshow demo-video-slideshow">
-                    {{ range $i, $v := $demo.videos }}
+                    {{ range $i, $demo_video := $demo.videos }}
                       <div class="demo-slide{{ if eq $i 0 }} is-active{{ end }}">
-                        {{ $youTubeURL := $v.youTubeURL | default "" }}
+                        {{ $youTubeURL := $demo_video.youTubeURL | default "" }}
                         {{ if $youTubeURL }}
                           {{/* YouTube — convert watch URL to embed URL */}}
                           {{ $ytEmbed := $youTubeURL | replaceRE "https://www\\.youtube\\.com/watch\\?v=([^&]+).*" "https://www.youtube.com/embed/$1" | replaceRE "https://youtu\\.be/([^?]+).*" "https://www.youtube.com/embed/$1" }}
@@ -161,12 +161,16 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                           </iframe>
-                        {{ else if $v.cosFileName }}
+                        {{ else if $demo_video.cosFileName }}
                           {{/* COS video */}}
-                          {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $v.cosFileName }}
-                          {{ $thumbPath := printf "demos/%s/%s" $demo.slug $v.thumbnail }}
-                          {{ $thumbRes := cond (gt (len $v.thumbnail) 0) (resources.Get $thumbPath) nil }}
-                          <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
+                          {{ $videoURL := printf "https://s3.us-south.cloud-object-storage.appdomain.cloud/dsce2-demo-videos/%s" $demo_video.cosFileName }}
+                          {{ if $demo_video.thumbnail }}
+                            {{ $thumbPath := printf "demos/%s/%s" $demo.slug $demo_video.thumbnail }}
+                            {{ $thumbRes := cond (gt (len $demo_video.thumbnail) 0) (resources.Get $thumbPath) nil }}
+                            <video width="100%" controls{{ if $thumbRes }} poster="{{ ($thumbRes | fingerprint).RelPermalink }}"{{ end }}>
+                          {{ else }}
+                            <video width="100%" controls>
+                          {{ end }}
                             <source src="{{ $videoURL }}" type="video/mp4">
                             Your browser does not support the video tag
                           </video>
@@ -181,7 +185,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="8,4 18,12 8,20"/></svg>
                       </button>
                       <div class="demo-slide-dots">
-                        {{ range $i, $v := $demo.videos }}
+                        {{ range $i, $demo_video := $demo.videos }}
                           <button class="demo-slide-dot{{ if eq $i 0 }} is-active{{ end }}" aria-label="Go to video {{ add $i 1 }}"></button>
                         {{ end }}
                       </div>

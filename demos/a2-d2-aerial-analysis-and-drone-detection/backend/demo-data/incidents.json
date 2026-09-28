@@ -1,0 +1,218 @@
+{
+  "A2D2-3A8C": [
+    {
+      "incident_id": "INC-A2D2-3A8C-001",
+      "drone_id": "A2D2-3A8C",
+      "flight_id": "FLT-3A8C-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-F3A1": [
+    {
+      "incident_id": "INC-A2D2-F3A1-001",
+      "drone_id": "A2D2-F3A1",
+      "flight_id": "FLT-F3A1-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-C9B2": [
+    {
+      "incident_id": "INC-A2D2-C9B2-001",
+      "drone_id": "A2D2-C9B2",
+      "flight_id": "FLT-C9B2-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-7E4D": [
+    {
+      "incident_id": "INC-A2D2-7E4D-001",
+      "drone_id": "A2D2-7E4D",
+      "flight_id": "FLT-7E4D-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T03:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-7E4D-002",
+      "drone_id": "A2D2-7E4D",
+      "flight_id": "FLT-7E4D-001",
+      "type": "payload_detected",
+      "zone": "YELLOW",
+      "severity": "HIGH",
+      "description": "Optical and RF sensors confirm underslung payload attached",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-B2F6": [
+    {
+      "incident_id": "INC-A2D2-B2F6-001",
+      "drone_id": "A2D2-B2F6",
+      "flight_id": "FLT-B2F6-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T03:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-B2F6-002",
+      "drone_id": "A2D2-B2F6",
+      "flight_id": "FLT-B2F6-001",
+      "type": "payload_detected",
+      "zone": "YELLOW",
+      "severity": "HIGH",
+      "description": "Optical and RF sensors confirm underslung payload attached",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-E5B7": [
+    {
+      "incident_id": "INC-A2D2-E5B7-001",
+      "drone_id": "A2D2-E5B7",
+      "flight_id": "FLT-E5B7-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T02:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-E5B7-002",
+      "drone_id": "A2D2-E5B7",
+      "flight_id": "FLT-E5B7-001",
+      "type": "payload_detected",
+      "zone": "YELLOW",
+      "severity": "HIGH",
+      "description": "Optical and RF sensors confirm underslung payload attached",
+      "timestamp": "2026-09-18T02:42:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-E5B7-003",
+      "drone_id": "A2D2-E5B7",
+      "flight_id": "FLT-E5B7-001",
+      "type": "zone_breach",
+      "zone": "YELLOW",
+      "severity": "MEDIUM",
+      "description": "Warning Yellow Zone outer boundary entry",
+      "timestamp": "2026-09-18T03:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-E5B7-004",
+      "drone_id": "A2D2-E5B7",
+      "flight_id": "FLT-E5B7-001",
+      "type": "speed_violation",
+      "zone": null,
+      "severity": "MEDIUM",
+      "description": "Speed exceeded 30 mph operational limit",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-9D1E": [
+    {
+      "incident_id": "INC-A2D2-9D1E-001",
+      "drone_id": "A2D2-9D1E",
+      "flight_id": "FLT-9D1E-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T02:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-9D1E-002",
+      "drone_id": "A2D2-9D1E",
+      "flight_id": "FLT-9D1E-001",
+      "type": "payload_detected",
+      "zone": "YELLOW",
+      "severity": "HIGH",
+      "description": "Optical and RF sensors confirm underslung payload attached",
+      "timestamp": "2026-09-18T02:42:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-9D1E-003",
+      "drone_id": "A2D2-9D1E",
+      "flight_id": "FLT-9D1E-001",
+      "type": "zone_breach",
+      "zone": "YELLOW",
+      "severity": "MEDIUM",
+      "description": "Warning Yellow Zone outer boundary entry",
+      "timestamp": "2026-09-18T03:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-9D1E-004",
+      "drone_id": "A2D2-9D1E",
+      "flight_id": "FLT-9D1E-001",
+      "type": "speed_violation",
+      "zone": null,
+      "severity": "MEDIUM",
+      "description": "Speed exceeded 30 mph operational limit",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ],
+  "A2D2-4F2A": [
+    {
+      "incident_id": "INC-A2D2-4F2A-001",
+      "drone_id": "A2D2-4F2A",
+      "flight_id": "FLT-4F2A-001",
+      "type": "zone_breach",
+      "zone": "RED",
+      "severity": "HIGH",
+      "description": "Restricted Red Zone airspace boundary penetration",
+      "timestamp": "2026-09-18T01:42:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-4F2A-002",
+      "drone_id": "A2D2-4F2A",
+      "flight_id": "FLT-4F2A-001",
+      "type": "payload_detected",
+      "zone": "YELLOW",
+      "severity": "HIGH",
+      "description": "Optical and RF sensors confirm underslung payload attached",
+      "timestamp": "2026-09-18T02:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-4F2A-003",
+      "drone_id": "A2D2-4F2A",
+      "flight_id": "FLT-4F2A-001",
+      "type": "zone_breach",
+      "zone": "YELLOW",
+      "severity": "MEDIUM",
+      "description": "Warning Yellow Zone outer boundary entry",
+      "timestamp": "2026-09-18T02:42:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-4F2A-004",
+      "drone_id": "A2D2-4F2A",
+      "flight_id": "FLT-4F2A-001",
+      "type": "speed_violation",
+      "zone": null,
+      "severity": "MEDIUM",
+      "description": "Speed exceeded 30 mph operational limit",
+      "timestamp": "2026-09-18T03:12:00.160Z"
+    },
+    {
+      "incident_id": "INC-A2D2-4F2A-005",
+      "drone_id": "A2D2-4F2A",
+      "flight_id": "FLT-4F2A-001",
+      "type": "altitude_violation",
+      "zone": null,
+      "severity": "LOW",
+      "description": "Altitude above 400 ft AGL threshold",
+      "timestamp": "2026-09-18T03:42:00.160Z"
+    }
+  ]
+}

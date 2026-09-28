@@ -1,0 +1,167 @@
+.container {
+	width: 100%;
+	height: 100%;
+	border: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.alertToast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f3f4f6;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  animation: fadeInDown 0.3s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.toastIcon {
+  font-size: 16px;
+}
+
+.toastText {
+  letter-spacing: 0.03em;
+}
+
+.muteButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+	width: 48px;
+	height: 48px;
+	border-radius: 8px;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	background: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(10px);
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+	&:hover {
+		background: rgba(0, 0, 0, 0.85);
+		border-color: rgba(255, 255, 255, 0.5);
+		transform: scale(1.05);
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+	}
+
+	&:active {
+		transform: scale(0.95);
+	}
+
+	svg {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.droneMarkerWrapper {
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.droneMarkerIconRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+}
+
+.droneMarkerImage {
+	width: 16px;
+	height: 16px;
+	object-fit: contain;
+	filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.8));
+}
+
+.droneMarkerDot {
+	width: 12px;
+	height: 12px;
+	border-radius: 999px;
+	border: 2px solid #ffffff;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+.droneMarkerLabel {
+	margin-top: 2px;
+	font-size: 10px;
+	color: #ffffff;
+	font-weight: 600;
+	text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
+	white-space: nowrap;
+}
+
+// Enhanced visibility for drone markers and labels with strong shadows
+.droneMarkerWrapper {
+	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9))
+		drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+}
+
+.droneMarkerLabel {
+	text-shadow:
+		0 0 6px rgba(0, 0, 0, 1),
+		0 0 3px rgba(0, 0, 0, 1),
+		0 2px 4px rgba(0, 0, 0, 0.8) !important;
+	font-weight: 700 !important;
+}
+
+.droneMarkerImage {
+	filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))
+		drop-shadow(0 0 2px rgba(0, 0, 0, 1)) !important;
+}
+
+.droneMarkerDot {
+	box-shadow:
+		0 0 10px rgba(0, 0, 0, 1),
+		0 0 5px currentColor,
+		0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+// Pilot and Home icon visibility enhancements
+:global(.pilot-icon-marker) {
+	filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+		drop-shadow(0 0 3px rgba(0, 255, 255, 0.6))
+		drop-shadow(0 2px 4px rgba(0, 0, 0, 1)) !important;
+}
+
+:global(.home-icon-marker) {
+	filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+		drop-shadow(0 0 3px rgba(255, 255, 255, 0.6))
+		drop-shadow(0 2px 4px rgba(0, 0, 0, 1)) !important;
+}
+
+// Trail dots visibility
+.trailDot {
+	box-shadow:
+		0 0 6px rgba(0, 0, 0, 1),
+		0 0 3px currentColor,
+		0 1px 4px rgba(0, 0, 0, 0.8) !important;
+}

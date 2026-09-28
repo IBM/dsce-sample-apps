@@ -242,3 +242,22 @@ body {
 input:disabled {
   color: #a8a8a8 !important;
 }
+
+/* Example scenario buttons: deep purple so the unselected (outline) state is readable */
+.example-btn.btn-outline-info {
+  color: #6929c4;
+  border-color: #6929c4;
+}
+.example-btn.btn-outline-info:hover,
+.example-btn.btn-outline-info:focus {
+  background-color: #491d8b;
+  border-color: #491d8b;
+  color: #ffffff;
+}
+.example-btn.btn-info,
+.example-btn.btn-info:hover,
+.example-btn.btn-info:focus {
+  background-color: #6929c4;
+  border-color: #6929c4;
+  color: #ffffff;
+}
