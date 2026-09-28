@@ -28,5 +28,5 @@ accelerate>=0.26.0
 granite-tsfm>=0.2.0
 
 # Development
-pytest==7.4.3
+pytest==9.0.3
 pytest-asyncio==0.21.1
