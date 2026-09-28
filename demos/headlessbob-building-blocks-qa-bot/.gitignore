@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Node / Next.js
+node_modules/
+.next/
+/out/
+/build/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment — local overrides with real credentials
+.env.local
+.env.*.local
+
+# VSCode
+.vscode/
+
+# Headless Bob runtime data
+headless-bob/assets/headlessbob/.headlessbob/

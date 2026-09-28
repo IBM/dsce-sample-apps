@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: headlessbob
+  labels: { app: headlessbob }
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: headlessbob-data
+  labels: { app: headlessbob }
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: ibmc-vpc-block-general-purpose
+  resources:
+    requests: { storage: 10Gi }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headlessbob
+  labels: { app: headlessbob }
+spec:
+  replicas: 1
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: headlessbob }
+  template:
+    metadata:
+      labels: { app: headlessbob }
+    spec:
+      serviceAccountName: headlessbob
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: headlessbob
+          image: image-registry.openshift-image-registry.svc:5000/binb/headlessbob:latest
+          imagePullPolicy: Always
+          ports: [{ name: http, containerPort: 8000 }]
+          env:
+            - { name: HOST, value: '0.0.0.0' }
+            - { name: ALLOW_TRUSTED_NETWORK, value: 'true' }
+            - { name: BOB_ENABLE_CONTINUATION, value: 'true' }
+            - { name: MAX_CONCURRENT, value: '1' }
+            - { name: MAX_QUEUED, value: '20' }
+            - name: BOB_API_KEY
+              valueFrom:
+                secretKeyRef: { name: headlessbob-credentials, key: BOB_API_KEY }
+            - name: AUTH_TOKENS
+              valueFrom:
+                secretKeyRef: { name: headlessbob-credentials, key: AUTH_TOKENS }
+          resources:
+            requests: { cpu: 250m, memory: 512Mi }
+            limits: { cpu: '2', memory: 2Gi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+            runAsNonRoot: true
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: bob-config, mountPath: /bob-config, readOnly: true }
+          startupProbe:
+            httpGet: { path: /healthz, port: http }
+            failureThreshold: 30
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 20
+          readinessProbe:
+            exec:
+              command:
+                - node
+                - -e
+                - 'fetch("http://127.0.0.1:8000/readyz",{headers:{Authorization:"Bearer "+Object.values(JSON.parse(process.env.AUTH_TOKENS))[0]}}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))'
+            periodSeconds: 15
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: headlessbob-data }
+        - name: bob-config
+          configMap: { name: headlessbob-bob-config }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: headlessbob
+  labels: { app: headlessbob }
+spec:
+  selector: { app: headlessbob }
+  ports: [{ name: http, port: 8000, targetPort: http }]
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: headlessbob
+  labels: { app: headlessbob }
+  annotations:
+    haproxy.router.openshift.io/timeout: 6m
+spec:
+  to: { kind: Service, name: headlessbob }
+  port: { targetPort: http }
+  tls: { termination: edge, insecureEdgeTerminationPolicy: Redirect }
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: headlessbob-ingress
+  labels: { app: headlessbob }
+spec:
+  podSelector:
+    matchLabels: { app: headlessbob }
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+      ports: [{ protocol: TCP, port: 8000 }]

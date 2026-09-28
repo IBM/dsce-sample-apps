@@ -1,0 +1,124 @@
+# ── Headless Bob — ServiceAccount, PVC, Deployment, Service ───────────────────
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: headless-bob
+  labels:
+    app: headless-bob
+    app.kubernetes.io/part-of: bb-qa-bot
+automountServiceAccountToken: false
+---
+# Bob's persistent database (threads, runs, workspaces)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: headless-bob-data
+  labels:
+    app: headless-bob
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: ibmc-vpc-block-10iops-tier
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headless-bob
+  labels:
+    app: headless-bob
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate   # required — only one Bob instance can own the PVC at a time
+  selector:
+    matchLabels:
+      app: headless-bob
+  template:
+    metadata:
+      labels:
+        app: headless-bob
+    spec:
+      serviceAccountName: headless-bob
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: headless-bob
+          image: image-registry.openshift-image-registry.svc:5000/NAMESPACE/headless-bob:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - { name: PORT,                    value: "8000" }
+            - { name: HOST,                    value: "0.0.0.0" }
+            - { name: ALLOW_TRUSTED_NETWORK,   value: "true" }
+            - { name: BOB_ENABLE_CONTINUATION, value: "true" }
+            - { name: RUN_TIMEOUT_MS,          value: "600000" }
+            - { name: MAX_CONCURRENT,          value: "5" }
+            - { name: MAX_QUEUED,              value: "20" }
+            - { name: DATA_DIR,                value: "/data/service" }
+            - { name: NODE_ENV,                value: "production" }
+            - name: BOB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bb-qa-credentials
+                  key: BOB_API_KEY
+            - name: AUTH_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: bb-qa-credentials
+                  key: AUTH_TOKENS
+          resources:
+            requests: { cpu: 250m,  memory: 512Mi }
+            limits:   { cpu: "2",   memory: 2Gi   }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+            runAsNonRoot: true
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: kb,   mountPath: /kb   }
+          startupProbe:
+            httpGet: { path: /healthz, port: http }
+            failureThreshold: 30
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 20
+          readinessProbe:
+            exec:
+              command:
+                - node
+                - -e
+                - >-
+                  fetch("http://127.0.0.1:8000/readyz",{headers:{Authorization:"Bearer "+Object.values(JSON.parse(process.env.AUTH_TOKENS))[0]}})
+                  .then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+            periodSeconds: 15
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: headless-bob-data
+        - name: kb
+          persistentVolumeClaim:
+            claimName: kb-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-bob
+  labels:
+    app: headless-bob
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  selector:
+    app: headless-bob
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
