@@ -11,7 +11,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment — local overrides with real credentials
+# Environment — never commit real credentials
+# Use .env.example as the template; copy to .env and fill in values locally
+.env
 .env.local
 .env.*.local
 
