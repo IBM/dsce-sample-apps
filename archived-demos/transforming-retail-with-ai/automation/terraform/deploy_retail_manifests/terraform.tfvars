@@ -1,6 +1,0 @@
-namespace   = "retail-automation"
-ocp_server  = "<Insert-OCP-URL>"
-ocp_token   = "<Insert-OCP-Token>"
-postgres_db        = "retaildb"
-postgres_user      = "retail_user"
-postgres_password  = "retail_password"

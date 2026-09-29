@@ -1,6 +1,0 @@
-Instruction:
-
-Input:
-
-
-Output:

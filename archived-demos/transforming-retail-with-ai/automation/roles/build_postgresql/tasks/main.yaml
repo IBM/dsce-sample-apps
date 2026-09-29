@@ -1,4 +1,0 @@
-- command: podman build -t docker.io/{{ docker_username }}/retail-postgresql:1.0.0 .
-  args:
-    chdir: "{{ app_dir }}/postgresql"
-- command: podman push docker.io/{{ docker_username }}/retail-postgresql:1.0.0

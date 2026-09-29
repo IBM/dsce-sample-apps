@@ -1,7 +1,0 @@
-- yum:
-    name:
-      - unzip
-      - podman
-      - java-11-openjdk
-      - git
-    state: present
