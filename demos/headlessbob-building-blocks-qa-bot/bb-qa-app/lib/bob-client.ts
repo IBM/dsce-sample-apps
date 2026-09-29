@@ -1,6 +1,23 @@
 // Headless Bob API client
 
-const BOB_URL   = process.env.HEADLESSBOB_URL  ?? "http://127.0.0.1:8000";
+/** Validate that BOB_URL is a safe, server-side-only loopback/internal origin.
+ *  This prevents SSRF — the URL must be an explicit http/https origin pointing
+ *  to a known internal host.  It is set at deployment time via env var, never
+ *  derived from request input.
+ */
+function validateBobUrl(raw: string): string {
+  let parsed: URL;
+  try { parsed = new URL(raw); } catch {
+    throw new Error(`HEADLESSBOB_URL is not a valid URL: ${raw}`);
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(`HEADLESSBOB_URL must use http or https, got: ${parsed.protocol}`);
+  }
+  // Strip any path/query the env var might accidentally include
+  return `${parsed.protocol}//${parsed.host}`;
+}
+
+const BOB_URL   = validateBobUrl(process.env.HEADLESSBOB_URL ?? "http://127.0.0.1:8000");
 const BOB_TOKEN = process.env.HEADLESSBOB_TOKEN ?? "";
 
 function headers(extra: Record<string, string> = {}) {

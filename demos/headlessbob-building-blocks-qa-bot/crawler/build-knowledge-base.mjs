@@ -141,6 +141,33 @@ function delay(ms) {
 }
 
 // ── HTML → Plain Text ───────────────────────────────────────────────────────
+
+/**
+ * Strip a paired HTML tag and all its content (case-insensitive, handles
+ * closing tags with optional whitespace before ">", e.g. </script >).
+ */
+function stripTag(html, tag) {
+  // Matches <tag ...> ... </tag> or </tag > (whitespace before >)
+  return html.replace(
+    new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}\\s*>`, "gi"),
+    ""
+  );
+}
+
+/**
+ * Decode HTML entities to plain text without double-unescaping.
+ * Processes &amp; last so it doesn't turn &amp;lt; into <.
+ */
+function decodeEntities(text) {
+  return text
+    .replace(/&nbsp;/g, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");   // must be last — avoids double-decode of &amp;lt; etc.
+}
+
 function htmlToText(html) {
   // Extract <title>
   const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
@@ -155,22 +182,13 @@ function htmlToText(html) {
     if (mainMatch) body = mainMatch[1];
   }
 
-  const text = body
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-    .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, "")
-    .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "")
-    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s{3,}/g, "\n\n")
-    .trim()
-    .slice(0, MAX_TEXT_CHARS);
+  const text = decodeEntities(
+    stripTag(stripTag(stripTag(stripTag(stripTag(
+      body, "style"), "script"), "nav"), "header"), "footer")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s{3,}/g, "\n\n")
+      .trim()
+  ).slice(0, MAX_TEXT_CHARS);
 
   return { title, text };
 }

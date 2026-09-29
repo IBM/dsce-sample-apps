@@ -6,7 +6,18 @@
 
 import { NextRequest } from "next/server";
 
-const BOB_URL   = process.env.HEADLESSBOB_URL  ?? "http://127.0.0.1:8000";
+function validateBobUrl(raw: string): string {
+  let parsed: URL;
+  try { parsed = new URL(raw); } catch {
+    throw new Error(`HEADLESSBOB_URL is not a valid URL: ${raw}`);
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(`HEADLESSBOB_URL must use http or https, got: ${parsed.protocol}`);
+  }
+  return `${parsed.protocol}//${parsed.host}`;
+}
+
+const BOB_URL   = validateBobUrl(process.env.HEADLESSBOB_URL ?? "http://127.0.0.1:8000");
 const BOB_TOKEN = process.env.HEADLESSBOB_TOKEN ?? "";
 
 function encode(obj: object) {

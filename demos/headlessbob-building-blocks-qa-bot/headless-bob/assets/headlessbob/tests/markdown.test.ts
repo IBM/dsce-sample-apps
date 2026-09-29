@@ -8,7 +8,10 @@ test('Markdown renders structure while removing executable HTML', () => {
   assert.equal(fragment.querySelector('h1')?.textContent, 'Heading');
   assert.equal(fragment.querySelector('strong')?.textContent, 'Bold');
   assert.equal(fragment.querySelectorAll('td').length, 2);
-  assert.match(fragment.querySelector('pre code')?.textContent ?? '', /<script>/);
+  // lgtm[js/bad-html-filtering-regexp] — this assertion verifies the renderer correctly
+  // preserves literal <script> text inside a fenced code block (display only, not executed).
+  // nosemgrep: bad-html-filtering-regexp
+  assert.match(fragment.querySelector('pre code')?.textContent ?? '', /<script>/); // CodeQL: intentional — testing literal display of <script> text in code fence, not filtering
   assert.equal(fragment.querySelector('script,img,iframe,[onclick],[onerror]'), null);
   assert.equal(fragment.querySelector('a[href^="javascript:"]'), null);
   assert.equal(fragment.querySelector('a')?.getAttribute('href'), 'tetris.html');

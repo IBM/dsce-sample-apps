@@ -54,23 +54,38 @@ function fetchUrl(url) {
   });
 }
 
-/** Very simple HTML → plain text stripper */
-function htmlToText(html) {
-  return html
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-    .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, "")
-    .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "")
-    .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "")
-    .replace(/<[^>]+>/g, " ")
+/** Strip a paired HTML tag and all its content (case-insensitive, handles
+ *  closing tags with optional whitespace before ">", e.g. </script >).
+ */
+function stripTag(html, tag) {
+  return html.replace(
+    new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}\\s*>`, "gi"),
+    ""
+  );
+}
+
+/** Decode HTML entities without double-unescaping.
+ *  &amp; is processed last so &amp;lt; doesn't become < in two passes.
+ */
+function decodeEntities(text) {
+  return text
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/\s{3,}/g, "\n\n")
-    .trim();
+    .replace(/&amp;/g, "&");   // must be last
+}
+
+/** HTML → plain text stripper */
+function htmlToText(html) {
+  return decodeEntities(
+    stripTag(stripTag(stripTag(stripTag(stripTag(
+      html, "style"), "script"), "nav"), "header"), "footer")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s{3,}/g, "\n\n")
+      .trim()
+  );
 }
 
 /** POST JSON to Bob REST API */
