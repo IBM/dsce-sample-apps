@@ -21,6 +21,18 @@ from ..config.settings import get_settings
 logger = logging.getLogger(__name__)
 
 
+def _redact_location(obj: Any) -> Any:
+    """Return a deep copy of obj with all latitude/longitude values redacted for safe logging."""
+    if isinstance(obj, dict):
+        return {
+            k: "[REDACTED]" if k in ("latitude", "longitude") else _redact_location(v)
+            for k, v in obj.items()
+        }
+    if isinstance(obj, list):
+        return [_redact_location(item) for item in obj]
+    return obj
+
+
 class SchemaValidationError(Exception):
     """Raised when Decision Agent payload fails schema validation"""
     pass
@@ -579,14 +591,14 @@ class AgentService:
         }
         
         logger.info("Decision Agent Payload (with raw agent outputs):")
-        logger.info(json.dumps(payload, indent=2))
+        logger.info(json.dumps(_redact_location(payload), indent=2))
         logger.info("=" * 80)
         
         # Auto-correct payload to ensure all required fields are present with defaults
         corrected_payload = self._auto_correct_decision_payload(payload)
         
         logger.info("Decision Agent Corrected Payload Being Sent:")
-        logger.info(json.dumps(corrected_payload, indent=2))
+        logger.info(json.dumps(_redact_location(corrected_payload), indent=2))
         
         # Retry logic: 3 total attempts with exponential backoff
         max_attempts = 3
@@ -1010,7 +1022,7 @@ class AgentService:
                             name=destination_name,  # Use destination name from decision agent
                             address=last_wp.get("city", "")
                         )
-                        logger.info(f"Truck {truck_id}: Updated destination to: {new_destination.name} at ({new_destination.latitude}, {new_destination.longitude})")
+                        logger.info(f"Truck {truck_id}: Updated destination to: {new_destination.name}")
                         
                         # Create complete currentTrip dict preserving all existing fields
                         update_data["currentTrip"] = {

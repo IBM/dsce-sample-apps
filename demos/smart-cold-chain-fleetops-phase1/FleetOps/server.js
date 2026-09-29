@@ -3,6 +3,7 @@
 
 require('dotenv').config();
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -34,6 +35,15 @@ const FORECAST_API_URL = process.env.FORECAST_API_URL || 'https://fleetops-forec
 
 // Turbonomic API base URL (for widget)
 const TURBONOMIC_API_URL = process.env.TURBONOMIC_API_URL || COLDCHAIN_API_URL;
+
+// Rate limiting - applied globally to all routes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,                  // max 100 requests per IP per window
+  standardHeaders: true,     // Return rate limit info in RateLimit-* headers
+  legacyHeaders: false,      // Disable X-RateLimit-* headers
+});
+app.use(limiter);
 
 // Middleware
 app.use(helmet({
@@ -1021,7 +1031,12 @@ app.post('/api/turbonomic/actions/:actionId/execute', async (req, res) => {
     const { actionId } = req.params;
     console.log('🔧 Execute single action request received (alias endpoint)');
     console.log('Action ID:', actionId);
-    
+
+    // Validate actionId to prevent SSRF: allow UUIDs and mock-action-<uuid> only
+    if (!/^(mock-action-)?[0-9a-fA-F-]{8,36}$/.test(actionId)) {
+      return res.status(400).json({ success: false, error: 'Invalid actionId' });
+    }
+
     // Convert single actionId to array format expected by main execute endpoint
     const action_uuids = [actionId];
     
@@ -2415,7 +2430,11 @@ app.use((err, req, res, next) => {
 app.post('/api/demo/force-critical/:truckId', async (req, res) => {
   try {
     const { truckId } = req.params;
-    
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(truckId)) {
+      return res.status(400).json({ success: false, error: 'Invalid truckId' });
+    }
+
     console.log(`🎬 DEMO: Forcing ${truckId} to critical state`);
     
     // Inject critical telemetry data to the cold-chain API
@@ -2462,7 +2481,11 @@ app.post('/api/demo/force-critical/:truckId', async (req, res) => {
 app.post('/api/demo/reset-truck/:truckId', async (req, res) => {
   try {
     const { truckId } = req.params;
-    
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(truckId)) {
+      return res.status(400).json({ success: false, error: 'Invalid truckId' });
+    }
+
     console.log(`🔄 DEMO: Resetting ${truckId} to normal state`);
     
     // Get current truck data to preserve GPS location

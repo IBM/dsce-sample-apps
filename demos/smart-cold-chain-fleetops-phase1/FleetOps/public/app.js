@@ -742,6 +742,16 @@ async function loadAllStations() {
     }
 }
 
+// Escape special HTML characters to prevent XSS when setting innerHTML
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 // Add activity log entry
 function addActivityLog(message, type = 'info') {
     const log = document.getElementById('activityLog');
@@ -752,7 +762,7 @@ function addActivityLog(message, type = 'info') {
     const time = new Date().toLocaleTimeString();
     const entry = document.createElement('div');
     entry.className = `log-entry log-${type}`;
-    entry.innerHTML = `<span class="log-time">${time}</span>${message}`;
+    entry.innerHTML = `<span class="log-time">${time}</span>${escapeHtml(message)}`;
     
     log.insertBefore(entry, log.firstChild);
     
@@ -769,9 +779,9 @@ function addCommandStatus(truckId, command, status, mode) {
     const entry = document.createElement('div');
     entry.className = `command-status-item command-${status}`;
     entry.innerHTML = `
-        <div style="font-weight: 600; margin-bottom: 4px;">${truckId}: ${command}</div>
+        <div style="font-weight: 600; margin-bottom: 4px;">${escapeHtml(truckId)}: ${escapeHtml(command)}</div>
         <div style="font-size: 0.8em; color: #666;">
-            ${time} | Mode: ${mode} | Status: ${status}
+            ${time} | Mode: ${escapeHtml(mode)} | Status: ${escapeHtml(status)}
         </div>
     `;
     
