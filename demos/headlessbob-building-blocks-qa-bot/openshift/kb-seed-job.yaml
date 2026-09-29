@@ -1,0 +1,51 @@
+# ── KB seed Job ───────────────────────────────────────────────────────────────
+# One-shot Job that seeds knowledge-base.json from a ConfigMap into the shared
+# PVC on first deploy. Bob's "Refresh KB" button can overwrite it later.
+#
+# The KB JSON is stored in a ConfigMap (kb-seed-config) which is created by
+# deploy.sh from the local crawler/knowledge-base.json file.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kb-seed
+  labels:
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 300   # auto-clean after 5 min
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: bb-qa-bot
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      containers:
+        - name: kb-seed
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              if [ ! -f /kb/knowledge-base.json ]; then
+                cp /seed/knowledge-base.json /kb/knowledge-base.json
+                echo "✅ KB seeded ($(wc -c < /kb/knowledge-base.json) bytes)"
+              else
+                echo "✅ KB already exists, skipping seed"
+              fi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - { name: kb,   mountPath: /kb }
+            - { name: seed, mountPath: /seed, readOnly: true }
+      volumes:
+        - name: kb
+          persistentVolumeClaim:
+            claimName: kb-data
+        - name: seed
+          configMap:
+            name: kb-seed-config

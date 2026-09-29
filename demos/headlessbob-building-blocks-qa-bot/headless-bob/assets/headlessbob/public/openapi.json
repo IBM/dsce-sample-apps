@@ -1,0 +1,2442 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "HeadlessBob Threads API",
+    "version": "0.4.0",
+    "description": "REST conversation wrapper over the Bob runtime. A thread owns one Bob session/workspace; each sent message creates a run. Existing ACP endpoints remain available separately. Only trusted operators are supported."
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "A service token from AUTH_TOKENS, not a Bob API key."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "server_error",
+              "invalid_input",
+              "not_found"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
+      "SessionId": {
+        "type": "string",
+        "format": "uuid",
+        "description": "Identifier of a session"
+      },
+      "RunId": {
+        "type": "string",
+        "format": "uuid",
+        "description": "Identifier of a run"
+      },
+      "RunStatus": {
+        "type": "string",
+        "enum": [
+          "created",
+          "in-progress",
+          "awaiting",
+          "cancelling",
+          "cancelled",
+          "completed",
+          "failed"
+        ],
+        "description": "Status of the run"
+      },
+      "RunMode": {
+        "type": "string",
+        "enum": [
+          "sync",
+          "async",
+          "stream"
+        ],
+        "description": "Mode of the request"
+      },
+      "CitationMetadata": {
+        "type": "object",
+        "description": "Represents an inline citation, providing info about information source. This is supposed to be rendered as an inline icon, optionally marking a text range it belongs to.\nIf CitationMetadata is included together with content in the message part, the citation belongs to that content and renders at the MessagePart position. This way may be used for non-text content, like images and files.\nAlternatively, `start_index` and `end_index` may define a text range, counting characters in the current Message across all MessageParts with content type `text/*`, where the citation will be rendered. If one of `start_index` and `end_index` is missing or their values are equal, the citation renders only as an inline icon at that position.\nIf both `start_index` and `end_index` are not present and MessagePart has no content, the citation renders as inline icon only at the MessagePart position.\n",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "citation",
+            "default": "citation"
+          },
+          "start_index": {
+            "type": "integer",
+            "nullable": true
+          },
+          "end_index": {
+            "type": "integer",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Accompanying text, which may be a general description of the source document, or a specific snippet.\n"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "TrajectoryMetadata": {
+        "type": "object",
+        "description": "Represents trajectory information for an agent's reasoning or tool execution steps. This metadata helps track the agent's decision-making process and provides transparency into how the agent arrived at its response.\nTrajectoryMetadata can capture either: 1. A reasoning step with a message 2. A tool execution with tool name, input, and output\nThis information can be used for debugging, audit trails, and providing users with insight into the agent's thought process.\n",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "trajectory",
+            "default": "trajectory"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true,
+            "description": "A reasoning step or thought in the agent's decision process."
+          },
+          "tool_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the tool that was executed."
+          },
+          "tool_input": {
+            "type": "object",
+            "nullable": true,
+            "description": "Input parameters passed to the tool."
+          },
+          "tool_output": {
+            "type": "object",
+            "nullable": true,
+            "description": "Output or result returned by the tool."
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "MessagePart": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string",
+            "default": "text/plain"
+          },
+          "content": {
+            "type": "string"
+          },
+          "content_encoding": {
+            "type": "string",
+            "enum": [
+              "plain",
+              "base64"
+            ],
+            "default": "plain"
+          },
+          "content_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CitationMetadata"
+              },
+              {
+                "$ref": "#/components/schemas/TrajectoryMetadata"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "content_type"
+        ],
+        "not": {
+          "allOf": [
+            {
+              "required": [
+                "content"
+              ]
+            },
+            {
+              "required": [
+                "content_url"
+              ]
+            }
+          ]
+        },
+        "description": "A part of a message, containing a specific `content_type` and either inline `content` or `content_url`, or neither. Only one of `content` or `content_url` can be provided."
+      },
+      "Message": {
+        "type": "object",
+        "required": [
+          "parts",
+          "role"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Specifies the sender of the message. Allowed values:\n- `\"user\"` for messages sent by an end-user.\n- `\"agent` for anonymous agent.\n- `\"agent/{agent_name}\"` for messages sent by an agent, where `{agent_name}` is the identifier of the agent.\n",
+            "examples": [
+              "user",
+              "agent",
+              "agent/summarizer",
+              "agent/data_processor"
+            ],
+            "pattern": "^(user|agent(\\/[a-zA-Z0-9_\\-]+)?)$"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MessagePart"
+            },
+            "minItems": 1,
+            "description": "Ordered sequence of message parts"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AwaitRequest": {
+        "type": "object",
+        "description": "Payload describing what is awaited from the client to continue the run."
+      },
+      "AwaitResume": {
+        "type": "object",
+        "description": "Payload sent by the client to resume an awaiting run."
+      },
+      "RunCreateRequest": {
+        "type": "object",
+        "properties": {
+          "agent_name": {
+            "$ref": "#/components/schemas/AgentName"
+          },
+          "session_id": {
+            "$ref": "#/components/schemas/SessionId"
+          },
+          "session": {
+            "$ref": "#/components/schemas/Session"
+          },
+          "input": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            },
+            "minItems": 1
+          },
+          "mode": {
+            "$ref": "#/components/schemas/RunMode"
+          }
+        },
+        "required": [
+          "agent_name",
+          "input"
+        ]
+      },
+      "RunResumeRequest": {
+        "type": "object",
+        "properties": {
+          "run_id": {
+            "$ref": "#/components/schemas/RunId"
+          },
+          "await_resume": {
+            "$ref": "#/components/schemas/AwaitResume"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/RunMode"
+          }
+        },
+        "required": [
+          "run_id",
+          "await_resume",
+          "mode"
+        ]
+      },
+      "RunEventsListResponse": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            }
+          }
+        },
+        "required": [
+          "events"
+        ]
+      },
+      "AgentsListResponse": {
+        "type": "object",
+        "properties": {
+          "agents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentManifest"
+            }
+          }
+        },
+        "required": [
+          "agents"
+        ]
+      },
+      "Run": {
+        "type": "object",
+        "properties": {
+          "agent_name": {
+            "$ref": "#/components/schemas/AgentName"
+          },
+          "session_id": {
+            "$ref": "#/components/schemas/SessionId"
+          },
+          "run_id": {
+            "$ref": "#/components/schemas/RunId"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "await_request": {
+            "$ref": "#/components/schemas/AwaitRequest",
+            "nullable": true
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          },
+          "error": {
+            "$ref": "#/components/schemas/Error",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finished_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        },
+        "required": [
+          "agent_name",
+          "run_id",
+          "status",
+          "output",
+          "created_at"
+        ]
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/SessionId"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "state": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "id",
+          "history"
+        ]
+      },
+      "MessageCreatedEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "message.created"
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "MessagePartEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "message.part"
+          },
+          "part": {
+            "$ref": "#/components/schemas/MessagePart"
+          }
+        },
+        "required": [
+          "type",
+          "part"
+        ]
+      },
+      "MessageCompletedEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "message.completed"
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "GenericEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "generic"
+          },
+          "generic": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "type",
+          "generic"
+        ]
+      },
+      "RunCreatedEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.created"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "RunInProgressEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.in-progress"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "RunAwaitingEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.awaiting"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "RunCompletedEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.completed"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "RunCancelledEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.cancelled"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "RunFailedEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "run.failed"
+          },
+          "run": {
+            "$ref": "#/components/schemas/Run"
+          }
+        },
+        "required": [
+          "type",
+          "run"
+        ]
+      },
+      "ErrorEvent": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "error"
+          },
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "required": [
+          "type",
+          "error"
+        ]
+      },
+      "Event": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MessageCreatedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/MessagePartEvent"
+          },
+          {
+            "$ref": "#/components/schemas/MessageCompletedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/GenericEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunCreatedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunInProgressEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunAwaitingEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunCompletedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunFailedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/RunCancelledEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ErrorEvent"
+          }
+        ]
+      },
+      "AgentName": {
+        "type": "string",
+        "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
+        "minLength": 1,
+        "maxLength": 63,
+        "description": "A unique identifier for the agent following the RFC 1123 DNS label naming convention.",
+        "example": "chat"
+      },
+      "AgentManifest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/AgentName"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the agent.",
+            "example": "Conversational agent with memory, supporting real-time search, Wikipedia lookups, and weather updates through integrated tools"
+          },
+          "input_content_types": {
+            "type": "array",
+            "minItems": 1,
+            "description": "List of supported MIME content types for input Messages. Defines what formats of content the agent can consume.\n",
+            "items": {
+              "type": "string",
+              "examples": [
+                "*/*",
+                "image/*",
+                "text/plain",
+                "application/json",
+                "image/png"
+              ]
+            }
+          },
+          "output_content_types": {
+            "type": "array",
+            "minItems": 1,
+            "description": "List of supported MIME content types for output Messages. Defines what formats of content the agent can produce.\n",
+            "items": {
+              "type": "string",
+              "examples": [
+                "*/*",
+                "image/*",
+                "text/plain",
+                "application/json",
+                "image/png"
+              ]
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "input_content_types",
+          "output_content_types"
+        ]
+      },
+      "Status": {
+        "type": "object",
+        "properties": {
+          "avg_run_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "avg_run_time_seconds": {
+            "type": "number",
+            "format": "float",
+            "minimum": 0
+          },
+          "success_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentage of successful runs (0-100)."
+          }
+        },
+        "description": "Real-time dynamic metrics and state provided by the system managing the agent."
+      },
+      "Tag": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "Chat",
+              "RAG",
+              "Canvas",
+              "Code",
+              "Researcher",
+              "Orchestrator"
+            ]
+          }
+        ],
+        "example": "Chat",
+        "description": "Simple tag or enum for classifying agents."
+      },
+      "Metadata": {
+        "type": "object",
+        "properties": {
+          "annotations": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Key-value annotation metadata."
+          },
+          "documentation": {
+            "type": "string",
+            "description": "Full agent documentation in markdown.",
+            "example": "The agent is a conversational system designed to process user messages, maintain context, and generate..."
+          },
+          "license": {
+            "type": "string",
+            "description": "SPDX license ID.",
+            "example": "Apache-2.0"
+          },
+          "programming_language": {
+            "type": "string",
+            "description": "Programming language (per GitHub language support).",
+            "example": "Python"
+          },
+          "natural_languages": {
+            "type": "array",
+            "description": "Supported human languages (ISO 639-1 codes).",
+            "items": {
+              "type": "string",
+              "example": "en"
+            }
+          },
+          "framework": {
+            "type": "string",
+            "description": "Agent framework, e.g. BeeAI, crewAI, Autogen, AG2.",
+            "example": "BeeAI"
+          },
+          "capabilities": {
+            "type": "array",
+            "description": "A structured list describing capabilities supported by the agent. Each capability includes a human-readable name and a brief description. This information might be consumed and interpreted by large language models (LLMs).\n",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Human-readable name of the capability.",
+                  "example": "Conversational AI"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Brief description of what the capability provides or enables.",
+                  "example": "Handles multi-turn conversations with memory."
+                }
+              },
+              "required": [
+                "name",
+                "description"
+              ]
+            },
+            "example": [
+              {
+                "name": "Conversational AI",
+                "description": "Handles multi-turn conversations with memory."
+              },
+              {
+                "name": "Vacation Request",
+                "description": "Handles submission and tracking of vacation requests."
+              }
+            ]
+          },
+          "domains": {
+            "type": "array",
+            "description": "Domains or functional areas applicable to the agent, such as 'finance', 'healthcare', 'supply-chain', or custom-defined domains relevant to your organization or team.\n",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "finance",
+              "healthcare",
+              "supply-chain"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "updated_at": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "author": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "example": [
+              {
+                "type": "source-code",
+                "url": "https://github.com/i-am-bee/beeai-platform.git"
+              },
+              {
+                "type": "homepage",
+                "url": "https://agentcommunicationprotocol.dev"
+              }
+            ]
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgentDependency"
+            }
+          },
+          "recommended_models": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "List of recommended model names (see providers such as Ollama, OpenAI, etc.)."
+            },
+            "example": [
+              "llama3.3:70b-instruct-fp16",
+              "llama3.3"
+            ]
+          }
+        },
+        "description": "Static details about the agent, for discovery, classification, and cataloging."
+      },
+      "GeneralSchema": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/JsonSchema"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "chat",
+              "text"
+            ],
+            "description": "Predefined schema types:\n- `chat`: Conversational input/output structured in a standard chat message format.\n- `text`: Simple plain text input/output without additional metadata.\n"
+          }
+        ]
+      },
+      "JsonSchema": {
+        "type": "object",
+        "description": "Any valid JSON Schema object."
+      },
+      "Link": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "source-code",
+              "container-image",
+              "homepage",
+              "documentation"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "type",
+          "url"
+        ]
+      },
+      "Timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp in RFC3339/ISO8601 format."
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Smith"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jsmith@example.com"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://example.com"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "AgentDependency": {
+        "type": "object",
+        "description": "**Experimental:** Represents a dependency required by the agent, specifying external resources or capabilities it relies upon, such as other agents, tools, or AI models.\n",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "agent",
+              "tool",
+              "model"
+            ],
+            "description": "Type of dependency:\n- `agent`: Another agent instance required to fulfill certain functionalities.\n- `tool`: External tool or utility needed by the agent.\n- `model`: Specific AI model that the agent depends on.\n",
+            "example": "tool"
+          },
+          "name": {
+            "type": "string",
+            "description": "Identifier or name of the dependency, such as an agent name, tool identifier, or model name.\n",
+            "example": "weather"
+          }
+        }
+      },
+      "Thread": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "session_id",
+          "last_run_id",
+          "status",
+          "archived",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "session_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "last_run_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "empty",
+              "ready",
+              "running",
+              "needs_new_thread",
+              "archived"
+            ]
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RestError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ThreadMessage": {
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "content",
+          "created_at",
+          "run_id",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "user",
+              "assistant"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          }
+        }
+      },
+      "Usage": {
+        "type": "object",
+        "description": "Statistics reported by Bob. Missing fields are unavailable, not zero. Session costs are Bob-reported session values, not per-message billing. Token fields depend on Bob runtime availability. Older and unsuccessful runs may have no usage.",
+        "properties": {
+          "duration_ms": {
+            "type": "number",
+            "minimum": 0
+          },
+          "session_costs": {
+            "type": "number",
+            "minimum": 0
+          },
+          "max_cost": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tool_calls": {
+            "type": "number",
+            "minimum": 0
+          },
+          "input_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "output_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "total_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cache_read_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cache_write_tokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "cache_ratio": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/capabilities": {
+      "get": {
+        "operationId": "getCapabilities",
+        "summary": "Runtime readiness, caller identity, supported features, and limits",
+        "responses": {
+          "200": {
+            "description": "Capabilities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads": {
+      "get": {
+        "operationId": "listThreads",
+        "summary": "List caller-owned threads, newest updated first",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          {
+            "name": "archived",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thread page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "next_cursor"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Thread"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createThread",
+        "summary": "Create an empty thread; workspace is allocated on its first message",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created thread",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Thread"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getThread",
+        "summary": "Read thread metadata and status",
+        "responses": {
+          "200": {
+            "description": "Thread",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Thread"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateThread",
+        "summary": "Rename, archive, or restore a thread",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "minProperties": 1,
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "archived": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated thread",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Thread"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteThread",
+        "summary": "Permanently remove the thread and wrapper message history",
+        "description": "No active run is allowed. ACP run records, Bob task history, and workspace files are retained separately. Use archive for reversible hiding.",
+        "responses": {
+          "204": {
+            "description": "Thread deleted; no response body"
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{id}/messages": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listMessages",
+        "summary": "Read saved user and assistant messages; results are chronological within a page",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of turns (each turn includes a user message and an assistant response).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message page",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "next_cursor"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ThreadMessage"
+                      }
+                    },
+                    "next_cursor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "sendMessage",
+        "summary": "Start one asynchronous Bob run; at most one active run per thread",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Reuse this key and identical content to retry without executing twice. Scoped to this thread and retained with its history.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9._:-]{1,128}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "content"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted run (also returned for idempotent retries)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "thread",
+                    "run",
+                    "message_id",
+                    "events_url"
+                  ],
+                  "properties": {
+                    "thread": {
+                      "$ref": "#/components/schemas/Thread"
+                    },
+                    "run": {
+                      "$ref": "#/components/schemas/Run"
+                    },
+                    "message_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "events_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getRun",
+        "summary": "Read current run status and output",
+        "responses": {
+          "200": {
+            "description": "Run",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Run"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{id}/cancel": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "cancelRun",
+        "summary": "Cancel a run; poll its status or stream events until terminal",
+        "responses": {
+          "202": {
+            "description": "Current run",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Run"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runs/{id}/events": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "streamEvents",
+        "summary": "SSE event stream with replay; disconnect does not cancel execution",
+        "description": "Each SSE data record contains an ACP Event. Integer id fields are positions within the run event log. Resume after the last received ID. Terminal runs replay available events and close.",
+        "parameters": [
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{1,10}$"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "Alternate cursor if Last-Event-ID is absent.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ordered ACP events with SSE IDs",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Request failed. code is machine-readable; message explains the failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/threads/{id}/files": {
+      "get": {
+        "summary": "List workspace files and directories. Available after execution finishes.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Relative workspace path. Hidden files and links are excluded."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Directory listing with path, items and truncated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid service token"
+          },
+          "404": {
+            "description": "Thread or file unavailable"
+          },
+          "409": {
+            "description": "Workspace busy or unavailable"
+          },
+          "413": {
+            "description": "File exceeds download limit"
+          }
+        }
+      }
+    },
+    "/threads/{id}/files/download": {
+      "get": {
+        "summary": "Download a regular workspace file, limited to 25 MiB, as an attachment.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Relative workspace path. Hidden files and links are excluded."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary attachment",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid service token"
+          },
+          "404": {
+            "description": "Thread or file unavailable"
+          },
+          "409": {
+            "description": "Workspace busy or unavailable"
+          },
+          "413": {
+            "description": "File exceeds download limit"
+          }
+        }
+      }
+    }
+  }
+}

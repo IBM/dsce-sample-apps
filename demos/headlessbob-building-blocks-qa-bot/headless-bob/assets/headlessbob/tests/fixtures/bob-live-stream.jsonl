@@ -1,0 +1,7 @@
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "user", "content": "Reply with exactly HEADLESSBOB_OK. Do not use tools."}
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "assistant", "content": "HEAD"}
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "assistant", "content": "LESS"}
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "assistant", "content": "BO"}
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "assistant", "content": "B"}
+{"type": "message", "timestamp": "2026-09-11T13:00:00.000Z", "role": "assistant", "content": "_OK"}
+{"type": "result", "timestamp": "2026-09-11T13:00:00.000Z", "status": "success", "stats": {"task_id": "redacted-live-task", "duration_ms": 1558, "session_costs": 0.010432, "max_cost": 0.1, "tool_calls": 0}}

@@ -264,6 +264,26 @@
       "architecture_description": "A2-D2 ingests live drone telemetry from a sensor network, analyses threats using IBM watsonx.ai, stores flight data in MongoDB, and automatically alerts response teams when risks are detected. Live telemetry flows from a Sensor Network into the A2-D2 Backend, which feeds the A2-D2 Dashboard for real-time monitoring. IBM watsonx.ai evaluates proximity, trajectory, speed, and payload indicators to generate a risk score and threat level. Telemetry and flight history are stored in MongoDB. When high-risk events are detected, automated SMS and email notifications are dispatched to response teams. The end-to-end flow is: Sensor Data → watsonx.ai Analysis → Threat Assessment → Automated Alerts.",
       "extrasBoxUrl": "",
       "isLive": true
+     }
+    ,
+    {
+      "name": "Building Blocks Q&A Bot",
+      "slug": "headlessbob-building-blocks-qa-bot",
+      "products": ["IBM Bob"],
+      "buildingBlocks": ["ai.ai-engineering"],
+      "skills": [],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/pull/226",
+      "workingDemoURL": "https://bb-qa-app-bb-qna-bot-da.automationbb-d01-2bef1f4b4097001da9502000c44fc2b2-0000.us-south.containers.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "headlessbob-building-blocks-qa-bot-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png"],
+      "longDescription": "IBM teams exploring the Building Blocks portfolio face a documentation discovery problem: 67+ pages spread across agents, AI Control Plane, data, and automation pillars with no conversational entry point. Sellers, architects, and developers spend time hunting for the right page instead of understanding how the blocks fit together.\n\nThe Building Blocks Q&A Bot solves this by putting Headless Bob in charge of everything beyond the UI shell. Bob autonomously crawls all 67 documentation pages, scores and ranks them by relevance to each incoming question, builds a grounded prompt with full context, and streams a markdown-formatted answer back to the user with source citations. Multi-turn conversation is preserved across follow-up questions within the same Bob thread, and the knowledge base can be refreshed on demand by clicking a single button — triggering another full Bob agentic crawl.\n\nThe demo runs on IBM Cloud OpenShift with two containerised services: the Headless Bob server (handling AI reasoning and thread management) and a Next.js frontend (handling routing, KB scoring, and SSE streaming to the browser). It showcases Bob's AI Agents and AI Control Plane building blocks in action — autonomous tool use, stateful multi-turn conversation, and real-time streaming — making it ideal for seller demos, architect walkthroughs, and internal enablement sessions.",
+      "shortDescription": "Ask any question about IBM Building Blocks and get instant, cited answers — powered entirely by Headless Bob's autonomous doc-crawling and streaming AI capabilities.",
+      "architecture_description": "The demo consists of two containerised services deployed on IBM Cloud OpenShift. The Headless Bob server (port 8000) acts as the AI runtime — it manages conversation threads, executes agentic tool calls to crawl documentation pages, and streams token-by-token responses via Server-Sent Events. The Next.js frontend (port 3000) serves the chat UI and hosts four API routes: /api/chat scores the knowledge base by keyword relevance, selects the top 5 pages, injects them as context into a grounded prompt, and sends it to Bob; /api/stream proxies Bob's SSE stream directly to the browser; /api/threads manages thread listing and deletion; and /api/kb-status triggers Bob's agentic crawl to rebuild the knowledge base on demand. A shared CephFS PersistentVolumeClaim mounts knowledge-base.json into both pods simultaneously.",
+      "extrasBoxUrl": "",
+      "isLive": false
     }
   ]
 }

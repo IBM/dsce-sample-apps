@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@layer base {
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; }
+}
+
+/* ── Prose / Markdown ─────────────────────────────────────── */
+.prose { font-size: 0.9rem; line-height: 1.65; color: #1a1a1a; }
+.prose h1,.prose h2,.prose h3,.prose h4 { font-weight: 600; margin: 1.1rem 0 0.4rem; color: #111; }
+.prose h1 { font-size: 1.2rem; }
+.prose h2 { font-size: 1.05rem; }
+.prose h3 { font-size: 0.95rem; }
+.prose p  { margin: 0.5rem 0; color: #333; }
+.prose ul,.prose ol { padding-left: 1.4rem; margin: 0.4rem 0; color: #333; }
+.prose li { margin: 0.2rem 0; }
+.prose strong { color: #111; font-weight: 600; }
+.prose a { color: #1a6b3c; text-decoration: underline; }
+.prose blockquote {
+  border-left: 3px solid #d1d5db;
+  padding-left: 0.75rem;
+  margin: 0.5rem 0;
+  color: #666;
+  font-style: italic;
+}
+.prose code {
+  background: #f3f4f6;
+  color: #1a6b3c;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.82em;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.prose pre {
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+.prose pre code { background: none; padding: 0; color: #1a1a1a; }
+.prose table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+.prose th {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+.prose td { padding: 0.45rem 0.75rem; border: 1px solid #e5e7eb; color: #374151; }
+.prose tr:nth-child(even) td { background: #fafafa; }
+.prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 1rem 0; }
+
+/* ── Dark sidebar input placeholder ──────────────────────── */
+input::placeholder { color: #5a7a5a; }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ── Cursor blink ─────────────────────────────────────────── */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor-blink { animation: blink 1s step-end infinite; }

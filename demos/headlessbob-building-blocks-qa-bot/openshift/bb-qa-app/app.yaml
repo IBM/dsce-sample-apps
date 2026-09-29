@@ -1,0 +1,100 @@
+# ── bb-qa-app — Deployment, Service, Route ────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bb-qa-app
+  labels:
+    app: bb-qa-app
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bb-qa-app
+  template:
+    metadata:
+      labels:
+        app: bb-qa-app
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: bb-qa-app
+          image: image-registry.openshift-image-registry.svc:5000/NAMESPACE/bb-qa-app:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - { name: NODE_ENV,      value: "production" }
+            - { name: PORT,          value: "3000" }
+            - { name: HOSTNAME,      value: "0.0.0.0" }
+            # headless-bob is reachable via its ClusterIP Service
+            - { name: HEADLESSBOB_URL,        value: "http://headless-bob:8000" }
+            - { name: KNOWLEDGE_BASE_PATH,    value: "/kb/knowledge-base.json" }
+            - { name: DOCS_BASE,              value: "https://ibm-self-serve-assets.github.io/building-blocks-docs" }
+            - name: HEADLESSBOB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bb-qa-credentials
+                  key: BOB_API_KEY
+          resources:
+            requests: { cpu: 100m,  memory: 256Mi }
+            limits:   { cpu: "1",   memory: 1Gi   }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+            runAsNonRoot: true
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - { name: kb, mountPath: /kb, readOnly: true }
+          startupProbe:
+            httpGet: { path: /, port: http }
+            failureThreshold: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /, port: http }
+            periodSeconds: 20
+          readinessProbe:
+            httpGet: { path: /, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 5
+      volumes:
+        - name: kb
+          persistentVolumeClaim:
+            claimName: kb-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bb-qa-app
+  labels:
+    app: bb-qa-app
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  selector:
+    app: bb-qa-app
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+# Public HTTPS route — OpenShift edge TLS termination
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: bb-qa-app
+  labels:
+    app: bb-qa-app
+    app.kubernetes.io/part-of: bb-qa-bot
+  annotations:
+    haproxy.router.openshift.io/timeout: 10m   # allow long SSE streams + crawl
+spec:
+  to:
+    kind: Service
+    name: bb-qa-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

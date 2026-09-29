@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>headlessbob documentation</title><link rel="stylesheet" href="/style.css"><script src="/docs.js" defer></script></head>
+<body class="docs-page">
+<header class="docs-header"><a href="/" class="brand">headlessbob</a><span>Developer documentation</span><a href="/">Open workspace ↗</a></header>
+<div class="docs-layout">
+<nav class="docs-nav" aria-label="Documentation sections"><a href="#start">Get started</a><a href="#choose">REST or ACP?</a><a href="#python">Python samples</a><a href="#rest">REST walkthrough</a><a href="#acp">ACP walkthrough</a><a href="#stream">Streaming and cancellation</a><a href="#files">Workspace files</a><a href="#reference">API reference</a><a href="#errors">Errors and limits</a></nav>
+<main class="api-document markdown">
+<p class="eyebrow">API GUIDES &amp; PYTHON EXAMPLES</p><h1>Build with headlessbob</h1>
+<p>Run Bob tasks from Python, connect a conversation UI, stream replies and download generated files. This guide covers the REST thread API and the text-based ACP 0.2.0 API on the same service.</p>
+<section id="start"><h2>Get started</h2><p>You need Python 3.10 or newer, the service URL and a <strong>service access token</strong>. The Python examples use only the standard library. A Bob API key is configured on the server; it is not the token used by API clients.</p>
+<pre><code>export HEADLESSBOB_URL='http://127.0.0.1:8000'
+export HEADLESSBOB_TOKEN='your-service-access-token'</code></pre>
+<p>For a deployed service, replace the URL with its HTTPS origin, without <code>/api/v1</code>. Running task examples consumes Bob credit and leaves the resulting threads, runs and files on the service.</p></section>
+<section id="choose"><h2>Choose an API</h2><table><thead><tr><th></th><th>REST threads</th><th>ACP</th></tr></thead><tbody>
+<tr><th>Best for</th><td>Conversations, UI integrations and workspace downloads</td><td>Agent clients and direct task execution</td></tr>
+<tr><th>Routes</th><td>/api/v1/threads and /api/v1/runs</td><td>/agents, /runs and /session</td></tr>
+<tr><th>Continuity</th><td>Send another message to the thread ID</td><td>Supply a completed run's session ID</td></tr>
+<tr><th>Live output</th><td>GET /api/v1/runs/{id}/events</td><td>POST /runs with mode: stream</td></tr>
+<tr><th>UI history</th><td>Threads appear in the workspace UI</td><td>Direct ACP runs do not create UI threads</td></tr>
+</tbody></table><p>Both APIs use <code>Authorization: Bearer TOKEN</code>. ACP is for CLI/server clients and rejects browser Origin requests. The REST wrapper accepts same-origin browser requests.</p></section>
+<section id="python"><h2>Download the Python samples</h2><p>Save <strong>client.py</strong> and the examples you want into the same folder. No pip installation is needed. These links download the actual source files used by the project.</p>
+<div class="docs-downloads"><a class="button outline" href="/examples/python/client.py" download>client.py · shared helper</a><a class="button outline" href="/examples/python/rest.py" download>rest.py · threads</a><a class="button outline" href="/examples/python/acp.py" download>acp.py · runs</a><a class="button outline" href="/examples/python/cancel.py" download>cancel.py · stop a run</a></div>
+<p><a href="/examples/python/README.md" download>Download the sample README</a>. Commands below assume your terminal is in the folder containing the downloaded files. In a repository checkout, the same files are under <code>examples/python/</code>.</p>
+<pre><code>python3 acp.py 'Say hello in one sentence.'
+python3 rest.py 'Create hello.txt containing Hello from Python.' \
+  --download hello.txt --output hello.txt</code></pre></section>
+<section id="rest"><h2>REST: create a thread and send a message</h2><p>A thread holds a conversation and one Bob workspace. Each message starts a run. The shared helper reads the URL/token from your environment and reports HTTP errors.</p>
+<pre><code>from uuid import uuid4
+from client import api, wait_run, show_result
+
+thread = api('/api/v1/threads', {'title': 'My Python task'})
+accepted = api(
+    f"/api/v1/threads/{thread['id']}/messages",
+    {'content': 'Create hello.txt containing Hello from Python.'},
+    headers={'Idempotency-Key': str(uuid4())},
+)
+run = wait_run(f"/api/v1/runs/{accepted['run']['run_id']}")
+show_result(run)
+print('Thread:', thread['id'])</code></pre>
+<p>Reuse the same idempotency key when retrying the same send. A new key starts a new message. Only one run can be active in a thread.</p>
+<pre><code>python3 rest.py 'Explain the file you created.' --thread THREAD_ID</code></pre>
+<p>The full sample streams the reply, reads message history, lists files and optionally downloads one. Run and assistant-message responses include <code>usage</code> when Bob reports statistics.</p></section>
+<section id="acp"><h2>ACP: discover Bob and execute a task</h2>
+<pre><code>from client import api, wait_run, show_result
+
+print(api('/agents'))
+run = api('/runs', {
+    'agent_name': 'headlessbob',
+    'mode': 'async',
+    'input': [{'role': 'user', 'parts': [{
+        'content_type': 'text/plain',
+        'content': 'Reply with a short hello.',
+    }]}],
+})
+run = wait_run(f"/runs/{run['run_id']}")
+show_result(run)
+print('Session:', run['session_id'])</code></pre>
+<p><code>sync</code> waits for a terminal result (HTTP 200), <code>async</code> returns immediately (HTTP 202), and <code>stream</code> returns live SSE (HTTP 200). Supply a valid previous <code>session_id</code> to continue the task.</p>
+<pre><code>python3 acp.py 'Reply briefly.' --mode sync
+python3 acp.py 'Continue the previous task.' --session SESSION_ID</code></pre>
+<p><a href="/acp">Full ACP guide with curl examples ↗</a></p></section>
+<section id="stream"><h2>Streaming and cancellation</h2>
+<pre><code>python3 acp.py 'Explain your capabilities.' --mode stream
+python3 rest.py 'Create a short project README.'</code></pre>
+<p>Both samples print run IDs. In another terminal, stop an active task using either cancellation API:</p>
+<pre><code>python3 cancel.py RUN_ID --api rest
+python3 cancel.py RUN_ID --api acp</code></pre>
+<p>The cancellation request returns HTTP 202; the sample polls for the terminal status. Closing a client, pressing Ctrl+C or reaching a client timeout does not cancel the server-side run.</p>
+<p>ACP <code>GET /runs/{id}/events</code> returns stored events as JSON. The REST events endpoint streams SSE and supports replay via <code>Last-Event-ID</code>. The small Python samples consume one stream; production clients should add replay/reconnection handling.</p></section>
+<section id="files"><h2>Workspace files</h2><p>REST threads support file browsing and authenticated downloads after active execution ends.</p>
+<pre><code>from client import api
+
+files = api('/api/v1/threads/THREAD_ID/files')
+for item in files['items']:
+    print(item['path'], item['type'], item['downloadable'])</code></pre>
+<pre><code>python3 rest.py 'Create report.txt with a short summary.' \
+  --download report.txt --output report.txt</code></pre>
+<p>The sample refuses to overwrite an existing local file. Downloads are attachments, limited to 25 MiB per file. Hidden files, symlinks, hard links and traversal paths are excluded. HTML artifacts can be opened locally after download.</p></section>
+<section id="reference"><h2>API reference</h2><p><a href="/api/openapi.json">REST OpenAPI JSON</a> · <a href="/acp/openapi.json">ACP OpenAPI JSON</a></p>
+<table><thead><tr><th>REST endpoint</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>GET /api/v1/capabilities</td><td>Caller, limits, features and API links</td></tr>
+<tr><td>POST /api/v1/threads</td><td>Create a thread</td></tr>
+<tr><td>GET /api/v1/threads</td><td>Search/list; q, archived, limit, cursor</td></tr>
+<tr><td>GET, PATCH, DELETE /api/v1/threads/{id}</td><td>Read, rename/archive/restore or delete</td></tr>
+<tr><td>GET, POST /api/v1/threads/{id}/messages</td><td>Read history or send a message</td></tr>
+<tr><td>GET /api/v1/runs/{id}</td><td>Run status, output and usage</td></tr>
+<tr><td>GET /api/v1/runs/{id}/events</td><td>Live SSE with replay</td></tr>
+<tr><td>POST /api/v1/runs/{id}/cancel</td><td>Request cancellation</td></tr>
+<tr><td>GET /api/v1/threads/{id}/files</td><td>Browse a workspace folder with ?path=</td></tr>
+<tr><td>GET /api/v1/threads/{id}/files/download</td><td>Download the file specified by ?path=</td></tr>
+</tbody></table>
+<p>Archive is reversible. Delete removes the wrapper thread and messages, while run audit records and workspace files remain retained. Neither action is allowed to interrupt an active run; cancel or wait first.</p></section>
+<section id="errors"><h2>Errors and limits</h2><p>REST errors use <code>{"error":{"code":"…","message":"…"}}</code>. ACP errors use <code>{"code":"…","message":"…","data":{…}}</code>. Common statuses:</p>
+<table><thead><tr><th>Status</th><th>Action</th></tr></thead><tbody>
+<tr><td>400</td><td>Check the payload or unsupported input</td></tr><tr><td>401</td><td>Check the service token</td></tr><tr><td>404</td><td>Check the resource ID and caller ownership</td></tr><tr><td>409</td><td>Check active runs, session recovery or archived state</td></tr><tr><td>413</td><td>Reduce request or file size</td></tr><tr><td>429</td><td>Wait for service capacity before retrying</td></tr>
+</tbody></table><p>Use this service with trusted operators: Bob can execute shell commands. ACP supports inline plain text only; imported sessions, Await/resume, multimodal input and ACP artifact transfer are not supported. Failed or cancelled sessions may need a fresh thread/session.</p></section>
+</main></div></body></html>

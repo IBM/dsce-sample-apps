@@ -1,0 +1,35 @@
+{
+  "name": "headlessbob",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "build": "npm run build:ui && tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "dev": "node --env-file-if-exists=.env --import tsx src/server.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "npm run build && npm test",
+    "client": "node --env-file-if-exists=.env scripts/client.mjs",
+    "smoke": "node --env-file-if-exists=.env --import tsx scripts/smoke.ts",
+    "smoke:client-bridge": "node --env-file-if-exists=.env --import tsx scripts/smoke-client-bridge.ts",
+    "build:ui": "esbuild browser/markdown.js --bundle --format=iife --global-name=HeadlessMarkdown --platform=browser --target=es2022 --outfile=public/markdown.js --minify"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "dompurify": "^3.4.15",
+    "marked": "^18.0.12",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.0.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
