@@ -1,3 +1,0 @@
-- git:
-    repo: https://github.com/SunilManika/retailapp.git
-    dest: "{{ app_dir }}"
