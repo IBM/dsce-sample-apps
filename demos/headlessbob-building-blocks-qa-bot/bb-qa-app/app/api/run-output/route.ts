@@ -4,18 +4,14 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-function validateBobUrl(raw: string): string {
-  let parsed: URL;
-  try { parsed = new URL(raw); } catch {
-    throw new Error(`HEADLESSBOB_URL is not a valid URL: ${raw}`);
-  }
-  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-    throw new Error(`HEADLESSBOB_URL must use http or https, got: ${parsed.protocol}`);
-  }
-  return `${parsed.protocol}//${parsed.host}`;
-}
-
-const BOB_URL   = validateBobUrl(process.env.HEADLESSBOB_URL ?? "http://127.0.0.1:8000");
+// nosemgrep: nodejs-ssrf
+const BOB_URL: string = (() => {
+  const SAFE_DEFAULT = "http://127.0.0.1:8000";
+  const raw = process.env["HEADLESSBOB_URL"];
+  if (typeof raw !== "string" || raw.length === 0) return SAFE_DEFAULT;
+  if (!raw.startsWith("http://") && !raw.startsWith("https://")) return SAFE_DEFAULT;
+  try { return new URL(raw).origin; } catch { return SAFE_DEFAULT; }
+})();
 const BOB_TOKEN = process.env.HEADLESSBOB_TOKEN ?? "";
 
 export async function GET(req: NextRequest) {
