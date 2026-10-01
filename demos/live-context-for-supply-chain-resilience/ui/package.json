@@ -12,7 +12,7 @@
   "dependencies": {
     "@carbon/icons-react": "^11.48.0",
     "@carbon/react": "^1.71.0",
-    "axios": "^1.7.0",
+    "axios": "^1.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0"
