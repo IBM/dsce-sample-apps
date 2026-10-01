@@ -14,7 +14,7 @@
     "@carbon/icons-react": "^11.25.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.6.0"
+    "axios": "^1.18.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -25,6 +25,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "sass": "^1.69.5",
-    "vite": "^5.0.8"
+    "vite": "^6.4.3"
   }
 }

@@ -5,7 +5,7 @@ Reset Astra DB by removing all collections and loading fresh PDF data.
 
 import os
 from pathlib import Path
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 from astrapy import DataAPIClient
 from dotenv import load_dotenv

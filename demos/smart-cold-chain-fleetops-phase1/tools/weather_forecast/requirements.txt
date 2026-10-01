@@ -2,4 +2,4 @@
 # The ibm_watsonx_orchestrate package is provided by the watsonx Orchestrate runtime
 
 # External dependencies for API integration
-requests>=2.31.0
+requests>=2.33.0
