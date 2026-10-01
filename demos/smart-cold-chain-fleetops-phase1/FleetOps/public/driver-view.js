@@ -25,11 +25,11 @@ function initDriverMap() {
         }
         
         driverMap = L.map('driverMapContainer').setView([39.8283, -98.5795], 4);
-        // Use CartoDB tile layer which is more reliable and doesn't have strict referrer policies
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap contributors © CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
+        // CartoDB tiles — new API format with key= param
+        const cartoApiKey = window.CARTO_API_KEY || '';
+        L.tileLayer(`https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key=${cartoApiKey}`, {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+            maxZoom: 19
         }).addTo(driverMap);
         
         console.log('Driver map initialized successfully');

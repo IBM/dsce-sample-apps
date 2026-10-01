@@ -9,8 +9,17 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const axios = require('axios');
+const https = require('https');
+const http = require('http');
 const fs = require('fs').promises;
 const k8s = require('@kubernetes/client-node');
+
+// Keep-alive agents so connections to the OpenShift backends are reused
+// and long responses don't get cut off by socket hang up
+const httpsAgent = new https.Agent({ keepAlive: true, timeout: 60000 });
+const httpAgent  = new http.Agent({  keepAlive: true, timeout: 60000 });
+axios.defaults.httpsAgent = httpsAgent;
+axios.defaults.httpAgent  = httpAgent;
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -28,18 +37,23 @@ try {
 }
 
 // Cold-chain API base URL (existing backend)
-const COLDCHAIN_API_URL = process.env.COLDCHAIN_API_URL || 'https://fleetops-api-fleetops-backend.apps.itz-uv3vvn.hub01-lb.techzone.ibm.com';
+const COLDCHAIN_API_URL = (process.env.COLDCHAIN_API_URL || 'https://fleetops-api-fleetops-backend.apps.itz-uv3vvn.hub01-lb.techzone.ibm.com').replace(/\/$/, '');
 
 // Forecast API base URL
-const FORECAST_API_URL = process.env.FORECAST_API_URL || 'https://fleetops-forecasting-fleetops-backend.apps.itz-uv3vvn.hub01-lb.techzone.ibm.com';
+const FORECAST_API_URL = (process.env.FORECAST_API_URL || 'https://fleetops-forecasting-fleetops-backend.apps.itz-uv3vvn.hub01-lb.techzone.ibm.com').replace(/\/$/, '');
 
 // Turbonomic API base URL (for widget)
 const TURBONOMIC_API_URL = process.env.TURBONOMIC_API_URL || COLDCHAIN_API_URL;
 
+// Only include a URL in CSP if it looks like a real URL (no unset placeholders)
+const isRealUrl = (u) => u && !u.includes('<') && !u.includes('>') && u.startsWith('http');
+const connectSrcUrls = ["'self'", "https:", COLDCHAIN_API_URL, FORECAST_API_URL]
+  .concat(isRealUrl(TURBONOMIC_API_URL) ? [TURBONOMIC_API_URL] : []);
+
 // Rate limiting - applied globally to all routes
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,                  // max 100 requests per IP per window
+  max: 2000,                 // allow up to 2000 requests per IP per window (dashboard auto-refreshes frequently)
   standardHeaders: true,     // Return rate limit info in RateLimit-* headers
   legacyHeaders: false,      // Disable X-RateLimit-* headers
 });
@@ -55,8 +69,7 @@ app.use(helmet({
       scriptSrcAttr: ["'unsafe-inline'"],  // Allow inline event handlers (onclick, etc.)
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://unpkg.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      // Allow connections to self (for /api/* endpoints) and external APIs
-      connectSrc: ["'self'", "https:", COLDCHAIN_API_URL, FORECAST_API_URL, TURBONOMIC_API_URL],
+      connectSrc: connectSrcUrls,
       upgradeInsecureRequests: null  // Disable upgrade-insecure-requests for local development
     }
   },
@@ -85,7 +98,8 @@ app.get('/health', (req, res) => {
 app.get('/api/config', (req, res) => {
   res.status(200).json({
     instanaUrl: process.env.INSTANA_URL,
-    turbonomicUrl: process.env.TURBONOMIC_URL
+    turbonomicUrl: process.env.TURBONOMIC_URL,
+    cartoApiKey: process.env.CARTO_API_KEY || ''
   });
 });
 
@@ -110,13 +124,17 @@ app.get('/api/config', (req, res) => {
 //   }
 // });
 
+// Normalise req.url: Express sets it to '/' (or '/?query') when the route matches
+// exactly, which appends a trailing slash that causes 404/socket hang up on the backend.
+const normaliseReqUrl = (u) => u.replace(/^\/(?=\?|$)/, '').replace(/\/(?=\?|$)/, '');
+
 app.use('/api/trucks', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${COLDCHAIN_API_URL}/api/trucks${req.url}`,
+      url: `${COLDCHAIN_API_URL}/api/trucks${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query
+      timeout: 30000
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -132,9 +150,9 @@ app.use('/api/alerts', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${COLDCHAIN_API_URL}/api/alerts${req.url}`,
+      url: `${COLDCHAIN_API_URL}/api/alerts${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query
+      timeout: 30000
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -150,9 +168,9 @@ app.use('/api/stations', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${COLDCHAIN_API_URL}/api/stations${req.url}`,
+      url: `${COLDCHAIN_API_URL}/api/stations${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query
+      timeout: 30000
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -165,7 +183,7 @@ app.use('/api/stations', async (req, res) => {
 });
 // Proxy for Agents API (watsonx Orchestrate integration)
 app.use('/api/agents', async (req, res) => {
-  const targetUrl = `${COLDCHAIN_API_URL}/api/agents${req.url}`;
+  const targetUrl = `${COLDCHAIN_API_URL}/api/agents${normaliseReqUrl(req.url)}`;
   console.log('=== AGENTS PROXY REQUEST ===');
   console.log('Method:', req.method);
   console.log('Original URL:', req.url);
@@ -212,9 +230,9 @@ app.use('/api/weather', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${COLDCHAIN_API_URL}/api/weather${req.url}`,
+      url: `${COLDCHAIN_API_URL}/api/weather${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query
+      timeout: 30000
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -230,9 +248,9 @@ app.use('/api/routes', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${COLDCHAIN_API_URL}/api/routes${req.url}`,
+      url: `${COLDCHAIN_API_URL}/api/routes${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query
+      timeout: 30000
     });
     res.status(response.status).json(response.data);
   } catch (error) {
@@ -249,9 +267,8 @@ app.use('/api/forecast', async (req, res) => {
   try {
     const response = await axios({
       method: req.method,
-      url: `${FORECAST_API_URL}/api/forecast${req.url}`,
+      url: `${FORECAST_API_URL}/api/forecast${normaliseReqUrl(req.url)}`,
       data: req.body,
-      params: req.query,
       timeout: 30000 // 30 second timeout for ML operations
     });
     res.status(response.status).json(response.data);

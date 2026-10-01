@@ -40,11 +40,11 @@ function initNewMap() {
         
         newMap = L.map('newMap').setView([39.8283, -98.5795], 5); // Center of USA
         
-        // Use CartoDB tiles as alternative (less likely to be blocked)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap contributors © CARTO',
-            maxZoom: 19,
-            subdomains: 'abcd'
+        // CartoDB tiles — new API format with key= param
+        const cartoApiKey = window.CARTO_API_KEY || '';
+        L.tileLayer(`https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key=${cartoApiKey}`, {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+            maxZoom: 19
         }).addTo(newMap);
         
         // Force map to resize after initialization

@@ -2093,7 +2093,7 @@ async function fetchTurbonomicActions() {
                                     action.risk.severity === 'MAJOR' ? '🟡' : '🔵';
                 
                 const createDate = new Date(action.createTime).toLocaleString();
-                const actionDataStr = JSON.stringify(action).replace(/"/g, '"');
+                const actionDataStr = JSON.stringify(action).replace(/"/g, '&quot;');
                 
                 return `
                     <div id="action-${action.uuid}" style="margin-bottom: var(--cds-spacing-05); padding: var(--cds-spacing-05); background: var(--cds-layer-02); border-left: 3px solid ${severityColor};">
@@ -2176,7 +2176,7 @@ function executeTurboAction(uuid, actionData) {
     const buttonContainer = document.getElementById(`action-buttons-${uuid}`);
     if (!buttonContainer) return;
     
-    const actionDataStr = JSON.stringify(actionData).replace(/"/g, '"');
+    const actionDataStr = JSON.stringify(actionData).replace(/"/g, '&quot;');
     
     // Show inline confirmation
     buttonContainer.innerHTML = `
