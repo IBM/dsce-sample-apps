@@ -1,0 +1,13 @@
+{
+  "type": "result",
+  "timestamp": "2026-09-11T13:00:00.000Z",
+  "status": "success",
+  "stats": {
+    "task_id": "redacted-live-json-task",
+    "duration_ms": 2815,
+    "session_costs": 0.013858,
+    "max_cost": 0.1,
+    "tool_calls": 0
+  },
+  "last_message": "HEADLESSBOB_JSON_OK"
+}

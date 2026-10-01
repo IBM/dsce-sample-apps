@@ -1,0 +1,46 @@
+# ── Network Policies ──────────────────────────────────────────────────────────
+# 1. headless-bob: only accepts traffic from bb-qa-app and OCP ingress
+# 2. bb-qa-app: only accepts traffic from OCP ingress (HAProxy router)
+---
+# Allow bb-qa-app → headless-bob on port 8000
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: headless-bob-ingress
+  labels:
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  podSelector:
+    matchLabels:
+      app: headless-bob
+  policyTypes: [Ingress]
+  ingress:
+    # From bb-qa-app pods only
+    - from:
+        - podSelector:
+            matchLabels:
+              app: bb-qa-app
+      ports:
+        - protocol: TCP
+          port: 8000
+---
+# Allow OpenShift router → bb-qa-app on port 3000
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: bb-qa-app-ingress
+  labels:
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  podSelector:
+    matchLabels:
+      app: bb-qa-app
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+      ports:
+        - protocol: TCP
+          port: 3000

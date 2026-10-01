@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create threads, send tasks to Bob, and inspect live runs in your HeadlessBob workspace.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>HeadlessBob · Threads</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/markdown.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <section id="connect-screen" class="connect-screen">
+    <div class="connect-card">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">b.</span><span>HeadlessBob<small>THREADS & RUNS</small></span></div>
+      <p class="eyebrow">YOUR BOB WORKSPACE</p>
+      <h1>One thread.<br>A conversation that continues.</h1>
+      <p class="connect-description">Send a task, watch Bob work, and pick up where you left off.</p>
+      <form id="connect-form">
+        <label for="access-token">Service access token</label>
+        <input id="access-token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your HeadlessBob access token">
+        <p class="field-help">Use the service token, not your Bob API key. It stays in this tab’s memory and is cleared when you disconnect or reload.</p>
+        <p id="connect-error" class="form-error" role="alert" hidden></p>
+        <button id="connect-button" class="button primary" type="submit">Connect to workspace <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="local-help">For a local service without authentication, leave the token blank.</p>
+    </div>
+    <p class="connect-docs"><a href="/docs" target="_blank" rel="noopener">Documentation &amp; Python examples ↗</a></p>
+    <p class="connect-footer">Powered by Bob Shell <span>·</span> A workspace for trusted operators</p>
+  </section>
+
+  <div id="workspace" class="workspace" hidden>
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">b.</span><span>HeadlessBob<small>THREADS & RUNS</small></span></div>
+      <button id="new-thread" class="button primary"><span aria-hidden="true">＋</span> New thread</button>
+      <label class="sr-only" for="search">Search threads</label>
+      <input id="search" class="search" type="search" placeholder="Search threads…" maxlength="120">
+      <div class="list-tabs" role="group" aria-label="Thread filter">
+        <button id="active-tab" class="tab selected" aria-pressed="true">Active</button>
+        <button id="archived-tab" class="tab" aria-pressed="false">Archived</button>
+      </div>
+      <nav id="thread-list" aria-label="Threads"></nav>
+      <button id="more-threads" class="button quiet more" hidden>Load more threads</button>
+      <nav class="sidebar-resources" aria-label="Documentation">
+        <a href="/docs" target="_blank" rel="noopener">Documentation <span aria-hidden="true">↗</span></a>
+        <a href="/docs#python" target="_blank" rel="noopener">Python examples <span aria-hidden="true">↗</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div><span id="connection-dot" class="connection-dot"></span><span id="connection-label">Connected</span></div>
+        <button id="disconnect" class="text-button">Disconnect</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="thread-header">
+        <div class="heading-group"><p class="eyebrow">WORKSPACE / THREADS</p><h1 id="thread-title">Your next thread</h1></div>
+        <div class="header-actions">
+          <button id="show-files" class="button outline" disabled>Files</button>
+          <button id="rename-thread" class="button quiet" disabled>Rename</button>
+          <button id="archive-thread" class="button quiet" disabled>Archive</button>
+          <button id="delete-thread" class="button quiet danger" disabled>Delete</button>
+          <button id="refresh" class="button quiet" title="Refresh threads and conversation">Refresh</button>
+          <button id="api-help" class="button outline">API docs <span aria-hidden="true">↗</span></button>
+        </div>
+      </header>
+      <form id="rename-form" class="rename-form" hidden>
+        <label for="rename-input">Thread title</label><input id="rename-input" maxlength="120" required>
+        <button class="button primary" type="submit">Save</button><button id="rename-cancel" class="button quiet" type="button">Cancel</button>
+      </form>
+      <div id="notice" class="notice" role="alert" hidden></div>
+
+      <div class="workspace-content">
+      <div class="chat-column">
+      <section id="conversation" class="conversation" aria-label="Conversation">
+        <button id="older-messages" class="button quiet more" hidden>Load earlier messages</button>
+        <div id="empty-state" class="empty-state">
+          <span class="empty-mark" aria-hidden="true">b.</span>
+          <p class="eyebrow">A LITTLE CONTEXT GOES A LONG WAY</p>
+          <h2>What would you like Bob to do?</h2>
+          <p>A thread keeps your conversation and workspace together.<br>Each message starts a new run.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="Create a README for a tiny todo app. Include setup instructions and a short feature list."><span>Build something</span>Create a project README <b aria-hidden="true">↗</b></button>
+            <button class="suggestion" data-prompt="Write a Python function that validates email addresses, with a few example inputs and outputs."><span>Try a coding task</span>Write a Python function <b aria-hidden="true">↗</b></button>
+            <button class="suggestion" data-prompt="Plan a small REST API for tracking tasks. Explain the endpoints and data model before writing code."><span>Think it through</span>Plan a small REST API <b aria-hidden="true">↗</b></button>
+          </div>
+        </div>
+        <div id="messages" class="messages"></div>
+
+      </section>
+
+      <section class="composer-area">
+        <div class="run-strip"><span id="run-status" class="status-badge">Ready for a task</span><span id="thread-context">A new workspace is created with your first message.</span></div>
+        <form id="message-form" class="composer">
+          <label class="sr-only" for="message-input">Message Bob</label>
+          <textarea id="message-input" placeholder="Give Bob a task, or ask a follow-up…" rows="3" maxlength="20000"></textarea>
+          <div class="composer-bottom"><span>Enter to send <span class="dot-separator">·</span> Shift + Enter for a new line</span><div class="composer-actions"><button id="cancel-run" class="button cancel-button" type="button" disabled title="No active run to cancel">Cancel run</button><button id="send-message" class="button primary" type="submit">Send message <span aria-hidden="true">↑</span></button></div></div>
+        </form>
+        <div class="composer-footnote"><span id="composer-hint">Bob can edit files and run commands in this thread’s workspace.</span><span id="character-count">0 / 20,000</span></div>
+        <details id="run-details" class="run-details" hidden><summary>Run details</summary><pre id="run-json"></pre></details>
+      </section>
+      </div>
+        <details id="files-panel" class="files-panel" open hidden>
+          <summary>Workspace files</summary>
+          <div class="files-toolbar"><button id="files-up" class="button quiet" hidden>← Back</button><span id="files-path">/</span><button id="refresh-files" class="button quiet">Refresh files</button></div>
+          <p id="files-note" class="field-help">Files can be downloaded after Bob finishes.</p>
+          <div id="file-list"></div>
+        </details>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="api-dialog">
+    <div class="dialog-heading"><div><p class="eyebrow">BUILT FOR YOUR APPLICATIONS</p><h2>REST and ACP APIs.</h2></div><button id="close-api" class="button quiet" aria-label="Close API reference">Close</button></div>
+    <p>Send your service token as <code>Authorization: Bearer TOKEN</code>. Requests and responses are JSON; live events use SSE.</p>
+    <p><a href="/docs" target="_blank" rel="noopener">Developer guide and Python samples ↗</a></p>
+    <h3>REST threads API</h3>
+    <dl class="endpoint-list">
+      <dt>POST /api/v1/threads</dt><dd>Create a conversation with an optional title.</dd>
+      <dt>GET /api/v1/threads</dt><dd>List and search your threads. Supports pagination.</dd>
+      <dt>PATCH /api/v1/threads/{id}</dt><dd>Rename, archive, or restore a thread.</dd>
+      <dt>DELETE /api/v1/threads/{id}</dt><dd>Delete the conversation from the wrapper. Run records and workspace files are retained.</dd>
+      <dt>POST /api/v1/threads/{id}/messages</dt><dd>Send <code>{"content":"Your task"}</code>. Returns a run immediately.</dd>
+      <dt>GET /api/v1/threads/{id}/messages</dt><dd>Read saved messages and responses.</dd>
+      <dt>GET /api/v1/threads/{id}/files</dt><dd>List workspace files. Use <code>?path=folder</code> for a directory.</dd>
+      <dt>GET /api/v1/threads/{id}/files/download?path=tetris.html</dt><dd>Download a file as an attachment (up to 25 MiB). Requires the same service token.</dd>
+      <dt>GET /api/v1/runs/{id}/events</dt><dd>Stream live events. Reconnect with <code>Last-Event-ID</code>.</dd>
+      <dt>GET /api/v1/runs/{id}</dt><dd>Run status, output and optional usage statistics. Assistant messages also include usage when available.</dd>
+      <dt>POST /api/v1/runs/{id}/cancel</dt><dd>Stop a queued or executing run.</dd>
+    </dl>
+    <p>Use an <code>Idempotency-Key</code> when sending a message to safely retry the same request. One run can be active per thread.</p>
+    <a href="/api/openapi.json" target="_blank" rel="noopener">REST OpenAPI specification ↗</a>
+    <h3>ACP 0.2.0 API</h3>
+    <p>ACP uses root-level routes on this same service and the same service token. It supports text runs and session continuation. Use ACP from a server or CLI; browser Origin requests are rejected.</p>
+    <dl class="endpoint-list">
+      <dt>GET /agents · GET /agents/headlessbob</dt><dd>Discover the Bob agent and its capabilities.</dd>
+      <dt>POST /runs</dt><dd>Create a run with mode sync, async or stream. Pass session_id to continue a completed task.</dd>
+      <dt>GET /runs/{run_id}</dt><dd>Read status, output and usage.</dd>
+      <dt>GET /runs/{run_id}/events</dt><dd>Read persisted events as JSON.</dd>
+      <dt>POST /runs/{run_id}/cancel</dt><dd>Cancel a queued or running task.</dd>
+      <dt>GET /session/{session_id}</dt><dd>Read session run history.</dd>
+    </dl>
+    <p><a href="/acp" target="_blank" rel="noopener">ACP documentation and examples ↗</a> · <a href="/acp/openapi.json" target="_blank" rel="noopener">ACP OpenAPI specification ↗</a></p>
+    <p class="field-help">Threads and messages survive service restarts. A failed or cancelled execution may require a fresh thread. Attachments and thread branching are not supported yet.</p>
+  </dialog>
+  <dialog id="delete-dialog">
+    <div class="dialog-heading"><div><p class="eyebrow">PERMANENT ACTION</p><h2>Delete this thread?</h2></div></div>
+    <p><strong id="delete-thread-name"></strong></p>
+    <p>This permanently removes the thread and its messages from this workspace’s thread list. This cannot be undone.</p>
+    <p>Run records, Bob’s task history, and workspace files are retained. Use Archive instead if you might want to return to this conversation.</p>
+    <p id="delete-error" class="form-error" role="alert" hidden></p>
+    <div class="delete-actions"><button id="keep-thread" class="button outline">Keep thread</button><button id="confirm-delete" class="button delete-button">Delete thread</button></div>
+  </dialog>
+</body>
+</html>

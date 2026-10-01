@@ -1,0 +1,39 @@
+# ── bb-qa-app — ImageStream + BuildConfig ─────────────────────────────────────
+# Builds the Next.js UI image from local source using binary build strategy.
+#
+# Trigger a build:
+#   oc start-build bb-qa-app --from-dir=bb-qa-app --follow
+#
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: bb-qa-app
+  labels:
+    app: bb-qa-app
+    app.kubernetes.io/part-of: bb-qa-bot
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: bb-qa-app
+  labels:
+    app: bb-qa-app
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  runPolicy: Serial
+  source:
+    type: Binary
+    binary: {}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "bb-qa-app:latest"
+  resources:
+    requests: { cpu: 500m, memory: 1Gi }
+    limits:   { cpu: "2",  memory: 3Gi }
+  successfulBuildsHistoryLimit: 2
+  failedBuildsHistoryLimit: 2

@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Node / Next.js
+node_modules/
+.next/
+/out/
+/build/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment — never commit real credentials
+# Use .env.example as the template; copy to .env and fill in values locally
+.env
+.env.local
+.env.*.local
+
+# VSCode
+.vscode/
+
+# Headless Bob runtime data
+headless-bob/assets/headlessbob/.headlessbob/

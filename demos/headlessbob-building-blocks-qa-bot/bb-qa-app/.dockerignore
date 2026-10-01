@@ -1,0 +1,25 @@
+# Build artifacts
+.next/
+out/
+build/
+
+# Dependencies (reinstalled inside image)
+node_modules/
+
+# Local env — secrets must be passed via docker-compose env or runtime flags
+.env*
+
+# Dev / editor clutter
+.DS_Store
+*.pem
+*.tsbuildinfo
+.vscode/
+
+# Source control
+.git/
+.gitignore
+
+# Docs / tests
+README.md
+AGENTS.md
+CLAUDE.md

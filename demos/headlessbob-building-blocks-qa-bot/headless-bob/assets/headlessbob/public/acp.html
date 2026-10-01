@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>headlessbob ACP API</title><link rel="stylesheet" href="/style.css"></head>
+<body><main class="api-document markdown">
+<p><a href="/">← Back to headlessbob</a></p>
+<p><a href="/docs">Developer guide and Python samples ↗</a></p>
+<h1>ACP API</h1>
+<p>headlessbob implements the text subset of Agent Communication Protocol (ACP) 0.2.0. ACP is available at root-level routes on this service. The thread-oriented REST API uses <code>/api/v1</code>. Both share the same Bob runtime and run manager.</p>
+<p><a href="/acp/openapi.json">ACP OpenAPI contract</a> · <a href="/api/openapi.json">REST OpenAPI contract</a></p>
+<h2>Authentication and discovery</h2>
+<p>Use the service access token from <code>AUTH_TOKENS</code>, not the Bob API key. These endpoints support server and CLI clients. Requests carrying a browser Origin header are rejected. Use this site's origin as BASE, or the local address below.</p>
+<pre><code>BASE=http://127.0.0.1:8000
+# Set TOKEN to your service access token.
+curl -H "Authorization: Bearer $TOKEN" "$BASE/agents"
+curl -H "Authorization: Bearer $TOKEN" "$BASE/agents/headlessbob"</code></pre>
+<h2>Run a task</h2>
+<pre><code>curl -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' "$BASE/runs" -d '{
+    "agent_name": "headlessbob",
+    "input": [{"role":"user","parts":[{"content_type":"text/plain","content":"Reply hello."}]}],
+    "mode": "async"
+  }'</code></pre>
+<p>The response includes <code>run_id</code>, <code>session_id</code> and <code>status</code>. Use those returned IDs in the requests below. Optional <code>usage</code> statistics appear when Bob reports them.</p>
+<table><thead><tr><th>Mode</th><th>Response</th></tr></thead><tbody>
+<tr><td>sync (default)</td><td>HTTP 200 JSON after the run terminates. Check status for completed, failed or cancelled.</td></tr>
+<tr><td>async</td><td>HTTP 202 JSON immediately; poll the run endpoint.</td></tr>
+<tr><td>stream</td><td>HTTP 200 text/event-stream with ACP JSON events in data records. Use curl -N.</td></tr>
+</tbody></table>
+<pre><code>curl -H "Authorization: Bearer $TOKEN" "$BASE/runs/$RUN_ID"
+curl -H "Authorization: Bearer $TOKEN" "$BASE/runs/$RUN_ID/events"
+curl -X POST -H "Authorization: Bearer $TOKEN" "$BASE/runs/$RUN_ID/cancel"</code></pre>
+<p>The events endpoint returns JSON containing stored events; it is not a live SSE stream. For live output, create a run with <code>mode: "stream"</code>. Disconnecting does not cancel execution. Cancellation returns HTTP 202; poll until the run reaches a terminal status.</p>
+<h2>Live streaming</h2>
+<pre><code>curl -N -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' "$BASE/runs" -d '{
+    "agent_name":"headlessbob",
+    "input":[{"role":"user","parts":[{"content_type":"text/plain","content":"Explain this task briefly."}]}],
+    "mode":"stream"
+  }'</code></pre>
+<h2>Continue a session</h2>
+<p>Use the <code>session_id</code> returned by a completed run. Continuation must be enabled and the session must remain usable. A failed or cancelled execution may require a new session.</p>
+<pre><code>curl -H "Authorization: Bearer $TOKEN" "$BASE/session/$SESSION_ID"
+curl -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' "$BASE/runs" -d "{
+    \"agent_name\":\"headlessbob\",
+    \"session_id\":\"$SESSION_ID\",
+    \"input\":[{\"role\":\"user\",\"parts\":[{\"content_type\":\"text/plain\",\"content\":\"Continue the previous task.\"}]}],
+    \"mode\":\"async\"
+  }"</code></pre>
+<h2>Supported endpoints</h2>
+<table><thead><tr><th>Endpoint</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>GET /ping, /healthz</td><td>Public liveness</td></tr>
+<tr><td>GET /readyz</td><td>Authenticated runtime readiness</td></tr>
+<tr><td>GET /agents, /agents/headlessbob</td><td>Agent discovery</td></tr>
+<tr><td>POST /runs</td><td>Sync, async or streamed execution</td></tr>
+<tr><td>GET /runs/{run_id}</td><td>Status, output and usage</td></tr>
+<tr><td>GET /runs/{run_id}/events</td><td>Stored events as JSON</td></tr>
+<tr><td>POST /runs/{run_id}/cancel</td><td>Request cancellation</td></tr>
+<tr><td>GET /session/{session_id}</td><td>Session ID and run history as UUID URNs</td></tr>
+</tbody></table>
+<h2>Errors and limits</h2>
+<p>ACP errors use <code>{"code":"invalid_input","message":"…","data":{"reason":"…"}}</code>; data is optional. Common HTTP statuses are 400 for invalid or unsupported input, 401 for missing/invalid credentials, 403 for browser Origin requests, 404 for unavailable or unowned resources, 409 for conflicting session state, and 429 for capacity limits.</p>
+<p>Only inline plain text is supported. ACP Await/resume (POST to an existing run), imported sessions, multimodal input, ACP artifact transfer and A2A are not implemented. Direct ACP runs do not create UI threads. To use the conversation UI and file downloads, create tasks through the thread REST API. Read the agent manifest for runtime capabilities.</p>
+</main></body></html>

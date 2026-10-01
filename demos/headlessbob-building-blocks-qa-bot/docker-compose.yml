@@ -1,0 +1,106 @@
+# Building Blocks Q&A Bot — Compose file
+# Works with both `docker compose` and `podman compose`
+#
+# Usage:
+#   cp .env.example .env          # fill in BOB_API_KEY
+#   podman compose up --build
+#
+# Services:
+#   headless-bob  — AI runtime on :8000
+#   bb-qa-app     — Next.js UI on :3000
+
+volumes:
+  bob-data:          # Bob's thread/run database (persists across restarts)
+  kb-data:           # Shared volume for knowledge-base.json
+
+services:
+
+  # ── KB seed — copies the pre-built knowledge-base.json into the shared volume ─
+  # Runs once on first `up`, exits immediately, skipped on subsequent starts
+  # because the volume already has the file. Bob can overwrite it via Refresh KB.
+  kb-seed:
+    image: busybox
+    container_name: kb-seed
+    restart: "no"
+    volumes:
+      - ./crawler:/src:ro
+      - kb-data:/kb
+    command: >
+      sh -c "if [ ! -f /kb/knowledge-base.json ]; then
+        cp /src/knowledge-base.json /kb/knowledge-base.json &&
+        echo 'KB seeded from crawler/knowledge-base.json';
+      else
+        echo 'KB already exists, skipping seed';
+      fi"
+
+
+  # ── Headless Bob ─────────────────────────────────────────────────────────────
+  headless-bob:
+    build:
+      context: ./headless-bob/assets/headlessbob
+      dockerfile: Dockerfile
+    container_name: headless-bob
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bob's persistent database (threads, runs, workspaces)
+      - bob-data:/data
+      # Shared KB folder — Bob writes here, Next.js reads from here
+      - kb-data:/kb
+    environment:
+      PORT: "8000"
+      # Bind on all interfaces so sibling containers can reach Bob.
+      # AUTH_TOKENS is a JSON map of { "callerName": "token" } — required by Bob's
+      # config guard alongside ALLOW_TRUSTED_NETWORK when HOST != loopback.
+      HOST: "0.0.0.0"
+      ALLOW_TRUSTED_NETWORK: "true"
+      # Note: double-quote the whole value so ${BOB_API_KEY} is substituted by compose
+      AUTH_TOKENS: "{\"app\":\"${BOB_API_KEY}\"}"
+      DATA_DIR: /data/service
+      HOME: /data/home
+      NODE_ENV: production
+      BOB_API_KEY: ${BOB_API_KEY}
+      BOB_ENABLE_CONTINUATION: "true"
+      RUN_TIMEOUT_MS: "600000"
+      KB_OUTPUT_PATH: /kb/knowledge-base.json
+    healthcheck:
+      # node is always present in the image; /healthz returns {"status":"ok"}
+      test: ["CMD", "node", "-e",
+        "require('http').get('http://127.0.0.1:8000/healthz',r=>{process.exit(r.statusCode===200?0:1)}).on('error',()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 30s
+
+  # ── Next.js UI ───────────────────────────────────────────────────────────────
+  bb-qa-app:
+    build:
+      context: ./bb-qa-app
+      dockerfile: Dockerfile
+    container_name: bb-qa-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      # Same shared KB volume — Next.js reads knowledge-base.json from here
+      - kb-data:/kb
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+      # Bob runs as a sibling container — use service name as hostname
+      HEADLESSBOB_URL: "http://headless-bob:8000"
+      HEADLESSBOB_TOKEN: ${BOB_API_KEY}
+      # Point to the shared volume mount
+      KNOWLEDGE_BASE_PATH: /kb/knowledge-base.json
+      DOCS_BASE: "https://ibm-self-serve-assets.github.io/building-blocks-docs"
+    depends_on:
+      headless-bob:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://0.0.0.0:3000"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

@@ -1,2 +1,0 @@
-Account.Opportunity Account.Case
-List all opportunities and cases in my account with bulleted details.

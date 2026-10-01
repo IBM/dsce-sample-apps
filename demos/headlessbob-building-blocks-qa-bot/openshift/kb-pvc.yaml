@@ -1,0 +1,16 @@
+# ── Shared KB PersistentVolumeClaim ───────────────────────────────────────────
+# Shared between headless-bob (write) and bb-qa-app (read).
+# Uses CephFS (ReadWriteMany) so both pods can mount it simultaneously.
+# ocs-storagecluster-cephfs is available on IBM Cloud ROKS clusters with ODF.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kb-data
+  labels:
+    app.kubernetes.io/part-of: bb-qa-bot
+spec:
+  accessModes: [ReadWriteMany]
+  storageClassName: ocs-storagecluster-cephfs
+  resources:
+    requests:
+      storage: 1Gi
