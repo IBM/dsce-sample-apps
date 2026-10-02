@@ -1,12 +1,12 @@
 # ── MCP Server ────────────────────────────────────────────────────────────────
 confluent-kafka>=2.4
-requests>=2.31
+requests>=2.33.0
 python-dateutil>=2.9
 fastapi>=0.111
 uvicorn[standard]>=0.29
 pydantic>=2.7
 opensearch-py>=2.5
-python-dotenv>=1.0
+python-dotenv>=1.2.2
 httpx>=0.27
 
 # ── watsonx AI ────────────────────────────────────────────────────────────────
