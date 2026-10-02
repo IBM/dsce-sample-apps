@@ -1,0 +1,58 @@
+# Slack app manifest for Bob in Slack (the case-flow sample needs the channel
+# scopes below: the service creates a channel per case and invites people).
+#
+# Usage (once the workspace exists):
+#   1. api.slack.com/apps → "Create New App" → "From an app manifest"
+#   2. Pick the test workspace, paste this file, create.
+#   3. Replace <APP-URL> below FIRST with the deployed service URL
+#      (e.g. https://bob-in-slack.your-domain.example). The
+#      example.com placeholders below are valid-but-dummy: create the app
+#      with them, then replace both URLs after deployment and click
+#      "Retry" on the events URL verification.
+#   4. Install the app to the workspace; copy the Bot Token (xoxb-…) and the
+#      Signing Secret into the service env:
+#        HB_SLACK_BOT_TOKEN=xoxb-…
+#        HB_SLACK_SIGNING_SECRET=…
+#
+# Interactivity is pre-enabled here — that's the setting that makes
+# Approve/Reject button clicks reach the service.
+
+display_information:
+  name: Headless Bob
+  description: IBM Bob in Slack — proposes, explains and documents; people approve.
+  background_color: "#0f62fe"
+
+features:
+  bot_user:
+    display_name: bob
+    always_online: true
+
+oauth_config:
+  scopes:
+    bot:
+      - app_mentions:read      # hear @bob mentions in channels
+      - chat:write             # post replies and approval prompts
+      - files:write            # attach files Bob creates into the thread
+      - channels:history       # read messages in public channels
+      - channels:read          # list channels (startup reconcile)
+      - channels:join          # optional auto-join (HB_SLACK_AUTO_JOIN)
+      - channels:manage        # create case channels, invite, archive
+      - groups:history         # …private channels
+      - im:history             # …DMs
+      - im:read
+      - im:write               # reply in DMs
+
+settings:
+  event_subscriptions:
+    request_url: https://example.com/slack/events
+    bot_events:
+      - app_mention
+      - message.channels       # plain messages in case channels (questions, "implement")
+      - message.im
+      - channel_created        # only used when HB_SLACK_AUTO_JOIN=1
+  interactivity:
+    is_enabled: true
+    request_url: https://example.com/slack/interactivity
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

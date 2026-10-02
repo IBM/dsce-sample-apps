@@ -1,0 +1,13 @@
+spikes/out/
+__pycache__/
+*.pyc
+.venv/
+.env
+sf_jwt.*
+
+# credentials never belong in git
+*.key
+*.pem
+*.crt
+sf_jwt.*
+*.egg-info/
