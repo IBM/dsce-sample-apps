@@ -21,6 +21,18 @@ from ..config.settings import get_settings
 logger = logging.getLogger(__name__)
 
 
+def _redact_location(obj: Any) -> Any:
+    """Return a deep copy of obj with all latitude/longitude values redacted for safe logging."""
+    if isinstance(obj, dict):
+        return {
+            k: "[REDACTED]" if k in ("latitude", "longitude") else _redact_location(v)
+            for k, v in obj.items()
+        }
+    if isinstance(obj, list):
+        return [_redact_location(item) for item in obj]
+    return obj
+
+
 class SchemaValidationError(Exception):
     """Raised when Decision Agent payload fails schema validation"""
     pass
@@ -146,7 +158,7 @@ class AgentService:
             
             # Apply decision to truck and resolve alerts
             logger.info(f"🔍 CHECKPOINT: About to call _apply_decision_to_truck for truck {truck.truckId}")
-            logger.info(f"🔍 decision_output type: {type(decision_output)}, value: {decision_output}")
+            logger.info(f"🔍 decision_output type: {type(decision_output)}, decision: {decision_output.get('decision') if isinstance(decision_output, dict) else 'N/A'}")
             await self._apply_decision_to_truck(truck, decision_output)
             logger.info(f"🔍 CHECKPOINT: _apply_decision_to_truck completed for truck {truck.truckId}")
             
@@ -543,12 +555,12 @@ class AgentService:
             logger.warning("watsonx Orchestrate is disabled, returning mock data")
             return self._mock_decision_output()
         
-        # Log actual agent outputs for debugging
+        # Log actual agent outputs for debugging (location fields omitted)
         logger.info("=" * 80)
         logger.info("DECISION AGENT - RECEIVED RAW INPUTS:")
-        logger.info(f"Weather Output: {json.dumps(weather_output, indent=2)}")
-        logger.info(f"Station Output: {json.dumps(station_output, indent=2)}")
-        logger.info(f"Route Output: {json.dumps(route_output, indent=2)}")
+        logger.info(f"Weather Output segments: {len(weather_output.get('segments', []))}, risk: {weather_output.get('overallWeatherRisk', 'N/A')}")
+        logger.info(f"Station Output facilities: {len(station_output.get('facilities', []))}")
+        logger.info(f"Route Output routes: {len(route_output.get('routes', []))}")
         logger.info("=" * 80)
         
         # Construct payload with raw agent outputs (no transformation)
@@ -578,15 +590,13 @@ class AgentService:
             "routeAnalysis": route_output       # Pass raw output
         }
         
-        logger.info("Decision Agent Payload (with raw agent outputs):")
-        logger.info(json.dumps(payload, indent=2))
+        logger.info(f"Decision Agent Payload: truckId={payload['truckId']}, incidentId={payload['incidentId']}, temperature={payload['telemetry']['temperature']}, coolantStatus={payload['telemetry']['coolantStatus']}")
         logger.info("=" * 80)
         
         # Auto-correct payload to ensure all required fields are present with defaults
         corrected_payload = self._auto_correct_decision_payload(payload)
         
-        logger.info("Decision Agent Corrected Payload Being Sent:")
-        logger.info(json.dumps(corrected_payload, indent=2))
+        logger.info("Decision Agent Corrected Payload ready for dispatch")
         
         # Retry logic: 3 total attempts with exponential backoff
         max_attempts = 3
@@ -648,8 +658,7 @@ class AgentService:
             "driverName": "Loco Pilot"  # Default driver name
         }
         
-        logger.info("Notification Agent Payload:")
-        logger.info(json.dumps(payload, indent=2))
+        logger.info(f"Notification Agent Payload: truckId={payload['truckId']}, driverName={payload['driverName']}")
         
         # Retry logic: 3 total attempts with exponential backoff
         max_attempts = 3
@@ -927,7 +936,6 @@ class AgentService:
             urgency = decision_output.get("urgency", "UNKNOWN")
             
             logger.info(f"Applying decision '{decision}' (urgency: {urgency}) to truck {truck_id}")
-            logger.info(f"Full decision output: {json.dumps(decision_output, indent=2)}")
             
             # Import simulation_engine here to avoid circular import
             from ..services.simulation_engine import simulation_engine
@@ -1010,7 +1018,7 @@ class AgentService:
                             name=destination_name,  # Use destination name from decision agent
                             address=last_wp.get("city", "")
                         )
-                        logger.info(f"Truck {truck_id}: Updated destination to: {new_destination.name} at ({new_destination.latitude}, {new_destination.longitude})")
+                        logger.info(f"Truck {truck_id}: Updated destination to: {new_destination.name}")
                         
                         # Create complete currentTrip dict preserving all existing fields
                         update_data["currentTrip"] = {
@@ -1046,7 +1054,7 @@ class AgentService:
                     update_data['originalRoute'] = truck.currentTrip
                 
                 logger.info(f"🚨 BEFORE UPDATE - Truck {truck_id} current status: {truck.status}")
-                logger.info(f"🚨 UPDATE DATA: {update_data}")
+                logger.info(f"🚨 UPDATE DATA keys: {list(update_data.keys())}, status: {update_data.get('status', 'N/A')}")
                 
                 result_truck = truck_service.update_truck(truck_id, **update_data)
                 

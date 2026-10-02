@@ -1,0 +1,12 @@
+.env
+.env.*
+*.env
+__pycache__/
+*.pyc
+.DS_Store
+.git
+.venv/
+venv/
+client-env/
+images/
+inference_engine_cache/

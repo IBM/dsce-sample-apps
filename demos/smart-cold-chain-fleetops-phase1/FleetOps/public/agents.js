@@ -1663,6 +1663,16 @@ const AgentsModule = (() => {
     }
 
 
+    // Escape special HTML characters to prevent XSS when setting innerHTML
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     // Add activity log entry for agent execution
     function addAgentActivityLog(message, type = 'info', agentData = null, truckInfo = null) {
         const log = document.getElementById('agentActivityLog');
@@ -1681,7 +1691,7 @@ const AgentsModule = (() => {
         const timestamp = new Date().toLocaleTimeString();
         let html = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--cds-spacing-02);">
-                <strong style="color: var(--cds-text-primary);">${message}</strong>
+                <strong style="color: var(--cds-text-primary);">${escapeHtml(message)}</strong>
                 <span style="color: var(--cds-text-secondary); font-size: 0.75rem;">${timestamp}</span>
             </div>
         `;
@@ -1689,9 +1699,9 @@ const AgentsModule = (() => {
         // Add truck context if provided
         if (truckInfo) {
             html += '<div style="margin-top: var(--cds-spacing-02); padding: var(--cds-spacing-03); background: var(--cds-layer-02); border-radius: 4px; font-size: 0.8125rem;">';
-            html += `<strong>Cargo:</strong> ${truckInfo.cargo || 'N/A'} | `;
-            html += `<strong>Temp:</strong> ${truckInfo.temperature || 'N/A'}°C | `;
-            html += `<strong>Route:</strong> ${truckInfo.origin || 'N/A'} → ${truckInfo.destination || 'N/A'}`;
+            html += `<strong>Cargo:</strong> ${escapeHtml(truckInfo.cargo || 'N/A')} | `;
+            html += `<strong>Temp:</strong> ${escapeHtml(truckInfo.temperature || 'N/A')}°C | `;
+            html += `<strong>Route:</strong> ${escapeHtml(truckInfo.origin || 'N/A')} → ${escapeHtml(truckInfo.destination || 'N/A')}`;
             html += '</div>';
         }
 
@@ -1713,7 +1723,7 @@ const AgentsModule = (() => {
                 html += `
                     <div style="margin-bottom: var(--cds-spacing-02);">
                         <strong style="color: var(--cds-text-secondary);">Weather:</strong>
-                        <span style="color: var(--cds-text-primary);"> ${risk} risk, ${segmentCount} segments analyzed${severeCount > 0 ? `, ${severeCount} severe` : ''}</span>
+                        <span style="color: var(--cds-text-primary);"> ${escapeHtml(risk)} risk, ${escapeHtml(segmentCount)} segments analyzed${severeCount > 0 ? `, ${escapeHtml(severeCount)} severe` : ''}</span>
                     </div>
                 `;
             }
@@ -1726,7 +1736,7 @@ const AgentsModule = (() => {
                 html += `
                     <div style="margin-bottom: var(--cds-spacing-02);">
                         <strong style="color: var(--cds-text-secondary);">Station:</strong>
-                        <span style="color: var(--cds-text-primary);"> ${facilityCount} facilities found${firstFacility ? `, nearest: ${firstFacility.name} (${distance}km)` : ''}</span>
+                        <span style="color: var(--cds-text-primary);"> ${escapeHtml(facilityCount)} facilities found${firstFacility ? `, nearest: ${escapeHtml(firstFacility.name)} (${escapeHtml(distance)}km)` : ''}</span>
                     </div>
                 `;
             }
@@ -1740,7 +1750,7 @@ const AgentsModule = (() => {
                 html += `
                     <div style="margin-bottom: var(--cds-spacing-02);">
                         <strong style="color: var(--cds-text-secondary);">Route:</strong>
-                        <span style="color: var(--cds-text-primary);"> ${routeCount} routes calculated${primaryRoute ? `, primary: ${distance}km, ${duration}min` : ''}</span>
+                        <span style="color: var(--cds-text-primary);"> ${escapeHtml(routeCount)} routes calculated${primaryRoute ? `, primary: ${escapeHtml(distance)}km, ${escapeHtml(duration)}min` : ''}</span>
                     </div>
                 `;
             }
@@ -1753,7 +1763,7 @@ const AgentsModule = (() => {
                 html += `
                     <div style="margin-bottom: var(--cds-spacing-02);">
                         <strong style="color: var(--cds-text-secondary);">Decision:</strong>
-                        <span style="color: var(--cds-text-primary);"> Risk: ${riskScore}/100${urgency ? ` (${urgency})` : ''}, Action: ${action}</span>
+                        <span style="color: var(--cds-text-primary);"> Risk: ${escapeHtml(riskScore)}/100${urgency ? ` (${escapeHtml(urgency)})` : ''}, Action: ${escapeHtml(action)}</span>
                     </div>
                 `;
             }

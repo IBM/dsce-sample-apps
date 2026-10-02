@@ -267,8 +267,8 @@ async def check_whatsapp_status(message_sid: str):
         return result
     except ValueError as e:
         raise HTTPException(status_code=500, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=500, detail="An internal error occurred while checking delivery status.")
 
 
 if __name__ == "__main__":

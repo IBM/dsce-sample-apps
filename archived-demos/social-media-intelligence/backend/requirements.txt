@@ -1,8 +1,0 @@
-flask
-requests
-flask-cors==4.0.0
-pypostalcode
-ibm_watson_machine_learning
-tqdm
-pandas
-python-dotenv

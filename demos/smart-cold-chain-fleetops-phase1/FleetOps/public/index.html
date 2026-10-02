@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBM FleetOptx - ColdPulse</title>
+    <title>FleetOptx - ColdPulse</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -891,7 +891,7 @@
     <!-- IBM Carbon UI Shell Header (Black #161616) -->
     <header class="ui-shell-header">
         <a href="#" class="header-name">
-            <span class="ibm-logo">IBM FleetOptx</span>
+            <span class="ibm-logo">FleetOptx</span>
             <span style="font-size: 1.15rem;"> ColdPulse</span>
         </a>
 
@@ -2455,7 +2455,10 @@
             try {
                 const configResponse = await fetch('/api/config');
                 const config = await configResponse.json();
-                
+
+                // Store CARTO API key globally so map initialisers can use it
+                window.CARTO_API_KEY = config.cartoApiKey || '';
+
                 // Update Instana link
                 const instanaLink = document.getElementById('instana-link');
                 if (instanaLink && config.instanaUrl) {
