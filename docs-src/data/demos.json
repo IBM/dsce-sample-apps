@@ -272,7 +272,7 @@
       "products": ["IBM Bob"],
       "buildingBlocks": ["ai.ai-engineering"],
       "skills": [],
-      "codeRepo": "https://github.com/IBM/dsce-sample-apps/pull/226",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/headlessbob-building-blocks-qa-bot",
       "workingDemoURL": "https://bb-qa-app-bb-qna-bot-da.automationbb-d01-2bef1f4b4097001da9502000c44fc2b2-0000.us-south.containers.appdomain.cloud/",
       "architecture": "architecture.png",
       "specificationsRepo": "",
