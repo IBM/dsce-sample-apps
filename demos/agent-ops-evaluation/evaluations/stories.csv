@@ -1,0 +1,3 @@
+story,agent
+"I am Sarah Chen, salaried, annual income $95,000, applying for a $250,000 home loan with $1,200 in monthly debt payments. I want an underwriting decision.",agentops_d1_loan_orchestrator_v2
+"I am David Park, salaried, annual income $70,000, applying for a $220,000 home loan with $2,400 in monthly debt payments. I want to know whether I am approved.",agentops_d1_loan_orchestrator_v2

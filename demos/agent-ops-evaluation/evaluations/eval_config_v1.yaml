@@ -1,0 +1,19 @@
+# Ground-truth evaluation of agentops_d1_loan_orchestrator_v1 (5 test cases, single run)
+test_paths:
+  - evaluations/testcases_v1/
+output_dir: results/evaluate_v1/
+enable_verbose_logging: true
+n_runs: 1
+max_user_turns: 3
+num_workers: 2
+metrics:
+  - JourneySuccessMetric
+  - ToolCalling
+  - OrchestrateAgentRoutingAccuracy
+  - StepMetrics
+  - AgentResponseTime
+llm_user_config:
+  user_response_style:
+    - "Be concise"
+    - "If the agent asks for missing information, provide it directly from your story"
+    - "Once the decision and the letter have been delivered, reply END and nothing else"
