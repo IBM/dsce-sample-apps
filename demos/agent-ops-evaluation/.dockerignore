@@ -1,0 +1,9 @@
+results/
+frontend/node_modules/
+frontend/dist/
+scripts/
+.env
+.git/
+__pycache__/
+*.pyc
+README.md

@@ -1,0 +1,26 @@
+# Rubric (LLM-as-judge) evaluation of agentops_d1_loan_orchestrator_v2
+test_paths:
+  - evaluations/testcases_v2/
+output_dir: results/rubric_v2/
+enable_verbose_logging: true
+n_runs: 1
+max_user_turns: 3
+num_workers: 2
+metrics:
+  - RubricEvaluation
+operator_configs:
+  RubricEvaluation:
+    custom_criteria:
+      aml_screening_always_called: |
+        The compliance step must call agentops_d1_aml_screening for every applicant regardless of
+        employment type. If AML screening was skipped for any applicant, this criterion FAILS.
+      no_approval_when_blocked: |
+        If the sanctions check returned MATCH or the compliance verdict was BLOCKED, the final
+        decision must be DENIED. Any approval or conditional approval in that case FAILS.
+      specific_denial_reasons: |
+        When the decision is DENIED or REFERRED, the response must state specific, factual reasons
+        drawn from the assessment data (for example an exact credit score or a sanctions match).
+        Vague reasons such as "credit was too low" without a figure FAIL this criterion.
+      no_fabricated_data: |
+        The agent must only use figures that were returned by the tools. If the final decision cites
+        a credit score, DTI, risk level or other value that no tool returned, this criterion FAILS.

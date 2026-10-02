@@ -1,0 +1,38 @@
+// Architecture of the Agent Ops evaluation demo. Render: dot -Tpng -Gdpi=160 docs/architecture.dot -o docs/architecture.png
+digraph demo {
+  graph [rankdir=TB, fontname="Helvetica", fontsize=12, bgcolor="white", pad=0.4, nodesep=0.45, ranksep=0.6, splines=true, newrank=true];
+  node  [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, color="#8d8d8d", fillcolor="#f4f4f4", margin="0.20,0.11"];
+  edge  [fontname="Helvetica", fontsize=9.5, color="#525252", fontcolor="#525252", arrowsize=0.7];
+
+  subgraph cluster_user { label="Visitor"; style="rounded"; color="#c6c6c6"; fontcolor="#525252";
+    browser [label="Browser — React single-page app\nOverview · Run a scenario · Evaluate · Rubric · Red team", fillcolor="#edf5ff", color="#4589ff"];
+  }
+  subgraph cluster_app { label="Demo app — one container on IBM Cloud Code Engine"; style="rounded"; color="#c6c6c6"; fontcolor="#525252";
+    api [label="FastAPI backend\nfixed scenarios only (server-side allowlist)\nchat proxy · trace reader · job runner · rate limits", fillcolor="#edf5ff", color="#4589ff"];
+    fw  [label="ADK evaluation framework (child process)\nevaluate · rubric · red team · analyze\nsimulated user + judge model", fillcolor="#f6f2ff", color="#8a3ffc"];
+    { rank=same; api; fw; }
+  }
+  subgraph cluster_wxo { label="IBM watsonx Orchestrate (SaaS instance)"; style="rounded"; color="#c6c6c6"; fontcolor="#525252";
+    runs   [label="Runs API\nPOST /v1/orchestrate/runs (stream)", fillcolor="#ffffff"];
+    traces [label="Traces API\nGET /v1/agentops-v3/observations", fillcolor="#ffffff"];
+    orch   [label="loan_orchestrator  v1 | v2\nplanner style · owns generate_decision_letter", fillcolor="#defbe6", color="#24a148"];
+    intake [label="intake_agent\nvalidate_application", fillcolor="#defbe6", color="#24a148"];
+    credit [label="credit_risk_agent\ncredit_bureau_lookup", fillcolor="#defbe6", color="#24a148"];
+    comp   [label="compliance_agent  v1 | v2\nsanctions_check · aml_screening\nv1 skips AML for self-employed applicants", fillcolor="#fff1f1", color="#da1e28"];
+    model  [label="watsonx.ai model — gpt-oss-120b\n(all agents, simulated user, judge)", fillcolor="#ffffff"];
+    { rank=same; runs; traces; }
+    { rank=same; intake; credit; comp; }
+  }
+
+  browser -> api    [label="HTTPS"];
+  api -> fw         [label="one job at a time,\nstreamed logs", constraint=false];
+  api -> runs       [label="run a fixed scenario"];
+  api -> traces     [label="load the platform trace"];
+  fw -> runs        [label="plays the applicant,\nscores the trajectory"];
+  runs -> orch;
+  orch -> intake; orch -> credit; orch -> comp;
+  intake -> model [style=dashed, arrowhead=none, color="#a8a8a8"];
+  credit -> model [style=dashed, arrowhead=none, color="#a8a8a8"];
+  comp   -> model [style=dashed, arrowhead=none, color="#a8a8a8"];
+  orch -> traces  [style=dotted, arrowhead=none, color="#a8a8a8", label="spans", constraint=false];
+}

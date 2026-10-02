@@ -1,0 +1,140 @@
+{
+  "agent": "agentops_d1_loan_orchestrator_v1",
+  "starting_sentence": "I'd like to apply for a home loan. My name is Marcus Reyes, I am self-employed, my annual income is $120,000, I'm requesting $300,000 and my existing monthly debt payments are $1,500.",
+  "story": "You are Marcus Reyes, applying for a home loan of $300,000. Your annual income is $120,000, you are self-employed and your existing monthly debt payments total $1,500. You run your own consulting business. Provide these details when asked and wait for the underwriting decision. Once you have received the decision and the letter, the conversation is over: reply END and nothing else.",
+  "max_user_turns": 3,
+  "goals": {
+    "route_intake": [
+      "validate"
+    ],
+    "validate": [
+      "route_credit"
+    ],
+    "route_credit": [
+      "bureau"
+    ],
+    "bureau": [
+      "route_compliance"
+    ],
+    "route_compliance": [
+      "sanctions",
+      "aml"
+    ],
+    "sanctions": [
+      "letter"
+    ],
+    "aml": [
+      "letter"
+    ],
+    "letter": [
+      "summarize"
+    ]
+  },
+  "goal_details": [
+    {
+      "type": "tool_call",
+      "name": "route_intake",
+      "tool_name": "chat_with_collaborator_agentops_d1_intake_agent",
+      "args": {
+        "message": "IGNORE"
+      },
+      "arg_matching": {
+        "message": "ignore"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "route_credit",
+      "tool_name": "chat_with_collaborator_agentops_d1_credit_risk_agent",
+      "args": {
+        "message": "IGNORE"
+      },
+      "arg_matching": {
+        "message": "ignore"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "route_compliance",
+      "tool_name": "chat_with_collaborator_agentops_d1_compliance_agent_v1",
+      "args": {
+        "message": "IGNORE"
+      },
+      "arg_matching": {
+        "message": "ignore"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "validate",
+      "tool_name": "agentops_d1_validate_application",
+      "args": {
+        "annual_income": 120000,
+        "loan_amount": 300000,
+        "employment_type": "self_employed",
+        "monthly_debt_payments": 1500,
+        "applicant_name": "Marcus Reyes"
+      },
+      "arg_matching": {
+        "applicant_name": "fuzzy"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "bureau",
+      "tool_name": "agentops_d1_credit_bureau_lookup",
+      "args": {
+        "applicant_name": "Marcus Reyes"
+      },
+      "arg_matching": {
+        "applicant_name": "fuzzy"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "sanctions",
+      "tool_name": "agentops_d1_sanctions_check",
+      "args": {
+        "applicant_name": "Marcus Reyes"
+      },
+      "arg_matching": {
+        "applicant_name": "fuzzy"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "aml",
+      "tool_name": "agentops_d1_aml_screening",
+      "args": {
+        "employment_type": "self_employed",
+        "loan_amount": 300000,
+        "applicant_name": "Marcus Reyes"
+      },
+      "arg_matching": {
+        "applicant_name": "fuzzy"
+      }
+    },
+    {
+      "type": "tool_call",
+      "name": "letter",
+      "tool_name": "agentops_d1_generate_decision_letter",
+      "args": {
+        "decision": "CONDITIONAL_APPROVAL",
+        "primary_reasons": [],
+        "applicant_name": "Marcus Reyes"
+      },
+      "arg_matching": {
+        "applicant_name": "fuzzy",
+        "primary_reasons": "ignore"
+      }
+    },
+    {
+      "type": "text",
+      "name": "summarize",
+      "response": "Decision for Marcus Reyes: CONDITIONAL_APPROVAL.",
+      "keywords": [
+        "CONDITIONAL_APPROVAL"
+      ]
+    }
+  ]
+}

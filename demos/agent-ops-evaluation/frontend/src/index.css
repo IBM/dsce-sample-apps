@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html { font-size: 17px; }
+body { @apply font-sans bg-ink-bg text-ink-text antialiased; font-feature-settings: "tnum" 1, "cv11" 1; }
+
+.card { @apply bg-ink-surface border border-ink-line rounded-lg; }
+.card > h2, .card h2 { @apply text-accent; }
+.card h3 { @apply text-ink-text; }
+.dot { @apply inline-block w-2 h-2 rounded-full mr-2 align-middle; }
+.section-title { @apply flex items-center gap-2 text-base font-semibold text-coral mb-2; }
+.section-title::before { content: ''; @apply inline-block w-1 h-4 rounded-sm bg-coral/70; }
+.btn { @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed; }
+.btn-primary { @apply btn bg-accent-strong text-white hover:bg-accent hover:text-ink-bg; }
+.btn-secondary { @apply btn bg-transparent border border-ink-line text-ink-text hover:border-accent hover:text-accent; }
+.pill { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium; }
+.pill-green { @apply pill bg-ok-soft text-ok; }
+.pill-red { @apply pill bg-bad-soft text-bad; }
+.pill-gray { @apply pill bg-ink-raised text-ink-muted; }
+.pill-blue { @apply pill bg-accent-soft text-accent; }
+.pill-yellow { @apply pill bg-warn-soft text-warn; }
+.eyebrow { @apply text-[11px] uppercase tracking-[0.08em] text-accent/70 font-medium; }
+
+.prose-chat p { @apply my-1.5; }
+.prose-chat strong { @apply font-semibold text-ink-text; }
+.prose-chat ul { @apply list-disc pl-5 my-1; }
+.prose-chat h1, .prose-chat h2, .prose-chat h3 { @apply font-semibold mt-3 mb-1; }
+.prose-chat blockquote { @apply border-l-2 border-ink-line pl-3 text-ink-muted; }
+.prose-chat code { @apply font-mono text-[0.9em] text-accent; }
+
+@keyframes blink { 0%, 80%, 100% { opacity: 0.15; } 40% { opacity: 1; } }
+.typing-dot { @apply inline-block w-1.5 h-1.5 rounded-full bg-accent; animation: blink 1.4s infinite ease-in-out; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+::selection { background: rgba(120,169,255,0.3); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { @apply bg-ink-line rounded-full; }

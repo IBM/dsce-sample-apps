@@ -1,0 +1,18 @@
+# secrets and local state
+.env
+.env.*
+!.env.example
+*.key
+# run artifacts
+results/
+runs/
+# python
+__pycache__/
+*.pyc
+.venv/
+# frontend
+frontend/node_modules/
+frontend/dist/
+# os / editor
+.DS_Store
+*.log
