@@ -3,14 +3,14 @@
     [
         { "ai" : [
                 { "agents" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/agents/" },
-                { "ai-control-plane" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-control-plane/" },
-                { "ai-engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-engineering/" }
+                { "control" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/control/" },
+                { "engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/engineering/" }
             ]
         },
         { "data" : [
-                { "context" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/context/" },
+                { "streamhouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/streamhouse/" },
                 { "pipelines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/pipelines/" },
-                { "query-engines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/query-engines/" }
+                { "lakehouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/lakehouse/" }
             ]
         },
         { "automation" : [

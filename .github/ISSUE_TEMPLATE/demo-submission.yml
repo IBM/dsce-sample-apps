@@ -64,14 +64,14 @@ body:
       description: Select from available [IBM Building Blocks](https://ibm-self-serve-assets.github.io/building-blocks-docs/)
       options:
         - label: ai.agents
-        - label: ai.ai-engineering
-        - label: ai.ai-control-plane
+        - label: ai.engineering
+        - label: ai.control-plane
         - label: automation.operate
         - label: automation.optimize
         - label: automation.secure
-        - label: data.context
+        - label: data.streamhouse
         - label: data.pipelines
-        - label: data.query-engines
+        - label: data.lakehouse
     validations:
       required: true
 
