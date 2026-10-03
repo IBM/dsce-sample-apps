@@ -5,7 +5,7 @@
 dash>=3.3.0,<4
 dash-bootstrap-components>=2.0.4,<3
 pandas>=2.2.3,<3
-python-dotenv>=1.2.1,<2
+python-dotenv>=1.2.2,<2
 jproperties>=2.1.2,<3
 # metrics + llmaj extras provide MetricsEvaluator, the built-in guardrail metrics and LLMJudge
 ibm-watsonx-gov[metrics,llmaj]>=1.4.0,<2

@@ -1,8 +1,11 @@
 client-env/
-.env*
+.env
 .DS_Store
 __pycache__
 *node_modules
 AGENTS.md
 ./bob/mcp.json
-demos/**/package-lock.json
+package-lock.json
+uv.lock
+poetry.lock
+Pipfile.lock

@@ -8,7 +8,7 @@
         { "name": "real-time-guardrails", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/real-time-guardrails" },
         { "name": "build-time-gen-ai-evals", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/build-time-gen-ai-evals" }
     ],
-    "data.context" : [
+    "data.streamhouse" : [
         { "name": "data-streaming-confluent", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-streaming-confluent" },
         { "name": "data-streaming-confluent-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-streaming-confluent-terraform" },
         { "name": "confluent-iac-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/confluent-iac-terraform" },
@@ -25,7 +25,7 @@
         { "name": "pipeline-standards", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/pipeline-standards" },
         { "name": "sdd-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/sdd-pipeline-builder" }
     ],
-    "data.query-engines" : [
+    "data.lakehouse" : [
         { "name": "text2sql-metadata-enrichment", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/text2sql-metadata-enrichment" },
         { "name": "text2sql-query-optimizer", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/text2sql-query-optimizer" },
         { "name": "watsonxdata-lakehouse", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/watsonxdata-lakehouse" }
