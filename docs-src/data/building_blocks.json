@@ -3,8 +3,8 @@
     [
         { "ai" : [
                 { "agents" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/agents/" },
-                { "ai-control-plane" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-control-plane/" },
-                { "ai-engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/ai-engineering/" }
+                { "control" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/control/" },
+                { "engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/engineering/" }
             ]
         },
         { "data" : [
