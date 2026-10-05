@@ -8,9 +8,9 @@
             ]
         },
         { "data" : [
-                { "context" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/context/" },
+                { "streamhouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/streamhouse/" },
                 { "pipelines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/pipelines/" },
-                { "query-engines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/query-engines/" }
+                { "lakehouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/lakehouse/" }
             ]
         },
         { "automation" : [
