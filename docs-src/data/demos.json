@@ -318,7 +318,7 @@
       "architecture_description": "FactoryPulse is built on Confluent Cloud as the shared event backbone. Machine telemetry, production events, quality results, and maintenance work orders flow into Kafka topics. Two Confluent Cloud Flink jobs run continuously: the operational pipeline (factory_operations.sql) aggregates telemetry into 30-second windows, detects threshold breaches, emits factory.exceptions, and joins telemetry + quality + production into factory.state; the Continuous RAG pipeline (continuous_rag.sql) chunks new knowledge documents with ML_RECURSIVE_TEXT_SPLITTER and embeds them with AI_EMBEDDING, writing durable chunk-and-vector records to rag.knowledge.embeddings. A Python 3.12 / FastAPI service deployed on IBM Cloud Code Engine consumes the embedding topic and maintains a Kafka-replayed retrieval index; when a question arrives it performs cosine-similarity retrieval, optionally calls watsonx.ai for answer synthesis, and returns the answer with evidence chunks to the dependency-free web UI. Schema Registry enforces data contracts at every topic boundary. Tableflow materializes factory.state and factory.exceptions as Apache Iceberg or Delta Lake tables for historical analytics, shift comparison, and model development — without touching the low-latency RAG request path.",
       "extrasBoxUrl": "",
       "release_date": "2026-10-03",
-      "isLive": false
+      "isLive": true
     }
     ,
     {
