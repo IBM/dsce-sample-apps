@@ -296,7 +296,7 @@
       "shortDescription": "Ask any question about IBM Building Blocks and get instant, cited answers — powered entirely by Headless Bob's autonomous doc-crawling and streaming AI capabilities.",
       "architecture_description": "The demo consists of two containerised services deployed on IBM Cloud OpenShift. The Headless Bob server (port 8000) acts as the AI runtime — it manages conversation threads, executes agentic tool calls to crawl documentation pages, and streams token-by-token responses via Server-Sent Events. The Next.js frontend (port 3000) serves the chat UI and hosts four API routes: /api/chat scores the knowledge base by keyword relevance, selects the top 5 pages, injects them as context into a grounded prompt, and sends it to Bob; /api/stream proxies Bob's SSE stream directly to the browser; /api/threads manages thread listing and deletion; and /api/kb-status triggers Bob's agentic crawl to rebuild the knowledge base on demand. A shared CephFS PersistentVolumeClaim mounts knowledge-base.json into both pods simultaneously.",
       "extrasBoxUrl": "",
-      "release_date": "2026-09-25",
+      "release_date": "2026-10-06",
       "isLive": true
     }
     ,
