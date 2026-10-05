@@ -118,7 +118,9 @@
       <main class="main-content-window">
         <div id="demo-results-count" class="demo-results-count"></div>
         <div id="demo-cards-wrapper" class="demo-cards-wrapper">
-          {{ range $allDemos }}
+          {{ $sortedDemos := sort $allDemos "name" "asc" }}
+          {{ $sortedDemos = sort $sortedDemos "release_date" "desc" }}
+          {{ range $sortedDemos }}
             {{ $demo := . }}
             {{ $cardImgPath := printf "demos/%s/%s" $demo.slug (index $demo.screenshots 0) }}
             {{ $cardImgRaw := resources.Get $cardImgPath }}

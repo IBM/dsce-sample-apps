@@ -14,7 +14,8 @@
         { "name": "confluent-iac-terraform", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/confluent-iac-terraform" },
         { "name": "udi-opensearch", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/udi-opensearch" },
         { "name": "opensearch-vector-search", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/opensearch-vector-search" },
-        { "name": "astradb-nosql-design", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/astradb-nosql-design" }
+        { "name": "astradb-nosql-design", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/astradb-nosql-design" },
+        { "name": "streamhouse-continuous-rag", "url": "https://github.com/ibm-self-serve-assets/building-blocks/blob/main/ibm-bob/skills/streamhouse-continuous-rag" }
     ],
     "data.pipelines" : [
         { "name": "data-ingestion-structured", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-ingestion-structured" },

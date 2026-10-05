@@ -174,6 +174,7 @@ customModes:
                                   if "_No response_", blank, or not present.
         isLive          (boolean) Always set to false for new submissions. A
                                   maintainer flips this to true after reviewing.
+        release_date    (string)  Current date in format <year>-<month>-<day-of-month>
 
       Never modify existing demo entries. Only append new ones.
 

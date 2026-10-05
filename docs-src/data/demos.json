@@ -17,6 +17,7 @@
       "architecture": "architecture.png",
       "extrasBoxUrl": "https://ibm.box.com/s/p02og23ax9ltq27kcgah7evmgl6n0ulf",
       "architecture_description": "The demo is built on four interconnected layers, all deployed on Red Hat OpenShift. The Python FastAPI fleetops-backend serves as both the simulation engine and the orchestration hub — it simulates a fleet of refrigerated pharma trucks with GPS coordinates, temperature telemetry, cargo manifests, and route waypoints, performs breach detection, and exposes an Agent Trigger endpoint. A companion IBM Granite TTM-R2 forecast service (forecast-backend) performs zero-shot 96-minute temperature predictions and feeds a WhatsApp/Twilio notification service. When a temperature breach is detected, the FleetOps Manager triggers the agentic workflow from the dashboard UI, which calls the backend's Agent Trigger endpoint; the backend then internally invokes IBM watsonx Orchestrate to run a sequential 5-agent pipeline: a Weather Advisor scores route-segment severity (CLEAR/MOD/SEVERE), a Station Agent locates nearby cold-storage facilities, a Route Optimizer ranks alternative routes, a Decision Agent produces a risk score (0–100) and selects one of four outcomes (EMERGENCY_REROUTE, CONTROLLED_REROUTE, CONTINUE, ABORT), and a Notification Agent dispatches a WhatsApp alert via Twilio. The agent decision is returned to the FleetOps dashboard for the logistics manager to evaluate — the front-end is a Node.js Express application built with IBM Carbon Design System that serves three operator personas — FleetOps Manager, SRE, and Driver — across tabs for Operations, Forecasting, Agents, Observe & Optimize, and Driver. Spanning all layers, IBM Instana collects APM traces and triggers breach alerts, while IBM Turbonomic auto-scales CPU and RAM on latency spikes and persists optimization action history.",
+      "release_date": "2026-09-01",
       "isLive": true
     },
     {
@@ -35,6 +36,7 @@
       "longDescription": "This demo is a use case wrapped within a use case.  The application's use case is a product ordering website for travelers needing supplies that can survive the rigors of space.  Travelers use agentic search (powered by OpenSearch) to research available products then use full shopping cart functionality.\n\nThis demo's primary use case is to educate partners on the power of Spec-Driven Development, which allowed IBM Bob to build the Orbital Suppliers using only natural language documents, UI design images, dataset requirements and backend endpoint APIs. This highlights how enterprise development teams build production quality solutions.  More up-front documentation and less interactive vibe coding.\n\nPartners can use the provided Specifications (in natural language not code) which IBM Bob can use to rebuild this entire demo.",
       "shortDescription": "Build a production-ready application starting from a use case specifications in natural language. Starting with zero code, IBM Bob spawns a team of subagents that build, containerize then deploy an application to IBM Cloud in 15 mins.",
       "architecture_description": "IBM Bob builds the website with a React frontend and a NodeJS Backend.  All product data is stored in Postgres with a subset of that product data embedded then stored into an OpenSearch vector db, which is used to power a product search agent is deployed into watsonX Orchestrate.  The web application is containerized then deployed to Red Hat OpenShift running on IBM Cloud.",
+      "release_date": "2026-09-01",
       "isLive": true
     },
     {
@@ -50,6 +52,7 @@
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
       "architecture": "architecture-placeholder.png",
+      "release_date": "2026-09-01",
       "isLive": false
     },
     {
@@ -66,6 +69,7 @@
       "longDescription": "Modern enterprises hold their most valuable operational knowledge in two completely disconnected worlds: structured records locked in databases and data warehouses, and unstructured institutional knowledge buried in runbooks, incident reports, and policy PDFs. Today, answering a single operational question — 'Why is this order delayed, and what should we do?' — requires an analyst to manually query multiple systems, search through documents, and correlate results before anyone can act. That process takes hours.\n\nThis demo collapses that time to under two seconds. It showcases a fully agentic architecture built on IBM watsonx.data as the unified query layer, with Apache Iceberg hosting all structured operational, analytics, and lakehouse data (covering orders, customers, warehouses, inventory, shipment events, and compensation policies). Unstructured content — four operational runbooks and two historical incident reports — is stored as vector embeddings in DataStax Astra DB or HCD, enabling semantic retrieval.\n\nA lightweight Python MCP (Model Context Protocol) server bridges the AI agent to both data worlds, exposing seven tools: SQL execution, vector search, and five schema-exploration helpers. An optional Confluent Kafka pipeline streams live orders into Iceberg with sub-500 ms end-to-end latency.\n\nThe entire system is orchestrated through IBM Bob — a VS Code AI assistant — using a custom 'AI Driven Analyst' mode that understands the demo schema, enforces correct tool selection, and formats answers for a live audience. The result is a demo that illustrates, in plain English, how structured facts and unstructured guidance combine into a single actionable insight: root cause, inventory reroute option, compensation amount, and runbook citation — all in one response.",
       "shortDescription": "Answer complex questions about supply-chain operations in seconds by federating structured data with unstructured runbooks and incident notes",
       "architecture": "architecture.png",
+      "release_date": "2026-09-01",
       "isLive": true
     },
     {
@@ -81,6 +85,7 @@
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
       "architecture": "architecture-placeholder.png",
+      "release_date": "2026-09-01",
       "isLive": false
     },
     {
@@ -100,6 +105,7 @@
       "architecture_description": "The architecture begins with HashiCorp Vault Radar scanning the Git repository to identify exposed credentials and generate structured security findings. IBM Bob analyzes the application source code and scanner evidence, creates a remediation plan, and requests approved actions through the Vault MCP Server. HashiCorp Vault enforces authentication and access policies while securely managing application secrets in KV and issuing short-lived certificates through PKI. The modernized application uses a separate, read-only runtime identity to retrieve only the secrets required for execution. Centralized rotation updates secrets and certificates without modifying the application source code, while subsequent scans validate the improved security posture.",
       "architecture": "architecture.png",
       "extrasBoxUrl": "",
+      "release_date": "2026-09-12",
       "isLive": true
     },
     {
@@ -121,6 +127,7 @@
       "architecture_description": "IBM Maximo acts as the authoritative source for asset-management context, while the Knowledge Hub provides a simplified conversational access layer built with IBM Bob. The integration retrieves relevant Maximo asset and maintenance information, brings it into the user conversation, and presents grounded answers or decision support to maintenance and reliability personas. The exact retrieval component and any additional runtime AI services should be confirmed from the original demo implementation before final catalog submission.",
       "architecture": "architecture.png",
       "extrasBoxUrl": "",
+      "release_date": "2026-09-10",
       "isLive": true
     },
     {
@@ -144,6 +151,7 @@
       "architecture_description": "The demo runs on a real-time streaming spine. Events from 18+ heterogeneous sources — Salesforce (CDC), Slack (real-time), Workday (nightly batch), object-storage file drops and a dozen more SaaS systems — publish onto IBM Confluent across three Kafka topics, so every velocity is normalized into one ordered event flow rather than a separate pipeline per source. A single Kafka consumer performs a dual-write, splitting each event as it lands into IBM DataStax for low-latency operational reads of the live \"now\" and into Apache Iceberg tables on IBM Cloud Object Storage for the historical \"always\". Publish to queryable takes roughly two seconds, with no nightly batch window anywhere in the path.\n\nThe watsonx.data Presto engine then answers one SQL statement that joins all three stores: the live DataStax tables, the Iceberg lakehouse, and BIW's existing Databricks Delta tables, which are read in place through open Iceberg interop with zero rows copied and zero tables migrated. That query-in-place federation is the commercial thesis of the demo — the customer keeps Databricks, and IBM lands the streaming, integration and serving layers without a rip-and-replace.\n\nThe unified result is enriched by IBM watsonx.ai (Llama 4 Maverick), which generates a personalized seller nudge and an action list priced in points that sums exactly to the seller's remaining gap, with each task citing the source signal behind it. The same payload renders into three delivery surfaces — the Elevate program app, a Salesforce Lightning component, and a Slack Block Kit DM. The whole application is containerized and runs on IBM Cloud Code Engine, and was built with IBM Bob from natural-language specifications.",
       "architecture": "architecture.png",
       "extrasBoxUrl": "https://ibm.box.com/s/qm3odxdarwy7vahiitmf2tivoo9ermxb",
+      "release_date": "2026-09-11",
       "isLive": true
     },
     {
@@ -167,6 +175,7 @@
       "architecture_description": "Source systems such as ERP/OMS, supplier portals, shipment tracking, inventory systems, and external-risk feeds publish business events through a reusable Confluent Building Block using connectors/producers, Kafka topics, and Schema Registry. IBM Bob orchestrates the demo flow from a spec-driven task plan. A Python or Flink SQL risk engine joins the signals, calculates days of supply and a multidimensional risk score, and publishes risk-scores, recommendations, and alerts; IBM watsonx.ai generates the explanation and communications, which can then drive dashboards, alerts, procurement workflows, or analytics.",
       "architecture": "architecture.png",
       "extrasBoxUrl": "",
+      "release_date": "2026-09-11",
       "isLive": true
     },
     {
@@ -186,6 +195,7 @@
       "shortDescription": "Use Bob, Confluent, watsonx Orchestrate, OpenSearch and RAG to detect critical material risks early, evaluate mitigation options, and protect Oil & Gas turnaround readiness.",
       "architecture_description": "Supply-chain changes such as approved-vendor updates, shipment changes, inventory movements, and material-readiness events are published into Confluent as real-time business events. Confluent provides the latest supply context that can be retrieved at query time rather than relying only on static or periodically refreshed information.\n\nIBM watsonx Orchestrate provides the agent experience and coordinates the tools required to retrieve and use this fresh context. A user can ask about a critical material such as CVA-8842, and the agent can respond using the latest available supplier or sourcing state. IBM Bob sits at the build and integration layer, helping assemble the streaming, agent, API, skill, MCP, and user-experience components into a reusable solution pattern.\n\nThe objective is not only to show a single turnaround use case. The architecture demonstrates a reusable Live Context pattern that can be applied wherever business decisions depend on rapidly changing enterprise information.",
       "extrasBoxUrl": "",
+      "release_date": "2026-09-11",
       "isLive": true
     },
     {
@@ -223,6 +233,7 @@
       "longDescription": "Cross-Industry — Data Privacy & Regulatory Compliance (India DPDP Act 2023)\nThis demo is industry-agnostic — it applies to any organization handling personal data under the DPDP Act, not one specific sector. If the form's dropdown doesn't offer a \"Cross-Industry\" option, pick the closest generic option it has (e.g. \"General\" / \"Other\") rather than naming a specific vertical.\n\nIndia's Digital Personal Data Protection (DPDP) Act, 2023 requires organizations to protect personal data across its lifecycle — from the moment it is collected through to its use, storage, and eventual disposal. In many enterprises, that responsibility is scattered across identity, security, and governance teams, making it hard to show, in one narrative, how a data subject's information is actually protected end to end. This demo tells that story: it follows a data subject's personal data as it moves through an organization, illustrates the kinds of DPDP-related risks that can emerge at each stage, and shows how IBM technology can help address them.\n\nThe demo is structured as six phases mapped to the data lifecycle — Collect, Discover, Protect, Use, Detect, and Govern — each paired with a relevant IBM capability: IBM Verify for consent management at the point of collection, IBM Guardium Discover and Classify for locating and classifying sensitive data, IBM Guardium Data Protection for access controls and data masking, HashiCorp Vault for key/secret management and encryption, IBM QRadar SIEM for breach detection and response, and IBM OpenPages for GRC reporting and compliance visibility. Interactive walkthroughs at each stage let a seller show how a compliance gap can be identified and addressed.\n\nThe demo is presented through four personas whose day-to-day actions map to DPDP-related responsibilities: the Data Principal / Customer, whose consent and data rights are central to the journey; the Security Admin / DB Admin, who is involved in discovering, classifying, and protecting sensitive data and managing encryption keys; the Data Analyst, whose access to customer data is shaped by masking and role-based policies; and the Data Protection Officer (DPO), who is involved in breach response and compliance reporting. Together these personas give sellers a role-based way to walk a customer through consent capture, data discovery, protection, breach detection, and governance.",
       "shortDescription": "An end-to-end demo of India's DPDP Act 2023 compliance journey, showing how IBM technology helps close data-privacy risk gaps across the data subject's lifecycle.",
       "architecture_description": "The application is a single-page app which has structured as a guided, six-stage story. A central stage-state layer drives navigation across the six DPDP lifecycle phases — Collect, Discover, Protect, Use, Detect, Govern — each rendered by its own stage component and themed around one IBM product: IBM Verify, IBM Guardium Discover and Classify, IBM Guardium Data Protection, HashiCorp Vault, IBM QRadar SIEM, and IBM OpenPages respectively. A left panel shows overall progress and persona context, while a right panel renders the active stage's interactive walkthrough, using synthetic demo data reflecting an Indian data context (names, ID formats, phone numbers), consistent with the DPDP Act's jurisdiction.\n\nEach stage captures user input (consent choices, scan triggers, role switches, encryption input, breach simulation, report generation) and updates the UI to reflect the resulting outcome, using simulated data for demo purposes. A floating \"IBM Bob\" assistant component sits on top of the app, letting a seller show how an Agentic SDLC platform can be used to create and deploy DPDP-focused compliance agents on IBM watsonx Orchestrate, connecting the lifecycle narrative to IBM's broader automation and agentic AI capabilities.",
+      "release_date": "2026-09-09",
       "isLive": true
     }
     ,
@@ -243,6 +254,7 @@
       "shortDescription": "An AI-powered SRE Copilot built on watsonx Orchestrate that analyzes IT infrastructure incidents in real time — performing root cause analysis, severity classification, and generating step-by-step remediation runbooks for on-call engineers.",
       "architecture_description": "SRE Copilot is built on three layers. The SRE Copilot App is a React-based web interface where on-call engineers view, triage, and interact with incidents. It pulls contextual data from external monitoring and collaboration tools — PagerDuty, Datadog, Splunk, GitHub, and Confluence — to enrich each incident with alerts, metrics, logs, and runbook references. When an engineer clicks Analyze, the app calls the watsonx Orchestrate Agent — a native AI agent running on IBM Cloud — which invokes the analyze_incident tool, reasons over the incident data and logs, and returns a structured response containing the root cause, a validated severity classification, and a step-by-step remediation runbook. The agent is protected by a three-layer controls pipeline (PII Filter, Content Guardrails, Secrets Detector) enforced at the platform level. Engineers can then ask follow-up questions in a conversational chat interface, with the agent maintaining full incident context across the entire session.",
       "extrasBoxUrl": "",
+      "release_date": "2026-10-01",
       "isLive": true
     }
     ,
@@ -263,6 +275,7 @@
       "shortDescription": "A real-time airspace security platform that streams live drone telemetry, applies AI-powered threat scoring via IBM watsonx.ai, and automatically dispatches tiered alerts as contacts approach a protected zone.",
       "architecture_description": "A2-D2 ingests live drone telemetry from a sensor network, analyses threats using IBM watsonx.ai, stores flight data in MongoDB, and automatically alerts response teams when risks are detected. Live telemetry flows from a Sensor Network into the A2-D2 Backend, which feeds the A2-D2 Dashboard for real-time monitoring. IBM watsonx.ai evaluates proximity, trajectory, speed, and payload indicators to generate a risk score and threat level. Telemetry and flight history are stored in MongoDB. When high-risk events are detected, automated SMS and email notifications are dispatched to response teams. The end-to-end flow is: Sensor Data → watsonx.ai Analysis → Threat Assessment → Automated Alerts.",
       "extrasBoxUrl": "",
+      "release_date": "2026-09-10",
       "isLive": true
      }
     ,
@@ -283,7 +296,113 @@
       "shortDescription": "Ask any question about IBM Building Blocks and get instant, cited answers — powered entirely by Headless Bob's autonomous doc-crawling and streaming AI capabilities.",
       "architecture_description": "The demo consists of two containerised services deployed on IBM Cloud OpenShift. The Headless Bob server (port 8000) acts as the AI runtime — it manages conversation threads, executes agentic tool calls to crawl documentation pages, and streams token-by-token responses via Server-Sent Events. The Next.js frontend (port 3000) serves the chat UI and hosts four API routes: /api/chat scores the knowledge base by keyword relevance, selects the top 5 pages, injects them as context into a grounded prompt, and sends it to Bob; /api/stream proxies Bob's SSE stream directly to the browser; /api/threads manages thread listing and deletion; and /api/kb-status triggers Bob's agentic crawl to rebuild the knowledge base on demand. A shared CephFS PersistentVolumeClaim mounts knowledge-base.json into both pods simultaneously.",
       "extrasBoxUrl": "",
+      "release_date": "2026-10-06",
       "isLive": true
+    }
+    ,
+    {
+      "name": "FactoryPulse — Continuous RAG on Confluent Cloud Streamhouse",
+      "slug": "factorypulse-continuous-rag-on-confluent-cloud-streamhouse",
+      "products": ["IBM watsonx.ai", "IBM Cloud Code Engine", "IBM Confluent"],
+      "buildingBlocks": ["data.streamhouse", "data.pipelines", "data.lakehouse"],
+      "skills": ["streamhouse-continuous-rag", "data-streaming-confluent"],
+      "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/streamhouse/serve/assets/streamhouse-continous-rag",
+      "workingDemoURL": "https://streamhouse-continous-rag.2fdpiiiyi2o0.eu-de.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/streamhouse/serve/assets/streamhouse-continous-rag/specs",
+      "specificationsFlow": "",
+      "videos": [],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "Manufacturing operators and maintenance engineers are increasingly reliant on AI assistants to diagnose machine faults, recommend corrective actions, and surface the right procedure at the right moment. The critical limitation of today's RAG deployments is staleness: AI retrieval is only as current as the last scheduled index rebuild, which means a technician's resolution note from this morning is invisible to the model until tonight's batch run. In a fast-moving factory environment — where CNC machines degrade in hours and work-order knowledge must flow immediately to the next shift — that lag creates operational risk.\n\nFactoryPulse solves this by treating enterprise knowledge as a continuous event stream on Confluent Cloud. Machine telemetry, production exceptions, quality events, maintenance work orders, and SOPs all flow through the same Kafka event backbone. Confluent Cloud Flink continuously chunks new documents with ML_RECURSIVE_TEXT_SPLITTER and embeds them with AI_EMBEDDING, writing durable chunk-and-vector records back to a compacted Kafka topic. The FastAPI service rebuilds its retrieval index by replaying that topic, so the moment a technician closes work order WO-11023, the resolution is retrievable without a rebuild. watsonx.ai synthesizes a grounded natural-language answer and the UI returns every evidence chunk so the operator can inspect the grounding path.\n\nThe demo targets manufacturing operations managers, maintenance engineers, and IT architects evaluating real-time AI in industrial environments. Confluent Cloud Tableflow optionally materializes factory state and exception topics as Apache Iceberg or Delta Lake tables, connecting the live operational story to the analytical lakehouse for shift comparison, MTTR trending, and predictive model training — all governed by the same Schema Registry that enforces data contracts at every Kafka topic boundary.",
+      "shortDescription": "FactoryPulse shows Continuous RAG as a live Streamhouse workload on Confluent Cloud — factory exceptions trigger AI-grounded answers that refresh the moment a technician closes a work order, with no nightly index rebuild.",
+      "architecture_description": "FactoryPulse is built on Confluent Cloud as the shared event backbone. Machine telemetry, production events, quality results, and maintenance work orders flow into Kafka topics. Two Confluent Cloud Flink jobs run continuously: the operational pipeline (factory_operations.sql) aggregates telemetry into 30-second windows, detects threshold breaches, emits factory.exceptions, and joins telemetry + quality + production into factory.state; the Continuous RAG pipeline (continuous_rag.sql) chunks new knowledge documents with ML_RECURSIVE_TEXT_SPLITTER and embeds them with AI_EMBEDDING, writing durable chunk-and-vector records to rag.knowledge.embeddings. A Python 3.12 / FastAPI service deployed on IBM Cloud Code Engine consumes the embedding topic and maintains a Kafka-replayed retrieval index; when a question arrives it performs cosine-similarity retrieval, optionally calls watsonx.ai for answer synthesis, and returns the answer with evidence chunks to the dependency-free web UI. Schema Registry enforces data contracts at every topic boundary. Tableflow materializes factory.state and factory.exceptions as Apache Iceberg or Delta Lake tables for historical analytics, shift comparison, and model development — without touching the low-latency RAG request path.",
+      "extrasBoxUrl": "",
+      "release_date": "2026-10-03",
+      "isLive": true
+    }
+    ,
+    {
+      "name": "IBM Bob inside Slack",
+      "slug": "ibm-bob-inside-slack",
+      "products": [],
+      "buildingBlocks": ["ai.engineering"],
+      "skills": ["headless-bob"],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/bob-in-slack-salesforce",
+      "workingDemoURL": "",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "bob-in-slack-demo-ai-voiceover.mov", "thumbnail": "" }],
+      "screenshots": ["home_page.png"],
+      "longDescription": "IBM Bob joins your Slack as a Salesforce architect: it reads a case, proposes a fix, builds and deploys it, with people approving This demo brings IBM Bob, IBM's AI development partner, into Slack, where your team already works, and shows its agentic harness handling a real Salesforce request from case to deployed change. A sales manager files a case: when a deal closes, the Success Plan is created manually days later, so handoffs slip, onboarding starts late and renewals suffer. Without Bob, the request joins the admin backlog of clarify, design, build, test and deploy, which takes days or weeks of mostly waiting. With Bob, it is picked up the moment it arrives.\n\nBob summarizes the case and proposes a solution: the problem, the fix, why it matters and the skills it applied. With custom Bob skills with Salesforce domain knowledge, Bob responds like an experienced Salesforce architect, and swapping in your own skills makes Bob respond in your domain. The team can push back at any point, asking Bob to explain its reasoning, and the answers are specific to the case rather than boilerplate. A team admin approves the proposal and Bob writes a use-case summary onto the case record in Salesforce, so anyone picking it up later sees what was decided and why. A second approval triggers the build: a new field on the Success Plan object and a flow that creates a Success Plan whenever an opportunity closes as won.\n\nOnce deployed, the team inspects exactly what was built through direct links to Salesforce Setup and tests it live: closing a deal as won creates the Success Plan within seconds, fills it with the opportunity details and notifies the account owner. A final approval closes the case, the requester receives a closure email and the channel is archived. Three approvals, zero code typed, one real change in a live Salesforce org, with every action attributed and traceable. The team defines the skills, approvals and connected systems, so the same harness could just as well end in a pull request, a ticket update or a change in any system with an API or MCP server.",
+      "shortDescription": "IBM Bob joins your Slack as a Salesforce architect: it reads a case, proposes a fix, builds and deploys it, with people approving every step.",
+      "architecture_description": "Three major components. Slack is the team's interface: a Slack app delivers messages and button clicks to the service over signed requests, and each case gets its own channel with approval buttons. The Headless Bob service is a single container that holds everything in the middle: a case state machine that advances only on a click, Bob Shell started over the Agent Client Protocol with Salesforce skills loaded, a read-only MCP endpoint that answers Bob's describe and query calls with the service's own session, a governance layer with a permission policy, budgets and an audit record per turn, and a package pipeline that collects the metadata Bob writes, validates it against the org with a check-only deploy, snapshots what it touches, deploys, and reverts. The Salesforce org is reached only by the service, through the REST API for the case record and the Metadata API for the change. Bob reads the org through the endpoint and writes files into its workspace; it never holds a credential, and nothing reaches the org without the service and a person's click in between.",
+      "extrasBoxUrl": "",
+      "release_date": "2026-10-05",
+      "isLive": true
+    }
+    ,
+    {
+      "name": "Agent Ops: Build Agents You Can Trust",
+      "slug": "agent-ops-build-agents-you-can-trust",
+      "products": ["IBM watsonX Orchestrate"],
+      "buildingBlocks": ["ai.control"],
+      "skills": ["agent-ops"],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/agent-ops-evaluation",
+      "workingDemoURL": "https://dsce-prod-ce-wxo-agentops-evaluation.2fg1zzigshm5.au-syd.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "agent-ops-build-agents-you-can-trust-video.mov", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "Building an AI agent is one thing. Knowing that it behaves as expected, follows business rules and stays reliable as you change it is another. watsonx Orchestrate Agent Ops provides a framework to evaluate, monitor and continuously improve agents throughout their lifecycle, and this demo shows it at work on a realistic case: loan underwriting at a bank, where every decision involves multiple steps, strict regulatory requirements and real compliance risk. An orchestrator agent coordinates three specialists for intake, credit risk and compliance, and together they process the application and produce the decision letter.\n\nThe demo compares two versions of this system. In version one, a self-employed applicant is approved and receives a professional decision letter, but the compliance agent silently skipped the anti-money-laundering check, so the approval should have been conditional. There are no errors and no warnings, just a confident but incorrect decision, which is why evaluating the final answer is not enough. Observability lets you inspect every model call, agent handoff, token count and latency, and the evaluation framework replays five test cases with a simulated applicant, scoring routing, tool calls, arguments and decisions: version one passes three of five, while version two, with a single agent's instructions corrected, passes all five. The tests are reusable, so regressions are caught after every prompt, tool or model change.\n\nTwo more layers go beyond checking tool calls. Rubric-based evaluation turns four compliance rules written in plain language into twenty pass-or-fail judgments by an LLM judge, each with an explanation, which gives a risk team a way to validate business requirements without writing code. Automated red teaming then sends an attacker model after the agents with three strategies from the framework's attack catalog, each trying to obtain an unconditional approval without the AML screen: every attack succeeds against version one on the first turn, while version two holds its compliance requirements through a six-turn escalation. Together these show how to move from testing correctness to building agents you can trust before they reach production.",
+      "shortDescription": "See watsonx Orchestrate Agent Ops uncover a hidden compliance defect in a loan-underwriting agent team, validate the fix, and red-team the agents before they reach production.",
+      "architecture_description": "Two tiers. The demo application — a React front end and a FastAPI backend in one container on IBM Cloud Code Engine — serves the pages, proxies live agent runs, reads traces, and runs evaluation jobs through the Agent Ops framework's Python API. Everything else lives in one IBM watsonx Orchestrate SaaS instance: the agentic system under test (a loan orchestrator with intake, credit-risk and compliance agents, five tools, and the gpt-oss-120b model on watsonx.ai, in two versions), the Agent Ops evaluation framework from the ADK, which drives that system as a simulated user and scores it with ground-truth test cases, rubric rules and red-team attacks, and the platform's observability, which records one trace per conversation with handoffs, tool calls, tokens and latency.",
+      "extrasBoxUrl": "",
+      "release_date": "2026-10-05",
+      "isLive": true
+    }
+    ,
+    {
+      "name": "Real-Time AI Guardrails",
+      "slug": "real-time-ai-guardrails",
+      "products": ["IBM watsonX Governance", "IBM watsonx.ai"],
+      "buildingBlocks": ["ai.control"],
+      "skills": ["real-time-guardrails"],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/ai-guardrails",
+      "workingDemoURL": "https://dsce-prod-ce-wtx-real-time-ai-guardrails.1op8ay1afyb7.us-south.codeengine.appdomain.cloud",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "real-time-ai-guardrails-video.mov", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "As AI agents become part of everyday business operations, one question becomes critical: how do you make sure they are safe, reliable and delivering the right results? A user might share sensitive information or try to bypass security controls, and the AI might produce an answer that sounds convincing but is not true. Real-Time AI Guardrails, powered by IBM watsonx.governance, detects these risks as they happen and enforces your policies before they affect your business. This demo shows how, in a web application you can run, tune and rerun in seconds.\n\nDifferent risks need different protection, so the demo draws on a catalog of 18 guardrail metrics in three families. Content safety metrics detect personal information exposure, harmful content, jailbreak attempts and bias. RAG metrics check whether a generated answer is relevant and grounded in the retrieved documents, so unsupported claims are stopped before they reach a customer. Response quality metrics use an LLM as a judge to assess completeness, conciseness and helpfulness, and a custom Action Oriented Validator shows how to encode a rule of your own, such as requiring every troubleshooting answer to include next steps. Each metric has its own configurable threshold, so a customer service agent that must collect personal data can be tuned differently from one that must never see it.\n\nFour scenarios walk through the metric categories one at a time: an input that combines personal data with a jailbreak attempt, an answer that claims facts its sources never mention, a long response that leaves out essential steps, and an explanation that never tells the customer what to do next. In each case you see which guardrails fired, the scores behind the decision, and the request or response being blocked. Because the guardrails are built with the watsonx.governance SDK, the same calls run inside your own agents, applications and workflows, with configurable policies and audit logging.",
+      "shortDescription": "Detect unsafe inputs, hallucinated answers and low-quality responses as they happen, and block them before they reach your customers, with configurable guardrails.",
+      "architecture_description": "The architecture has three layers. A web application on IBM Cloud Code Engine is the orchestration layer: it takes the user's selected guardrails and thresholds, sends one batched evaluation request, and turns the returned scores into a Pass or Block decision per metric. IBM watsonx.governance is the evaluation engine, where Granite Guardian models score the content safety and grounding metrics. IBM watsonx.ai supplies the LLM-as-judge for the quality metrics, calling Llama 3.3 70B. A custom metric built with the watsonx.governance SDK shows how organizations can extend the catalogue with their own rules.",
+      "extrasBoxUrl": "",
+      "release_date": "2026-10-05",
+      "isLive": true
+    }
+    ,
+    {
+      "name": "Semantic Product Search with Vector Search Builder and IBM Bob",
+      "slug": "semantic-product-search-with-vector-search-builder-and-ibm-bob",
+      "products": [],
+      "buildingBlocks": ["data.lakehouse"],
+      "skills": [],
+      "codeRepo": "https://github.com/mukoubuchi/vector-search-hands-on",
+      "workingDemoURL": "https://mukoubuchi.github.io/vector-search-hands-on/demo/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "semantic-product-vector-search.mp4", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png", "screenshot-03.png", "screenshot-04.png"],
+      "longDescription": "Shoppers search in their own words, but keyword search only matches the literal words in product names. At Fictional Online Store, a search for \"red sneakers\" misses the product \"Red Running Shoes\", so shoppers leave without finding it. Meaning-based search solves this, yet building it usually means choosing a vector database and an embedding model, wiring them into an API, and spending weeks on each new feature.\n\nThis hands-on kit uses the Vector Search Builder mode, a custom mode for IBM Bob, together with a Milvus instance that the instructor hosts and a local embedding model (paraphrase-multilingual-MiniLM-L12-v2, 384 dimensions), so participants need no API key. Participants connect to Milvus, load 12 sample products, and search by meaning on a search screen that a FastAPI app serves. They then ask IBM Bob to add product images, a price filter, and recommendation reasons. Each feature takes a short instruction, and IBM Bob changes the application code while the participant reviews and approves the steps.\n\nThe same pattern applies to enterprise document search, where titles use different words, and to customer support, where agents look for similar past questions. The hands-on runs in about 60 minutes, and every page is available in English and Japanese. It uses a local model and a shared Milvus for learning; for production, the summary page points to watsonx.ai for embeddings and watsonx.data for Milvus.",
+      "shortDescription": "Build meaning-based product search on Milvus with IBM Bob's Vector Search Builder mode, then add images, a price filter, and recommendation reasons with short natural-language instructions.",
+      "architecture_description": "Instructor side: Docker Compose runs Milvus standalone (embedded etcd and local storage) and the documentation server. The documentation is shared on the local network, through GitHub Pages, or through ngrok. Participant side: the participant zip holds the Vector Search Builder mode rules (.bob) and the participant scripts. Participants open it in IBM Bob and select Vector Search Builder mode. Data flow: the scripts connect to Milvus with the MilvusClient API. The embedding model runs locally and turns product text into 384-dimensional vectors. insert_sample_data.py creates a collection (IVF_FLAT index, COSINE metric) and inserts 12 products. app.py (FastAPI) serves /search and the search screen on port 8002. No API keys: embeddings are generated locally with Hugging Face Transformers.",
+      "extrasBoxUrl": "",
+      "release_date": "2026-10-02",
+      "isLive": false
     }
   ]
 }

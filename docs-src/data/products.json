@@ -62,6 +62,10 @@
         "url" : "https://www.ibm.com/products/watsonx-orchestrate",
         "image" : "ibm-watsonx-orchestrate.svg"
     },
+    "IBM watsonX Governance" : {
+        "url" : "https://www.ibm.com/products/watsonx-governance",
+        "image" : "ibm-watsonx-governance.svg"
+    },
     "OpenSearch" : {
         "url" : "https://opensearch.org/",
         "image" : "opensearch.svg"
