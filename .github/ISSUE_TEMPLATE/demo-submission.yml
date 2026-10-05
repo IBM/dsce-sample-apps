@@ -69,9 +69,9 @@ body:
         - label: automation.operate
         - label: automation.optimize
         - label: automation.secure
-        - label: data.context
+        - label: data.streamhouse
         - label: data.pipelines
-        - label: data.query-engines
+        - label: data.lakehouse
     validations:
       required: true
 
