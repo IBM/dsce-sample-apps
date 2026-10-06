@@ -1,4 +1,4 @@
-name: Deploy Hugo Docs with Filtering
+name: Deploy Hugo Docs
 
 on:
   push:
