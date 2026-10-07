@@ -19,9 +19,9 @@ dependencies = [
     "httpx>=0.27",
 
     # Web framework + server
-    "fastapi>=0.111",
-    "uvicorn[standard]>=0.29",
-    "pydantic>=2.7",
+    "fastapi>=0.115.5",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.3",
 
     # OpenSearch
     "opensearch-py>=2.5",
@@ -39,6 +39,8 @@ dependencies = [
     # Configuration & utilities
     "python-dotenv>=1.2.2",
     "zod-python>=0.1",            # optional schema validation
+    "cryptography>=50.0.0",
+    "PyJWT>=2.14.0",
 ]
 
 [project.optional-dependencies]

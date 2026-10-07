@@ -1,10 +1,10 @@
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
-pydantic==2.5.3
+fastapi>=0.115.5
+uvicorn[standard]>=0.32.0
+pydantic>=2.10.3
 pydantic-settings==2.1.0
 python-dateutil==2.8.2
 APScheduler==3.10.4
-geopy==2.5.0
+geopy>=2.5.0
 httpx==0.27.0
 pyyaml>=6.0
 aiohttp>=3.14.3
