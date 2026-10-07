@@ -1,0 +1,6 @@
+ibmcloud_api_key    = "YOUR_IBMCLOUD_API_KEY"
+region              = "us-south"
+resource_group_name = "default"
+project_name        = "finops-turbo-project"
+app_name            = "turbo-cloud-demo"
+image_reference     = "us-south.icr.io/YOUR_NAMESPACE/turbo-cloud-demo:latest"
