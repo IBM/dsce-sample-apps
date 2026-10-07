@@ -1,6 +1,6 @@
-fastapi==0.115.5
-uvicorn[standard]==0.32.1
+fastapi>=0.115.5
+uvicorn[standard]>=0.32.0
 python-dotenv>=1.2.2
 ibm-watsonx-orchestrate>=2.15.0
-pydantic==2.10.3
+pydantic>=2.10.3
 httpx>=0.28.1

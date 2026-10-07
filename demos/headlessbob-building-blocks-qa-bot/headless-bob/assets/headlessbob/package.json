@@ -21,7 +21,7 @@
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
     "dompurify": "^3.4.15",
-    "marked": "^18.0.12",
+    "marked": "^18.0.14",
     "yaml": "^2.8.3"
   },
   "devDependencies": {

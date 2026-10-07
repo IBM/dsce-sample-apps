@@ -1,6 +1,6 @@
 # FastAPI and Server
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
+fastapi>=0.115.5
+uvicorn[standard]>=0.32.0
 python-dotenv>=1.2.2
 
 # Data Processing
@@ -10,7 +10,7 @@ pandas>=2.1.0
 # HTTP Requests & Validation
 httpx==0.26.0
 requests>=2.33.0
-pydantic==2.5.3
+pydantic>=2.10.3
 
 # WhatsApp Notifications
 twilio==9.0.0
