@@ -75,7 +75,16 @@ app.use(helmet({
   },
   hsts: false  // Disable HSTS for local development (prevents HTTPS redirect)
 }));
-app.use(cors());
+// Restrict CORS to same-origin and explicit dev/demo origins.
+// Set CORS_ALLOWED_ORIGINS (comma-separated) in the environment for production.
+const CORS_ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || 'http://localhost:4000,http://localhost:3000')
+  .split(',').map(o => o.trim()).filter(Boolean);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || CORS_ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error('CORS: origin not allowed'));
+  },
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));

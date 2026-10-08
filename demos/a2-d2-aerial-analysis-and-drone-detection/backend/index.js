@@ -139,7 +139,20 @@ function csvRowToDroneFrame(row) {
 const app    = express();
 const server = http.createServer(app);
 
-app.use(cors());
+// Restrict CORS to localhost origins used during development/demo.
+// In production, replace with your real deployed frontend origin.
+const ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:5173')
+  .split(',').map(o => o.trim()).filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow same-origin / non-browser requests (no Origin header)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS: origin not allowed'));
+  },
+}));
 app.use(express.json());
 
 // ── Health ────────────────────────────────────────────────────────────────────

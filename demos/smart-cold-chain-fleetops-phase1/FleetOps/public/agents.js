@@ -616,7 +616,7 @@ const AgentsModule = (() => {
                 console.log('Output div display set to block');
             } else if (status === 'FAILED' && agentStatus.error) {
                 console.log('Displaying error...');
-                outputDiv.innerHTML = `<div class="error-message">Error: ${agentStatus.error}</div>`;
+                outputDiv.innerHTML = `<div class="error-message">Error: ${escapeHtml(String(agentStatus.error))}</div>`;
                 outputDiv.style.display = 'block';
             } else {
                 console.log('Hiding output div');
@@ -912,7 +912,7 @@ const AgentsModule = (() => {
                 }
                 
                 if (outputDiv) {
-                    outputDiv.innerHTML = `<div class="error-message">Error: ${errorMessage}</div>`;
+                    outputDiv.innerHTML = `<div class="error-message">Error: ${escapeHtml(String(errorMessage))}</div>`;
                     outputDiv.style.display = 'block';
                 }
             }

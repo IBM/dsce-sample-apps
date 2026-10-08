@@ -1,7 +1,20 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { marked } from "marked";
+import { marked, Renderer } from "marked";
+
+// Prevent XSS: disable raw HTML pass-through in marked output.
+// The renderer escapes any literal HTML that appears inside Markdown so that
+// only the Markdown-rendered output is ever injected into the DOM.
+const safeRenderer = new Renderer();
+safeRenderer.html = ({ text }: { text: string }) =>
+  text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+marked.use({ renderer: safeRenderer });
 
 interface Source  { breadcrumb: string; url: string }
 interface Message {
@@ -168,7 +181,7 @@ export default function ChatPanel({ threadId, threadTitle, onThreadCreated, kbRe
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   }
 
-  function renderMarkdown(text: string) {
+  function renderMarkdown(text: string): string {
     try { return marked.parse(text) as string; } catch { return text; }
   }
 
