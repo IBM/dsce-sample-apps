@@ -811,7 +811,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
+// Rate limit catch-all route that serves index.html to reduce DoS risk
+const staticFallbackLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300, // limit each IP to 300 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+app.get('*', staticFallbackLimiter, (req, res) => {
   if (req.path.startsWith('/api') || req.path === '/health') {
     return res.status(404).json({ success: false, error: 'API route not found' });
   }
