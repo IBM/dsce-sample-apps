@@ -1,7 +1,10 @@
 """Admin API endpoints for persistence management."""
+import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -46,8 +49,11 @@ async def get_persistence_status() -> Dict[str, Any]:
             "enabled": True,
             **status
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error getting status: {str(e)}")
+        logger.exception("Error getting persistence status: %s", e)
+        raise HTTPException(status_code=500, detail="Error getting persistence status")
 
 
 @router.post("/reset-persistence")
@@ -107,8 +113,11 @@ async def reset_persistence(request: ResetRequest) -> Dict[str, Any]:
                 "message": f"Reset completed for: {', '.join(entities)}",
                 "results": reset_results
             }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error resetting data: {str(e)}")
+        logger.exception("Error resetting data: %s", e)
+        raise HTTPException(status_code=500, detail="Error resetting data")
 
 
 @router.post("/save-state")
@@ -127,7 +136,10 @@ async def manual_save_state() -> Dict[str, Any]:
             "status": "success",
             "message": "Manual save triggered (requires simulation engine integration)"
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error saving state: {str(e)}")
+        logger.exception("Error saving state: %s", e)
+        raise HTTPException(status_code=500, detail="Error saving state")
 
 # Made with Bob

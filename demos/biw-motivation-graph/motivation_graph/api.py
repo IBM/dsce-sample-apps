@@ -9,6 +9,7 @@ All v1 endpoints (/api/beliefs, /api/loop-closure, /api/catalog-gap,
 """
 
 import json
+import logging
 import sys
 import threading
 from pathlib import Path
@@ -18,6 +19,8 @@ from flask_cors import CORS
 
 sys.path.insert(0, str(Path(__file__).parent))
 from config import DB_PATH
+
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -48,7 +51,8 @@ def nudge(seller_id: str):
             con.close()
         return jsonify(result)
     except Exception as exc:
-        return jsonify({"error": str(exc), "seller_id": seller_id}), 500
+        logger.exception("Error generating nudge for %s: %s", seller_id, exc)
+        return jsonify({"error": "Failed to generate motivation nudge", "seller_id": seller_id}), 500
 
 
 @app.get("/api/nudge")
@@ -137,7 +141,8 @@ def actions(seller_id: str):
             }
         return jsonify(plan)
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc), "seller_id": seller_id}), 500
+        logger.exception("Error generating action plan for %s: %s", seller_id, exc)
+        return jsonify({"error": "Failed to generate action plan", "seller_id": seller_id}), 500
 
 
 @app.post("/api/actions/<seller_id>/complete")
@@ -189,9 +194,11 @@ def actions_payload(seller_id: str, channel: str):
             "payload":   build_payload(channel, plan, n),
         })
     except ValueError as exc:
-        return jsonify({"error": str(exc)}), 400
+        logger.warning("Invalid payload request: %s", exc)
+        return jsonify({"error": "Invalid request parameters"}), 400
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc), "seller_id": seller_id}), 500
+        logger.exception("Error generating payload for %s: %s", seller_id, exc)
+        return jsonify({"error": "Failed to generate payload", "seller_id": seller_id}), 500
 
 
 @app.post("/api/actions/<seller_id>/deliver")
@@ -209,9 +216,11 @@ def actions_deliver(seller_id: str):
         plan, n = _plan_and_nudge(seller_id)
         return jsonify(deliver(channel, plan, n))
     except ValueError as exc:
-        return jsonify({"error": str(exc)}), 400
+        logger.warning("Invalid deliver request: %s", exc)
+        return jsonify({"error": "Invalid request parameters"}), 400
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc), "seller_id": seller_id}), 500
+        logger.exception("Error delivering action plan for %s: %s", seller_id, exc)
+        return jsonify({"error": "Failed to deliver action plan", "seller_id": seller_id}), 500
 
 
 # ── Sellers ───────────────────────────────────────────────────────────────────

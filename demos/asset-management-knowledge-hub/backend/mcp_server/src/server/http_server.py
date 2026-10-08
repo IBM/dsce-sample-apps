@@ -385,10 +385,13 @@ def create_app() -> FastAPI:
                 "httpStatus": result.get("httpStatus", 200),
             }
         except ValueError as exc:
-            raise HTTPException(status_code=404, detail=str(exc))
+            logger.warning("PM not found: %s", exc)
+            raise HTTPException(status_code=404, detail="PM record not found")
+        except HTTPException:
+            raise
         except Exception as exc:
             logger.error("PM update failed", extra={"pmNum": body.pmNum, "error": str(exc)})
-            raise HTTPException(status_code=502, detail=f"Maximo update failed: {exc}")
+            raise HTTPException(status_code=502, detail="Maximo update failed")
 
     # ── ServiceNow ticket creation endpoint ───────────────────────────────────
 
@@ -409,10 +412,13 @@ def create_app() -> FastAPI:
             result = await loop.run_in_executor(None, _create)
             return {"success": True, **result}
         except ServiceNowConfigError as exc:
-            raise HTTPException(status_code=503, detail=str(exc))
+            logger.warning("ServiceNow configuration error: %s", exc)
+            raise HTTPException(status_code=503, detail="ServiceNow service not configured")
+        except HTTPException:
+            raise
         except Exception as exc:
             logger.error("ServiceNow ticket creation failed", extra={"error": str(exc)})
-            raise HTTPException(status_code=502, detail=f"ServiceNow ticket creation failed: {exc}")
+            raise HTTPException(status_code=502, detail="ServiceNow ticket creation failed")
 
     # ── Chat history endpoints ─────────────────────────────────────────────────
 

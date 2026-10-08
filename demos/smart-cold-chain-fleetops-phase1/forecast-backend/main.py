@@ -5,6 +5,7 @@ Provides TTM-based forecasting endpoints for cold-chain management
 """
 
 import os
+import logging
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,6 +32,8 @@ SERVER_PORT = int(os.getenv("SERVER_PORT", "5001"))
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 USE_TTM_MODEL = os.getenv("USE_TTM_MODEL", "False").lower() == "true"
+
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -116,8 +119,11 @@ async def forecast_temperature_breach(
         
         return TemperatureForecastResponse(**result)
     
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception("Failed to forecast temperature breach for truck %s: %s", truck_id, e)
+        raise HTTPException(status_code=500, detail="Failed to forecast temperature breach.")
 
 
 @app.get("/api/forecast/station", response_model=StationForecastResponse)
@@ -144,7 +150,8 @@ async def forecast_station_availability(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception("Failed to forecast station availability: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to forecast station availability.")
 
 
 @app.get("/api/forecast/weather/{truck_id}", response_model=WeatherForecastResponse)
@@ -168,8 +175,11 @@ async def forecast_weather_impact(
         
         return WeatherForecastResponse(**result)
     
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception("Failed to forecast weather impact for truck %s: %s", truck_id, e)
+        raise HTTPException(status_code=500, detail="Failed to forecast weather impact.")
 
 
 @app.get("/api/forecast/fleet", response_model=FleetOptimizationResponse)
@@ -187,8 +197,11 @@ async def forecast_fleet_optimization(
         result = forecasting_service.forecast_fleet_optimization(frequency=frequency)
         return FleetOptimizationResponse(**result)
     
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception("Failed to optimize fleet forecast: %s", e)
+        raise HTTPException(status_code=500, detail="Failed to optimize fleet forecast.")
 
 
 # WhatsApp Notification Models
@@ -244,12 +257,13 @@ async def send_whatsapp_notification(request: WhatsAppNotificationRequest):
         return WhatsAppNotificationResponse(**result)
     
     except ValueError as e:
-        # Missing environment variables
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.warning("WhatsApp notification configuration error: %s", e)
+        raise HTTPException(status_code=500, detail="WhatsApp service configuration error.")
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        logger.exception("Unexpected error sending WhatsApp notification: %s", e)
+        raise HTTPException(status_code=500, detail="Unexpected error sending notification.")
 
 
 @app.get("/api/notifications/whatsapp/status/{message_sid}")
@@ -266,8 +280,10 @@ async def check_whatsapp_status(message_sid: str):
         result = whatsapp_service.check_delivery_status(message_sid)
         return result
     except ValueError as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    except Exception:
+        logger.warning("WhatsApp delivery status check error: %s", e)
+        raise HTTPException(status_code=500, detail="Invalid WhatsApp message status request.")
+    except Exception as e:
+        logger.exception("Unexpected error checking WhatsApp delivery status: %s", e)
         raise HTTPException(status_code=500, detail="An internal error occurred while checking delivery status.")
 
 

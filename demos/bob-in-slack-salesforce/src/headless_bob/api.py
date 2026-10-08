@@ -10,10 +10,13 @@ created via the bootstrap CLI (see __main__.py); no default credentials exist.
 
 from contextlib import asynccontextmanager
 import json
+import logging
 import os
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, HTTPException, Request
+
+logger = logging.getLogger(__name__)
 from pydantic import BaseModel, Field
 
 from bob_runtime import BobRuntime
@@ -254,8 +257,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             def demo_case(body: CaseSubmission) -> dict:
                 try:
                     return flow.start(body.issue)
+                except HTTPException:
+                    raise
                 except Exception as exc:
-                    raise HTTPException(status_code=502, detail=str(exc)) from exc
+                    logger.exception("Failed to start demo flow: %s", exc)
+                    raise HTTPException(status_code=502, detail="Failed to start demo flow") from exc
 
         async def _verified_body(request: Request) -> bytes:
             body = await request.body()

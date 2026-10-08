@@ -1,6 +1,9 @@
 """Alert API endpoints"""
+import logging
 from fastapi import APIRouter, HTTPException
 from typing import List
+
+logger = logging.getLogger(__name__)
 import uuid
 from datetime import datetime
 from ..models.alert import Alert, CreateAlertRequest
@@ -131,6 +134,9 @@ async def cleanup_alert_history(before_date: str = None):
             "message": f"Deleted {deleted_count} alert records"
         }
     
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error cleaning up alerts: {str(e)}")
+        logger.exception("Error cleaning up alerts: %s", e)
+        raise HTTPException(status_code=500, detail="Error cleaning up alerts")
 

@@ -1,6 +1,9 @@
 """API endpoints for persistence data retrieval."""
+import logging
 from fastapi import APIRouter, HTTPException
 from typing import Dict, Any, List
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -30,8 +33,11 @@ async def get_all_persisted_data() -> Dict[str, Any]:
             "status": "success",
             "data": data
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading data: {str(e)}")
+        logger.exception("Error loading persisted data: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading data")
 
 
 @router.get("/data/trucks")
@@ -51,8 +57,11 @@ async def get_persisted_trucks() -> Dict[str, Any]:
             "count": len(trucks),
             "trucks": trucks
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading trucks: {str(e)}")
+        logger.exception("Error loading persisted trucks: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading trucks")
 
 
 @router.get("/data/stations")
@@ -72,8 +81,11 @@ async def get_persisted_stations() -> Dict[str, Any]:
             "count": len(stations),
             "stations": stations
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading stations: {str(e)}")
+        logger.exception("Error loading persisted stations: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading stations")
 
 
 @router.get("/data/weather")
@@ -93,8 +105,11 @@ async def get_persisted_weather() -> Dict[str, Any]:
             "count": len(weather),
             "weather": weather
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading weather: {str(e)}")
+        logger.exception("Error loading persisted weather: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading weather")
 
 
 @router.get("/data/alerts")
@@ -114,8 +129,11 @@ async def get_persisted_alerts() -> Dict[str, Any]:
             "count": len(alerts),
             "alerts": alerts
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading alerts: {str(e)}")
+        logger.exception("Error loading persisted alerts: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading alerts")
 
 
 @router.get("/data/incidents")
@@ -135,7 +153,10 @@ async def get_persisted_incidents() -> Dict[str, Any]:
             "count": len(incidents),
             "incidents": incidents
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error loading incidents: {str(e)}")
+        logger.exception("Error loading persisted incidents: %s", e)
+        raise HTTPException(status_code=500, detail="Error loading incidents")
 
 # Made with Bob

@@ -53,7 +53,7 @@ def main() -> int:
     print(f"  endpoint : {COS_ENDPOINT}")
     print(f"  bucket   : {COS_BUCKET}")
     print(f"  region   : {COS_REGION}")
-    print(f"  key_id   : {COS_ACCESS_KEY[:8]}…")
+    print(f"  key_id   : {'set ✓' if COS_ACCESS_KEY and not COS_ACCESS_KEY.startswith('<') else 'NOT SET'}")
     print("─────────────────────────────────────────────────────────────────\n")
 
     if not all([COS_ENDPOINT, COS_ACCESS_KEY, COS_SECRET_KEY, COS_BUCKET]):
