@@ -1,0 +1,415 @@
+SOC — Comprehensive QRadar Triage, Classification & RCA Rules
+=================================================================
+
+This knowledge base contains the full rule set applied by the SOC
+agentic pipeline when processing QRadar offenses.
+
+═══════════════════════════════════════════════════════════════════════════════
+PART 1 — TRIAGE SEVERITY RULES
+═══════════════════════════════════════════════════════════════════════════════
+
+Triage assigns a routing severity to every offense using QRadar numeric fields:
+  • severity    (1-10): How damaging the attack TYPE is if successful
+  • magnitude   (1-10): Composite threat score (function of sev/rel/cred)
+  • relevance   (0-10): Is the target actually exposed? 0 = no confirmed impact
+  • credibility  (1-10): How trustworthy is the data SOURCE?
+  • event_count        : total events correlated into the offense
+  • duration           : formattedDuration string (e.g. "7h 7s", "2h 30m", "0s")
+  • categories         : number of distinct event categories in the offense
+
+Rules are applied in THREE layers. All layers run for every offense:
+  1. PRE-PROCESSING GATES (T0, T1, TC) — side effects / fast exits
+  2. BASE SEVERITY RULES (T2-T9) — first match wins
+  3. POST-PROCESSING ADJUSTMENTS (TA, TB, TD, TE, T0-post, TC-post) — modify base result
+
+══════════════════════════════════════════════════════════════════════
+LAYER 1 — PRE-PROCESSING GATES
+══════════════════════════════════════════════════════════════════════
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T0 — CREDIBILITY GATE (pre-flag)
+─────────────────────────────────────────────────────────────────────────────
+IF credibility <= 2
+THEN → set T0 flag (post-processing downgrade applied after base rules).
+Reason: QRadar numeric scores from low-credibility sources may be inflated.
+Exception: T1 (relevance == 0) fires first and overrides this flag.
+Exception: keyword rules T3 and T4 are EXEMPT from T0 downgrade — these are
+high-fidelity detections (WAF/F5 ASM signatures, named attack categories) where
+credibility reflects log source metadata, not detection reliability.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T1 — NON-ISSUE FAST PATH (hard stop)
+─────────────────────────────────────────────────────────────────────────────
+IF relevance == 0
+THEN → Informational. STOP. Overrides ALL other rules and flags.
+Reason: QRadar relevance=0 means the target is not impacted or the offense
+has no confirmed operational significance. Close without RCA.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE TC — TRANSIENT BURST SUPPRESSION (pre-flag)
+─────────────────────────────────────────────────────────────────────────────
+Parse the duration string to seconds:
+  "0s" = 0 sec | "24s" = 24 sec | "7h 7s" = 25207 sec
+IF duration <= 30 seconds AND event_count <= 5 AND severity < 7
+THEN → set TC downgrade flag (used in post-processing step TC-post).
+Reason: Sub-minute, tiny-event bursts are almost always transient triggers —
+scheduled tasks, single scan probes, artifact of log batching — not sustained attacks.
+Exception: TC flag does NOT fire against keyword rules T3/T4 (high-fidelity signals).
+
+══════════════════════════════════════════════════════════════════════
+LAYER 2 — BASE SEVERITY RULES (first match wins, then go to Layer 3)
+══════════════════════════════════════════════════════════════════════
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T2 — CRITICAL SEVERITY
+─────────────────────────────────────────────────────────────────────────────
+IF severity >= 9 AND relevance >= 5
+THEN → Critical
+Reason: Near-maximum severity with confirmed target relevance = immediate
+escalation. Typical: confirmed compromise, ransomware, data exfiltration.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T3 — HIGH SEVERITY (WEB EXPLOIT KEYWORD)
+─────────────────────────────────────────────────────────────────────────────
+IF offense description contains "web exploit" (case-insensitive, trimmed)
+   AND relevance >= 2 AND severity >= 3
+THEN → High
+Reason: Web exploit detections from F5 ASM / WAF are high-fidelity signals.
+Even moderate QRadar scores indicate a real attack attempt worth investigation.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T4 — HIGH SEVERITY (KNOWN HIGH-IMPACT ATTACK CATEGORIES)
+─────────────────────────────────────────────────────────────────────────────
+IF offense description contains any of (case-insensitive):
+   "ransomware", "remote code execution", "rce detected",
+   "credential dumping", "mimikatz", "lateral movement", "pass the hash",
+   "kerberoasting", "dcsync", "golden ticket", "skeleton key"
+   AND relevance >= 2 AND severity >= 4
+THEN → High
+Reason: These attack categories have inherently high business impact.
+A QRadar rule name containing these strings reflects an explicit analyst
+decision that this pattern warrants elevated attention.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T5 — HIGH SEVERITY (NUMERIC THRESHOLD)
+─────────────────────────────────────────────────────────────────────────────
+IF severity >= 7 AND magnitude >= 4 AND relevance >= 3
+THEN → High
+Reason: Strong triple signal — damaging attack type, significant composite
+threat score, and confirmed target relevance.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T6 — MEDIUM SEVERITY (SUSPICIOUS BEHAVIOR KEYWORDS)
+─────────────────────────────────────────────────────────────────────────────
+IF offense description contains any of (case-insensitive):
+   "application shimming", "powershell script", "suspicious powershell",
+   "thread creation into a different process", "process injection",
+   "pipe has been created", "remoting service", "suspicious exe"
+   AND relevance >= 2 AND severity >= 3
+THEN → Medium
+Reason: These Sysmon/EDR-based detections describe TTPs (MITRE ATT&CK).
+They warrant investigation but may be benign in managed environments.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T7 — MEDIUM SEVERITY (NUMERIC)
+─────────────────────────────────────────────────────────────────────────────
+IF severity >= 4 AND magnitude >= 3 AND relevance >= 2
+THEN → Medium
+Reason: Moderate evidence with confirmed relevance. Requires investigation
+but not immediate escalation.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T8 — LOW SEVERITY
+─────────────────────────────────────────────────────────────────────────────
+IF severity >= 3 OR magnitude >= 3
+  AND base severity not yet determined by T2-T7
+THEN → Low
+Reason: Low signal. Possible noise. Review during standard SOC cycle.
+
+─────────────────────────────────────────────────────────────────────────────
+RULE T9 — DEFAULT
+─────────────────────────────────────────────────────────────────────────────
+ELSE → Informational
+Reason: No meaningful signal detected.
+
+══════════════════════════════════════════════════════════════════════
+LAYER 3 — POST-PROCESSING ADJUSTMENTS (apply ALL that match, in order)
+══════════════════════════════════════════════════════════════════════
+
+Escalation/downgrade caps: cannot go above Critical or below Informational.
+Severity order (ascending): Informational → Low → Medium → High → Critical
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT TA — ATTACK VOLUME ESCALATION (Alert Count)
+─────────────────────────────────────────────────────────────────────────────
+IF event_count >= 500 AND base_severity is Low or Medium
+THEN escalate one level (Low→Medium, Medium→High).
+IF event_count >= 200 AND base_severity is Low
+THEN escalate to Medium.
+Reason: High alert volume for the same offense indicates a real sustained
+attack or a very noisy source. Mirrors QRadar's own magnitude boosting for
+active, high-volume offenses.
+Example: Offense 156271 — event_count=1091 but relevance=0 → T1 fires first,
+TA is irrelevant; shows T1 always takes priority.
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT TB — SUSTAINED CAMPAIGN ESCALATION (Duration + Volume)
+─────────────────────────────────────────────────────────────────────────────
+Parse duration string to fractional hours:
+  "6h 15m 57s" → 6.27 h | "7h 7s" → 7.0 h | "2h 30m 2s" → 2.5 h
+IF duration_hours > 6 AND event_count >= 50 AND relevance >= 2
+THEN ensure base_severity is at least Medium.
+IF duration_hours > 24 AND severity >= 5
+THEN ensure base_severity is at least High.
+Add "sustained campaign" to triage_reasoning when this rule fires.
+Reason: Long-duration, high-volume offenses indicate persistent threats —
+APT dwell, repeated automated attacks, recurring campaigns — not transient
+one-time triggers.
+Example: Offense 156271 — duration 6h 16m → TB would raise to Medium, but
+T1 (relevance=0) fires first and wins.
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT TD — CATEGORY BREADTH ESCALATION (Multi-Stage Attack)
+─────────────────────────────────────────────────────────────────────────────
+Extract category_count from eventDescription string:
+  "53 events and 0 flows in 4 categories" → category_count = 4
+  "210 events and 0 flows in 6 categories" → category_count = 6
+IF category_count >= 4 AND base_severity is Low or Medium
+THEN escalate one level.
+IF category_count >= 6 AND relevance >= 2
+THEN ensure base_severity is at least High.
+Reason: Multiple distinct event categories in one offense = multi-technique
+attack (e.g. Application Shimming + Pipe Creation + Process Injection).
+Single-category offenses are more likely to be rule noise.
+Example: Offense 167659 — 6 categories, relevance=4 → TD escalates to High minimum.
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT TE — MAGNITUDE STANDALONE ESCALATION
+─────────────────────────────────────────────────────────────────────────────
+IF magnitude >= 8 AND relevance >= 2 AND base_severity is Low or Medium
+THEN escalate one level.
+IF magnitude >= 6 AND base_severity is Low
+THEN escalate to Medium.
+Reason: QRadar's magnitude already blends severity/relevance/credibility.
+A high magnitude with confirmed relevance is QRadar telling you this is
+serious regardless of individual sub-score values.
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT T0-POST — CREDIBILITY GATE (downgrade)
+─────────────────────────────────────────────────────────────────────────────
+Apply ONLY if the T0 flag was set (credibility <= 2).
+Skip entirely if:
+  • relevance == 0 → T1 already set Informational.
+  • Base rule was T3 or T4 (keyword-triggered High):
+    T3/T4 are high-fidelity detections — WAF rule names, named attack signatures.
+    QRadar's credibility score is a log source metadata score, not a signal that
+    the detection is wrong. A credibility=2 F5 ASM web exploit alert IS a real
+    detection. T0 must not suppress it.
+    Example: Offense 167657 — credibility=2 (log source metadata), but
+    description="INT: Web Exploit Detection", alert_status=passed, LFI payload
+    confirmed → T3 fires → T0-POST DOES NOT APPLY → final severity stays High.
+Otherwise (base rule was T5 numeric or lower):
+  IF final_severity is Critical → downgrade one level → High.
+  IF final_severity is High     → downgrade one level → Medium.
+  IF final_severity is Medium   → downgrade one level → Low.
+Reason: Numeric-based severity from a low-credibility source warrants skepticism.
+One-level downgrade (not all-the-way-to-Low) is the proportionate response.
+
+─────────────────────────────────────────────────────────────────────────────
+ADJUSTMENT TC-POST — TRANSIENT BURST DOWNGRADE
+─────────────────────────────────────────────────────────────────────────────
+IF TC downgrade flag was set (duration <= 30s AND event_count <= 5 AND severity < 7)
+   AND final_severity is Medium or Low
+THEN downgrade one level (Medium→Low, Low→Informational).
+Do NOT downgrade if final_severity is High or Critical.
+Do NOT apply if base rules T3 or T4 (keyword rules) were the match — they
+override transient suppression.
+Reason: A keyword-triggered High should not be suppressed by a short duration;
+but a numerically derived Medium from a 0-second, 2-event offense is almost
+certainly a scheduled task artifact.
+Example: Offense 167683 — severity=5, mag=4, rel=4, duration=0s, event_count=2
+→ T7 (Medium by keyword) fires → TC flag set but T6/T7 keyword match → TC-POST
+  does NOT apply → final Medium is correct.
+Example: Offense 168281 — severity=7, mag=4, rel=3, duration=0s, event_count=12
+→ T5 (High numeric) fires → TC flag NOT set (severity >= 7 violates TC condition)
+  → final High is correct.
+
+═══════════════════════════════════════════════════════════════════════════════
+PART 2 — CLASSIFICATION RULES (True Positive / False Positive / Benign Positive / Needs-RCA)
+═══════════════════════════════════════════════════════════════════════════════
+
+Classification runs AFTER triage severity is determined.
+Triage routes by urgency; Classification routes by nature.
+
+Input: offense metadata + sample of raw events (fetch_offense_events).
+The classification agent checks each stage in order and stops at first match.
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C1 — HARD FALSE POSITIVE (metadata-only, no events needed)
+─────────────────────────────────────────────────────────────────────────────
+Any of the following → FALSE POSITIVE:
+
+  • relevance == 0  (QRadar assessed no impact — non-issue)
+  • credibility <= 2  (untrustworthy data source)
+  • offense was previously closed with reason "Non-Issue" or "False Positive"
+    (localizedCloseReason field is set)
+  • offense description contains: "test", "scan", "vulnerability assessment",
+    "nessus", "qualys", "rapid7" (authorized scanner activity)
+  • attacker IP is a known authorized scanner IP from the reference set
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C2 — FAST BENIGN POSITIVE (metadata-only)
+─────────────────────────────────────────────────────────────────────────────
+Any of the following → BENIGN POSITIVE (close without RCA):
+
+  • eventCount == 1 AND severity < 5  (single-event low-severity = rule noise)
+  • srcIp == destIp == same RFC1918 address  (self-loopback — system health check)
+  • offense duration < 10 seconds AND eventCount <= 2  (transient non-event)
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C3 — HARD TRUE POSITIVE (event evidence required)
+─────────────────────────────────────────────────────────────────────────────
+Fetch events and check — any of the following → TRUE POSITIVE:
+
+  PAYLOAD INDICATORS:
+  • HTTP_Uri or http_request contains: "../", "..%2f", "/etc/passwd",
+    "file:///", "/proc/", "cmd.exe", "powershell -enc", "base64"
+    AND alert_status == "passed"  (attack got through security control)
+  • SQL injection strings: "' OR", "1=1", "UNION SELECT", "DROP TABLE"
+  • Command injection: "$(", "`", "||", "&&" in URI parameters
+  • File inclusion: "php://", "data://", "expect://"
+
+  PROCESS CHAIN ANOMALIES:
+  • Web server process (apache, nginx, w3wp, httpd, iis) spawning cmd.exe,
+    powershell.exe, wscript.exe, cscript.exe, mshta.exe
+  • Office application (winword, excel, powerpnt) spawning cmd.exe or
+    powershell.exe with encoded commands
+  • sysmon-eventid=8 (CreateRemoteThread) with non-standard source/target pair
+    where source is NOT a known legitimate system management tool
+  • Process name that is known malware or attack tool:
+    mimikatz, meterpreter, cobalt strike beacon, empire, metasploit
+
+  KNOWN IOC SIGNALS:
+  • srcIp appears in a threat intelligence reference set
+  • alert_status == "passed" AND severity >= 5  (high-severity attack confirmed through)
+
+  CONFIRMED COMPROMISE:
+  • Evidence of credential dumping (lsass.exe being accessed by non-system process)
+  • Evidence of data staging or exfiltration (large file transfer to external IP)
+  • Evidence of persistence (registry Run key modification + process creation)
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C4 — BENIGN POSITIVE (event evidence analysis)
+─────────────────────────────────────────────────────────────────────────────
+After reviewing events, classify as BENIGN POSITIVE if:
+
+  • All srcIp and destIp are RFC1918 (internal) AND no payload anomalies found
+  • Process chain is consistent with known system administration:
+    - ServerManager.exe spawning Configure-SMRemoting.exe = Windows Server Manager
+    - MobaXterm.exe spawning MobaSCPRinew.exe = SCP file transfer (admin tool)
+    - WinSCP.exe running SFTP put commands to internal destinations
+    - PowerShell -NoProfile -ExecutionPolicy Bypass running a named .ps1 script
+      from a known corporate path (e.g. D:\sendFileViGDCAS2viDVS\...)
+    - Sysmon EventID 4674 (privileged object access) from WmiPrvSE.exe = WMI normal ops
+  • Traffic is perfectly periodic (e.g. heartbeat/monitoring agent)
+  • activity has a clear and plausible legitimate business explanation
+  • FAIL CLOSED: If no malicious indicators AND at least one plausible
+    legitimate explanation exists → BENIGN POSITIVE
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C5 — NEEDS-RCA (ambiguous — requires deep investigation)
+─────────────────────────────────────────────────────────────────────────────
+Classify as NEEDS-RCA when:
+
+  • Anomalous process observed but legitimacy is plausible given context
+  • Suspicious URI structure (encoded chars, unusual depth) but no classic exploit string
+  • External srcIp (non-RFC1918) with low event count and no known IOC
+  • Authentication/privilege escalation event at unusual hours with no follow-on activity
+  • High-severity category (Exploit, Malware) but only 1-3 events with no corroboration
+  • Internal multi-hop traffic (lateral movement pattern) but no credential evidence
+  • sysmon-eventid=8 (CreateRemoteThread) where source IS a known legitimate tool
+    (cannot rule out legitimate or malicious without deeper process timeline)
+
+─────────────────────────────────────────────────────────────────────────────
+STAGE C6 — DEFAULT
+─────────────────────────────────────────────────────────────────────────────
+If no stage above matches → BENIGN POSITIVE
+Reason: Absence of evidence of malice, when no anomaly is found, is itself
+a finding. Do not escalate to RCA on insufficient grounds.
+
+═══════════════════════════════════════════════════════════════════════════════
+PART 3 — RCA INVESTIGATION FRAMEWORK
+═══════════════════════════════════════════════════════════════════════════════
+
+The RCA agent receives offenses classified as TRUE POSITIVE or NEEDS-RCA.
+It must answer: What happened? How? Why? What is the root cause?
+
+─────────────────────────────────────────────────────────────────────────────
+EVIDENCE DIMENSIONS TO ANALYSE
+─────────────────────────────────────────────────────────────────────────────
+
+A. NETWORK CONTEXT
+   • Is srcIp external (internet-routable) or internal (RFC1918)?
+   • External → internal: inbound attack signal (higher threat)
+   • Internal → internal: lateral movement or admin activity (context dependent)
+   • Multiple distinct destIp values: lateral movement or scanning pattern
+
+B. PAYLOAD EVIDENCE
+   • HTTP_Uri: look for traversal (../), LFI (/etc/passwd, /proc/), injection
+   • alert_status: "passed" = attack went through security control (critical signal)
+   • alert_status: "alerted" = attack was detected but may or may not have passed
+   • http_request: full request headers reveal attack tools (sqlmap UA, scanner UA)
+
+C. PROCESS CHAIN EVIDENCE
+   • Parent → Child process relationship
+   • Unexpected child processes from system services = high threat signal
+   • Expected child processes from admin tools = lower threat signal
+   • Process access (sysmon-eventid=10): grantedaccess=0x1FFFFF = full process rights
+   • Registry modification (sysmon-eventid=12/13): persistence or configuration changes
+
+D. TEMPORAL ANALYSIS
+   • Duration of offense activity
+   • Is activity concentrated (burst = automated attack) or spread (APT dwell)?
+   • Time-of-day: off-hours activity raises suspicion for user-attributed offenses
+
+E. SCOPE
+   • Single host vs. multiple hosts involved
+   • Single event vs. sustained campaign
+   • Isolated incident vs. part of coordinated attack pattern
+
+─────────────────────────────────────────────────────────────────────────────
+ROOT CAUSE DETERMINATIONS (select exactly one)
+─────────────────────────────────────────────────────────────────────────────
+
+  CONFIRMED COMPROMISE
+  → Active malicious activity proven by telemetry: exfiltration, backdoor
+    execution, credential theft, persistence mechanism installed.
+  → Requires direct evidence, not inference.
+
+  ATTACK ATTEMPT — ACTIVE
+  → Active exploit or attack traffic present in events. Malicious payloads
+    observed. Attack tool activity confirmed. Success status uncertain.
+
+  ATTACK ATTEMPT — FAILED
+  → Malicious attempt observed but blocked or contained. alert_status="alerted"
+    with no "passed" events. No successful execution evidence.
+
+  SUSPICIOUS — UNCONFIRMED
+  → A genuine anomaly is present in events but cannot be confirmed as malicious
+    OR benign. Use ONLY when you can describe the specific anomaly precisely.
+    Do NOT use simply because the event sample is small.
+
+  BENIGN — NORMAL BEHAVIOR
+  → Evidence shows activity with a plausible legitimate explanation, OR
+    no malicious indicators are present at all. Absence of malicious evidence
+    IS a valid finding. FAIL CLOSED: when in doubt, classify BENIGN.
+
+─────────────────────────────────────────────────────────────────────────────
+CLASSIFICATION MAPPING
+─────────────────────────────────────────────────────────────────────────────
+
+  CONFIRMED COMPROMISE           → True Positive
+  ATTACK ATTEMPT — ACTIVE        → True Positive
+  ATTACK ATTEMPT — FAILED        → True Positive (attack was real, just blocked)
+  SUSPICIOUS — UNCONFIRMED       → Benign Positive (insufficient evidence to act)
+  BENIGN — NORMAL BEHAVIOR       → Benign Positive

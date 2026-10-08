@@ -1,0 +1,55 @@
+# SOC — Approved Linux Log Rotation Paths
+# Used by Classification Module M6-TP-1 (Log Destruction).
+# Deletion or truncation of files matching these paths by a periodic process
+# is classified as BENIGN POSITIVE (normal log rotation), not log destruction.
+# THREE conditions must ALL hold for Benign: path matches here AND target is a
+# lock/rotated/temp artefact (*.lock, *.1, *.gz, *.tmp) AND fetch_host_baseline
+# returns is_periodic==true.
+# Seeded from Offense 177441 (Linux log rotation false positive).
+
+approved_rotation_paths:
+  # Standard Linux log rotation targets
+  - path: "/var/log/"
+    permitted_targets:
+      - "*.lock"
+      - "*.1"
+      - "*.2"
+      - "*.gz"
+      - "*.tmp"
+      - "*.old"
+    description: "Standard logrotate managed files — lock and rotated archives only"
+    note: "rm of active *.log files (e.g. /var/log/auth.log) is NOT benign here"
+
+  - path: "/var/log/pcp/"
+    permitted_targets:
+      - "pmie.log.lock"
+      - "*.lock"
+    description: "Performance Co-Pilot lock files — normal pmie rotation"
+    evidence_ref: "Offense 177441"
+
+  - path: "/var/log/audit/"
+    permitted_targets:
+      - "audit.log.*"
+      - "*.gz"
+    description: "auditd log rotation — only rotated archives, NOT audit.log itself"
+    note: "Deletion of /var/log/audit/audit.log itself is NEVER benign"
+
+  - path: "/tmp/"
+    permitted_targets:
+      - "*"
+    description: "Temp directory cleanup — always benign if is_periodic==true"
+
+  - path: "/var/tmp/"
+    permitted_targets:
+      - "*"
+    description: "Var temp cleanup — benign when periodic"
+
+
+
+# Paths that are NEVER benign to delete — immediate TRUE POSITIVE regardless of rotation
+never_benign:
+  - "/var/log/audit/audit.log"
+  - "/var/log/auth.log"
+  - "/var/log/secure"
+  - "/var/log/syslog"
+  - "/var/log/messages"

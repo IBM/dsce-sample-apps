@@ -1,0 +1,55 @@
+# SOC — Data Exfiltration Tool Names
+# Used by Classification Module M4 (Outbound Network).
+# Any process command line matching these names connecting to a PUBLIC IP triggers M4-TP.
+# Seeded from v3 spec and Offense 177254 (rclone connecting to 5 public IPs on port 7001).
+
+tools:
+  # Cloud sync / file transfer tools commonly abused for exfiltration
+  - name: "rclone"
+    notes: "Multi-cloud file sync — Offense 177254 confirmed True Positive"
+  - name: "megacmd"
+    notes: "MEGA cloud storage CLI"
+  - name: "mega.exe"
+    notes: "MEGA cloud storage desktop client"
+  - name: "MEGAcmdServer.exe"
+    notes: "MEGA cloud storage server process"
+
+  # Tunnelling / port forwarding tools
+  - name: "ngrok"
+    notes: "Reverse tunnel — commonly used to expose internal services externally"
+  - name: "plink"
+    notes: "PuTTY Link — SSH tunnelling"
+  - name: "psftp"
+    notes: "PuTTY SFTP client"
+  - name: "croc"
+    notes: "Peer-to-peer file transfer"
+  - name: "wormhole"
+    notes: "Peer-to-peer file transfer"
+  - name: "chisel"
+    notes: "Fast TCP/UDP tunnel over HTTP"
+  - name: "ligolo"
+    notes: "Tunnelling proxy for red teams"
+  - name: "frpc"
+    notes: "Fast reverse proxy client"
+
+  # FTP / SFTP clients (flag only when connecting to PUBLIC destinations)
+  - name: "filezilla"
+    notes: "Flag only when destination is public IP — internal SFTP is reviewed via allowlist.yaml"
+  - name: "winscp"
+    notes: "Flag only when destination is public IP — D:\\sendFileViGDCAS2viDVS\\WinScp is allowlisted for internal"
+
+  # Archive + upload patterns
+  - name: "7za.exe"
+    notes: "7-Zip standalone — suspicious only when combined with network upload"
+  - name: "robocopy"
+    notes: "Flag only when destination is a UNC path to external/unknown host"
+
+# Dangerous PowerShell patterns that indicate exfiltration (used in M2 and M4)
+powershell_exfil_patterns:
+  - "Invoke-WebRequest"
+  - "IWR"
+  - "Start-BitsTransfer"
+  - "Net.WebClient"
+  - "UploadFile"
+  - "UploadString"
+  - "UploadData"

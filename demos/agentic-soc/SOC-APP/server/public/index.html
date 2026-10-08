@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>watsonx Orchestrate Agent Stage Demo</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">IBM watsonx Orchestrate</p>
+      <h1>SOC agent stage walkthrough</h1>
+      <p class="subtitle">Run each stage agent individually, explain what it does, and show outputs, traces, and tool analytics for customer demos.</p>
+    </header>
+
+    <section class="panel controls-panel">
+      <div class="field-group">
+        <label for="globalPrompt">Scenario prompt</label>
+        <textarea id="globalPrompt" rows="5" placeholder="Example: Analyze QRadar offense 167657. Explain findings with enough detail for the next SOC stage."></textarea>
+      </div>
+      <div class="button-row">
+        <button id="runAllButton" class="primary">Run all stages</button>
+        <button id="clearButton" class="secondary">Clear saved browser data</button>
+      </div>
+      <p id="statusBanner" class="status-banner">Loading stage configuration…</p>
+    </section>
+
+    <main id="stageContainer" class="stage-grid"></main>
+  </div>
+
+  <template id="stageTemplate">
+    <section class="panel stage-card">
+      <div class="stage-header">
+        <div>
+          <p class="stage-kicker"></p>
+          <h2 class="stage-title"></h2>
+        </div>
+        <span class="stage-state">Idle</span>
+      </div>
+      <p class="agent-id"></p>
+      <p class="instruction"></p>
+      <label class="field-group">
+        <span>Stage-specific prompt</span>
+        <textarea class="stage-prompt" rows="4"></textarea>
+      </label>
+      <div class="button-row">
+        <button class="primary run-stage-button">Run stage</button>
+      </div>
+      <div class="meta-grid">
+        <div>
+          <span class="meta-label">Thread</span>
+          <p class="thread-id">—</p>
+        </div>
+        <div>
+          <span class="meta-label">Run</span>
+          <p class="run-id">—</p>
+        </div>
+      </div>
+      <div class="analytics-grid">
+        <div class="analytic-box">
+          <span class="meta-label">Status</span>
+          <p class="analytic-status">—</p>
+        </div>
+        <div class="analytic-box">
+          <span class="meta-label">Duration</span>
+          <p class="analytic-duration">—</p>
+        </div>
+        <div class="analytic-box">
+          <span class="meta-label">Tool calls</span>
+          <p class="analytic-tools">—</p>
+        </div>
+        <div class="analytic-box">
+          <span class="meta-label">Trace items</span>
+          <p class="analytic-traces">—</p>
+        </div>
+      </div>
+      <div>
+        <span class="meta-label">Agent output</span>
+        <pre class="output-panel"></pre>
+      </div>
+      <div>
+        <span class="meta-label">Trace payload</span>
+        <pre class="trace-panel"></pre>
+      </div>
+    </section>
+  </template>
+
+  <script src="/app.js"></script>
+</body>
+</html>

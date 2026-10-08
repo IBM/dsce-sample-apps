@@ -1,0 +1,14 @@
+spec_version: v1
+kind: connection
+app_id: soc-cos-data
+environments:
+  draft:
+    type: team
+    kind: key_value
+  live:
+    type: team
+    kind: key_value
+
+# IBM Cloud Object Storage connection for SOC PoC offense CSV data.
+# Credentials set via: orchestrate connections set-credentials -a soc-cos-data
+# Required keys: cos_api_key, cos_instance_crn, cos_endpoint, cos_bucket

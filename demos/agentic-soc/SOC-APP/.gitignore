@@ -1,0 +1,22 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / Next.js
+node_modules/
+.next/
+tsconfig.tsbuildinfo
+
+# Bob IDE
+/.bob/
+

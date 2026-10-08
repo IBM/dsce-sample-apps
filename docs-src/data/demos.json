@@ -45,15 +45,16 @@
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM QRadar"],
       "buildingBlocks": ["ai.agents", "automation.secure"],
       "skills": ["agent-builder"],
-      "codeRepo": "https://github.com/",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/agentic-soc",
       "specificationsRepo": "",
-      "specificationsFlow": "specs-flow-placeholder.png",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "agentic_soc.mp4" }],
       "screenshots": ["home_page.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
-      "architecture": "architecture-placeholder.png",
+      "architecture": "agentic_soc_architecture.png",
       "release_date": "2026-09-01",
-      "isLive": false
+      "isLive": true
     },
     {
       "name": "NexusIQ - Intelligent Operations Platform",
@@ -73,25 +74,9 @@
       "isLive": true
     },
     {
-      "name": "Counter-UAS in Modern Warfare",
-      "slug": "counter-uas-in-modern-warfare",
-      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Confluent"],
-      "buildingBlocks": ["ai.agents", "data.streamhouse"],
-      "skills": [],
-      "codeRepo": "https://github.com/",
-      "specificationsRepo": "",
-      "specificationsFlow": "",
-      "screenshots": ["home_page.png"],
-      "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
-      "shortDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
-      "architecture": "architecture-placeholder.png",
-      "release_date": "2026-09-01",
-      "isLive": false
-    },
-    {
       "name": "AI Secret Management and Modernization",
       "slug": "ai-secret-management-and-modernization",
-      "products": ["IBM Bob", "HashiCorp Vault Radar", "HashiCorp Vault"],
+      "products": ["HashiCorp Vault Radar", "HashiCorp Vault"],
       "buildingBlocks": ["automation.secure"],
       "skills": ["non-human-identity-vault"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/hcp-vault-radar-foundations",
@@ -280,7 +265,7 @@
      }
     ,
     {
-      "name": "Building Blocks Q&A Bot",
+      "name": "Building Blocks Q&A Using Headless IBM Bob",
       "slug": "headlessbob-building-blocks-qa-bot",
       "products": ["IBM Bob"],
       "buildingBlocks": ["ai.engineering"],
@@ -324,7 +309,7 @@
     {
       "name": "IBM Bob inside Slack",
       "slug": "ibm-bob-inside-slack",
-      "products": [],
+      "products": ["IBM Bob"],
       "buildingBlocks": ["ai.engineering"],
       "skills": ["headless-bob"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/bob-in-slack-salesforce",
@@ -402,7 +387,7 @@
       "architecture_description": "Instructor side: Docker Compose runs Milvus standalone (embedded etcd and local storage) and the documentation server. The documentation is shared on the local network, through GitHub Pages, or through ngrok. Participant side: the participant zip holds the Vector Search Builder mode rules (.bob) and the participant scripts. Participants open it in IBM Bob and select Vector Search Builder mode. Data flow: the scripts connect to Milvus with the MilvusClient API. The embedding model runs locally and turns product text into 384-dimensional vectors. insert_sample_data.py creates a collection (IVF_FLAT index, COSINE metric) and inserts 12 products. app.py (FastAPI) serves /search and the search screen on port 8002. No API keys: embeddings are generated locally with Hugging Face Transformers.",
       "extrasBoxUrl": "",
       "release_date": "2026-10-02",
-      "isLive": false
+      "isLive": true
     }
   ]
 }

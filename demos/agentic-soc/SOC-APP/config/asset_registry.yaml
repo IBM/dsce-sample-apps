@@ -1,0 +1,225 @@
+# SOC — Asset Registry
+# Used by: soc_lookup_asset (Triage rules T2b, TF; offense type resolution)
+#
+# Fields:
+#   ip              : IP address as seen in QRadar offenses
+#   hostname        : Sanitised hostname (replace with real values when customer provides CMDB)
+#   criticality     : crown_jewel | high | medium | low   ← DUMMY — overwrite with real CMDB data
+#   is_internet_facing: true | false                      ← Derived from IP range (203.x = public)
+#   os_family       : windows | linux | network | other | unknown  ← Derived from offense rule names
+#   environment     : production | staging | dev | unknown ← DUMMY — overwrite with real CMDB data
+#   service_name    : Primary service hosted              ← Partial — derived from offense context
+#   owner           : Asset owner team                    ← DUMMY — overwrite with real CMDB data
+#
+# DUMMY fields are marked with "# DUMMY" — replace with real values from CMDB.
+# Fields derived from offense/event data are marked with "# DERIVED".
+# Fields that need review are marked with "# NEEDS_REVIEW".
+#
+# Evidence sources: 25-offense PoC validation set (sanitised IPs only).
+# Replace sanitised IPs (10.0.0.x, 203.0.0.x) with real IPs when customer provides CMDB export.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RFC1918 internal hosts (10.0.0.x range)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- ip: "10.0.0.1"
+  hostname: "HOST_SANITISED_0001"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — DEF-0001-Thread Creation (Sysmon/Windows channel)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 141835"
+
+- ip: "10.0.0.4"
+  hostname: "HOST_SANITISED_0004"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — DEF-0001-Thread Creation (Sysmon EventID 8)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 156271"
+
+- ip: "10.0.0.5"
+  hostname: "HOST_SANITISED_0005"
+  criticality: "high"             # DUMMY — web server targeted by exploit
+  is_internet_facing: false       # DERIVED — RFC1918 target
+  os_family: "windows"            # DERIVED — IIS/w3wp context in offense 167644
+  environment: "production"       # DUMMY
+  service_name: "web_application" # DERIVED — target of INT: Web Exploit Detection
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 167644"
+
+- ip: "10.0.0.6"
+  hostname: "HOST_SANITISED_0006"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "unknown"            # NEEDS_REVIEW
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 167644"
+
+- ip: "10.0.0.11"
+  hostname: "HOST_SANITISED_0011"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — Application Shimming (Sysmon EventID 11)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 167679"
+
+- ip: "10.0.0.16"
+  hostname: "HOST_SANITISED_0016"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — EXE: Detect service create (EventID 7045)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 173500"
+  note: "TRUE POSITIVE offense — malicious service install C:\\Windows\\Temp\\vmware-vmsvc-SYSTEM2.log"
+
+- ip: "10.0.0.18"
+  hostname: "HOST_SANITISED_0018"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — Sysmon EventID 3 (network connection)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177254"
+  note: "Source of rclone exfil to 5 public IPs on port 7001"
+
+- ip: "10.0.0.19"
+  hostname: "HOST_SANITISED_0019"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "linux"              # DERIVED — DEF: Detect Clear Log on Linux Host (auditd)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177441"
+
+- ip: "10.0.0.20"
+  hostname: "HOST_SANITISED_0020"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "linux"              # DERIVED — IMP: Detect System Shutdown or Reboot on Linux
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177498"
+
+- ip: "10.0.0.24"
+  hostname: "HOST_SANITISED_0024"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — EXE: Detect service create (EventID 4697)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 178147"
+  note: "Benign — Windows per-user svchost services (UnistoreSvc, OneSyncSvc)"
+
+- ip: "10.0.0.25"
+  hostname: "HOST_SANITISED_0025"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "windows"            # DERIVED — EXE: Detect service create (EventID 7045)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 178224"
+  note: "Benign — Kaspersky KES driver installation"
+
+- ip: "10.0.0.27"
+  hostname: "HOST_SANITISED_0027"
+  criticality: "high"             # DUMMY — web/app server (w3wp.exe)
+  is_internet_facing: false       # DERIVED — RFC1918 but hosts web application
+  os_family: "windows"            # DERIVED — w3wp.exe process create events
+  environment: "production"       # DUMMY
+  service_name: "web_application" # DERIVED — Suspicious command execute from w3wp.exe
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 179423"
+
+- ip: "10.0.0.29"
+  hostname: "HOST_SANITISED_0029"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: false       # DERIVED — RFC1918
+  os_family: "linux"              # DERIVED — Detect command line change password (auditd)
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 180074"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Public / internet-facing hosts (203.0.0.x range)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- ip: "203.0.0.2"
+  hostname: "HOST_SANITISED_PUBLIC_0002"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: true        # DERIVED — public IP range
+  os_family: "unknown"            # NEEDS_REVIEW
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 167657 (attacker)"
+  note: "External attacker IP — not a asset. Kept for completeness."
+
+- ip: "203.0.0.4"
+  hostname: "HOST_SANITISED_PUBLIC_0004"
+  criticality: "high"             # DUMMY — public-facing web server
+  is_internet_facing: true        # DERIVED — public IP range
+  os_family: "windows"            # DERIVED — IIS/WAF log source (F5 ASM style)
+  environment: "production"       # DUMMY
+  service_name: "web_application" # DERIVED — target of INT: Web Exploit Detection
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 167657 (target)"
+
+- ip: "203.0.0.13"
+  hostname: "HOST_SANITISED_PUBLIC_0013"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: true        # DERIVED — public IP
+  os_family: "unknown"            # NEEDS_REVIEW
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177254 (destination — rclone target)"
+  note: "One of 5 public IPs receiving rclone exfil traffic on port 7001"
+
+- ip: "203.0.0.19"
+  hostname: "ctt-nginx"
+  criticality: "high"             # DUMMY — public-facing nginx reverse proxy
+  is_internet_facing: true        # DERIVED — public IP, nginx server
+  os_family: "linux"              # DERIVED — nginx LEEF log source
+  environment: "production"       # DUMMY
+  service_name: "nginx_reverse_proxy" # DERIVED — offense 177507 LEEF log source
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177507"
+  note: "PROXY — srcIp==destIp==203.0.0.19. Real attacker is in src= LEEF field. Listed in proxy_and_lb.yaml."
+
+- ip: "203.0.0.25"
+  hostname: "HOST_SANITISED_PUBLIC_0025"
+  criticality: "medium"           # DUMMY
+  is_internet_facing: true        # DERIVED — public IP
+  os_family: "unknown"            # NEEDS_REVIEW
+  environment: "production"       # DUMMY
+  service_name: "unknown"         # NEEDS_REVIEW
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177940 (attacker — brute force source)"
+
+- ip: "203.0.0.26"
+  hostname: "HOST_SANITISED_PUBLIC_0026"
+  criticality: "high"             # DUMMY — MSSQL server targeted by brute force
+  is_internet_facing: true        # DERIVED — public IP
+  os_family: "windows"            # DERIVED — MSSQL 18456 auth failure events
+  environment: "production"       # DUMMY
+  service_name: "mssql"           # DERIVED — Windows: detect bruteforce login (MSSQL 18456)
+  owner: "unknown"                # DUMMY
+  evidence_ref: "Offense 177940 (target)"
+  note: "MSSQL server targeted by brute force. Privileged accounts (sa) targeted."

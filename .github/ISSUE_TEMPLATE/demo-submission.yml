@@ -197,6 +197,16 @@ body:
     validations:
       required: true
 
+# ── Security ────────────────────────────────────────────────
+  - type: checkboxes
+    id: response
+    attributes:
+      label: Perform code review prior to submission using this [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml)
+      options:
+        - label: IBM CIO now scans all repos in ibm.github.com, so I have used the [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml) to ensure known security alerts have been resovled in my repo.
+    validations:
+      required: true
+
   # ── Privacy ────────────────────────────────────────────────
   - type: checkboxes
     id: response

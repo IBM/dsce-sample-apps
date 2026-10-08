@@ -1,0 +1,213 @@
+# SOC — Approved Process Chain & Path Allowlist
+# Schema: id, description, match (key/value patterns), host_scope, approved_by, approved_date, review_due, evidence_ref
+# Match patterns support substring matching. Use * for wildcard in host_scope.
+# IMPORTANT: approved_by and review_due must be filled in by a analyst before production use.
+# Entries marked NEEDS_REVIEW require analyst sign-off.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M7 ENDPOINT — Shimming & Pipe events
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-001
+  description: "Windows shim installation by PcaSvc — normal OS compatibility database maintenance"
+  match:
+    parent_process: "svchost.exe*PcaSvc"
+    child_process: "sdbinst.exe"
+    file_path: "C:\\Windows\\apppatch\\MergeSdbFiles\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 167679"
+
+- id: BENIGN-002
+  description: "Veeam Availability Console agent pipe creation — normal backup agent IPC"
+  match:
+    process: "Veeam.AC.Agent.exe"
+    process_path: "C:\\Program Files\\Veeam\\Availability Console\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 167659"
+
+- id: BENIGN-003
+  description: "wsmprovhost.exe creating PSScriptPolicyTest temp file — normal WinRM/PowerShell startup"
+  match:
+    process: "wsmprovhost.exe"
+    file_path: "AppData\\Local\\Temp\\__PSScriptPolicyTest_"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 167666"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M7 ENDPOINT — CreateRemoteThread (EventID 8)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-004
+  description: "MobaXterm CreateRemoteThread — normal SSH/SCP client thread injection for terminal emulation"
+  match:
+    source_process: "MobaXterm.exe"
+    source_path: "C:\\Program Files (x86)\\Mobatek\\MobaXterm\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 156271"
+
+- id: BENIGN-005
+  description: "GTBRMAgent CreateRemoteThread into GTBInjector32 — DLP agent normal operation"
+  match:
+    source_process: "GTBRMAgent.exe"
+    target_process: "GTBInjector32.exe"
+    source_path: "C:\\Windows\\SysWOW64\\epa\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 156271"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M7 ENDPOINT — ProcessAccess (EventID 10) / Privileged Object (4674)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-006
+  description: "WmiPrvSE.exe EventID 4674 privileged object access — normal WMI service operation"
+  match:
+    process: "WmiPrvSE.exe"
+    process_path: "C:\\Windows\\System32\\wbem\\WmiPrvSE.exe"
+    event_id: "4674"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 141835"
+
+- id: BENIGN-007
+  description: "ServerManager.exe ProcessAccess to Configure-SMRemoting.exe — normal Server Manager remote management config"
+  match:
+    source_process: "ServerManager.exe"
+    target_process: "Configure-SMRemoting.exe"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 167683"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M2 PROCESS — Web server benign child processes
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-008
+  description: "w3wp.exe spawning w3wp.exe — IIS application pool start/recycle, normal behaviour"
+  match:
+    parent_process: "w3wp.exe"
+    child_process: "w3wp.exe"
+    child_path: "C:\\Windows\\System32\\inetsrv\\w3wp.exe"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 173398"
+
+- id: BENIGN-009
+  description: "w3wp.exe spawning wermgr.exe -outproc — Windows Error Reporting, normal IIS crash reporting"
+  match:
+    parent_process: "w3wp.exe"
+    child_process: "wermgr.exe"
+    child_args: "-outproc"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 177876"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M2 PROCESS — Scheduled task / svchost benign child processes
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-010
+  description: "svchost.exe Schedule -> rundll32.exe PcaSvc.dll,PcaPatchSdbTask — normal OS scheduled shimming task"
+  match:
+    parent_process: "svchost.exe"
+    parent_args: "-k netsvcs -p -s Schedule"
+    child_process: "rundll32.exe"
+    child_args: "PcaSvc.dll,PcaPatchSdbTask"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 178229"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M2 PROCESS — Approved corporate PowerShell scripts
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-011
+  description: "sendFileVi2SftpDVS.ps1 — approved scheduled task transferring CAS data via SFTP to internal destination"
+  match:
+    script_path: "D:\\sendFileViGDCAS2viDVS\\sendFileVi2SftpDVS.ps1"
+    process: "powershell.exe"
+    args: "-ExecutionPolicy Bypass"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 168281"
+  note: "Script must only connect to internal (RFC1918) SFTP destinations. Review if destination changes."
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M3 SERVICE — Approved service installations
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-012
+  description: "Kaspersky KES driver installation — approved security product service"
+  match:
+    service_name: "klids"
+    service_path: "C:\\ProgramData\\Kaspersky Lab\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 178224"
+
+- id: BENIGN-013
+  description: "Kaspersky NDIS filter driver — approved security product kernel driver"
+  match:
+    service_name: "Kaspersky Anti-Virus NDIS"
+    service_path: "\\SystemRoot\\system32\\DRIVERS\\klim6.sys"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 178224"
+
+- id: BENIGN-014
+  description: "Windows UnistoreSvc / OneSyncSvc / UserDataSvc per-user instances — normal Windows user data sync services"
+  match:
+    service_name: "UnistoreSvc_"
+    service_path: "C:\\Windows\\System32\\svchost.exe"
+    service_args: "-k UnistackSvcGroup"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 178147"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# M4 NETWORK — Approved outbound connections
+# ─────────────────────────────────────────────────────────────────────────────
+
+- id: BENIGN-015
+  description: "WinSCP SFTP transfers from sendFileVi2SftpDVS corporate workflow to internal destination"
+  match:
+    process: "WinSCP.exe"
+    process_path: "D:\\sendFileViGDCAS2viDVS\\WinScp\\"
+  host_scope: ["*"]
+  approved_by: "NEEDS_REVIEW"
+  approved_date: "2026-08-07"
+  review_due: "2027-02-07"
+  evidence_ref: "Offense 168281"
+  note: "Only benign when destination is internal RFC1918. Flag if destination changes to public IP."

@@ -1,0 +1,36 @@
+# SOC — Reverse Proxy and Load Balancer IP Addresses
+# Used by Classification Normalisation N1 (real source IP resolution).
+# If offense-level srcIp matches any entry here, it is the proxy/LB — NOT the real attacker.
+# Parse rawEvent for 'src=', 'http_x_forwarded_for=' or 'http_true_client_ip=' to find real_source_ip.
+# IMPORTANT: This list must be kept current — contact network team when infrastructure changes.
+# Seeded from Offense 177507 (203.0.0.19 NGINX server where srcIp==destIp).
+
+proxies:
+  - ip: "203.0.0.19"
+    hostname: "ctt-nginx"
+    type: "nginx_reverse_proxy"
+    sites:
+      - "soxaydung.hungyen.gov.vn"
+      - "soyte.hungyen.gov.vn"
+    notes: "Confirmed from Offense 177507 — srcIp and destIp both 203.0.0.19. Real attacker in src= LEEF field."
+    evidence_ref: "Offense 177507"
+    added_by: "NEEDS_REVIEW"
+    added_date: "2026-08-07"
+
+load_balancers:
+  # NEEDS_REVIEW — populate with F5/HAProxy/nginx LB IPs
+  # Example schema:
+  # - ip: "x.x.x.x"
+  #   hostname: "lb-prod-01"
+  #   type: "f5_big_ip"
+  #   added_by: "<analyst>"
+  #   added_date: "YYYY-MM-DD"
+
+waf_devices:
+  # NEEDS_REVIEW — populate with WAF device IPs
+  # F5 ASM devices that appear as srcIp in web events
+  # Example:
+  # - ip: "x.x.x.x"
+  #   type: "f5_asm"
+  #   added_by: "<analyst>"
+  #   added_date: "YYYY-MM-DD"

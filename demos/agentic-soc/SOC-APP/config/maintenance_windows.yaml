@@ -1,0 +1,15 @@
+# SOC — Approved Maintenance Windows
+# Used by Classification Module M6-TP-2 (system shutdown/reboot) and M6-TP-3 (credential change).
+# If check_maintenance_window(hostname, timestamp).in_window==true AND the invoking account
+# is an approved operator, the event is classified BENIGN POSITIVE.
+# IMPORTANT: This file contains NO entries — it MUST be populated before production use.
+# Each window requires: id, description, host_scope, start (ISO 8601), end (ISO 8601),
+# approved_by, approved_date, review_due.
+# Schema example provided below.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Active maintenance windows — NEEDS_REVIEW (all entries)
+# ─────────────────────────────────────────────────────────────────────────────
+
+windows: []
+
