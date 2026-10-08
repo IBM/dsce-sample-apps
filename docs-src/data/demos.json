@@ -396,7 +396,7 @@
       "products": ["IBM Apptio", "IBM Turbonomic"],
       "buildingBlocks": ["automation.optimize"],
       "skills": ["automated-resource-mgmt-turbonomic"],
-      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/finops-intelligence/demos/finOps-intelligence",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/finOps-intelligence",
       "workingDemoURL": "https://finops-intelligence.2flkoh5jv8wq.us-south.codeengine.appdomain.cloud/",
       "architecture": "architecture.png",
       "specificationsRepo": "",
