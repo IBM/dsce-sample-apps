@@ -204,7 +204,7 @@ function requestJson(options, body) {
     path: options.path,
     method: options.method,
     payloadSize: body ? Buffer.byteLength(body) : 0,
-    payload: parsedBody
+    payloadRedacted: Boolean(body)
   });
   
   return new Promise((resolve, reject) => {
