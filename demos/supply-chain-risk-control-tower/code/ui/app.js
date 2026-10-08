@@ -433,6 +433,16 @@ function setKPI(id, val) {
 
 // ── Event Stream Log ─────────────────────────────────────────────────────────
 
+// Escape special HTML characters to prevent XSS when interpolating into innerHTML.
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function logEvent(topic, key, event) {
   const feed = $('stream-input');
   if (!feed) return;
@@ -444,7 +454,7 @@ function logEvent(topic, key, event) {
 
   const entry = document.createElement('div');
   entry.className = `stream-entry ${sClass}`;
-  entry.innerHTML = `<span class="st-time">${time}</span><span class="st-topic">${topic}</span><span class="st-key">${key}</span><span class="st-val">${summariseEvent(event)}</span>`;
+  entry.innerHTML = `<span class="st-time">${escapeHtml(time)}</span><span class="st-topic">${escapeHtml(topic)}</span><span class="st-key">${escapeHtml(key)}</span><span class="st-val">${escapeHtml(summariseEvent(event))}</span>`;
   feed.appendChild(entry);
   if (feed.children.length > 200) feed.removeChild(feed.firstChild);
   feed.scrollTop = feed.scrollHeight;
@@ -461,7 +471,7 @@ function logOutput(risk, rec) {
   ['supply_chain_risk_scores', 'control_tower_alerts'].forEach(t => {
     const entry = document.createElement('div');
     entry.className = `stream-entry ${sClass}`;
-    entry.innerHTML = `<span class="st-time">${time}</span><span class="st-topic">${t}</span><span class="st-key">${risk.risk_id}</span><span class="st-val">${risk.risk_band} score=${risk.risk_score} dos=${risk.days_of_supply}</span>`;
+    entry.innerHTML = `<span class="st-time">${escapeHtml(time)}</span><span class="st-topic">${escapeHtml(t)}</span><span class="st-key">${escapeHtml(risk.risk_id)}</span><span class="st-val">${escapeHtml(risk.risk_band)} score=${escapeHtml(String(risk.risk_score))} dos=${escapeHtml(String(risk.days_of_supply))}</span>`;
     feed.appendChild(entry);
   });
   if (feed.children.length > 200) feed.removeChild(feed.firstChild);
@@ -731,7 +741,7 @@ function showToast(title, msg, type = 'info') {
   const container = $('toast-container');
   const el = document.createElement('div');
   el.className = `toast toast-${type}`;
-  el.innerHTML = `<div class="toast-icon">${iconMap[type] || iconMap.info}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  el.innerHTML = `<div class="toast-icon">${iconMap[type] || iconMap.info}</div><div class="toast-body"><div class="toast-title">${escapeHtml(title)}</div><div class="toast-msg">${escapeHtml(msg)}</div></div>`;
   container.appendChild(el);
   setTimeout(() => { el.style.opacity = '0'; el.style.transform = 'translateX(16px)'; el.style.transition = '.2s'; setTimeout(() => el.remove(), 200); }, 4000);
 }

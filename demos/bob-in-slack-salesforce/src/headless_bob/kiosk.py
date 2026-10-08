@@ -38,6 +38,9 @@ KIOSK_HTML = """<!doctype html>
   </div>
 </main>
 <script>
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
 async function submitCase() {
   const go = document.getElementById('go'); const err = document.getElementById('err');
   go.disabled = true; err.textContent = '';
@@ -46,7 +49,7 @@ async function submitCase() {
       body: JSON.stringify({issue: document.getElementById('issue').value})});
     if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
     const data = await res.json();
-    document.getElementById('caseinfo').innerHTML = 'Case <code>' + data.caseNumber + '</code> · channel <code>#' + data.channel + '</code>';
+    document.getElementById('caseinfo').innerHTML = 'Case <code>' + escHtml(data.caseNumber) + '</code> · channel <code>#' + escHtml(data.channel) + '</code>';
     const cur = await (await fetch('/demo/current')).json();
     const link = document.getElementById('slacklink');
     if (cur.url) { link.href = cur.url; } else { link.textContent = 'Open Slack and find #' + data.channel; link.removeAttribute('href'); }

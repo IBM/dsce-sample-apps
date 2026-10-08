@@ -93,15 +93,15 @@ function applyTruckFilter() {
             const mapTitle = document.getElementById('mapTitle');
             if (mapTitle) {
                 const statusIcon = getStatusIcon(truck.status);
-                mapTitle.innerHTML = `${statusIcon} ${truck.truckId} - Live Tracking (${truck.origin} → ${truck.destination})`;
+                mapTitle.innerHTML = `${statusIcon} ${escapeHtml(truck.truckId)} - Live Tracking (${escapeHtml(truck.origin)} → ${escapeHtml(truck.destination)})`;
                 console.log('Map title updated:', mapTitle.innerHTML);
             }
-            
+
             // Update fleet title
             const fleetTitle = document.getElementById('fleetTitle');
             if (fleetTitle) {
                 const statusIcon = getStatusIcon(truck.status);
-                fleetTitle.innerHTML = `${statusIcon} ${truck.truckId} Status`;
+                fleetTitle.innerHTML = `${statusIcon} ${escapeHtml(truck.truckId)} Status`;
                 console.log('Fleet title updated:', fleetTitle.innerHTML);
             }
         }
@@ -356,29 +356,29 @@ function renderMockAlerts(alerts) {
         const severityColor = 'var(--cds-support-error)'; // CRITICAL
         const severityIcon = '🔴';
         const createDate = new Date(alert.created).toLocaleString();
-        
+
         return `
-            <div id="mock-alert-${alert.id}" style="margin-bottom: var(--cds-spacing-05); padding: var(--cds-spacing-05); background: var(--cds-layer-02); border-left: 3px solid ${severityColor};">
+            <div id="mock-alert-${escapeHtml(alert.id)}" style="margin-bottom: var(--cds-spacing-05); padding: var(--cds-spacing-05); background: var(--cds-layer-02); border-left: 3px solid ${severityColor};">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
                     <div style="font-weight: 600; color: var(--cds-text-primary);">
-                        ${severityIcon} ${alert.type}
+                        ${severityIcon} ${escapeHtml(alert.type)}
                     </div>
                     <div style="font-size: 0.75rem; color: ${severityColor}; font-weight: 600;">
                         CRITICAL
                     </div>
                 </div>
                 <div style="font-size: 0.875rem; color: var(--cds-text-secondary); margin-bottom: 0.5rem;">
-                    ${alert.description}
+                    ${escapeHtml(alert.description)}
                 </div>
                 <div style="font-size: 0.75rem; color: var(--cds-text-placeholder); margin-bottom: 0.5rem;">
-                    <strong>Target:</strong> ${alert.target}<br>
-                    <strong>CPU Change:</strong> ${alert.details.cpuChange} | <strong>Memory Change:</strong> ${alert.details.memoryChange}
+                    <strong>Target:</strong> ${escapeHtml(alert.target)}<br>
+                    <strong>CPU Change:</strong> ${escapeHtml(alert.details.cpuChange)} | <strong>Memory Change:</strong> ${escapeHtml(alert.details.memoryChange)}
                 </div>
                 <div style="font-size: 0.75rem; color: var(--cds-text-placeholder); margin-bottom: var(--cds-spacing-03);">
-                    <strong>Recommendation:</strong> ${alert.recommendation} | <strong>Created:</strong> ${createDate}
+                    <strong>Recommendation:</strong> ${escapeHtml(alert.recommendation)} | <strong>Created:</strong> ${escapeHtml(createDate)}
                 </div>
-                <div id="mock-alert-buttons-${alert.id}" style="display: flex; gap: 0.5rem;">
-                    <button onclick='executeMockAlert("${alert.id}")' style="
+                <div id="mock-alert-buttons-${escapeHtml(alert.id)}" style="display: flex; gap: 0.5rem;">
+                    <button onclick='executeMockAlert("${escapeHtml(alert.id)}")' style="
                         background: var(--cds-interactive);
                         color: var(--cds-text-on-color);
                         border: none;
@@ -391,7 +391,7 @@ function renderMockAlerts(alerts) {
                     " onmouseover="this.style.background='var(--cds-interactive-hover)'" onmouseout="this.style.background='var(--cds-interactive)'">
                         ✓ Execute Action
                     </button>
-                    <button onclick="dismissMockAlert('${alert.id}')" style="
+                    <button onclick="dismissMockAlert('${escapeHtml(alert.id)}')" style="
                         background: var(--cds-layer-03);
                         color: var(--cds-text-secondary);
                         border: 1px solid var(--cds-border-subtle);
@@ -1172,25 +1172,26 @@ async function fetchData() {
                     : alert.status === 'acknowledged'
                     ? '<span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7em; margin-left: 8px;">⚠ Ack</span>'
                     : '';
-                
+
+                const safeSeverity = escapeHtml(alert.severity);
                 const cardClass = alert.status === 'resolved'
                     ? 'alert-card'
-                    : `alert-card alert-${alert.severity}`;
-                
+                    : `alert-card alert-${safeSeverity}`;
+
                 const cardStyle = alert.status === 'resolved'
                     ? 'opacity: 0.6; border-color: #94a3b8; background: #f1f5f9;'
                     : '';
-                
+
                 return `
                     <div class="${cardClass}" style="${cardStyle}">
                         <div class="alert-header">
-                            <span class="alert-severity">${alert.severity}${statusBadge}</span>
-                            <span class="alert-time">${new Date(alert.createdAt).toLocaleTimeString()}</span>
+                            <span class="alert-severity">${safeSeverity}${statusBadge}</span>
+                            <span class="alert-time">${escapeHtml(new Date(alert.createdAt).toLocaleTimeString())}</span>
                         </div>
                         <div class="alert-message">
-                            <strong>${alert.truckId}</strong>: ${alert.message}
+                            <strong>${escapeHtml(alert.truckId)}</strong>: ${escapeHtml(alert.message)}
                         </div>
-                        ${alert.resolvedAt ? `<div style="font-size: 0.75em; color: #666; margin-top: 4px;">Resolved: ${new Date(alert.resolvedAt).toLocaleTimeString()} by ${alert.resolvedBy}</div>` : ''}
+                        ${alert.resolvedAt ? `<div style="font-size: 0.75em; color: #666; margin-top: 4px;">Resolved: ${escapeHtml(new Date(alert.resolvedAt).toLocaleTimeString())} by ${escapeHtml(alert.resolvedBy)}</div>` : ''}
                     </div>
                 `;
             }).join('');
