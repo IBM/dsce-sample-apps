@@ -80,7 +80,7 @@ def main() -> int:
     print(f"  host        : {HOST or '(not set)'}")
     print(f"  port        : {PORT}")
     print(f"  presto user : {PRESTO_USER or '(not set)'}")
-    print(f"  api key     : {(API_KEY[:8] + '...') if API_KEY and not API_KEY.startswith('<') else 'NOT SET'}")
+    print(f"  api key     : {'set ✓' if API_KEY and not API_KEY.startswith('<') else 'NOT SET'}")
     print(f"  catalog     : {CATALOG or '(not set)'}")
     print(f"  schema      : {SCHEMA or '(not set)'}")
     print("─────────────────────────────────────────────────────────────────\n")

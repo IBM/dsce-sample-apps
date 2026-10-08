@@ -1,11 +1,14 @@
+import copy
+from datetime import datetime, timezone
+import logging
+import os
+import random
+import secrets
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from datetime import datetime, timezone
-import os
-import random
-import copy
-import secrets
+
+logger = logging.getLogger(__name__)
 
 from models import (
     Incident, AnalysisResult, AnalyzeRequest,
@@ -124,8 +127,11 @@ async def analyze_incident(request: AnalyzeRequest):
         return result
     except ImportError:
         raise HTTPException(status_code=501, detail="Agent client not yet configured")
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"Agent invocation failed: {str(e)}")
+        logger.exception("Agent invocation failed: %s", e)
+        raise HTTPException(status_code=502, detail="Agent invocation failed")
 
 
 @app.post("/api/incidents/reset", response_model=ResetResponse)
@@ -226,5 +232,8 @@ async def chat_with_incident(incident_id: str, request: ChatRequest):
         return ChatResponse(reply=reply)
     except ImportError:
         raise HTTPException(status_code=501, detail="Agent client not yet configured")
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"Chat invocation failed: {str(e)}")
+        logger.exception("Chat invocation failed: %s", e)
+        raise HTTPException(status_code=502, detail="Chat invocation failed")

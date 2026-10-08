@@ -55,10 +55,12 @@ async def execute_agent_workflow(
         )
     except ValueError as e:
         logger.error(f"ValueError in execute_agent_workflow: {e}")
-        raise HTTPException(status_code=404, detail=str(e))
+        raise HTTPException(status_code=404, detail="Truck not found or invalid request.")
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Exception in execute_agent_workflow: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to start agent workflow: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to start agent workflow.")
 
 
 @router.get("/status/{execution_id}", response_model=AgentExecution)
