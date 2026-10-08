@@ -58,11 +58,18 @@ router.post('/login', async (req, res) => {
         username: user.username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' },
+      { expiresIn: '24h', algorithm: 'HS256' },
     );
 
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000, // 24 h
+    });
+
     const { password_hash, ...safeUser } = user;
-    return res.json({ token, user: safeUser });
+    return res.json({ user: safeUser });
   } catch (error) {
     return res.status(500).json({ error: 'Failed to log in' });
   }
@@ -75,13 +82,16 @@ router.get('/random-user', async (_req, res) => {
     );
     const user = result.rows[0];
     if (!user) return res.status(404).json({ error: 'No users found' });
-    return res.json({ email: user.email, password: process.env.USER_PASSWORD });
+    // Return only the email; the frontend fills the password field via a
+    // separate demo hint rather than receiving it from the server.
+    return res.json({ email: user.email });
   } catch {
     return res.status(500).json({ error: 'Failed to fetch random user' });
   }
 });
 
 router.post('/logout', (_req, res) => {
+  res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
   res.json({ message: 'Logged out' });
 });
 

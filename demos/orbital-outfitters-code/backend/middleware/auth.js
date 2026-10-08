@@ -1,16 +1,17 @@
 import jwt from 'jsonwebtoken';
 
 export default function requireAuth(req, res, next) {
+  // Prefer httpOnly cookie; fall back to Authorization header for API/agent clients.
+  const cookieToken = req.cookies?.token;
   const header = req.headers.authorization;
+  const token = cookieToken || (header?.startsWith('Bearer ') ? header.slice(7) : null);
 
-  if (!header || !header.startsWith('Bearer ')) {
+  if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }
 
-  const token = header.slice(7);
-
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
     req.user = decoded;
     next();
   } catch {

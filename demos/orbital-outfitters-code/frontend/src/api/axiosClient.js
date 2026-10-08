@@ -1,15 +1,9 @@
 import axios from 'axios';
 
+// withCredentials ensures the httpOnly auth cookie is sent on every request.
 const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL : '/api',
-});
-
-axiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  withCredentials: true,
 });
 
 export default axiosClient;

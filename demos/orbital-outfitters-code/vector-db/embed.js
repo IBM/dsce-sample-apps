@@ -18,7 +18,11 @@ const DB_NAME     = process.env.DB_NAME;
 const DB_USER     = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_SSL      = process.env.DB_SSL === 'true';
-const DB_SCHEMA   = process.env.DB_SCHEMA;
+const rawSchema   = process.env.DB_SCHEMA ?? 'public';
+if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(rawSchema)) {
+  throw new Error(`DB_SCHEMA contains invalid characters: "${rawSchema}"`);
+}
+const DB_SCHEMA = rawSchema;
 
 // ── Postgres ──────────────────────────────────────────────────────────────────
 const { Client: PgClient } = pg;
@@ -29,7 +33,7 @@ const db = new PgClient({
   database: DB_NAME,
   user:     DB_USER,
   password: DB_PASSWORD,
-  ssl:      DB_SSL ? { rejectUnauthorized: false } : false,
+  ssl:      DB_SSL ? { rejectUnauthorized: true } : false,
 });
 
 await db.connect();
