@@ -19,7 +19,7 @@ export default function LoginModal({ onClose, message }) {
     setLoading(true);
     try {
       const res = await axiosClient.post('/auth/login', { login: email, password });
-      login(res.data.user);
+      login(res.data.token, res.data.user);
       await refreshCartCount();
       onClose();
     } catch (err) {

@@ -1,27 +1,36 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// The JWT is stored in an httpOnly cookie set by the backend — it is not
-// accessible from JavaScript. This context only tracks the user profile
-// object (non-sensitive) in memory so components can show the username etc.
-
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
 
-  const isLoggedIn = Boolean(user);
+  const isLoggedIn = Boolean(token && user);
 
-  function login(newUser) {
-    // The backend sets the httpOnly cookie; we only keep the user profile in memory.
+  function login(newToken, newUser) {
+    setToken(newToken);
     setUser(newUser);
+    if (newToken) localStorage.setItem('token', newToken);
+    if (newUser) localStorage.setItem('user', JSON.stringify(newUser));
   }
 
   function logout() {
+    setToken(null);
     setUser(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

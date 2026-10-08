@@ -61,15 +61,8 @@ router.post('/login', async (req, res) => {
       { expiresIn: '24h', algorithm: 'HS256' },
     );
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000, // 24 h
-    });
-
     const { password_hash, ...safeUser } = user;
-    return res.json({ user: safeUser });
+    return res.json({ token, user: safeUser });
   } catch (error) {
     return res.status(500).json({ error: 'Failed to log in' });
   }
@@ -91,7 +84,6 @@ router.get('/random-user', async (_req, res) => {
 });
 
 router.post('/logout', (_req, res) => {
-  res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
   res.json({ message: 'Logged out' });
 });
 

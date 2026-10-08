@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
@@ -27,7 +26,6 @@ app.use(cors({
   },
   credentials: true,
 }));
-app.use(cookieParser());
 app.use(express.json());
 
 app.use('/auth', authRoutes);
