@@ -8,19 +8,47 @@ const helmet = require('helmet');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 // Simple logger utility
+const SENSITIVE_LOG_KEYS = new Set([
+  'apikey', 'api_key', 'api-key',
+  'token', 'access_token', 'refresh_token',
+  'authorization', 'password', 'secret'
+]);
+
+function sanitizeForLogging(value, seen = new WeakSet()) {
+  if (value === null || value === undefined) return value;
+  if (typeof value !== 'object') return value;
+
+  if (seen.has(value)) return '[Circular]';
+  seen.add(value);
+
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitizeForLogging(item, seen));
+  }
+
+  const sanitized = {};
+  Object.keys(value).forEach((key) => {
+    if (SENSITIVE_LOG_KEYS.has(String(key).toLowerCase())) {
+      sanitized[key] = '[REDACTED]';
+    } else {
+      sanitized[key] = sanitizeForLogging(value[key], seen);
+    }
+  });
+  return sanitized;
+}
+
 const logger = {
   info: (message, data = {}) => {
-    console.log('[%s] INFO: %s', new Date().toISOString(), message, data);
+    console.log('[%s] INFO: %s', new Date().toISOString(), message, sanitizeForLogging(data));
   },
   error: (message, error = {}) => {
-    console.error('[%s] ERROR: %s', new Date().toISOString(), message, error);
+    console.error('[%s] ERROR: %s', new Date().toISOString(), message, sanitizeForLogging(error));
   },
   warn: (message, data = {}) => {
-    console.warn('[%s] WARN: %s', new Date().toISOString(), message, data);
+    console.warn('[%s] WARN: %s', new Date().toISOString(), message, sanitizeForLogging(data));
   },
   debug: (message, data = {}) => {
     if (process.env.DEBUG === 'true') {
-      console.log('[%s] DEBUG: %s', new Date().toISOString(), message, data);
+      console.log('[%s] DEBUG: %s', new Date().toISOString(), message, sanitizeForLogging(data));
     }
   }
 };
