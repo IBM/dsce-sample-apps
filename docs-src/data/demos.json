@@ -407,7 +407,7 @@
       "shortDescription": "Enterprise interactive showcase of how IBM Apptio and IBM Turbonomic deliver closed-loop cloud cost management, pairing multi-cloud cost allocation and unit economics with performance-aware automated resource rightsizing.",
       "architecture_description": "The Continuous FinOps Closed-Loop Architecture connects IBM Cloudability and IBM Turbonomic into an automated, four-stage lifecycle (INFORM → OPTIMIZE → OPERATE → MEASURE).\n\nIBM Cloudability ingests multi-cloud billing and usage to provide financial visibility, showback attribution, ML forecasting, and unit economics (INFORM).\nIBM Turbonomic dynamically analyzes full-stack application demand to generate and execute performance-aware rightsizing, container scaling, and workload parking actions (OPTIMIZE & OPERATE).\nThe cycle closes as Cloudability validates realized cost reductions and updates executive reporting without risking application SLOs (MEASURE).",
       "extrasBoxUrl": "",
-      "isLive": false,
+      "isLive": true,
       "release_date": "2026-10-08"
     }
   ]
