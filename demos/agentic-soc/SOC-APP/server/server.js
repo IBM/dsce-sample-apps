@@ -10,17 +10,17 @@ require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') }
 // Simple logger utility
 const logger = {
   info: (message, data = {}) => {
-    console.log(`[${new Date().toISOString()}] INFO: ${message}`, data);
+    console.log('[%s] INFO: %s', new Date().toISOString(), message, data);
   },
   error: (message, error = {}) => {
-    console.error(`[${new Date().toISOString()}] ERROR: ${message}`, error);
+    console.error('[%s] ERROR: %s', new Date().toISOString(), message, error);
   },
   warn: (message, data = {}) => {
-    console.warn(`[${new Date().toISOString()}] WARN: ${message}`, data);
+    console.warn('[%s] WARN: %s', new Date().toISOString(), message, data);
   },
   debug: (message, data = {}) => {
     if (process.env.DEBUG === 'true') {
-      console.log(`[${new Date().toISOString()}] DEBUG: ${message}`, data);
+      console.log('[%s] DEBUG: %s', new Date().toISOString(), message, data);
     }
   }
 };
