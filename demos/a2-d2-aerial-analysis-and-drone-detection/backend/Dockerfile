@@ -35,7 +35,13 @@ RUN mkdir -p /app/certs
 # Place your certificate as 'backend/certs/mongodb-ca.crt' before building
 # This will fail silently if the directory doesn't exist
 RUN --mount=type=bind,source=backend/certs,target=/tmp/certs,readonly \
-    cp -r /tmp/certs/* /app/certs/ 2>/dev/null || echo "No certificates to copy"
+    cp -r /tmp/certs/* /app/certs/ 2>/dev/null || echo "No certificates to copy"
+
+# Run as non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 --ingroup nodejs nodejs && \
+    chown -R nodejs:nodejs /app
+USER nodejs
 
 # Expose backend port (Code Engine default)
 EXPOSE 8080

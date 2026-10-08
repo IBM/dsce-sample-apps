@@ -3,23 +3,23 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('user');
     try {
-      return stored ? JSON.parse(stored) : null;
+      const savedUser = localStorage.getItem('user');
+      return savedUser ? JSON.parse(savedUser) : null;
     } catch {
       return null;
     }
   });
+  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
 
-  const isLoggedIn = Boolean(token);
+  const isLoggedIn = Boolean(token && user);
 
   function login(newToken, newUser) {
     setToken(newToken);
     setUser(newUser);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    if (newToken) localStorage.setItem('token', newToken);
+    if (newUser) localStorage.setItem('user', JSON.stringify(newUser));
   }
 
   function logout() {
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token, user, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

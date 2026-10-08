@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import authRoutes from './routes/auth.js';
@@ -22,11 +23,19 @@ app.use(cors({
       return;
     }
 
-    callback(null, true);
+    callback(new Error('CORS: origin not allowed'));
   },
   credentials: true,
 }));
 app.use(express.json());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limiter);
 
 app.use('/auth', authRoutes);
 app.use('/products', productsRoutes);

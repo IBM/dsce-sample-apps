@@ -8,7 +8,18 @@ dotenv.config({ path: resolve(__dirname, '../../.env') });
 
 const { Pool } = pg;
 
-const ssl = process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false;
+// Validate DB_SCHEMA is a safe identifier before embedding it in SQL.
+// PostgreSQL SET search_path does not support parameterised ($1) placeholders,
+// so we must allowlist the value ourselves (letters, digits, underscores only).
+const rawSchema = process.env.DB_SCHEMA ?? 'public';
+if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(rawSchema)) {
+  throw new Error(`DB_SCHEMA contains invalid characters: "${rawSchema}"`);
+}
+const DB_SCHEMA = rawSchema;
+
+// Only enable SSL when explicitly requested; always require the server cert to
+// be verified so we do not silently connect to a MITM endpoint.
+const ssl = process.env.DB_SSL === 'true' ? { rejectUnauthorized: true } : false;
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -20,14 +31,14 @@ const pool = new Pool({
 });
 
 pool.on('connect', async (client) => {
-  await client.query(`SET search_path TO ${process.env.DB_SCHEMA}`);
+  // DB_SCHEMA has been validated as a safe identifier above.
+  await client.query(`SET search_path TO ${DB_SCHEMA}`);
 });
 
 export async function query(text, params) {
   const client = await pool.connect();
 
   try {
-    await client.query(`SET search_path TO ${process.env.DB_SCHEMA}`);
     return await client.query(text, params);
   } finally {
     client.release();

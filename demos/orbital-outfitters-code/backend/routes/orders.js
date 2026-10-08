@@ -22,7 +22,6 @@ router.post('/', requireAuth, async (req, res) => {
 
   try {
     await client.query('BEGIN');
-    await client.query(`SET search_path TO ${process.env.DB_SCHEMA}`);
 
     const cartResult = await client.query(
       `SELECT c.cart_id, ci.cart_item_id, ci.product_id, ci.quantity, ci.unit_price
@@ -137,7 +136,6 @@ router.get('/:id', requireAuth, async (req, res) => {
   const client = await pool.connect();
 
   try {
-    await client.query(`SET search_path TO ${process.env.DB_SCHEMA}`);
 
     const detailResult = await client.query(
       `SELECT o.order_id, o.order_number, o.status,

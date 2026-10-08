@@ -29,6 +29,12 @@ COPY --from=frontend-build /app/frontend/build ./public
 # Copy drone images into public directory
 COPY frontend/public/drone_images ./public/drone_images
 
+# Run as non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 --ingroup nodejs nodejs && \
+    chown -R nodejs:nodejs /app
+USER nodejs
+
 # Set default port for demo mode
 ENV PORT=4000
 EXPOSE 4000

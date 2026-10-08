@@ -34,7 +34,7 @@ export default function LoginModal({ onClose, message }) {
     try {
       const res = await axiosClient.get('/auth/random-user');
       setEmail(res.data.email);
-      setPassword(res.data.password);
+      // Password is not returned by the server; leave the field for manual entry.
     } catch {
       setError('Could not fetch a demo user.');
     } finally {

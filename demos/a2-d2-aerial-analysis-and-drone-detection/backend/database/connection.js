@@ -43,11 +43,11 @@ if (!isLocal) {
 		options.tlsCAFile = caCertPath;
 		console.log('🔒 Production mode - Using CA certificate:', caCertPath);
 	} else {
-		// Fallback: Allow self-signed certificates
-		options.tlsAllowInvalidCertificates = true;
-		options.tlsAllowInvalidHostnames = true;
-		console.log(
-			':lock: Production mode - SSL/TLS enabled (self-signed certs allowed)',
+		// No CA certificate available — refuse to connect with unverified TLS.
+		// Set MONGODB_CA_CERT_PATH or provide backend/certs/mongodb-ca.crt.
+		throw new Error(
+			`Production TLS requires a CA certificate. ` +
+			`Set MONGODB_CA_CERT_PATH or place the cert at: ${caCertPath}`,
 		);
 	}
 } else {

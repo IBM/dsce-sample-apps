@@ -58,7 +58,7 @@ router.post('/login', async (req, res) => {
         username: user.username,
       },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' },
+      { expiresIn: '24h', algorithm: 'HS256' },
     );
 
     const { password_hash, ...safeUser } = user;
@@ -75,7 +75,9 @@ router.get('/random-user', async (_req, res) => {
     );
     const user = result.rows[0];
     if (!user) return res.status(404).json({ error: 'No users found' });
-    return res.json({ email: user.email, password: process.env.USER_PASSWORD });
+    // Return only the email; the frontend fills the password field via a
+    // separate demo hint rather than receiving it from the server.
+    return res.json({ email: user.email });
   } catch {
     return res.status(500).json({ error: 'Failed to fetch random user' });
   }

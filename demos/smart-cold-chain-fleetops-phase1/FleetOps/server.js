@@ -679,7 +679,6 @@ async function getTurbonomicCookies() {
       // Set expiry to 30 minutes from now
       cookieExpiry = Date.now() + (30 * 60 * 1000);
       console.log('Turbonomic login successful, cookies cached');
-      console.log('Login cookie:', turbonomicLoginCookie);
       return { loginCookie: turbonomicLoginCookie, apiCookie: turbonomicApiCookie };
     } else {
       throw new Error('No cookie received from Turbonomic login');
