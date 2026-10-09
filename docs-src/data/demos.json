@@ -45,15 +45,16 @@
       "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM QRadar"],
       "buildingBlocks": ["ai.agents", "automation.secure"],
       "skills": ["agent-builder"],
-      "codeRepo": "https://github.com/",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/agentic-soc",
       "specificationsRepo": "",
-      "specificationsFlow": "specs-flow-placeholder.png",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "agentic_soc.mp4" }],
       "screenshots": ["home_page.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
-      "architecture": "architecture-placeholder.png",
+      "architecture": "agentic_soc_architecture.png",
       "release_date": "2026-09-01",
-      "isLive": false
+      "isLive": true
     },
     {
       "name": "NexusIQ - Intelligent Operations Platform",
@@ -73,25 +74,9 @@
       "isLive": true
     },
     {
-      "name": "Counter-UAS in Modern Warfare",
-      "slug": "counter-uas-in-modern-warfare",
-      "products": ["IBM watsonx Orchestrate", "IBM watsonx.ai", "IBM Confluent"],
-      "buildingBlocks": ["ai.agents", "data.streamhouse"],
-      "skills": [],
-      "codeRepo": "https://github.com/",
-      "specificationsRepo": "",
-      "specificationsFlow": "",
-      "screenshots": ["home_page.png"],
-      "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
-      "shortDescription": "Defence operations are intrinsically information-centric and become quickly data saturated Operators often have only few seconds to Interpret complex sensor feeds to construct situational awareness then coordinate a response. The future defense systems will not only display information and involve heavy manual interpretations, they will understand, reason, prioritize, explain, recommend and collaborate with operators in real-time.",
-      "architecture": "architecture-placeholder.png",
-      "release_date": "2026-09-01",
-      "isLive": false
-    },
-    {
       "name": "AI Secret Management and Modernization",
       "slug": "ai-secret-management-and-modernization",
-      "products": ["IBM Bob", "HashiCorp Vault Radar", "HashiCorp Vault"],
+      "products": ["HashiCorp Vault Radar", "HashiCorp Vault"],
       "buildingBlocks": ["automation.secure"],
       "skills": ["non-human-identity-vault"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/hcp-vault-radar-foundations",
@@ -280,7 +265,7 @@
      }
     ,
     {
-      "name": "Building Blocks Q&A Bot",
+      "name": "Building Blocks Q&A Using Headless IBM Bob",
       "slug": "headlessbob-building-blocks-qa-bot",
       "products": ["IBM Bob"],
       "buildingBlocks": ["ai.engineering"],
@@ -324,7 +309,7 @@
     {
       "name": "IBM Bob inside Slack",
       "slug": "ibm-bob-inside-slack",
-      "products": [],
+      "products": ["IBM Bob"],
       "buildingBlocks": ["ai.engineering"],
       "skills": ["headless-bob"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/bob-in-slack-salesforce",
@@ -402,7 +387,28 @@
       "architecture_description": "Instructor side: Docker Compose runs Milvus standalone (embedded etcd and local storage) and the documentation server. The documentation is shared on the local network, through GitHub Pages, or through ngrok. Participant side: the participant zip holds the Vector Search Builder mode rules (.bob) and the participant scripts. Participants open it in IBM Bob and select Vector Search Builder mode. Data flow: the scripts connect to Milvus with the MilvusClient API. The embedding model runs locally and turns product text into 384-dimensional vectors. insert_sample_data.py creates a collection (IVF_FLAT index, COSINE metric) and inserts 12 products. app.py (FastAPI) serves /search and the search screen on port 8002. No API keys: embeddings are generated locally with Hugging Face Transformers.",
       "extrasBoxUrl": "",
       "release_date": "2026-10-02",
-      "isLive": false
+      "isLive": true
+    }
+    ,
+    {
+      "name": "FinOps Intelligence",
+      "slug": "finops-intelligence",
+      "products": ["IBM Apptio", "IBM Turbonomic"],
+      "buildingBlocks": ["automation.optimize"],
+      "skills": ["automated-resource-mgmt-turbonomic"],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/finOps-intelligence",
+      "workingDemoURL": "https://finops-intelligence.2flkoh5jv8wq.us-south.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "youTubeURL": "https://www.youtube.com/watch?v=KBJVAZNDhYM", "cosFileName": "", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png", "screenshot-02.png"],
+      "longDescription": "Modern enterprises struggle with surging multi-cloud expenditures and decentralized infrastructure decisions. Finance teams face multi-million dollar cloud bills with limited attribution, while engineering teams defensively overprovision virtual machines and container workloads to safeguard against latency and downtime. Static cost recommendations often pile up in spreadsheets because organizations lack the operational confidence to execute changes without risking service SLAs.\n\nFinancial Visibility & Accountability (IBM Cloudability):\n- Full multi-cloud cost allocation across AWS, Microsoft Azure, Google Cloud Platform, and IBM Cloud.\n- Tag-based showback/chargeback, ML-powered budget variance forecasting, and anomaly detection.\n- Business unit metrics and unit economics (e.g., cost-per-checkout, cost-per-transaction, cost-per-query).\n\nPerformance-Aware Actionable Optimization (IBM Turbonomic):\n- AI-driven supply-chain analytics that continuously map application resource demand to underlying cloud infrastructure.\n- Non-disruptive rightsizing across VMs, Kubernetes container requests/limits, databases, and unattached volumes.\n- Automated workload parking schedules for idle non-production environments.\n- Single-click or policy-driven execution of optimization actions that guarantee performance while eliminating cloud waste.\n\nInteractive Capabilities & Enterprise Tooling:\n- Live KPI simulation demonstrating tangible spend reduction, budget convergence, and multi-million dollar annualized savings.\n- Interactive REST API Explorer illustrating native integration patterns with IBM Cloudability and IBM Turbonomic APIs.\n- Dynamic scenario modeling allowing teams to upload custom JSON workload topologies or test enterprise configurations.",
+      "shortDescription": "Enterprise interactive showcase of how IBM Apptio and IBM Turbonomic deliver closed-loop cloud cost management, pairing multi-cloud cost allocation and unit economics with performance-aware automated resource rightsizing.",
+      "architecture_description": "The Continuous FinOps Closed-Loop Architecture connects IBM Cloudability and IBM Turbonomic into an automated, four-stage lifecycle (INFORM → OPTIMIZE → OPERATE → MEASURE).\n\nIBM Cloudability ingests multi-cloud billing and usage to provide financial visibility, showback attribution, ML forecasting, and unit economics (INFORM).\nIBM Turbonomic dynamically analyzes full-stack application demand to generate and execute performance-aware rightsizing, container scaling, and workload parking actions (OPTIMIZE & OPERATE).\nThe cycle closes as Cloudability validates realized cost reductions and updates executive reporting without risking application SLOs (MEASURE).",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-10-08"
     }
   ]
 }

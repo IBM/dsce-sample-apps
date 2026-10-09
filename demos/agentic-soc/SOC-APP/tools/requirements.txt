@@ -1,0 +1,4 @@
+pydantic==2.13.3
+requests
+mailjet-rest
+pyyaml

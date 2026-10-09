@@ -1,0 +1,16 @@
+spec_version: v1
+kind: knowledge_base
+name: soc_knowledge_base
+description: >
+  SOC knowledge base containing QRadar triage rules, classification rules,
+  RCA investigation framework, remediation action schemas, and PoC offense reference.
+  Used by Triage, Classification, RCA, and Action agents.
+
+documents:
+  - path: triage_rules.txt
+  - path: action_schemas.txt
+
+vector_index:
+  embeddings_model_name: ibm/slate-125m-english-rtrvr-v2
+
+# Made with Bob

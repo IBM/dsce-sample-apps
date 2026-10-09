@@ -1,0 +1,70 @@
+# SOC — Privileged Accounts Requiring Close Monitoring
+# Used by Classification Module M5 (Authentication) and M6-TP-3 (Credential Change).
+# Any authentication failure, brute force, or credential change targeting these accounts
+# triggers escalated investigation.
+# IMPORTANT: Seed entries below are universal standards. must add their environment-specific
+# service accounts, domain admin accounts and application accounts before production use.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Universal high-privilege accounts (standard across all environments)
+# ─────────────────────────────────────────────────────────────────────────────
+
+universal:
+  - account: "administrator"
+    description: "Windows built-in local Administrator"
+    risk: "critical"
+  - account: "admin"
+    description: "Generic admin account"
+    risk: "critical"
+  - account: "root"
+    description: "Linux/Unix root account"
+    risk: "critical"
+  - account: "sa"
+    description: "SQL Server system administrator"
+    risk: "critical"
+  - account: "sysadmin"
+    description: "Generic sysadmin account"
+    risk: "high"
+  - account: "postgres"
+    description: "PostgreSQL superuser"
+    risk: "high"
+  - account: "oracle"
+    description: "Oracle DB admin account"
+    risk: "high"
+  - account: "backup"
+    description: "Backup service account — often has broad read access"
+    risk: "high"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Pattern-based matches (prefix/suffix matching)
+# ─────────────────────────────────────────────────────────────────────────────
+
+patterns:
+  - pattern: "svc_*"
+    description: "Service accounts — broad system access"
+    risk: "high"
+  - pattern: "*_admin"
+    description: "Admin-suffixed accounts"
+    risk: "high"
+  - pattern: "adm_*"
+    description: "Admin-prefixed accounts"
+    risk: "high"
+  - pattern: "DA_*"
+    description: "Domain Admin prefixed accounts — NEEDS_REVIEW for local naming convention"
+    risk: "critical"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# environment-specific accounts — NEEDS_REVIEW
+# ─────────────────────────────────────────────────────────────────────────────
+
+partner_specific:
+  # Add domain admin accounts, application service accounts,
+  # and shared admin accounts here.
+  # Example schema:
+  # - account: "partner_da_prod"
+  #   description: "production domain admin"
+  #   risk: "critical"
+  #   added_by: "<analyst>"
+  #   added_date: "YYYY-MM-DD"
+  #   review_due: "YYYY-MM-DD"
+  []

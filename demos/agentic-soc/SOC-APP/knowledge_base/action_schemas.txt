@@ -1,0 +1,699 @@
+SOC — Remediation Action Schemas & Payload Specifications
+==============================================================
+
+This document defines the exact payload structure for every remediation
+action the Action Agent can request and execute. The Action Agent MUST
+consult this KB to build correct payloads before calling
+soc_request_action_approval and soc_execute_approved_action.
+
+Action types are grouped into 6 categories:
+  1. NETWORK CONTAINMENT   — stop active attack traffic
+  2. ENDPOINT CONTAINMENT  — contain compromised hosts and processes
+  3. IDENTITY & ACCESS     — lock down accounts and sessions
+  4. APPLICATION LAYER     — WAF rules, patching, hardening
+  5. FILE & DATA           — quarantine, integrity, data protection
+  6. INTELLIGENCE & AUDIT  — IOC management, logging, forensics
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 1 — NETWORK CONTAINMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: block_ip_address
+Purpose: Block an attacker IP at the perimeter firewall or WAF.
+Priority: Critical when IP has confirmed passing attacks; High otherwise.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "ip_address":      "<attacker IP — from RCA SUMMARY Attacker field>",
+  "offense_id":      "<offense ID>",
+  "reason":          "<1 sentence from RCA Evidence>",
+  "duration_hours":  72,
+  "block_type":      "inbound"
+}
+
+When to use:
+  • RCA Determination is ATTACK ATTEMPT — ACTIVE or CONFIRMED COMPROMISE
+  • srcIp is internet-routable (non-RFC1918)
+  • alert_status="passed" present in events
+  • Multiple attack payloads observed from same IP
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: create_firewall_rule
+Purpose: Create a persistent firewall DROP rule for a confirmed malicious
+         subnet or persistent attacker with multiple offenses.
+Priority: High when attack campaign spans multiple IPs in a CIDR block.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "ip_address":   "<IP or CIDR, e.g. 203.0.0.0/24>",
+  "offense_id":   "<offense ID>",
+  "reason":       "<evidence-based reason>",
+  "direction":    "inbound",
+  "protocol":     "any",
+  "rule_name":    "SOC-AUTO-<offense_id>"
+}
+
+When to use:
+  • Same attacker subnet appears in 2+ offenses
+  • RCA confirms coordinated scan or campaign
+  • Prefer over block_ip_address when whole CIDR is malicious
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: block_domain
+Purpose: Block DNS resolution or HTTP traffic to a confirmed malicious domain
+         (C2, phishing, malware distribution).
+Priority: High when domain is confirmed C2 or active phishing site.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "domain":       "<fully qualified domain name>",
+  "offense_id":   "<offense ID>",
+  "reason":       "<evidence-based reason>",
+  "block_method": "dns_sinkhole",
+  "duration_hours": 168
+}
+
+When to use:
+  • DNS lookup or WHOIS from RCA confirms C2/phishing domain
+  • PowerShell or malware binary contacted external domain
+  • Email-based offense with confirmed malicious link
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: block_url_pattern
+Purpose: Block a specific malicious URI pattern at the WAF (path traversal,
+         SQLi probe, SSRF probe) without blocking the whole IP.
+Priority: High when specific URI pattern is the confirmed attack vector.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "url_pattern":    "<pattern to block, e.g. '/../../../etc/passwd'>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "match_type":     "contains",
+  "action":         "block",
+  "waf_policy":     "<WAF policy name, e.g. bigip2_policy>"
+}
+
+When to use:
+  • RCA confirms repeated traversal/injection via specific URI pattern
+  • Attacker IP is dynamic (CDN, TOR) — pattern block is more durable
+  • Use alongside block_ip_address when both IP and pattern are confirmed
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: rate_limit_ip
+Purpose: Apply rate limiting to a source IP instead of a hard block — use
+         when blocking would disrupt legitimate shared-IP users.
+Priority: Medium — use before block_ip_address for ambiguous sources.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "ip_address":          "<source IP>",
+  "offense_id":          "<offense ID>",
+  "reason":              "<evidence-based reason>",
+  "requests_per_minute": 30,
+  "duration_hours":      24
+}
+
+When to use:
+  • srcIp is a shared IP (CDN, ISP proxy) and hard block would cause collateral
+  • Low event count with no confirmed payload pass-through (alert_status="alerted")
+  • Interim measure while awaiting confirmation
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 2 — ENDPOINT CONTAINMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: isolate_device
+Purpose: Network-isolate a compromised endpoint via EDR platform.
+Priority: Critical when active malware execution is confirmed.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "device_name":              "<hostname or device identifier>",
+  "offense_id":               "<offense ID>",
+  "reason":                   "<evidence-based reason>",
+  "isolation_type":           "full",
+  "allow_management_traffic": true
+}
+
+When to use:
+  • CONFIRMED COMPROMISE determination
+  • Active C2 beacon traffic detected
+  • Ransomware execution suspected
+  • Lateral movement confirmed from this host
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: terminate_process
+Purpose: Kill a malicious or suspicious process running on an endpoint.
+Priority: Critical when process is confirmed malware; High for suspicious.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "process_name":  "<process name, e.g. 'mimikatz.exe'>",
+  "process_id":    "<PID if known, else omit>",
+  "device_name":   "<hostname where process is running>",
+  "offense_id":    "<offense ID>",
+  "reason":        "<evidence-based reason>"
+}
+
+When to use:
+  • Sysmon EventID 1 (Process Create) shows known malware executable
+  • LSASS being accessed by non-system process (credential dumping)
+  • Encoded PowerShell with injected shellcode payload
+  • Process name matches known attack tool (mimikatz, meterpreter, etc.)
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: collect_forensic_image
+Purpose: Trigger memory/disk acquisition from an endpoint for forensic
+         investigation before isolating or remediating.
+Priority: High when CONFIRMED COMPROMISE — collect before wiping.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "device_name":       "<hostname>",
+  "offense_id":        "<offense ID>",
+  "reason":            "<evidence-based reason>",
+  "collection_type":   "memory",
+  "storage_path":      "/forensics/soc/<offense_id>/",
+  "priority":          "high"
+}
+
+When to use:
+  • CONFIRMED COMPROMISE — before isolating device
+  • ATTACK ATTEMPT — ACTIVE with process injection evidence
+  • Required for legal/regulatory investigations
+  • Always run BEFORE isolate_device to preserve volatile memory
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: run_edr_scan
+Purpose: Trigger a targeted EDR/AV scan on a specific endpoint.
+Priority: Medium — use for NEEDS-RCA or SUSPICIOUS cases before isolating.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "device_name":   "<hostname>",
+  "offense_id":    "<offense ID>",
+  "reason":        "<evidence-based reason>",
+  "scan_type":     "full",
+  "scan_path":     "C:\\"
+}
+
+When to use:
+  • Suspicious process chain with no confirmed malicious payload yet
+  • Post-remediation verification scan
+  • Device had anomalous network connection but no execution evidence
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 3 — IDENTITY & ACCESS
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: block_user
+Purpose: Disable or suspend a user account suspected of compromise or abuse.
+Priority: Critical when account shows credential theft; High for suspicious.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":       "<user email or username>",
+  "offense_id":       "<offense ID>",
+  "reason":           "<evidence-based reason>",
+  "block_type":       "suspend",
+  "notify_manager":   true
+}
+
+When to use:
+  • RCA shows credential theft or unauthorized access
+  • User account involved in lateral movement
+  • Account logged in from anomalous geo-location
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: disable_user_account
+Purpose: Permanently disable a service account or compromised account in AD.
+Priority: Critical when service account is confirmed to be weaponised.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":     "<user email or samAccountName>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "account_type":   "service_account",
+  "notify_it":      true
+}
+
+When to use:
+  • Service account used to run malicious commands
+  • Account credential confirmed stolen (Kerberoasting, DCSync evidence)
+  • Account no longer needed — disable rather than suspend
+  • Distinguish from block_user: block_user is temporary, disable is permanent
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: reset_user_password
+Purpose: Force password reset for a user whose credentials may be compromised.
+Priority: High when credential theft is suspected.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":                  "<user email or username>",
+  "offense_id":                  "<offense ID>",
+  "reason":                      "<evidence-based reason>",
+  "require_mfa_re_enrollment":   false,
+  "notify_user":                 true
+}
+
+When to use:
+  • Credential stuffing attack with matching username in events
+  • Password spraying attempt with successful authentication
+  • User's credentials appeared in a breach dataset reference set
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: revoke_user_session
+Purpose: Invalidate all active sessions and OAuth tokens for a user.
+Priority: High — immediate containment without disabling the account.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":     "<user email or username>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "revoke_scope":   "all_sessions"
+}
+
+When to use:
+  • Token theft detected (stolen JWT, OAuth token reuse)
+  • Simultaneous login from two geographically distant locations
+  • User account active in ongoing attack but not yet confirmed compromised
+  • Preferred over block_user when business continuity is a concern
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: enforce_mfa
+Purpose: Force MFA enrollment or step-up authentication for a user or group.
+Priority: Medium — preventive hardening after credential-based incident.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":         "<user email or group name>",
+  "offense_id":         "<offense ID>",
+  "reason":             "<evidence-based reason>",
+  "mfa_type":           "totp",
+  "scope":              "all_applications",
+  "grace_period_hours": 24
+}
+
+When to use:
+  • Post-incident hardening after credential compromise
+  • User account accessed sensitive resources without MFA
+  • Part of remediation plan after Kerberoasting or pass-the-hash
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 4 — APPLICATION LAYER
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: apply_web_application_firewall_rule
+Purpose: Deploy a custom WAF rule to block a confirmed exploit technique
+         (LFI, SQLi, RCE, SSRF) across all traffic — not just one IP.
+Priority: High for confirmed web exploit with alert_status=passed.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "waf_policy":      "<policy name, e.g. 'bigip2_policy'>",
+  "rule_name":       "SOC-<offense_id>-<attack_type>",
+  "offense_id":      "<offense ID>",
+  "reason":          "<evidence-based reason>",
+  "attack_type":     "lfi | sqli | rce | xss | ssrf | command_injection",
+  "match_target":    "<URI pattern or request parameter being exploited>",
+  "action":          "block",
+  "log_violations":  true
+}
+
+When to use:
+  • Web exploit confirmed via F5 ASM / WAF events
+  • alert_status="passed" — attack got through existing WAF rules
+  • LFI payloads (../etc/passwd), SQLi payloads, RCE in URI/POST body
+  • Use alongside block_ip_address — WAF rule protects against future IPs
+  • Example: Offense 167657 LFI → rule matches URI containing "/../" or "/etc/passwd"
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: patch_web_application
+Purpose: Trigger emergency patching workflow for a vulnerable web application
+         component identified during RCA.
+Priority: High when CVE correlation confirms exploitable vulnerability.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "application_name":   "<app name or hostname>",
+  "component":          "<vulnerable component, e.g. 'Apache 2.4.49'>",
+  "cve_id":             "<CVE ID if known, e.g. 'CVE-2021-41773'>",
+  "offense_id":         "<offense ID>",
+  "reason":             "<evidence-based reason>",
+  "patch_urgency":      "emergency | high | normal",
+  "notify_owner":       true
+}
+
+When to use:
+  • QVM vulnerability scan confirms CVE on attacked target
+  • RCA evidence shows exploit payload matching known CVE
+  • Exploit confirmed passing through WAF (alert_status=passed)
+  • Coordinate with block_ip_address and apply_web_application_firewall_rule
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: update_ids_signature
+Purpose: Push an updated IDS/IPS signature to detect and block a specific
+         attack pattern that was not previously covered.
+Priority: Medium — prevents reoccurrence after incident closure.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "signature_name":   "SOC-SIG-<offense_id>",
+  "attack_pattern":   "<regex or indicator pattern from RCA payload evidence>",
+  "offense_id":       "<offense ID>",
+  "reason":           "<evidence-based reason>",
+  "action":           "alert_and_block",
+  "protocol":         "http | tcp | udp | any"
+}
+
+When to use:
+  • Novel attack pattern not matched by existing IDS signatures
+  • Recurring offense with same payload structure
+  • After ATTACK ATTEMPT — ACTIVE where WAF rule alone is insufficient
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: reconfigure_log_source
+Purpose: Adjust a QRadar log source's credibility, enabled status, or
+         collection parameters when it is generating false positives.
+Priority: Low — tune after closing FP offense.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "log_source_id":    "<QRadar log source ID>",
+  "offense_id":       "<offense ID>",
+  "reason":           "<evidence-based reason>",
+  "change":           "adjust_credibility | disable | adjust_coalescing",
+  "new_credibility":  5
+}
+
+When to use:
+  • Recurring False Positive from the same log source
+  • Log source credibility=1/2 causing excessive T0 downgrades
+  • QRadar rule tuning required after FP pattern identified
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 5 — FILE & DATA
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: quarantine_file
+Purpose: Quarantine a suspicious file hash via EDR platform.
+Priority: High when malware hash is identified in events.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "file_hash":     "<SHA256 hash from event parsed_props or MD5 if SHA256 not available>",
+  "file_name":     "<filename if known>",
+  "file_path":     "<full file path if known>",
+  "device_name":   "<hostname where file resides>",
+  "offense_id":    "<offense ID>",
+  "reason":        "<evidence-based reason>"
+}
+
+When to use:
+  • Sysmon EventID 11 (FileCreate) or EventID 1 (ProcessCreate) shows malicious hash
+  • MD5 hash in event matches known malware (e.g. from offense 167479: MD5=79EF9CC16B1ECF09E424077014473E4B)
+  • Downloaded file from external IP with suspicious extension or path
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: conduct_file_integrity_check
+Purpose: Run a file integrity check against a known-good baseline on a
+         specific host — detect persistence mechanisms, modified binaries,
+         or web shells.
+Priority: High after CONFIRMED COMPROMISE or post-incident verification.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "device_name":    "<hostname>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "scan_path":      "<path to check, e.g. 'C:\\inetpub\\wwwroot\\' or '/var/www/html/'>",
+  "check_type":     "hash_comparison | acl_check | new_files",
+  "baseline_date":  "<ISO date of last known-good baseline, or 'latest'>"
+}
+
+When to use:
+  • Web server compromise suspected — check for web shells
+  • After CONFIRMED COMPROMISE — verify no backdoors installed
+  • RCA shows FileCreate events (Sysmon EventID 11) in sensitive directories
+  • Registry persistence suspected — include registry hives in scan_path
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: delete_malicious_file
+Purpose: Delete a confirmed malicious file from an endpoint after quarantine.
+Priority: High — run after quarantine_file confirms the file is malware.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "file_path":      "<full path of file to delete>",
+  "file_hash":      "<hash for verification before deletion>",
+  "device_name":    "<hostname>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "secure_wipe":    false
+}
+
+When to use:
+  • After quarantine_file confirms file is malicious (hash match)
+  • Persistence mechanism installed as file (scheduled task script, startup entry)
+  • Web shell confirmed in web root directory
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: revoke_data_access
+Purpose: Remove a user or process from access to sensitive data stores
+         (file share, S3 bucket, database) after confirmed data access event.
+Priority: Critical when data exfiltration is suspected.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "user_email":      "<user or service account>",
+  "resource_name":   "<file share, DB name, or bucket name>",
+  "offense_id":      "<offense ID>",
+  "reason":          "<evidence-based reason>",
+  "access_type":     "read | write | all",
+  "notify_owner":    true
+}
+
+When to use:
+  • RCA shows large file transfer to external IP (exfiltration)
+  • Unauthorized database query extracting bulk records
+  • User accessed sensitive path outside normal working hours
+
+═══════════════════════════════════════════════════════════════════════════════
+CATEGORY 6 — INTELLIGENCE & AUDIT
+═══════════════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: add_ioc_to_watchlist
+Purpose: Add a confirmed malicious IP, domain, hash, or URL to the QRadar
+         reference set for closed-loop detection in future offenses.
+Priority: Medium — always pair with active containment actions above.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "ioc_value":           "<IP, domain, hash, or URL>",
+  "ioc_type":            "ip | domain | hash | url",
+  "offense_id":          "<offense ID>",
+  "reason":              "<why this IOC is malicious>",
+  "reference_set_name":  "soc_malicious_ips"
+}
+
+Reference set name by IOC type:
+  • ip      → "soc_malicious_ips"
+  • domain  → "soc_malicious_domains"
+  • hash    → "soc_malicious_hashes"
+  • url     → "soc_malicious_urls"
+
+When to use:
+  • Always after confirming True Positive — IOC in future offense = instant TP
+  • After identifying malware hash — add to hash blocklist
+  • After confirming C2 domain in DNS/WHOIS
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: enable_enhanced_logging
+Purpose: Increase log verbosity on a specific host or application to capture
+         full attack telemetry for an ongoing investigation.
+Priority: Medium — activate before isolating device.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "device_name":    "<hostname or log source name>",
+  "offense_id":     "<offense ID>",
+  "reason":         "<evidence-based reason>",
+  "log_level":      "debug | verbose",
+  "duration_hours": 48,
+  "log_targets":    ["process_create", "network_connections", "registry_changes"]
+}
+
+When to use:
+  • Ongoing APT investigation — increase Sysmon verbosity
+  • NEEDS-RCA offense — need more process chain telemetry
+  • Supplement sparse event set before running RCA agent
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: notify_asset_owner
+Purpose: Send a structured security notification to the owner of a targeted
+         or compromised asset, requesting acknowledgement and cooperation.
+Priority: Medium — always send for CONFIRMED COMPROMISE and True Positive.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "asset_ip":           "<target IP from RCA REPORT>",
+  "asset_hostname":     "<hostname if known>",
+  "offense_id":         "<offense ID>",
+  "reason":             "<summary of incident — 1-2 sentences>",
+  "notification_type":  "incident_alert | remediation_required | information",
+  "owner_email":        "<asset owner email if known, else 'soc-team@example.com'>",
+  "urgency":            "immediate | within_4h | within_24h"
+}
+
+When to use:
+  • True Positive with confirmed impact on internal asset
+  • CONFIRMED COMPROMISE — owner must initiate business continuity plan
+  • Asset owner must coordinate patching (patch_web_application)
+  • Always send for customer-facing services (e.g. cloud-sgate.example.com)
+
+──────────────────────────────────────────────────────────────────────────────
+ACTION: create_threat_intel_report
+Purpose: Document the full attack campaign as a structured threat intelligence
+         entry for future SOC awareness.
+Priority: Low — run after all containment actions complete.
+──────────────────────────────────────────────────────────────────────────────
+Payload schema:
+{
+  "offense_id":        "<offense ID>",
+  "attacker_ip":       "<attacker IP>",
+  "attack_type":       "<MITRE ATT&CK technique ID and name>",
+  "iocs":              ["<ip>", "<domain>", "<hash>"],
+  "determination":     "<RCA determination>",
+  "ttps":              ["<MITRE technique IDs>"],
+  "summary":           "<2-3 sentences summarising campaign>",
+  "report_audience":   "internal_soc"
+}
+
+When to use:
+  • True Positive with novel or sophisticated attack pattern
+  • Attacker has appeared in 3+ offenses (campaign-level)
+  • Major incident requiring CSIRT notification
+
+═══════════════════════════════════════════════════════════════════════════════
+MULTI-ACTION ORDERING RULES
+═══════════════════════════════════════════════════════════════════════════════
+
+Execute actions in this priority order when multiple apply:
+
+PHASE 1 — EVIDENCE PRESERVATION (before any containment destroys artefacts)
+  1. collect_forensic_image      — memory/disk before isolation
+  2. enable_enhanced_logging     — increase telemetry if still live
+
+PHASE 2 — STOP THE ATTACK (active containment)
+  3. block_ip_address            — cut off external attacker immediately
+  4. block_domain                — cut C2 channel
+  5. block_url_pattern           — block recurring exploit pattern at WAF
+  6. apply_web_application_firewall_rule — broader WAF protection
+  7. isolate_device              — contain compromised endpoint
+  8. terminate_process           — kill active malicious process
+
+PHASE 3 — REMOVE ATTACKER FOOTHOLD (access revocation)
+  9. revoke_user_session         — invalidate stolen tokens
+  10. block_user                 — suspend compromised account
+  11. disable_user_account       — permanent disable for service accounts
+  12. reset_user_password        — force credential change
+  13. revoke_data_access         — remove from sensitive resources
+
+PHASE 4 — REMOVE ARTEFACTS (clean up persistence)
+  14. quarantine_file            — quarantine malware file
+  15. delete_malicious_file      — delete confirmed malware after quarantine
+  16. conduct_file_integrity_check — verify no residual backdoors
+
+PHASE 5 — PREVENT RECURRENCE (hardening)
+  17. patch_web_application      — apply emergency patch
+  18. update_ids_signature       — add new detection signature
+  19. enforce_mfa                — strengthen authentication
+  20. reconfigure_log_source     — tune noisy FP sources
+
+PHASE 6 — RECORD & COMMUNICATE
+  21. add_ioc_to_watchlist       — add all confirmed IOCs to reference sets
+  22. notify_asset_owner         — notify stakeholders
+  23. create_threat_intel_report — document campaign (only for major TPs)
+
+RULES:
+  • NEVER batch multiple targets into one action call
+  • ONE action call per target entity (one per IP, one per user, one per file)
+  • Each action_id must be unique: ACT-<offense_id>-001, ACT-<offense_id>-002
+  • Always request approval BEFORE executing each action
+  • Skip phases that do not apply — do not force every phase for every offense
+
+═══════════════════════════════════════════════════════════════════════════════
+OFFENSE-TYPE TO ACTION MAPPING
+═══════════════════════════════════════════════════════════════════════════════
+
+Use this table to quickly select the right action set for each offense type.
+
+WEB EXPLOIT (F5 ASM / WAF) — e.g. offense 167644, 167657:
+  • block_ip_address (attacker IP)
+  • apply_web_application_firewall_rule (LFI/SQLi/RCE pattern)
+  • add_ioc_to_watchlist (attacker IP)
+  • patch_web_application (if CVE confirmed on target)
+  • notify_asset_owner (target server owner)
+
+RANSOMWARE / MALWARE EXECUTION:
+  • collect_forensic_image (FIRST — preserve evidence)
+  • isolate_device (infected endpoint)
+  • terminate_process (ransomware process)
+  • block_ip_address (C2 IP)
+  • block_domain (C2 domain)
+  • quarantine_file (ransomware binary)
+  • add_ioc_to_watchlist (C2 IP, C2 domain, malware hash)
+
+CREDENTIAL THEFT / PASS-THE-HASH / KERBEROASTING:
+  • revoke_user_session (compromised account, immediate)
+  • reset_user_password (force new credentials)
+  • block_user (if ongoing abuse confirmed)
+  • enforce_mfa (post-incident hardening)
+  • add_ioc_to_watchlist (attacker IP)
+  • notify_asset_owner (AD/Identity team)
+
+LATERAL MOVEMENT / PROCESS INJECTION (e.g. offense 167659, 167679):
+  • collect_forensic_image (source host)
+  • isolate_device (source host)
+  • terminate_process (injecting process)
+  • conduct_file_integrity_check (look for web shells or persistence files)
+  • add_ioc_to_watchlist (attacker host IP)
+
+SUSPICIOUS POWERSHELL / SCRIPT EXECUTION (e.g. offense 167666, 168281):
+  • If CONFIRMED malicious: terminate_process + quarantine_file + isolate_device
+  • If BENIGN (scheduled task confirmed): NO ACTION — report 0 actions
+  • enable_enhanced_logging if still ambiguous before RCA is complete
+
+APPLICATION SHIMMING (e.g. offense 167659, 167679):
+  • conduct_file_integrity_check (look for .sdb shim files in %windir%)
+  • If malicious .sdb confirmed: delete_malicious_file + quarantine_file
+  • If benign installer: NO ACTION
+
+RCE DETECTED (e.g. offense 167479 WinRAR):
+  • If confirmed exploit: isolate_device + quarantine_file + block_ip_address
+  • If benign (WMI normal ops confirmed): NO ACTION
+
+═══════════════════════════════════════════════════════════════════════════════
+NO-ACTION SCENARIOS (report 0 actions)
+═══════════════════════════════════════════════════════════════════════════════
+
+Do NOT request any action when:
+  • RCA Determination is BENIGN — NORMAL BEHAVIOR
+  • RCA Determination is SUSPICIOUS — UNCONFIRMED
+  • Classification is False Positive or Benign Positive
+  • Attacker IP is internal RFC1918 with no confirmed lateral movement
+  • The offense was on the Low/Informational direct-close path
+  • Evidence shows known admin tool (ServerManager, MobaXterm, WinSCP, WMI)
+  • PowerShell script is a confirmed scheduled task running from corporate path
+
+In these cases: output 0 actions in the ACTION REPORT and proceed to close.

@@ -1,0 +1,172 @@
+# SOC — Threat Intelligence Feed
+# Used by: soc_lookup_threat_intel (Triage adjustment TG; Classification N1)
+#
+# Fields:
+#   ip       : IP address to look up
+#   verdict  : clean | suspicious | malicious | unknown  ← DUMMY for external IPs
+#   is_known_scanner    : true if this is a registered internal scanner  ← NEEDS_REVIEW
+#   is_known_partner_cdn: true if this is a partner or CDN IP (no-block flag) ← NEEDS_REVIEW
+#   sources  : list of TI sources that contributed the verdict
+#
+# DUMMY entries are placeholders — replace with real TI verdicts from the TI platform.
+# Internal RFC1918 IPs are marked clean by definition (not external threat actors).
+# External IPs from confirmed True Positive offenses are marked suspicious as a safe default.
+# All verdicts marked "# DUMMY" must be overwritten with real TI data from customer.
+#
+# Evidence sources: 25-offense PoC validation set.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RFC1918 internal IPs — always clean (not external attackers)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- ip: "10.0.0.1"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false         # NEEDS_REVIEW — set true if this is a vulnerability scanner
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.4"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false         # NEEDS_REVIEW
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.5"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false         # NEEDS_REVIEW
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.6"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false         # NEEDS_REVIEW
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.11"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false         # NEEDS_REVIEW
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.16"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.18"
+  verdict: "clean"                # DERIVED — internal RFC1918 (compromise suspected but IP itself is internal victim)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.19"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.20"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.24"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.25"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.27"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+- ip: "10.0.0.29"
+  verdict: "clean"                # DERIVED — internal RFC1918
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["rfc1918_internal"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Public IPs — DUMMY verdicts, replace with real TI data
+# ─────────────────────────────────────────────────────────────────────────────
+
+- ip: "203.0.0.2"
+  verdict: "suspicious"           # DUMMY — external attacker in confirmed TP (Offense 167657)
+  is_known_scanner: false         # NEEDS_REVIEW
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI lookup. Attacker in Offense 167657 web exploit."
+
+- ip: "203.0.0.4"
+  verdict: "clean"                # DERIVED — internal web server (target, not attacker)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["asset_registry"]
+  note: "public web server — target of web exploit offenses."
+
+- ip: "203.0.0.13"
+  verdict: "suspicious"           # DUMMY — destination of confirmed rclone exfil (Offense 177254)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI lookup. One of 5 rclone exfil destinations on port 7001."
+
+- ip: "203.0.0.14"
+  verdict: "suspicious"           # DUMMY — rclone exfil destination (Offense 177254)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI lookup. rclone destination."
+
+- ip: "203.0.0.15"
+  verdict: "clean"                # DUMMY — chrome.exe connecting to 443 (likely CDN/update)
+  is_known_scanner: false
+  is_known_partner_cdn: false     # NEEDS_REVIEW — may be a partner CDN
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — chrome.exe connecting to 443 in Offense 177254 events. Likely benign but unconfirmed."
+
+- ip: "203.0.0.19"
+  verdict: "clean"                # DERIVED — nginx reverse proxy server, not an attacker
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["proxy_and_lb.yaml", "asset_registry"]
+  note: "nginx reverse proxy — srcIp==destIp pattern. Real attacker resolved via N1 normalisation."
+
+- ip: "203.0.0.20"
+  verdict: "suspicious"           # DUMMY — real attacker behind 203.0.0.19 proxy (Offense 177507, src= field)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI. Real attacker IP extracted via N1 from src= LEEF field in Offense 177507."
+
+- ip: "203.0.0.21"
+  verdict: "suspicious"           # DUMMY — real attacker in Offense 177507 (lang=english|cat /etc/passwd)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI. Confirmed attacker: uri_query=lang=english|cat%20/etc/passwd."
+
+- ip: "203.0.0.25"
+  verdict: "suspicious"           # DUMMY — source of MSSQL brute force (Offense 177940)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["poc_validation_set_dummy"]
+  note: "DUMMY — replace with real TI. Brute force source targeting MSSQL sa account."
+
+- ip: "203.0.0.26"
+  verdict: "clean"                # DERIVED — internal MSSQL server (target, not attacker)
+  is_known_scanner: false
+  is_known_partner_cdn: false
+  sources: ["asset_registry"]
+  note: "internal MSSQL server — target of brute force. Not an external TI entity."

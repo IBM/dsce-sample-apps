@@ -1,0 +1,52 @@
+{
+  "name": "qradar-agent-stage-demo",
+  "version": "1.0.0",
+  "description": "Full-stack demo for watsonx Orchestrate SOC stage agents",
+  "main": "server/server.js",
+  "scripts": {
+    "dev": "node -e \"require('child_process').execSync('lsof -ti:3000,3001 | xargs kill -9 2>/dev/null || true', {stdio:'ignore'})\" && sleep 1 && concurrently \"PORT=3001 node server/server.js\" \"next dev -p 3000\"",
+    "build": "next build",
+    "start": "node server/server.js",
+    "next:dev": "next dev -p 3000",
+    "server": "node server/server.js",
+    "kill-ports": "lsof -ti:3000,3001 | xargs kill -9 2>/dev/null || true",
+    "test": "node --check server/server.js"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "framer-motion": "^13.1.0",
+    "helmet": "^8.0.0",
+    "ibm-cos-sdk": "^1.15.2",
+    "lucide-react": "^1.31.0",
+    "next": "^16.4.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "recharts": "^3.10.1",
+    "tailwind-merge": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "watsonx",
+    "orchestrate",
+    "qradar",
+    "demo"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "autoprefixer": "^10.5.4",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^7.0.2"
+  }
+}

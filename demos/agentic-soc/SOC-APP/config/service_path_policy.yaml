@@ -1,0 +1,62 @@
+# SOC — Windows Service Binary Path Policy
+# Used by Classification Module M3 (Service Installation).
+# permitted_paths: Service Filename must be under one of these directories to be eligible for Benign verdict.
+# suspicious_paths: Immediate TRUE POSITIVE — no further checks needed.
+# Seeded from v3 spec and offenses 173500, 178147, 178224.
+
+permitted_paths:
+  - "C:\\Windows\\System32\\"
+  - "C:\\Windows\\SysWOW64\\"
+  - "C:\\Program Files\\"
+  - "C:\\Program Files (x86)\\"
+  - "\\SystemRoot\\system32\\DRIVERS\\"
+  # Vendor-specific approved paths — NEEDS_REVIEW for production additions
+  - "C:\\ProgramData\\Kaspersky Lab\\"          # Kaspersky KES
+  - "C:\\ProgramData\\CrowdStrike\\"            # CrowdStrike Falcon — NEEDS_REVIEW
+  - "C:\\Program Files\\Trend Micro\\"          # Trend Micro — NEEDS_REVIEW
+  - "C:\\Program Files\\Veeam\\"                # Veeam backup — NEEDS_REVIEW
+  - "C:\\Windows\\CCM\\"                        # SCCM client — NEEDS_REVIEW
+
+suspicious_paths:
+  - "C:\\Windows\\Temp\\"
+  - "C:\\Temp\\"
+  - "\\AppData\\Local\\Temp\\"
+  - "\\AppData\\Roaming\\"
+  - "C:\\PerfLogs\\"
+  - "C:\\Users\\Public\\"
+  - "\\Downloads\\"
+  - "\\Desktop\\"
+
+suspicious_extensions:
+  # Any service filename with these extensions is an immediate TRUE POSITIVE
+  - ".log"
+  - ".tmp"
+  - ".dat"
+  - ".txt"
+  - ".bin"
+  - ".png"
+  - ".jpg"
+  - ""  # No extension
+
+permitted_extensions:
+  - ".exe"
+  - ".sys"
+  - ".dll"
+
+approved_security_vendors:
+  # Services installed by these vendors in their standard directories are eligible for Benign
+  - name: "Kaspersky"
+    path_prefix: "C:\\ProgramData\\Kaspersky Lab\\"
+    evidence_ref: "Offense 178224"
+  - name: "CrowdStrike"
+    path_prefix: "C:\\ProgramData\\CrowdStrike\\"
+    note: "NEEDS_REVIEW — confirm CrowdStrike is deployed in this environment"
+  - name: "Trend Micro"
+    path_prefix: "C:\\Program Files\\Trend Micro\\"
+    note: "NEEDS_REVIEW"
+  - name: "Veeam"
+    path_prefix: "C:\\Program Files\\Veeam\\"
+    evidence_ref: "Offense 167659"
+  - name: "SCCM"
+    path_prefix: "C:\\Windows\\CCM\\"
+    note: "NEEDS_REVIEW"
