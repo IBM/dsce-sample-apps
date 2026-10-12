@@ -3,12 +3,12 @@
     [
         { "ai" : [
                 { "agents" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/agents/" },
-                { "control" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/control/" },
+                { "govern" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/govern/" },
                 { "engineering" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/ai-core/engineering/" }
             ]
         },
         { "data" : [
-                { "streamhouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/streamhouse/" },
+                { "real-time" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/real-time/" },
                 { "pipelines" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/pipelines/" },
                 { "lakehouse" : "https://ibm-self-serve-assets.github.io/building-blocks-docs/data-core/lakehouse/" }
             ]
