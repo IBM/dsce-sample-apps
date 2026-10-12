@@ -65,11 +65,11 @@ body:
       options:
         - label: ai.agents
         - label: ai.engineering
-        - label: ai.control-plane
+        - label: ai.govern
         - label: automation.operate
         - label: automation.optimize
         - label: automation.secure
-        - label: data.streamhouse
+        - label: data.real-time
         - label: data.pipelines
         - label: data.lakehouse
     validations:
@@ -199,7 +199,7 @@ body:
 
 # ── Security ────────────────────────────────────────────────
   - type: checkboxes
-    id: response
+    id: code_review_completed
     attributes:
       label: Perform code review prior to submission using this [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml)
       options:
@@ -209,7 +209,7 @@ body:
 
   # ── Privacy ────────────────────────────────────────────────
   - type: checkboxes
-    id: response
+    id: ip_pii_removed
     attributes:
       label: Don't submit personal information or customer/partner IP
       options:
