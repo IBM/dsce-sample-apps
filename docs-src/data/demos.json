@@ -410,5 +410,26 @@
       "isLive": true,
       "release_date": "2026-10-08"
     }
+    ,
+    {
+      "name": "AI-Powered Maximo Automation Script Optimization with IBM Bob",
+      "slug": "ai-powered-maximo-automation-script-optimization-with-ibm-bob",
+      "products": ["IBM Bob", "IBM Maximo Application Suite", "IBM Maximo Manage"],
+      "buildingBlocks": ["ai.engineering", "automation.optimize"],
+      "skills": ["maximo-code-optimization"],
+      "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/maximo-code-optimization",
+      "workingDemoURL": "",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [{ "cosFileName": "ai-powered-maximo-automation-script-optimization-with-ibm-bob-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "screenshots": ["home_page.png", "screenshot-01.png"],
+      "longDescription": "IBM Maximo environments often contain numerous automation scripts implementing critical business logic for work orders, assets, inventory, and other maintenance processes. Over time, these scripts can become complex and difficult to maintain, increasing technical debt and making troubleshooting, enhancements, and upgrades more challenging. Manually reviewing and optimizing scripts requires significant developer effort and specialized Maximo expertise.\n\nThis demo showcases AI-powered automation script optimization using IBM Bob and a reusable Maximo-specific building block, Maximo-script-optimizer. The solution assists developers in analyzing existing Maximo automation scripts, evaluating code quality and maintainability, identifying potential issues, and generating optimized code recommendations based on Maximo-specific coding patterns.\n\nThe demo presents the original script alongside the optimized version, allowing developers to review suggested changes and understand how the code can be improved. Code-quality indicators and identified issues help illustrate opportunities to improve readability, maintainability, performance, and consistency.\n\nBy combining IBM Bob's AI-assisted development capabilities with reusable Maximo-specific optimization patterns, the solution helps Maximo developers, solution architects, and implementation partners reduce manual code-review effort, simplify existing customizations, and accelerate ongoing Maximo development and modernization activities. Developers remain responsible for reviewing, validating, and testing optimized scripts before deploying them into production environments.",
+      "shortDescription": "Uses IBM Bob to analyze and optimize IBM Maximo automation scripts, improving code quality, maintainability, performance, and consistency while reducing manual development effort and technical debt.",
+      "architecture_description": "The solution uses IBM Bob and a reusable Maximo-specific building block, Maximo-script-optimizer, to assist developers in analyzing and optimizing existing IBM Maximo automation scripts. The workflow starts with a developer selecting a script for analysis. IBM Bob assists in evaluating the code and generating optimization recommendations based on the capabilities and Maximo-specific patterns implemented in the building block. The solution presents the original code alongside the proposed optimized version, helping developers understand and review suggested changes. Developers validate the functional behavior and test the resulting script before approving it for deployment. IBM Maximo Manage remains the target application environment, and the solution supports the modernization of existing customizations without replacing Maximo's role as the operational system of record.",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-10-13"
+    }
   ]
 }
