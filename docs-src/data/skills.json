@@ -37,7 +37,8 @@
         { "name": "ibm-cloud", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/ibm-cloud" },
         { "name": "maximo-code-optimization", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/maximo-code-optimization" },
         { "name": "code-modernization-expert", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/code-modernization-expert" },
-        { "name": "code-modernization-java", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/code-modernization-java" }
+        { "name": "code-modernization-java", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/code-modernization-java" },
+        { "name": "maximo-java-conversion", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/automation/operate/asset-management/bob-skills" }
     ],
     "automation.optimize" : [
         { "name": "automated-resource-mgmt-turbonomic", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/automated-resource-mgmt-turbonomic" }
