@@ -121,5 +121,9 @@
     "Database for MongoDB" : {
         "url" : "https://www.ibm.com/products/databases-for-mongodb",
         "image" : "ibm-cloud-database-for-mongodb.svg"
+    },
+    "IBM Maximo Manage" : {
+        "url" : "https://www.ibm.com/products/maximo",
+        "image" : "ibm-maximo-manage.svg"
     }
 }
