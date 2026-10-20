@@ -60,7 +60,7 @@
       "name": "NexusIQ - Intelligent Operations Platform",
       "slug": "nexusiq-intelligent-operations-platform",
       "products": ["IBM watsonX.data", "IBM DataStax", "IBM Confluent"],
-      "buildingBlocks": ["ai.agents", "data.real-time", "data.lakehouse"],
+      "buildingBlocks": ["ai.agents", "data.streamhouse", "data.lakehouse"],
       "skills": ["agent", "data-streaming-confluent"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/Unified_AI_Driven_Analytics_Platform",
       "specificationsRepo": "",
@@ -97,7 +97,7 @@
       "name": "Intelligent Asset Management Knowledge Hub with Maximo",
       "slug": "intelligent-asset-management-knowledge-hub-with-bob-and-maximo",
       "products": ["IBM watsonx.ai", "IBM Maximo Application Suite", "IBM COS"],
-      "buildingBlocks": ["ai.agents", "data.real-time", "data.pipelines"],
+      "buildingBlocks": ["ai.agents", "data.streamhouse", "data.pipelines"],
       "skills": ["agent", "data-streaming-confluent", "rag-pipeline-builder"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/asset-management-knowledge-hub",
       "workingDemoURL": "https://maximo-knowledge-hub.25flzevluudl.eu-de.codeengine.appdomain.cloud/",
@@ -119,7 +119,7 @@
       "name": "Real-Time Seller Motivation — Streaming on IBM Confluent",
       "slug": "real-time-seller-motivation-streaming-on-ibm-confluent",
       "products": ["IBM Cloud Code Engine", "IBM Cloud Object Storage", "IBM Confluent", "IBM DataStax", "IBM watsonX.data", "IBM watsonx.ai"],
-      "buildingBlocks": ["ai.engineering", "automation.operate", "data.real-time", "data.lakehouse"],
+      "buildingBlocks": ["ai.engineering", "automation.operate", "data.streamhouse", "data.lakehouse"],
       "skills": [],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/biw-motivation-graph",
       "workingDemoURL": "https://biw-motivation-graph.2dcwtgewyqkc.us-south.codeengine.appdomain.cloud/",
@@ -143,7 +143,7 @@
       "name": "Real-Time Supply Chain Risk Control Tower with Confluent",
       "slug": "real-time-supply-chain-risk-control-tower-with-bob-and-confluent",
       "products": ["IBM watsonx.ai", "IBM Confluent"],
-      "buildingBlocks": ["ai.agents", "data.real-time", "data.pipelines"],
+      "buildingBlocks": ["ai.agents", "data.streamhouse", "data.pipelines"],
       "skills": ["agent", "data-streaming-confluent", "rag-pipeline-builder"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/supply-chain-risk-control-tower",
       "workingDemoURL": "",
@@ -167,7 +167,7 @@
       "name": "Live Context for Supply Chain Resilience",
       "slug": "live-context-for-supply-chain-resilience",
       "products": ["IBM watsonX Orchestrate", "IBM watsonx.ai", "IBM Confluent"],
-      "buildingBlocks": ["ai.agents", "data.real-time", "data.pipelines"],
+      "buildingBlocks": ["ai.agents", "data.streamhouse", "data.pipelines"],
       "skills": ["agent-builder", "data-streaming-confluent", "udi-opensearch", "infrastructure-as-code-terraform"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/live-context-for-supply-chain-resilience",
       "workingDemoURL": "",
@@ -289,7 +289,7 @@
       "name": "FactoryPulse — Continuous RAG on Confluent Cloud Streamhouse",
       "slug": "factorypulse-continuous-rag-on-confluent-cloud-streamhouse",
       "products": ["IBM watsonx.ai", "IBM Cloud Code Engine", "IBM Confluent"],
-      "buildingBlocks": ["data.real-time", "data.pipelines", "data.lakehouse"],
+      "buildingBlocks": ["data.streamhouse", "data.pipelines", "data.lakehouse"],
       "skills": ["streamhouse-continuous-rag", "data-streaming-confluent"],
       "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/streamhouse/serve/assets/streamhouse-continous-rag",
       "workingDemoURL": "https://streamhouse-continous-rag.2fdpiiiyi2o0.eu-de.codeengine.appdomain.cloud/",
@@ -451,6 +451,42 @@
       "extrasBoxUrl": "",
       "isLive": true,
       "release_date": "2026-10-13"
+    },
+    {
+      "name": "Predictive Hospital Campus Resilience During Severe Weather",
+      "slug": "predictive-hospital-campus-resilience",
+      "products": [
+        "IBM watsonX Orchestrate",
+        "IBM watsonx.ai",
+        "IBM Granite Time Series Models",
+        "IBM Maximo Application Suite",
+        "IBM Environmental Intelligence Suite",
+        "IBM Cloud Code Engine"
+      ],
+      "buildingBlocks": [
+        "ai.agents",
+        "automation.optimize",
+        "data.streamhouse"
+      ],
+      "skills": [],
+      "codeRepo": "https://github.ibm.com/ibm-build-lab/hover-agentic-energy-optimization",
+      "workingDemoURL": "https://hover-ui.26kc5w2sbrjq.us-south.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [],
+      "screenshots": [
+        "screenshot-01.png",
+        "screenshot-02.png",
+        "screenshot-03.png",
+        "screenshot-04.png"
+      ],
+      "longDescription": "A severe storm approaching a hospital campus puts critical operations at risk. Solar output collapses, and a grid outage can leave the battery system unable to carry the protected acute-care load on its own. A dashboard that only alerts operators is not enough. Facilities teams need to know, hours ahead, what the campus will look like and what to do before the disruption arrives.\n\nThis demo adds an IBM AI layer on top of the Hover Energy Microgrid Management System (MMS). IBM Environmental Intelligence Suite weather forecasts, IBM Maximo asset telemetry, and IBM Granite time-series forecasting predict generation, demand, and the resulting capacity gap across a three-building campus. Deterministic rules lock a 1,080 kW protected floor for Building A (acute care), autonomously pre-charge the battery system to 85%, and propose shedding 215 kW of pre-approved nonclinical load in Buildings B and C. An IBM watsonx Orchestrate agent explains the reasoning in natural language and routes the plan to a human operator for approval. Every recommendation carries explainability metadata (decision logic and confidence).\n\nThe demo plays out a simulated storm week (May 1–7, 2026), with solar, wind, and battery curves showing how the storm is expected to unfold. In production these come from IBM Environmental Intelligence Suite and Granite forecasts, while the demo uses scripted data for repeatability. A grid outage is overlaid as a what-if scenario: the grid fails at 14:50 and returns at 16:30. Battery and wind generation carry the protected floor through the full outage with zero clinical impact, and a Maximo work order is synced for the degraded inverter. Personas include the facilities/energy manager who approves the plan and the clinical operations lead who needs assurance that patient-care loads are never touched.",
+      "shortDescription": "Predictive AI agents protect a hospital microgrid from severe storms, pre-charging batteries and staging operator-approved load shedding so critical care power never drops.",
+      "architecture_description": "The demo layers six components. IBM Environmental Intelligence Suite supplies hyper-local storm and weather forecasts. Edge telemetry from PV, wind, and battery assets flows through IBM Maximo Application Suite, which tracks asset health and generates work orders. IBM Granite time-series models on watsonx.ai forecast generation, load, and capacity gap 96 minutes ahead. The Hover Energy MMS (FastAPI telemetry and fault-detection services over a SQLite dataset) applies deterministic rules: a locked clinical protection floor, battery reserve calculation, and nonclinical load-shed planning. IBM watsonx Orchestrate hosts the agent that explains recommendations and routes them to a human operator for approval. A Next.js/Carbon UI proxies all calls to the backend services. In this demo, weather, generation, and battery data are simulated to stand in for the live feeds.",
+      "extrasBoxUrl": "",
+      "isLive": false,
+      "release_date": "2026-10-20"
     }
   ]
 }

@@ -1,4 +1,4 @@
 ---
-title: "DSCE 2.0 Home"
+title: "Partner Solution Hub"
 layout: "index"
 ---

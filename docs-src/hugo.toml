@@ -1,6 +1,6 @@
 baseURL = 'http://localhost:1313/'
 locale = 'en-us'
-title = 'DSCE 2.0'
+title = 'Partner Solution Hub'
 
 [taxonomies]
 

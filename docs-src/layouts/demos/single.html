@@ -5,7 +5,7 @@
   {{ $hasSpec := and $demo.specificationsRepo (gt (len $demo.specificationsRepo) 0) }}
   {{ if $demo }}
     {{ $mdSrc := printf "demos/%s/demo_script.md" $demo.slug }}
-    {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "%s/demo_script.md" $demo.slug) }}
+    {{ $mdRes := resources.Get $mdSrc | resources.Copy (printf "demos/%s/demo_script.md" $demo.slug) }}
     {{ $images := $demo.screenshots }}
     {{ $assetTypes := slice }}
     {{- if $segmentKey }}
@@ -107,8 +107,10 @@
                     {{ $product := index hugo.Data.products $name }}
                     <li>
                       {{ if $product }}
-                        {{ $productImgPath := printf "images/products/%s" $product.image }}
-                        {{ $productIcon := resources.Get $productImgPath }}
+                        {{ $productIcon := "" }}
+                        {{ if $product.image }}
+                          {{ $productIcon = resources.Get (printf "images/products/%s" $product.image) }}
+                        {{ end }}
                         <a href="{{ $product.url }}" target="_blank" rel="noopener">
                           {{ if $productIcon }}
                             <img src="{{ $productIcon.RelPermalink }}" alt="" class="demo-btn-icon" />

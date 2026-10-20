@@ -1,6 +1,6 @@
 # Smart Cold-Chain Guardrail Platform — Deploy on OpenShift
 
-> **IBM DSCE Demo Asset · Cold-Chain Logistics**
+> **IBM Partner Solution Hub Demo Asset · Cold-Chain Logistics**
 >
 > Deploy the AI-powered cold-chain logistics platform on OpenShift.
 > This guide walks you through registering five watsonx Orchestrate agents and tools,

@@ -84,7 +84,7 @@
         namespace: 'slideshow',
         CTA: 'Screenshot Expanded',
         elementId: 'demo-slide-zoom',
-        platformTitle: 'DSCE',
+        platformTitle: 'Partner Solution Hub',
         payload: { image_type: imageType, image_alt: alt }
       });
     });

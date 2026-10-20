@@ -1,3 +1,3 @@
 ---
-title: "Explore DSCE Use Cases"
+title: "Explore Partner Solution Hub Use Cases"
 ---
