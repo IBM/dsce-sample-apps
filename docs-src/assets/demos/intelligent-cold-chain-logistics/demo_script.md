@@ -48,7 +48,7 @@ Demonstrates how IBM FleetOptx ColdPulse uses AI forecasting models and multi-ag
    - The system reserves an emergency cooling bay at the selected service station.
    - An automated WhatsApp notification with updated navigation details is sent to the driver's device.
 
-> **Note:** For DSCE, the notification option is kept disabled during this demo workflow. Please check the video for full functionality.
+> **Note:** For Partner Solution Hub, the notification option is kept disabled during this demo workflow. Please check the video for full functionality.
 
 ---
 
@@ -96,4 +96,4 @@ Shows how IBM FleetOptx ColdPulse supports the Driver Persona — automatically 
 
 ## Part 3 — SRE Persona
 
-> **Note:** For DSCE, application observability is kept disabled during this demo workflow. Please check the video for full functionality.
+> **Note:** For Partner Solution Hub, application observability is kept disabled during this demo workflow. Please check the video for full functionality.

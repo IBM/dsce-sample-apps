@@ -72,7 +72,7 @@ checkboxes.forEach(cb => cb.addEventListener('change', () => {
     namespace: 'filter',
     CTA: 'Filter Applied',
     elementId: 'filter-checkbox',
-    platformTitle: 'DSCE',
+    platformTitle: 'Partner Solution Hub',
     payload: { filter_values: active, result_count: count }
   });
 }));
@@ -87,7 +87,7 @@ if (clearBtn) {
       namespace: 'filter',
       CTA: 'Filter Cleared',
       elementId: 'clearAllBtn',
-      platformTitle: 'DSCE',
+      platformTitle: 'Partner Solution Hub',
       payload: {}
     });
   });

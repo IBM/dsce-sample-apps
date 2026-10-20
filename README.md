@@ -1,10 +1,10 @@
-# DSCE: Digital Self-Service Co-Create Experience
-This GitHub repo contains source code for all demos hosted in DSCE.  
+# Partner Solution Hub
+This GitHub repo contains source code for all demos hosted in Partner Solution Hub.  
 
-DSCE hosts a broad selection of enterprise applications built using the [IBM Building Blocks](https://ibm-self-serve-assets.github.io/building-blocks-docs/) and its companion [skills for IBM Bob](https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/).
+Partner Solution Hub hosts a broad selection of enterprise applications built using the [IBM Building Blocks](https://ibm-self-serve-assets.github.io/building-blocks-docs/) and its companion [skills for IBM Bob](https://ibm-self-serve-assets.github.io/building-blocks-docs/ibm-bob/skills/).
 
-# Explore DSCE Demos
-Visit the [DSCE demo exploration site](https://ibm.github.io/dsce-sample-apps) to browse the demos by Building Block and use case plus engage with hosted version of the demos.
+# Explore Partner Solution HubDemos
+Visit the [Partner Solution Hubdemo exploration site](https://ibm.github.io/dsce-sample-apps) to browse the demos by Building Block and use case plus engage with hosted version of the demos.
 
 <a href="[https://dsce.com](https://ibm.github.io/dsce-sample-apps)">
   <kbd>

@@ -1,12 +1,12 @@
-name: DSCE Demo Submission
-description: Submit a new demo for inclusion in the DSCE Demo Catalog.
+name: Partner Solution Hub Demo Submission
+description: Submit a new demo for inclusion in the Partner Solution Hub Demo Catalog.
 title: "[Demo Submission] "
 labels: ["demo-submission"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to submit a new demo to the DSCE catalog. Fields marked **required** must be completed.
+        Use this form to submit a new demo to the Partner Solution Hub catalog. Fields marked **required** must be completed.
         Once submitted, the demo team will review your submission and follow up with any questions.
 
   # ── Overview ───────────────────────────────────────────────
@@ -69,7 +69,7 @@ body:
         - label: automation.operate
         - label: automation.optimize
         - label: automation.secure
-        - label: data.real-time
+        - label: data.streamhouse
         - label: data.pipelines
         - label: data.lakehouse
     validations:
@@ -203,7 +203,7 @@ body:
     attributes:
       label: Perform code review prior to submission using this [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml)
       options:
-        - label: IBM CIO now scans all repos in ibm.github.com, so I have used the [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml) to ensure known security alerts have been resovled in my repo.
+        - label: IBM CIO now scans all repos in ibm.github.com, so I have used the [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml) to ensure known security alerts have been resolved in my repo.
     validations:
       required: true
 

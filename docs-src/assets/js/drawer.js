@@ -22,7 +22,7 @@ function bindDrawer(options) {
         namespace: 'drawer',
         CTA: 'Demo Script Opened',
         elementId: 'demoExplainerBtn',
-        platformTitle: 'DSCE',
+        platformTitle: 'Partner Solution Hub',
         payload: {},
         demo_name: demoMeta.name,
         demo_slug: demoMeta.slug,

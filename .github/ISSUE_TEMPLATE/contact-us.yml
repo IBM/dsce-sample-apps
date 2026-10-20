@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form to reach out to the DSCE team. Fields marked **required** must be completed before submitting.
+        Use this form to reach out to the Partner Solution Hub team. Fields marked **required** must be completed before submitting.
 
   # ── Topic ──────────────────────────────────────────────────
   - type: dropdown

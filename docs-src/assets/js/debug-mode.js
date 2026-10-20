@@ -60,7 +60,7 @@ function handleAdminModeClick() {
     clickTimes = [];
     const next = !isAdminMode();
     setDebugMode(next);
-    console.info(`[DSCE] Debug mode ${next ? 'enabled' : 'disabled'}`);
+    console.info(`[Partner Solution Hub] Debug mode ${next ? 'enabled' : 'disabled'}`);
     // Dispatch a custom event so other modules (e.g. index.js) can react
     window.dispatchEvent(new CustomEvent('dsce:debugModeChange', { detail: { active: next } }));
   }

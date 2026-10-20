@@ -125,5 +125,13 @@
     "IBM Maximo Manage" : {
         "url" : "https://www.ibm.com/products/maximo",
         "image" : "ibm-maximo-manage.svg"
+    },
+    "IBM Granite Time Series Models" : {
+        "url" : "https://www.ibm.com/granite/docs/models/time-series",
+        "image" : ""
+    },
+    "IBM Environmental Intelligence Suite" : {
+        "url" : "https://www.ibm.com/docs/en/environmental-intel-suite?topic=product-overview",
+        "image" : ""
     }
 }
