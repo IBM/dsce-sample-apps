@@ -422,7 +422,7 @@
       "architecture": "architecture.png",
       "specificationsRepo": "",
       "specificationsFlow": "",
-      "videos": [{ "cosFileName": "ai-powered-maximo-automation-script-optimization-with-ibm-bob-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "videos": [{ "cosFileName": "ai-powered-maximo-automation-script-optimization-with-ibm-bob-video-1.mp4"}],
       "screenshots": ["home_page.png", "screenshot-01.png"],
       "longDescription": "IBM Maximo environments often contain numerous automation scripts implementing critical business logic for work orders, assets, inventory, and other maintenance processes. Over time, these scripts can become complex and difficult to maintain, increasing technical debt and making troubleshooting, enhancements, and upgrades more challenging. Manually reviewing and optimizing scripts requires significant developer effort and specialized Maximo expertise.\n\nThis demo showcases AI-powered automation script optimization using IBM Bob and a reusable Maximo-specific building block, Maximo-script-optimizer. The solution assists developers in analyzing existing Maximo automation scripts, evaluating code quality and maintainability, identifying potential issues, and generating optimized code recommendations based on Maximo-specific coding patterns.\n\nThe demo presents the original script alongside the optimized version, allowing developers to review suggested changes and understand how the code can be improved. Code-quality indicators and identified issues help illustrate opportunities to improve readability, maintainability, performance, and consistency.\n\nBy combining IBM Bob's AI-assisted development capabilities with reusable Maximo-specific optimization patterns, the solution helps Maximo developers, solution architects, and implementation partners reduce manual code-review effort, simplify existing customizations, and accelerate ongoing Maximo development and modernization activities. Developers remain responsible for reviewing, validating, and testing optimized scripts before deploying them into production environments.",
       "shortDescription": "Uses IBM Bob to analyze and optimize IBM Maximo automation scripts, improving code quality, maintainability, performance, and consistency while reducing manual development effort and technical debt.",
@@ -443,7 +443,7 @@
       "architecture": "architecture.png",
       "specificationsRepo": "",
       "specificationsFlow": "",
-      "videos": [{ "cosFileName": "ai-powered-legacy-java-to-maximo-automation-script-conversion-with-ibm-bob-video-1.mp4", "youTubeURL": "", "thumbnail": "" }],
+      "videos": [{ "cosFileName": "ai-powered-legacy-java-to-maximo-automation-script-conversion-with-ibm-bob-video-1.mp4"}],
       "screenshots": ["home_page.png", "screenshot-01.png"],
       "longDescription": "IBM Maximo implementations often contain legacy Java customizations developed to support specialized business requirements. Over time, maintaining these customizations can become challenging due to code complexity, upgrade considerations, and dependency on specialized Java and Maximo development expertise. Manually analyzing existing Java implementations and recreating their functionality as Maximo automation scripts can require significant time and effort.\n\nThis demo showcases AI-assisted legacy Java customization conversion using IBM Bob and a reusable Maximo-specific building block, Maximo-java-conversion. The solution assists developers in analyzing existing Java customization logic and generating corresponding Maximo automation script implementations.\n\nThe demo demonstrates how the conversion workflow can help developers understand legacy code, map existing business logic to the automation scripting model, and accelerate the creation of maintainable Maximo customizations. Developers can review the original Java implementation alongside the generated automation script to assess the conversion and identify any required adjustments.\n\nBy combining IBM Bob's AI-assisted development capabilities with reusable Maximo-specific conversion patterns, the solution helps Maximo developers, solution architects, and implementation partners reduce manual conversion effort and simplify legacy customization maintenance. The approach supports Maximo modernization initiatives by encouraging maintainable implementations while retaining the required business behavior. Generated scripts must be reviewed, functionally validated, and tested in a non-production environment before deployment.",
       "shortDescription": "Accelerates IBM Maximo modernization by using IBM Bob to assist in converting legacy Java customizations into Maximo automation scripts, reducing manual conversion effort and simplifying long-term customization maintenance.",
@@ -468,13 +468,13 @@
         "automation.optimize",
         "data.streamhouse"
       ],
-      "skills": [],
+      "skills": ["ttm-forecasting", "real-time-guardrails"],
       "codeRepo": "https://github.ibm.com/ibm-build-lab/hover-agentic-energy-optimization",
       "workingDemoURL": "https://hover-ui.26kc5w2sbrjq.us-south.codeengine.appdomain.cloud/",
       "architecture": "architecture.png",
       "specificationsRepo": "",
       "specificationsFlow": "",
-      "videos": [],
+      "videos": [{ "cosFileName": "predictive-hospital-campus-resilience.mp4"}],
       "screenshots": [
         "screenshot-01.png",
         "screenshot-02.png",
@@ -485,7 +485,7 @@
       "shortDescription": "Predictive AI agents protect a hospital microgrid from severe storms, pre-charging batteries and staging operator-approved load shedding so critical care power never drops.",
       "architecture_description": "The demo layers six components. IBM Environmental Intelligence Suite supplies hyper-local storm and weather forecasts. Edge telemetry from PV, wind, and battery assets flows through IBM Maximo Application Suite, which tracks asset health and generates work orders. IBM Granite time-series models on watsonx.ai forecast generation, load, and capacity gap 96 minutes ahead. The Hover Energy MMS (FastAPI telemetry and fault-detection services over a SQLite dataset) applies deterministic rules: a locked clinical protection floor, battery reserve calculation, and nonclinical load-shed planning. IBM watsonx Orchestrate hosts the agent that explains recommendations and routes them to a human operator for approval. A Next.js/Carbon UI proxies all calls to the backend services. In this demo, weather, generation, and battery data are simulated to stand in for the live feeds.",
       "extrasBoxUrl": "",
-      "isLive": false,
+      "isLive": true,
       "release_date": "2026-10-20"
     }
   ]
