@@ -2,7 +2,8 @@
     "ai.agents" : [
         { "name": "agent", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/agent" },
         { "name": "agent-ops", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/agent-ops" },
-        { "name": "application-observability", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/application-observability" }
+        { "name": "application-observability", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/application-observability" },
+        { "name": "cost-management", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/cost-management" }
     ],
     "ai.trust" : [
         { "name": "real-time-guardrails", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/real-time-guardrails" },
@@ -15,7 +16,7 @@
         { "name": "udi-opensearch", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/udi-opensearch" },
         { "name": "opensearch-vector-search", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/opensearch-vector-search" },
         { "name": "astradb-nosql-design", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/astradb-nosql-design" },
-        { "name": "streamhouse-continuous-rag", "url": "https://github.com/ibm-self-serve-assets/building-blocks/blob/main/ibm-bob/skills/streamhouse-continuous-rag" }
+        { "name": "streamhouse-continuous-rag", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/streamhouse-continuous-rag" }
     ],
     "data.pipelines" : [
         { "name": "data-ingestion-structured", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/data-ingestion-structured" },
@@ -24,7 +25,8 @@
         { "name": "rag-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/rag-pipeline-builder" },
         { "name": "rag-mcp-server-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/rag-mcp-server-builder" },
         { "name": "pipeline-standards", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/pipeline-standards" },
-        { "name": "sdd-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/sdd-pipeline-builder" }
+        { "name": "sdd-pipeline-builder", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/sdd-pipeline-builder" },
+        { "name": "ttm-forecasting", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/ttm-forecasting" }
     ],
     "data.lakehouse" : [
         { "name": "text2sql-metadata-enrichment", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/text2sql-metadata-enrichment" },
@@ -41,7 +43,8 @@
         { "name": "maximo-java-conversion", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/automation/operate/asset-management/bob-skills" }
     ],
     "automation.optimize" : [
-        { "name": "automated-resource-mgmt-turbonomic", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/automated-resource-mgmt-turbonomic" }
+        { "name": "automated-resource-mgmt-turbonomic", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/automated-resource-mgmt-turbonomic" },
+        { "name": "tech-financial-mgmt-finOps", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/tech-financial-mgmt-finOps" }
     ],
     "automation.secure" : [
         { "name": "non-human-identity-vault", "url": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/ibm-bob/skills/non-human-identity-vault" }
