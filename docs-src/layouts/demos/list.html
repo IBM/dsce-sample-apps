@@ -1,121 +1,25 @@
 {{ define "main" }}
-  <div class="homepage-wrapper">
-    <div class="site-header-content">
-      <div class="site-header">Explore interactive use cases</div>
-      <div class="site-subheader">See how IBM Building Blocks can be used with IBM Bob to build enterprise solutions.</div>
+  <div class="demos-catalog-wrapper">
+    <div class="demos-page-header">
+      <div class="demos-eyebrow">HOME / DEMOS AND USE CASES</div>
+      <h1 class="demos-page-title">Explore interactive use cases</h1>
+      <p class="demos-page-subtitle">Explore the existing Hub by Building Block. A partner route retains its solution context.</p>
     </div>
-    <div class="site-filter-wrapper">
-      <div class="sidebar-nav">
-        <div class="demo-filter">
 
-          <div class="asset-type-filter">
-            <div class="asset-type-filter-header">
-              <div class="master-nav-header" id="admin-mode-trigger">Filter by Building Block</div>
-              <span class="clear-all-btn" id="clearAllBtn">Clear all</span>
-            </div>
-          </div>
-          <hr>
+    <!-- Filter pills -->
+    {{ $allDemos := hugo.Data.demos.demos }}
+    {{ $liveDemos := where $allDemos "isLive" true }}
+    <div class="demos-filter-pills" id="demoFilterPills">
+      <button class="demos-filter-pill is-active" data-bb="">All</button>
+      <button class="demos-filter-pill" data-bb="agents">AI &middot; Agents</button>
+      <button class="demos-filter-pill" data-bb="streamhouse">Data &middot; Streamhouse</button>
+      <button class="demos-filter-pill" data-bb="optimize">Automation &middot; Optimize</button>
+    </div>
 
-          <!-- ==================== MASTER SECTION: BUILDING BLOCKS ==================== -->
-          {{ $allDemos := hugo.Data.demos.demos }}
-          {{ $liveDemos := where $allDemos "isLive" true }}
-          {{ $bbCounts := dict }}
-          {{ range $liveDemos }}
-            {{ range .buildingBlocks }}
-              {{ $parts := split . "." }}
-              {{ if eq (len $parts) 2 }}
-                {{ $key := index $parts 1 }}
-                {{ $bbCounts = merge $bbCounts (dict $key (add (index $bbCounts $key | default 0) 1)) }}
-              {{ end }}
-            {{ end }}
-          {{ end }}
-          <div class="master-nav-section">
-            <div class="master-nav-content">
-
-              <!-- ==================== SECTION: AI ==================== -->
-              <div class="nav-section">
-                <div class="section-title">AI</div>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="agents">Agents <span class="filter-count">{{ index $bbCounts "agents" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="govern">Govern <span class="filter-count">{{ index $bbCounts "govern" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="engineering">Engineering <span class="filter-count">{{ index $bbCounts "engineering" | default 0 }}</span></label>
-                </div>
-              </div>
-
-              <!-- ==================== SECTION: DATA ==================== -->
-              <div class="nav-section">
-                <div class="section-title">Data</div>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="pipelines">Pipelines <span class="filter-count">{{ index $bbCounts "pipelines" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="Streamhouse">Streamhouse <span class="filter-count">{{ index $bbCounts "streamhouse" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="lakehouse">Lakehouse <span class="filter-count">{{ index $bbCounts "lakehouse" | default 0 }}</span></label>
-                </div>
-              </div>
-
-              <!-- ==================== SECTION: AUTOMATION ==================== -->
-              <div class="nav-section">
-                <div class="section-title">Automation</div>
-                <div class="accordion-content">
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="operate">Operate <span class="filter-count">{{ index $bbCounts "operate" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="secure">Secure <span class="filter-count">{{ index $bbCounts "secure" | default 0 }}</span></label>
-                  <label class="checkbox-label"><input type="checkbox" class="filter-cb" value="optimize">Optimize <span class="filter-count">{{ index $bbCounts "optimize" | default 0 }}</span></label>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="info-card">
-          <div>
-            <div class="info-card-tagline">
-              {{ $bbIcon := resources.Get "images/blocks.svg" | fingerprint }}
-              <img src="{{ $bbIcon.RelPermalink }}" width="50">
-              <span class="info-card-tagline-text">
-                <strong>Building Blocks</strong>
-                <span>Pre-built capabilities spanning AI, Data, and Automation.</span>
-                <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" class="cta-link" target="_blank" rel="noopener noreferrer" id="buildingBlocksDocsBtn">
-                  Learn More →
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="info-card">
-          <div>
-            <div class="info-card-tagline">
-              {{ $bobIcon := resources.Get "images/bob.png" | fingerprint }}
-              <img src="{{ $bobIcon.RelPermalink }}" width="50">
-              <span class="info-card-tagline-text">
-                <strong>IBM Bob</strong>
-                <span>AI-first development partner for building enterprise solutions.</span>
-                <a href="https://bob.ibm.com/" class="cta-link" target="_blank" rel="noopener noreferrer" id="tryBobBtn">
-                  Try Bob →
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="info-card">
-          <div>
-            <div class="info-card-tagline">
-              {{ $repoOwner := .Site.Params.githubRepoOwner }}
-              {{ $repoName := .Site.Params.githubRepoName }}
-              {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
-              {{ $applicationIcon := resources.Get "images/application_black.svg" | fingerprint }}
-              <img src="{{ $applicationIcon.RelPermalink }}" width="50">
-              <span class="info-card-tagline-text">
-                <strong>Have a demo to share?</strong>
-                <span>We are accepting new applications to showcase</span>
-                <a href="{{$demoSubmissionURL}}" class="cta-link" target="_blank" rel="noopener noreferrer" id="sidebarSubmitDemoBtn">
-                  Submit your demo →
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <main class="main-content-window">
+    <!-- Main two-column area: demo cards left, technical content right -->
+    <div class="demos-main-layout">
+      <!-- Left: demo card list -->
+      <div class="demos-cards-column">
         <div id="demo-results-count" class="demo-results-count"></div>
         <div id="demo-cards-wrapper" class="demo-cards-wrapper">
           {{ $sortedDemos := sort $allDemos "name" "asc" }}
@@ -144,12 +48,33 @@
                 {{ $bbSlugs = $bbSlugs | append (. | lower) }}
               {{ end }}
             {{ end }}
+
+            {{/* First live demo gets the featured card layout with video placeholder */}}
+            {{ if and $demo.isLive (eq $demo.slug "finops-intelligence") }}
+            <div class="demos-featured-card"
+              data-building-blocks="{{ delimit $bbSlugs " " | lower }}"
+              data-asset-types="{{ delimit $assetTypes " " }}"
+              data-islive="{{ $demo.isLive }}">
+              <div class="demos-featured-video-placeholder">
+                <span>Demo video &middot; 2–5 minutes</span>
+              </div>
+              <div class="demos-featured-card-body">
+                <h2 class="demos-featured-card-title">{{ $demo.name }}</h2>
+                <p class="demos-featured-card-desc">{{ $demo.shortDescription }}</p>
+                <a class="demos-featured-cta" href="{{ printf "demos/%s/" $demo.slug | absURL }}">
+                  Explore technical assets &nbsp;&#8594;
+                </a>
+              </div>
+            </div>
+            {{ else }}
             <a class="card-item"
               href="{{ printf "demos/%s/" $demo.slug | absURL }}"
               data-building-blocks="{{ delimit $bbSlugs " " | lower }}"
               data-asset-types="{{ delimit $assetTypes " " }}"
               data-islive="{{ $demo.isLive }}">
+              {{ if $cardImg }}
               <img src="{{ $cardImg.RelPermalink }}" alt="{{ $demo.name }}" />
+              {{ end }}
               <div class="card-item-description">
                 <div>{{ $demo.name }}</div>
                 <p>{{ $demo.shortDescription }}</p>
@@ -159,29 +84,24 @@
               </div>
               <div class="explore-demo">Explore use case →</div>
             </a>
+            {{ end }}
           {{ end }}
         </div>
       </div>
-    </main>
+
+      <!-- Right: Technical content panel -->
+      <aside class="demos-technical-panel">
+        <h2 class="demos-technical-title">Technical content</h2>
+        <ul class="demos-technical-list">
+          <li>IBM technologies and Building Blocks</li>
+          <li>Architecture and demo walkthrough</li>
+          <li>IBM Bob specifications and skills, where available</li>
+          <li>Source code, where available</li>
+        </ul>
+      </aside>
+    </div>
   </div>
+
   {{ $js := resources.Get "js/index.js" | fingerprint }}
   <script src="{{ $js.RelPermalink }}" defer integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
-  {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .Site.Params.segmentApiKey -}}
-  {{- if $segmentKey }}
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var base = { channel: 'webpage', type: 'Button', objectType: 'CTA', location: 'demo listing sidebar', productCode: 'dsce2', productCodeType: 'ibm build engineering' };
-    var links = [
-      { id: 'buildingBlocksDocsBtn', text: 'Building Blocks Docs' },
-      { id: 'tryBobBtn',             text: 'Try Bob'               },
-      { id: 'sidebarSubmitDemoBtn',  text: 'Submit your demo', type: 'Link' }
-    ];
-    links.forEach(function (cfg) {
-      var el = document.getElementById(cfg.id);
-      if (!el || !window.analytics) return;
-      window.analytics.trackLink(el, 'CTA Clicked', Object.assign({}, base, { CTA: cfg.text, text: cfg.text, type: cfg.type || base.type }));
-    });
-  });
-  </script>
-  {{- end }}
 {{ end }}

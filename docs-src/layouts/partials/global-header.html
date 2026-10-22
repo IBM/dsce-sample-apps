@@ -8,50 +8,38 @@
       <span class="global-header-brand-divider" aria-hidden="true"></span>
       <span class="global-header-brand-title">Partner Solution Hub</span>
     </div>
-    {{- $segmentKey := os.Getenv "HUGO_SEGMENT_API_KEY" | default .page.Site.Params.segmentApiKey -}}
     <nav class="header-actions" aria-label="Header actions">
-      {{ $repoOwner := .page.Site.Params.githubRepoOwner }}
-      {{ $repoName := .page.Site.Params.githubRepoName }}
-      {{ $demoSubmissionURL := printf "https://github.com/%s/%s/issues/new?template=demo-submission.yml" $repoOwner $repoName }}
-      {{ $contactUsURL := printf "https://github.com/%s/%s/issues/new?template=contact-us.yml" $repoOwner $repoName }}
-      <a class="header-btn" href="{{$demoSubmissionURL}}" target="_blank" rel="noopener noreferrer" id="headerSubmitDemoBtn">Submit your demo</a>
-      <span class="header-actions-divider" aria-hidden="true">|</span>
-      <a class="header-btn" href="{{$contactUsURL}}" target="_blank" rel="noopener noreferrer" id="headerContactUsBtn">Contact us</a>
+      <a class="header-btn header-btn--explore" href="{{ "demos/" | relURL }}" id="headerExploreBtn">Explore demos &nbsp;&#8594;</a>
     </nav>
-    {{- if $segmentKey }}
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var base = { channel: 'webpage', type: 'Link', location: 'header', objectType: 'CTA', productCode: 'dsce2', productCodeType: 'ibm build engineering' };
-      var links = [
-        { id: 'headerSubmitDemoBtn', text: 'Submit your demo' },
-        { id: 'headerContactUsBtn',  text: 'Contact us' }
-      ];
-      links.forEach(function (cfg) {
-        var el = document.getElementById(cfg.id);
-        if (!el || !window.analytics) return;
-        window.analytics.trackLink(el, 'CTA Clicked', Object.assign({}, base, { CTA: cfg.text, text: cfg.text }));
-      });
-    });
-    </script>
-    {{- end }}
+  </div>
+  <div class="global-header-disclaimer" role="note">
+    Design proposal &middot; Illustrative partner records and assets. No customer outcomes or partner-to-demo relationships are asserted.
   </div>
   <div class="global-header global-header-breadcrumbs" aria-label="Breadcrumb">
     <a class="global-header-home" href="{{ site.Home.RelPermalink }}">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-        <path fill="currentColor" d="M12 3.3 4 9.5V21h5v-6h6v6h5V9.5z"/>
-      </svg>
-      <span>Home</span>
+      HOME
     </a>
     {{ if .showUseCases }}
       <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
-      <span class="global-header-current">Use cases</span>
+      <span class="global-header-current">DEMOS AND USE CASES</span>
     {{ end }}
     {{ if .showBack }}
       <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
-      <a class="global-header-use-cases" href="{{ "demos/" | relURL }}">Use cases</a>
+      {{ if hasPrefix .page.RelPermalink "/partners" }}
+        <a class="global-header-use-cases" href="{{ "partners/" | relURL }}">PARTNER SOLUTIONS</a>
+      {{ else }}
+        <a class="global-header-use-cases" href="{{ "demos/" | relURL }}">USE CASES</a>
+      {{ end }}
       <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
-      <span class="global-header-current">{{ .title }}</span>
+      <span class="global-header-current">{{ .title | upper }}</span>
+    {{ end }}
+    {{ if and (not .showBack) (not .showUseCases) (hasPrefix .page.RelPermalink "/partners") }}
+      <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
+      <span class="global-header-current">PARTNER SOLUTIONS</span>
+    {{ end }}
+    {{ if and (not .showBack) (not .showUseCases) (hasPrefix .page.RelPermalink "/demos") }}
+      <span class="global-header-breadcrumb-separator" aria-hidden="true">&#8250;</span>
+      <span class="global-header-current">DEMOS AND USE CASES</span>
     {{ end }}
   </div>
 </header>
-
