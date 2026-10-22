@@ -3,8 +3,7 @@ name: Deploy Hugo Docs
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Change to master if your default repo branch uses master
 
 permissions:
   contents: read
