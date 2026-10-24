@@ -1,0 +1,156 @@
+{{ define "main" }}
+  {{ $allPartners := hugo.Data.partners.partners }}
+  {{ $livePartners := where $allPartners "published" true }}
+
+  <div class="partners-catalog-wrapper">
+    <div class="partners-page-header">
+      <div class="partners-eyebrow">HOME / PARTNER SOLUTIONS</div>
+      <h1 class="partners-page-title">Find a partner solution for your business</h1>
+      <p class="partners-page-subtitle">Explore offerings with approved customer evidence. Open a solution to see its use cases, stories and available demos.</p>
+      <p class="partners-search-label">Search partners, offerings or business problems</p>
+    </div>
+
+    <div class="partners-search-bar">
+      <label for="ps-search" class="sr-only">Search partner solutions</label>
+      <div class="partners-search-input-wrap">
+        <svg class="partners-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="ps-search" class="partners-search-input" type="search" placeholder="Search partner solutions" autocomplete="off" />
+      </div>
+    </div>
+
+    <!-- Inline dropdown filters -->
+    <div class="partners-inline-filters">
+      <div class="partners-inline-filter-group">
+        <label class="partners-inline-filter-label" for="ps-filter-industry-sel">Industry</label>
+        <select id="ps-filter-industry-sel" class="partners-inline-select" data-filter-type="industry">
+          <option value="">All industries</option>
+          {{ $industries := slice }}
+          {{ range $livePartners }}
+            {{ range .industries }}
+              {{ $industries = $industries | append . }}
+            {{ end }}
+          {{ end }}
+          {{ range ($industries | uniq | sort) }}
+          <option value="{{ . | urlize }}">{{ . }}</option>
+          {{ end }}
+        </select>
+      </div>
+
+      <div class="partners-inline-filter-group">
+        <label class="partners-inline-filter-label" for="ps-filter-product-sel">IBM product used in solution</label>
+        <select id="ps-filter-product-sel" class="partners-inline-select" data-filter-type="product">
+          <option value="">All verified products</option>
+          {{ $products := slice }}
+          {{ range $livePartners }}
+            {{ range .ibmProducts }}
+              {{ $products = $products | append . }}
+            {{ end }}
+          {{ end }}
+          {{ range ($products | uniq | sort) }}
+          <option value="{{ . | urlize }}">{{ . }}</option>
+          {{ end }}
+        </select>
+      </div>
+
+      <div class="partners-inline-filter-group">
+        <label class="partners-inline-filter-label" for="ps-filter-offering-sel">Partner offering</label>
+        <select id="ps-filter-offering-sel" class="partners-inline-select" data-filter-type="offering">
+          <option value="">All offerings</option>
+          {{ range $livePartners }}
+            {{ $partner := . }}
+            {{ range .solutions }}
+              {{ if .published }}
+              <option value="{{ .title | urlize }}">{{ .title }}</option>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        </select>
+      </div>
+    </div>
+
+    <!-- Results count + active filter tags -->
+    <div class="partners-results-meta">
+      <span id="ps-count" aria-live="polite" aria-atomic="true"></span>
+      <a href="#" class="partners-clear-link" id="ps-clear" style="display:none;">Clear filters</a>
+      <div class="partners-active-filters" id="ps-active-filters" aria-label="Active filters"></div>
+    </div>
+
+    <!-- Card grid -->
+    <div class="partners-grid" id="ps-grid">
+      {{ range $livePartners }}
+        {{ $partner := . }}
+        {{ range .solutions }}
+          {{ $sol := . }}
+          {{ if .published }}
+          {{ $evidenceTypes := slice }}
+          {{ range .evidence }}
+            {{ if .published }}
+              {{ $evidenceTypes = $evidenceTypes | append .type }}
+            {{ end }}
+          {{ end }}
+          {{ $hasEvidence := gt (len $evidenceTypes) 0 }}
+          {{ $hasDemo := gt (len .demoSlugs) 0 }}
+          {{ $productSlugs := slice }}
+          {{ range .ibmProducts }}
+            {{ $productSlugs = $productSlugs | append (. | urlize) }}
+          {{ end }}
+          {{ $industrySlugs := slice }}
+          {{ range $partner.industries }}
+            {{ $industrySlugs = $industrySlugs | append (. | urlize) }}
+          {{ end }}
+          <article class="partner-card"
+            data-partner-name="{{ $partner.name | lower }}"
+            data-solution-title="{{ .title | lower }}"
+            data-offering="{{ .title | urlize }}"
+            data-business-problem="{{ .businessProblem | lower }}"
+            data-industries="{{ delimit $industrySlugs " " }}"
+            data-products="{{ delimit $productSlugs " " }}"
+            data-geo="{{ $partner.geo | urlize }}"
+            data-has-evidence="{{ $hasEvidence }}"
+            data-has-demo="{{ $hasDemo }}">
+            <div class="partner-card-header">
+              <div class="partner-card-name">{{ $partner.name }}</div>
+            </div>
+            <h2 class="partner-card-title">{{ .title }}</h2>
+            <p class="partner-card-desc">{{ .shortDescription }}</p>
+            <div class="partner-card-tags">
+              {{ range $partner.industries }}
+                <span class="partner-tag partner-tag--industry">{{ . }}</span>
+              {{ end }}
+              {{ range .ibmProducts }}
+                <span class="partner-tag partner-tag--product">{{ . }}</span>
+              {{ end }}
+            </div>
+            <div class="partner-card-footer">
+              <div class="partner-card-evidence-row">
+                {{ if $hasEvidence }}
+                  <span class="partner-evidence-slot">Customer story slot</span>
+                {{ end }}
+                {{ if $hasDemo }}
+                  <span class="partner-evidence-slot">Linked demo slot</span>
+                {{ else }}
+                  <span class="partner-evidence-slot partner-evidence-slot--none">Demo not available</span>
+                {{ end }}
+              </div>
+              <a class="partner-card-cta" href="{{ printf "partners/%s/" $partner.slug | relURL }}">
+                Explore solution and evidence &nbsp;&#8594;
+              </a>
+            </div>
+          </article>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+
+    <p class="partners-empty-state" id="ps-empty" hidden>
+      No solutions match your filters. <button type="button" class="partners-clear-inline" id="ps-clear-inline">Clear all filters</button> to broaden your search.
+    </p>
+
+    <div class="partners-catalog-footer">
+      <a class="partners-demos-link" href="{{ "demos/" | relURL }}">Explore all IBM demos &nbsp;&#8594;</a>
+    </div>
+  </div>
+
+  {{ $js := resources.Get "js/partners.js" | fingerprint }}
+  <script src="{{ $js.RelPermalink }}" defer integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
+{{ end }}

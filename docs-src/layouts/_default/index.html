@@ -1,25 +1,54 @@
 {{ define "main" }}
+  {{ $featured := hugo.Data.featured }}
   <div class="landing-wrapper">
     <div class="landing-hero-panel">
-      <h1 class="landing-hero-headline">Accelerate and scale innovation with IBM technologies</h1>
+      <div class="landing-hero-inner">
+        <div class="landing-eyebrow">PARTNER SOLUTION HUB</div>
+        <h1 class="landing-hero-headline">Accelerate and scale innovation with IBM technologies</h1>
+      </div>
     </div>
     <div class="landing-content-panel">
-      <p class="landing-intro-text">
-        <strong>Partner Solution Hub</strong> helps you explore, adapt, and build solutions with
-        <a href="https://ibm-self-serve-assets.github.io/building-blocks-docs/" target="_blank" rel="noopener">IBM Building Blocks</a>.
-        These use cases address a wide range of business and technical challenges with each including an interactive demo, system architecture, natural language specifications,
-        and source code to help you get started.
-      </p>
-      <p class="landing-intro-text">
-        Have a different challenge in mind?
-        <a href="https://github.com/IBM/dsce-sample-apps/issues/new?template=contact-us.yml" target="_blank" rel="noopener">Contact us</a>,
-        and let’s build a solution together.
-      </p>
-      <a class="landing-cta-btn" href="{{ "demos/" | absURL }}">
-        Get Started &nbsp;&#8594;
-      </a>
+      <div class="landing-content-card">
+        <h2 class="landing-content-card-title">Explore what partners build. See how it works.</h2>
+        <p class="landing-intro-text">
+          Discover partner offerings and customer stories, then explore the demos, architecture and build assets behind relevant use cases.
+        </p>
+        <div class="landing-cta-row">
+          <a class="landing-cta-btn" href="{{ "partners/" | relURL }}">
+            Explore partner solutions &nbsp;&#8594;
+          </a>
+          <a class="landing-cta-btn landing-cta-btn--secondary" href="{{ "demos/" | relURL }}">
+            Browse demos &nbsp;&#8594;
+          </a>
+        </div>
+      </div>
     </div>
   </div>
+
+  {{- if $featured.published }}
+  <section class="landing-featured" aria-label="Featured content">
+    <div class="landing-featured-inner">
+      <div class="landing-featured-eyebrow">TECHXCHANGE FEATURE</div>
+      <h2 class="landing-featured-title">{{ $featured.title }}</h2>
+      {{ if $featured.description }}
+        <p class="landing-featured-desc">{{ $featured.description }}</p>
+      {{ end }}
+      {{ if $featured.partnerNames }}
+        <p class="landing-featured-partners">
+          {{- range $i, $p := $featured.partnerNames -}}
+            {{- if gt $i 0 }}, {{ end }}{{ $p }}
+          {{- end -}}
+        </p>
+      {{ end }}
+      {{ if $featured.linkURL }}
+        <a class="landing-featured-link" href="{{ $featured.linkURL }}" {{ if not (hasPrefix $featured.linkURL "/") }}target="_blank" rel="noopener"{{ end }}>
+          {{ if $featured.linkLabel }}{{ $featured.linkLabel }}{{ else }}Preview featured route{{ end }} &nbsp;&#8594;
+        </a>
+      {{ end }}
+    </div>
+  </section>
+  {{- end }}
+
   <footer class="landing-footer">
     <span class="landing-footer-left">Developed by IBM Build Engineering team</span>
     <nav class="landing-footer-links" aria-label="Footer links">
@@ -31,5 +60,3 @@
     </nav>
   </footer>
 {{ end }}
-
-

@@ -1,0 +1,171 @@
+{{ define "main" }}
+  {{ $slug := .Params.slug }}
+  {{ $allPartners := hugo.Data.partners.partners }}
+  {{ $partner := index (where $allPartners "slug" $slug) 0 }}
+
+  {{ if $partner }}
+    {{ $allSolutions := slice }}
+    {{ range $partner.solutions }}
+      {{ if .published }}
+        {{ $allSolutions = $allSolutions | append . }}
+      {{ end }}
+    {{ end }}
+
+    <main class="partner-detail-page">
+      <!-- Breadcrumb is handled by global-header via showBack param -->
+
+      <div class="partner-detail-eyebrow">PARTNER SOLUTION</div>
+      <div class="partner-detail-partner-name">{{ $partner.name }}</div>
+      <div class="partner-detail-website">
+        <a href="{{ $partner.website }}" target="_blank" rel="noopener noreferrer">{{ $partner.website }}</a>
+      </div>
+      <div class="partner-detail-meta-tags">
+        {{ range $partner.industries }}
+          <span class="partner-tag partner-tag--industry">{{ . }}</span>
+        {{ end }}
+        <span class="partner-tag partner-tag--geo">{{ $partner.geo }}</span>
+      </div>
+
+      {{ range $allSolutions }}
+        {{ $sol := . }}
+        {{ $publishedEvidence := where .evidence "published" true }}
+        {{ $hasDemos := gt (len .demoSlugs) 0 }}
+        {{ $allDemos := hugo.Data.demos.demos }}
+
+        <div class="partner-solution-block" id="solution-{{ .slug }}">
+
+          <h1 class="partner-solution-title">{{ .title }}</h1>
+          <p class="partner-solution-short-desc">{{ .shortDescription }}</p>
+
+          <!-- IBM Products used -->
+          <div class="partner-solution-products">
+            {{ range .ibmProducts }}
+              <span class="partner-tag partner-tag--product">{{ . }}</span>
+            {{ end }}
+          </div>
+
+          <!-- Steps: numbered sequentially -->
+          {{ $stepNum := 1 }}
+
+          <!-- Step: Offering Overview -->
+          <section class="partner-step" id="offering-overview">
+            <div class="partner-step-title">
+              <span class="step-circle">{{ $stepNum }}</span> Offering overview
+            </div>
+            <div class="partner-step-content">
+              {{ if .businessProblem }}
+                <div class="partner-detail-section-label">Business problem</div>
+                <p class="partner-detail-body">{{ .businessProblem }}</p>
+              {{ end }}
+              {{ if .valueProp }}
+                <div class="partner-detail-section-label">Value proposition</div>
+                <p class="partner-detail-body">{{ .valueProp }}</p>
+              {{ end }}
+              {{ if .audience }}
+                <div class="partner-detail-section-label">Intended for</div>
+                <p class="partner-detail-body">{{ .audience }}</p>
+              {{ end }}
+            </div>
+          </section>
+
+          <!-- Step: Customer Evidence -->
+          {{ $stepNum = add $stepNum 1 }}
+          {{ if $publishedEvidence }}
+          <section class="partner-step" id="customer-evidence">
+            <div class="partner-step-title">
+              <span class="step-circle">{{ $stepNum }}</span> Customer evidence
+            </div>
+            <div class="partner-step-content">
+              {{ range $publishedEvidence }}
+              <div class="partner-evidence-card">
+                <div class="partner-evidence-type">{{ .type | upper }}</div>
+                <h3 class="partner-evidence-title">{{ .title }}</h3>
+                {{ if .summary }}
+                  <p class="partner-evidence-summary">{{ .summary }}</p>
+                {{ end }}
+                {{ if .sourceURL }}
+                  <a class="partner-evidence-link" href="{{ .sourceURL }}" target="_blank" rel="noopener noreferrer">
+                    Read {{ .type | lower }} &nbsp;&#8594;
+                  </a>
+                {{ end }}
+              </div>
+              {{ end }}
+            </div>
+          </section>
+          {{ end }}
+
+          <!-- Step: Demos and Technical Exploration -->
+          {{ $stepNum = add $stepNum 1 }}
+          <section class="partner-step" id="demos-and-technical">
+            <div class="partner-step-title">
+              <span class="step-circle">{{ $stepNum }}</span> Demos and technical exploration
+            </div>
+            <div class="partner-step-content">
+              {{ if $hasDemos }}
+                {{ if eq (len .demoSlugs) 1 }}
+                  {{ $demoSlug := index .demoSlugs 0 }}
+                  {{ $demo := index (where $allDemos "slug" $demoSlug) 0 }}
+                  {{ if $demo }}
+                    <p class="partner-detail-body">An interactive demo is available for this solution.</p>
+                    <div class="partner-demo-card">
+                      <div class="partner-demo-card-name">{{ $demo.name }}</div>
+                      <p class="partner-demo-card-desc">{{ $demo.shortDescription }}</p>
+                      <a class="partner-demo-btn" href="{{ printf "demos/%s/" $demo.slug | relURL }}">
+                        Explore demo &nbsp;&#8594;
+                      </a>
+                    </div>
+                  {{ end }}
+                {{ else }}
+                  <p class="partner-detail-body">Multiple demos are available for this solution.</p>
+                  {{ range .demoSlugs }}
+                    {{ $demoSlug := . }}
+                    {{ $demo := index (where $allDemos "slug" $demoSlug) 0 }}
+                    {{ if $demo }}
+                    <div class="partner-demo-card">
+                      <div class="partner-demo-card-name">{{ $demo.name }}</div>
+                      <p class="partner-demo-card-desc">{{ $demo.shortDescription }}</p>
+                      <a class="partner-demo-btn" href="{{ printf "demos/%s/" $demo.slug | relURL }}">
+                        Explore demo &nbsp;&#8594;
+                      </a>
+                    </div>
+                    {{ end }}
+                  {{ end }}
+                {{ end }}
+              {{ else }}
+                <p class="partner-detail-body partner-detail-muted">No demo has been linked to this solution yet. Explore the IBM demo catalog for related use cases.</p>
+                <a class="partner-demo-btn partner-demo-btn--secondary" href="{{ "demos/" | relURL }}">Browse all demos &nbsp;&#8594;</a>
+              {{ end }}
+            </div>
+          </section>
+
+          <!-- Step 4: Next step -->
+          {{ if .partnerProductURL }}
+          {{ $stepNum = add $stepNum 1 }}
+          <section class="partner-step" id="next-step">
+            <div class="partner-step-title">
+              <span class="step-circle">{{ $stepNum }}</span> Take the next step
+            </div>
+            <div class="partner-step-content">
+              <p class="partner-detail-body">Learn more about this offering or contact {{ $partner.name }} directly.</p>
+              <a class="partner-cta-btn" href="{{ .partnerProductURL }}" target="_blank" rel="noopener noreferrer">
+                Visit {{ $partner.name }} &nbsp;&#8594;
+              </a>
+            </div>
+          </section>
+          {{ end }}
+
+        </div><!-- /.partner-solution-block -->
+      {{ end }}
+
+      <div class="partner-detail-back-row">
+        <a class="partner-back-link" href="{{ "partners/" | relURL }}">&larr; Back to partner solutions</a>
+      </div>
+    </main>
+
+  {{ else }}
+    <main class="partner-detail-page">
+      <p class="demo-detail-missing">Partner not found.</p>
+      <a class="partner-back-link" href="{{ "partners/" | relURL }}">&larr; Back to partner solutions</a>
+    </main>
+  {{ end }}
+{{ end }}

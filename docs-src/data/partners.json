@@ -1,0 +1,780 @@
+{
+  "partners": [
+    {
+      "id": "accusoft",
+      "slug": "accusoft",
+      "name": "Accusoft Corporation",
+      "website": "https://www.accusoft.com",
+      "geo": "Americas",
+      "industries": ["Data Management"],
+      "ibmProducts": ["watsonx.ai"],
+      "solutions": [
+        {
+          "id": "accusoft-prizmdoc",
+          "slug": "prizmdoc-ai-document-intelligence",
+          "title": "PrizmDoc AI Document Intelligence",
+          "shortDescription": "Embed secure document viewing, editing, conversion, search, annotation, redaction and AI processing into web applications via REST APIs.",
+          "businessProblem": "Developers need to integrate secure document workflows and AI-powered document processing — including PII extraction, summarisation, classification and Q&A — into their web applications without building from scratch.",
+          "valueProp": "PrizmDoc is a collection of REST APIs and AI modules that developers integrate into web-based applications for secure document viewing, editing, conversion, search, annotation, redaction and document processing. AI capabilities include extracting PII from documents, summarising documents, classifying documents, and answering questions from documents.",
+          "audience": "Software developers and ISVs building document-centric web applications",
+          "ibmProducts": ["watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://www.accusoft.com/products/prizmdoc-suite/",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "addai-life",
+      "slug": "addai-life",
+      "name": "AddAI.Life s.r.o.",
+      "website": "https://www.addai.cz",
+      "geo": "EMEA",
+      "industries": ["Cross Industry", "Security"],
+      "ibmProducts": ["Watson Assistant", "watsonx.ai", "Watson Discovery"],
+      "solutions": [
+        {
+          "id": "addai-cybersecurity-virtual-assistant",
+          "slug": "cybersecurity-and-virtual-assistant-platform",
+          "title": "Cybersecurity & Virtual Assistant Platform",
+          "shortDescription": "End-to-end cybersecurity risk management and a multilingual virtual assistant — built on IBM Watson — for enterprise security operations and customer engagement.",
+          "businessProblem": "Enterprises need to manage cybersecurity risk across IAM/SSO, PIM/PAM, data security, endpoint management, and SIEM/SOAR while also providing intelligent multilingual conversational experiences for customers.",
+          "valueProp": "AddAI delivers outcome-based cybersecurity managed services and an NLP virtual assistant that integrates with customer frontends and backends across WhatsApp, Messenger, mobile and web. The assistant supports Czech and English and can be enriched with STT, TTS, sentiment analysis and unstructured text analysis.",
+          "audience": "Enterprise CISOs, security operations teams, and customer-facing service teams",
+          "ibmProducts": ["Watson Assistant", "watsonx.ai", "Watson Discovery"],
+          "demoSlugs": ["agentic-security-operations-center"],
+          "evidence": [
+            {
+              "id": "addai-ibm-case-study",
+              "type": "Customer story",
+              "title": "AddAI and IBM: Cybersecurity and AI Virtual Assistant",
+              "summary": "Published IBM case study covering AddAI's deployment of Watson-powered solutions.",
+              "sourceURL": "https://www.ibm.com/case-studies/addai",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.addai.cz",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "adesso",
+      "slug": "adesso",
+      "name": "adesso SE",
+      "website": "https://www.adesso.de",
+      "geo": "EMEA",
+      "industries": ["Entertainment", "Sports", "Finance", "Health", "Insurance", "Automotive", "Retail", "Energy", "Government", "Transportation", "Supply Chain"],
+      "ibmProducts": ["Watson Assistant"],
+      "solutions": [
+        {
+          "id": "adesso-chatbot-workbench",
+          "slug": "chatbot-workbench-and-runtime",
+          "title": "Chatbot Workbench and Runtime",
+          "shortDescription": "A configurable omnichannel chatbot runtime and training toolset that makes IBM Watson Assistant accessible to subject matter experts without IT knowledge.",
+          "businessProblem": "Organisations want to deploy IBM Watson Assistant chatbots across multiple channels and allow non-technical subject matter experts to train and manage them — without requiring administrative access.",
+          "valueProp": "adesso's Chatbot Workbench and Runtime provides a flexible omnichannel runtime, automated quality assurance testing, reclassification based on user utterances, an answer store, extended logging and tools to train Watson Assistant without IT skills.",
+          "audience": "Enterprise digital teams and subject matter experts deploying Watson-powered chatbots",
+          "ibmProducts": ["Watson Assistant"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://www.adesso.de",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "apliqo",
+      "slug": "apliqo",
+      "name": "Apliqo AG",
+      "website": "https://www.apliqo.com",
+      "geo": "EMEA",
+      "industries": ["Finance", "HR/Talent"],
+      "ibmProducts": ["IBM Planning Analytics", "watsonx.ai"],
+      "solutions": [
+        {
+          "id": "apliqo-fpm-suite",
+          "slug": "financial-performance-management-suite",
+          "title": "Financial Performance Management Suite",
+          "shortDescription": "Unified planning, consolidation, analysis and reporting on IBM Planning Analytics — with AI-driven finance capabilities powered by watsonx.",
+          "businessProblem": "Finance teams need a unified platform for driver-based planning, rolling forecasts, scenario analysis, legal consolidation and self-service analytics — without complex coding or IT dependency.",
+          "valueProp": "Apliqo FPM, Apliqo CC and Apliqo UX unify planning, consolidation and reporting in one platform. Pre-configured models, best-practice templates, no-code development, Excel-like UX and embedded AI accelerate time-to-value and reduce implementation risk.",
+          "audience": "CFOs, FP&A teams, and finance business users",
+          "ibmProducts": ["IBM Planning Analytics", "watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "apliqo-ibm-case-study",
+              "type": "Customer story",
+              "title": "Apliqo and IBM Planning Analytics",
+              "summary": "Published IBM case study on Apliqo's Planning Analytics deployment.",
+              "sourceURL": "https://www.ibm.com/case-studies/apliqo",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.apliqo.com/products/apliqo-fpm",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "available-networks",
+      "slug": "available-networks",
+      "name": "Available Networks",
+      "website": "https://available-networks.com",
+      "geo": "Americas",
+      "industries": ["Security", "Government", "Finance", "Manufacturing", "Energy"],
+      "ibmProducts": ["watsonx Orchestrate", "watsonx.data", "watsonx.gov", "watsonx.ai"],
+      "solutions": [
+        {
+          "id": "available-networks-ztns-ai",
+          "slug": "ai-edge-compute-zero-trust-security",
+          "title": "AI & Edge Compute on Zero Trust Network Security",
+          "shortDescription": "AI and edge compute capabilities layered on a Zero Trust Network Security architecture for all-encompassing cyber security and edge AI inference.",
+          "businessProblem": "Organisations operating critical infrastructure need comprehensive cyber security for data at rest and in transit, combined with AI and LLM capabilities at the edge for real-time device and end-user intelligence.",
+          "valueProp": "Available Networks provides AI and edge compute on a ZTNS architecture — covering OT streaming data such as cameras, audio, drone footage and flight plans — with Watson AI and LLMs at the edge for device and end-user use.",
+          "audience": "Security officers and IT architects in government, critical infrastructure and financial services",
+          "ibmProducts": ["watsonx Orchestrate", "watsonx.data", "watsonx.gov", "watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://available-networks.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "avid-solutions",
+      "slug": "avid-solutions",
+      "name": "Avid Solutions International",
+      "website": "https://avidsolutionsintl.com",
+      "geo": "Americas",
+      "industries": ["Agriculture", "Food", "Manufacturing"],
+      "ibmProducts": ["watsonx Orchestrate", "Watson Assistant", "IBM Maximo"],
+      "solutions": [
+        {
+          "id": "avid-urban-agriculture-managed-service",
+          "slug": "sustainable-urban-agriculture-managed-service",
+          "title": "Sustainable Urban Agriculture Managed Service",
+          "shortDescription": "A repeatable managed service for urban farming that leverages IBM Maximo and watsonx Orchestrate to automate vermiculture systems, optimise nutrient distribution and monitor infrastructure resilience.",
+          "businessProblem": "Urban farming operations and regional infrastructure initiatives struggle with food and energy insecurity. Manual asset management and lack of real-time data make it hard to prevent equipment failure, reduce spoilage and scale sustainably.",
+          "valueProp": "Avid Solutions delivers an all-in-one managed service combining IBM Maximo for condition-based monitoring and asset intelligence, advanced analytics, real-time environmental monitoring and watsonx Orchestrate to automate cross-functional workflows — creating a scalable model for national infrastructure and ESG innovation.",
+          "audience": "Municipal governments, agricultural operators, and ESG-focused investors",
+          "ibmProducts": ["watsonx Orchestrate", "Watson Assistant", "IBM Maximo"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "avid-georgia-tech",
+              "type": "Customer story",
+              "title": "Georgia Tech Infrastructure for Resilience",
+              "summary": "Avid Solutions and ZNAPZ deployed IBM Maximo to power condition-based monitoring and asset intelligence across agriculture and energy systems in Georgia.",
+              "sourceURL": "https://www.ibm.com/case-studies/georgia-tech",
+              "customerNameApproved": true,
+              "published": true
+            },
+            {
+              "id": "avid-ibm-case-study",
+              "type": "Partner case study",
+              "title": "Avid Solutions International with IBM Bob",
+              "summary": "Published IBM case study on Avid Solutions International.",
+              "sourceURL": "https://www.ibm.com/case-studies/avid-bob",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://avidsolutionsintl.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "bi-worldwide",
+      "slug": "bi-worldwide",
+      "name": "BI Worldwide",
+      "website": "https://www.biworldwide.com",
+      "geo": "Americas",
+      "industries": ["Cross Industry", "Finance", "Sports", "Retail", "HR/Talent"],
+      "ibmProducts": ["watsonx.gov", "watsonx Orchestrate", "watsonx.ai"],
+      "solutions": [
+        {
+          "id": "biw-employee-engagement-ai",
+          "slug": "ai-powered-employee-engagement-platform",
+          "title": "AI-Powered Employee Engagement Platform",
+          "shortDescription": "Repeatable end-to-end employee engagement, sales motivation, channel sales, customer loyalty and corporate events — all enhanced with embedded IBM Watson AI.",
+          "businessProblem": "Enterprises need to motivate employees, sales teams and channel partners through personalised, data-driven engagement programmes — with AI features that improve outcomes while meeting governance requirements.",
+          "valueProp": "BI Worldwide embeds IBM Watson AI into their proprietary platform to create and enhance AI-based features for employee engagement and recognition, sales team motivation, channel sales, corporate events and customer loyalty solutions.",
+          "audience": "HR leaders, sales operations and channel programme managers",
+          "ibmProducts": ["watsonx.gov", "watsonx Orchestrate", "watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://www.biworldwide.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "c-metric",
+      "slug": "c-metric",
+      "name": "C-Metric Solutions",
+      "website": "https://c-metric.com",
+      "geo": "APAC",
+      "industries": ["Finance", "Automotive", "Health", "Retail", "Telecom", "Government", "Supply Chain"],
+      "ibmProducts": ["Watson Assistant", "watsonx.ai", "watsonx Orchestrate", "Watson Discovery", "watsonx.data"],
+      "solutions": [
+        {
+          "id": "c-metric-aivio-chatbot",
+          "slug": "aivio-enterprise-ai-chatbot",
+          "title": "AIVIO Enterprise AI Chatbot System",
+          "shortDescription": "An embedded enterprise chatbot that integrates Watson Discovery, Elasticsearch and a Python orchestrator to handle complex queries, scale across data sources and deliver accurate conversational answers.",
+          "businessProblem": "Enterprises across finance, healthcare, retail and government need a scalable, intelligent chatbot that can handle complex queries, integrate with diverse data sources and maintain consistent accuracy — without manual tagging or intent mapping.",
+          "valueProp": "AIVIO integrates watsonx Discovery and Elasticsearch for NLP and document retrieval, a Python orchestrator for intent recognition and routing, and role-based authentication — accessible on web and mobile. The system retrieves data from SQL and NoSQL databases in real time.",
+          "audience": "Enterprise IT and digital teams across regulated industries",
+          "ibmProducts": ["Watson Assistant", "watsonx.ai", "watsonx Orchestrate", "Watson Discovery", "watsonx.data"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "c-metric-healthcare-case-study",
+              "type": "Customer story",
+              "title": "C-Metric Healthcare AI Deployment",
+              "summary": "Published IBM case study on C-Metric's healthcare AI chatbot.",
+              "sourceURL": "https://www.ibm.com/case-studies/c-metric-healthcare",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://c-metric.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "cogniware",
+      "slug": "cogniware",
+      "name": "Cogniware s.r.o.",
+      "website": "https://www.cogniware.com",
+      "geo": "EMEA",
+      "industries": ["Law Enforcement", "Government"],
+      "ibmProducts": ["watsonx.ai", "watsonx.data"],
+      "solutions": [
+        {
+          "id": "cogniware-argos-wxd",
+          "slug": "argos-investigative-analytics-platform",
+          "title": "Argos Investigative Analytics Platform",
+          "shortDescription": "An investigative analytics system for law enforcement that consolidates diverse data sources — social media, CDR, financial transactions, criminal records, multimedia — into a unified lakehouse powered by IBM watsonx.data.",
+          "businessProblem": "Law enforcement and intelligence agencies need to process and cross-reference massive volumes of structured and unstructured data — including social media, call data records, financial transactions, vehicle tracking and multimedia files — faster than traditional tools allow.",
+          "valueProp": "Cogniware's Argos integrates with IBM watsonx.data via JDBC over PrestoDB/Minio S3 using Apache Iceberg's open format, providing a unified data platform for investigative analytics across structured and unstructured sources.",
+          "audience": "Law enforcement agencies and government intelligence units",
+          "ibmProducts": ["watsonx.ai", "watsonx.data"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "cogniware-ibm-case-study",
+              "type": "Customer story",
+              "title": "Cogniware and IBM watsonx.data",
+              "summary": "Published IBM case study on Cogniware's Argos analytics platform.",
+              "sourceURL": "https://www.ibm.com/case-studies/cogniware",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.cogniware.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "comparus",
+      "slug": "comparus",
+      "name": "Comparus GmbH",
+      "website": "https://www.comparus.de",
+      "geo": "EMEA",
+      "industries": ["Finance"],
+      "ibmProducts": ["Watson Assistant", "watsonx Orchestrate", "watsonx.ai"],
+      "solutions": [
+        {
+          "id": "comparus-cfs",
+          "slug": "cloud-compliance-for-financial-services",
+          "title": "Cloud Compliance for Financial Services",
+          "shortDescription": "A cloud-native compliance solution for the financial services industry — combining continuous monitoring, security posture management and IBM Cloud's Financial Services framework.",
+          "businessProblem": "Financial services organisations need to move regulated workloads to public cloud while meeting complex compliance requirements — including continuous monitoring, CSPM and SCC-aligned controls — without building a custom platform.",
+          "valueProp": "Comparus CFS is the first cloud-built compliance solution for financial services. It provides continuous monitoring, reporting and a compliance dashboard, an IBM SCC Security and Compliance Center, a Bastion Host for management actions and an IBM Cloud Financial Services Cloud Pattern.",
+          "audience": "CISOs and cloud architects in financial services organisations",
+          "ibmProducts": ["Watson Assistant", "watsonx Orchestrate", "watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "comparus-ibm-case-study",
+              "type": "Customer story",
+              "title": "Comparus GmbH and IBM Cloud for Financial Services",
+              "summary": "Published IBM case study on Comparus's compliance solution.",
+              "sourceURL": "https://www.ibm.com/case-studies/comparus-gmbh",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.comparus.de",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "edsvard",
+      "slug": "edsvard",
+      "name": "Edsvard Hållbarhet AB",
+      "website": "https://edsvard.se",
+      "geo": "EMEA",
+      "industries": ["Construction", "Real Estate", "Environmental"],
+      "ibmProducts": ["watsonx Orchestrate", "watsonx.data", "watsonx.ai", "Watson Discovery", "Envizi"],
+      "solutions": [
+        {
+          "id": "edsvard-charlie-ai",
+          "slug": "charlie-ai-construction-safety-platform",
+          "title": "Charlie AI Construction Safety Platform",
+          "shortDescription": "An AI assistant for construction sites and property management that converts documentation into actionable information, coordinates high-risk activities and proactively prevents on-site accidents.",
+          "businessProblem": "Construction and property management organisations need to coordinate complex on-site activities, reduce safety incidents from high-risk work and give technicians instant access to operational documentation.",
+          "valueProp": "Samporten and Charlie AI — built on IBM watsonx — provide digitised coordination for infrastructure owners, automated safety measurement across high-risk activities, and a personalised AI assistant that converts documentation into actionable information with visual planning.",
+          "audience": "Construction site managers, safety officers and property management teams",
+          "ibmProducts": ["watsonx Orchestrate", "watsonx.data", "watsonx.ai", "Watson Discovery", "Envizi"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "edsvard-ibm-case-study",
+              "type": "Customer story",
+              "title": "Edsvard Hållbarhet AB and IBM watsonx",
+              "summary": "Published IBM case study on Edsvard's construction safety AI platform.",
+              "sourceURL": "https://www.ibm.com/case-studies/edsvardhallbarhet",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://edsvard.se",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "fiducia-ai",
+      "slug": "fiducia-ai",
+      "name": "Fiducia AI, Inc.",
+      "website": "https://fiduciaai.com",
+      "geo": "Americas",
+      "industries": ["Sports", "Retail", "Lifestyle", "Education"],
+      "ibmProducts": ["watsonx.ai"],
+      "solutions": [
+        {
+          "id": "fiducia-speedshotx",
+          "slug": "speedshotx-ai-visual-revenue-accelerator",
+          "title": "SpeedShotX™ AI Visual Revenue Accelerator",
+          "shortDescription": "A browser-native, white-label AI platform that transforms static digital experiences into intelligent, interactive, multilingual customer journeys — increasing engagement, improving conversion and accelerating revenue.",
+          "businessProblem": "Retailers, sports organisations and hospitality brands need to convert passive digital experiences into interactive, AI-driven journeys that engage customers in real time — without long deployment cycles.",
+          "valueProp": "SpeedShotX™ — built with IBM watsonx.ai, IBM watsonx Gateway and IBM Power11 — combines AI Visual Engine, Virtual Try-On (FitX), VideoX™ and KnowledgeX™ into a deployable platform that delivers trusted, enterprise-grade AI experiences in as little as 48 hours.",
+          "audience": "Digital commerce, retail, sports and hospitality marketing teams",
+          "ibmProducts": ["watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "fiducia-kate-barton",
+              "type": "Customer story",
+              "title": "Kate Barton and SpeedShotX",
+              "summary": "Published IBM case study on Fiducia AI's SpeedShotX deployment.",
+              "sourceURL": "https://www.ibm.com/case-studies/kate-barton",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://fiduciaai.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "happiest-minds",
+      "slug": "happiest-minds",
+      "name": "Happiest Minds Technologies",
+      "website": "https://www.happiestminds.com",
+      "geo": "APAC",
+      "industries": ["Cross Industry", "Security"],
+      "ibmProducts": ["watsonx.ai", "IBM QRadar"],
+      "solutions": [
+        {
+          "id": "happiest-minds-crpp",
+          "slug": "cyber-risk-protection-platform",
+          "title": "Cyber Risk Protection Platform",
+          "shortDescription": "An integrated SOC-as-a-service platform that automates, accelerates and orchestrates the threat defence lifecycle using IBM QRadar alongside SIEM, endpoint security and vulnerability management.",
+          "businessProblem": "Enterprises need to automate and accelerate threat detection, protection and prevention across their security stack — while managing SOC operations with limited analyst capacity.",
+          "valueProp": "Happiest Minds' CRPP delivers SOC-as-a-service with IBM QRadar at the core, integrated with next-generation network and endpoint security, vulnerability management, security automation and a 10M$+ security services operation.",
+          "audience": "Enterprise CISOs and security operations teams",
+          "ibmProducts": ["watsonx.ai", "IBM QRadar"],
+          "demoSlugs": ["agentic-security-operations-center"],
+          "evidence": [
+            {
+              "id": "happiest-minds-ibm-case-study",
+              "type": "Customer story",
+              "title": "Happiest Minds Technologies and IBM watsonx",
+              "summary": "Published IBM case study on Happiest Minds' watsonx deployment.",
+              "sourceURL": "https://www.ibm.com/case-studies/happiest-minds-watsonx",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.happiestminds.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "libero-ai",
+      "slug": "libero-ai",
+      "name": "Libero AI Pty Ltd",
+      "website": "https://liberoai.com.au",
+      "geo": "APAC",
+      "industries": ["Manufacturing", "Energy", "Mining"],
+      "ibmProducts": ["watsonx.ai"],
+      "solutions": [
+        {
+          "id": "libero-safety-suite",
+          "slug": "libero-safety-suite",
+          "title": "Libero Safety Suite",
+          "shortDescription": "A catalogue of AI-powered safety and risk solutions for asset-intensive organisations — covering form capture, risk quality assessment, safety investigations, reporting and compliance.",
+          "businessProblem": "Heavy industrial organisations need to improve safety data quality, accelerate incident investigations, assess risk register quality and generate better insights from safety data captured across multiple enterprise systems.",
+          "valueProp": "Libero Safety Suite — powered by IBM watsonx — includes Libero Safety Assistant (guided data entry), Libero Ask Safety (conversational safety knowledge), Libero Safety Form Capture (AI-guided form completion) and Libero Risk Register Quality Assessor (causal relationship analysis using University of Queensland's CaNeTA).",
+          "audience": "Safety managers, risk officers and operational teams in heavy industrial sectors",
+          "ibmProducts": ["watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "libero-mitchell-services",
+              "type": "Customer story",
+              "title": "Mitchell Services and Libero Safety Suite",
+              "summary": "Published IBM case study on Libero AI's safety suite deployment at Mitchell Services.",
+              "sourceURL": "https://www.ibm.com/case-studies/mitchell-services",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://liberoai.com.au",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "migrato",
+      "slug": "migrato",
+      "name": "Migrato B.V.",
+      "website": "https://migrato.nl",
+      "geo": "EMEA",
+      "industries": ["Government", "Data Management"],
+      "ibmProducts": ["watsonx.data", "watsonx.governance", "watsonx.ai", "Watson Assistant", "watsonx Orchestrate"],
+      "solutions": [
+        {
+          "id": "migrato-micc",
+          "slug": "micc-intelligent-content-compliance",
+          "title": "MICC Intelligent Content & Compliance Suite",
+          "shortDescription": "AI-powered document classification, GDPR compliance, OCR, near-duplicate detection and automated content lifecycle management for organisations with millions of files.",
+          "businessProblem": "Government organisations and enterprises struggle to manage millions of unstructured files — determining which documents to keep, delete or migrate while meeting GDPR and open government compliance requirements.",
+          "valueProp": "MICC uses AI and ML to automatically classify documents, extract metadata (type, date, author, GDPR sensitivity), detect near-duplicates and enforce retention rules — processing millions of files in hours. Migrato empowers Dutch government organisations to solve tough compliance challenges with embeddable AI from IBM.",
+          "audience": "Government data officers, compliance teams and enterprise records managers",
+          "ibmProducts": ["watsonx.data", "watsonx.governance", "watsonx.ai", "Watson Assistant", "watsonx Orchestrate"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "migrato-ibm-case-study",
+              "type": "Customer story",
+              "title": "Migrato and IBM: Government Data Compliance",
+              "summary": "Published IBM case study on Migrato's MICC deployment for government compliance.",
+              "sourceURL": "https://www.ibm.com/case-studies/migrato",
+              "customerNameApproved": true,
+              "published": true
+            },
+            {
+              "id": "migrato-bob-case-study",
+              "type": "Partner case study",
+              "title": "Migrato with IBM Bob",
+              "summary": "Published IBM case study on Migrato's use of IBM Bob.",
+              "sourceURL": "https://www.ibm.com/case-studies/migrato-bob",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://migrato.nl",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "mint-ai",
+      "slug": "mint-ai",
+      "name": "Mint.ai",
+      "website": "https://mint.ai",
+      "geo": "Americas",
+      "industries": ["Data Management", "Finance", "Retail", "Transportation"],
+      "ibmProducts": ["watsonx Orchestrate", "watsonx.ai", "Watson Discovery"],
+      "solutions": [
+        {
+          "id": "mint-ai-arm",
+          "slug": "advertising-resource-management-platform",
+          "title": "Advertising Resource Management Platform",
+          "shortDescription": "An AI-powered advertising operations platform that consolidates media planning, buying, activation and reporting into a unified system — reducing cost and improving EBITDA through next-generation advertising agents.",
+          "businessProblem": "Enterprise advertising teams operate across fragmented workflows, disparate data sources and siloed systems — resulting in planning inaccuracies, slow reporting and sub-optimal campaign performance.",
+          "valueProp": "Mint ARM — powered by IBM watsonx Orchestrate and watsonx.ai — provides agentic capabilities for media planning, buying, activation and real-time reporting. LLMs deliver advertising suggestions to maximise ROI and enable continuous improvement across enterprise advertising operations.",
+          "audience": "Enterprise advertising operations, media planning and marketing analytics teams",
+          "ibmProducts": ["watsonx Orchestrate", "watsonx.ai", "Watson Discovery"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://mint.ai",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "mylua-health",
+      "slug": "mylua-health",
+      "name": "MyLÚA Health Inc",
+      "website": "https://myluahealth.com",
+      "geo": "Americas",
+      "industries": ["Health"],
+      "ibmProducts": ["watsonx.ai", "watsonx Orchestrate", "watsonx.data"],
+      "solutions": [
+        {
+          "id": "mylua-maternal-health",
+          "slug": "maternal-health-ai-companion",
+          "title": "Maternal Health AI Companion",
+          "shortDescription": "A digital maternal care platform that predicts and manages the risk of maternal complications — delivering empathetic, personalised guidance across breastfeeding, nutrition, pregnancy, postpartum care and emotional wellbeing.",
+          "businessProblem": "Maternal morbidity and health inequity remain significant challenges. Women and birthing people need accessible, culturally attuned support across key maternal health domains — available through a scalable digital companion.",
+          "valueProp": "MyLÚA Health's AI chatbot — powered by IBM watsonx.ai and watsonx Orchestrate — serves as a digital front door for maternal health, providing empathetic, AI-driven guidance, personalized patient education and interventional care measures to reduce maternal complications and advance health equity.",
+          "audience": "Women and birthing people, maternal health clinicians and health system digital teams",
+          "ibmProducts": ["watsonx.ai", "watsonx Orchestrate", "watsonx.data"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "mylua-ibm-case-study",
+              "type": "Customer story",
+              "title": "MyLÚA Health and IBM watsonx",
+              "summary": "Published IBM case study on MyLÚA Health's AI maternal care platform.",
+              "sourceURL": "https://www.ibm.com/case-studies/mylua-health",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://myluahealth.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "netsmartz",
+      "slug": "netsmartz",
+      "name": "NETSMARTZ, LLC",
+      "website": "https://netsmartz.com",
+      "geo": "Americas",
+      "industries": ["Cross Industry", "Health", "Manufacturing", "Retail", "Security", "Finance", "Supply Chain", "Education", "Transportation"],
+      "ibmProducts": ["watsonx.gov", "watsonx.ai", "Watson Assistant", "Watson Discovery"],
+      "solutions": [
+        {
+          "id": "netsmartz-gen-ai-assistant",
+          "slug": "enterprise-generative-ai-assistant",
+          "title": "Enterprise Generative AI Assistant",
+          "shortDescription": "A governed, RAG-powered conversational AI assistant — built on watsonx — that delivers Tier-1 support, factually accurate responses from enterprise knowledge repositories and secure AI chat experiences.",
+          "businessProblem": "Enterprises need to deploy governed generative AI assistants for voice and chat that produce accurate, indemnified responses from their own knowledge bases — while meeting compliance standards and reducing Tier-1 support load.",
+          "valueProp": "Netsmartz leverages watsonx Assistant, watsonx.ai (IBM Granite models), Watson Discovery for RAG and watsonx.governance to deliver secure, compliant conversational AI experiences that fortify client protection and gain operational efficiency.",
+          "audience": "Enterprise IT and operations teams across regulated industries",
+          "ibmProducts": ["watsonx.gov", "watsonx.ai", "Watson Assistant", "Watson Discovery"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "netsmartz-careerforce",
+              "type": "Customer story",
+              "title": "CareerForce Pro and Netsmartz",
+              "summary": "Published IBM case study on Netsmartz's generative AI deployment at CareerForce Pro.",
+              "sourceURL": "https://www.ibm.com/case-studies/careerforce-pro",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://netsmartz.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "pershing-technology",
+      "slug": "pershing-technology",
+      "name": "Pershing Technology Services",
+      "website": "https://www.pershing.com.tw",
+      "geo": "APAC",
+      "industries": ["Cross Industry", "Data Management", "Finance", "Manufacturing", "Government"],
+      "ibmProducts": ["watsonx Orchestrate", "watsonx.ai", "watsonx.data", "watsonx.governance"],
+      "solutions": [
+        {
+          "id": "ptsc-ai-router",
+          "slug": "ai-router-intelligent-knowledge-management",
+          "title": "AI Router & Intelligent Knowledge Management",
+          "shortDescription": "An intelligent AI router that automatically determines user intent and routes queries to the correct AI agent — combining RAG, multi-agent orchestration and enterprise knowledge base management.",
+          "businessProblem": "Enterprises need to manage multiple AI agents across diverse knowledge bases — enabling users to ask questions naturally without selecting a specific bot, while ensuring accurate, up-to-date responses and role-based access control.",
+          "valueProp": "PTSC's AI Router integrates with watsonx.ai for LLM-powered agents, watsonx Orchestrate for action execution, and a RAG system for retrieval accuracy. Users interact naturally; the AI Router determines intent and routes to the right agent automatically.",
+          "audience": "Enterprise IT architects and knowledge management teams",
+          "ibmProducts": ["watsonx Orchestrate", "watsonx.ai", "watsonx.data", "watsonx.governance"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "ptsc-ibm-case-study",
+              "type": "Customer story",
+              "title": "Pershing Technology Services and IBM watsonx",
+              "summary": "Published IBM case study on PTSC's AI Router deployment.",
+              "sourceURL": "https://www.ibm.com/case-studies/pershing-technology-services-corporation",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.pershing.com.tw",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "pyramid-analytics",
+      "slug": "pyramid-analytics",
+      "name": "Pyramid Analytics",
+      "website": "https://pyramidanalytics.com",
+      "geo": "EMEA",
+      "industries": ["Cross Industry", "Finance"],
+      "ibmProducts": ["watsonx.ai"],
+      "solutions": [
+        {
+          "id": "pyramid-analytics-ai-ml",
+          "slug": "ai-ml-business-analytics-platform",
+          "title": "AI/ML Business Analytics Platform",
+          "shortDescription": "An enterprise business analytics platform integrated with watsonx.ai — enabling users to select private, secure LLMs and apply ML models to business analytics in real time, without sharing data outside their organisation.",
+          "businessProblem": "Business users need to apply the latest ML models to real-time analytics decisions while keeping their data private, secure and within their own infrastructure.",
+          "valueProp": "Pyramid Analytics integrates watsonx.ai into its award-winning Business Analytics platform, enabling customers to select a private and secure LLM, conduct business analytics on the results and choose the most suitable ML model to optimise cost and time for their specific business problem.",
+          "audience": "Business analysts, finance teams and enterprise BI teams",
+          "ibmProducts": ["watsonx.ai"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "pyramid-analytics-ibm-case-study",
+              "type": "Customer story",
+              "title": "Pyramid Analytics and IBM watsonx.ai",
+              "summary": "Published IBM case study on Pyramid Analytics' business analytics platform.",
+              "sourceURL": "https://www.ibm.com/case-studies/pyramid-analytics",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://pyramidanalytics.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "sirionlabs",
+      "slug": "sirionlabs",
+      "name": "SirionLabs Inc",
+      "website": "https://sirionlabs.com",
+      "geo": "Americas",
+      "industries": ["Data Management", "Legal", "Finance", "Retail"],
+      "ibmProducts": ["Watson Discovery", "Watson Assistant"],
+      "solutions": [
+        {
+          "id": "sirion-clm",
+          "slug": "ai-contract-lifecycle-management",
+          "title": "AI-Powered Contract Lifecycle Management",
+          "shortDescription": "Contract lifecycle management software that transforms contract data into digital assets, delivering real-time insights, accelerating contracting processes and reducing risk across the full contract portfolio.",
+          "businessProblem": "Enterprises need to manage the full contract lifecycle — from creation and negotiation to execution and compliance — with AI-powered insights, reduced risk and 360-degree visibility across their contract portfolio.",
+          "valueProp": "SirionOne CLM integrates IBM Watson Discovery and Watson Assistant to deliver industry-best AI for contract intelligence, accelerating contracting processes, cutting costs and providing real-time insights across the entire contract portfolio.",
+          "audience": "Legal, procurement and finance teams managing large contract portfolios",
+          "ibmProducts": ["Watson Discovery", "Watson Assistant"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://sirionlabs.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "sopra-steria",
+      "slug": "sopra-steria",
+      "name": "Sopra Steria AS",
+      "website": "https://www.soprasteria.com",
+      "geo": "EMEA",
+      "industries": ["Finance", "Cross Industry"],
+      "ibmProducts": ["Watson Assistant"],
+      "solutions": [
+        {
+          "id": "sopra-steria-backup-management",
+          "slug": "enterprise-backup-and-storage-management",
+          "title": "Enterprise Backup & Storage Management",
+          "shortDescription": "A complete backup management solution for monitoring, reporting, alert handling, capacity planning, licence analysis and disaster recovery across multi-country organisations.",
+          "businessProblem": "Multi-country enterprises need a unified solution to monitor, report and manage backup, storage and network capacity — including disaster recovery and full history of backup logs — across complex distributed environments.",
+          "valueProp": "Sopra Steria's backup management solution provides continuous monitoring, alert handling, capacity planning, licence analysis and management analysis for multi-country companies, with full disaster recovery capabilities.",
+          "audience": "IT operations managers and infrastructure teams in multi-country enterprises",
+          "ibmProducts": ["Watson Assistant"],
+          "demoSlugs": [],
+          "evidence": [
+            {
+              "id": "sopra-steria-ibm-case-study",
+              "type": "Customer story",
+              "title": "Sopra Steria Group and IBM Watson Cloud",
+              "summary": "Published IBM case study on Sopra Steria's AI and Watson Cloud deployment.",
+              "sourceURL": "https://www.ibm.com/case-studies/sopra-steria-group-ai-watson-cloud",
+              "customerNameApproved": true,
+              "published": true
+            }
+          ],
+          "partnerProductURL": "https://www.soprasteria.com",
+          "published": true
+        }
+      ],
+      "published": true
+    },
+    {
+      "id": "trillicom",
+      "slug": "trillicom",
+      "name": "TrilliCom, LLC",
+      "website": "https://www.trillicom.com",
+      "geo": "Americas",
+      "industries": ["Finance", "Government", "Data Management"],
+      "ibmProducts": ["watsonx.ai", "watsonx Orchestrate"],
+      "solutions": [
+        {
+          "id": "trillicom-loan-document-center",
+          "slug": "loan-document-center",
+          "title": "Loan Document Center",
+          "shortDescription": "A turn-key platform for SBA lenders that captures, standardises, indexes, retains and provides a unified view of loan documents — with AI-powered intelligence to extract insights from any file format.",
+          "businessProblem": "SBA lenders managing complex, multi-source loan documentation need to capture, standardise, index, retain and extract intelligence from documents — across a $300B annual market with unique rules by loan type, geography and underwriting process.",
+          "valueProp": "TrilliCom's Loan Document Center captures documents from all customer data sources, standardises file formats, applies pre-defined indexing and retention rules, and leverages IBM watsonx.ai to extract data-driven insights from PDFs, Excel files and other formats.",
+          "audience": "SBA lenders, loan servicers and financial institutions",
+          "ibmProducts": ["watsonx.ai", "watsonx Orchestrate"],
+          "demoSlugs": [],
+          "evidence": [],
+          "partnerProductURL": "https://www.trillicom.com",
+          "published": true
+        }
+      ],
+      "published": true
+    }
+  ]
+}
