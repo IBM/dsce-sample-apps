@@ -2,3 +2,6 @@ fastapi>=0.125,<0.142
 uvicorn[standard]>=0.32.0
 httpx>=0.27,<1
 ibm-watsonx-orchestrate[agentops]==2.18.0
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23

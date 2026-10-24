@@ -2,3 +2,6 @@ pydantic==2.13.3
 requests
 mailjet-rest
 pyyaml
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23

@@ -23,7 +23,7 @@
     "helmet": "^8.0.0",
     "ibm-cos-sdk": "^1.15.2",
     "lucide-react": "^1.31.0",
-    "next": "^16.4.0",
+    "next": "^16.4.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "recharts": "^3.10.1",
