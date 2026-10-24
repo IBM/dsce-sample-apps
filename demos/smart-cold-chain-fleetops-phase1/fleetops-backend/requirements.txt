@@ -13,3 +13,6 @@ kubernetes>=28.1.0
 # Optional persistence backends (install as needed)
 # cassandra-driver>=3.28.0  # For Astra DB
 # ibm_db>=3.1.0             # For IBM Db2
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23

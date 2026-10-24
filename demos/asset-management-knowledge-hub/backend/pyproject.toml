@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "maximo-knowledge-hub"
@@ -38,9 +38,10 @@ dependencies = [
 
     # Configuration & utilities
     "python-dotenv>=1.2.2",
-    "zod-python>=0.1",            # optional schema validation
     "cryptography>=50.0.0",
-    "PyJWT>=2.14.0",
+    "PyJWT>=2.15.1",
+    "Pillow>=13.0.0",
+    "certifi>=2026.10.23",
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,4 @@
+[console_scripts]
+scrc-producer = scrc.producer:app
+scrc-register-schemas = scrc.register_schemas:app
+scrc-risk-engine = scrc.risk_engine:app
