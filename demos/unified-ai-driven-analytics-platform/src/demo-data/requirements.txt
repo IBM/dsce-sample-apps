@@ -8,3 +8,7 @@ astrapy>=2.0.1
 sentence-transformers>=2.2.0
 reportlab>=4.0.0
 pypdf>=3.1.0
+
+# Security: pin transitive deps to patched releases (Pillow via reportlab; certifi via requests)
+Pillow>=13.0.0
+certifi>=2026.10.23

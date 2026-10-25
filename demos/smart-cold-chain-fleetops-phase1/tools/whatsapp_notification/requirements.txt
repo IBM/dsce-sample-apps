@@ -1,1 +1,4 @@
 requests>=2.33.0
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23

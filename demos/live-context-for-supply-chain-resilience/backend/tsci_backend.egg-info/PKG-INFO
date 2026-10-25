@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: tsci-backend
+Version: 1.0.0
+Summary: Turnaround Supply Chain Intelligence – backend (Python/FastAPI)
+Requires-Python: >=3.11

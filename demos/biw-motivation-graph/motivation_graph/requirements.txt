@@ -34,3 +34,6 @@ trino==0.335.0
 
 # ── v2 DataFabric — Optional AI tier (off by default) ────────────────────────
 # openai==1.82.1              # optional — for Ollama / watsonx.ai BYOM endpoint
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23

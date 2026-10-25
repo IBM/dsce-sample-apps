@@ -10,3 +10,6 @@ jproperties>=2.1.2,<3
 # metrics + llmaj extras provide MetricsEvaluator, the built-in guardrail metrics and LLMJudge
 ibm-watsonx-gov[metrics,llmaj]>=1.4.0,<2
 gunicorn>=23.0.0,<24
+
+# Security: pin transitive TLS CA bundle to patched release (GHSA-6q48-6c7w-9gw2)
+certifi>=2026.10.23
