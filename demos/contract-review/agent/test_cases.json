@@ -1,0 +1,210 @@
+[
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You want to check what the standard GTA template says about payment terms before reviewing any vendor document. You know the template_id is GTA-STANDARD-v1.0. When the agent asks for a template_id or template version, tell it GTA-STANDARD-v1.0.",
+    "starting_sentence": "What does the standard GTA template say about payment terms? The template version is GTA-STANDARD-v1.0.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "As per the standard contract template, here is the relevant clause:",
+        "keywords": ["standard", "payment"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You want to check what the standard GTA template says about termination clauses before reviewing any vendor document. You know the template_id is GTA-STANDARD-v1.0. When the agent asks for a template_id or template version, tell it GTA-STANDARD-v1.0.",
+    "starting_sentence": "What does the standard GTA template say about termination? The template version is GTA-STANDARD-v1.0.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "As per the standard contract template, here is the relevant clause:",
+        "keywords": ["standard", "termination"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You want to check what the standard GTA template says about liability clauses. You know the template_id is GTA-STANDARD-v1.0. When the agent asks for a template_id or template version, tell it GTA-STANDARD-v1.0.",
+    "starting_sentence": "What does the standard GTA template say about liability? The template version is GTA-STANDARD-v1.0.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "As per the standard contract template, here is the relevant clause:",
+        "keywords": ["standard", "liability"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You want to check what the standard GTA template says about confidentiality. You know the template_id is GTA-STANDARD-v1.0. When the agent asks for a template_id or template version, tell it GTA-STANDARD-v1.0.",
+    "starting_sentence": "What does the standard GTA template say about confidentiality? The template version is GTA-STANDARD-v1.0.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "As per the standard contract template, here is the relevant clause:",
+        "keywords": ["standard", "confidential"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have just uploaded a vendor contract PDF. The upload has already completed — the system has processed it and you now have the following details: session_id is test-session-001, cos_pdf_url is https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf, vendor_id is vendor, template_id is GTA-STANDARD-v1.0, and the contract has 5 clauses: section 1 Definitions, section 2 Payment Terms, section 3 Termination, section 4 Liability, section 5 Confidentiality. Tell the agent all of this information in your first message.",
+    "starting_sentence": "The vendor contract has been uploaded and parsed.\nsession_id: test-session-001\ncos_pdf_url: https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf\nvendor_id: vendor\ntemplate_id: GTA-STANDARD-v1.0\nclause_count: 5\nclause_index:\n  §1 Definitions\n  §2 Payment Terms\n  §3 Termination\n  §4 Liability\n  §5 Confidentiality",
+    "goals": {
+      "summarize": []
+    },
+    "goal_details": [
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "The contract has been uploaded and parsed.",
+        "keywords": ["uploaded", "clause"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have already uploaded a vendor contract. You have the following context: session_id is test-session-001, cos_pdf_url is https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf, vendor_id is vendor, template_id is GTA-STANDARD-v1.0. The contract has 5 clauses: section 1 Definitions, section 2 Payment Terms, section 3 Termination, section 4 Liability, section 5 Confidentiality. You now want to compare the payment terms clause with the standard template. Provide all the context details and your comparison request together in one message.",
+    "starting_sentence": "The vendor contract has been uploaded and parsed.\nsession_id: test-session-001\ncos_pdf_url: https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf\nvendor_id: vendor\ntemplate_id: GTA-STANDARD-v1.0\nclause_count: 5\nclause_index:\n  §1 Definitions\n  §2 Payment Terms\n  §3 Termination\n  §4 Liability\n  §5 Confidentiality\n\nCompare the payment terms clause with the standard template.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "| Clause Parameter | Standard Template | Submitted Contract | Deviation |",
+        "keywords": ["Standard Template", "Deviation"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have already uploaded a vendor contract. You have the following context: session_id is test-session-001, cos_pdf_url is https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf, vendor_id is vendor, template_id is GTA-STANDARD-v1.0. The contract has 5 clauses: section 1 Definitions, section 2 Payment Terms, section 3 Termination, section 4 Liability, section 5 Confidentiality. You now want to compare the termination clause with the standard template. Provide all the context details and your comparison request together in one message.",
+    "starting_sentence": "The vendor contract has been uploaded and parsed.\nsession_id: test-session-001\ncos_pdf_url: https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf\nvendor_id: vendor\ntemplate_id: GTA-STANDARD-v1.0\nclause_count: 5\nclause_index:\n  §1 Definitions\n  §2 Payment Terms\n  §3 Termination\n  §4 Liability\n  §5 Confidentiality\n\nCompare the termination clause with the standard template.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "| Clause Parameter | Standard Template | Submitted Contract | Deviation |",
+        "keywords": ["Standard Template", "Deviation"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have already uploaded a vendor contract. You have the following context: session_id is test-session-001, cos_pdf_url is https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf, vendor_id is vendor, template_id is GTA-STANDARD-v1.0. The contract has 5 clauses: section 1 Definitions, section 2 Payment Terms, section 3 Termination, section 4 Liability, section 5 Confidentiality. You now want to compare the liability clause with the standard template. Provide all the context details and your comparison request together in one message.",
+    "starting_sentence": "The vendor contract has been uploaded and parsed.\nsession_id: test-session-001\ncos_pdf_url: https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf\nvendor_id: vendor\ntemplate_id: GTA-STANDARD-v1.0\nclause_count: 5\nclause_index:\n  §1 Definitions\n  §2 Payment Terms\n  §3 Termination\n  §4 Liability\n  §5 Confidentiality\n\nCompare the liability clause with the standard template.",
+    "goals": {
+      "searchClause-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "searchClause-1",
+        "tool_name": "searchClause",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "| Clause Parameter | Standard Template | Submitted Contract | Deviation |",
+        "keywords": ["Standard Template", "Deviation"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have already uploaded a vendor contract and compared some clauses. You have the following context: session_id is test-session-001, cos_pdf_url is https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf, vendor_id is vendor, template_id is GTA-STANDARD-v1.0. There is a known deviation in the Payment Terms clause: the vendor contract says sixty (60) days for payment, but the standard template requires thirty (30) days. The fix to apply is: find the text 'sixty (60) days after receipt of invoice' and replace it with 'thirty (30) days after receipt of invoice'. You want the agent to regenerate the PDF with this fix applied. Provide all context and PENDING_FIXES in your first message, then confirm when the agent asks for your selection.",
+    "starting_sentence": "The vendor contract has been uploaded and parsed.\nsession_id: test-session-001\ncos_pdf_url: https://s3.us-east.cloud-object-storage.appdomain.cloud/regeneratepdf/original_vendor_test-session-001.pdf\nvendor_id: vendor\ntemplate_id: GTA-STANDARD-v1.0\nclause_count: 5\nclause_index:\n  §1 Definitions\n  §2 Payment Terms\n  §3 Termination\n  §4 Liability\n  §5 Confidentiality\n\nPENDING_FIXES:\n- clause: Payment Terms\n  find: \"sixty (60) days after receipt of invoice\"\n  replace: \"thirty (30) days after receipt of invoice\"\n\nPlease regenerate the PDF applying all pending fixes.",
+    "goals": {
+      "rectifyPdf-1": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "rectifyPdf-1",
+        "tool_name": "rectifyPdf",
+        "args": { "IGNORE": null }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "Your PDF has been regenerated.",
+        "keywords": ["regenerated", "download"]
+      }
+    ]
+  },
+  {
+    "agent": "contract_reviewer",
+    "story": "You are a GTA contract reviewer. You have NOT uploaded any vendor contract. You have no session_id and no cos_pdf_url. You want to ask the agent to regenerate a PDF, but you have not uploaded anything yet. If the agent asks whether you have a contract or session details, tell it you do not have any uploaded contract.",
+    "starting_sentence": "Please regenerate the PDF with all the corrections.",
+    "goals": {
+      "summarize": []
+    },
+    "goal_details": [
+      {
+        "name": "summarize",
+        "type": "text",
+        "response": "upload",
+        "keywords": ["upload", "contract"]
+      }
+    ]
+  }
+]

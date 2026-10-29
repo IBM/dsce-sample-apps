@@ -1,0 +1,157 @@
+[
+  {
+    "id": "9e10856c-24c9-4514-b3e2-32fac0ce1b23",
+    "agent": "contract_reviewer",
+    "story": "An uploaded vendor contract context already exists. The template_id is GTA-STANDARD-v1.0 and the session_id is 993e56cb-def9-4202-85bd-7dec8a138437. You want to compare the payment of fee clause in the vendor contract against the standard template.",
+    "starting_sentence": "The vendor contract has already been uploaded and ingested.\nsession_id: 993e56cb-def9-4202-85bd-7dec8a138437\ntemplate_id: GTA-STANDARD-v1.0\n\nCompare the payment of fee clause against the standard template.",
+    "goals": {
+      "search_clause": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "search_clause",
+        "tool_name": "search_clause",
+        "args": {
+          "session_id": "993e56cb-def9-4202-85bd-7dec8a138437",
+          "template_id": "GTA-STANDARD-v1.0",
+          "clause_query": "payment of fee clause"
+        },
+        "arg_matching": {
+          "session_id": "strict",
+          "template_id": "strict",
+          "clause_query": "fuzzy"
+        }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "summary": "Agent finds the relevant payment of fee clause in the vendor contract and the standard template, then compares the two clearly."
+      }
+    ]
+  },
+  {
+    "id": "cc872270-46ef-44b4-b1a2-664b635e6f1c",
+    "agent": "contract_reviewer",
+    "story": "An uploaded vendor contract context already exists. The template_id is GTA-STANDARD-v1.0 and the session_id is 993e56cb-def9-4202-85bd-7dec8a138437. You want to compare the Termination for Convenience clause in the vendor contract against the standard template.",
+    "starting_sentence": "The vendor contract has already been uploaded and ingested.\nsession_id: 993e56cb-def9-4202-85bd-7dec8a138437\ntemplate_id: GTA-STANDARD-v1.0\n\nCompare the Termination for Convenience clause against the standard template.",
+    "goals": {
+      "search_clause": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "search_clause",
+        "tool_name": "search_clause",
+        "args": {
+          "session_id": "993e56cb-def9-4202-85bd-7dec8a138437",
+          "template_id": "GTA-STANDARD-v1.0",
+          "clause_query": "termination for convenience"
+        },
+        "arg_matching": {
+          "session_id": "strict",
+          "template_id": "strict",
+          "clause_query": "fuzzy"
+        }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "summary": "Agent finds the relevant Termination for Convenience clause in the vendor contract and the standard template, then compares the two clearly."
+      }
+    ]
+  },
+  {
+    "id": "c3d0d065-fe08-447d-8ad3-1615ebd28506",
+    "agent": "contract_reviewer",
+    "story": "An uploaded vendor contract context already exists. The template_id is GTA-STANDARD-v1.0 and the session_id is 993e56cb-def9-4202-85bd-7dec8a138437. You want to compare the term renewal clause in the vendor contract against the standard template.",
+    "starting_sentence": "The vendor contract has already been uploaded and ingested.\nsession_id: 993e56cb-def9-4202-85bd-7dec8a138437\ntemplate_id: GTA-STANDARD-v1.0\n\nCompare the term renewal clause against the standard template.",
+    "goals": {
+      "search_clause": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "search_clause",
+        "tool_name": "search_clause",
+        "args": {
+          "session_id": "993e56cb-def9-4202-85bd-7dec8a138437",
+          "template_id": "GTA-STANDARD-v1.0",
+          "clause_query": "term renewal clause"
+        },
+        "arg_matching": {
+          "session_id": "strict",
+          "template_id": "strict",
+          "clause_query": "fuzzy"
+        }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "summary": "Agent finds the relevant term renewal clause in the vendor contract and the standard template, then compares the two clearly."
+      }
+    ]
+  },
+  {
+    "id": "7e558691-1532-490d-995c-88ac283261c0",
+    "agent": "contract_reviewer",
+    "story": "An uploaded vendor contract context already exists. The template_id is GTA-STANDARD-v1.0 and the session_id is 993e56cb-def9-4202-85bd-7dec8a138437. You want to compare the Termination by GTA for Cause clause in the vendor contract against the standard template.",
+    "starting_sentence": "The vendor contract has already been uploaded and ingested.\nsession_id: 993e56cb-def9-4202-85bd-7dec8a138437\ntemplate_id: GTA-STANDARD-v1.0\n\nCompare the Termination by GTA for Cause clause against the standard template.",
+    "goals": {
+      "search_clause": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "search_clause",
+        "tool_name": "search_clause",
+        "args": {
+          "session_id": "993e56cb-def9-4202-85bd-7dec8a138437",
+          "template_id": "GTA-STANDARD-v1.0",
+          "clause_query": "Termination by GTA for Cause"
+        },
+        "arg_matching": {
+          "session_id": "strict",
+          "template_id": "strict",
+          "clause_query": "fuzzy"
+        }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "summary": "Agent finds the relevant Termination by GTA for Cause clause in the vendor contract and the standard template, then compares the two clearly."
+      }
+    ]
+  },
+  {
+    "id": "f6b3050c-1c61-42c7-a057-a5a14a1ff786",
+    "agent": "contract_reviewer",
+    "story": "An uploaded vendor contract context already exists. The template_id is GTA-STANDARD-v1.0 and the session_id is 993e56cb-def9-4202-85bd-7dec8a138437. You want to compare the payment terms clause in the vendor contract against the standard template.",
+    "starting_sentence": "The vendor contract has already been uploaded and ingested.\nsession_id: 993e56cb-def9-4202-85bd-7dec8a138437\ntemplate_id: GTA-STANDARD-v1.0\n\nCompare the payment terms clause against the standard template.",
+    "goals": {
+      "search_clause": ["summarize"]
+    },
+    "goal_details": [
+      {
+        "type": "tool_call",
+        "name": "search_clause",
+        "tool_name": "search_clause",
+        "args": {
+          "session_id": "993e56cb-def9-4202-85bd-7dec8a138437",
+          "template_id": "GTA-STANDARD-v1.0",
+          "clause_query": "payment terms clause"
+        },
+        "arg_matching": {
+          "session_id": "strict",
+          "template_id": "strict",
+          "clause_query": "fuzzy"
+        }
+      },
+      {
+        "name": "summarize",
+        "type": "text",
+        "summary": "Agent finds the relevant payment terms clause in the vendor contract and the standard template, then compares the two clearly."
+      }
+    ]
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contract Clause Search",
+    "description": "Vector search for standard template and vendor contract clauses. Returns both sides in one call so the agent can build a comparison table without two round-trips.",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://search-contract-clause.<project-id>.<region>.codeengine.appdomain.cloud",
+      "description": "Code Engine deployment"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+    }
+  },
+  "security": [{ "ApiKeyAuth": [] }],
+  "paths": {
+    "/search_clause": {
+      "post": {
+        "operationId": "searchClause",
+        "summary": "searchClause",
+        "description": "Search standard template and vendor contract clauses. Runs two parallel AstraDB vector queries — one for the standard template, one for the vendor contract — and returns both results in a single response.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["session_id", "template_id", "clause_query"],
+                "properties": {
+                  "session_id": {
+                    "type": "string",
+                    "description": "Unique session ID returned by ingest_vendor_contract on upload",
+                    "example": "abc-123-uuid"
+                  },
+                  "template_id": {
+                    "type": "string",
+                    "description": "Template version the vendor contract is based on",
+                    "example": "GTA-MSA-v1.2"
+                  },
+                  "clause_query": {
+                    "type": "string",
+                    "description": "Natural language description of the clause to find",
+                    "example": "fee payment calculation percentage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Both standard and vendor clause results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "standard": {
+                      "description": "Most similar clause from the standard template. Null if no template chunks exist for template_id.",
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "section_id":  { "type": "string", "example": "§3.2" },
+                            "heading":     { "type": "string", "example": "Calculation and Payment of Fee" },
+                            "text":        { "type": "string" },
+                            "clause_type": { "type": "string", "example": "fee_payment" },
+                            "similarity":  { "type": "number", "example": 0.94 }
+                          }
+                        },
+                        { "type": "null" }
+                      ]
+                    },
+                    "vendor": {
+                      "description": "Most similar clause from the vendor contract. Null if no vendor chunks exist for session_id.",
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "section_id":  { "type": "string", "example": "§3.2" },
+                            "heading":     { "type": "string", "example": "Calculation and Payment of Fee" },
+                            "text":        { "type": "string" },
+                            "clause_type": { "type": "string", "example": "fee_payment" },
+                            "similarity":  { "type": "number", "example": 0.91 }
+                          }
+                        },
+                        { "type": "null" }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error — missing or invalid request fields"
+          },
+          "503": {
+            "description": "AstraDB not initialised"
+          }
+        }
+      }
+    }
+  }
+}

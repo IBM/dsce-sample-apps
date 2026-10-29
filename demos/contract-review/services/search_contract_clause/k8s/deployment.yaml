@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-contract-clause
+  labels:
+    app: search-contract-clause
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: search-contract-clause
+  template:
+    metadata:
+      labels:
+        app: search-contract-clause
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: search-contract-clause
+          image: icr.io/<namespace>/search-contract-clause:2.0.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: search-contract-clause-secret
+                  key: SERVICE_API_KEY
+            - name: ASTRA_DB_API_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_API_ENDPOINT
+            - name: ASTRA_DB_APPLICATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_APPLICATION_TOKEN
+            - name: ASTRA_DB_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_COLLECTION
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: search-contract-clause
+spec:
+  selector:
+    app: search-contract-clause
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: search-contract-clause
+spec:
+  to:
+    kind: Service
+    name: search-contract-clause
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

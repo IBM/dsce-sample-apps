@@ -1,0 +1,94 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PDF Regeneration Service",
+    "description": "Applies clause corrections to vendor contract PDFs. Downloads original from COS, applies PyMuPDF edits, uploads rectified PDF, returns presigned download URL.",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://regenerate-pdf.<project-id>.<region>.codeengine.appdomain.cloud",
+      "description": "Code Engine deployment"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+    }
+  },
+  "security": [{ "ApiKeyAuth": [] }],
+  "paths": {
+    "/rectify_pdf": {
+      "post": {
+        "operationId": "rectifyPdf",
+        "summary": "rectifyPdf",
+        "description": "Rectify a vendor contract PDF. Pass exact find/replace pairs derived from clause comparison. Downloads PDF from COS, applies PyMuPDF edits, uploads rectified PDF, returns presigned URL. Response includes skipped list for any find strings that had no match.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["cos_pdf_url"],
+                "properties": {
+                  "cos_pdf_url": {
+                    "type": "string",
+                    "description": "COS URL of the PDF to edit — either the original vendor PDF or a previously rectified PDF for retry.",
+                    "example": "https://s3.us-east.../regeneratepdf/original_everton_abc123.pdf"
+                  },
+                  "instructions": {
+                    "type": "array",
+                    "description": "Path A: exact find/replace pairs from comparison context. Preferred — no LLM call.",
+                    "items": {
+                      "type": "object",
+                      "required": ["find", "replace"],
+                      "properties": {
+                        "find":    { "type": "string", "example": "two-and-one-half percent (2.5%)" },
+                        "replace": { "type": "string", "example": "three percent (3%)" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PDF rectified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "download_url": {
+                      "type": "string",
+                      "description": "Presigned URL to download the rectified PDF (valid 1 hour)"
+                    },
+                    "changes_applied": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Human-readable summary of each substitution that was successfully applied"
+                    },
+                    "skipped": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Find strings that had no match in the PDF and were not applied. Pass these as cos_pdf_url=download_url in a retry call."
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 3600,
+                      "description": "Seconds until the download URL expires"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": { "description": "instructions is empty or missing" },
+          "502": { "description": "Failed to download PDF from COS" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: regenerate-pdf
+  labels:
+    app: regenerate-pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: regenerate-pdf
+  template:
+    metadata:
+      labels:
+        app: regenerate-pdf
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: regenerate-pdf
+          image: icr.io/<namespace>/regenerate-pdf:2.0.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: regenerate-pdf-secret
+                  key: SERVICE_API_KEY
+            - name: COS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_API_KEY
+            - name: COS_SERVICE_INSTANCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_SERVICE_INSTANCE_ID
+            - name: COS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_ENDPOINT
+            - name: COS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_BUCKET
+            - name: COS_HMAC_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_HMAC_ACCESS_KEY_ID
+            - name: COS_HMAC_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_HMAC_SECRET_ACCESS_KEY
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: regenerate-pdf
+spec:
+  selector:
+    app: regenerate-pdf
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: regenerate-pdf
+spec:
+  to:
+    kind: Service
+    name: regenerate-pdf
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

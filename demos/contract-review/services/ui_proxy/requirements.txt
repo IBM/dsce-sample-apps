@@ -1,0 +1,10 @@
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+httpx==0.28.1
+python-multipart==0.0.32
+python-dotenv==1.2.4
+pydantic==2.14.1
+# Ingestion dependencies (proxy now handles COS + AstraDB directly)
+ibm-cos-sdk==2.16.2
+astrapy==2.3.2
+pymupdf==1.28.2
