@@ -144,16 +144,20 @@ function parseServiceUrl(serviceUrl) {
 }
 
 function getPlatform(serviceUrl) {
-  const value = serviceUrl.toLowerCase();
+  try {
+    const hostname = new URL(serviceUrl).hostname.toLowerCase();
 
-  if (value.includes('watson-orchestrate.cloud.ibm.com')) {
-    logger.debug('Detected platform: IBM Cloud');
-    return 'ibm_cloud';
-  }
+    if (hostname === 'watson-orchestrate.cloud.ibm.com') {
+      logger.debug('Detected platform: IBM Cloud');
+      return 'ibm_cloud';
+    }
 
-  if (value.includes('watson-orchestrate.ibm.com')) {
-    logger.debug('Detected platform: AWS or SaaS');
-    return 'aws_or_saas';
+    if (hostname === 'watson-orchestrate.ibm.com') {
+      logger.debug('Detected platform: AWS or SaaS');
+      return 'aws_or_saas';
+    }
+  } catch (error) {
+    logger.warn('Invalid service URL format; defaulting platform detection to on_prem', { serviceUrl });
   }
 
   logger.debug('Detected platform: On-Premises');
