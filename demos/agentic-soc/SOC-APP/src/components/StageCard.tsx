@@ -15,8 +15,8 @@ import {
   Check,
   Code2,
   ChevronDown,
-  Minimize2,
-  Maximize2,
+  Download,
+  Sparkles,
 } from 'lucide-react';
 
 interface StageCardProps {
@@ -28,6 +28,7 @@ interface StageCardProps {
   isPipelineRunning: boolean;
   /** When true renders as compact expandable column */
   compact?: boolean;
+  onViewReport?: () => void;
 }
 
 // Accent colour per stage key — 6 distinct colours for 6 stages
@@ -95,11 +96,11 @@ export const StageCard: React.FC<StageCardProps> = ({
   onPromptChange,
   isPipelineRunning,
   compact = false,
+  onViewReport,
 }) => {
   const [activeTab, setActiveTab] = useState<'output' | 'tools' | 'traces' | 'prompt'>('output');
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [minimized, setMinimized] = useState(false);
 
   const run = stageState.run;
   const isLoading = stageState.loading;
@@ -236,7 +237,7 @@ export const StageCard: React.FC<StageCardProps> = ({
         </button>
 
         {/* Run button */}
-        <div className="px-3 pb-3">
+        <div className="px-3 pb-3 flex flex-col gap-1.5">
           <button
             onClick={(e) => { e.stopPropagation(); onRunStage(stage.key); }}
             disabled={isLoading || isPipelineRunning}
@@ -245,6 +246,18 @@ export const StageCard: React.FC<StageCardProps> = ({
             <Play className="h-2.5 w-2.5 fill-current" />
             <span>Run</span>
           </button>
+
+          {/* Quick Report Download Trigger for RCA */}
+          {stage.key === 'rca' && run?.status === 'completed' && onViewReport && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onViewReport(); }}
+              className="w-full inline-flex items-center justify-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold bg-teal-950/80 text-teal-300 border border-teal-500/40 hover:bg-teal-900/90 transition-all shadow-sm"
+              title="Download Incident Investigation Report"
+            >
+              <FileText className="h-2.5 w-2.5" />
+              <span>Report</span>
+            </button>
+          )}
         </div>
 
         {/* Expanded panel */}
@@ -293,7 +306,28 @@ export const StageCard: React.FC<StageCardProps> = ({
                       <p className="text-[11px]">Processing…</p>
                     </div>
                   ) : run?.outputText ? (
-                    <pre className="whitespace-pre-wrap leading-relaxed text-slate-200 font-sans text-[11px]">{run.outputText}</pre>
+                    <div>
+                      {/* RCA Report Callout Banner */}
+                      {stage.key === 'rca' && onViewReport && (
+                        <div className="mb-3 flex items-center justify-between rounded-lg border border-teal-500/40 bg-teal-950/30 p-2.5 font-sans">
+                          <div className="flex items-center gap-2">
+                            <Sparkles className="h-4 w-4 text-teal-400 shrink-0" />
+                            <div>
+                              <p className="text-[11px] font-semibold text-teal-200">Incident Investigation Report Ready</p>
+                              <p className="text-[10px] text-teal-400/80">Certified 5-Dimension Root Cause Analysis</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={onViewReport}
+                            className="inline-flex items-center gap-1 rounded-md bg-teal-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-teal-500 shadow-sm transition-all"
+                          >
+                            <Download className="h-3 w-3" />
+                            <span>Download Report</span>
+                          </button>
+                        </div>
+                      )}
+                      <pre className="whitespace-pre-wrap leading-relaxed text-slate-200 font-sans text-[11px]">{run.outputText}</pre>
+                    </div>
                   ) : (
                     <p className="text-slate-500 italic py-6 text-center font-sans text-[11px]">Not executed yet.</p>
                   )
@@ -382,129 +416,140 @@ export const StageCard: React.FC<StageCardProps> = ({
                 <BadgeIcon className={`h-3 w-3 ${isLoading ? 'animate-spin' : ''}`} />
                 <span>{currentBadge.label}</span>
               </span>
-              <button onClick={() => onRunStage(stage.key)} disabled={isLoading || isPipelineRunning}
-                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 focus:outline-none ${accent.btn}`}>
+              <button
+                onClick={() => onRunStage(stage.key)}
+                disabled={isLoading || isPipelineRunning}
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 ${accent.btn}`}
+              >
                 <Play className="h-3 w-3 fill-current" />
                 <span>Run Stage</span>
               </button>
-              <button onClick={() => setMinimized((v) => !v)}
-                className="inline-flex items-center justify-center h-7 w-7 rounded-lg border border-slate-700/60 bg-slate-800/40 text-slate-500 hover:text-slate-300 hover:border-slate-600 transition-colors"
-                title={minimized ? 'Expand card' : 'Minimize card'}>
-                {minimized ? <Maximize2 className="h-3.5 w-3.5" /> : <Minimize2 className="h-3.5 w-3.5" />}
-              </button>
             </div>
           </div>
-          {!minimized && (
-            <p className="text-xs text-slate-400 bg-slate-900/40 p-2.5 rounded-lg border border-slate-800/60 leading-relaxed">{stage.instruction}</p>
-          )}
         </div>
 
         {/* Body */}
-        {!minimized && (
-          <>
-            {/* Telemetry Row */}
-            <div className="grid grid-cols-2 gap-2 bg-slate-900/40 px-4 py-2.5 border-b border-slate-800/60 sm:grid-cols-4 text-xs font-mono">
-              <div><span className="text-[10px] uppercase text-slate-600 block">Thread ID</span><span className="text-slate-300 truncate block">{run?.threadId || '—'}</span></div>
-              <div><span className="text-[10px] uppercase text-slate-600 block">Run ID</span><span className="text-slate-300 truncate block">{run?.runId || '—'}</span></div>
-              <div><span className="text-[10px] uppercase text-slate-600 block">Duration</span><span className="text-slate-300 block">{formatDuration(run?.analytics?.durationMs)}</span></div>
-              <div><span className="text-[10px] uppercase text-slate-600 block">Tools / Traces</span><span className="text-slate-300 block">{toolCalls.length} / {run?.analytics?.traceCount ?? 0}</span></div>
-            </div>
+        <div className="p-4 sm:p-5 space-y-4">
+          <p className="text-xs text-slate-300 bg-slate-900/60 p-3 rounded-lg border border-slate-800/60 leading-relaxed">
+            {stage.instruction}
+          </p>
 
-            {/* Tabs */}
-            <div className="p-4 sm:p-5">
-              <div className="flex flex-wrap items-center justify-between border-b border-slate-800/60 pb-2 mb-3 gap-2">
-                <div className="flex items-center gap-1 flex-wrap">
-                  {[
-                    { id: 'output', icon: FileText, label: 'Agent Output' },
-                    { id: 'tools', icon: Wrench, label: `Tool Calls (${toolCalls.length})` },
-                    { id: 'traces', icon: Terminal, label: `Traces (${run?.traces?.length || 0})` },
-                    { id: 'prompt', icon: Code2, label: 'Override Prompt' },
-                  ].map(({ id, icon: Icon, label }) => (
-                    <button key={id} onClick={() => setActiveTab(id as any)}
-                      className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium border transition-colors ${activeTab === id ? tabActiveClass : 'border-transparent text-slate-500 hover:text-slate-200 hover:bg-slate-800/50'}`}>
-                      <Icon className="h-3.5 w-3.5" />
-                      <span>{label}</span>
-                    </button>
-                  ))}
+          {/* RCA Report Callout Banner in Full View */}
+          {stage.key === 'rca' && run?.status === 'completed' && onViewReport && (
+            <div className="flex items-center justify-between rounded-xl border border-teal-500/40 bg-teal-950/30 p-3.5">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-500/20 text-teal-300">
+                  <Sparkles className="h-4 w-4" />
                 </div>
-                {activeTab === 'output' && run?.outputText && (
-                  <button onClick={() => handleCopy(run.outputText)} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-300 transition-colors">
-                    {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
-                    <span>{copied ? 'Copied' : 'Copy'}</span>
-                  </button>
-                )}
+                <div>
+                  <h4 className="text-xs font-bold text-teal-100">Root Cause Investigation Report Generated</h4>
+                  <p className="text-[11px] text-teal-300/80">Includes 5-dimension analysis, timeline, and MITRE mapping</p>
+                </div>
               </div>
-
-              <div className="min-h-[140px] rounded-lg bg-slate-950/60 border border-slate-800/60 p-3.5 font-mono text-xs text-slate-300 overflow-x-auto">
-                {activeTab === 'output' && (
-                  isLoading ? (
-                    <div className="flex flex-col items-center justify-center py-8 text-slate-400 space-y-2">
-                      <Activity className="h-5 w-5 animate-spin text-indigo-400" />
-                      <p className="text-xs">watsonx Orchestrate agent processing request…</p>
-                    </div>
-                  ) : run?.outputText ? (
-                    <pre className="whitespace-pre-wrap leading-relaxed text-slate-200 font-sans text-xs">{run.outputText}</pre>
-                  ) : (
-                    <p className="text-slate-500 italic py-6 text-center font-sans">Stage has not been executed yet.</p>
-                  )
-                )}
-                {activeTab === 'tools' && (
-                  isLoading ? (
-                    <div className="flex flex-col items-center justify-center py-8 text-slate-400 space-y-2">
-                      <Activity className="h-5 w-5 animate-spin text-indigo-400" />
-                      <p className="text-xs">Capturing tool calls…</p>
-                    </div>
-                  ) : toolCalls.length > 0 ? (
-                    <div className="space-y-3 font-sans">
-                      {toolCalls.map((tc, idx) => (
-                        <div key={tc.id || idx} className="rounded-lg border border-slate-800 bg-slate-900/90 p-3 space-y-2 font-mono">
-                          <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-800/80">
-                            <div className="flex items-center gap-2">
-                              <Wrench className="h-3.5 w-3.5 text-indigo-400 shrink-0" />
-                              <span className="font-semibold text-indigo-300">{tc.name}</span>
-                            </div>
-                            <span className="text-[10px] text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">#{idx + 1}</span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-semibold text-slate-500 block mb-1">Arguments</span>
-                            <pre className="rounded bg-slate-950 p-2 text-[11px] text-slate-300 leading-tight whitespace-pre-wrap max-h-40 overflow-y-auto">
-                              {tc.input ? (typeof tc.input === 'object' ? JSON.stringify(tc.input, null, 2) : tc.input) : 'No arguments required'}
-                            </pre>
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-semibold text-teal-400 block mb-1">Response</span>
-                            <pre className="rounded bg-slate-950 p-2 text-[11px] text-teal-300/90 leading-tight whitespace-pre-wrap max-h-60 overflow-y-auto">
-                              {tc.output ? (typeof tc.output === 'object' ? JSON.stringify(tc.output, null, 2) : tc.output) : 'Execution completed'}
-                            </pre>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-slate-500 text-xs font-sans py-6 text-center">No tool calls captured.</p>
-                  )
-                )}
-                {activeTab === 'traces' && (
-                  run?.traces && run.traces.length > 0 ? (
-                    <pre className="whitespace-pre-wrap text-[11px] text-indigo-400/90 leading-tight">{JSON.stringify(run.traces, null, 2)}</pre>
-                  ) : (
-                    <p className="text-slate-500 italic py-6 text-center font-sans">No trace payloads captured.</p>
-                  )
-                )}
-                {activeTab === 'prompt' && (
-                  <div className="space-y-2 font-sans">
-                    <label className="text-xs text-slate-400 font-medium block">Stage Override Prompt (Optional)</label>
-                    <textarea value={stageState.prompt || ''} onChange={(e) => onPromptChange(stage.key, e.target.value)} rows={4}
-                      placeholder={`Provide custom instructions for the ${stage.label} agent…`}
-                      className="w-full rounded-lg border border-slate-700/60 bg-slate-900/60 p-3 text-xs text-slate-200 placeholder-slate-600 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-                    />
-                    <p className="text-[11px] text-slate-500">If left blank, global prompt and previous stage outputs are passed automatically.</p>
-                  </div>
-                )}
-              </div>
+              <button
+                onClick={onViewReport}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-teal-500 transition-all"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span>View & Download Report</span>
+              </button>
             </div>
-          </>
-        )}
+          )}
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div className="flex items-center gap-1">
+                {(['output', 'tools', 'traces', 'prompt'] as const).map((tab) => {
+                  const icons = { output: FileText, tools: Wrench, traces: Terminal, prompt: Code2 };
+                  const labels = { output: 'Output', tools: `Tools (${toolCalls.length})`, traces: `Traces (${run?.traces?.length || 0})`, prompt: 'Prompt' };
+                  const TabIcon = icons[tab];
+                  return (
+                    <button key={tab} onClick={() => setActiveTab(tab)}
+                      className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${activeTab === tab ? tabActiveClass : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'}`}
+                    >
+                      <TabIcon className="h-3.5 w-3.5" />
+                      <span>{labels[tab]}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              {activeTab === 'output' && run?.outputText && (
+                <button onClick={() => handleCopy(run.outputText)} className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-200 transition-colors">
+                  {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                  <span>{copied ? 'Copied' : 'Copy'}</span>
+                </button>
+              )}
+            </div>
+
+            <div className="min-h-[160px] rounded-lg bg-slate-950 p-4 font-mono text-xs text-slate-200 overflow-auto max-h-[420px]">
+              {activeTab === 'output' && (
+                isLoading ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <Activity className="h-6 w-6 animate-spin text-violet-400" />
+                    <p className="text-xs">Agent is processing…</p>
+                  </div>
+                ) : run?.outputText ? (
+                  <pre className="whitespace-pre-wrap leading-relaxed text-slate-200 font-sans text-xs">{run.outputText}</pre>
+                ) : (
+                  <p className="text-slate-500 italic py-8 text-center font-sans">Click "Run Stage" or "Run Pipeline" to execute.</p>
+                )
+              )}
+              {activeTab === 'tools' && (
+                isLoading ? (
+                  <div className="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <Activity className="h-6 w-6 animate-spin text-violet-400" />
+                    <p className="text-xs">Capturing tool calls…</p>
+                  </div>
+                ) : toolCalls.length > 0 ? (
+                  <div className="space-y-3 font-sans">
+                    {toolCalls.map((tc, idx) => (
+                      <div key={tc.id || idx} className="rounded-lg border border-slate-800 bg-slate-900/90 p-3 space-y-2 font-mono">
+                        <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-800/80">
+                          <div className="flex items-center gap-2">
+                            <Wrench className="h-3.5 w-3.5 text-violet-400 shrink-0" />
+                            <span className="font-semibold text-violet-300">{tc.name}</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">#{idx + 1}</span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] uppercase font-semibold text-slate-400 block mb-1">Arguments</span>
+                          <pre className="rounded bg-slate-950 p-2 text-[10px] text-slate-300 leading-tight whitespace-pre-wrap max-h-32 overflow-y-auto">
+                            {tc.input ? (typeof tc.input === 'object' ? JSON.stringify(tc.input, null, 2) : tc.input) : 'No arguments'}
+                          </pre>
+                        </div>
+                        <div>
+                          <span className="text-[10px] uppercase font-semibold text-emerald-400 block mb-1">Response</span>
+                          <pre className="rounded bg-slate-950 p-2 text-[10px] text-emerald-300/90 leading-tight whitespace-pre-wrap max-h-48 overflow-y-auto">
+                            {tc.output ? (typeof tc.output === 'object' ? JSON.stringify(tc.output, null, 2) : tc.output) : 'Completed'}
+                          </pre>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-slate-400 text-xs font-sans py-8 text-center">No tool calls captured.</p>
+                )
+              )}
+              {activeTab === 'traces' && (
+                run?.traces && run.traces.length > 0 ? (
+                  <pre className="whitespace-pre-wrap text-xs text-violet-300/90 leading-tight">{JSON.stringify(run.traces, null, 2)}</pre>
+                ) : (
+                  <p className="text-slate-500 italic py-8 text-center font-sans">No traces captured.</p>
+                )
+              )}
+              {activeTab === 'prompt' && (
+                <div className="space-y-2 font-sans">
+                  <label className="text-xs text-slate-400 font-medium block">Custom Prompt</label>
+                  <textarea value={stageState.prompt || ''} onChange={(e) => onPromptChange(stage.key, e.target.value)} rows={4}
+                    placeholder={`Custom instructions for ${stage.label}…`}
+                    className="w-full rounded-lg border border-slate-800 bg-slate-900/90 p-2.5 text-xs text-slate-100 placeholder-slate-500 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+                  />
+                  <p className="text-[11px] text-slate-500">Leave blank to use global prompt + previous stage outputs.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

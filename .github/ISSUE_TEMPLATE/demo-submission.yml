@@ -201,9 +201,9 @@ body:
   - type: checkboxes
     id: code_review_completed
     attributes:
-      label: Perform code review prior to submission using this [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml)
+      label: Perform IBM CIO code scans prior to submission.  This is required as IBM CIO now scans all repos in ibm.github.com for security flaws.
       options:
-        - label: IBM CIO now scans all repos in ibm.github.com, so I have used the [Security and Vulnerability IBM Mode](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml) to ensure known security alerts have been resolved in my repo.
+        - label: I have used the **Security and Vulnerability IBM Mode** in this [custom_modes.yaml](https://github.com/IBM/dsce-sample-apps/blob/main/.bob/custom_modes.yaml) with IBM to ensure known security alerts have been resolved in my repo.
     validations:
       required: true
 

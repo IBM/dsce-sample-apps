@@ -49,7 +49,7 @@ _TARGET_KEY_MAP = {
     # Identity & access
     "block_user":                          "user_email",
     "disable_user_account":                "user_email",
-    "reset_user_password":                 "user_email",  # vault:ignore - action type key, not a credential
+    "reset_user_password":                 "user_email",
     "revoke_user_session":                 "user_email",
     "enforce_mfa":                         "user_email",
     # Application layer

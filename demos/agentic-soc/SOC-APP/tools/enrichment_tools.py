@@ -57,10 +57,7 @@ def _get_iam_token(api_key: str) -> str:
     resp = requests.post(
         IBM_IAM_URL,
         headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={
-            "grant_type": "urn:ibm:params:oauth:grant-type:apikey",
-            "apikey": api_key,
-        },
+        data=f"grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey={api_key}",
         timeout=15,
     )
     resp.raise_for_status()

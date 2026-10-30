@@ -6,6 +6,7 @@ Uses plain requests — no ibm-cos-sdk needed in WxO runtime.
 
 import csv
 import io
+import re
 import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List
@@ -126,10 +127,7 @@ def _get_iam_token(api_key: str) -> str:
     resp = requests.post(
         IBM_IAM_URL,
         headers={"Content-Type": "application/x-www-form-urlencoded"},
-        data={
-            "grant_type": "urn:ibm:params:oauth:grant-type:apikey",
-            "apikey": api_key,
-        },
+        data=f"grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey={api_key}",
         timeout=15,
     )
     resp.raise_for_status()
@@ -138,6 +136,14 @@ def _get_iam_token(api_key: str) -> str:
     expires_in = int(body.get("expires_in", 3600))
     _TOKEN_CACHE = {"api_key": api_key, "token": token, "expires_at": now + expires_in}
     return token
+
+
+_OFFENSE_ID_RE = re.compile(r"^\d{1,12}$")
+
+
+def _valid_offense_id(offense_id: str) -> bool:
+    """Offense IDs are numeric; reject anything that could alter the COS object key."""
+    return bool(_OFFENSE_ID_RE.match(str(offense_id).strip()))
 
 
 def _fetch_csv(object_key: str) -> List[Dict[str, str]]:
@@ -262,7 +268,8 @@ def fetch_offense(offense_id: str) -> OffenseOutput:
     Args:
         offense_id: QRadar offense ID (e.g. "167657")
     """
-    rows = _fetch_csv(f"Offense_{offense_id}.csv")
+    offense_id = str(offense_id).strip()
+    rows = _fetch_csv(f"Offense_{offense_id}.csv") if _valid_offense_id(offense_id) else []
     if not rows:
         return OffenseOutput(
             found=False, offense_id=offense_id, description="NOT FOUND",
@@ -325,7 +332,9 @@ def fetch_offense_events(offense_id: str, max_events: int = 20) -> EventsOutput:
         offense_id: QRadar offense ID
         max_events: Maximum rows to return (default 20; increase for dense offenses)
     """
-    rows = _fetch_csv(f"Offense_{offense_id}_Events.csv")
+    offense_id = str(offense_id).strip()
+    max_events = max(1, min(int(max_events), 500))
+    rows = _fetch_csv(f"Offense_{offense_id}_Events.csv") if _valid_offense_id(offense_id) else []
     if not rows:
         return EventsOutput(
             found=False, offense_id=offense_id, event_type="all_events",
@@ -362,7 +371,9 @@ def fetch_rca_events(offense_id: str, max_events: int = 25) -> EventsOutput:
         offense_id: QRadar offense ID
         max_events: Maximum rows to return (default 25)
     """
-    rows = _fetch_csv(f"Offense_{offense_id}_RCA_Relevant_Events.csv")
+    offense_id = str(offense_id).strip()
+    max_events = max(1, min(int(max_events), 500))
+    rows = _fetch_csv(f"Offense_{offense_id}_RCA_Relevant_Events.csv") if _valid_offense_id(offense_id) else []
     if not rows:
         return EventsOutput(
             found=False, offense_id=offense_id, event_type="rca_relevant_events",

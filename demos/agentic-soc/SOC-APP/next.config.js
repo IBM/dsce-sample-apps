@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
   async rewrites() {
     return [
       // NOTE: /api/poc-stages/:stageKey/run and /api/poc-stages/:stageKey/run/:runId

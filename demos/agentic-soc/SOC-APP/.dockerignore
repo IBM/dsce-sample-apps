@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+node_modules
+.next
+.git
+*.log
+.venv
+__pycache__
+.bob

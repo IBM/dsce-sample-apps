@@ -46,14 +46,15 @@
       "buildingBlocks": ["ai.agents", "automation.secure"],
       "skills": ["agent-builder"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/agentic-soc",
+      "workingDemoURL": "https://agentic-soc-frontend.2fzgycrrx0uz.au-syd.codeengine.appdomain.cloud/",
       "specificationsRepo": "",
       "specificationsFlow": "",
       "videos": [{ "cosFileName": "agentic_soc.mp4" }],
-      "screenshots": ["home_page.png"],
+      "screenshots": ["ApplicationUI-1.png", "ApplicationUI-2.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
       "architecture": "agentic_soc_architecture.png",
-      "release_date": "2026-09-01",
+      "release_date": "2026-10-30",
       "isLive": true
     },
     {
@@ -519,6 +520,45 @@
       "extrasBoxUrl": "https://ibm.box.com/s/cpo5w15kdqmloy0i9yyqtwxjlsxiiq5z",
       "isLive": true,
       "release_date": "2026-10-28"
+    },
+    {
+      "name": "Factory Pulse: Streamhouse Digital Twin for Manufacturing",
+      "slug": "factory-pulse-streamhouse-digital-twin-for-manufacturing",
+      "products": [
+        "IBM Confluent",
+        "IBM Bob",
+        "IBM watsonX.data"
+      ],
+      "buildingBlocks": [
+        "data.streamhouse",
+        "data.pipelines"
+      ],
+      "skills": [
+        "data-streaming-confluent",
+        "data-streaming-confluent-terraform"
+      ],
+      "codeRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/streamhouse/serve/assets/streamhouse",
+      "workingDemoURL": "https://streamhouse-factory-pulse.2gamafpz9ir9.eu-de.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "https://github.com/ibm-self-serve-assets/building-blocks/tree/main/data/streamhouse/serve/assets/streamhouse/docs",
+      "specificationsFlow": "",
+      "videos": [
+        {
+          "youTubeURL": "https://www.youtube.com/watch?v=SRpT1qd7OsM"
+        }
+      ],
+      "screenshots": [
+        "home_page.png",
+        "screenshot-01.png",
+        "screenshot-02.png",
+        "screenshot-03.png"
+      ],
+      "longDescription": "Manufacturers run their plants in real time, but the data behind most decisions still arrives in batches. When a robot's bearing starts to wear, the warning signs sit in sensor data that nobody sees until the robot trips and the whole line stops. Every hour of unplanned downtime is lost output, and AI assistants built on yesterday's data can't say which asset needs attention right now. Factory Pulse shows how a Streamhouse on IBM Confluent closes that gap.\n\nFactory Pulse is a digital twin of six US plants and 36 robots, and each plant runs a different production line in 3D. A Node.js backend publishes schema-validated telemetry to IBM Confluent Kafka topics, with JSON Schema contracts held in Schema Registry. Apache Flink SQL on IBM Confluent turns the stream into predictive risk signals, 1-minute OEE windows and quality alerts, while Stream Governance adds lineage and discoverable data products. The serve layer gives AI agents live asset state through the Real-Time Context Engine over MCP, and Tableflow lands history as Apache Iceberg tables for IBM watsonx.data. The app also runs fully offline in the browser, so sellers can demo it anywhere.\n\nSellers inject scenarios such as bearing wear, thermal excursion, quality drift or a demand surge, and watch one robot react: vibration climbs, a predictive alert appears, and if nobody acts the robot trips and the conveyor holds the line. A context panel then answers which robot needs maintenance from the live snapshot, and an MCP tool explorer connects to a real Real-Time Context Engine endpoint when one is configured. The demo speaks to plant and operations leaders, data and integration architects, and AI teams who need trustworthy real-time context. It was built with IBM Bob from natural-language specifications, using Plan and Agent modes and automated tests.",
+      "shortDescription": "A live 3D factory digital twin that streams robot telemetry through IBM Confluent, spots failing robots before the line stops, and serves governed real-time context to AI agents.",
+      "architecture_description": "Factory Pulse has three layers. A Node.js backend simulates six plants and 36 robots, serializes every reading against a JSON Schema in Schema Registry, and publishes it to three IBM Confluent Kafka topics: factory-iot-telemetry, factory-asset-state and factory-maintenance-events. Apache Flink SQL on IBM Confluent continuously turns these streams into predictive risk signals (factory-risk-signals), 1-minute shift KPIs and quality alerts, while Stream Governance provides schema contracts, stream lineage, discoverable data products and Flink Topic Actions. In the serve layer, the Real-Time Context Engine exposes live asset state to AI agents such as watsonx Orchestrate over MCP, and Tableflow materializes topics as Apache Iceberg tables for IBM watsonx.data. The React and IBM Carbon front end renders a three.js digital twin fed by server-sent events, sends fault and surge scenarios back over REST, and falls back to an in-browser simulation when no backend is reachable.",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-10-30"
     }
   ]
 }

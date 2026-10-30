@@ -9,7 +9,7 @@
     },
     "IBM Bob" : {
         "url" : "https://bob.ibm.com/",
-        "image" : "ibm-bob.svg"
+        "image" : "ibm-bob.png"
     },
     "HashiCorp Terraform" : {
         "url" : "https://developer.hashicorp.com/terraform",
