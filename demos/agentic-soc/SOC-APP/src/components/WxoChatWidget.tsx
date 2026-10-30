@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MessageSquare, X, Send, RotateCcw, Bot, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
+import { MessageSquare, X, Send, RotateCcw, Bot, Loader2, AlertCircle, ChevronDown, Sparkles } from 'lucide-react';
+import { getMockSupervisorChatResponse } from '@/data/mockPipelineData';
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'error';
@@ -10,10 +11,15 @@ interface ChatMessage {
   durationMs?: number | null;
 }
 
+interface WxoChatWidgetProps {
+  mockMode?: boolean;
+  selectedOffenseId?: string;
+}
+
 const POLL_INTERVAL_MS = 3000;
 const POLL_TIMEOUT_MS  = 360000;
 
-export function WxoChatWidget() {
+export function WxoChatWidget({ mockMode = true, selectedOffenseId = '167657' }: WxoChatWidgetProps) {
   const [open, setOpen]             = useState(false);
   const [messages, setMessages]     = useState<ChatMessage[]>([]);
   const [input, setInput]           = useState('');
@@ -39,8 +45,8 @@ export function WxoChatWidget() {
     }
   }, [open]);
 
-  const sendMessage = useCallback(async () => {
-    const text = input.trim();
+  const sendMessage = useCallback(async (customText?: string) => {
+    const text = (typeof customText === 'string' ? customText : input).trim();
     if (!text || thinkingRef.current) return;
 
     setInput('');
@@ -49,6 +55,29 @@ export function WxoChatWidget() {
 
     setMessages(prev => [...prev, { role: 'user', content: text }]);
 
+    // ── MOCK MODE HANDLING ──────────────────────────────────────────────────
+    if (mockMode) {
+      setStatusLine('Conversational supervisor analyzing query…');
+      setTimeout(() => {
+        const reply = getMockSupervisorChatResponse(text, selectedOffenseId);
+        setStatusLine('');
+        setMessages(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: reply,
+            status: 'completed',
+            durationMs: 820,
+          },
+        ]);
+        if (!open) setUnread(u => u + 1);
+        thinkingRef.current = false;
+        setThinking(false);
+      }, 750);
+      return;
+    }
+
+    // ── LIVE WXO HANDLING ───────────────────────────────────────────────────
     try {
       // Step 1: POST — create run
       const postRes = await fetch('/api/chat-conv', {
@@ -117,7 +146,7 @@ export function WxoChatWidget() {
       thinkingRef.current = false;
       setThinking(false);
     }
-  }, [input, threadId, open]);
+  }, [input, threadId, open, mockMode, selectedOffenseId]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -131,6 +160,8 @@ export function WxoChatWidget() {
     setThreadId(null);
     setStatusLine('');
     setInput('');
+    thinkingRef.current = false;
+    setThinking(false);
   };
 
   return (
@@ -180,23 +211,23 @@ export function WxoChatWidget() {
               <Bot className="h-4 w-4 text-indigo-300" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-white leading-none">Conversational Supervisor</p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-sm font-semibold text-white leading-none">Conversational Supervisor</p>
+              </div>
               <p className="text-[10px] text-indigo-300/70 mt-0.5">watsonx Orchestrate · SOC</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
-            {threadId && (
-              <button
-                onClick={handleReset}
-                title="Reset conversation"
-                className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-800 hover:text-slate-300 transition-colors"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-              </button>
-            )}
+            <button
+              onClick={handleReset}
+              title="Reset conversation"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800/80 hover:text-white transition-colors"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+            </button>
             <button
               onClick={() => setOpen(false)}
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-800 hover:text-slate-300 transition-colors"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800/80 hover:text-white transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -220,19 +251,20 @@ export function WxoChatWidget() {
               <div>
                 <p className="text-sm font-medium text-slate-300">Ask the Supervisor</p>
                 <p className="text-xs text-slate-600 mt-1 max-w-[260px]">
-                  Ask about any offense — the conversational supervisor will guide you through the 6-agent pipeline step by step.
+                  Ask about any offense — the conversational supervisor will guide you through the 5-agent pipeline step by step.
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5 justify-center mt-1">
                 {[
-                  'Analyze offense #1234',
+                  `Analyze offense #${selectedOffenseId}`,
                   'What is the pipeline status?',
-                  'Classify this IP: 10.0.0.1',
+                  'Explain the MITRE ATT&CK techniques',
+                  'What actions are recommended?',
                 ].map(s => (
                   <button
                     key={s}
-                    onClick={() => setInput(s)}
-                    className="rounded-full border border-slate-700 bg-slate-800/60 px-2.5 py-1 text-[10px] text-slate-400 hover:border-indigo-500/50 hover:text-indigo-300 transition-colors"
+                    onClick={() => sendMessage(s)}
+                    className="rounded-full border border-slate-700 bg-slate-800/60 px-2.5 py-1 text-[10px] text-slate-300 hover:border-indigo-500 hover:bg-indigo-950/40 hover:text-indigo-200 transition-all active:scale-95 text-left"
                   >
                     {s}
                   </button>
@@ -267,7 +299,7 @@ export function WxoChatWidget() {
                       : 'bg-slate-800/80 border border-slate-700/50 text-slate-200 rounded-tl-sm',
                 ].join(' ')}
               >
-                <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                <div className="whitespace-pre-wrap break-words">{msg.content}</div>
                 {msg.role === 'assistant' && msg.durationMs != null && (
                   <p className="mt-1 text-[10px] text-slate-600 font-mono">{(msg.durationMs / 1000).toFixed(1)}s · {msg.status}</p>
                 )}
@@ -317,7 +349,7 @@ export function WxoChatWidget() {
               style={{ fieldSizing: 'content' } as React.CSSProperties}
             />
             <button
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={thinking || !input.trim()}
               className={[
                 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all',

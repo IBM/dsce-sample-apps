@@ -3,132 +3,122 @@ const cors = require('cors');
 const path = require('path');
 const https = require('https');
 const crypto = require('crypto');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 // Simple logger utility
-const SENSITIVE_LOG_KEYS = new Set([
-  'apikey', 'api_key', 'api-key',
-  'token', 'access_token', 'refresh_token',
-  'authorization', 'password', 'secret'
-]);
-
-function sanitizeForLogging(value, seen = new WeakSet()) {
-  if (value === null || value === undefined) return value;
-  if (typeof value !== 'object') return value;
-
-  if (seen.has(value)) return '[Circular]';
-  seen.add(value);
-
-  if (Array.isArray(value)) {
-    return value.map((item) => sanitizeForLogging(item, seen));
-  }
-
-  const sanitized = {};
-  Object.keys(value).forEach((key) => {
-    if (SENSITIVE_LOG_KEYS.has(String(key).toLowerCase())) {
-      sanitized[key] = '[REDACTED]';
-    } else {
-      sanitized[key] = sanitizeForLogging(value[key], seen);
-    }
-  });
-  return sanitized;
-}
-
 const logger = {
   info: (message, data = {}) => {
-    console.log('[%s] INFO: %s', new Date().toISOString(), message, sanitizeForLogging(data));
+    console.log(`[${new Date().toISOString()}] INFO: ${message}`, data);
   },
   error: (message, error = {}) => {
-    console.error('[%s] ERROR: %s', new Date().toISOString(), message, sanitizeForLogging(error));
+    console.error(`[${new Date().toISOString()}] ERROR: ${message}`, error);
   },
   warn: (message, data = {}) => {
-    console.warn('[%s] WARN: %s', new Date().toISOString(), message, sanitizeForLogging(data));
+    console.warn(`[${new Date().toISOString()}] WARN: ${message}`, data);
   },
   debug: (message, data = {}) => {
     if (process.env.DEBUG === 'true') {
-      console.log('[%s] DEBUG: %s', new Date().toISOString(), message, sanitizeForLogging(data));
+      console.log(`[${new Date().toISOString()}] DEBUG: ${message}`, data);
     }
   }
 };
 
 const app = express();
 
-// ── Security middleware ───────────────────────────────────────────────────────
-app.use(helmet());
-app.use(cors({
-  origin: process.env.ALLOWED_ORIGIN || 'http://localhost:3000',
-  methods: ['GET', 'POST'],
-}));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.disable('x-powered-by');
 
-// ── Rate limiters ─────────────────────────────────────────────────────────────
-const agentRunLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 20,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { success: false, error: 'Too many requests — try again in a minute.' },
+// Restrict cross-origin access to the configured front-end origin(s).
+const ALLOWED_ORIGINS = (process.env.CORS_ORIGIN || 'http://localhost:3000')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+app.use(cors({
+  origin: (origin, cb) => (!origin || ALLOWED_ORIGINS.includes(origin) ? cb(null, true) : cb(null, false)),
+}));
+
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('Cache-Control', 'no-store');
+  next();
 });
-const tokenLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { success: false, error: 'Too many token requests — try again in a minute.' },
-});
+
+app.use(express.json({ limit: '256kb' }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const DEFAULT_STAGE_CONFIG = {
   triage: {
     label: 'Triage',
-    agentId: process.env.TRIAGE_AGENT_ID || '',
+    agentId: process.env.TRIAGE_AGENT_ID || '6deb4a84-605f-400b-be4d-1a2f319234a8',
     instruction: 'Assesses the incoming offense, determines severity, and prepares the hand-off for downstream stages.'
   },
   classification: {
     label: 'Classification',
-    agentId: process.env.CLASSIFICATION_AGENT_ID || '',
+    agentId: process.env.CLASSIFICATION_AGENT_ID || '0bd38980-d1af-4873-9f56-8e9265167cd3',
     instruction: 'Determines whether the offense is a true positive, false positive, benign positive, or requires RCA.'
   },
   rca: {
     label: 'RCA',
-    agentId: process.env.RCA_AGENT_ID || '',
+    agentId: process.env.RCA_AGENT_ID || 'f04f39ac-4cd0-468c-b60e-a9ec290d1431',
     instruction: 'Performs root cause analysis, evidence correlation, and investigation summarization.'
   },
   notification: {
     label: 'Notification',
-    agentId: process.env.NOTIFICATION_AGENT_ID || '',
+    agentId: process.env.NOTIFICATION_AGENT_ID || 'd43bc045-1d87-496d-80a0-30795600f4f5',
     instruction: 'Builds the customer-ready notification payload and explains the communication outcome.'
   },
   action: {
     label: 'Action',
-    agentId: process.env.ACTION_AGENT_ID || '',
+    agentId: process.env.ACTION_AGENT_ID || '35257061-1e99-426f-bf7d-5b9bda3cce3c',
     instruction: 'Recommends or executes the next remediation action and records the decision.'
   },
   close: {
     label: 'Close',
-    agentId: process.env.CLOSE_AGENT_ID || '',
+    agentId: process.env.CLOSE_AGENT_ID || 'a3cff33a-20d5-4f05-97a5-7c4707c2eff2',
     instruction: 'Finalizes the case, summarizes resolution, and closes the workflow.'
   }
 };
 
 const STAGE_ORDER = ['triage', 'classification', 'rca', 'notification', 'action', 'close'];
-const VALID_STAGE_KEYS = new Set(STAGE_ORDER);
 const SERVICE_URL = process.env.WXO_URL || process.env.WATSONX_SERVICE_URL || process.env.Service_instance_URL || '';
 const API_KEY = process.env.WXO_API_KEY || process.env.WATSONX_API_KEY || '';
 const CONV_SUPERVISOR_AGENT_ID = process.env.CONV_SUPERVISOR_AGENT_ID || '';
 
-// Log stage configuration at startup — omit agentIds from INFO logs
+// Log stage configuration at startup
 logger.info('=== Stage Configuration Loaded ===', {
-  stageCount: Object.keys(DEFAULT_STAGE_CONFIG).length,
-  stages: Object.keys(DEFAULT_STAGE_CONFIG).map((key) => ({
-    key,
-    label: DEFAULT_STAGE_CONFIG[key].label,
-    fromEnv: Boolean(process.env[`${key.toUpperCase()}_AGENT_ID`]),
-    configured: Boolean(DEFAULT_STAGE_CONFIG[key].agentId),
-  })),
+  stages: Object.keys(DEFAULT_STAGE_CONFIG).reduce((acc, key) => {
+    acc[key] = {
+      label: DEFAULT_STAGE_CONFIG[key].label,
+      agentId: DEFAULT_STAGE_CONFIG[key].agentId,
+      fromEnv: Boolean(process.env[`${key.toUpperCase()}_AGENT_ID`])
+    };
+    return acc;
+  }, {})
 });
+
+// Safe stage lookup (rejects prototype keys such as __proto__ / constructor)
+function getStage(stageKey) {
+  return Object.prototype.hasOwnProperty.call(DEFAULT_STAGE_CONFIG, stageKey)
+    ? DEFAULT_STAGE_CONFIG[stageKey]
+    : undefined;
+}
+
+// Run IDs are interpolated into upstream URL paths; only allow UUID-like tokens
+// so a caller cannot traverse to other WxO API paths using our bearer token.
+const RUN_ID_RE = /^[A-Za-z0-9-]{8,64}$/;
+function isValidRunId(runId) {
+  return typeof runId === 'string' && RUN_ID_RE.test(runId);
+}
+
+// Do not forward upstream error bodies to clients
+function sendError(res, error, fallbackStatus = 500) {
+  const status = error && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : fallbackStatus;
+  res.status(status).json({
+    success: false,
+    error: status >= 500 ? 'Upstream or internal error' : (error && error.message) || 'Request failed'
+  });
+}
 
 function parseServiceUrl(serviceUrl) {
   if (!serviceUrl) {
@@ -154,28 +144,14 @@ function parseServiceUrl(serviceUrl) {
 }
 
 function getPlatform(serviceUrl) {
-  let hostname = '';
+  const value = serviceUrl.toLowerCase();
 
-  try {
-    hostname = new URL(serviceUrl).hostname.toLowerCase();
-  } catch (error) {
-    logger.warn('Unable to parse service URL while detecting platform', { serviceUrl });
-    logger.debug('Detected platform: On-Premises');
-    return 'on_prem';
-  }
-
-  if (
-    hostname === 'watson-orchestrate.cloud.ibm.com' ||
-    hostname.endsWith('.watson-orchestrate.cloud.ibm.com')
-  ) {
+  if (value.includes('watson-orchestrate.cloud.ibm.com')) {
     logger.debug('Detected platform: IBM Cloud');
     return 'ibm_cloud';
   }
 
-  if (
-    hostname === 'watson-orchestrate.ibm.com' ||
-    hostname.endsWith('.watson-orchestrate.ibm.com')
-  ) {
+  if (value.includes('watson-orchestrate.ibm.com')) {
     logger.debug('Detected platform: AWS or SaaS');
     return 'aws_or_saas';
   }
@@ -204,7 +180,7 @@ function requestJson(options, body) {
     path: options.path,
     method: options.method,
     payloadSize: body ? Buffer.byteLength(body) : 0,
-    payloadRedacted: Boolean(body)
+    payload: parsedBody
   });
   
   return new Promise((resolve, reject) => {
@@ -468,31 +444,32 @@ app.get('/api/config', (req, res) => {
   });
 });
 
-app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
+app.post('/api/stages/:stageKey/run', async (req, res) => {
   try {
     const { stageKey } = req.params;
     const { prompt, threadId } = req.body;
+    
+    logger.info('POST /api/stages/:stageKey/run - Starting stage run', {
+      stageKey,
+      threadId: threadId || 'new - agent will create',
+      promptLength: prompt?.length || 0
+    });
 
-    // Allowlist check — reject any key not in the known stage set
-    if (!VALID_STAGE_KEYS.has(stageKey)) {
+    const stage = getStage(stageKey);
+
+    if (!stage) {
       logger.warn('Unknown stage requested', { stageKey });
       return res.status(404).json({ success: false, error: 'Unknown stage' });
     }
 
-    logger.info('POST /api/stages/:stageKey/run - Starting stage run', {
-      stageKey,
-      threadId: threadId ? '[provided]' : 'new - agent will create',
-      promptLength: prompt?.length || 0,
-    });
-
-    const stage = DEFAULT_STAGE_CONFIG[stageKey];
-
     logger.debug('Stage configuration retrieved', {
       stageKey,
       stageName: stage.label,
+      agentId: stage.agentId,
+      instruction: stage.instruction
     });
 
-    if (!prompt) {
+    if (!prompt || typeof prompt !== 'string') {
       logger.warn('Prompt is required but missing');
       return res.status(400).json({ success: false, error: 'prompt is required' });
     }
@@ -534,12 +511,13 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
 
     const body = JSON.stringify(payload);
     const startedAt = new Date().toISOString();
-
-    logger.info('Agent call dispatched', {
+    
+    logger.info('Agent call payload', {
       stageKey,
       stageName: stage.label,
-      threadId: threadId ? '[provided]' : null,
-      messageLength: payload.message.content.length,
+      agentId: stage.agentId,
+      threadId: threadId || null,
+      messageLength: payload.message.content.length
     });
     
     const runResponse = await requestJson({
@@ -557,7 +535,10 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
     logger.info('Agent call response received', {
       stageKey,
       runId: runResponse.run_id,
-      responseStatus: runResponse.status || 'unknown',
+      threadId: runResponse.thread_id || threadId || null,
+      taskId: runResponse.task_id || null,
+      messageId: runResponse.message_id || null,
+      responseStatus: runResponse.status || 'unknown'
     });
     
     const runDetails = await waitForCompletion(runResponse.run_id, token, service, startedAt);
@@ -571,7 +552,8 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
       stageKey,
       runId: runResponse.run_id,
       status: runDetails?.status,
-      duration: Date.now() - new Date(startedAt).getTime(),
+      outputLength: outputText.length,
+      duration: Date.now() - new Date(startedAt).getTime()
     });
 
     res.json({
@@ -580,6 +562,7 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
         key: stageKey,
         label: stage.label,
         instruction: stage.instruction,
+        agentId: stage.agentId
       },
       run: {
         threadId: runDetails?.thread_id || runResponse.thread_id || null,
@@ -590,6 +573,7 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
         outputText: outputText,
         analytics,
         traces,
+        raw: runDetails
       }
     });
   } catch (error) {
@@ -598,15 +582,12 @@ app.post('/api/stages/:stageKey/run', agentRunLimiter, async (req, res) => {
       error: error.message,
       errorDetails: error.body || error
     });
-    res.status(error.statusCode || 500).json({
-      success: false,
-      error: error.message,
-      details: error.body || null
-    });
+    sendError(res, error);
   }
 });
 
 app.get('/api/runs/:runId', async (req, res) => {
+  if (!isValidRunId(req.params.runId)) return res.status(400).json({ success: false, error: 'Invalid runId' });
   try {
     logger.info('GET /api/runs/:runId - Fetching run details', { runId: req.params.runId });
     
@@ -632,33 +613,29 @@ app.get('/api/runs/:runId', async (req, res) => {
         outputText: extractText(runDetails),
         analytics,
         traces,
+        raw: runDetails
       }
     });
   } catch (error) {
     logger.error('Failed to fetch run details', { runId: req.params.runId, error: error.message });
-    res.status(error.statusCode || 500).json({
-      success: false,
-      error: error.message,
-      details: error.body || null
-    });
+    sendError(res, error);
   }
 });
 
 
 
 // POST /api/poc-stages/:stageKey/run — create a run, return immediately with runId + startedAt
-app.post('/api/poc-stages/:stageKey/run', agentRunLimiter, async (req, res) => {
+app.post('/api/poc-stages/:stageKey/run', async (req, res) => {
   const { stageKey } = req.params;
   const { prompt, threadId } = req.body;
 
-  if (!VALID_STAGE_KEYS.has(stageKey)) return res.status(404).json({ success: false, error: 'Unknown stage' });
-  if (!prompt) return res.status(400).json({ success: false, error: 'prompt is required' });
+  const stage = getStage(stageKey);
+  if (!stage) return res.status(404).json({ success: false, error: `Unknown stage: ${stageKey}` });
+  if (!prompt || typeof prompt !== 'string') return res.status(400).json({ success: false, error: 'prompt is required' });
   if (!SERVICE_URL) return res.status(500).json({ success: false, error: 'Missing WATSONX_SERVICE_URL' });
 
-  const stage = DEFAULT_STAGE_CONFIG[stageKey];
-
   logger.info(`[${stageKey}] ── START ──────────────────────────────────────`);
-  logger.info(`[${stageKey}] Prompt dispatched (${prompt.length} chars)`);
+  logger.info(`[${stageKey}] Prompt received (${prompt.length} chars)`);
 
   try {
     const service = parseServiceUrl(SERVICE_URL);
@@ -682,17 +659,18 @@ app.post('/api/poc-stages/:stageKey/run', agentRunLimiter, async (req, res) => {
     res.json({ success: true, runId, threadId: runResponse.thread_id || null, taskId: runResponse.task_id || null, startedAt });
   } catch (error) {
     logger.error(`[${stageKey}] Failed to create run: ${error.message}`);
-    res.status(error.statusCode || 500).json({ success: false, error: error.message, details: error.body || null });
+    sendError(res, error);
   }
 });
 
 // GET /api/poc-stages/:stageKey/run/:runId — single non-blocking status check
 app.get('/api/poc-stages/:stageKey/run/:runId', async (req, res) => {
   const { stageKey, runId } = req.params;
-  const { threadId } = req.query;  // startedAt no longer accepted from client
+  const { startedAt, threadId } = req.query;
+  if (!isValidRunId(runId)) return res.status(400).json({ success: false, error: 'Invalid runId' });
 
-  if (!VALID_STAGE_KEYS.has(stageKey)) return res.status(404).json({ success: false, error: 'Unknown stage' });
-  const stage = DEFAULT_STAGE_CONFIG[stageKey];
+  const stage = getStage(stageKey);
+  if (!stage) return res.status(404).json({ success: false, error: `Unknown stage: ${stageKey}` });
   if (!SERVICE_URL) return res.status(500).json({ success: false, error: 'Missing WATSONX_SERVICE_URL' });
 
   try {
@@ -711,32 +689,30 @@ app.get('/api/poc-stages/:stageKey/run/:runId', async (req, res) => {
     const runEvents  = await getRunEvents(runId, token, service);
     const outputText = extractText(runDetails);
     const traces     = extractTraces(runDetails, runEvents);
-    // Use server-sourced timestamp — never the client-supplied startedAt
-    const resolvedStartedAt = runDetails?.created_at || new Date().toISOString();
-    const analytics  = buildAnalytics(runDetails, resolvedStartedAt, traces);
+    const analytics  = buildAnalytics(runDetails, startedAt || new Date().toISOString(), traces);
 
     logger.info(`[${stageKey}] ── DONE ─── status: ${status}  duration: ${analytics.durationMs != null ? (analytics.durationMs / 1000).toFixed(1) + 's' : '—'}`);
 
     res.json({
       success: true, completed: true,
-      stage: { key: stageKey, label: stage.label },
+      stage: { key: stageKey, label: stage.label, agentId: stage.agentId },
       run: {
         threadId:  runDetails?.thread_id || threadId || null,
         runId, taskId: null, messageId: null,
-        status, outputText, analytics, traces,
+        status, outputText, analytics, traces, raw: runDetails,
       },
     });
   } catch (error) {
     logger.error(`[${stageKey}] Poll error — runId: ${runId} — ${error.message}`);
-    res.status(error.statusCode || 500).json({ success: false, error: error.message, details: error.body || null });
+    sendError(res, error);
   }
 });
 
 // ── Conversational Supervisor Chat routes ─────────────────────────────────
 
-app.post('/api/chat-conv', agentRunLimiter, async (req, res) => {
+app.post('/api/chat-conv', async (req, res) => {
   const { message, threadId } = req.body;
-  if (!message) return res.status(400).json({ success: false, error: 'message is required' });
+  if (!message || typeof message !== 'string') return res.status(400).json({ success: false, error: 'message is required' });
   if (!SERVICE_URL) return res.status(500).json({ success: false, error: 'Missing WATSONX_SERVICE_URL' });
   if (!CONV_SUPERVISOR_AGENT_ID) return res.status(500).json({ success: false, error: 'CONV_SUPERVISOR_AGENT_ID is not set in .env' });
 
@@ -758,13 +734,14 @@ app.post('/api/chat-conv', agentRunLimiter, async (req, res) => {
 
     res.json({ success: true, runId: runResponse.run_id, threadId: runResponse.thread_id || threadId || null, startedAt });
   } catch (error) {
-    res.status(error.statusCode || 500).json({ success: false, error: error.message, details: error.body || null });
+    sendError(res, error);
   }
 });
 
 app.get('/api/chat-conv/:runId', async (req, res) => {
   const { runId } = req.params;
-  const { threadId } = req.query;  // startedAt no longer accepted from client
+  const { startedAt, threadId } = req.query;
+  if (!isValidRunId(runId)) return res.status(400).json({ success: false, error: 'Invalid runId' });
   if (!SERVICE_URL) return res.status(500).json({ success: false, error: 'Missing WATSONX_SERVICE_URL' });
 
   try {
@@ -780,25 +757,16 @@ app.get('/api/chat-conv/:runId', async (req, res) => {
     const runEvents  = await getRunEvents(runId, token, service);
     const outputText = extractText(runDetails);
     const traces     = extractTraces(runDetails, runEvents);
-    const resolvedStartedAt = runDetails?.created_at || new Date().toISOString();
-    const analytics  = buildAnalytics(runDetails, resolvedStartedAt, traces);
+    const analytics  = buildAnalytics(runDetails, startedAt || new Date().toISOString(), traces);
 
     res.json({ success: true, completed: true, threadId: runDetails?.thread_id || threadId || null, runId, status, outputText, analytics, traces });
   } catch (error) {
-    res.status(error.statusCode || 500).json({ success: false, error: error.message, details: error.body || null });
+    sendError(res, error);
   }
 });
 
 // ── Embed JWT endpoint ────────────────────────────────────────────────────────
-app.get('/api/wxo-token', tokenLimiter, (req, res) => {
-  // Enforce same-origin: only allow requests from the configured allowed origin
-  const origin = req.headers.origin || req.headers.referer || '';
-  const allowed = process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
-  if (origin && !origin.startsWith(allowed)) {
-    logger.warn('[wxo-token] Request rejected — origin not allowed', { origin });
-    return res.status(403).json({ success: false, error: 'Forbidden' });
-  }
-
+app.get('/api/wxo-token', (req, res) => {
   const rawKey = process.env.WXO_EMBED_PRIVATE_KEY || '';
   if (!rawKey) {
     logger.warn('[wxo-token] WXO_EMBED_PRIVATE_KEY not set — returning unsigned placeholder');
@@ -807,17 +775,14 @@ app.get('/api/wxo-token', tokenLimiter, (req, res) => {
 
   try {
     const privateKey = rawKey.replace(/\\n/g, '\n');
-    const now = Math.floor(Date.now() / 1000);
     const header  = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
-    const jwtPayload = Buffer.from(JSON.stringify({
+    const payload = Buffer.from(JSON.stringify({
       sub: 'embed-user',
-      iss: 'soc-demo-server',
-      aud: 'wxo-embed',
-      iat: now,
-      exp: now + 3600,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 3600,
     })).toString('base64url');
 
-    const signingInput = `${header}.${jwtPayload}`;
+    const signingInput = `${header}.${payload}`;
     const sign = crypto.createSign('RSA-SHA256');
     sign.update(signingInput);
     const signature = sign.sign(privateKey, 'base64url');
@@ -839,15 +804,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Rate limit catch-all route that serves index.html to reduce DoS risk
-const staticFallbackLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit each IP to 300 requests per windowMs
-  standardHeaders: true,
-  legacyHeaders: false
-});
-
-app.get('*', staticFallbackLimiter, (req, res) => {
+app.get('*', (req, res) => {
   if (req.path.startsWith('/api') || req.path === '/health') {
     return res.status(404).json({ success: false, error: 'API route not found' });
   }

@@ -55,14 +55,15 @@ export async function GET() {
   const bucket = process.env.COS_BUCKET;
 
   if (!bucket) {
-    return NextResponse.json({ error: 'COS_BUCKET env var is not set' }, { status: 500 });
+    return NextResponse.json({ error: 'Storage is not configured' }, { status: 500 });
   }
 
   let cos: any;
   try {
     cos = getCosClient();
   } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.error('[config-files] COS client init failed:', err?.message);
+    return NextResponse.json({ error: 'Storage is not configured' }, { status: 500 });
   }
 
   const results = await Promise.all(
@@ -71,7 +72,8 @@ export async function GET() {
       try {
         content = await fetchObject(cos, bucket, key);
       } catch (err: any) {
-        content = `# Could not fetch "${key}" from COS bucket "${bucket}"\n# Error: ${err.message}`;
+        console.error(`[config-files] Could not fetch "${key}":`, err?.message);
+        content = `# Could not fetch "${key}"`;
       }
       return { id, label, group, content };
     })

@@ -46,14 +46,15 @@
       "buildingBlocks": ["ai.agents", "automation.secure"],
       "skills": ["agent-builder"],
       "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/agentic-soc",
+      "workingDemoURL": "https://agentic-soc-frontend.2fzgycrrx0uz.au-syd.codeengine.appdomain.cloud/",
       "specificationsRepo": "",
       "specificationsFlow": "",
       "videos": [{ "cosFileName": "agentic_soc.mp4" }],
-      "screenshots": ["home_page.png"],
+      "screenshots": ["ApplicationUI-1.png", "ApplicationUI-2.png"],
       "longDescription": "Automated agentic operations and predictive IOT analytics ensure refrigerated transport (cold-chain) operators can solve the increasing pressure to reduce spoilage, improve real-time visibility, ensure compliance, respond faster, and build customer trust.",
       "shortDescription": "Security Operations Centers (SOCs) are under constant pressure to manage increasing cyber threats while operating with limited analyst capacity. The growing volume of alerts and manual triage processes slow incident response and increase operational risk. Organizations need an intelligent security operations platform that augments analysts and automates repetitive tasks.",
       "architecture": "agentic_soc_architecture.png",
-      "release_date": "2026-09-01",
+      "release_date": "2026-10-30",
       "isLive": true
     },
     {

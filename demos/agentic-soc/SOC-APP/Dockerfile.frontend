@@ -1,0 +1,25 @@
+FROM registry.access.redhat.com/ubi9/nodejs-22:latest AS builder
+
+WORKDIR /app
+COPY --chown=1001:0 package*.json ./
+RUN npm ci
+
+COPY --chown=1001:0 . .
+RUN npm run build
+
+FROM registry.access.redhat.com/ubi9/nodejs-22-minimal:latest
+
+WORKDIR /app
+
+COPY --chown=1001:0 --from=builder /app/.next/standalone ./
+COPY --chown=1001:0 --from=builder /app/.next/static ./.next/static
+COPY --chown=1001:0 --from=builder /app/public ./public
+
+USER 1001:0
+EXPOSE 3000
+
+ENV PORT=3000
+ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
+
+CMD ["node", "server.js"]

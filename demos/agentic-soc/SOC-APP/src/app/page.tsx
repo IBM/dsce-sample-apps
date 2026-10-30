@@ -7,11 +7,13 @@ import { StageCard } from '@/components/StageCard';
 import { AnalyticsVisualizer } from '@/components/AnalyticsVisualizer';
 import { PipelineFlow } from '@/components/PipelineFlow';
 import { ConfigViewer } from '@/components/ConfigViewer';
+import { IncidentReportModal } from '@/components/IncidentReportModal';
+import { ActionApprovalPanel, ActionItem } from '@/components/ActionApprovalPanel';
 import { ConversationalSupervisorWidget } from '@/components/ConversationalSupervisorWidget';
 import { WxoChatWidget } from '@/components/WxoChatWidget';
-import { PersonaView } from '@/components/PersonaView';
 import { DEFAULT_STAGES } from '@/data/defaultStages';
 import { POC_OFFENSES } from '@/data/sampleOffenses';
+import { buildMockRunDetails } from '@/data/mockPipelineData';
 import { StageConfig, StageState, ConfigResponse, PocOffense } from '@/types';
 import {
   Shield,
@@ -19,23 +21,41 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
+  Sparkles,
+  Zap,
+  FileText,
+  Download,
+  Lock,
 } from 'lucide-react';
 
 export default function SOCDashboard() {
   const [stages, setStages] = useState<StageConfig[]>(DEFAULT_STAGES);
   const [runs, setRuns] = useState<Record<string, StageState>>({});
   const runsRef = useRef<Record<string, StageState>>({});
+  const selectedOffenseIdRef = useRef<string>(POC_OFFENSES[0].id);
 
+  const [mockMode, setMockMode] = useState<boolean>(true);
   const [selectedOffenseId, setSelectedOffenseId] = useState<string>(POC_OFFENSES[0].id);
+  // Keep a ref in sync so async functions always read the latest offense ID
+  selectedOffenseIdRef.current = selectedOffenseId;
   const [globalPrompt, setGlobalPrompt] = useState<string>(`Analyze QRadar Offense ${POC_OFFENSES[0].id}`);
-  const [serviceConfigured, setServiceConfigured] = useState<boolean>(true);
+  const [serviceConfigured, setServiceConfigured] = useState<boolean>(false);
   const [running, setRunning] = useState<boolean>(false);
-  const [statusMessage, setStatusMessage] = useState<string>('SOC — Agentic Pipeline Ready.');
+  const [statusMessage, setStatusMessage] = useState<string>(
+    '⚡ Simulation Mode Active — Running end-to-end WxO multi-agent pipeline.'
+  );
   const [showGuide, setShowGuide] = useState<boolean>(false);
   const [executionOpen, setExecutionOpen] = useState<boolean>(true);
   const [analyticsOpen, setAnalyticsOpen] = useState<boolean>(true);
-  const [personaViewOpen, setPersonaViewOpen] = useState<boolean>(true);
   const [configViewerOpen, setConfigViewerOpen] = useState<boolean>(false);
+  const [reportModalOpen, setReportModalOpen] = useState<boolean>(false);
+  const [actionApprovalOpen, setActionApprovalOpen] = useState<boolean>(false);
+
+  // Promise resolver reference for approval gating
+  const actionApprovalResolverRef = useRef<((items: ActionItem[]) => void) | null>(null);
+
+  const selectedOffense = POC_OFFENSES.find((o) => o.id === selectedOffenseId) || POC_OFFENSES[0];
+  const rcaCompleted = runs['rca']?.run?.status === 'completed';
 
   const updateRunsState = (newRuns: Record<string, StageState>) => {
     runsRef.current = newRuns;
@@ -43,31 +63,60 @@ export default function SOCDashboard() {
   };
 
   useEffect(() => {
-    fetchConfig();
+    // Restore persisted mode — default to Mock if nothing saved
+    const savedMockMode = localStorage.getItem('soc_mock_mode');
+    const initialMock = savedMockMode !== null ? savedMockMode === 'true' : true;
+    setMockMode(initialMock);
+    fetchConfig(initialMock);
   }, []);
 
-  const fetchConfig = async () => {
+  const handleToggleMockMode = (targetMode?: boolean) => {
+    const nextMock = targetMode !== undefined ? targetMode : !mockMode;
+    setMockMode(nextMock);
+    localStorage.setItem('soc_mock_mode', String(nextMock));
+    if (nextMock) {
+      setStatusMessage('⚡ Simulation Mode Active — Running end-to-end WxO multi-agent pipeline.');
+    } else {
+      setActionApprovalOpen(false);
+      setReportModalOpen(false);
+      setStatusMessage(
+        serviceConfigured
+          ? 'Live watsonx Orchestrate endpoint execution active.'
+          : '⚠️ Live mode selected — WxO credentials not configured in .env.'
+      );
+    }
+  };
+
+  const fetchConfig = async (currentMockMode?: boolean) => {
+    const isMock = currentMockMode !== undefined ? currentMockMode : mockMode;
     try {
       const res = await fetch('/api/config');
       const data: ConfigResponse = await res.json();
       if (data.success && data.stages && data.stages.length > 0) {
         setStages(data.stages);
         setServiceConfigured(data.serviceConfigured);
-        setStatusMessage(
-          data.serviceConfigured
-            ? 'watsonx Orchestrate agent endpoints connected.'
-            : 'Service credentials missing — set agent IDs in .env'
-        );
+        if (!data.serviceConfigured) {
+          // WxO not configured — force Mock Mode on and persist it (FR-01).
+          setMockMode(true);
+          localStorage.setItem('soc_mock_mode', 'true');
+          setStatusMessage('⚡ Self-Contained Simulation Engine Active.');
+        } else if (isMock) {
+          setStatusMessage('⚡ Simulation Mode Active — Running end-to-end WxO multi-agent pipeline.');
+        } else {
+          setStatusMessage('watsonx Orchestrate agent endpoints connected.');
+        }
       }
     } catch {
-      setStatusMessage('Backend unreachable — using default stage configuration.');
+      // Config fetch failed — force Mock Mode on (not persisted) (FR-01).
+      setMockMode(true);
+      setStatusMessage('⚡ Self-Contained Simulation Engine Active.');
     }
   };
 
   const handleSelectOffense = (offense: PocOffense) => {
     setSelectedOffenseId(offense.id);
     setGlobalPrompt(`Analyze QRadar Offense ${offense.id}`);
-    // Clear per-stage prompt overrides so the new offense ID is picked up
+    setActionApprovalOpen(false);
     const cleared: Record<string, StageState> = {};
     for (const key of Object.keys(runsRef.current)) {
       const { prompt: _dropped, ...rest } = runsRef.current[key];
@@ -83,7 +132,31 @@ export default function SOCDashboard() {
   const handleClearData = () => {
     runsRef.current = {};
     setRuns({});
+    setActionApprovalOpen(false);
     setStatusMessage('Cleared saved execution outputs and traces.');
+  };
+
+  const handleLoadMockResults = () => {
+    const loaded: Record<string, StageState> = {};
+    const startedAt = new Date().toISOString();
+    for (const stage of stages) {
+      const mockDetails = buildMockRunDetails(stage.key, selectedOffenseIdRef.current, startedAt);
+      loaded[stage.key] = {
+        prompt: buildPromptForStage(stage.key, loaded),
+        loading: false,
+        run: mockDetails,
+      };
+    }
+    updateRunsState(loaded);
+    setActionApprovalOpen(false);
+    setStatusMessage(`⚡ Telemetry & outputs populated for Offense #${selectedOffenseIdRef.current}. Report ready!`);
+  };
+
+  const handleActionDecided = (items: ActionItem[]) => {
+    if (actionApprovalResolverRef.current) {
+      actionApprovalResolverRef.current(items);
+      actionApprovalResolverRef.current = null;
+    }
   };
 
   const buildPromptForStage = (stageKey: string, currentRuns: Record<string, StageState>): string => {
@@ -147,7 +220,7 @@ export default function SOCDashboard() {
   };
 
   const POLL_INTERVAL_MS = 4000;
-  const POLL_TIMEOUT_MS  = 360000; // 6 min client-side safety net
+  const POLL_TIMEOUT_MS  = 360000;
 
   const runStage = async (
     stageKey: string,
@@ -160,19 +233,93 @@ export default function SOCDashboard() {
 
     const currentStageState = activeRuns[stageKey] || {};
     const inheritedPrompt   = buildPromptForStage(stageKey, activeRuns);
-    const promptToUse       = currentStageState.prompt?.trim() || inheritedPrompt;
+    const promptToUse       = currentStageState.prompt?.trim() || inheritedPrompt || `Analyze QRadar Offense ${selectedOffenseIdRef.current}`;
 
-    if (!promptToUse) {
-      setStatusMessage(`Please enter a scenario prompt before executing ${stage.label}.`);
-      return activeRuns;
+    const loadingRuns = { ...activeRuns, [stageKey]: { ...activeRuns[stageKey], loading: true, error: undefined } };
+    updateRunsState(loadingRuns);
+
+    // ── MOCK MODE EXECUTION (NEVER FAILS, ALWAYS COMPLETES SEAMLESSLY) ────────
+    if (mockMode) {
+      try {
+        const startedAt = new Date().toISOString();
+
+        if (stageKey === 'action') {
+          setStatusMessage(`[Action] Action Approval Required — Waiting for analyst review…`);
+          setActionApprovalOpen(true);
+
+          // Await user decision via ActionApprovalPanel
+          const decisions = await new Promise<ActionItem[]>((resolve) => {
+            actionApprovalResolverRef.current = resolve;
+          });
+
+          const approvedCount = decisions.filter((d) => d.status === 'approved').length;
+          const rejectedCount = decisions.filter((d) => d.status === 'rejected').length;
+
+          setStatusMessage(`[Action] Enforcing ${approvedCount} approved remediation action(s) across firewall & host controls…`);
+          await new Promise((r) => setTimeout(r, 2500));
+          setStatusMessage(`[Action] Verifying containment policies and synchronizing audit trail with SIEM…`);
+          await new Promise((r) => setTimeout(r, 2500));
+
+          const mockRunDetails = buildMockRunDetails(stageKey, selectedOffenseIdRef.current, startedAt);
+          if (mockRunDetails?.analytics) {
+            mockRunDetails.analytics.durationMs = 5000;
+          }
+
+          // Customize output text with approved items
+          const actionSummary = decisions.map((d) => `- **${d.name}** (\`${d.id}\`): ${d.status === 'approved' ? '✅ EXECUTED' : '❌ REJECTED by Analyst'}`).join('\n');
+          mockRunDetails.outputText = `### [Action Agent] Approval-Gated Remediation Summary\n\n**Adjudication Overview:**\n- Approved: ${approvedCount}\n- Rejected: ${rejectedCount}\n\n**Action Results:**\n${actionSummary}\n\n*Containment measures synchronized with perimeter firewall and SIEM.*`;
+
+          const completedRuns = {
+            ...runsRef.current,
+            [stageKey]: { prompt: promptToUse, loading: false, run: mockRunDetails, error: undefined },
+          };
+          updateRunsState(completedRuns);
+          setActionApprovalOpen(false);
+
+          if (!preserveStatusBanner) {
+            setStatusMessage(`[Action] Completed in 5.0s — ${approvedCount} action(s) executed successfully.`);
+          }
+          return completedRuns;
+        }
+
+        // Standard non-action stages — 5 seconds total realistic execution with progressive updates
+        setStatusMessage(`[${stage.label}] Initiating agent reasoning & fetching offense #${selectedOffenseIdRef.current} telemetry…`);
+        await new Promise((r) => setTimeout(r, 1650));
+        setStatusMessage(`[${stage.label}] Executing security tools & evaluating baseline policies…`);
+        await new Promise((r) => setTimeout(r, 1700));
+        setStatusMessage(`[${stage.label}] Synthesizing findings and generating structured report…`);
+        await new Promise((r) => setTimeout(r, 1650));
+
+        const mockRunDetails = buildMockRunDetails(stageKey, selectedOffenseIdRef.current, startedAt);
+        if (mockRunDetails?.analytics) {
+          mockRunDetails.analytics.durationMs = 5000;
+        }
+        const completedRuns = {
+          ...runsRef.current,
+          [stageKey]: { prompt: promptToUse, loading: false, run: mockRunDetails, error: undefined },
+        };
+        updateRunsState(completedRuns);
+
+        if (!preserveStatusBanner) {
+          setStatusMessage(`[${stage.label}] Completed in 5.0s — status: completed`);
+        }
+        return completedRuns;
+      } catch (err: any) {
+        // Fallback resilience: guarantee mock mode never fails
+        const fallbackDetails = buildMockRunDetails(stageKey, selectedOffenseIdRef.current);
+        const completedRuns = {
+          ...runsRef.current,
+          [stageKey]: { prompt: promptToUse, loading: false, run: fallbackDetails, error: undefined },
+        };
+        updateRunsState(completedRuns);
+        return completedRuns;
+      }
     }
 
-    const loadingRuns = { ...activeRuns, [stageKey]: { ...activeRuns[stageKey], loading: true } };
-    updateRunsState(loadingRuns);
+    // ── LIVE WXO EXECUTION ───────────────────────────────────────────────────
     setStatusMessage(`[${stage.label}] Submitting prompt to watsonx Orchestrate…`);
 
     try {
-      // Step 1: POST — returns immediately with runId
       const postRes = await fetch(`/api/poc-stages/${stageKey}/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -184,7 +331,6 @@ export default function SOCDashboard() {
       const { runId, threadId, startedAt } = postPayload;
       setStatusMessage(`[${stage.label}] Run created (${runId.slice(0, 8)}…) — agent is processing…`);
 
-      // Step 2: poll — GET checks status once per tick
       const deadline  = Date.now() + POLL_TIMEOUT_MS;
       let   pollCount = 0;
 
@@ -245,15 +391,18 @@ export default function SOCDashboard() {
   const runAllStages = async () => {
     if (running) return;
     setRunning(true);
-    setStatusMessage('Initiating SOC 6-Agent Pipeline — Triage → Close…');
+    setStatusMessage('⚡ Initiating SOC 5-Agent Pipeline — Triage → Action…');
 
     let currentRuns = { ...runsRef.current };
     const errors: string[] = [];
 
     for (const stage of stages) {
-      setStatusMessage(`Executing ${stage.label} Agent…`);
+      setStatusMessage(`Executing ${stage.label} Agent for Offense #${selectedOffenseIdRef.current}…`);
       try {
         currentRuns = await runStage(stage.key, true, currentRuns);
+        if (mockMode && stage.key !== 'action') {
+          await new Promise((r) => setTimeout(r, 300));
+        }
       } catch (error: any) {
         errors.push(`${stage.label}: ${error.message}`);
         setStatusMessage(`${stage.label} failed — continuing pipeline…`);
@@ -262,7 +411,9 @@ export default function SOCDashboard() {
 
     setRunning(false);
     if (errors.length === 0) {
-      setStatusMessage('Pipeline completed successfully. Review outputs for final verdict.');
+      setStatusMessage(
+        'Pipeline completed successfully. Remediation actions adjudicated and verified.'
+      );
     } else if (errors.length === stages.length) {
       setStatusMessage('Pipeline finished — all stages failed. Check configuration.');
     } else {
@@ -270,7 +421,6 @@ export default function SOCDashboard() {
     }
   };
 
-  // Build stageStatuses for PipelineFlow
   const stageStatuses = Object.fromEntries(
     stages.map((s) => [
       s.key,
@@ -281,8 +431,10 @@ export default function SOCDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-[#080a12] text-slate-200 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#080a12] text-slate-200 flex flex-col font-sans relative">
       <Navbar
+        mockMode={mockMode}
+        onToggleMockMode={handleToggleMockMode}
         serviceConfigured={serviceConfigured}
         running={running}
         onRunAll={runAllStages}
@@ -301,9 +453,11 @@ export default function SOCDashboard() {
 
             <div className="relative z-10 space-y-4">
               <div className="flex items-center justify-between gap-3">
-                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                  Agentic Security Operations Platform
-                </h1>
+                <div className="flex items-center gap-2.5">
+                  <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                    Agentic Security Operations Platform
+                  </h1>
+                </div>
                 <button
                   onClick={() => setShowGuide(!showGuide)}
                   className="self-start inline-flex items-center gap-1.5 rounded-lg border border-white/25 bg-white/10 px-3 py-2 text-xs font-medium text-white hover:bg-white/20 transition-colors shrink-0"
@@ -319,6 +473,12 @@ export default function SOCDashboard() {
                 <span>Triage → Classification → RCA → Notification → Action</span>
                 <span>·</span><span>{POC_OFFENSES.length} Active Offenses</span>
                 <span>·</span><span>QRadar SIEM</span>
+                {mockMode && (
+                  <>
+                    <span>·</span>
+                    <span className="text-emerald-300 font-semibold">⚡ High-Fidelity Simulation Mode</span>
+                  </>
+                )}
               </div>
               {showGuide && (
                 <div className="rounded-xl border border-white/15 bg-white/10 p-4 text-xs text-indigo-100 space-y-2">
@@ -338,6 +498,39 @@ export default function SOCDashboard() {
           <PipelineFlow stageStatuses={stageStatuses} />
         </section>
 
+        {/* ── RCA Report Floating Alert Banner (Mock Mode Only) ─────────────── */}
+        {rcaCompleted && mockMode && (
+          <section className="animate-in slide-in-from-top-2 duration-300">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-teal-500/40 bg-gradient-to-r from-teal-950/90 via-slate-900 to-indigo-950/80 p-4 sm:px-6 shadow-lg shadow-teal-950/40">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-500/20 text-teal-300 ring-1 ring-teal-500/30">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-white tracking-tight">
+                      Root Cause Investigation Report Ready for Download
+                    </h3>
+                    <span className="rounded-full bg-teal-500/20 border border-teal-500/30 px-2 py-0.5 text-[10px] font-mono text-teal-300">
+                      Offense #{selectedOffense.id}
+                    </span>
+                  </div>
+                  <p className="text-xs text-teal-300/80 mt-0.5">
+                    5-dimension analysis, chronological timeline, and MITRE ATT&CK mapping completed.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setReportModalOpen(true)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-2 text-xs font-semibold text-white shadow-md hover:bg-teal-500 active:scale-95 transition-all shrink-0"
+              >
+                <Download className="h-4 w-4" />
+                <span>View & Download Incident Report</span>
+              </button>
+            </div>
+          </section>
+        )}
+
         {/* ── Section 2: Agent Execution ────────────────────────────────────── */}
         <section className="rounded-2xl border border-slate-800/60 bg-[#0d1117] overflow-hidden">
           {/* Section header */}
@@ -352,8 +545,18 @@ export default function SOCDashboard() {
               <h2 className="text-sm font-semibold text-slate-100 tracking-tight">Agent Execution</h2>
               <span className="rounded-full border border-slate-700/60 bg-slate-800/60 px-2 py-0.5 text-[10px] font-mono text-slate-500">{stages.length} stages</span>
             </div>
-            <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
-              <span className="hidden sm:block text-[11px] font-mono text-indigo-200/50">Inspect responses & traces</span>
+            <div className="flex items-center gap-2.5" onClick={(e) => e.stopPropagation()}>
+              {mockMode && (
+                <button
+                  onClick={handleLoadMockResults}
+                  disabled={running}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-950/40 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-900/50 disabled:opacity-40 transition-all active:scale-95 shadow-sm"
+                  title="Instantly pre-populate all stage responses for this offense"
+                >
+                  <Zap className="h-3 w-3" />
+                  
+                </button>
+              )}
               <button
                 onClick={runAllStages}
                 disabled={running}
@@ -396,6 +599,7 @@ export default function SOCDashboard() {
                             onPromptChange={handlePromptChange}
                             isPipelineRunning={running}
                             compact={true}
+                            onViewReport={mockMode ? () => setReportModalOpen(true) : undefined}
                           />
                         </div>
                         {index < stages.length - 1 && (
@@ -411,6 +615,19 @@ export default function SOCDashboard() {
                   </div>
                 </div>
               </div>
+
+              {/* ── Action Approval Required Panel (Mock Mode Only) ───────── */}
+              {actionApprovalOpen && mockMode && (
+                <div className="px-5 pb-5 bg-[#0a0c16] animate-in fade-in slide-in-from-top-2 duration-300">
+                  <ActionApprovalPanel
+                    key={selectedOffense.id}
+                    offense={selectedOffense}
+                    isOpen={actionApprovalOpen}
+                    onAllDecided={handleActionDecided}
+                    onViewRcaReport={() => setReportModalOpen(true)}
+                  />
+                </div>
+              )}
             </>
           )}
         </section>
@@ -424,25 +641,40 @@ export default function SOCDashboard() {
           onToggle={() => setAnalyticsOpen((o) => !o)}
         />
 
-        {/* PersonaView intentionally hidden from UI — kept in script */}
-        {/* <PersonaView
-          stages={stages}
-          runs={runs}
-          open={personaViewOpen}
-          onToggle={() => setPersonaViewOpen((o) => !o)}
-        /> */}
-
         {/* ── Section 4: Agent & Config Files ──────────────────────────────── */}
         <ConfigViewer open={configViewerOpen} onToggle={() => setConfigViewerOpen((o) => !o)} />
       </main>
 
-      <ConversationalSupervisorWidget />
-      <WxoChatWidget />
+      {!mockMode && serviceConfigured && <ConversationalSupervisorWidget />}
+      <WxoChatWidget mockMode={mockMode} selectedOffenseId={selectedOffenseId} />
+
+      {/* Floating Bottom-Left "View RCA Report" Pill Button (Mock Mode Only) */}
+      {rcaCompleted && mockMode && (
+        <button
+          onClick={() => setReportModalOpen(true)}
+          className="fixed bottom-24 left-6 z-40 inline-flex items-center gap-2 rounded-full bg-[#0066cc] px-4 py-2.5 text-xs font-bold text-white shadow-xl shadow-blue-950/50 hover:bg-[#0052a3] active:scale-95 transition-all"
+        >
+          <FileText className="h-4 w-4" />
+          <span>View RCA Report</span>
+        </button>
+      )}
+
+      {/* Incident Report Modal (Mock Mode Only) */}
+      {mockMode && (
+        <IncidentReportModal
+          isOpen={reportModalOpen}
+          onClose={() => setReportModalOpen(false)}
+          offense={selectedOffense}
+          runs={runs}
+        />
+      )}
 
       <footer className="mt-12 border-t border-slate-800/60 bg-[#0d1117] py-5">
         <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
           <span>SOC — Agentic Security Operations Platform</span>
-          <span className="font-mono text-[11px] text-slate-700">Triage · Classification · RCA · Notification · Action · watsonx Orchestrate</span>
+          <span className="font-mono text-[11px] text-slate-700">
+            Triage · Classification · RCA · Notification · Action · watsonx Orchestrate
+          </span>
         </div>
       </footer>
     </div>

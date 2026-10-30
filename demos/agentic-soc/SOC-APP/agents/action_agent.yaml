@@ -75,7 +75,7 @@ tools:
   - soc_request_action_approval
   - soc_execute_approved_action
 
-knowledge_bases:
+knowledge_base:
   - soc_knowledge_base
 
 config:

@@ -17,13 +17,11 @@
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^5.1.0",
-    "express-rate-limit": "^7.5.0",
+    "express": "^4.19.2",
     "framer-motion": "^13.1.0",
-    "helmet": "^8.0.0",
     "ibm-cos-sdk": "^1.15.2",
     "lucide-react": "^1.31.0",
-    "next": "^16.4.3",
+    "next": "^16.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "recharts": "^3.10.1",
@@ -44,9 +42,9 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "autoprefixer": "^10.5.4",
-    "concurrently": "^9.1.2",
+    "concurrently": "^10.0.4",
     "postcss": "^8.5.26",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^3.4.19",
     "typescript": "^7.0.2"
   }
 }

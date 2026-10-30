@@ -1,0 +1,106 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Security Scan Report - DSCE Agentic SOC</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; background: #ffffff; margin: 0; padding: 32px 16px; }
+  .page { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 24px; margin: 0 0 4px 0; }
+  h2 { font-size: 17px; margin: 32px 0 10px 0; padding-bottom: 6px; border-bottom: 1px solid #e5e7eb; }
+  p { margin: 8px 0; }
+  .muted { color: #57606a; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  th { background: #f7f8fa; font-weight: 600; }
+  .box { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 14px; margin: 12px 0; }
+  .sev { font-weight: 600; }
+  .crit { color: #b42318; }
+  .high { color: #b54708; }
+  .med { color: #7c5cd8; }
+  .low { color: #57606a; }
+  code { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 3px; padding: 0 4px; font-size: 12.5px; }
+  ul { margin: 6px 0; padding-left: 20px; }
+  .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Security Scan Report</h1>
+<p class="muted">Project: DSCE Agentic SOC (<code>SOC-APP</code>) · Next.js frontend, Express backend, Python watsonx Orchestrate tools, bootstrap script</p>
+
+<h2>1. Summary</h2>
+<div class="box">
+  <p>The scan covered the Express server, Next.js API routes and components, Python tools, <code>import-all.sh</code>, Dockerfiles, environment files and npm dependencies. It was a manual code review plus <code>npm audit</code>. It was not a penetration test, and git history could not be checked because the folder has no <code>.git</code>.</p>
+  <p><strong>Result:</strong> code-level and dependency issues were fixed. Two items still need action from the project owner: credential rotation and API authentication.</p>
+</div>
+
+<table>
+  <tr><th>Severity</th><th>Found</th><th>Fixed</th><th>Open</th></tr>
+  <tr><td class="sev crit">Critical</td><td>4</td><td>3</td><td>1 (credential rotation)</td></tr>
+  <tr><td class="sev high">High</td><td>5</td><td>4</td><td>1 (no API authentication)</td></tr>
+  <tr><td class="sev med">Medium</td><td>6</td><td>6</td><td>0</td></tr>
+  <tr><td class="sev low">Low / Informational</td><td>3</td><td>2</td><td>1 (hardcoded WxO identifiers)</td></tr>
+</table>
+
+<h2>2. Findings and fixes</h2>
+
+<table>
+  <tr><th>#</th><th>Severity</th><th>Finding</th><th>Location</th><th>Status</th></tr>
+  <tr><td>1</td><td class="sev crit">Critical</td><td>Live-looking WxO, COS and Mailjet credentials stored in the example env file. Replaced with placeholders.</td><td><code>.env.example</code></td><td>Fixed in file; <strong>rotation required</strong></td></tr>
+  <tr><td>2</td><td class="sev crit">Critical</td><td>Next.js 16.0.0 - 16.4.0 advisories, including unauthenticated remote code execution, SSRF and cache poisoning.</td><td><code>package.json</code></td><td>Fixed (<code>npm audit fix</code>)</td></tr>
+  <tr><td>3</td><td class="sev crit">Critical</td><td><code>proxy-addr</code> IP spoofing via IPv4-mapped IPv6 trust subnet.</td><td>dependency</td><td>Fixed</td></tr>
+  <tr><td>4</td><td class="sev crit">Critical</td><td>Real secrets present in <code>.env</code> inside the project folder. It is gitignored but the same values were in the example file.</td><td><code>SOC-APP/.env</code></td><td>Open: rotate keys</td></tr>
+  <tr><td>5</td><td class="sev high">High</td><td>Unauthenticated Express and Next.js API. Anyone who can reach port 3001 can start agent runs using the IBM API key.</td><td><code>server/server.js</code>, <code>src/app/api/*</code></td><td>Open: needs design decision</td></tr>
+  <tr><td>6</td><td class="sev high">High</td><td>CORS open to every origin. Now limited to <code>CORS_ORIGIN</code> (default <code>http://localhost:3000</code>).</td><td><code>server/server.js</code></td><td>Fixed</td></tr>
+  <tr><td>7</td><td class="sev high">High</td><td><code>runId</code> interpolated into upstream URL path, allowing path traversal to other WxO endpoints with the bearer token. Now restricted to 8-64 alphanumeric/hyphen characters.</td><td><code>server/server.js</code></td><td>Fixed</td></tr>
+  <tr><td>8</td><td class="sev high">High</td><td>Report HTML built with unescaped offense fields (script injection), rendered in an iframe and a new window. Added HTML escaping and <code>sandbox=""</code> on the iframe.</td><td><code>reportGenerator.ts</code>, <code>IncidentReportModal.tsx</code></td><td>Fixed</td></tr>
+  <tr><td>9</td><td class="sev high">High</td><td><code>body-parser</code>, <code>sharp</code> and <code>source-map-js</code> denial-of-service advisories.</td><td>dependencies</td><td>Fixed</td></tr>
+  <tr><td>10</td><td class="sev med">Medium</td><td>Stage lookup by user-supplied key (<code>__proto__</code>, <code>constructor</code>). Now uses <code>hasOwnProperty</code>.</td><td><code>server/server.js</code></td><td>Fixed</td></tr>
+  <tr><td>11</td><td class="sev med">Medium</td><td>Upstream error bodies and internal error text returned to clients (bucket name, WxO responses).</td><td><code>server.js</code>, <code>config-files/route.ts</code>, <code>chat-conv/route.ts</code></td><td>Fixed</td></tr>
+  <tr><td>12</td><td class="sev med">Medium</td><td>Prompts, payloads and agent output logged at info level.</td><td><code>server/server.js</code></td><td>Fixed</td></tr>
+  <tr><td>13</td><td class="sev med">Medium</td><td><code>offense_id</code> used directly in COS object keys; <code>max_events</code> unbounded. Now numeric-only and capped at 500.</td><td><code>tools/offense_tools.py</code></td><td>Fixed</td></tr>
+  <tr><td>14</td><td class="sev med">Medium</td><td>Notification tool had hardcoded personal addresses, no recipient validation or cap, and unsanitised subject (header injection). Now validated, capped at 10, sourced from the connection.</td><td><code>tools/notify_tool.py</code></td><td>Fixed</td></tr>
+  <tr><td>15</td><td class="sev med">Medium</td><td>COS secrets interpolated into a Python heredoc in the bootstrap script. Now passed through environment variables.</td><td><code>import-all.sh</code></td><td>Fixed</td></tr>
+  <tr><td>16</td><td class="sev low">Low</td><td>No security headers, <code>x-powered-by</code> enabled, no request body limit. Added <code>nosniff</code>, <code>X-Frame-Options</code>, <code>Referrer-Policy</code>, <code>no-store</code>, 256 KB limit.</td><td><code>server/server.js</code></td><td>Fixed</td></tr>
+  <tr><td>17</td><td class="sev low">Low</td><td>No <code>.dockerignore</code>; <code>COPY . .</code> in the frontend image could include <code>.env</code>. Added one.</td><td><code>SOC-APP/.dockerignore</code></td><td>Fixed</td></tr>
+  <tr><td>18</td><td class="sev low">Low</td><td>WxO orchestration ID, CRN and agent ID hardcoded in client code. Identifiers, not secrets.</td><td><code>ConversationalSupervisorWidget.tsx</code></td><td>Open: optional</td></tr>
+</table>
+
+<h2>3. Verification</h2>
+<table>
+  <tr><th>Check</th><th>Result</th></tr>
+  <tr><td><code>npm audit</code></td><td>Before: 6 vulnerabilities (2 critical, 3 high, 1 moderate). After: 0.</td></tr>
+  <tr><td><code>tsc --noEmit</code></td><td>Passes with no errors.</td></tr>
+  <tr><td><code>node --check server/server.js</code></td><td>Passes.</td></tr>
+  <tr><td><code>py_compile</code> on edited Python tools, <code>bash -n import-all.sh</code></td><td>Pass.</td></tr>
+  <tr><td>Malformed <code>runId</code></td><td>HTTP 400</td></tr>
+  <tr><td><code>__proto__</code> as stage name</td><td>HTTP 404</td></tr>
+  <tr><td>Non-string prompt</td><td>HTTP 400</td></tr>
+  <tr><td>Oversized request body</td><td>HTTP 413</td></tr>
+  <tr><td>Request from a foreign origin</td><td>No CORS header returned</td></tr>
+  <tr><td>Request from <code>localhost:3000</code></td><td>CORS header returned</td></tr>
+</table>
+<p class="muted">Not run: the Next.js production build, the Python tools against a live COS or WxO instance, and <code>import-all.sh</code> end to end.</p>
+
+<h2>4. Required actions</h2>
+<ol>
+  <li><strong>Rotate every credential</strong> that appeared in <code>.env.example</code> and <code>.env</code>: the WxO API key, COS API key, and Mailjet key and secret. Treat any copy of the project that was shared or zipped as exposed.</li>
+  <li><strong>Add authentication</strong> to the Express API and Next.js <code>/api/*</code> routes, including <code>/api/wxo-token</code>, before exposing the app beyond localhost.</li>
+  <li>Delete <code>apikey (3).json</code> from the folder above the project if it is a real key. It was not opened during the scan.</li>
+  <li>Re-run <code>import-all.sh</code> with the new <code>MAILJET_SENDER_EMAIL</code> and <code>MAILJET_DEFAULT_RECIPIENTS</code> values so the Mailjet connection receives them.</li>
+</ol>
+
+<h2>5. Remaining risks and recommendations</h2>
+<ul>
+  <li><code>action_tools.py</code> auto-approves every action and does not validate <code>payload</code>. Add a real approval step before connecting it to firewall, EDR or Active Directory systems.</li>
+  <li>Move the hardcoded WxO identifiers in the widget to environment variables if they should not be public.</li>
+  <li>Run <code>npm audit</code> in CI and pin the Python tool dependencies (<code>requests</code>, <code>mailjet-rest</code> and <code>pyyaml</code> are unpinned in <code>tools/requirements.txt</code>).</li>
+  <li>Initialise version control and add a secret scanner (for example gitleaks) as a pre-commit hook.</li>
+</ul>
+
+<div class="footer">Made with IBM Bob</div>
+</div>
+</body>
+</html>

@@ -40,6 +40,8 @@ fi
 while IFS='=' read -r key value; do
   # Skip blank lines and comment lines
   [[ -z "$key" || "$key" == \#* ]] && continue
+  # Strip CR (CRLF .env files) so keys are never blank/garbled
+  key="${key%$'\r'}"; value="${value%$'\r'}"
   # Strip inline comments (everything after an unquoted ' #' or ' #')
   value="${value%%  #*}"
   value="${value%% #*}"
@@ -53,7 +55,7 @@ done < <(grep -v '^\s*#' "$ENV_FILE" | grep -v '^\s*$')
 required_vars=(
   WXO_ENV_NAME WXO_URL WXO_API_KEY
   COS_API_KEY COS_INSTANCE_CRN COS_ENDPOINT COS_BUCKET
-  MAILJET_API_KEY MAILJET_SECRET_KEY
+  MAILJET_API_KEY MAILJET_SECRET_KEY MAILJET_SENDER_EMAIL MAILJET_DEFAULT_RECIPIENTS
 )
 missing=()
 for var in "${required_vars[@]}"; do
@@ -108,29 +110,43 @@ ok "ibm-watsonx-orchestrate CLI ready"
 echo ""
 info "Step 2/7: Configuring watsonx Orchestrate environment..."
 
-orchestrate env add -n "$WXO_ENV_NAME" -u "$WXO_URL" <<< "y"
-orchestrate env activate "$WXO_ENV_NAME" --api-key "$WXO_API_KEY"
+# API key always comes from .env via --api-key — never prompted interactively
+orchestrate env add -n "$WXO_ENV_NAME" -u "$WXO_URL" 2>/dev/null || true
+orchestrate env activate "$WXO_ENV_NAME" --api-key "$WXO_API_KEY" \
+  || fail "env activate failed — check WXO_URL and WXO_API_KEY in .env"
 ok "WxO environment '$WXO_ENV_NAME' activated"
 
 # =============================================================================
-# STEP 3: IBM COS Connection — import spec, then set credentials
+# STEP 3: IBM COS Connection — add connection, configure environments, set credentials
 # =============================================================================
 echo ""
-info "Step 3/7: Importing IBM COS connection and setting credentials..."
+info "Step 3/7: Registering IBM COS connection and setting credentials..."
 
-orchestrate connections import -f connections/cos_connection.yaml
+# Add connection if not already present (silently succeeds or skips if exists)
+orchestrate connections add --app-id soc-cos-data 2>/dev/null || true
 
-orchestrate connections set-credentials -a soc-cos-data --env draft \
+# Explicitly ensure both draft and live environment configurations exist
+orchestrate connections configure -a soc-cos-data --environment draft -t team -k key_value 2>/dev/null || true
+orchestrate connections configure -a soc-cos-data --environment live -t team -k key_value 2>/dev/null || true
+
+# Import YAML connection spec if present
+if [ -f "connections/cos_connection.yaml" ]; then
+  orchestrate connections import -f connections/cos_connection.yaml 2>/dev/null || true
+fi
+
+orchestrate connections set-credentials -a soc-cos-data --environment draft \
   -e "cos_api_key=${COS_API_KEY}" \
   -e "cos_instance_crn=${COS_INSTANCE_CRN}" \
   -e "cos_endpoint=${COS_ENDPOINT}" \
-  -e "cos_bucket=${COS_BUCKET}"
+  -e "cos_bucket=${COS_BUCKET}" \
+  || warn "Failed to set draft credentials for soc-cos-data"
 
-orchestrate connections set-credentials -a soc-cos-data --env live \
+orchestrate connections set-credentials -a soc-cos-data --environment live \
   -e "cos_api_key=${COS_API_KEY}" \
   -e "cos_instance_crn=${COS_INSTANCE_CRN}" \
   -e "cos_endpoint=${COS_ENDPOINT}" \
-  -e "cos_bucket=${COS_BUCKET}"
+  -e "cos_bucket=${COS_BUCKET}" \
+  || warn "Failed to set live credentials for soc-cos-data"
 
 ok "soc-cos-data connection configured (draft + live)"
 
@@ -138,17 +154,33 @@ ok "soc-cos-data connection configured (draft + live)"
 # STEP 3b: Mailjet Connection
 # =============================================================================
 echo ""
-info "Step 3b/8: Importing Mailjet connection and setting credentials..."
+info "Step 3b/7: Registering Mailjet connection and setting credentials..."
 
-orchestrate connections import -f connections/mailjet_connection.yaml
+# Add connection if not already present (silently succeeds or skips if exists)
+orchestrate connections add --app-id soc-mailjet 2>/dev/null || true
 
-orchestrate connections set-credentials -a soc-mailjet --env draft \
+# Explicitly ensure both draft and live environment configurations exist
+orchestrate connections configure -a soc-mailjet --environment draft -t team -k key_value 2>/dev/null || true
+orchestrate connections configure -a soc-mailjet --environment live -t team -k key_value 2>/dev/null || true
+
+# Import YAML connection spec if present
+if [ -f "connections/mailjet_connection.yaml" ]; then
+  orchestrate connections import -f connections/mailjet_connection.yaml 2>/dev/null || true
+fi
+
+orchestrate connections set-credentials -a soc-mailjet --environment draft \
   -e "mailjet_api_key=${MAILJET_API_KEY}" \
-  -e "mailjet_secret_key=${MAILJET_SECRET_KEY}"
+  -e "mailjet_secret_key=${MAILJET_SECRET_KEY}" \
+  -e "mailjet_sender_email=${MAILJET_SENDER_EMAIL}" \
+  -e "mailjet_default_recipients=${MAILJET_DEFAULT_RECIPIENTS}" \
+  || warn "Failed to set draft credentials for soc-mailjet"
 
-orchestrate connections set-credentials -a soc-mailjet --env live \
+orchestrate connections set-credentials -a soc-mailjet --environment live \
   -e "mailjet_api_key=${MAILJET_API_KEY}" \
-  -e "mailjet_secret_key=${MAILJET_SECRET_KEY}"
+  -e "mailjet_secret_key=${MAILJET_SECRET_KEY}" \
+  -e "mailjet_sender_email=${MAILJET_SENDER_EMAIL}" \
+  -e "mailjet_default_recipients=${MAILJET_DEFAULT_RECIPIENTS}" \
+  || warn "Failed to set live credentials for soc-mailjet"
 
 ok "soc-mailjet connection configured (draft + live)"
 
@@ -168,19 +200,21 @@ else
   info "Step 4/7: Uploading YAML config files to COS bucket '${COS_BUCKET}'..."
 
   # Use Python + ibm-cos-sdk to upload each config file
-  python - <<PYEOF
+  export COS_API_KEY COS_INSTANCE_CRN COS_ENDPOINT COS_BUCKET
+  python - <<'PYEOF'
+import os
 import ibm_boto3
 from ibm_botocore.client import Config
 
 cos = ibm_boto3.client(
     "s3",
-    ibm_api_key_id="${COS_API_KEY}",
-    ibm_service_instance_id="${COS_INSTANCE_CRN}",
+    ibm_api_key_id=os.environ["COS_API_KEY"],
+    ibm_service_instance_id=os.environ["COS_INSTANCE_CRN"],
     config=Config(signature_version="oauth"),
-    endpoint_url="${COS_ENDPOINT}",
+    endpoint_url=os.environ["COS_ENDPOINT"],
 )
 
-bucket = "${COS_BUCKET}"
+bucket = os.environ["COS_BUCKET"]
 
 config_files = [
     ("config/allowlist.yaml",             "allowlist.yaml"),
@@ -288,15 +322,35 @@ orchestrate tools import -k python \
 echo ""
 info "Step 6/7: Importing knowledge base..."
 
+# Verify all required KB files are present before importing
+KB_NAME="soc_knowledge_base"
+for f in soc_kb.yaml triage_rules.txt action_schemas.txt; do
+  [ -f "knowledge_base/$f" ] || fail "knowledge_base/$f not found"
+done
+
 # Note: triage_agent, classification_agent, and rca_agent no longer reference
 # this knowledge base. Only action_agent uses it (action_schemas.txt).
-# Imported here for completeness and future use.
-orchestrate knowledge-bases import -f knowledge_base/soc_kb.yaml
-ok "  soc_knowledge_base imported (used by action_agent for action_schemas.txt)"
+# The CLI exits 0 even when server-side indexing fails — do not treat exit code as proof of success.
+orchestrate knowledge-bases import -f knowledge_base/soc_kb.yaml \
+  || fail "knowledge-bases import failed"
 
-info "  Waiting 25 seconds for knowledge base indexing..."
-sleep 25
-ok "  Knowledge base indexed"
+# Poll until the KB index reaches 'ready' (up to 3 minutes / 36 × 5 s).
+# The CLI's -v JSON contains raw newlines in 'description', so it must be parsed
+# with json.loads(..., strict=False); plain jq raises "Invalid control character".
+KB_STATE=""
+for i in $(seq 1 36); do
+  KB_STATE=$(orchestrate knowledge-bases status -n "$KB_NAME" -v 2>/dev/null \
+    | python -c 'import sys,json; d=json.loads(sys.stdin.read(),strict=False); print(d.get("built_in_index_status") or "pending")' \
+    2>/dev/null || echo "unknown")
+  info "  KB index status: $KB_STATE (attempt $i/36)"
+  [ "$KB_STATE" = "ready" ] && break
+  case "$KB_STATE" in
+    failed|error) fail "Knowledge base indexing failed — run: orchestrate knowledge-bases status -n $KB_NAME" ;;
+  esac
+  sleep 5
+done
+[ "$KB_STATE" = "ready" ] || fail "Knowledge base did not reach 'ready' within 3 minutes"
+ok "  soc_knowledge_base indexed and ready"
 
 # =============================================================================
 # STEP 8: Agents — sub-agents first, supervisor last

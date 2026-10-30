@@ -3,9 +3,11 @@ SOC — Notify Tool
 Generates HTML incident reports and delivers them via Mailjet transactional email.
 Credentials injected from connection: soc-mailjet (key_value).
 Required keys: mailjet_api_key, mailjet_secret_key
-Optional key:  mailjet_sender_email
+Required key:  mailjet_sender_email
+Optional key:  mailjet_default_recipients (comma-separated)
 """
 
+import re
 from datetime import datetime, timezone
 
 from ibm_watsonx_orchestrate.agent_builder.connections import ConnectionType, ExpectedCredentials
@@ -15,8 +17,8 @@ from mailjet_rest import Client
 from pydantic import BaseModel, Field
 
 MAILJET_APP_ID = "soc-mailjet"
-DEFAULT_SENDER = "soc-demo@example.com"
-DEFAULT_RECIPIENTS = ["soc-team@example.com"]
+_EMAIL_RE = re.compile(r"^[^@\s,;<>\"]+@[^@\s,;<>\"]+\.[^@\s,;<>\"]+$")
+MAX_RECIPIENTS = 10
 
 
 class NotifyOutput(BaseModel):
@@ -35,7 +37,7 @@ class NotifyOutput(BaseModel):
     description=(
         "Send an HTML incident report notification for a QRadar offense via Mailjet. "
         "Credentials are pulled from the soc-mailjet connection (mailjet_api_key, mailjet_secret_key). "
-        "Defaults to sending to soc-team@example.com when no recipients are specified."
+        "Recipients default to the mailjet_default_recipients value in the soc-mailjet connection."
     ),
     permission=ToolPermission.READ_WRITE,
     expected_credentials=[ExpectedCredentials(app_id=MAILJET_APP_ID, type=ConnectionType.KEY_VALUE)],
@@ -53,7 +55,7 @@ def notify_tool(
         html_content: Full HTML report string
         incident_id: QRadar offense ID
         subject: Email subject (auto-generated if omitted)
-        recipients: Email list (defaults to soc-team@example.com)
+        recipients: Email list (defaults to connection key mailjet_default_recipients, comma-separated)
     """
     timestamp = datetime.now(timezone.utc).isoformat()
 
@@ -68,18 +70,34 @@ def notify_tool(
             email_size_kb=0.0,
         )
 
-    if not recipients:
-        recipients = DEFAULT_RECIPIENTS
-    if not subject:
-        subject = f"[SOC] QRadar Offense {incident_id} — Incident Report"
-
-    size_kb = round(len(html_content) / 1024, 2)
-
     # Pull credentials from the watsonx Orchestrate connection
     creds = connections.key_value(MAILJET_APP_ID)
     api_key = creds.get("mailjet_api_key")
     secret_key = creds.get("mailjet_secret_key")
-    sender_email = creds.get("mailjet_sender_email", DEFAULT_SENDER)
+    sender_email = creds.get("mailjet_sender_email")
+
+    if not recipients:
+        default_rcpts = creds.get("mailjet_default_recipients", "")
+        recipients = [r.strip() for r in default_rcpts.split(",") if r.strip()]
+
+    # Validate addresses and cap fan-out so the tool cannot be abused as a mail relay
+    invalid = [r for r in recipients if not _EMAIL_RE.match(r)]
+    if not sender_email or not recipients or invalid or len(recipients) > MAX_RECIPIENTS:
+        return NotifyOutput(
+            status="FAILED",
+            message="Invalid or missing sender/recipients configuration",
+            incident_id=incident_id,
+            recipients=[],
+            subject="",
+            timestamp=timestamp,
+            email_size_kb=0.0,
+        )
+
+    if not subject:
+        subject = f"[SOC] QRadar Offense {incident_id} — Incident Report"
+    subject = re.sub(r"[\r\n]+", " ", subject)[:200]
+
+    size_kb = round(len(html_content) / 1024, 2)
 
     mailjet = Client(auth=(api_key, secret_key), version="v3.1")
 

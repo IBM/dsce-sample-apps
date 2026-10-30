@@ -200,22 +200,14 @@ function ensureStageState(stageKey) {
 
 function loadState() {
   try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    // Only restore prompts — never persist run IDs, thread IDs, or trace data
-    return Object.fromEntries(
-      Object.entries(stored).map(([k, v]) => [k, { prompt: v.prompt || '' }])
-    );
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   } catch (error) {
     return {};
   }
 }
 
 function saveState() {
-  // Persist only prompt text — omit runIds, threadIds, traces, and outputText
-  const safe = Object.fromEntries(
-    Object.entries(state.runs).map(([k, v]) => [k, { prompt: v.prompt || '' }])
-  );
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(safe));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.runs));
 }
 
 function formatDuration(durationMs) {
