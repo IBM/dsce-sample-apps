@@ -1,0 +1,91 @@
+# clause_types.yaml
+# ------------------
+# Defines clause type classification rules for ingest_standard_templates.py.
+# Edit this file to add new types or keywords — no Python changes needed.
+#
+# Rules:
+#   - First matching entry wins (order matters)
+#   - Keywords are matched case-insensitively against heading + body text
+#   - Use partial words (stems) to catch variations:
+#       "terminat" catches terminate / termination / terminated
+#       "confidential" catches confidentiality / confidential information
+#
+# To add a new type: append a new entry with a unique "type" value and
+# a list of keywords that signal that clause in your contracts.
+
+clause_types:
+
+  - type: fee_payment
+    keywords:
+      - fee
+      - payment
+      - invoice
+      - remit
+      - quarterly
+      - billing
+      - compensation
+      - pricing
+      - cost
+      - charge
+
+  - type: term_renewal
+    keywords:
+      - renewal
+      - renew
+      - expir
+      - commenc
+      - effective date
+      - initial term
+      - extension
+      - duration
+
+  - type: termination
+    keywords:
+      - terminat
+      - convenience
+      - for cause
+      - breach
+      - default
+      - discontinu
+      - wind down
+
+  - type: confidentiality
+    keywords:
+      - confidential
+      - non-disclos
+      - nondisclos
+      - proprietary
+      - trade secret
+      - disclosure
+
+  - type: liability
+    keywords:
+      - liabilit
+      - indemnif
+      - warrant
+      - damage
+      - limitation of liability
+      - consequential
+      - cap on liability
+
+  - type: security
+    keywords:
+      - security
+      - nist
+      - cyber
+      - data protection
+      - encrypt
+      - access control
+      - incident
+      - vulnerability
+
+  - type: general
+    keywords:
+      - background
+      - framework
+      - introduction
+      - purpose
+      - recital
+      - preamble
+      - definitions
+      - scope

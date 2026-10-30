@@ -1,0 +1,49 @@
+# ── Credentials — NEVER commit ─────────────────────────────────────────────
+.env
+*.env
+!*.env.example
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Jupyter ─────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDE ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+
+# ── Test / coverage artifacts ────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Test / scratch files ──────────────────────────────────────────────────────
+services/regenerate_pdf/test_rectify.json
+services/regenerate_pdf/test_rectify_large.json
+services/regenerate_pdf/test_pdf_service.py
+services/ingest_vendor_contract/test_server.py
+
+# ── Local tooling (may contain local tokens) ────────────────────────────────
+.bob/

@@ -1,0 +1,4 @@
+astrapy==2.3.2
+pymupdf==1.28.2
+python-dotenv==1.2.4
+pyyaml==6.0.3

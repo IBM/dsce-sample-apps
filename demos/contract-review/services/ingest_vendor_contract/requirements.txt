@@ -1,0 +1,9 @@
+ibm-watsonx-orchestrate>=1.0.0,<3
+astrapy==2.3.2
+pymupdf==1.28.2
+ibm-cos-sdk==2.16.2
+python-dotenv==1.2.4
+# ── local test server only ────────────────────────────────────────────────────
+fastapi==0.162.0
+uvicorn==0.54.0
+python-multipart==0.0.32

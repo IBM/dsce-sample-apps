@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contract Reviewer</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;background:#f4f5f7;color:#1c2128;font-size:13px;line-height:1.5}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#cdd1d9;border-radius:2px}
+
+/* ── NAV ── */
+.topbar{background:#161b22;height:52px;display:flex;align-items:center;padding:0 20px;position:sticky;top:0;z-index:200;gap:0;border-bottom:1px solid #21262d}
+.topbar-brand{display:flex;align-items:center;gap:8px;margin-right:32px}
+.brand-mark{width:28px;height:28px;background:#1f6feb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.brand-name{font-size:14px;font-weight:700;color:#e6edf3;letter-spacing:-.2px}
+.brand-name span{color:#58a6ff}
+.nav-item{height:52px;display:flex;align-items:center;padding:0 16px;color:#8b949e;font-size:13px;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap}
+.nav-item:hover{color:#e6edf3}
+.nav-item.active{color:#e6edf3;border-bottom-color:#1f6feb}
+.nav-badge{background:#238636;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:5px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.env-tag{background:#0d1117;border:1px solid #30363d;color:#58a6ff;font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600}
+.user-chip{display:flex;align-items:center;gap:6px}
+.user-avatar{width:26px;height:26px;background:#1f6feb;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.user-name{font-size:12px;color:#8b949e}
+
+/* ── SCREENS ── */
+.screen{display:none;padding:16px 20px}
+.screen.active{display:block}
+
+/* ── SHARED ── */
+.card{background:#fff;border:1px solid #d0d7de;border-radius:8px}
+.card-header{padding:12px 16px;border-bottom:1px solid #eaecef;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:700;color:#1c2128}
+.card-subtitle{font-size:11px;color:#57606a;margin-top:1px}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#57606a;margin-bottom:7px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.tag.red{background:#fff0ee;color:#cf222e;border:1px solid #ffd8d3}
+.tag.yellow{background:#fff8c5;color:#9a6700;border:1px solid #fae17d}
+.tag.green{background:#dafbe1;color:#1a7f37;border:1px solid #aceebb}
+.tag.blue{background:#ddf4ff;color:#0969da;border:1px solid #b6e3ff}
+.tag.purple{background:#fbefff;color:#8250df;border:1px solid #e2c5ff}
+.bar-track{background:#eaecef;border-radius:3px;height:5px}
+.bar-fill{height:5px;border-radius:3px}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt18{margin-top:18px}
+.fw7{font-weight:700}
+.text-muted{color:#57606a}
+
+/* ═══════════════════════════════════
+   S1 — CONTRACT REVIEW
+═══════════════════════════════════ */
+.s1-layout{display:grid;grid-template-columns:220px 1fr 272px;gap:12px;height:calc(100vh - 84px)}
+
+/* -- left col -- */
+.s1-left{display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.session-card{padding:12px 14px}
+.session-vendor{font-size:14px;font-weight:700;color:#1c2128;margin-bottom:2px}
+.session-meta{font-size:11px;color:#57606a}
+.session-divider{border:none;border-top:1px solid #eaecef;margin:10px 0}
+
+.clause-summary-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f6f8fa}
+.clause-summary-row:last-child{border-bottom:none}
+.clause-name{font-size:11.5px;color:#1c2128}
+.clause-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.clause-status-dot.dev{background:#cf222e}
+.clause-status-dot.ok{background:#1a7f37}
+.clause-status-dot.na{background:#8b949e}
+
+.recent-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:background .1s}
+.recent-item:hover{background:#f6f8fa}
+.recent-item.active{background:#ddf4ff;border-color:#b6e3ff}
+.ri-icon{width:22px;height:22px;background:#fff0ee;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#cf222e;flex-shrink:0}
+.ri-name{font-size:11.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-date{font-size:10px;color:#57606a}
+.risk-indicator{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.risk-indicator.h{background:#cf222e}
+.risk-indicator.m{background:#bf8700}
+.risk-indicator.l{background:#1a7f37}
+
+/* -- center chat -- */
+.chat-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.chat-topbar{padding:10px 16px;border-bottom:1px solid #eaecef;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fff;border-radius:8px 8px 0 0}
+.chat-doc-title{font-size:14px;font-weight:700}
+.chat-doc-sub{font-size:11px;color:#57606a;margin-top:1px}
+.chat-quick{display:flex;gap:5px;padding:7px 16px;background:#f6f8fa;border-bottom:1px solid #eaecef;flex-shrink:0;flex-wrap:wrap}
+.qchip{background:#fff;border:1px solid #d0d7de;border-radius:16px;font-size:11px;color:#0969da;padding:3px 9px;cursor:pointer;white-space:nowrap;transition:background .1s}
+.qchip:hover{background:#ddf4ff;border-color:#b6e3ff}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.msg-row{display:flex;gap:8px}
+.msg-row.u{flex-direction:row-reverse}
+.msg-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.msg-av.ai{background:#161b22;color:#58a6ff;border:1px solid #30363d}
+.msg-av.u{background:#1f6feb;color:#fff}
+.msg-bubble{max-width:79%;padding:9px 12px;border-radius:10px;font-size:12.5px;line-height:1.55}
+.msg-bubble.ai{background:#f6f8fa;border:1px solid #eaecef;border-top-left-radius:3px;white-space:pre-wrap;word-break:break-word}
+.msg-bubble.u{background:#1f6feb;color:#fff;border-top-right-radius:3px}
+.cmp-table{border-collapse:collapse;width:100%;margin-top:8px;font-size:11.5px}
+.cmp-table th{background:#f6f8fa;border:1px solid #d0d7de;padding:5px 8px;text-align:left;font-weight:700;color:#1c2128}
+.cmp-table td{border:1px solid #eaecef;padding:5px 8px;vertical-align:top}
+.cmp-table tr:nth-child(even) td{background:#fafbfc}
+.dev-tag{display:inline-block;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:700}
+.dev-tag.dn{background:#fff0ee;color:#cf222e}
+.dev-tag.up{background:#fff8c5;color:#9a6700}
+.rec-box{background:#fff8c5;border:1px solid #fae17d;border-radius:6px;padding:9px 11px;margin-top:9px;font-size:11.5px}
+.rec-box-label{font-size:9.5px;font-weight:700;color:#9a6700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.action-row{display:flex;gap:7px;margin-top:9px}
+.btn{padding:5px 13px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid;font-family:inherit}
+.btn.primary{background:#1f6feb;color:#fff;border-color:#1f6feb}
+.btn.primary:hover{background:#1158c7}
+.btn.secondary{background:#fff;color:#1f6feb;border-color:#1f6feb}
+.btn.secondary:hover{background:#ddf4ff}
+.typing-dots{display:flex;align-items:center;gap:4px;padding:9px 12px;background:#f6f8fa;border:1px solid #eaecef;border-radius:10px;border-top-left-radius:3px;width:fit-content}
+.typing-dots span{width:5px;height:5px;background:#8b949e;border-radius:50%;animation:blink 1.2s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.chat-input-bar{display:flex;flex-direction:column;gap:6px;padding:10px 16px;border-top:1px solid #eaecef;background:#fff;flex-shrink:0;border-radius:0 0 8px 8px}
+.chat-input-row{display:flex;gap:8px;align-items:flex-end}
+.chat-textarea{flex:1;border:1px solid #d0d7de;border-radius:7px;padding:7px 11px;font-size:13px;font-family:inherit;resize:none;outline:none;min-height:36px;background:#f6f8fa;color:#1c2128}
+.chat-textarea:focus{border-color:#1f6feb;background:#fff;box-shadow:0 0 0 2px rgba(31,111,235,.12)}
+.send-btn{background:#1f6feb;border:none;color:#fff;padding:7px 14px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;flex-shrink:0}
+.send-btn:disabled{background:#8b949e;cursor:not-allowed}
+.attach-btn{width:34px;height:34px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .1s,border-color .1s;padding:0}
+.attach-btn:hover{background:#ddf4ff;border-color:#b6e3ff}
+.attach-btn svg{display:block}
+.file-pill{display:inline-flex;align-items:center;gap:5px;background:#ddf4ff;border:1px solid #b6e3ff;border-radius:16px;padding:3px 9px 3px 7px;font-size:11px;color:#0969da;font-weight:600;max-width:100%;overflow:hidden}
+.file-pill-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.file-pill-x{cursor:pointer;color:#57606a;font-size:13px;line-height:1;margin-left:2px;flex-shrink:0}
+.file-pill-x:hover{color:#cf222e}
+.file-pill.uploading{background:#fff8c5;border-color:#fae17d;color:#9a6700}
+.chat-attachment-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.msg-file-bubble{display:inline-flex;align-items:center;gap:6px;background:#f0f6ff;border:1px solid #b6e3ff;border-radius:8px;padding:7px 11px;font-size:12px;font-weight:600;color:#0969da}
+.msg-file-icon{width:22px;height:22px;background:#ddf4ff;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#0969da;flex-shrink:0}
+.err-banner{background:#fff0ee;border:1px solid #ffd8d3;border-radius:7px;padding:7px 12px;font-size:12px;color:#cf222e;margin-top:4px}
+
+/* -- right col: deviation panel -- */
+.dev-panel{display:flex;flex-direction:column;gap:10px;overflow-y:auto;height:100%}
+.dev-score-card{padding:12px 14px}
+.score-circle-row{display:flex;gap:10px;margin-bottom:10px}
+.score-circle{flex:1;background:#f6f8fa;border:1px solid #eaecef;border-radius:8px;padding:10px 8px;text-align:center}
+.score-circle .num{font-size:22px;font-weight:800}
+.score-circle .lbl{font-size:10px;color:#57606a;margin-top:2px}
+.dev-card{overflow:hidden}
+.dev-card-head{padding:8px 12px;border-bottom:1px solid #f0f1f3;display:flex;align-items:center;justify-content:space-between}
+.dev-card-title{font-size:12px;font-weight:700}
+.dev-card-body{padding:9px 12px;font-size:11.5px}
+.diff-line{display:flex;gap:5px;align-items:flex-start;margin-bottom:4px}
+.diff-pill{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.diff-pill.t{background:#dafbe1;color:#1a7f37}
+.diff-pill.u{background:#fff0ee;color:#cf222e}
+.diff-val{font-size:11px;color:#444;line-height:1.4}
+.conf-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+.conf-row .ck{color:#57606a}.conf-row .cv{font-weight:700}
+.dl-card{padding:12px 14px}
+.dl-link{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#f6f8fa;border:1px solid #eaecef;border-radius:6px;font-size:12px;color:#0969da;font-weight:600;cursor:pointer;text-decoration:none}
+.dl-link:hover{background:#ddf4ff;border-color:#b6e3ff}
+
+/* ═════════════════════
+   S2 — DASHBOARD
+═════════════════════ */
+.dash-hero{background:#161b22;border-radius:8px;padding:20px 24px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid #30363d}
+.dash-hero h2{font-size:18px;font-weight:800;color:#e6edf3;margin-bottom:2px}
+.dash-hero p{font-size:11px;color:#484f58}
+.kpi-row{display:flex;gap:14px;margin-bottom:14px}
+.kpi-card{background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;flex:1}
+.kpi-val{font-size:26px;font-weight:800;color:#1c2128}
+.kpi-lbl{font-size:11.5px;color:#57606a;margin-top:2px}
+.kpi-trend{font-size:11px;margin-top:5px;font-weight:600}
+.kpi-trend.up-g{color:#1a7f37}.kpi-trend.dn-r{color:#cf222e}
+.dash-mid{display:grid;grid-template-columns:1.9fr 1fr;gap:12px}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{padding:8px 12px;text-align:left;background:#f6f8fa;border-bottom:2px solid #eaecef;font-weight:700;color:#57606a;font-size:10px;letter-spacing:.04em;text-transform:uppercase}
+.data-table td{padding:8px 12px;border-bottom:1px solid #f0f1f3;vertical-align:middle}
+.data-table tbody tr:hover td{background:#f6f8fa}
+.st-badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.st-badge.pending{background:#fff8c5;color:#9a6700}
+.st-badge.done{background:#dafbe1;color:#1a7f37}
+.st-badge.regen{background:#fbefff;color:#8250df}
+.st-badge.flagged{background:#fff0ee;color:#cf222e}
+
+/* ═══════════════════════════
+   S3 — GOVERNANCE
+═══════════════════════════ */
+.gov-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.gov-kpi{background:#fff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px}
+.gov-kpi-val{font-size:28px;font-weight:800}
+.gov-kpi-lbl{font-size:11px;color:#57606a;margin-top:1px}
+.gov-kpi-bar{margin-top:8px;background:#eaecef;border-radius:3px;height:4px}
+.gov-kpi-fill{height:4px;border-radius:3px}
+.gov-body{display:grid;grid-template-columns:1.7fr 1fr;gap:12px}
+.scenario-item{border:1px solid #eaecef;border-radius:6px;overflow:hidden;margin-bottom:8px}
+.scenario-head{padding:8px 12px;background:#f6f8fa;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600}
+.scenario-body{padding:8px 12px;font-size:11px;color:#57606a;border-top:1px solid #eaecef}
+.sc-row{display:flex;justify-content:space-between;margin-bottom:2px}
+
+footer{text-align:center;font-size:10.5px;color:#8b949e;border-top:1px solid #eaecef;padding:10px;margin-top:14px;background:#fff}
+</style>
+</head>
+<body>
+
+<script>
+  // PROXY_URL is injected by the FastAPI server at serve time (%%PROXY_URL%% → "").
+  // Same-origin on OpenShift: all /chat and /upload calls are relative paths.
+  // Local dev: open http://localhost:8080 — proxy and UI on same port.
+  const PROXY_URL = "%%PROXY_URL%%";
+</script>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-mark">CR</div>
+    <div class="brand-name">Contract<span>Reviewer</span></div>
+  </div>
+  <div class="nav-item active" onclick="nav('s1',this)">Contract Review</div>
+  <div class="nav-item" onclick="nav('s2',this)">Dashboard</div>
+  <div class="nav-item" onclick="nav('s3',this);loadGovernance()">Governance &amp; Evaluation <span class="nav-badge">Live</span></div>
+  <div class="topbar-right">
+    <span class="env-tag">watsonx Orchestrate · contract-reviewer</span>
+    <div class="user-chip">
+      <div class="user-avatar">CR</div>
+      <span class="user-name">Reviewer</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════
+  S1 — CONTRACT REVIEW
+═══════════════════════════════════════ -->
+<div id="s1" class="screen active">
+  <div class="s1-layout">
+
+    <!-- LEFT: Session + Clauses + Recent -->
+    <div class="s1-left">
+
+      <!-- Active session -->
+      <div class="card session-card">
+        <div id="sessionVendor" class="session-vendor">No contract loaded</div>
+        <div id="sessionMeta" class="session-meta">Upload a vendor PDF to begin</div>
+        <div class="session-divider"></div>
+        <div id="sessionTags" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag blue">Awaiting upload</span>
+        </div>
+        <div class="session-divider"></div>
+        <div class="sec-label">Clause Status</div>
+        <div id="clauseStatusList">
+          <div style="font-size:11px;color:#57606a;">— will populate after upload —</div>
+        </div>
+      </div>
+
+      <!-- Recent reviews (static reference) -->
+      <div class="card" style="padding:10px 10px">
+        <div class="sec-label" style="padding:0 2px;">Recent Reviews</div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div class="recent-item">
+            <div class="ri-icon">PDF</div>
+            <div style="flex:1;min-width:0;"><div class="ri-name">Vendor-Contract-A</div><div class="ri-date">Yesterday</div></div>
+            <div class="risk-indicator m"></div>
+          </div>
+          <div class="recent-item">
+            <div class="ri-icon" style="background:#dafbe1;color:#1a7f37;">PDF</div>
+            <div style="flex:1;min-width:0;"><div class="ri-name">Vendor-Contract-B</div><div class="ri-date">Dec 18, 2025</div></div>
+            <div class="risk-indicator l"></div>
+          </div>
+          <div class="recent-item">
+            <div class="ri-icon" style="background:#dafbe1;color:#1a7f37;">PDF</div>
+            <div style="flex:1;min-width:0;"><div class="ri-name">Vendor-Contract-C</div><div class="ri-date">Dec 15, 2025</div></div>
+            <div class="risk-indicator l"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: CHAT -->
+    <div class="card chat-wrap">
+      <div class="chat-topbar">
+        <div>
+          <div id="chatDocTitle" class="chat-doc-title">Contract Reviewer</div>
+          <div class="chat-doc-sub">IBM watsonx Orchestrate · groq/openai/gpt-oss-120b · AstraDB vector search</div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <span id="deviationBadge" class="tag blue" style="display:none;"></span>
+          <button onclick="exportReport()" class="btn secondary" style="font-size:11px;padding:4px 10px;">Export Report</button>
+        </div>
+      </div>
+      <div class="chat-quick">
+        <span style="font-size:10.5px;color:#57606a;align-self:center;margin-right:2px;">Suggested:</span>
+        <span class="qchip" onclick="quickSend('Compare the fee and payment clause with the standard template')">Compare Fee Clause</span>
+        <span class="qchip" onclick="quickSend('Show term and renewal deviations')">Term &amp; Renewal</span>
+        <span class="qchip" onclick="quickSend('List all deviations found in this contract')">All Deviations</span>
+        <span class="qchip" onclick="quickSend('Summarise this contract in 3 sentences')">Summarise</span>
+      </div>
+      <div id="msgs" class="chat-msgs">
+        <div class="msg-row">
+          <div class="msg-av ai">AI</div>
+          <div class="msg-bubble ai">Welcome to Contract Reviewer, powered by IBM watsonx Orchestrate.
+
+Upload a vendor contract PDF using the paperclip button below — or ask me anything about the standard contract template first.</div>
+        </div>
+      </div>
+      <div id="errBanner" class="err-banner" style="display:none;margin:0 16px 6px;"></div>
+      <div class="chat-input-bar">
+        <div id="attachRow" class="chat-attachment-row" style="display:none;"></div>
+        <div class="chat-input-row">
+          <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="onFileChosen(event)"/>
+          <button class="attach-btn" title="Attach vendor contract PDF" onclick="document.getElementById('fileInput').click()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.5 7.5L7.5 13.5C6.1 14.9 3.9 14.9 2.5 13.5C1.1 12.1 1.1 9.9 2.5 8.5L8.5 2.5C9.4 1.6 10.9 1.6 11.8 2.5C12.7 3.4 12.7 4.9 11.8 5.8L5.8 11.8C5.3 12.3 4.5 12.3 4 11.8C3.5 11.3 3.5 10.5 4 10L9.5 4.5" stroke="#57606a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <textarea id="txtInput" class="chat-textarea" rows="1"
+            placeholder="Ask about a clause, request a comparison, or attach a vendor contract PDF…"
+            onkeydown="onKey(event)"></textarea>
+          <button id="sendBtn" class="send-btn" onclick="sendMsg()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: DEVIATION PANEL -->
+    <div class="dev-panel">
+
+      <!-- Score summary -->
+      <div class="card dev-score-card">
+        <div class="sec-label">Review Summary</div>
+        <div class="score-circle-row">
+          <div class="score-circle"><div id="scoreC" class="num" style="color:#8b949e;">—</div><div class="lbl">Critical</div></div>
+          <div class="score-circle"><div id="scoreM" class="num" style="color:#8b949e;">—</div><div class="lbl">Minor</div></div>
+          <div class="score-circle"><div id="scoreOk" class="num" style="color:#8b949e;">—</div><div class="lbl">Compliant</div></div>
+        </div>
+        <div class="sec-label mt6">Session</div>
+        <div id="sessionIdDisplay" style="font-size:10.5px;color:#57606a;word-break:break-all;">No active session</div>
+      </div>
+
+      <!-- Live deviation cards — populated from agent responses -->
+      <div id="devCards">
+        <div class="card" style="padding:12px 14px;font-size:11.5px;color:#57606a;">
+          Deviation details will appear here after a clause comparison.
+        </div>
+      </div>
+
+      <!-- Download -->
+      <div class="card dl-card">
+        <div class="sec-label">Regenerated Output</div>
+        <div id="dlStatus" style="font-size:11px;color:#57606a;">No regenerated PDF yet. Confirm regeneration to produce a corrected contract.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═════════════════════
+  S2 — DASHBOARD
+═════════════════════ -->
+<div id="s2" class="screen">
+  <div class="dash-hero">
+    <div>
+      <h2>Contract Review Dashboard</h2>
+      <p>IBM watsonx Orchestrate · groq/openai/gpt-oss-120b · AstraDB vector search · IBM COS · IBM Code Engine</p>
+    </div>
+    <div style="display:flex;gap:24px;">
+      <div style="text-align:center;"><div style="font-size:26px;font-weight:800;color:#58a6ff;">24</div><div style="font-size:10px;color:#484f58;">Contracts Reviewed</div></div>
+      <div style="text-align:center;"><div style="font-size:26px;font-weight:800;color:#f78166;">11</div><div style="font-size:10px;color:#484f58;">Deviations Found</div></div>
+      <div style="text-align:center;"><div style="font-size:26px;font-weight:800;color:#56d364;">7</div><div style="font-size:10px;color:#484f58;">PDFs Regenerated</div></div>
+      <div style="text-align:center;"><div style="font-size:26px;font-weight:800;color:#e3b341;">96%</div><div style="font-size:10px;color:#484f58;">AI Accuracy</div></div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-val" style="color:#cf222e;">4</div><div class="kpi-lbl">High-Risk Contracts</div><div class="kpi-trend dn-r">↑ 2 vs last week</div></div>
+    <div class="kpi-card"><div class="kpi-val" style="color:#bf8700;">5</div><div class="kpi-lbl">Medium-Risk Contracts</div><div class="kpi-trend dn-r">↑ 1 vs last week</div></div>
+    <div class="kpi-card"><div class="kpi-val" style="color:#1a7f37;">15</div><div class="kpi-lbl">Compliant Contracts</div><div class="kpi-trend up-g">↑ 3 vs last week</div></div>
+    <div class="kpi-card"><div class="kpi-val">3.8s</div><div class="kpi-lbl">Avg Response Time</div><div class="kpi-trend up-g">↓ 0.4s vs last week</div></div>
+  </div>
+
+  <div class="dash-mid">
+    <div class="card" style="overflow:hidden;padding:0;">
+      <div class="card-header"><div class="card-title">Recent Contract Reviews</div></div>
+      <table class="data-table">
+        <thead><tr><th>Contract</th><th>Vendor</th><th>Uploaded</th><th>Risk</th><th>Deviations</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td class="fw7">Contract-A</td><td>Vendor A Ltd</td><td>Today</td><td><span class="tag red">High</span></td><td>3</td><td><span class="st-badge regen">PDF Regenerated</span></td></tr>
+          <tr><td class="fw7">Contract-B</td><td>Vendor B Co.</td><td>Yesterday</td><td><span class="tag yellow">Medium</span></td><td>1</td><td><span class="st-badge done">Reviewed</span></td></tr>
+          <tr><td class="fw7">Contract-C</td><td>Vendor C Inc.</td><td>Dec 18</td><td><span class="tag green">Low</span></td><td>0</td><td><span class="st-badge done">Compliant</span></td></tr>
+          <tr><td class="fw7">Contract-D</td><td>Vendor D Ltd</td><td>Dec 15</td><td><span class="tag green">Low</span></td><td>0</td><td><span class="st-badge done">Compliant</span></td></tr>
+          <tr><td class="fw7">Contract-E</td><td>Vendor E Corp</td><td>Dec 12</td><td><span class="tag red">High</span></td><td>4</td><td><span class="st-badge pending">Pending Review</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card" style="padding:14px 16px;">
+        <div class="sec-label">Deviation by Clause Type</div>
+        <div><div class="conf-row"><span class="ck">Fee &amp; Payment Terms</span><span class="cv">38%</span></div><div class="bar-track mt6"><div class="bar-fill" style="width:38%;background:#cf222e;"></div></div></div>
+        <div class="mt10"><div class="conf-row"><span class="ck">Term &amp; Renewal</span><span class="cv">27%</span></div><div class="bar-track mt6"><div class="bar-fill" style="width:27%;background:#bf8700;"></div></div></div>
+        <div class="mt10"><div class="conf-row"><span class="ck">Liability &amp; Indemnity</span><span class="cv">18%</span></div><div class="bar-track mt6"><div class="bar-fill" style="width:18%;background:#bf8700;"></div></div></div>
+        <div class="mt10"><div class="conf-row"><span class="ck">Confidentiality</span><span class="cv">10%</span></div><div class="bar-track mt6"><div class="bar-fill" style="width:10%;background:#0969da;"></div></div></div>
+        <div class="mt10"><div class="conf-row"><span class="ck">Other</span><span class="cv">7%</span></div><div class="bar-track mt6"><div class="bar-fill" style="width:7%;background:#8b949e;"></div></div></div>
+      </div>
+      <div class="card" style="padding:14px 16px;">
+        <div class="sec-label">Platform</div>
+        <div style="font-size:12px;color:#1c2128;font-weight:600;">Vector Search</div>
+        <div style="font-size:11px;color:#57606a;margin-top:2px;">Standard Template · AstraDB · nvidia/nv-embedqa-e5-v5 · <span style="color:#1a7f37;font-weight:700;">Indexed ✓</span></div>
+        <div style="font-size:12px;color:#1c2128;font-weight:600;margin-top:10px;">PDF Regeneration</div>
+        <div style="font-size:11px;color:#57606a;margin-top:2px;">watsonx.ai LLaMA-3 405B · PyMuPDF · IBM Code Engine · IBM COS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+  S3 — GOVERNANCE & EVALUATION
+═══════════════════════════ -->
+<div id="s3" class="screen">
+
+  <!-- Header row: title + status badge + Run button -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px;">
+    <div>
+      <div style="font-size:18px;font-weight:800;color:#1c2128;">Governance &amp; Evaluation</div>
+      <div id="govSubtitle" style="font-size:11px;color:#57606a;margin-top:2px;">
+        IBM watsonx Orchestrate Evaluation API · Loading…
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+      <div id="govStatusBadge" class="tag blue">Loading…</div>
+      <button id="runEvalBtn" class="btn primary" style="font-size:11px;padding:5px 14px;"
+              onclick="triggerEvaluation()">Run Evaluation</button>
+    </div>
+  </div>
+
+  <!-- KPI tiles — populated from latest run's aggregate_metrices -->
+  <div class="gov-kpi-row">
+    <div class="gov-kpi">
+      <div id="kpiAnswerRelevancy" class="gov-kpi-val" style="color:#8b949e;">—</div>
+      <div class="gov-kpi-lbl">Answer Relevancy</div>
+      <div class="gov-kpi-bar"><div id="kpiAnswerRelevancyBar" class="gov-kpi-fill" style="width:0%;background:#8b949e;"></div></div>
+    </div>
+    <div class="gov-kpi">
+      <div id="kpiFaithfulness" class="gov-kpi-val" style="color:#8b949e;">—</div>
+      <div class="gov-kpi-lbl">Faithfulness</div>
+      <div class="gov-kpi-bar"><div id="kpiFaithfulnessBar" class="gov-kpi-fill" style="width:0%;background:#8b949e;"></div></div>
+    </div>
+    <div class="gov-kpi">
+      <div id="kpiToolQuality" class="gov-kpi-val" style="color:#8b949e;">—</div>
+      <div class="gov-kpi-lbl">Tool Quality</div>
+      <div class="gov-kpi-bar"><div id="kpiToolQualityBar" class="gov-kpi-fill" style="width:0%;background:#8b949e;"></div></div>
+    </div>
+    <div class="gov-kpi">
+      <div id="kpiTxComplete" class="gov-kpi-val" style="color:#8b949e;">—</div>
+      <div class="gov-kpi-lbl">Transaction Completion</div>
+      <div class="gov-kpi-bar"><div id="kpiTxCompleteBar" class="gov-kpi-fill" style="width:0%;background:#8b949e;"></div></div>
+    </div>
+  </div>
+
+  <div class="gov-body">
+
+    <!-- LEFT: Evaluation run history table -->
+    <div class="card" style="overflow:hidden;padding:0;">
+      <div class="card-header">
+        <div class="card-title">Evaluation Run History</div>
+        <span class="text-muted" style="font-size:11px;">Click a row to see test case breakdown</span>
+      </div>
+      <div id="govEvalError" class="err-banner" style="display:none;margin:8px 12px;"></div>
+      <div id="govLoadingRow" style="padding:20px 16px;font-size:12px;color:#57606a;text-align:center;">
+        Loading evaluation history…
+      </div>
+      <table class="data-table" id="govHistoryTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>Eval ID</th>
+            <th>Date</th>
+            <th>By</th>
+            <th>Test Cases</th>
+            <th>Answer Quality</th>
+            <th>Tool Quality</th>
+            <th>Completion</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="govHistoryBody"></tbody>
+      </table>
+    </div>
+
+    <!-- RIGHT: per-run detail panel (test cases + metrics bar) -->
+    <div>
+      <!-- Metrics bar chart — populated from selected run's aggregate_metrices -->
+      <div class="card" style="padding:14px 16px;margin-bottom:12px;">
+        <div class="sec-label" id="govMetricLabel">Metrics — select a run</div>
+        <div id="govMetricBars" style="font-size:11px;color:#57606a;">
+          Click a row in the history table to see detailed metrics.
+        </div>
+      </div>
+
+      <!-- Per-test-case cards -->
+      <div class="sec-label">Test Case Results</div>
+      <div id="govTestCases">
+        <div style="font-size:11px;color:#57606a;padding:4px 0;">
+          Select an evaluation run to see individual test cases.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Polling status banner (shown while a new run is in progress) -->
+  <div id="govPollBanner" style="display:none;background:#ddf4ff;border:1px solid #b6e3ff;
+       border-radius:7px;padding:8px 14px;font-size:12px;color:#0969da;margin-top:10px;">
+    <span id="govPollMsg">Evaluation running…</span>
+    <span style="margin-left:8px;font-size:10px;color:#57606a;">Polling every 5 s</span>
+  </div>
+
+</div>
+
+<footer>Contract Reviewer Assistant &nbsp;·&nbsp; Powered by IBM watsonx Orchestrate &nbsp;·&nbsp; Made with IBM Bob</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   SESSION STATE
+═══════════════════════════════════════════ */
+var _threadId   = null;   // WXO thread ID — persists for the conversation
+var _fileId     = null;   // file_id returned by /upload — sent once with next message
+var _pendingFile = null;  // { name, file } — awaiting /upload confirmation
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+function nav(id, el) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════ */
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function showErr(msg) {
+  var b = document.getElementById('errBanner');
+  b.textContent = msg;
+  b.style.display = 'block';
+  setTimeout(() => { b.style.display = 'none'; }, 6000);
+}
+
+function clearErr() {
+  document.getElementById('errBanner').style.display = 'none';
+}
+
+function setInputEnabled(enabled) {
+  document.getElementById('sendBtn').disabled = !enabled;
+  document.getElementById('txtInput').disabled = !enabled;
+}
+
+/* ═══════════════════════════════════════════
+   CHAT RENDERING
+═══════════════════════════════════════════ */
+function appendMsg(html, isUser) {
+  var c = document.getElementById('msgs');
+  var d = document.createElement('div');
+  d.className = 'msg-row' + (isUser ? ' u' : '');
+  var av = isUser
+    ? '<div class="msg-av u">U</div>'
+    : '<div class="msg-av ai">AI</div>';
+  var cls = isUser ? 'u' : 'ai';
+  d.innerHTML = (isUser ? '' : av)
+    + '<div class="msg-bubble ' + cls + '">' + html + '</div>'
+    + (isUser ? av : '');
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyping() {
+  var c = document.getElementById('msgs');
+  var d = document.createElement('div');
+  d.className = 'msg-row'; d.id = 'typ';
+  d.innerHTML = '<div class="msg-av ai">AI</div>'
+    + '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function removeTyping() {
+  var t = document.getElementById('typ');
+  if (t) t.remove();
+}
+
+/* ═══════════════════════════════════════════
+   FILE ATTACHMENT
+═══════════════════════════════════════════ */
+function onFileChosen(e) {
+  var f = e.target.files[0];
+  if (!f) return;
+  _pendingFile = { name: f.name, file: f };
+  var row = document.getElementById('attachRow');
+  row.style.display = 'flex';
+  row.innerHTML = '<div class="file-pill uploading">'
+    + '<div class="msg-file-icon">PDF</div>'
+    + '<span class="file-pill-name">' + esc(f.name) + '</span>'
+    + '<span style="font-size:10px;margin-left:4px;">Uploading…</span>'
+    + '</div>';
+
+  // Upload immediately to proxy /upload
+  var fd = new FormData();
+  fd.append('file', f);
+  fetch(PROXY_URL + '/upload', { method: 'POST', body: fd })
+    .then(r => r.ok ? r.json() : r.text().then(t => { throw new Error(t); }))
+    .then(data => {
+      _fileId = data.file_id;
+      row.innerHTML = '<div class="file-pill">'
+        + '<div class="msg-file-icon">PDF</div>'
+        + '<span class="file-pill-name">' + esc(data.filename) + '</span>'
+        + '<span class="file-pill-x" title="Remove" onclick="clearAttachment()">×</span>'
+        + '</div>'
+        + '<span style="font-size:10.5px;color:#57606a;">Ready — click Send to begin review</span>';
+    })
+    .catch(err => {
+      showErr('File upload failed: ' + err.message);
+      clearAttachment();
+    });
+
+  e.target.value = '';
+}
+
+function clearAttachment() {
+  _pendingFile = null;
+  _fileId = null;
+  var row = document.getElementById('attachRow');
+  row.style.display = 'none';
+  row.innerHTML = '';
+}
+
+/* ═══════════════════════════════════════════
+   SEND MESSAGE  →  PROXY  →  WXO AGENT
+═══════════════════════════════════════════ */
+function quickSend(t) {
+  document.getElementById('txtInput').value = t;
+  sendMsg();
+}
+
+function onKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+}
+
+function sendMsg() {
+  var inp  = document.getElementById('txtInput');
+  var txt  = inp.value.trim();
+  var hasFile = !!_fileId;
+
+  if (!txt && !hasFile) return;
+
+  clearErr();
+  setInputEnabled(false);
+
+  // Render user message
+  if (hasFile && _pendingFile) {
+    appendMsg(
+      '<div class="msg-file-bubble"><div class="msg-file-icon">PDF</div>'
+      + esc(_pendingFile.name) + '</div>'
+      + (txt ? '<br/><span style="font-size:12.5px;">' + esc(txt) + '</span>' : ''),
+      true
+    );
+  } else {
+    appendMsg(esc(txt), true);
+  }
+
+  inp.value = '';
+  showTyping();
+
+  // Build proxy request
+  var payload = {
+    message:   txt || ('PDF uploaded: ' + (_pendingFile ? _pendingFile.name : '')),
+    thread_id: _threadId,
+    file_id:   _fileId || null,
+  };
+
+  // Clear attachment state before fetch (file_id consumed in this message)
+  var sentFileId = _fileId;
+  clearAttachment();
+
+  fetch(PROXY_URL + '/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(r => r.ok ? r.json() : r.text().then(t => { throw new Error(t); }))
+  .then(data => {
+    removeTyping();
+    _threadId = data.thread_id;
+
+    // Render agent reply
+    appendMsg(esc(data.reply), false);
+
+    // After first upload, update left panel session info
+    if (sentFileId && payload.message.startsWith('PDF uploaded:')) {
+      updateSessionPanel(payload.message.replace('PDF uploaded: ', '').trim());
+    }
+
+    // Parse reply for download links and deviation signals
+    parseAgentReply(data.reply);
+
+    setInputEnabled(true);
+
+    // Update session ID display
+    document.getElementById('sessionIdDisplay').textContent =
+      'Thread: ' + (_threadId || '—');
+  })
+  .catch(err => {
+    removeTyping();
+    showErr('Agent error: ' + err.message);
+    setInputEnabled(true);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   PARSE AGENT REPLY
+   Scans the plain-text reply for:
+   - Download URLs  → populates dl panel
+   - Deviation counts → updates score circles
+═══════════════════════════════════════════ */
+function parseAgentReply(reply) {
+  var urlMatch = reply.match(/https?:\/\/[^\s)\]"]+\.pdf[^\s)\]"]*/i);
+  if (urlMatch) {
+    var url = urlMatch[0];
+    var dlStatus = document.getElementById('dlStatus');
+    dlStatus.textContent = '';
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.className = 'dl-link';
+    a.textContent = '📄 Download Rectified Contract PDF';
+    var meta = document.createElement('div');
+    meta.style.cssText = 'font-size:10px;color:#57606a;margin-top:5px;';
+    meta.textContent = 'Link valid 1 hour · IBM COS';
+    dlStatus.appendChild(a);
+    dlStatus.appendChild(meta);
+  }
+
+  // Deviation count: "X deviations" or "X deviation"
+  var devMatch = reply.match(/(\d+)\s+deviation/i);
+  if (devMatch) {
+    var n = parseInt(devMatch[1]);
+    var badge = document.getElementById('deviationBadge');
+    badge.textContent = n + ' Deviation' + (n !== 1 ? 's' : '');
+    badge.className = 'tag ' + (n >= 2 ? 'red' : n === 1 ? 'yellow' : 'green');
+    badge.style.display = '';
+    document.getElementById('scoreC').textContent = n >= 2 ? n - 1 : n > 0 ? 1 : 0;
+    document.getElementById('scoreM').textContent = n >= 2 ? 1 : 0;
+    document.getElementById('scoreOk').textContent = '—';
+    document.getElementById('scoreC').style.color = n > 0 ? '#cf222e' : '#1a7f37';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   UPDATE LEFT SESSION PANEL
+═══════════════════════════════════════════ */
+function updateSessionPanel(filename) {
+  document.getElementById('sessionVendor').textContent = filename;
+  document.getElementById('sessionMeta').textContent =
+    'Contract uploaded · ' + new Date().toLocaleDateString();
+  document.getElementById('sessionTags').innerHTML =
+    '<span class="tag blue">Session active</span>';
+  document.getElementById('chatDocTitle').textContent = filename;
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT REPORT (placeholder)
+═══════════════════════════════════════════ */
+function exportReport() {
+  alert('Export: copy the conversation thread ID (' + (_threadId || 'none') + ') to retrieve the full audit trail from WXO.');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GOVERNANCE TAB — live WXO Evaluation API
+   ═══════════════════════════════════════════════════════════
+
+   State
+   ─────
+   _govLoaded      true once the tab has fetched data at least once
+   _govPollTimer   setInterval handle for the polling loop
+   _govActiveEval  evaluation_id currently selected in the history table
+   ═══════════════════════════════════════════════════════════════════ */
+var _govLoaded    = false;
+var _govPollTimer = null;
+var _govActiveEval = null;
+
+/* ── called by the nav() click on the Governance tab ─────────────── */
+function loadGovernance() {
+  if (_govLoaded) return;   // already fetched — don't re-fetch on every click
+  _govLoaded = true;
+  fetchEvaluations();
+}
+
+/* ── Fetch all evaluation runs ────────────────────────────────────── */
+function fetchEvaluations() {
+  document.getElementById('govLoadingRow').style.display = 'block';
+  document.getElementById('govHistoryTable').style.display = 'none';
+  document.getElementById('govEvalError').style.display = 'none';
+
+  fetch(PROXY_URL + '/governance/evaluations?limit=10')
+    .then(function(r) { return r.ok ? r.json() : r.text().then(function(t){ throw new Error(t); }); })
+    .then(function(data) {
+      document.getElementById('govLoadingRow').style.display = 'none';
+      var evals = data.evaluations || [];
+      if (!evals.length) {
+        document.getElementById('govLoadingRow').textContent = 'No evaluation runs found for this agent.';
+        document.getElementById('govLoadingRow').style.display = 'block';
+        document.getElementById('govStatusBadge').textContent = '0 runs';
+        document.getElementById('govSubtitle').textContent =
+          'IBM watsonx Orchestrate Evaluation API · No runs yet';
+        return;
+      }
+      renderHistoryTable(evals);
+      populateKpiTiles(evals[0]);   // latest run drives KPI tiles
+      updateGovSubtitle(evals[0], data.total);
+    })
+    .catch(function(err) {
+      document.getElementById('govLoadingRow').style.display = 'none';
+      var eb = document.getElementById('govEvalError');
+      eb.textContent = 'Failed to load evaluations: ' + err.message;
+      eb.style.display = 'block';
+    });
+}
+
+/* ── Render the history table rows ───────────────────────────────── */
+function renderHistoryTable(evals) {
+  var tbody = document.getElementById('govHistoryBody');
+  tbody.innerHTML = '';
+  evals.forEach(function(ev) {
+    var aq  = safeMetric(ev, 'answer_quality',         'average');
+    var tq  = safeMetric(ev, 'tool_quality',           'average');
+    var tx  = safeMetricTx(ev);
+    var st  = ev.evaluation_status || 'UNKNOWN';
+    var stClass = st === 'COMPLETED' ? 'done' : st === 'FAILED' ? 'flagged' : 'pending';
+    var shortId = (ev.id || '').substring(0, 8);
+    var dateStr = ev.executed_date ? ev.executed_date.substring(0, 16).replace('T', ' ') : '—';
+    var tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    tr.setAttribute('data-eval-id', ev.id || '');
+    tr.innerHTML =
+      '<td class="fw7" style="font-size:11px;font-family:monospace;">' + shortId + '</td>' +
+      '<td style="font-size:11px;">' + esc(dateStr) + '</td>' +
+      '<td style="font-size:11px;color:#57606a;">' + esc(ev.executed_by || '—') + '</td>' +
+      '<td style="text-align:center;">' + (ev.number_of_test_cases || 0) + '</td>' +
+      '<td>' + metricBadge(aq) + '</td>' +
+      '<td>' + metricBadge(tq) + '</td>' +
+      '<td>' + metricBadge(tx) + '</td>' +
+      '<td><span class="st-badge ' + stClass + '">' + esc(st) + '</span></td>';
+    tr.addEventListener('click', function() { selectEvalRow(ev, tr); });
+    tbody.appendChild(tr);
+  });
+  document.getElementById('govHistoryTable').style.display = 'table';
+}
+
+/* ── Row click: load test cases + render metrics bars ───────────── */
+function selectEvalRow(ev, tr) {
+  // Highlight selected row
+  document.querySelectorAll('#govHistoryBody tr').forEach(function(r) {
+    r.style.background = '';
+  });
+  tr.style.background = '#ddf4ff';
+  _govActiveEval = ev.id;
+
+  renderMetricBars(ev);
+  fetchTestCases(ev.id);
+}
+
+/* ── Populate KPI tiles from aggregate_metrices ─────────────────── */
+function populateKpiTiles(ev) {
+  var aq  = safeMetric(ev, 'answer_quality',   'average');
+  var faith = safeMetric(ev, 'answer_quality', 'faithfulness');
+  var tq  = safeMetric(ev, 'tool_quality',     'average');
+  var tx  = safeMetricTx(ev);
+
+  setKpiTile('kpiAnswerRelevancy',  'kpiAnswerRelevancyBar',  aq);
+  setKpiTile('kpiFaithfulness',     'kpiFaithfulnessBar',     faith);
+  setKpiTile('kpiToolQuality',      'kpiToolQualityBar',      tq);
+  setKpiTile('kpiTxComplete',       'kpiTxCompleteBar',       tx);
+}
+
+function setKpiTile(valId, barId, pct) {
+  var el  = document.getElementById(valId);
+  var bar = document.getElementById(barId);
+  if (pct === null) {
+    el.textContent = '—';
+    el.style.color = '#8b949e';
+    bar.style.width = '0%';
+    bar.style.background = '#8b949e';
+    return;
+  }
+  var p = Math.round(pct * 100);
+  var col = p >= 80 ? '#1a7f37' : p >= 60 ? '#bf8700' : '#cf222e';
+  el.textContent = p + '%';
+  el.style.color = col;
+  bar.style.width = p + '%';
+  bar.style.background = col;
+}
+
+/* ── Render metrics bar chart for a selected run ────────────────── */
+function renderMetricBars(ev) {
+  var label = document.getElementById('govMetricLabel');
+  var shortId = (ev.id || '').substring(0, 8);
+  label.textContent = 'Metrics — run ' + shortId;
+
+  var metrics = [
+    { label: 'Faithfulness',    val: safeMetric(ev, 'answer_quality', 'faithfulness') },
+    { label: 'Answer Relevancy',val: safeMetric(ev, 'answer_quality', 'relevance') },
+    { label: 'Correctness',     val: safeMetric(ev, 'answer_quality', 'correctness') },
+    { label: 'Tool Accuracy',   val: safeMetric(ev, 'tool_quality',   'accuracy') },
+    { label: 'Tool Relevance',  val: safeMetric(ev, 'tool_quality',   'relevance') },
+  ];
+
+  var html = '';
+  metrics.forEach(function(m) {
+    if (m.val === null) return;
+    var p   = Math.round(m.val * 100);
+    var col = p >= 80 ? '#1a7f37' : p >= 60 ? '#bf8700' : '#cf222e';
+    html +=
+      '<div class="conf-row" style="margin-bottom:2px;">' +
+        '<span class="ck">' + m.label + '</span>' +
+        '<span class="cv" style="color:' + col + ';">' + p + '%</span>' +
+      '</div>' +
+      '<div class="bar-track" style="margin-bottom:8px;">' +
+        '<div class="bar-fill" style="width:' + p + '%;background:' + col + ';"></div>' +
+      '</div>';
+  });
+
+  // Transaction completion row
+  var am = ev.aggregate_metrices;
+  if (am && am.transaction_completion) {
+    var tc = am.transaction_completion;
+    html +=
+      '<div class="conf-row" style="margin-top:4px;">' +
+        '<span class="ck">Tx Completion</span>' +
+        '<span class="cv">' + (tc.success || 0) + ' / ' + (tc.total || 0) + ' passed</span>' +
+      '</div>';
+  }
+
+  document.getElementById('govMetricBars').innerHTML = html || '<span style="color:#57606a;">No metrics available for this run.</span>';
+}
+
+/* ── Fetch per-test-case breakdown for a run ────────────────────── */
+function fetchTestCases(evalId) {
+  var container = document.getElementById('govTestCases');
+  container.innerHTML = '<div style="font-size:11px;color:#57606a;">Loading…</div>';
+
+  fetch(PROXY_URL + '/governance/evaluations/' + evalId + '/test_cases?limit=20')
+    .then(function(r) { return r.ok ? r.json() : r.text().then(function(t){ throw new Error(t); }); })
+    .then(function(data) {
+      var tcs = data.test_cases || [];
+      if (!tcs.length) {
+        container.innerHTML = '<div style="font-size:11px;color:#57606a;">No test cases for this run.</div>';
+        return;
+      }
+      var html = '';
+      tcs.forEach(function(tc) {
+        var st    = tc.status || 'UNKNOWN';
+        var tagCls = st === 'PASSED' ? 'green' : st === 'FAILED' ? 'red' : 'yellow';
+        var tagTxt = st === 'PASSED' ? 'Pass ✓' : st === 'FAILED' ? 'Fail ✗' : st;
+        var prompt = tc.prompt || '—';
+        var exDate = tc.executed_date ? tc.executed_date.substring(0, 16).replace('T', ' ') : '—';
+        html +=
+          '<div class="scenario-item">' +
+            '<div class="scenario-head">' +
+              '<span style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + esc(prompt) + '">' +
+                esc(prompt.length > 52 ? prompt.substring(0, 52) + '…' : prompt) +
+              '</span>' +
+              '<span class="tag ' + tagCls + '">' + tagTxt + '</span>' +
+            '</div>' +
+            '<div class="scenario-body">' +
+              '<div class="sc-row"><span>Executed</span><span class="fw7">' + exDate + '</span></div>' +
+            '</div>' +
+          '</div>';
+      });
+      container.innerHTML = html;
+    })
+    .catch(function(err) {
+      container.innerHTML = '<div style="font-size:11px;color:#cf222e;">Failed: ' + esc(err.message) + '</div>';
+    });
+}
+
+/* ── Run Evaluation button ───────────────────────────────────────── */
+function triggerEvaluation() {
+  var btn = document.getElementById('runEvalBtn');
+  btn.disabled = true;
+  btn.textContent = 'Fetching test cases…';
+
+  // Step 1: get all test_case IDs
+  fetch(PROXY_URL + '/governance/test_cases?limit=50')
+    .then(function(r) { return r.ok ? r.json() : r.text().then(function(t){ throw new Error(t); }); })
+    .then(function(data) {
+      var ids = (data.test_cases || []).map(function(tc) { return tc.id; }).filter(Boolean);
+      if (!ids.length) throw new Error('No test cases registered for this agent.');
+
+      btn.textContent = 'Starting run…';
+
+      // Step 2: trigger evaluation
+      return fetch(PROXY_URL + '/governance/evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ test_case_ids: ids }),
+      }).then(function(r) { return r.ok ? r.json() : r.text().then(function(t){ throw new Error(t); }); });
+    })
+    .then(function(result) {
+      var evalId = result.evaluation_id;
+      var n      = result.number_of_test_cases;
+      btn.textContent = 'Running…';
+      showGovPoll('Evaluation started — ' + n + ' test case(s) running (ID: ' + evalId.substring(0, 8) + '…)');
+      pollEvaluation(evalId, 0);
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Run Evaluation';
+      var eb = document.getElementById('govEvalError');
+      eb.textContent = 'Run failed: ' + err.message;
+      eb.style.display = 'block';
+    });
+}
+
+/* ── Poll a running evaluation every 5 s ────────────────────────── */
+function pollEvaluation(evalId, attempt) {
+  if (_govPollTimer) clearInterval(_govPollTimer);
+  _govPollTimer = setTimeout(function() {
+    fetch(PROXY_URL + '/governance/evaluations/' + evalId)
+      .then(function(r) { return r.ok ? r.json() : r.text().then(function(t){ throw new Error(t); }); })
+      .then(function(ev) {
+        var st = ev.evaluation_status || '';
+        showGovPoll('Evaluation ' + st.toLowerCase() + ' — attempt ' + (attempt + 1));
+
+        if (st === 'COMPLETED' || st === 'FAILED' || st === 'CANCELLED') {
+          // Done — reset button, hide banner, refresh full list
+          clearTimeout(_govPollTimer);
+          document.getElementById('runEvalBtn').disabled = false;
+          document.getElementById('runEvalBtn').textContent = 'Run Evaluation';
+          hideGovPoll();
+          _govLoaded = false;   // force re-fetch on next load
+          fetchEvaluations();   // refresh history table + KPI tiles
+        } else {
+          // Still running — poll again
+          pollEvaluation(evalId, attempt + 1);
+        }
+      })
+      .catch(function(err) {
+        clearTimeout(_govPollTimer);
+        document.getElementById('runEvalBtn').disabled = false;
+        document.getElementById('runEvalBtn').textContent = 'Run Evaluation';
+        showGovPoll('Poll error: ' + err.message);
+      });
+  }, 5000);
+}
+
+function showGovPoll(msg) {
+  document.getElementById('govPollBanner').style.display = 'block';
+  document.getElementById('govPollMsg').textContent = msg;
+}
+function hideGovPoll() {
+  document.getElementById('govPollBanner').style.display = 'none';
+}
+
+/* ── Update subtitle with summary of latest run ──────────────────── */
+function updateGovSubtitle(latestEval, total) {
+  var st  = latestEval.evaluation_status || '';
+  var dt  = latestEval.executed_date ? latestEval.executed_date.substring(0, 16).replace('T', ' ') : '—';
+  var n   = latestEval.number_of_test_cases || 0;
+  document.getElementById('govSubtitle').textContent =
+    'IBM watsonx Orchestrate Evaluation API · ' + total + ' total runs · Last run: ' + dt + ' UTC';
+
+  var badge = document.getElementById('govStatusBadge');
+  if (st === 'COMPLETED') {
+    badge.textContent = n + ' test cases · ' + st;
+    badge.className = 'tag green';
+  } else if (st === 'FAILED') {
+    badge.textContent = st;
+    badge.className = 'tag red';
+  } else {
+    badge.textContent = st || 'Unknown';
+    badge.className = 'tag yellow';
+  }
+}
+
+/* ── Helpers ─────────────────────────────────────────────────────── */
+function safeMetric(ev, group, key) {
+  try { return ev.aggregate_metrices[group][key].value; } catch(e) { return null; }
+}
+function safeMetricTx(ev) {
+  try {
+    var tx = ev.aggregate_metrices.transaction_completion;
+    if (tx && tx.total > 0) return tx.success / tx.total;
+    if (tx && tx.average && tx.average.value !== null) return tx.average.value;
+    return null;
+  } catch(e) { return null; }
+}
+function metricBadge(pct) {
+  if (pct === null) return '<span style="color:#8b949e;font-size:11px;">—</span>';
+  var p   = Math.round(pct * 100);
+  var col = p >= 80 ? '#1a7f37' : p >= 60 ? '#bf8700' : '#cf222e';
+  return '<span style="font-weight:700;font-size:11px;color:' + col + ';">' + p + '%</span>';
+}
+</script>
+</body>
+</html>

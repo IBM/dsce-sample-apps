@@ -1,0 +1,163 @@
+---
+# Secret — create once:
+#   oc create secret generic ui-proxy-secret \
+#     --from-literal=WXO_BASE_URL=https://<instance>.watson-orchestrate.ibm.com \
+#     --from-literal=WXO_API_KEY=<api-key> \
+#     --from-literal=WXO_AGENT_ID=<agent-uuid> \
+#     --from-literal=UI_USERNAME=reviewer \
+#     --from-literal=UI_PASSWORD=<min-12-char-password> \
+#     --from-literal=ALLOWED_ORIGIN=https://contract-reviewer-<namespace>.apps.<cluster>
+#
+# Image — build and push once:
+#   cd contract_review_v2/services/ui_proxy
+#   cp ../../ui/index.html .
+#   docker build -t icr.io/<namespace>/contract-reviewer-ui:2.0.0 .
+#   docker push icr.io/<namespace>/contract-reviewer-ui:2.0.0
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contract-reviewer-ui
+  labels:
+    app: contract-reviewer-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contract-reviewer-ui
+  template:
+    metadata:
+      labels:
+        app: contract-reviewer-ui
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: contract-reviewer-ui
+          image: icr.io/<namespace>/contract-reviewer-ui:2.0.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: UI_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: UI_USERNAME
+            - name: UI_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: UI_PASSWORD
+            - name: WXO_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: WXO_BASE_URL
+            - name: WXO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: WXO_API_KEY
+            - name: WXO_AGENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: WXO_AGENT_ID
+            - name: ALLOWED_ORIGIN
+              valueFrom:
+                secretKeyRef:
+                  name: ui-proxy-secret
+                  key: ALLOWED_ORIGIN
+            - name: ASTRA_DB_API_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_API_ENDPOINT
+            - name: ASTRA_DB_APPLICATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_APPLICATION_TOKEN
+            - name: ASTRA_DB_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: astradb-secret
+                  key: ASTRA_DB_COLLECTION
+            - name: COS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_API_KEY
+            - name: COS_SERVICE_INSTANCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_SERVICE_INSTANCE_ID
+            - name: COS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_ENDPOINT
+            - name: COS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret
+                  key: COS_BUCKET
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      volumes:
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contract-reviewer-ui
+spec:
+  selector:
+    app: contract-reviewer-ui
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: contract-reviewer-ui
+spec:
+  to:
+    kind: Service
+    name: contract-reviewer-ui
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
