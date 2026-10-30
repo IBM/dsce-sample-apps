@@ -6,19 +6,47 @@ const crypto = require('crypto');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 // Simple logger utility
+const SENSITIVE_LOG_KEYS = new Set([
+  'apikey',
+  'api_key',
+  'authorization',
+  'token',
+  'access_token',
+  'refresh_token',
+  'password',
+  'secret',
+  'client_secret'
+]);
+
+function sanitizeForLogging(value) {
+  if (value === null || value === undefined) return value;
+  if (Array.isArray(value)) return value.map(sanitizeForLogging);
+  if (typeof value !== 'object') return value;
+
+  const sanitized = {};
+  for (const [key, val] of Object.entries(value)) {
+    if (SENSITIVE_LOG_KEYS.has(String(key).toLowerCase())) {
+      sanitized[key] = '[REDACTED]';
+    } else {
+      sanitized[key] = sanitizeForLogging(val);
+    }
+  }
+  return sanitized;
+}
+
 const logger = {
   info: (message, data = {}) => {
-    console.log(`[${new Date().toISOString()}] INFO: ${message}`, data);
+    console.log('[%s] INFO: %s', new Date().toISOString(), message, sanitizeForLogging(data));
   },
   error: (message, error = {}) => {
-    console.error(`[${new Date().toISOString()}] ERROR: ${message}`, error);
+    console.error('[%s] ERROR: %s', new Date().toISOString(), message, sanitizeForLogging(error));
   },
   warn: (message, data = {}) => {
-    console.warn(`[${new Date().toISOString()}] WARN: ${message}`, data);
+    console.warn('[%s] WARN: %s', new Date().toISOString(), message, sanitizeForLogging(data));
   },
   debug: (message, data = {}) => {
     if (process.env.DEBUG === 'true') {
-      console.log(`[${new Date().toISOString()}] DEBUG: ${message}`, data);
+      console.log('[%s] DEBUG: %s', new Date().toISOString(), message, sanitizeForLogging(data));
     }
   }
 };
@@ -144,16 +172,20 @@ function parseServiceUrl(serviceUrl) {
 }
 
 function getPlatform(serviceUrl) {
-  const value = serviceUrl.toLowerCase();
+  try {
+    const hostname = new URL(serviceUrl).hostname.toLowerCase();
 
-  if (value.includes('watson-orchestrate.cloud.ibm.com')) {
-    logger.debug('Detected platform: IBM Cloud');
-    return 'ibm_cloud';
-  }
+    if (hostname === 'watson-orchestrate.cloud.ibm.com') {
+      logger.debug('Detected platform: IBM Cloud');
+      return 'ibm_cloud';
+    }
 
-  if (value.includes('watson-orchestrate.ibm.com')) {
-    logger.debug('Detected platform: AWS or SaaS');
-    return 'aws_or_saas';
+    if (hostname === 'watson-orchestrate.ibm.com') {
+      logger.debug('Detected platform: AWS or SaaS');
+      return 'aws_or_saas';
+    }
+  } catch (error) {
+    logger.warn('Invalid service URL format; defaulting platform detection to on_prem', { serviceUrl });
   }
 
   logger.debug('Detected platform: On-Premises');
