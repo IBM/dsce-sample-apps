@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const https = require('https');
 const crypto = require('crypto');
@@ -836,7 +837,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
+// Rate-limit the SPA fallback, which performs file system access (sendFile).
+const spaFallbackLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.get('*', spaFallbackLimiter, (req, res) => {
   if (req.path.startsWith('/api') || req.path === '/health') {
     return res.status(404).json({ success: false, error: 'API route not found' });
   }
