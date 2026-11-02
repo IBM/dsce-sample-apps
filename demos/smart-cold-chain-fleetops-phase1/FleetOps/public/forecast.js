@@ -1067,12 +1067,17 @@ async function loadFleetOptimizationOld() {
         `;
     } catch (error) {
         console.error('Fleet optimization error:', error);
-        document.getElementById('highRiskTrucks').innerHTML = `
+        const highRiskTrucksEl = document.getElementById('highRiskTrucks');
+        highRiskTrucksEl.innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load fleet optimization data<br>
-                ${error.message}
+                <span id="fleetOptimizationErrorDetail"></span>
             </div>
         `;
+        const errorDetailEl = document.getElementById('fleetOptimizationErrorDetail');
+        if (errorDetailEl) {
+            errorDetailEl.textContent = error && error.message ? error.message : String(error);
+        }
     }
 }
 
