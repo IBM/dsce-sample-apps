@@ -2,6 +2,22 @@
 // FORECASTING TAB FUNCTIONALITY
 // ============================================================================
 
+/**
+ * Escape a value for safe insertion into HTML content or attribute strings.
+ * Prevents XSS (CWE-79 / CodeQL js/xss) by encoding the five characters
+ * that have special meaning in HTML/attribute contexts.
+ * @param {*} value - Any value; non-strings are coerced with String().
+ * @returns {string} HTML-safe string.
+ */
+function escapeHTML(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;');
+}
+
 // Use local proxy to avoid CSP issues
 const FORECAST_API_BASE = '';
 
@@ -361,15 +377,15 @@ async function loadTemperatureForecast(truckId, frequency) {
                     color: var(--cds-text-primary);
                     font-size: 0.875rem;
                     font-weight: 600;
-                ">${risk.action}</div>
+                ">${escapeHTML(risk.action)}</div>
             </div>
             <div style="margin-bottom: var(--cds-spacing-05);">
                 <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-bottom: var(--cds-spacing-02);">STATUS</div>
                 <div style="color: var(--cds-text-primary); font-size: 0.875rem;">${
                     // Improve message clarity for immediate breaches
-                    risk.message.includes('0 minutes')
+                    escapeHTML(risk.message.includes('0 minutes')
                         ? risk.message.replace('Breach predicted in 0 minutes', 'BREACH IN PROGRESS - Immediate action required')
-                        : risk.message
+                        : risk.message)
                 }</div>
             </div>
             <div>
@@ -382,7 +398,7 @@ async function loadTemperatureForecast(truckId, frequency) {
                         border-radius: 2px;
                         color: var(--cds-text-primary);
                         font-size: 0.875rem;
-                    ">${rec}</div>
+                    ">${escapeHTML(rec)}</div>
                 `).join('')}
             </div>
         `;
@@ -391,7 +407,7 @@ async function loadTemperatureForecast(truckId, frequency) {
         document.getElementById('tempRecommendations').innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load temperature forecast<br>
-                ${error.message}
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
@@ -493,7 +509,7 @@ async function loadWeatherForecast(truckId, frequency) {
         document.getElementById('weatherRecommendations').innerHTML = `
             <div style="margin-bottom: var(--cds-spacing-05);">
                 <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-bottom: var(--cds-spacing-02);">IMPACT LEVEL</div>
-                <div style="font-size: 2rem; font-weight: 600; color: ${impactColor};">${impact.impact_level}</div>
+                <div style="font-size: 2rem; font-weight: 600; color: ${impactColor};">${escapeHTML(impact.impact_level)}</div>
             </div>
             <div style="margin-bottom: var(--cds-spacing-05);">
                 <div style="font-size: 0.75rem; color: var(--cds-text-secondary); margin-bottom: var(--cds-spacing-02);">CONDITIONS</div>
@@ -511,7 +527,7 @@ async function loadWeatherForecast(truckId, frequency) {
                         border-radius: 2px;
                         color: var(--cds-text-primary);
                         font-size: 0.875rem;
-                    ">${rec}</div>
+                    ">${escapeHTML(rec)}</div>
                 `).join('')}
             </div>
         `;
@@ -520,7 +536,7 @@ async function loadWeatherForecast(truckId, frequency) {
         document.getElementById('weatherRecommendations').innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load weather forecast<br>
-                ${error.message}
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
@@ -551,7 +567,7 @@ async function loadStationForecast() {
         // Populate station selector
         const selector = document.getElementById('stationSelector');
         selector.innerHTML = data.stations.map((station, index) =>
-            `<option value="${index}">${station.station_name} - ${station.region}</option>`
+            `<option value="${index}">${escapeHTML(station.station_name)} - ${escapeHTML(station.region)}</option>`
         ).join('');
         
         // Add change event listener
@@ -564,7 +580,7 @@ async function loadStationForecast() {
         document.getElementById('stationRecommendations').innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load station forecast<br>
-                ${error.message}
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
@@ -657,7 +673,7 @@ function updateStationChart(stationIndex) {
                         border-radius: 2px;
                         color: var(--cds-text-primary);
                         font-size: 0.875rem;
-                    ">${rec}</div>
+                    ">${escapeHTML(rec)}</div>
                 `).join('')}
             </div>
         `;
@@ -752,7 +768,7 @@ async function loadFleetOptimization() {
                 ">
                     <!-- Left: Truck ID & Risk Score -->
                     <div style="display: flex; flex-direction: column; align-items: center; min-width: 80px;">
-                        <div style="font-weight: 600; color: var(--cds-text-primary); font-size: 0.8125rem; margin-bottom: 0.25rem;">${truck.truck_id}</div>
+                        <div style="font-weight: 600; color: var(--cds-text-primary); font-size: 0.8125rem; margin-bottom: 0.25rem;">${escapeHTML(truck.truck_id)}</div>
                         <div style="font-size: 1.5rem; font-weight: 700; color: ${hasAlerts ? '#da1e28' : riskColor}; line-height: 1;">${truck.composite_risk_score}%</div>
                         <div style="font-size: 0.6875rem; color: var(--cds-text-secondary); text-transform: uppercase;">Risk</div>
                     </div>
@@ -770,7 +786,7 @@ async function loadFleetOptimization() {
                             </div>
                             <div style="display: flex; flex-direction: column;">
                                 <div style="color: var(--cds-text-secondary); font-size: 0.6875rem;">Priority</div>
-                                <div style="color: ${hasAlerts ? '#da1e28' : riskColor}; font-weight: 600;">${hasAlerts ? 'CRITICAL' : truck.priority}</div>
+                                <div style="color: ${hasAlerts ? '#da1e28' : riskColor}; font-weight: 600;">${hasAlerts ? 'CRITICAL' : escapeHTML(truck.priority)}</div>
                             </div>
                             <div style="display: flex; flex-direction: column;">
                                 <div style="color: var(--cds-text-secondary); font-size: 0.6875rem;">Cargo</div>
@@ -810,7 +826,7 @@ async function loadFleetOptimization() {
                                     
                                     return displayAlerts.map(alert => `
                                         <div style="font-size: 0.6875rem; color: #525252; margin-bottom: 0.125rem;">
-                                            • ${alert.type || alert.alertType}: ${alert.message || alert.description || 'Alert active'}
+                                            • ${escapeHTML(alert.type || alert.alertType)}: ${escapeHTML(alert.message || alert.description || 'Alert active')}
                                         </div>
                                     `).join('');
                                 })()}
@@ -821,7 +837,7 @@ async function loadFleetOptimization() {
                     <!-- Right: Action Buttons -->
                     <div style="display: flex; gap: 0.5rem; margin-left: auto;">
                         <button
-                            onclick="viewTruckForecast('${truck.truck_id}')"
+                            onclick="viewTruckForecast('${escapeHTML(truck.truck_id)}')"
                             style="
                                 background: var(--cds-layer-03);
                                 color: var(--cds-text-primary);
@@ -841,7 +857,7 @@ async function loadFleetOptimization() {
                         
                         ${showAgentButton ? `
                             <button
-                                onclick="triggerAgentAnalysis('${truck.truck_id}')"
+                                onclick="triggerAgentAnalysis('${escapeHTML(truck.truck_id)}')"
                                 style="
                                     background: #0f62fe;
                                     color: white;
@@ -929,7 +945,7 @@ async function loadFleetOptimization() {
         document.getElementById('highRiskTrucks').innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load fleet optimization data<br>
-                ${error.message}
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
@@ -994,7 +1010,7 @@ async function loadFleetOptimizationOld() {
                     ">
                         <!-- Left: Truck ID & Risk Score -->
                         <div style="display: flex; flex-direction: column; align-items: center; min-width: 80px;">
-                            <div style="font-weight: 600; color: var(--cds-text-primary); font-size: 0.8125rem; margin-bottom: 0.25rem;">${truck.truck_id}</div>
+                            <div style="font-weight: 600; color: var(--cds-text-primary); font-size: 0.8125rem; margin-bottom: 0.25rem;">${escapeHTML(truck.truck_id)}</div>
                             <div style="font-size: 1.5rem; font-weight: 700; color: ${riskColor}; line-height: 1;">${truck.composite_risk_score}%</div>
                             <div style="font-size: 0.6875rem; color: var(--cds-text-secondary); text-transform: uppercase;">Risk</div>
                         </div>
@@ -1011,7 +1027,7 @@ async function loadFleetOptimizationOld() {
                                 </div>
                             <div style="display: flex; flex-direction: column;">
                                 <div style="color: var(--cds-text-secondary); font-size: 0.6875rem;">Priority</div>
-                                <div style="color: ${riskColor}; font-weight: 600;">${truck.priority}</div>
+                                <div style="color: ${riskColor}; font-weight: 600;">${escapeHTML(truck.priority)}</div>
                             </div>
                             <div style="display: flex; flex-direction: column;">
                                 <div style="color: var(--cds-text-secondary); font-size: 0.6875rem;">Cargo</div>
@@ -1022,7 +1038,7 @@ async function loadFleetOptimizationOld() {
                         <!-- Right: Action Buttons -->
                         <div style="display: flex; gap: 0.5rem; margin-left: auto;">
                             <button
-                                onclick="viewTruckForecast('${truck.truck_id}')"
+                                onclick="viewTruckForecast('${escapeHTML(truck.truck_id)}')"
                                 style="
                                     background: var(--cds-layer-03);
                                     color: var(--cds-text-primary);
@@ -1042,7 +1058,7 @@ async function loadFleetOptimizationOld() {
                             
                             ${showAgentButton ? `
                                 <button
-                                    onclick="triggerAgentAnalysis('${truck.truck_id}')"
+                                    onclick="triggerAgentAnalysis('${escapeHTML(truck.truck_id)}')"
                                     style="
                                         background: #0f62fe;
                                         color: white;
@@ -1070,7 +1086,7 @@ async function loadFleetOptimizationOld() {
         document.getElementById('highRiskTrucks').innerHTML = `
             <div style="color: var(--cds-support-error); font-size: 0.875rem;">
                 Failed to load fleet optimization data<br>
-                ${error.message}
+                ${escapeHTML(error.message)}
             </div>
         `;
     }
