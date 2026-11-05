@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+.git
+.bob
+node_modules
+server/node_modules
+dist
+*.log
+README.md
+Dockerfile
+.dockerignore
