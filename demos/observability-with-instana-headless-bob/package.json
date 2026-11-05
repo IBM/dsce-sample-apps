@@ -1,0 +1,24 @@
+{
+  "name": "instana-bob-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "vite",
+    "server": "node server/index.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server/index.mjs"
+  },
+  "dependencies": {
+    "@carbon/react": "^1.71.0",
+    "@carbon/icons-react": "^11.54.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "vite": "^6.0.3"
+  }
+}
