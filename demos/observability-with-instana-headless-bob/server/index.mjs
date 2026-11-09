@@ -74,6 +74,7 @@ function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
 }
 
 const llmRateLimiter = createRateLimiter({ windowMs: 60_000, max: 20 });
+const staticRateLimiter = createRateLimiter({ windowMs: 60_000, max: 150 });
 
 // Mock mode: the simulated API answers first; live handlers below are never reached
 // for the routes it owns, and live-only routes are rejected by the mock router.
@@ -1520,8 +1521,8 @@ app.use('/hb', (req, res, next) => {
 // UI itself. In development Vite serves the UI and proxies /api and /hb here.
 const DIST_DIR = resolve(__dirname, '../dist');
 if (existsSync(resolve(DIST_DIR, 'index.html'))) {
-  app.use(express.static(DIST_DIR));
-  app.get(/^\/(?!api\/|hb\/).*/, (req, res) => res.sendFile(resolve(DIST_DIR, 'index.html')));
+  app.use(express.static(DIST_DIR, { maxAge: '1h' }));
+  app.get(/^\/(?!api\/|hb\/).*/, staticRateLimiter, (req, res) => res.sendFile(resolve(DIST_DIR, 'index.html')));
   console.log(`Serving UI from ${DIST_DIR}`);
 }
 

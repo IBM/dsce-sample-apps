@@ -131,10 +131,23 @@ function renderMarkdown(text) {
   return elements;
 }
 
+function sanitizeLinkUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return null;
+  try {
+    const parsed = new URL(rawUrl.trim());
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+      return parsed.href;
+    }
+  } catch {
+    // Malformed or relative URL
+  }
+  return null;
+}
+
 function InlineMarkdown({ text }) {
   // bold, italic, code, emoji pass-through
   const parts = [];
-  let remaining = text;
+  let remaining = String(text ?? '');
   let key = 0;
 
   while (remaining.length > 0) {
@@ -170,15 +183,17 @@ function InlineMarkdown({ text }) {
       );
       remaining = remaining.slice(first.index + first.match[0].length);
     } else if (first.type === 'link') {
-      // LLM output is untrusted: only render http(s) links (blocks javascript:, data:, etc.)
-      if (/^https?:\/\//i.test(first.match[2].trim())) {
+      // Validate link scheme strictly via URL API to prevent javascript: / data: / DOM XSS
+      const safeHref = sanitizeLinkUrl(first.match[2]);
+      const linkLabel = String(first.match[1] ?? '');
+      if (safeHref) {
         parts.push(
-          <a key={key++} href={first.match[2].trim()} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--cds-link-primary)' }}>
-            {first.match[1]}
+          <a key={key++} href={safeHref} target="_blank" rel="noreferrer noopener" style={{ color: 'var(--cds-link-primary)' }}>
+            {linkLabel}
           </a>
         );
       } else {
-        parts.push(<span key={key++}>{first.match[1]}</span>);
+        parts.push(<span key={key++}>{linkLabel}</span>);
       }
       remaining = remaining.slice(first.index + first.match[0].length);
     }
