@@ -29,8 +29,51 @@ const STREAM_MODE = RAW_STREAM_MODE === 'realtime' ? 'realtime' : 'mock';
 const MOCK_MODE = STREAM_MODE === 'mock';
 console.log(`STREAM_MODE=${STREAM_MODE}${MOCK_MODE ? ' (simulated data; no Instana/MCP/Bob calls)' : ' (live Instana via MCP)'}`);
 
-app.use(cors());
+// ─── Security: CORS & Rate Limiting ─────────────────────────────────────────
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+  : [
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'http://localhost:3001',
+      'http://127.0.0.1:3001',
+      'http://localhost:8080',
+      'http://127.0.0.1:8080',
+    ];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like same-origin mobile apps, curl, or server-to-server)
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('CORS request blocked by security policy'));
+    },
+    credentials: true,
+  })
+);
+
 app.use(express.json({ limit: '10mb' }));
+
+// Lightweight in-memory rate limiter for expensive LLM / telemetry sinks
+function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
+  const requests = new Map();
+  return (req, res, next) => {
+    const ip = req.ip || req.socket.remoteAddress || 'unknown';
+    const now = Date.now();
+    const windowStart = now - windowMs;
+    const timestamps = (requests.get(ip) || []).filter((t) => t > windowStart);
+    if (timestamps.length >= max) {
+      return res.status(429).json({ error: 'Too many requests. Please slow down.' });
+    }
+    timestamps.push(now);
+    requests.set(ip, timestamps);
+    next();
+  };
+}
+
+const llmRateLimiter = createRateLimiter({ windowMs: 60_000, max: 20 });
 
 // Mock mode: the simulated API answers first; live handlers below are never reached
 // for the routes it owns, and live-only routes are rejected by the mock router.
@@ -310,21 +353,25 @@ Primary monitored application: ${RETAIL_APP_NAME}`;
 // ─── Stage 2: Headless Bob Autonomous SRE RCA & Remediation Generator ──────
 async function runHeadlessBobRCA(prompt, instanaReport, issueSummary) {
   // If a HeadlessBob instance is actively registered, forward to HeadlessBob thread
-  if (hbobUrl) {
+  const hbBase = sanitizeHBobBaseUrl(hbobUrl);
+  if (hbBase) {
     try {
-      const hbBase = hbobUrl.replace(/\/$/, '');
       const hbHdrs = { 'Content-Type': 'application/json',
                        ...(hbobToken ? { Authorization: `Bearer ${hbobToken}` } : {}) };
 
-      if (!hbobThread) {
-        const tr = await fetch(`${hbBase}/api/v1/threads`, {
+      if (!hbobThread || !isValidId(hbobThread)) {
+        const threadEndpoint = new URL('/api/v1/threads', hbBase).href;
+        const tr = await fetch(threadEndpoint, {
           method: 'POST', headers: hbHdrs,
           body: JSON.stringify({ title: `RCA — ${RETAIL_APP_NAME}` }),
         });
-        if (tr.ok) hbobThread = (await tr.json()).id;
+        if (tr.ok) {
+          const threadData = await tr.json();
+          if (isValidId(threadData?.id)) hbobThread = threadData.id;
+        }
       }
 
-      if (hbobThread) {
+      if (hbobThread && isValidId(hbobThread)) {
         const rcaPrompt = `A critical issue was identified during health assessment: "${issueSummary}".
 User query: "${prompt}"
 Telemetry from Instana:
@@ -336,24 +383,28 @@ Please perform an in-depth SRE Root Cause Analysis (RCA) and generate a comprehe
 - 📉 **Impact Assessment** (blast radius, affected transactions)
 - 🛠️ **Remediation & Step-by-Step Fixes** (immediate mitigation, code/config fixes, preventive measures)`;
 
-        const mr = await fetch(`${hbBase}/api/v1/threads/${hbobThread}/messages`, {
+        const msgEndpoint = new URL(`/api/v1/threads/${encodeURIComponent(hbobThread)}/messages`, hbBase).href;
+        const mr = await fetch(msgEndpoint, {
           method: 'POST', headers: hbHdrs,
           body: JSON.stringify({ content: rcaPrompt }),
         });
 
         if (mr.ok) {
           const { run_id } = await mr.json();
-          const deadline = Date.now() + 120_000;
-          while (Date.now() < deadline) {
-            await new Promise((r) => setTimeout(r, 2000));
-            const pr = await fetch(`${hbBase}/api/v1/runs/${run_id}`, { headers: hbHdrs });
-            if (!pr.ok) break;
-            const run = await pr.json();
-            if (['completed', 'failed', 'cancelled'].includes(run.status)) {
-              if (run.status === 'completed' && run.output) {
-                return { rca: run.output, source: 'headlessbob' };
+          if (isValidId(run_id)) {
+            const deadline = Date.now() + 120_000;
+            while (Date.now() < deadline) {
+              await new Promise((r) => setTimeout(r, 2000));
+              const runEndpoint = new URL(`/api/v1/runs/${encodeURIComponent(run_id)}`, hbBase).href;
+              const pr = await fetch(runEndpoint, { headers: hbHdrs });
+              if (!pr.ok) break;
+              const run = await pr.json();
+              if (['completed', 'failed', 'cancelled'].includes(run.status)) {
+                if (run.status === 'completed' && run.output) {
+                  return { rca: run.output, source: 'headlessbob' };
+                }
+                break;
               }
-              break;
             }
           }
         }
@@ -468,61 +519,71 @@ async function runMonitorCheck() {
   broadcast({ type: 'check_start', ts: Date.now() });
 
   // ── PATH A: Headless Bob owns the check ──────────────────────────────────
-  if (hbobUrl) {
+  const hbBase = sanitizeHBobBaseUrl(hbobUrl);
+  if (hbBase) {
     try {
-      const hbBase = hbobUrl.replace(/\/$/, '');
       const hbHdrs = { 'Content-Type': 'application/json',
                        ...(hbobToken ? { Authorization: `Bearer ${hbobToken}` } : {}) };
 
       // Lazily create a dedicated monitor thread
-      if (!hbobThread) {
-        const tr = await fetch(`${hbBase}/api/v1/threads`, {
+      if (!hbobThread || !isValidId(hbobThread)) {
+        const threadEndpoint = new URL('/api/v1/threads', hbBase).href;
+        const tr = await fetch(threadEndpoint, {
           method: 'POST', headers: hbHdrs,
           body: JSON.stringify({ title: `${RETAIL_APP_NAME} — Auto Monitor` }),
         });
         if (!tr.ok) throw new Error(`thread create failed: ${tr.status}`);
-        hbobThread = (await tr.json()).id;
-        console.log('[Monitor] Headless Bob monitor thread:', hbobThread);
+        const threadData = await tr.json();
+        if (isValidId(threadData?.id)) {
+          hbobThread = threadData.id;
+          console.log('[Monitor] Headless Bob monitor thread:', hbobThread);
+        }
       }
 
-      // Send the standing health-check prompt — Bob calls Instana tools himself
-      const mr = await fetch(`${hbBase}/api/v1/threads/${hbobThread}/messages`, {
-        method: 'POST', headers: hbHdrs,
-        body: JSON.stringify({ content: BOB_MONITOR_PROMPT(RETAIL_APP_NAME) }),
-      });
-      if (!mr.ok) throw new Error(`message POST failed: ${mr.status}`);
-      const { run_id } = await mr.json();
-
-      broadcast({ type: 'bob_running', ts: Date.now(), run_id });
-
-      // Poll until Bob completes (max 3 min)
-      const deadline = Date.now() + 180_000;
-      while (Date.now() < deadline) {
-        await new Promise(r => setTimeout(r, 3000));
-        const pr = await fetch(`${hbBase}/api/v1/runs/${run_id}`, { headers: hbHdrs });
-        if (!pr.ok) break;
-        const run = await pr.json();
-        if (!['completed', 'failed', 'cancelled'].includes(run.status)) continue;
-
-        if (run.status !== 'completed' || !run.output) break;
-
-        // Parse Bob's sentinel to extract structured fields
-        const sentinel = parseBobSentinel(run.output);
-        const severity  = sentinel?.severity  ?? 'ok';
-        const errorRate  = sentinel?.errorRate  ?? null;
-        const p90Latency = sentinel?.p90Latency ?? null;
-
-        broadcast({
-          type:     severity === 'ok' ? 'status_tick' : 'alert',
-          ts:       Date.now(),
-          severity,
-          errorRate,
-          p90Latency,
-          hasOpenIncidents: sentinel?.hasIncidents ?? false,
-          message:  run.output,
-          source:   'headlessbob',
+      if (hbobThread && isValidId(hbobThread)) {
+        // Send the standing health-check prompt — Bob calls Instana tools himself
+        const msgEndpoint = new URL(`/api/v1/threads/${encodeURIComponent(hbobThread)}/messages`, hbBase).href;
+        const mr = await fetch(msgEndpoint, {
+          method: 'POST', headers: hbHdrs,
+          body: JSON.stringify({ content: BOB_MONITOR_PROMPT(RETAIL_APP_NAME) }),
         });
-        return; // done for this cycle
+        if (!mr.ok) throw new Error(`message POST failed: ${mr.status}`);
+        const { run_id } = await mr.json();
+
+        if (isValidId(run_id)) {
+          broadcast({ type: 'bob_running', ts: Date.now(), run_id });
+
+          // Poll until Bob completes (max 3 min)
+          const deadline = Date.now() + 180_000;
+          while (Date.now() < deadline) {
+            await new Promise(r => setTimeout(r, 3000));
+            const runEndpoint = new URL(`/api/v1/runs/${encodeURIComponent(run_id)}`, hbBase).href;
+            const pr = await fetch(runEndpoint, { headers: hbHdrs });
+            if (!pr.ok) break;
+            const run = await pr.json();
+            if (!['completed', 'failed', 'cancelled'].includes(run.status)) continue;
+
+            if (run.status !== 'completed' || !run.output) break;
+
+            // Parse Bob's sentinel to extract structured fields
+            const sentinel = parseBobSentinel(run.output);
+            const severity  = sentinel?.severity  ?? 'ok';
+            const errorRate  = sentinel?.errorRate  ?? null;
+            const p90Latency = sentinel?.p90Latency ?? null;
+
+            broadcast({
+              type:     severity === 'ok' ? 'status_tick' : 'alert',
+              ts:       Date.now(),
+              severity,
+              errorRate,
+              p90Latency,
+              hasOpenIncidents: sentinel?.hasIncidents ?? false,
+              message:  run.output,
+              source:   'headlessbob',
+            });
+            return; // done for this cycle
+          }
+        }
       }
     } catch (hbErr) {
       console.error('[Monitor] Headless Bob check failed:', hbErr.message, '— falling back');
@@ -633,10 +694,42 @@ app.get('/api/monitor/stream', (req, res) => {
   req.on('close', () => { clearInterval(ping); sseClients.delete(res); });
 });
 
+function sanitizeHBobBaseUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return null;
+  try {
+    const parsed = new URL(rawUrl);
+    if (!['http:', 'https:'].includes(parsed.protocol)) return null;
+
+    const hostname = parsed.hostname.toLowerCase();
+    // Disallow cloud metadata endpoints & link-local addresses
+    if (hostname === '169.254.169.254' || hostname.startsWith('169.254.')) return null;
+    
+    // Allow localhost/loopback or pre-configured trusted hosts
+    const configuredHosts = process.env.ALLOWED_HBOB_HOSTS
+      ? process.env.ALLOWED_HBOB_HOSTS.split(',').map((h) => h.trim())
+      : [];
+    const allowedHosts = new Set(['127.0.0.1', 'localhost', '::1', '0.0.0.0', ...configuredHosts]);
+    if (!allowedHosts.has(hostname)) return null;
+
+    const port = parsed.port ? `:${parsed.port}` : '';
+    return `${parsed.protocol}//${hostname}${port}`;
+  } catch {
+    return null;
+  }
+}
+
+function isValidId(id) {
+  return typeof id === 'string' && /^[a-zA-Z0-9_\-]+$/.test(id);
+}
+
 app.post('/api/monitor/register', (req, res) => {
   const { url, token } = req.body ?? {};
   if (!url) return res.status(400).json({ error: 'url is required' });
-  hbobUrl   = url.replace(/\/$/, '');
+  const safeUrl = sanitizeHBobBaseUrl(url);
+  if (!safeUrl) {
+    return res.status(400).json({ error: 'Invalid registration URL: target host is not authorized or uses an invalid protocol.' });
+  }
+  hbobUrl   = safeUrl;
   hbobToken = token || null;
   hbobThread = null;
   console.log('[Monitor] Headless Bob registered for auto-monitor:', hbobUrl);
@@ -1362,7 +1455,7 @@ app.get('/api/tools', (req, res) => {
   res.json({ tools: mcpTools });
 });
 
-app.post('/api/prompt', async (req, res) => {
+app.post('/api/prompt', llmRateLimiter, async (req, res) => {
   const { prompt, conversationHistory = [] } = req.body;
   if (!prompt?.trim()) {
     return res.status(400).json({ error: 'prompt is required' });
@@ -1378,7 +1471,7 @@ app.post('/api/prompt', async (req, res) => {
 });
 
 // ─── Trigger Headless Bob RCA Diagnostics ─────────────────────────────────
-app.post('/api/headlessbob/diagnose', async (req, res) => {
+app.post('/api/headlessbob/diagnose', llmRateLimiter, async (req, res) => {
   const { prompt, instanaAnswer, issueSummary } = req.body;
   try {
     const result = await runHeadlessBobRCA(prompt || '', instanaAnswer || '', issueSummary || '');
