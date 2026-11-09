@@ -13,11 +13,12 @@ from dataclasses import dataclass
 from typing import Optional
 from urllib.parse import urljoin, urlparse
 
-import requests
 from bs4 import BeautifulSoup
 
 from ingestion_pipeline.src.services.cos_service import DocumentMetadata
 from ingestion_pipeline.src.services.opensearch_service import OpenSearchService, DocumentChunk
+from shared.chunking import CHUNK_OVERLAP, CHUNK_SIZE, split_text
+from shared.net_guard import UnsafeURLError, crawl_allowed_hosts, safe_get
 from shared.watsonx import client as wx
 from datetime import datetime
 from shared.logging import get_logger
@@ -27,6 +28,11 @@ logger = get_logger(__name__)
 _DEFAULT_HEADERS = {
     "User-Agent": "MaximoKnowledgeHub/1.0 (+https://github.com/ibm/maximo-knowledge-hub)"
 }
+
+# Hard ceilings, independent of what the caller asks for.
+MAX_DEPTH_LIMIT = 2
+MAX_PAGES_LIMIT = 50
+MAX_CHUNKS_PER_PAGE = 500
 
 
 @dataclass
@@ -48,6 +54,17 @@ class _WebOpenSearchService(OpenSearchService):
         self._client = build_client()
         self._index = os.environ.get("SPIDERBOT_INDEX", "maximo_web_knowledge")
 
+    @staticmethod
+    def _to_doc(chunk: DocumentChunk) -> dict:
+        """Write the fields the web index is mapped with and the MCP reader queries
+        (url, title, siteLabel, crawledAt), alongside the generic chunk fields."""
+        doc = OpenSearchService._to_doc(chunk)
+        doc["url"] = chunk.file_name
+        doc["title"] = chunk.metadata.get("title") or chunk.file_name
+        doc["siteLabel"] = urlparse(chunk.file_name).hostname or ""
+        doc["crawledAt"] = chunk.timestamp
+        return doc
+
 
 class WebIngestionService:
 
@@ -68,31 +85,45 @@ class WebIngestionService:
     ) -> WebCrawlResult:
         from ingestion_pipeline.src.services.progress_service import progress_service, ProgressEvent
 
+        max_depth = max(0, min(max_depth, MAX_DEPTH_LIMIT))
+        max_pages = max(1, min(max_pages, MAX_PAGES_LIMIT))
+        allowed_hosts = crawl_allowed_hosts()
+
         visited: set[str] = set()
         queue: list[tuple[str, int]] = [(seed_url, 0)]
         total_chunks = 0
         pages_crawled = 0
+        attempts = 0
 
-        while queue and pages_crawled < max_pages:
+        # Cap fetch attempts (not just indexed pages) so unreachable or empty
+        # links cannot keep the worker busy indefinitely.
+        while queue and pages_crawled < max_pages and attempts < max_pages * 3:
             url, depth = queue.pop(0)
             if url in visited:
                 continue
             visited.add(url)
+            attempts += 1
 
             try:
-                resp = requests.get(url, headers=_DEFAULT_HEADERS, timeout=20)
-                resp.raise_for_status()
+                resp = safe_get(url, headers=_DEFAULT_HEADERS, allowed_hosts=allowed_hosts)
             except Exception as exc:
-                logger.warning("Skipping URL", extra={"url": url, "error": str(exc)})
+                # Details stay in the server log. The caller sees one generic
+                # outcome, so the response is no network-probing oracle.
+                logger.warning("Skipping URL", extra={
+                    "url": url,
+                    "error": str(exc),
+                    "blocked": isinstance(exc, UnsafeURLError),
+                })
                 if job_id:
                     progress_service.push(job_id, ProgressEvent(
                         type="skip",
                         message=f"  ↷ Skipped {url}",
-                        detail=str(exc),
+                        detail="URL could not be fetched",
                     ))
                 continue
 
             soup = BeautifulSoup(resp.text, "html.parser")
+            title = (soup.title.get_text(strip=True) if soup.title else "")[:300]
             text = self._extract_text(soup, selector)
             if text.strip():
                 if job_id:
@@ -113,7 +144,7 @@ class WebIngestionService:
                     category=category,
                     tags=tags or [],
                 )
-                result = self._process_web_content(text, url, meta)
+                result = self._process_web_content(text, url, meta, title)
                 total_chunks += result.total_chunks
                 pages_crawled += 1
                 if job_id:
@@ -124,7 +155,7 @@ class WebIngestionService:
                         chunks=total_chunks,
                     ))
 
-            # Follow links at this depth level
+            # Follow links at this depth level (same host as the seed only)
             if depth < max_depth:
                 base = urlparse(seed_url)
                 for a in soup.find_all("a", href=True):
@@ -143,13 +174,13 @@ class WebIngestionService:
             status="success",
         )
 
-    def _process_web_content(self, text: str, url: str, meta: DocumentMetadata) -> "ProcessingResult":
+    def _process_web_content(
+        self, text: str, url: str, meta: DocumentMetadata, title: str = ""
+    ) -> "ProcessingResult":
         """Chunk + embed + index web text directly into the web-knowledge index."""
         from dataclasses import dataclass as _dc
         from datetime import datetime, timezone
 
-        _CHUNK_SIZE = 400
-        _CHUNK_OVERLAP = 50
         _BATCH_SIZE = 10
 
         @_dc
@@ -158,40 +189,31 @@ class WebIngestionService:
             status: str
 
         doc_id = meta.document_id
-        chunk_index = 0
-        start = 0
         batch: list[DocumentChunk] = []
         total_indexed = 0
 
-        while start < len(text):
-            end = min(start + _CHUNK_SIZE, len(text))
-            chunk_text = text[start:end]
-            if end < len(text):
-                bp = max(chunk_text.rfind("."), chunk_text.rfind("\n"))
-                if bp > _CHUNK_SIZE * 0.7:
-                    end = start + bp + 1
-                    chunk_text = text[start:end]
-            content = chunk_text.strip()
-            if content:
-                batch.append(DocumentChunk(
-                    id=f"{doc_id}::chunk-{chunk_index}",
-                    document_id=doc_id,
-                    file_name=url,
-                    chunk_index=chunk_index,
-                    content=content,
-                    metadata={
-                        "assetnum": meta.asset_num,
-                        "category": meta.category,
-                        "version":  meta.version,
-                        "tags":     meta.tags or [],
-                    },
-                    timestamp=datetime.now(timezone.utc).isoformat(),
-                ))
-                chunk_index += 1
+        for chunk_index, content in enumerate(split_text(text, CHUNK_SIZE, CHUNK_OVERLAP)):
+            if chunk_index >= MAX_CHUNKS_PER_PAGE:
+                logger.warning("Chunk cap reached; truncating page", extra={"url": url})
+                break
+            batch.append(DocumentChunk(
+                id=f"{doc_id}::chunk-{chunk_index}",
+                document_id=doc_id,
+                file_name=url,
+                chunk_index=chunk_index,
+                content=content,
+                metadata={
+                    "assetnum": meta.asset_num,
+                    "category": meta.category,
+                    "version":  meta.version,
+                    "tags":     meta.tags or [],
+                    "title":    title,
+                },
+                timestamp=datetime.now(timezone.utc).isoformat(),
+            ))
             if len(batch) >= _BATCH_SIZE:
                 total_indexed += self._flush(batch)
                 batch = []
-            start = end - _CHUNK_OVERLAP
 
         if batch:
             total_indexed += self._flush(batch)

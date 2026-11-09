@@ -10,7 +10,7 @@
 # Matches .env:
 #   OPENSEARCH_HOST=https://localhost:9200
 #   OPENSEARCH_USERNAME=admin
-#   OPENSEARCH_PASSWORD=<password>
+#   OPENSEARCH_PASSWORD=StrongPass@123!
 #   OPENSEARCH_VERIFY_SSL=false
 #
 # USAGE (from repo root):
@@ -32,7 +32,7 @@ VOLUME="maximo-opensearch-data"
 IMAGE="docker.io/opensearchproject/opensearch:2.11.0"
 DASH_IMAGE="docker.io/opensearchproject/opensearch-dashboards:2.11.0"
 OS_USER="admin"
-OS_PASS="<password>"
+OS_PASS="admin"
 
 # Ports
 HTTP_PORT=9200

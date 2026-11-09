@@ -2,11 +2,18 @@
  * Markdown → HTML renderer (zero external deps).
  * Handles: # headings, **bold**, *italic*, `code`, bullet/numbered lists,
  *          pipe tables, [text](url), horizontal rules.
+ *
+ * The input is untrusted: it is LLM output derived from crawled web pages and
+ * uploaded documents. All HTML in it is escaped before any markdown is applied,
+ * and only http(s) links are produced.
  */
+const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
+
 export function renderMarkdown(text) {
   if (!text) return '';
 
-  const lines = text.split('\n');
+  const lines = escapeHtml(String(text)).split('\n');
   const html  = [];
   let inUl    = false;
   let inOl    = false;

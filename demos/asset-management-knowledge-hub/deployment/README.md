@@ -1,5 +1,11 @@
 # Asset Management Knowledge Hub — Container Deployment
 
+> **Demonstration application — not security-hardened for production.**
+> These scripts deploy a demo. Before using them for anything real, read
+> [Security notes and known limits](../README.md#security-notes-and-known-limits): shared
+> secrets instead of per-user identity, an in-memory rate limiter, and no network
+> isolation or egress filtering configured for you.
+
 This folder contains everything needed to build, test locally with Podman, and deploy the
 Asset Management Knowledge Hub to **IBM Cloud Code Engine**.
 
@@ -90,6 +96,11 @@ Initialises OpenSearch indexes on startup.
 | `COS_ENDPOINT` | COS endpoint URL |
 | `COS_BUCKET_INSTANCE_CRN` | COS service instance CRN |
 | `CORS_ORIGIN` | Allowed CORS origin (frontend URL) |
+| `API_KEY` | Shared secret; requests without a matching `X-API-Key` get `401` (same value on all three services) |
+| `ADMIN_API_KEY` | Required. Second secret (`X-Admin-Key`) for routes that start ingestion or delete documents; `403` without it. Same value as the UI service |
+| `CRAWL_ALLOWED_HOSTS` | *Optional.* Approved web-crawl domains. Blank = `*.ibm.com`, `*.maximosecrets.com` (and their apex domains) |
+| `INGEST_RATE_LIMIT_MAX` / `INGEST_RATE_LIMIT_WINDOW` | *Optional.* Submissions per client per window (default 10 per 60 s) |
+| `S3_ALLOWED_ENDPOINTS` | *Optional.* Extra S3 endpoints callers may select |
 
 ---
 
@@ -107,6 +118,8 @@ Runs `python -m mcp_server` — the MCP / Knowledge Hub API on port 6868.
 | `WATSONX_API_KEY` | IBM watsonx AI API key |
 | `WATSONX_PROJECT_ID` | watsonx project ID |
 | `CORS_ORIGIN` | Allowed CORS origin (frontend URL) |
+| `API_KEY` | Shared secret; requests without a matching `X-API-Key` get `401` (same value on all three services) |
+| `MAXIMO_ALLOWED_HOSTS` | *Optional.* Hosts that may be registered as Maximo instances |
 
 ---
 
@@ -122,6 +135,11 @@ Backend URLs are injected at container startup — not baked into the image.
 | `BACKEND_API_URL` | `http://host.containers.internal:6868` | MCP Server URL |
 | `INGEST_API_URL` | `http://host.containers.internal:8080` | Ingestion Pipeline URL |
 | `OPENSEARCH_URL` | `https://host.containers.internal:9200` | OpenSearch URL |
+| `API_KEY` | *(none — required)* | Shared secret nginx adds as `X-API-Key` to `/api` and `/ingest-api` calls |
+| `ADMIN_API_KEY` | *(none — required to ingest)* | Sent to the ingestion service as `X-Admin-Key`, only for `UI_USERNAME` |
+| `UI_USERNAME` | *(none — required)* | Administrator login for the UI (HTTP basic auth enforced by nginx) |
+| `UI_PASSWORD` | *(none — required)* | Password for `UI_USERNAME`. The container refuses to start without both |
+| `UI_VIEWER_USERNAME` / `UI_VIEWER_PASSWORD` | *(optional)* | Read-only login; cannot ingest or delete. Set both or neither |
 
 ---
 

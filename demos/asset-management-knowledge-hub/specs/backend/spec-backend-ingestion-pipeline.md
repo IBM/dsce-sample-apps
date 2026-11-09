@@ -98,7 +98,7 @@ GET /health
 
 > **Skill:** `opensearch-vector-search`
 
-The [`DocumentProcessorService`](../backend/ingestion_pipeline/src/services/document_processor_service.py) implements the full pipeline:
+The [`DocumentProcessorService`](../../backend/ingestion_pipeline/src/services/document_processor_service.py) implements the full pipeline:
 
 ### 4.1 Processing Steps
 
@@ -200,7 +200,7 @@ documents/{file_name}                  — for general documents
 
 ## 6. Document Registry
 
-The [`document_registry_service`](../backend/ingestion_pipeline/src/services/document_registry_service.py) tracks which documents have been ingested and their content hashes to prevent re-indexing unchanged files.
+The [`document_registry_service`](../../backend/ingestion_pipeline/src/services/document_registry_service.py) tracks which documents have been ingested and their content hashes to prevent re-indexing unchanged files.
 
 ---
 
