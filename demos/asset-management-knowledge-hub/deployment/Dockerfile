@@ -11,7 +11,6 @@
 # Build args (all optional — override with --build-arg on the CLI):
 #   VITE_MCP_SERVER_URL   default: ""  (relative /api path used in prod)
 #   VITE_INGESTION_URL    default: ""  (relative /ingest-api path used in prod)
-#   VITE_OPENSEARCH_URL   default: ""  (relative /opensearch-api path)
 # =============================================================================
 
 # ── Stage 1: build ────────────────────────────────────────────────────────────
@@ -21,11 +20,8 @@ FROM registry.access.redhat.com/ubi9/nodejs-20-minimal AS builder
 # Leave empty to use relative proxy paths (recommended — nginx handles routing).
 ARG VITE_MCP_SERVER_URL=""
 ARG VITE_INGESTION_URL=""
-ARG VITE_OPENSEARCH_URL=""
-
 ENV VITE_MCP_SERVER_URL=$VITE_MCP_SERVER_URL \
     VITE_INGESTION_URL=$VITE_INGESTION_URL \
-    VITE_OPENSEARCH_URL=$VITE_OPENSEARCH_URL \
     NPM_CONFIG_UPDATE_NOTIFIER=false \
     NPM_CONFIG_FUND=false
 
@@ -64,7 +60,9 @@ COPY deployment/entrypoint.sh /entrypoint.sh
 # Fix permissions on writable paths.
 # pid file lives at /run/nginx.pid on this image (not /var/run).
 # gettext (envsubst) is pre-installed on ubi9/nginx-122 — no install needed.
-RUN chmod -R g+rwX /var/log/nginx /etc/nginx \
+# sed strips CRs so a Windows (CRLF) checkout cannot break the #! line.
+RUN sed -i 's/\r$//' /entrypoint.sh /etc/nginx/nginx.conf \
+    && chmod -R g+rwX /var/log/nginx /etc/nginx \
     && touch /run/nginx.pid \
     && chown 1001:0 /run/nginx.pid \
     && chmod +x /entrypoint.sh

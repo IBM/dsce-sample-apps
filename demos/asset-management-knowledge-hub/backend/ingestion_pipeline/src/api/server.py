@@ -14,7 +14,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -28,7 +28,8 @@ class PipelineRunRequest(BaseModel):
     force: bool = False
 
 
-from ingestion_pipeline.src.api.routes.ingestion_routes import router as ingestion_router
+from shared.auth import ApiKeyMiddleware
+from ingestion_pipeline.src.api.routes.ingestion_routes import audit, router as ingestion_router, throttle
 from ingestion_pipeline.src.config import app as app_cfg, cos as cos_cfg
 from ingestion_pipeline.src.services.cos_service import cos_service
 from ingestion_pipeline.src.services.document_processor_service import document_processor_service
@@ -42,6 +43,14 @@ _cos_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="cos-ingest
 
 logger = get_logger(__name__)
 
+_ADMIN_PREFIXES = ("/api/ingestion/", "/api/pipelines/", "/api/documents")
+_WRITE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
+
+
+def _is_admin_route(method: str, path: str) -> bool:
+    """Routes that start ingestion work or change the index: administrator only."""
+    return method in _WRITE_METHODS and path.startswith(_ADMIN_PREFIXES)
+
 
 def create_app() -> FastAPI:
     """Build the FastAPI application."""
@@ -51,13 +60,15 @@ def create_app() -> FastAPI:
         description="Document ingestion from IBM COS into OpenSearch.",
     )
 
+    # Authentication first, CORS last: Starlette runs the last-added middleware
+    # outermost, so CORS answers pre-flights and decorates 401 responses.
+    _app.add_middleware(ApiKeyMiddleware, admin_check=_is_admin_route)
     _app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=False,   # must be False when allow_origins=["*"]
+        allow_origins=[o.strip() for o in app_cfg.cors_origin.split(",") if o.strip()],
+        allow_credentials=False,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        allow_headers=["*"],
-        expose_headers=["*"],
+        allow_headers=["Content-Type", "Authorization", "X-API-Key"],
         max_age=600,
     )
 
@@ -199,17 +210,20 @@ def create_app() -> FastAPI:
         ))
 
     @_app.post("/api/pipelines/run", tags=["pipelines"])
-    async def run_pipeline(body: PipelineRunRequest):
+    async def run_pipeline(body: PipelineRunRequest, request: Request):
         """Kick off COS pipeline in background — returns job_id immediately."""
+        throttle(request)
         label = f"COS {body.prefix or 'documents/'}"
         job_id = progress_service.create_job("cos", label=label)
+        audit(request, "cos", job_id, prefix=body.prefix, force=body.force)
         loop = asyncio.get_event_loop()
         loop.run_in_executor(_cos_executor, _run_cos_pipeline, job_id, body.prefix, body.force)
         return {"job_id": job_id, "status": "running"}
 
     @_app.delete("/api/documents/{document_id:path}", tags=["documents"])
-    async def delete_document(document_id: str):
+    async def delete_document(document_id: str, request: Request):
         """Remove a document's chunks from OpenSearch."""
+        audit(request, "delete", None, document_id=document_id[:200])
         opensearch_service.delete_document_chunks(document_id)
         return {"deleted": document_id}
 

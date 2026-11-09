@@ -71,8 +71,8 @@ function Citations({ section }) {
         <ul className="citations-list">
           {section.citations.map((c, i) => (
             <li key={i} className="citation-item">
-              {c.url
-                ? <a href={c.url} target="_blank" rel="noreferrer" className="citation-link">{c.title || c.url}</a>
+              {/^https?:\/\//i.test(c.url || '')
+                ? <a href={c.url} target="_blank" rel="noopener noreferrer" className="citation-link">{c.title || c.url}</a>
                 : <span className="citation-filename">{c.title || c.documentId || `Source ${i + 1}`}</span>
               }
               {c.score != null && <span className="citation-meta">score: {c.score.toFixed(2)}</span>}

@@ -20,18 +20,21 @@ failures with Pydantic >= 2.12 / FastAPI >= 0.115.
 
 import asyncio
 import json
+import os
 from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from mcp_server.src.handlers.tool_handlers import TOOL_HANDLERS
 from mcp_server.src.config import server as srv_cfg
 from mcp_server.src.config import opensearch as os_cfg
 from mcp_server.src.config import kafka as kafka_cfg
-from shared.config import cos as cos_cfg
+from shared.auth import ApiKeyMiddleware
+from shared.config import app as app_cfg, cos as cos_cfg
+from shared.net_guard import UnsafeURLError, check_url, parse_host_list
 from mcp_server.src.services.instance_registry import instance_registry
 from mcp_server.src.services import history_store
 from mcp_server.src.services.opensearch_service import opensearch_service
@@ -44,12 +47,33 @@ logger = get_logger(__name__)
 
 # ── Request models — module-level so Pydantic v2 can resolve them ─────────────
 
+def validate_instance_url(url: str) -> str:
+    """Reject Maximo URLs that would turn the server into an SSRF proxy.
+
+    Maximo is commonly on a private network, so private addresses are allowed.
+    Link-local (cloud metadata), unspecified and multicast targets never are,
+    nor are non-http(s) schemes or embedded credentials. Set
+    ``MAXIMO_ALLOWED_HOSTS`` (comma-separated, ``*.`` wildcards ok) to restrict
+    registration to known Maximo hosts.
+    """
+    allowed = parse_host_list(os.environ.get("MAXIMO_ALLOWED_HOSTS", ""))
+    try:
+        return check_url(url, allow_private=True, allowed_hosts=allowed).url
+    except UnsafeURLError as exc:
+        raise ValueError(f"Invalid Maximo URL: {exc}") from exc
+
+
 class AddInstanceRequest(BaseModel):
-    name: str = Field(..., description="Human-readable instance label")
-    url: str = Field(..., description="Maximo REST API base URL")
-    api_key: str = Field("", description="API key (preferred auth method)")
-    username: str = Field("", description="Basic-auth username (fallback)")
-    password: str = Field("", description="Basic-auth password (fallback)")
+    name: str = Field(..., max_length=100, description="Human-readable instance label")
+    url: str = Field(..., max_length=2048, description="Maximo REST API base URL")
+    api_key: str = Field("", max_length=512, description="API key (preferred auth method)")
+    username: str = Field("", max_length=256, description="Basic-auth username (fallback)")
+    password: str = Field("", max_length=512, description="Basic-auth password (fallback)")
+
+    @field_validator("url")
+    @classmethod
+    def _url_is_safe(cls, v: str) -> str:
+        return validate_instance_url(v)
 
 
 class QueryRequest(BaseModel):
@@ -100,14 +124,15 @@ def create_app() -> FastAPI:
         description="3-source RAG API for Maximo assets, documents, and web knowledge.",
     )
 
-    # CORS — allow all origins (covers Vite dev on any port)
+    # Authentication first, CORS last: Starlette runs the last-added middleware
+    # outermost, so CORS answers pre-flights and decorates 401 responses.
+    app.add_middleware(ApiKeyMiddleware)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=False,   # must be False when allow_origins=["*"]
+        allow_origins=[o.strip() for o in app_cfg.cors_origin.split(",") if o.strip()],
+        allow_credentials=False,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        allow_headers=["*"],
-        expose_headers=["*"],
+        allow_headers=["Content-Type", "Authorization", "X-API-Key"],
         max_age=600,
     )
 
@@ -253,6 +278,10 @@ def create_app() -> FastAPI:
         inst = instance_registry.get(instance_id)
         if not inst:
             raise HTTPException(status_code=404, detail="Instance not found")
+        try:
+            validate_instance_url(inst.url)   # re-check: DNS may have changed since registration
+        except ValueError:
+            raise HTTPException(status_code=422, detail="Instance URL is not allowed")
 
         loop = asyncio.get_event_loop()
 
@@ -274,10 +303,14 @@ def create_app() -> FastAPI:
                 }
             else:
                 instance_registry.update_status(instance_id, "inactive")
+                logger.warning(
+                    "Maximo instance test failed",
+                    extra={"instanceId": instance_id, "error": result.get("error")},
+                )
                 return {
                     "connected": False,
                     "status": "inactive",
-                    "error": result.get("error", "Connection failed"),
+                    "error": "Connection failed",
                 }
 
         return await loop.run_in_executor(None, _test)
@@ -385,13 +418,10 @@ def create_app() -> FastAPI:
                 "httpStatus": result.get("httpStatus", 200),
             }
         except ValueError as exc:
-            logger.warning("PM not found: %s", exc)
-            raise HTTPException(status_code=404, detail="PM record not found")
-        except HTTPException:
-            raise
+            raise HTTPException(status_code=404, detail=str(exc))
         except Exception as exc:
             logger.error("PM update failed", extra={"pmNum": body.pmNum, "error": str(exc)})
-            raise HTTPException(status_code=502, detail="Maximo update failed")
+            raise HTTPException(status_code=502, detail=f"Maximo update failed: {exc}")
 
     # ── ServiceNow ticket creation endpoint ───────────────────────────────────
 
@@ -412,13 +442,10 @@ def create_app() -> FastAPI:
             result = await loop.run_in_executor(None, _create)
             return {"success": True, **result}
         except ServiceNowConfigError as exc:
-            logger.warning("ServiceNow configuration error: %s", exc)
-            raise HTTPException(status_code=503, detail="ServiceNow service not configured")
-        except HTTPException:
-            raise
+            raise HTTPException(status_code=503, detail=str(exc))
         except Exception as exc:
             logger.error("ServiceNow ticket creation failed", extra={"error": str(exc)})
-            raise HTTPException(status_code=502, detail="ServiceNow ticket creation failed")
+            raise HTTPException(status_code=502, detail=f"ServiceNow ticket creation failed: {exc}")
 
     # ── Chat history endpoints ─────────────────────────────────────────────────
 

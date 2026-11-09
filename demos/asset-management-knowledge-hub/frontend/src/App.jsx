@@ -14,7 +14,6 @@ import {
 } from '@carbon/react';
 import {
   Notification,
-  Logout,
   IbmWatsonAssistant,
   Bullhorn,
   DataConnected,
@@ -25,7 +24,6 @@ import {
   Settings,
 } from '@carbon/icons-react';
 
-import Login          from './pages/Login';
 import AgentChat      from './pages/AgentChat';
 import Configuration  from './pages/Configuration';
 import Audit          from './pages/Audit';
@@ -65,13 +63,38 @@ function initials(name) {
   return name.slice(0, 2).toUpperCase();
 }
 
+// Sign-in is enforced by nginx (HTTP basic auth) before this bundle is even
+// served, so the app only needs to ask who the browser authenticated as.
+// The Vite dev server has no nginx in front, so it falls back to a local name.
+async function fetchCurrentUser() {
+  try {
+    const res = await fetch('/whoami', { cache: 'no-store', credentials: 'same-origin' });
+    if (res.ok) {
+      const body = await res.json();
+      if (body.user) return String(body.user);
+    }
+  } catch { /* fall through */ }
+  return import.meta.env.DEV ? 'local-dev' : null;
+}
+
 export default function App() {
   const [user,             setUser]             = useState(null);
+  const [authChecked,      setAuthChecked]      = useState(false);
   const [active,           setActive]           = useState('agent');
   const [selectedActionId, setSelectedActionId] = useState(null);
   const [sideNavOpen,      setSideNavOpen]      = useState(
     () => typeof window !== 'undefined' && window.innerWidth >= SIDENAV_BREAKPOINT
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchCurrentUser().then((name) => {
+      if (cancelled) return;
+      setUser(name);
+      setAuthChecked(true);
+    });
+    return () => { cancelled = true; };
+  }, []);
 
   // Keep default-open on wide screens, closed on narrow — but do NOT auto-reopen
   // when a wide-screen user has intentionally closed the nav.
@@ -83,19 +106,15 @@ export default function App() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  if (!authChecked) return null;
   if (!user) {
-    return <Login onLogin={(username) => setUser(username)} />;
+    return <p role="alert" style={{ padding: '2rem' }}>Not signed in. Reload the page to sign in.</p>;
   }
 
   const navigate = (key) => {
     setActive(key);
     setSelectedActionId(null);
     if (window.innerWidth < SIDENAV_BREAKPOINT) setSideNavOpen(false);
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    setActive('agent');
   };
 
   function openAction(id) {
@@ -143,13 +162,6 @@ export default function App() {
             <span className="header-user-avatar" aria-hidden="true">
               {initials(user)}
             </span>
-          </HeaderGlobalAction>
-          <HeaderGlobalAction
-            aria-label="Sign out"
-            tooltipAlignment="end"
-            onClick={handleLogout}
-          >
-            <Logout size={20} />
           </HeaderGlobalAction>
         </HeaderGlobalBar>
       </Header>

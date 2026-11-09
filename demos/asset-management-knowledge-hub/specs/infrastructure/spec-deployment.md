@@ -134,7 +134,7 @@ The frontend container is an nginx server that:
 
 ## 6. Environment Variables Reference
 
-See [SPEC-001 §5](./spec-001-system-overview.md#5-environment-variables) for the full list.
+See [SPEC-001 §5](../overview/spec-system-overview.md#5-environment-variables) for the full list.
 
 ---
 
