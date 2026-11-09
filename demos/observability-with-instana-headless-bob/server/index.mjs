@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import OpenAI from 'openai';
 import { config } from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { createMockRouter } from './mockRoutes.mjs';
 
@@ -56,25 +57,30 @@ app.use(
 
 app.use(express.json({ limit: '10mb' }));
 
-// Lightweight in-memory rate limiter for expensive LLM / telemetry sinks
-function createRateLimiter({ windowMs = 60_000, max = 30 } = {}) {
-  const requests = new Map();
-  return (req, res, next) => {
-    const ip = req.ip || req.socket.remoteAddress || 'unknown';
-    const now = Date.now();
-    const windowStart = now - windowMs;
-    const timestamps = (requests.get(ip) || []).filter((t) => t > windowStart);
-    if (timestamps.length >= max) {
-      return res.status(429).json({ error: 'Too many requests. Please slow down.' });
-    }
-    timestamps.push(now);
-    requests.set(ip, timestamps);
-    next();
-  };
-}
+// Global rate limiter for DDoS and DoS mitigation
+const globalRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // Limit each IP to 1000 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(globalRateLimiter);
 
-const llmRateLimiter = createRateLimiter({ windowMs: 60_000, max: 20 });
-const staticRateLimiter = createRateLimiter({ windowMs: 60_000, max: 150 });
+// Specific rate limiters for expensive LLM sinks & static file access
+const llmRateLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 20, // Limit each IP to 20 LLM requests per minute
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please slow down.' },
+});
+
+const staticRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500, // Limit each IP to 500 static file requests per 15 minutes
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Mock mode: the simulated API answers first; live handlers below are never reached
 // for the routes it owns, and live-only routes are rejected by the mock router.
@@ -1520,9 +1526,14 @@ app.use('/hb', (req, res, next) => {
 // When `dist/` exists (npm run build / container image) the bridge serves the
 // UI itself. In development Vite serves the UI and proxies /api and /hb here.
 const DIST_DIR = resolve(__dirname, '../dist');
-if (existsSync(resolve(DIST_DIR, 'index.html'))) {
+const INDEX_HTML_PATH = resolve(DIST_DIR, 'index.html');
+if (existsSync(INDEX_HTML_PATH)) {
+  const indexHtmlContent = readFileSync(INDEX_HTML_PATH, 'utf8');
   app.use(express.static(DIST_DIR, { maxAge: '1h' }));
-  app.get(/^\/(?!api\/|hb\/).*/, staticRateLimiter, (req, res) => res.sendFile(resolve(DIST_DIR, 'index.html')));
+  app.get(/^\/(?!api\/|hb\/).*/, staticRateLimiter, (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(indexHtmlContent);
+  });
   console.log(`Serving UI from ${DIST_DIR}`);
 }
 
