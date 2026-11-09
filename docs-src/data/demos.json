@@ -559,6 +559,42 @@
       "extrasBoxUrl": "",
       "isLive": true,
       "release_date": "2026-10-30"
+    },
+    {
+      "name": "Observability with IBM Instana and IBM Headless Bob",
+      "slug": "observability-with-instana-and-ibm-headless-bob",
+      "products": [
+        "IBM Bob",
+        "IBM Instana",
+        "Red Hat OpenShift"
+      ],
+      "buildingBlocks": [
+        "automation.operate"
+      ],
+      "skills": [
+        "instana-bob-headless"
+      ],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/observability-with-instana-bob/demos/observability-with-instana-headless-bob",
+      "workingDemoURL": "https://instana-bob-demo.2ggouu1v5tr1.us-south.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [
+        {
+          "youTubeURL": "https://www.youtube.com/watch?v=DR2nffIXiPE"
+        }
+      ],
+      "screenshots": [
+        "home_page.png",
+        "screenshot-01.png",
+        "screenshot-02.png"
+      ],
+      "longDescription": "The Instana AI Assistant demonstrates the next generation of generative AI-powered observability and Site Reliability Engineering. This solution bridges IBM Instana APM via the Model Context Protocol (MCP) with IBM Bob Foundation Models (claude-opus-4-5). Operating in both live enterprise mode and an offline simulation engine with 5 injectable anomaly scenarios, it visualizes real-time OpenShift cluster topology with animated SVG Bézier splines, delivers live microservice health telemetry, executes multi-turn tool calling across 11 Instana APM tools, and generates instant Root Cause Analysis (RCA) and prioritized remediation steps for critical infrastructure and application outages.",
+      "shortDescription": "An autonomous Site Reliability Engineering console combining IBM Instana APM telemetry, interactive OpenShift Digital Twin topology, and multi-turn IBM Bob AI diagnostics to detect, diagnose, and remediate enterprise microservice incidents in seconds.",
+      "architecture_description": "The IBM Instana Autonomous SRE Platform is architected as a four-tier observability and generative AI solution featuring a React 18 frontend styled to the IBM Carbon v11 g100 dark theme with an interactive OpenShift SVG Digital Twin topology, real-time KPI dashboards, and an autonomous SRE chat interface.\n\nAt the center, an Express bridge server (Node.js 20 ESM) coordinates dual execution modes, seamlessly switching between an offline simulation engine with 5 injectable anomaly scenarios (STREAM_MODE=mock) and live enterprise telemetry streaming (STREAM_MODE=realtime).\n\nFor AI-driven operations, the bridge leverages the Model Context Protocol (MCP) to spawn the mcp-instana subprocess over STDIO JSON-RPC, exposing 11 APM tools to the IBM Bob Inference API (claude-opus-4-5) through a multi-turn autonomous diagnostic loop.\n\nFinally, the platform connects securely to an enterprise IBM Instana APM tenant to continuously correlate container metrics, database lock contention, and distributed trace spans across Red Hat OpenShift microservices with strict application-level tenant isolation.",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-11-06"
     }
   ]
 }
