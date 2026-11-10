@@ -1,0 +1,163 @@
+# QSE Automation Workbench
+#
+#   cd deployment
+#   cp ../.env.example .env        # fill SECRETS_KEYS, ADMIN_PASSWORD, QSE_CLI_HOST_DIR ...
+#   docker compose up -d --build                       # Workbench only (use an existing Headless Bob)
+#   docker compose --profile bob up -d --build         # also run a Headless Bob container from HEADLESS_BOB_IMAGE
+#   docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d --build   # HTTPS on :8443
+#
+# EXECUTION STRATEGY: shared-volume.
+# Headless Bob runs commands in its own container and cannot see the Workbench filesystem. The backend therefore clones
+# into the `workspaces` volume, and the QSE CLI directory is bind-mounted read-only. BOTH are mounted into the backend
+# AND the Headless Bob container, and the backend translates paths between the two mount points (PathMapper):
+#
+#     backend: /data/workspaces/<id>/repo   <->   bob: /shared/workspaces/<id>/repo
+#     backend: /opt/qse-cli/cli.sh          <->   bob: /opt/qse-cli/cli.sh
+#
+# If you use an EXISTING Headless Bob container, give it these same two mounts (see docs/DEPLOYMENT.md).
+
+name: qse-workbench
+
+x-hardening: &hardening
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  restart: unless-stopped
+
+services:
+  frontend:
+    <<: *hardening
+    build:
+      # Project root as context so the image can include deployment/nginx without BuildKit-only features.
+      context: ..
+      dockerfile: frontend/Dockerfile
+      # Optional login-page prefill; empty unless set in deployment/.env (the values are baked into the public bundle).
+      args:
+        VITE_DEFAULT_USERNAME: ${VITE_DEFAULT_USERNAME:-}
+        VITE_DEFAULT_PASSWORD: ${VITE_DEFAULT_PASSWORD:-}
+    image: qse-workbench-frontend:latest
+    environment:
+      BACKEND_UPSTREAM: http://backend:8080
+    ports:
+      - "${HTTP_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /etc/nginx/conf.d:mode=1777
+    networks: [workbench]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/nginx-health"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  backend:
+    <<: *hardening
+    build:
+      context: ../backend
+      args:
+        JAVA_PACKAGE: ${BACKEND_JAVA_PACKAGE:-}
+    image: qse-workbench-backend:latest
+    # Not published: reachable only through NGINX on the internal network.
+    expose:
+      - "8080"
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      PORT: "8080"
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+      WORKSPACE_ROOT: /data/workspaces
+      SECRETS_KEYS: ${SECRETS_KEYS:?Set SECRETS_KEYS (kid:base64-32-byte-key)}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD (min 12 characters)}
+      SESSION_TTL_MINUTES: ${SESSION_TTL_MINUTES:-480}
+      SESSION_IDLE_MINUTES: ${SESSION_IDLE_MINUTES:-60}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      TRUST_PROXY: ${TRUST_PROXY:-1}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-}
+      BOB_ALLOWED_HOSTS: ${BOB_ALLOWED_HOSTS:-}
+      BOB_ALLOW_PRIVATE_NETWORK: ${BOB_ALLOW_PRIVATE_NETWORK:-true}
+      BOB_REQUEST_TIMEOUT_MS: ${BOB_REQUEST_TIMEOUT_MS:-15000}
+      STREAM_MODE: ${STREAM_MODE:-mock}
+      GITHUB_ALLOWED_HOSTS: ${GITHUB_ALLOWED_HOSTS:-github.com}
+      CLONE_TIMEOUT_MS: ${CLONE_TIMEOUT_MS:-600000}
+      QSE_CLI_PATH: ${QSE_CLI_PATH:-}
+      QSE_CLI_SEARCH_DIRS: /opt/qse-cli
+      QSE_CLI_ALLOWED_DIRS: /opt/qse-cli
+      QSE_CLI_EXECUTABLE_NAMES: ${QSE_CLI_EXECUTABLE_NAMES:-qse-cli,cli.sh}
+      QSE_CLI_VERSION_ARGS: ${QSE_CLI_VERSION_ARGS:--v}
+      QSE_VALIDATION_TIMEOUT_MS: ${QSE_VALIDATION_TIMEOUT_MS:-30000}
+      EXECUTION_STRATEGY: shared-volume
+      QSE_MOUNT_DIR: /opt/qse-cli
+      BOB_QSE_MOUNT_DIR: /opt/qse-cli
+      BOB_WORKSPACE_MOUNT_DIR: /shared/workspaces
+      EXECUTION_TIMEOUT_MS: ${EXECUTION_TIMEOUT_MS:-1800000}
+      MAX_CONCURRENT_EXECUTIONS: ${MAX_CONCURRENT_EXECUTIONS:-1}
+      MAX_PROMPT_CHARS: ${MAX_PROMPT_CHARS:-8000}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-60000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-300}
+      LOGIN_RATE_LIMIT_MAX: ${LOGIN_RATE_LIMIT_MAX:-10}
+    volumes:
+      # SQLite database, encrypted secrets and execution history.
+      - workbench-data:/data
+      # Cloned repositories — SHARED with Headless Bob (nested mount over /data).
+      - workspaces:/data/workspaces
+      # QSE CLI — SHARED with Headless Bob, read-only.
+      - ${QSE_CLI_HOST_DIR:-./qse-cli}:/opt/qse-cli:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    networks: [workbench]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 30s
+
+  # Optional: a Headless Bob container wired for the shared-volume strategy. The Workbench does not own its lifecycle;
+  # omit this profile and point the UI at an existing Headless Bob instead.
+  headless-bob:
+    <<: *hardening
+    profiles: ["bob"]
+    image: ${HEADLESS_BOB_IMAGE:-headlessbob:latest}
+    environment:
+      HOST: 0.0.0.0
+      PORT: "8000"
+      ALLOW_TRUSTED_NETWORK: "true"
+      BOB_API_KEY: ${BOB_API_KEY:-}
+      AUTH_TOKENS: ${AUTH_TOKENS:-}
+      RUN_TIMEOUT_MS: ${BOB_RUN_TIMEOUT_MS:-1800000}
+    volumes:
+      - headless-bob-data:/data
+      - workspaces:/shared/workspaces:${BOB_WORKSPACE_MOUNT_MODE:-ro}
+      - ${QSE_CLI_HOST_DIR:-./qse-cli}:/opt/qse-cli:${BOB_QSE_MOUNT_MODE:-ro}
+    networks:
+      workbench:
+        aliases: [headless-bob]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+networks:
+  workbench:
+    name: qse-workbench-net
+
+volumes:
+  workbench-data:
+    name: qse-workbench-data
+  # Fixed name so an externally managed Headless Bob container can mount the very same volume.
+  workspaces:
+    name: qse-workbench-workspaces
+  headless-bob-data:
+    name: qse-workbench-bob-data

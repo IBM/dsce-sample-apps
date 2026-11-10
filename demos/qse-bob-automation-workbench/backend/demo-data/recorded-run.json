@@ -1,0 +1,711 @@
+{
+ "schema": 1,
+ "description": "Recording of one real Headless Bob + QSE CLI execution, replayed by STREAM_MODE=mock. Local filesystem paths were replaced with placeholders. Nothing here is generated or invented.",
+ "recordedFrom": {
+  "executionId": "c0d229f4-c3a5-43cd-9712-169f703eda90",
+  "startedAt": "2026-11-10T02:38:18.413Z",
+  "finishedAt": "2026-11-10T02:42:31.686Z",
+  "durationMs": 253273,
+  "headlessBobRunId": "4b2f038d-18be-4a25-8c7c-e1ba25eec060",
+  "headlessBobThreadId": "f116fec1-2639-46d0-a0dd-c644e2de4527",
+  "adapter": "rest-threads"
+ },
+ "repository": {
+  "url": "https://github.com/SunilManika/crypto-inventory-demo",
+  "owner": "SunilManika",
+  "name": "crypto-inventory-demo",
+  "branch": "main",
+  "commit": "bcc625a16b726f0c249a836909e20a6b4bd58b18",
+  "fileCount": 55
+ },
+ "qse": {
+  "executablePath": "/usr/local/bin/qse-cli-artifacts/cli.sh",
+  "version": "App Version : 2.3.1.0 Build Version : 202605.00095",
+  "versionArgs": [
+   "-v"
+  ]
+ },
+ "bobCapabilities": {
+  "adapter": "rest-threads",
+  "runtimeReady": true,
+  "features": {
+   "streaming": true,
+   "cancellation": true,
+   "fileDownloads": true,
+   "threads": true,
+   "continuation": true
+  },
+  "limits": {
+   "timeoutMs": 300000,
+   "maxMessageCharacters": 20000,
+   "maxConcurrentRuns": 2,
+   "maxDownloadBytes": 26214400
+  }
+ },
+ "prompt": "Analyze this repository using QSE CLI. Identify cryptographic algorithms, libraries, APIs, and dependencies that may be vulnerable to future quantum computing threats. Generate a detailed quantum-safe assessment, identify potential remediation opportunities, and provide an end-to-end report with findings and recommendations.",
+ "reportFile": "qse-e2e-report.md",
+ "bobEvents": [
+  {
+   "offsetMs": 0,
+   "text": "## 1. Executive Summary"
+  },
+  {
+   "offsetMs": 252,
+   "text": "**Objective.** Use the QSE CLI (IBM Quantum Safe Explorer, `app.version=2.3.1.0`, `build.version=202605.00095`) to find cryptographic algorithms, libraries, APIs and dependencies in the repository that may be vulnerable to future quantum attacks. Then assess them and recommend remediation."
+  },
+  {
+   "offsetMs": 268,
+   "text": "**Repository analyzed.** https://github.com/SunilManika/crypto-inventory-demo, branch `main`, commit `bcc625a16b726f0c249a836909e20a6b4bd58b18`. Execution ID `c0d229f4-c3a5-43cd-9712-169f703eda90`. The checkout was read in place at `<workspace>/repo`."
+  },
+  {
+   "offsetMs": 271,
+   "text": "**Scope.** 19 Java source files and 1,712 active lines of code, as reported by QSE. QSE supports only source and class-file analysis. Configuration files, certificates, `pom.xml`, `Dockerfile` and `docker/openssl.cnf` were not scanned by QSE. I read some of them by hand (see §2)."
+  },
+  {
+   "offsetMs": 271,
+   "text": "**Overall outcome.** QSE reported `globalQSafeComplianceStatus: false`. This is the result of the final (second) scan, which resolved all dependency classes (see §2 for the two runs)."
+  },
+  {
+   "offsetMs": 272,
+   "text": "- QSE found 48 crypto assets and produced a CycloneDX 1.6 CBOM with 49 cryptographic-asset components."
+  },
+  {
+   "offsetMs": 273,
+   "text": "- 13 assets are labelled \"Not Quantum Safe\". All are RSA, ECDSA or ECDH (RSA key generation, encrypt/decrypt and sign/verify; ECDSA sign/verify; ECDH key agreement)."
+  },
+  {
+   "offsetMs": 502,
+   "text": "- 2 EC key-generation assets, 3 JJWT key assets and 3 `SecureRandom.nextBytes` assets (8 in total) are labelled \"Unknown\"."
+  },
+  {
+   "offsetMs": 505,
+   "text": "- 22 symmetric or hash assets are labelled \"Not Applicable\". QSE only categorizes asymmetric algorithms for quantum safety."
+  },
+  {
+   "offsetMs": 505,
+   "text": "- 5 `SSLContext.getInstance(\"TLS\")` assets have no compliance label."
+  },
+  {
+   "offsetMs": 505,
+   "text": "**Key findings (from QSE output).**"
+  },
+  {
+   "offsetMs": 508,
+   "text": "- **RSA, 10 findings.** RSA-1024 and RSA-2048 are used for key generation, encryption and signatures. The RSA-1024 findings also carry CWE-326 (small key size). The RSA encrypt/decrypt findings also carry CWE-780 (no OAEP padding)."
+  },
+  {
+   "offsetMs": 510,
+   "text": "- **Elliptic curve, 5 findings.** EC / ECDSA / ECDH on `secp256r1` are flagged as non-quantum-resistant. QSE says the replacements \"must be ML-KEM, ML-DSA, SLH-DSA\"."
+  },
+  {
+   "offsetMs": 693,
+   "text": "- **Classically weak algorithms.** MD5 and SHA-1 are flagged CWE-327/328, and DES is flagged CWE-327. These are classical weaknesses, not quantum-specific."
+  },
+  {
+   "offsetMs": 696,
+   "text": "- **JWT key handling.** Three JJWT key-handling assets (`JWTTokenExample.java` lines 28, 40 and 46) are flagged CWE-338. QSE traces the key material to `String.trim`, not `SecureRandom`."
+  },
+  {
+   "offsetMs": 1117,
+   "text": "- **Crypto-agility.** QSE flagged 88 low-severity crypto-agility anti-patterns, such as hardcoded algorithm names, key lengths and protocol names."
+  },
+  {
+   "offsetMs": 1413,
+   "text": "QSE issued 15 \"non-quantum-resistant public-key algorithm\" (CWE-327) findings: RSA 10, EC 2, ECDSA 2, ECDH 1."
+  },
+  {
+   "offsetMs": 1700,
+   "text": "## 2. Repository Analysis"
+  },
+  {
+   "offsetMs": 1703,
+   "text": "**Languages and technologies.**"
+  },
+  {
+   "offsetMs": 2127,
+   "text": "- Java 17 Maven project (`pom.xml`, `maven.compiler.source/target` = 17), group `com.example`, artifact `crypto-inventory-demo` version 1.0.0."
+  },
+  {
+   "offsetMs": 2129,
+   "text": "- `Dockerfile` using `maven:3.9-eclipse-temurin-17` and `eclipse-temurin:17-jre`."
+  },
+  {
+   "offsetMs": 2130,
+   "text": "- Config, certificates and secrets directories."
+  },
+  {
+   "offsetMs": 2390,
+   "text": "- The source tree is `src/main/java/com/demo/{app,asymmetric,certificates,crypto,hashing,jwt,signatures,ssh,ssl,symmetric,tls}`. It has 19 `.java` files, all of which QSE scanned."
+  },
+  {
+   "offsetMs": 2736,
+   "text": "**Cryptographic components (files read and QSE evidence).**"
+  },
+  {
+   "offsetMs": 2740,
+   "text": "- Hashing: `MD5Example`, `SHA1Example`, `SHA256Example`."
+  },
+  {
+   "offsetMs": 3092,
+   "text": "- Symmetric: `AES128Example`, `AES256Example` (AES/GCM), `DESExample` (DES/CBC/PKCS5)."
+  },
+  {
+   "offsetMs": 3436,
+   "text": "- Asymmetric: `RSA1024Example`, `RSA2048Example`, `ECExample` (EC/ECDH)."
+  },
+  {
+   "offsetMs": 3440,
+   "text": "- Signatures: `RSASignatureExample`, `ECDSASignatureExample`."
+  },
+  {
+   "offsetMs": 3445,
+   "text": "- JWT: `JWTTokenExample`, which uses JJWT `Keys.secretKeyFor(SignatureAlgorithm.HS256)` and `Keys.hmacShaKeyFor`. The source prints \"HS256 (HMAC with SHA-256)\"."
+  },
+  {
+   "offsetMs": 3741,
+   "text": "- SSH: `SSHConnectionExample`, which uses JSch with `StrictHostKeyChecking=no` (demo comment in source)."
+  },
+  {
+   "offsetMs": 4181,
+   "text": "- TLS/SSL: `SSLContextExample` and `TLSClientExample`, which use `SSLContext.getInstance(\"TLS\")`."
+  },
+  {
+   "offsetMs": 4790,
+   "text": "- KeyStores: `KeyStoreExample` and `TrustStoreExample`. `KeyStoreExample.java` sets `keystoreType = \"JKS\"` and generates an RSA key pair at line 87. `SSLContextExample.java` also loads `KeyStore.getInstance(\"JKS\")`."
+  },
+  {
+   "offsetMs": 4790,
+   "text": "- Certificates: `CertificateLoader` and `TrustStoreExample` use `CertificateFactory.getInstance(\"X.509\")`."
+  },
+  {
+   "offsetMs": 4793,
+   "text": "**Dependencies analyzed (from `pom.xml`, read manually).** QSE has no manifest-level dependency scanner. It was only given these jars as class-resolution input."
+  },
+  {
+   "offsetMs": 5088,
+   "text": "| Dependency | Version in `pom.xml` |"
+  },
+  {
+   "offsetMs": 5090,
+   "text": "|---|---|"
+  },
+  {
+   "offsetMs": 5092,
+   "text": "| `org.bouncycastle:bcprov-jdk18on`, `bcpkix-jdk18on` | 1.78 |"
+  },
+  {
+   "offsetMs": 5440,
+   "text": "| `io.jsonwebtoken:jjwt-api` / `jjwt-impl` / `jjwt-jackson` | 0.12.5 |"
+  },
+  {
+   "offsetMs": 5785,
+   "text": "| `com.jcraft:jsch` | 0.1.55 |"
+  },
+  {
+   "offsetMs": 5786,
+   "text": "| `org.slf4j:slf4j-api` | 2.0.12 |"
+  },
+  {
+   "offsetMs": 5788,
+   "text": "| `ch.qos.logback:logback-classic` | 1.5.3 |"
+  },
+  {
+   "offsetMs": 6142,
+   "text": "No Bouncy Castle `import`s were found in the source by my `grep`. The Bouncy Castle dependencies are declared but QSE reported no assets attributed to them. All QSE assets are attributed to `library: JCA`."
+  },
+  {
+   "offsetMs": 6144,
+   "text": "**Non-source files read manually (not scanned by QSE).**"
+  },
+  {
+   "offsetMs": 6894,
+   "text": "- `config/application.properties` sets `crypto.default.algorithm=AES`, `crypto.default.keysize=256`, `crypto.default.mode=GCM`, `keystore.type=JKS`, `truststore.type=JKS`, `ssl.protocol=TLS` and `ssl.enabled.protocols=TLSv1.2,TLSv1.3`."
+  },
+  {
+   "offsetMs": 7239,
+   "text": "- `docker/openssl.cnf` has `default_bits = 2048`, `default_md = sha256`, and usage-example commands that use `rsa:2048` and `rsa:4096`."
+  },
+  {
+   "offsetMs": 7602,
+   "text": "- The repository contains `certificates/rootCA.pem`, `certificates/server.crt`, `certificates/server.key` (its first line is `-----BEGIN PRIVATE KEY-----`), `secrets/secret.properties` and `jwt/jwt-secret.txt`. I did not reproduce any secret or key values here."
+  },
+  {
+   "offsetMs": 7940,
+   "text": "- I tried to inspect the certificates with `openssl x509` and `keytool -printcert`. Both failed to parse them. **The public-key algorithm, key size and signature algorithm of the committed certificates could not be determined.**"
+  },
+  {
+   "offsetMs": 7941,
+   "text": "- `keys/` and `keystore/` contain only `.gitkeep`."
+  },
+  {
+   "offsetMs": 7942,
+   "text": "**Scan runs and limitations.**"
+  },
+  {
+   "offsetMs": 8241,
+   "text": "1. **Run 1.** Input was the repository checkout, with `-cf <repo>/target/classes` and `-da`. Output is in `qs_scan_result/`. It produced 43 assets and an issue summary of 6 issues:"
+  },
+  {
+   "offsetMs": 8943,
+   "text": "   - Missing dependency classes `io.jsonwebtoken.JwtException` and `com.jcraft.jsch.Session` (in `Main.java`, `JWTTokenExample.java`, `SSHConnectionExample.java`)."
+  },
+  {
+   "offsetMs": 9294,
+   "text": "   - `JWTTokenExample` and `SSHConnectionExample` graphs failed to build. `log/scan-errors.log` shows that `com.demo.jwt.JWTTokenExample` was found both in `target/classes` and in `target/crypto-inventory-demo-1.0.0.jar` (\"several jars that implement it\"). This is why the JWT and SSH-related findings were incomplete in Run 1."
+  },
+  {
+   "offsetMs": 10342,
+   "text": "2. **Run 2.** I made a temporary copy of `src/` to `/tmp/qse-src` and copied `target/classes` and the dependency jars into `/tmp/qse-cf`. I took the jars from the local `~/.m2` cache, at the same versions that `pom.xml` declares: JJWT 0.12.5, JSch 0.1.55, and Bouncy Castle 1.78 (bcprov and bcpkix). The `-cf` value was `/tmp/qse-cf/classes;/tmp/qse-cf/lib`, again with `-da`. The repository checkout was not modified. Output is in `qs_scan_result_run2/`. The issue summary is empty (`\"issues\":[]`), 48 assets were found, and 19 files were scanned."
+  },
+  {
+   "offsetMs": 10343,
+   "text": "3. **Not covered.**"
+  },
+  {
+   "offsetMs": 10637,
+   "text": "   - Transitive dependencies of the listed libraries."
+  },
+  {
+   "offsetMs": 10641,
+   "text": "   - Runtime behavior, such as JVM default TLS cipher suites and which JCE providers are present at runtime."
+  },
+  {
+   "offsetMs": 10991,
+   "text": "   - TLS and SSH negotiation. QSE flagged only the hardcoded protocol name \"TLS\". It did not enumerate the negotiated key exchange or cipher suites."
+  },
+  {
+   "offsetMs": 10992,
+   "text": "   - `Main.java` produced no crypto assets of its own."
+  },
+  {
+   "offsetMs": 11690,
+   "text": "   - `SSHConnectionExample.java` (JSch) produced no crypto assets in Run 2. I did not find SSH key-exchange, host-key or signature algorithm assets in the Run 2 asset list."
+  },
+  {
+   "offsetMs": 11699,
+   "text": "   - Data-analytics (`-da`) usage output was not found as a separate artifact. The only `-da`-related artifacts are inside the findings JSON."
+  },
+  {
+   "offsetMs": 11699,
+   "text": "   - QSE did not output any numeric risk scores or timeline estimates beyond the labels quoted in §3."
+  },
+  {
+   "offsetMs": 11700,
+   "text": "## 3. Quantum-Safe Assessment"
+  },
+  {
+   "offsetMs": 12040,
+   "text": "All counts below come from `qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json` (48 assets) unless noted."
+  },
+  {
+   "offsetMs": 12388,
+   "text": "### 3.1 Cryptographic algorithms identified"
+  },
+  {
+   "offsetMs": 12393,
+   "text": "| Algorithm / API | Assets (QSE) | Files and lines |"
+  },
+  {
+   "offsetMs": 12393,
+   "text": "|---|---|---|"
+  },
+  {
+   "offsetMs": 13192,
+   "text": "| RSA (1024 and 2048) via `KeyPairGenerator`, `Cipher`, `Signature` | 10 | `RSA1024Example.java` L23, 29, 36; `RSA2048Example.java` L22, 28, 35; `KeyStoreExample.java` L87; `RSASignatureExample.java` L22, 29, 38 |"
+  },
+  {
+   "offsetMs": 13197,
+   "text": "| EC (secp256r1) keygen | 2 | `ECExample.java` L28; `ECDSASignatureExample.java` L24 |"
+  },
+  {
+   "offsetMs": 13197,
+   "text": "| ECDSA sign / verify | 2 | `ECDSASignatureExample.java` L31, 40 |"
+  },
+  {
+   "offsetMs": 13487,
+   "text": "| ECDH key agreement | 1 | `ECExample.java` L35 |"
+  },
+  {
+   "offsetMs": 13493,
+   "text": "| AES-128/256 GCM (Cipher + KeyGenerator) | 6 | `AES128Example.java`, `AES256Example.java` |"
+  },
+  {
+   "offsetMs": 13838,
+   "text": "| DES (CBC / PKCS5, 56-bit) | 3 | `DESExample.java` L27, 41, 50 |"
+  },
+  {
+   "offsetMs": 14185,
+   "text": "| MD5 | 2 | `MD5Example.java` L19, 25 |"
+  },
+  {
+   "offsetMs": 14186,
+   "text": "| SHA-1 (\"SHA\") | 2 | `SHA1Example.java` L17, 23 |"
+  },
+  {
+   "offsetMs": 14541,
+   "text": "| SHA-256 | 3 | `SHA256Example.java` L17, 23, 38 |"
+  },
+  {
+   "offsetMs": 14544,
+   "text": "| SHA-256 associated with sign / verify operations | 4 | `ECDSASignatureExample.java` L31, 40; `RSASignatureExample.java` L29, 38 |"
+  },
+  {
+   "offsetMs": 14838,
+   "text": "| JJWT (HMAC / SHA-2 based) key creation and verification | 5 | `JWTTokenExample.java` L23, 28, 40, 46 |"
+  },
+  {
+   "offsetMs": 14852,
+   "text": "| `SecureRandom.nextBytes` | 3 | `AES128Example.java` L33; `AES256Example.java` L34; `DESExample.java` L32 |"
+  },
+  {
+   "offsetMs": 15189,
+   "text": "| `SSLContext.getInstance(\"TLS\")` | 5 | `SSLContextExample.java` L43, 50; `TLSClientExample.java` L19, 29, 88 |"
+  },
+  {
+   "offsetMs": 15537,
+   "text": "### 3.2 Potentially quantum-vulnerable implementations (QSE classification)"
+  },
+  {
+   "offsetMs": 15888,
+   "text": "QSE labelled **13 assets \"Not Quantum Safe\"**. Its message is \"The asset has an asymmetric primitive and does not match with the Quantum Safe whitelists of OIDs and algorithms\". These are:"
+  },
+  {
+   "offsetMs": 15892,
+   "text": "- RSA key generation: `RSA1024Example.java:23`, `RSA2048Example.java:22`, `KeyStoreExample.java:87`, `RSASignatureExample.java:22`."
+  },
+  {
+   "offsetMs": 16241,
+   "text": "- RSA encrypt and decrypt: `RSA1024Example.java:29` and `:36`, `RSA2048Example.java:28` and `:35`."
+  },
+  {
+   "offsetMs": 16536,
+   "text": "- RSA sign and verify: `RSASignatureExample.java:29` and `:38`."
+  },
+  {
+   "offsetMs": 16539,
+   "text": "- ECDSA sign and verify: `ECDSASignatureExample.java:31` and `:40`."
+  },
+  {
+   "offsetMs": 16540,
+   "text": "- ECDH key agreement: `ECExample.java:35`."
+  },
+  {
+   "offsetMs": 17283,
+   "text": "Two EC key-generation assets (`ECExample.java:28`, `ECDSASignatureExample.java:24`) have QSE label \"Unknown\". The reason given is that the asset primitive was not set. They still carry the CWE-327 \"non-quantum-resistant public-key algorithm: EC\" finding."
+  },
+  {
+   "offsetMs": 17290,
+   "text": "QSE did not label symmetric or hash assets for quantum safety. These show \"Not Applicable\" (\"we only categorize asymmetric algorithms\"). I make no claim about AES-128/256 or SHA-256 post-quantum strength based on QSE output."
+  },
+  {
+   "offsetMs": 17589,
+   "text": "### 3.3 Findings with evidence (severity values are QSE's `vulnerabilityScore`)"
+  },
+  {
+   "offsetMs": 17591,
+   "text": "| Classification | QSE severity | Count | Summary |"
+  },
+  {
+   "offsetMs": 17592,
+   "text": "|---|---|---|---|"
+  },
+  {
+   "offsetMs": 18638,
+   "text": "| CWE-327 | high | 22 total | 15 \"Use of non-quantum-resistant public-key algorithms (must be ML-KEM, ML-DSA, SLH-DSA)\" (RSA ×10, EC ×2, ECDSA ×2, ECDH ×1). The other 7 are \"broken or risky cryptographic algorithm\": MD5 ×2, SHA ×2, DES ×3. |"
+  },
+  {
+   "offsetMs": 18648,
+   "text": "| CWE-328 | high | 4 | \"Use of weak hash algorithm\": MD5 (`MD5Example.java` L19, 25) and SHA (`SHA1Example.java` L17, 23). |"
+  },
+  {
+   "offsetMs": 18648,
+   "text": "| CWE-326 | high | 3 | \"Use of small key size: 1024\" (`RSA1024Example.java` L23, 29, 36). |"
+  },
+  {
+   "offsetMs": 19038,
+   "text": "| CWE-780 | high | 4 | RSA used without the recommended OAEP padding (`RSA1024Example.java` L29, 36; `RSA2048Example.java` L28, 35). |"
+  },
+  {
+   "offsetMs": 19741,
+   "text": "| CWE-338 | high | 3 | \"Use of cryptographically weak pseudo-random number generator\" with `java.lang.String.trim for key` (`JWTTokenExample.java` L28, 40, 46). Only a `trim` call on a string key is reported, and the finding says to use `SecureRandom` instead. I did not manually trace the code path. |"
+  },
+  {
+   "offsetMs": 20041,
+   "text": "| CWE-759 | low | 11 | \"Use of one-way hash without a salt\" (hash assets in `MD5Example`, `SHA1Example`, `SHA256Example` and sign/verify-associated SHA-2 assets). |"
+  },
+  {
+   "offsetMs": 20389,
+   "text": "| Crypto-agility anti-pattern | low | 88 | Hardcoded algorithm choice (52), key length (21), IV length (6), protocol \"TLS\" (5), tag length (4). |"
+  },
+  {
+   "offsetMs": 21087,
+   "text": "Also reported by QSE: FIPS 140-3 L1 compliance labels. For example, the RSA-1024 assets are \"FIPS140-3-L1 non-compliant\". The RSA-2048 key generation and EC key generation assets are \"FIPS140-3-L1 capable\" with `isUnCompliant: true` and a message. I did not analyze the full wording of these messages beyond the labels."
+  },
+  {
+   "offsetMs": 21089,
+   "text": "### 3.4 Post-quantum opportunities"
+  },
+  {
+   "offsetMs": 21438,
+   "text": "Mapping uses the targets named in QSE's own message (\"ML-KEM, ML-DSA, SLH-DSA\"). The migration pairings are my interpretation and are not QSE output."
+  },
+  {
+   "offsetMs": 21442,
+   "text": "| Current use (QSE-detected) | Post-quantum candidate |"
+  },
+  {
+   "offsetMs": 21442,
+   "text": "|---|---|"
+  },
+  {
+   "offsetMs": 21444,
+   "text": "| RSA / ECDH key establishment and RSA encryption | ML-KEM (FIPS 203) |"
+  },
+  {
+   "offsetMs": 21790,
+   "text": "| RSA / ECDSA signatures (`RSASignatureExample`, `ECDSASignatureExample`) | ML-DSA (FIPS 204) or SLH-DSA (FIPS 205) |"
+  },
+  {
+   "offsetMs": 22202,
+   "text": "| RSA / EC keys stored in KeyStores (`KeyStoreExample`) | Hybrid or PQC key types once the JCE provider and keystore format support them |"
+  },
+  {
+   "offsetMs": 22505,
+   "text": "| TLS via `SSLContext.getInstance(\"TLS\")` | Hybrid key exchange, depending on JDK/provider support |"
+  },
+  {
+   "offsetMs": 22840,
+   "text": "| SSH via JSch 0.1.55 | Replace or upgrade the SSH library. This is my observation, since QSE produced no JSch assets in Run 2. |"
+  },
+  {
+   "offsetMs": 22843,
+   "text": "Neither QSE nor my review identified any post-quantum algorithm already in use in this repository."
+  },
+  {
+   "offsetMs": 22844,
+   "text": "## 4. Recommendations"
+  },
+  {
+   "offsetMs": 22844,
+   "text": "**Prioritized next steps.**"
+  },
+  {
+   "offsetMs": 22846,
+   "text": "1. **Remove classically broken primitives first (CWE-326/327/328/780).** These findings are high severity in QSE and are independent of quantum timelines."
+  },
+  {
+   "offsetMs": 23225,
+   "text": "   - Remove or replace `RSA1024Example` (RSA-1024, no OAEP) and `DESExample`."
+  },
+  {
+   "offsetMs": 23542,
+   "text": "   - Replace MD5 and SHA-1 usage (`MD5Example`, `SHA1Example`) with SHA-256 or stronger. If these files are demonstration only, keep them clearly marked and out of production paths."
+  },
+  {
+   "offsetMs": 23890,
+   "text": "   - Use OAEP padding for any remaining RSA encryption (`RSA1024Example`, `RSA2048Example`)."
+  },
+  {
+   "offsetMs": 24189,
+   "text": "2. **Fix JWT key handling (CWE-338, `JWTTokenExample.java` L28, 40, 46).** Generate HMAC keys with `SecureRandom` or `Keys.secretKeyFor(...)`. Do not derive them from a stored or trimmed string. Keep key material outside the repository."
+  },
+  {
+   "offsetMs": 24192,
+   "text": "3. **Plan migration of the 13 \"Not Quantum Safe\" RSA/ECDSA/ECDH assets.**"
+  },
+  {
+   "offsetMs": 24534,
+   "text": "   - Build an inventory and prioritize long-lived confidentiality uses: RSA encryption, ECDH and key exchange."
+  },
+  {
+   "offsetMs": 24535,
+   "text": "   - Prioritize signatures that must remain valid long term."
+  },
+  {
+   "offsetMs": 25239,
+   "text": "   - Target ML-KEM for key establishment and ML-DSA or SLH-DSA for signatures. Consider hybrid classical + PQC modes during the transition. Confirm provider support first. Bouncy Castle at the pinned version may offer PQC algorithms, but I did not verify that against the library, and QSE does not report it."
+  },
+  {
+   "offsetMs": 25692,
+   "text": "4. **Improve crypto-agility (88 low findings).** Move hardcoded algorithm names, key lengths and protocol names into configuration. `config/application.properties` already has `crypto.default.*` and `ssl.*` keys, but the code hardcodes values. Wrap algorithm selection in a single abstraction so a PQC algorithm can be swapped in with a configuration change."
+  },
+  {
+   "offsetMs": 25692,
+   "text": "5. **Dependencies to review.**"
+  },
+  {
+   "offsetMs": 25987,
+   "text": "   - `jsch` 0.1.55 is an old version. I have not verified its supported algorithms, so check whether a maintained fork is needed for modern key exchange and host-key algorithms."
+  },
+  {
+   "offsetMs": 26338,
+   "text": "   - `bcprov-jdk18on` / `bcpkix-jdk18on` 1.78 and the other pinned versions should be compared against current releases for security fixes and PQC support. I did not run a vulnerability database check."
+  },
+  {
+   "offsetMs": 26693,
+   "text": "   - Declared Bouncy Castle dependencies are unused according to my `grep` of the source and QSE's JCA-only attribution. Remove them if they are not needed, or use them deliberately for PQC."
+  },
+  {
+   "offsetMs": 27044,
+   "text": "6. **Switch keystores and trust stores from JKS to PKCS12.** `keystore.type=JKS` and `truststore.type=JKS` are used in `config/application.properties`, `KeyStoreExample.java` and `SSLContextExample.java`. The repository's own code prints \"Use PKCS12 format for new KeyStores\". JKS is also a legacy format."
+  },
+  {
+   "offsetMs": 27713,
+   "text": "7. **Review committed key and secret files.** The repository contains `certificates/server.key`, `secrets/secret.properties` and `jwt/jwt-secret.txt`. I did not verify whether they are real or sample values, but they should not be in version control. Rotate them if they are real. Parse the certificates with a working tool to determine their key algorithm and signature algorithm, since I could not do so."
+  },
+  {
+   "offsetMs": 28392,
+   "text": "8. **Enforce TLS and SSH policy.** QSE flagged only the hardcoded \"TLS\" protocol choice. The properties file lists `TLSv1.2,TLSv1.3`. Confirm at runtime which protocols and cipher suites are actually enabled. `SSHConnectionExample` sets `StrictHostKeyChecking=no` (the source says this is demo-only)."
+  },
+  {
+   "offsetMs": 28738,
+   "text": "9. **Fix the scan setup.** For future QSE runs, supply a `-cf` path that contains `target/classes` and the dependency jars, without also including the project's own packaged jar. Otherwise QSE reports \"several jars that implement it\". Optionally add QSE to CI so the 13 \"Not Quantum Safe\" assets are tracked."
+  },
+  {
+   "offsetMs": 28738,
+   "text": "## 5. Execution Artifacts"
+  },
+  {
+   "offsetMs": 29790,
+   "text": "All paths are under `<bob-workspace>` unless an absolute path is shown."
+  },
+  {
+   "offsetMs": 29793,
+   "text": "**Run 1** (`-cf <repo>/target/classes`, 43 assets, 6 issues):"
+  },
+  {
+   "offsetMs": 29795,
+   "text": "- `qs_scan_result/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json`"
+  },
+  {
+   "offsetMs": 30089,
+   "text": "- `qs_scan_result/qs_explorer_result/quantum_safe_cryptography_analysis_cbom.json` (CycloneDX CBOM)"
+  },
+  {
+   "offsetMs": 30437,
+   "text": "- `qs_scan_result/qs_explorer_result/quantum_safe_cryptography_analysis_issue_summary.json`"
+  },
+  {
+   "offsetMs": 30793,
+   "text": "- `qs_scan_result/qs_scan_result.zip`. It contains `metrics/metrics-summary.json`, `slices/cryptoData.json`, `log/scan.log`, `log/scan-debug.log` and `log/scan-errors.log`. The `java/02_graph_model/` directory is empty."
+  },
+  {
+   "offsetMs": 31143,
+   "text": "**Run 2** (primary, complete resolution of dependencies, 48 assets, no issues):"
+  },
+  {
+   "offsetMs": 31147,
+   "text": "- `qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json`"
+  },
+  {
+   "offsetMs": 31619,
+   "text": "- `qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_cbom.json` (CycloneDX 1.6, 49 components)"
+  },
+  {
+   "offsetMs": 31886,
+   "text": "- `qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_issue_summary.json`"
+  },
+  {
+   "offsetMs": 31889,
+   "text": "- `qs_scan_result_run2/qs_scan_result.zip` (metrics, slices and logs for Run 2; I did not inspect its contents)"
+  },
+  {
+   "offsetMs": 32240,
+   "text": "**Helper (temporary) files created by me outside the workspace:**"
+  },
+  {
+   "offsetMs": 32243,
+   "text": "- `/tmp/qse-src/` — copy of the repository `src/` directory used as the Run 2 scan input."
+  },
+  {
+   "offsetMs": 32537,
+   "text": "- `/tmp/qse-cf/classes` and `/tmp/qse-cf/lib` — copies of `target/classes` and the dependency jars used as the Run 2 class path."
+  },
+  {
+   "offsetMs": 32542,
+   "text": "- `/tmp/qsx/` — an extraction of `qs_scan_result.zip` that I used to read the Run 1 logs."
+  },
+  {
+   "offsetMs": 32543,
+   "text": "**Report:**"
+  },
+  {
+   "offsetMs": 32543,
+   "text": "- `qse-e2e-report.md`"
+  },
+  {
+   "offsetMs": 32544,
+   "text": "## 6. Conclusion"
+  },
+  {
+   "offsetMs": 33668,
+   "text": "**Overall assessment.** QSE reports the application as non-compliant (`globalQSafeComplianceStatus: false`). All of its public-key cryptography is quantum-vulnerable: RSA (1024 and 2048), EC / ECDSA / ECDH on secp256r1. The repository also uses classically broken primitives (MD5, SHA-1, DES, RSA-1024, RSA without OAEP). It contains no post-quantum algorithms. The project is a demonstration inventory of crypto usage, so these findings are expected for its purpose. They show what a real application would need to migrate."
+  },
+  {
+   "offsetMs": 33887,
+   "text": "**Key takeaways.**"
+  },
+  {
+   "offsetMs": 33893,
+   "text": "- 13 assets are labelled \"Not Quantum Safe\" by QSE, and 2 further EC key-generation assets are \"Unknown\" but also flagged CWE-327."
+  },
+  {
+   "offsetMs": 33894,
+   "text": "- Fixing the classical weaknesses (CWE-326/327/328/780/338) is the fastest risk reduction."
+  },
+  {
+   "offsetMs": 34826,
+   "text": "- The hardcoded algorithm, key length and protocol choices (88 findings) are the main obstacle to a quick PQC migration."
+  },
+  {
+   "offsetMs": 34831,
+   "text": "- Not covered: the committed certificates (could not be parsed), the transitive dependencies, JSch/SSH algorithm negotiation, and the runtime TLS configuration."
+  },
+  {
+   "offsetMs": 34835,
+   "text": "**Next steps.**"
+  },
+  {
+   "offsetMs": 34835,
+   "text": "1. Remove or replace the weak primitives and fix the JWT key handling."
+  },
+  {
+   "offsetMs": 34866,
+   "text": "2. Introduce configuration-driven algorithm selection."
+  },
+  {
+   "offsetMs": 35073,
+   "text": "3. Pilot ML-KEM / ML-DSA (or hybrid) for key establishment and signatures where the libraries support them."
+  },
+  {
+   "offsetMs": 37666,
+   "text": "4. Re-run QSE after each change and compare findings with `qs_scan_result_run2`."
+  }
+ ],
+ "files": [
+  {
+   "path": "qse-e2e-report.md",
+   "contentType": "text/markdown",
+   "file": "workspace/qse-e2e-report.md",
+   "size": 19744
+  },
+  {
+   "path": "qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_cbom.json",
+   "contentType": "application/json",
+   "file": "workspace/qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_cbom.json",
+   "size": 45885
+  },
+  {
+   "path": "qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json",
+   "contentType": "application/json",
+   "file": "workspace/qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_findings_java.json",
+   "size": 456239
+  },
+  {
+   "path": "qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_issue_summary.json",
+   "contentType": "application/json",
+   "file": "workspace/qs_scan_result_run2/qs_explorer_result/quantum_safe_cryptography_analysis_issue_summary.json",
+   "size": 57
+  }
+ ]
+}
