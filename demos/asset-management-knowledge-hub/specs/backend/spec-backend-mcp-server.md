@@ -113,7 +113,7 @@ GET /health
 
 ## 4. Intelligent Query Routing
 
-The [`maximo_service.determine_routing()`](../backend/mcp_server/src/services/maximo_service.py) method scores each query against keyword dictionaries to determine whether to route to the live Maximo API or to OpenSearch RAG.
+The [`maximo_service.determine_routing()`](../../backend/mcp_server/src/services/maximo_service.py) method scores each query against keyword dictionaries to determine whether to route to the live Maximo API or to OpenSearch RAG.
 
 **Maximo API keywords (examples):** `work order`, `asset status`, `how many`, `current`, `open`, `in progress`  
 **RAG keywords (examples):** `how to`, `procedure`, `manual`, `maintenance procedure`, `troubleshoot`, `best practice`
@@ -137,7 +137,7 @@ The MCP Server queries two OpenSearch indices:
 | `maximo-documents` | COS-ingested PDF/DOCX chunks with embeddings | Hybrid (vector + BM25) |
 | `maximo_web_knowledge` | Spiderbot-crawled IBM Docs + community content | BM25 keyword |
 
-The [`opensearch_service.hybrid_search()`](../backend/mcp_server/src/services/opensearch_service.py) method applies:
+The [`opensearch_service.hybrid_search()`](../../backend/mcp_server/src/services/opensearch_service.py) method applies:
 - `multi_match` across `content`, `fileName`, `metadata.section` fields
 - Optional `knn` vector search (requires knn_vector index mapping)
 - Optional metadata filters: `assetnum`, `category`, `version`
@@ -148,7 +148,7 @@ The [`opensearch_service.hybrid_search()`](../backend/mcp_server/src/services/op
 
 > **Skill:** `data-streaming-confluent`
 
-The [`kafka_service.test_connection()`](../backend/mcp_server/src/services/kafka_service.py) verifies Kafka cluster connectivity and lists available topics.
+The [`kafka_service.test_connection()`](../../backend/mcp_server/src/services/kafka_service.py) verifies Kafka cluster connectivity and lists available topics.
 
 **Configuration via environment variables:**
 
@@ -175,7 +175,7 @@ The MCP Server must consume events from these topics to enrich investigation con
 
 ## 7. Maximo Service
 
-The [`MaximoService`](../backend/mcp_server/src/services/maximo_service.py) supports:
+The [`MaximoService`](../../backend/mcp_server/src/services/maximo_service.py) supports:
 
 - `query_object_structure(object_structure, select, page_size, query)` — generic OSLC query
 - `intelligent_query(query)` — auto-detect object structure + execute
@@ -201,7 +201,7 @@ The [`MaximoService`](../backend/mcp_server/src/services/maximo_service.py) supp
 
 ## 8. Multi-Tenant Instance Registry
 
-The [`instance_registry.py`](../backend/mcp_server/src/services/instance_registry.py) manages multiple Maximo instances.
+The [`instance_registry.py`](../../backend/mcp_server/src/services/instance_registry.py) manages multiple Maximo instances.
 
 Each instance entry:
 ```json

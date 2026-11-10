@@ -19,7 +19,7 @@ set -euo pipefail
 
 CONTAINER="maximo-opensearch"
 OS_USER="admin"
-OS_PASS="<password>"
+OS_PASS="admin"
 BASE_URL="https://localhost:9200"
 FORCE=0
 

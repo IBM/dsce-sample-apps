@@ -1,5 +1,12 @@
 # Asset Management Knowledge Hub
 
+> **Demonstration application — not security-hardened for production.**
+> This asset shows how IBM building blocks fit together. It has had a targeted
+> fix for an unauthenticated server-side request forgery (SSRF) report, but it has
+> not had a full security assessment, penetration test or threat model. Do not
+> expose it to the internet, or connect it to production Maximo data, until you have
+> completed the [production-readiness checklist](#security-notes-and-known-limits).
+
 **Core Capability**: Asset Management
 **IBM Products**: IBM Maximo Application Suite, IBM watsonx AI, IBM watsonx.data (OpenSearch), IBM Cloud Object Storage, IBM Cloud Code Engine
 **Product Components**: MCP Server (FastAPI); Ingestion Pipeline (FastAPI); Spiderbot (Playwright web crawler); React + IBM Carbon UI; IBM IAM
@@ -78,6 +85,13 @@ Key environment variables (read by all three services):
 | `COS_BUCKET_NAME` | COS bucket containing Maximo documents |
 | `COS_ENDPOINT` | COS endpoint URL |
 | `COS_BUCKET_INSTANCE_CRN` | COS service instance CRN |
+| `API_KEY` | **Required.** Shared secret for the MCP Server and Ingestion Pipeline; requests without a matching `X-API-Key` get `401`. Also put it in the root `.env` for local dev (the Vite proxy adds it) and in `deployment/.env.deploy` for deployments. Letters, digits, `_`, `-` only (`openssl rand -hex 32`). |
+| `ADMIN_API_KEY` | **Required to ingest or delete.** Second secret the Ingestion Pipeline requires (`X-Admin-Key`) on every route that starts a job or changes the index. nginx sends it only for `UI_USERNAME`. Put it in the root `.env` for local dev (the Vite proxy adds it). Must differ from `API_KEY`. |
+| `UI_USERNAME` / `UI_PASSWORD` | **Required for the deployed UI.** The administrator login: nginx enforces HTTP basic auth on the whole site (the old client-side login that accepted anything was removed). Not needed for local `npm run dev`. |
+| `UI_VIEWER_USERNAME` / `UI_VIEWER_PASSWORD` | *Optional.* Read-only login. Can search and chat; ingestion and delete are refused with `403`. |
+| `CORS_ORIGIN` | Frontend origin(s) allowed to call the backends (comma-separated). No longer `*`. |
+| `CRAWL_ALLOWED_HOSTS` | *Optional.* Approved web-crawl domains (`*.` wildcards ok). Blank = `ibm.com`, `*.ibm.com`, `maximosecrets.com`, `*.maximosecrets.com`. Private, loopback, link-local, cloud-metadata and cluster-internal targets are always refused. |
+| `INGEST_RATE_LIMIT_MAX` / `INGEST_RATE_LIMIT_WINDOW` | *Optional.* Job submissions allowed per client per window (defaults: `10` per `60` seconds). Excess requests get `429` with `Retry-After`. |
 
 #### 2 — Install dependencies
 
@@ -306,6 +320,32 @@ IBM watsonx.data OpenSearch      (managed vector + keyword search)
 IBM Cloud Object Storage         (document source bucket)
 IBM watsonx AI                   (embeddings + generation)
 ```
+
+---
+
+## Security notes and known limits
+
+This asset is a **demonstration**. The following controls exist after the SSRF fix:
+
+| Area | What is in place |
+|---|---|
+| Authentication | `API_KEY` on both backends (fails closed); nginx basic auth in front of the UI |
+| Authorization | Ingestion and delete routes also need `ADMIN_API_KEY`; only the administrator login receives it |
+| Crawl sources | Approved-domain list (`CRAWL_ALLOWED_HOSTS`), enforced on request (`422`) and again on every fetch and redirect |
+| SSRF guard | Private, loopback, link-local, cloud-metadata, reserved and CGNAT ranges; internal names (`localhost`, `*.svc`, `*.cluster.local`, `*.internal`, container-host aliases); container and cluster management ports; DNS pinned to the vetted IP; every redirect re-checked |
+| Abuse limits | Per-client rate limit, cap on running jobs, request, page, depth, size and chunk limits |
+| Logging | Each accepted submission (`event=ingest_submitted`), rejected URL (`ingest_url_rejected`), rate-limited request (`ingest_rate_limited`) and denied request (`Request denied`, `401`/`403`) is logged with client address, user and route. Secrets are never logged |
+
+Known limits you must address before any real deployment:
+
+- **No per-user identity.** Access is two shared secrets and one or two shared UI logins, not single sign-on, roles or MFA.
+- **Rate limiter is in memory.** It is per process, resets on restart and is not shared between replicas. Put a gateway or WAF limit in front.
+- **Audit log is application stdout.** It is not tamper-evident, and nothing alerts on it. Ship it to a log platform and add alerts on repeated `401`/`403`/`429` and `ingest_url_rejected`.
+- **Network controls are out of scope.** Make the Code Engine apps private, restrict egress (block `169.254.169.254` and internal ranges at the network layer), and place the OpenSearch cluster on a private endpoint.
+- **Secrets are environment variables.** Rotate them, keep them out of source control, and use a secrets manager.
+- **Default approved domains are broad.** `*.ibm.com` covers many sites that host user-generated content. Narrow `CRAWL_ALLOWED_HOSTS` to the exact hosts you need.
+- **Crawled text is untrusted.** It is fenced in the LLM prompt and HTML is escaped when shown, but retrieval-poisoning risk remains, so review what is indexed.
+- **No automated tests or security scans were added** with this change. Run your own SAST, dependency and container scans.
 
 ---
 

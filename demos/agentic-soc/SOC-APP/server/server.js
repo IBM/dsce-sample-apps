@@ -201,19 +201,11 @@ let _tokenCache = { token: '', expiresAt: 0 };
 const TOKEN_TTL_MS = 50 * 60 * 1000; // 50 min — refresh 10 min before 60-min IBM token expires
 
 function requestJson(options, body) {
-  let parsedBody = null;
-  try {
-    parsedBody = body ? JSON.parse(body) : null;
-  } catch (e) {
-    parsedBody = body;
-  }
-  
   logger.debug('Making HTTP request', {
     hostname: options.hostname,
     path: options.path,
     method: options.method,
-    payloadSize: body ? Buffer.byteLength(body) : 0,
-    payload: parsedBody
+    payloadSize: body ? Buffer.byteLength(body) : 0
   });
   
   return new Promise((resolve, reject) => {

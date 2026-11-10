@@ -1,0 +1,1 @@
+var e=e=>({"data-invalid":!0,"aria-invalid":!0,"aria-errormessage":e}),t=e=>({"aria-describedby":e}),n=e=>({"aria-describedby":e}),r=({sharedTextInputProps:r,invalid:i,invalidId:a,warn:o,warnId:s,hasHelper:c,helperId:l})=>({...r,...i?e(a):{},...o?t(s):{},...c?n(l):{}});export{r as t};

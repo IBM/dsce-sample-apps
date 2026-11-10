@@ -251,7 +251,7 @@ function SourceCard({
                 />
                 <NumberInput
                   id="web-run-depth" size="sm"
-                  label="Override max depth" min={0} max={5}
+                  label="Override max depth" min={0} max={2}
                   value={webDepth ?? ''}
                   onChange={(_, { value }) => setWebDepth(value === '' ? null : value)}
                 />
@@ -482,10 +482,12 @@ export default function DataIngestion({ onNavigate }) {
       return;
     }
     fireRun('web', async () => {
+      // Server limits: 10 URLs, depth 0-2, 1-50 pages. Clamp values saved by older versions.
+      const clamp = (v, lo, hi, dflt) => Math.min(hi, Math.max(lo, Number.isFinite(+v) ? +v : dflt));
       const { data } = await axios.post(`${INGEST_URL}/api/ingestion/web`, {
-        urls: urlList,
-        max_depth: webDepth ?? web.maxDepth,
-        max_pages: web.maxPages,
+        urls: urlList.slice(0, 10),
+        max_depth: clamp(webDepth ?? web.maxDepth, 0, 2, 1),
+        max_pages: clamp(web.maxPages, 1, 50, 20),
         selector: web.selector || null,
         category: web.category,
       });

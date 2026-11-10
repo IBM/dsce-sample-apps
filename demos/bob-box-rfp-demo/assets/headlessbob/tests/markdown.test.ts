@@ -8,7 +8,7 @@ test('Markdown renders structure while removing executable HTML', () => {
   assert.equal(fragment.querySelector('h1')?.textContent, 'Heading');
   assert.equal(fragment.querySelector('strong')?.textContent, 'Bold');
   assert.equal(fragment.querySelectorAll('td').length, 2);
-  assert.match(fragment.querySelector('pre code')?.textContent ?? '', /<script>/);
+  assert.match(fragment.querySelector('pre code')?.textContent ?? '', /<script>/i);
   assert.equal(fragment.querySelector('script,img,iframe,[onclick],[onerror]'), null);
   assert.equal(fragment.querySelector('a[href^="javascript:"]'), null);
   assert.equal(fragment.querySelector('a')?.getAttribute('href'), 'tetris.html');

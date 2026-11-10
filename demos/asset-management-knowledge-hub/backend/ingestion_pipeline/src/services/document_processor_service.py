@@ -19,15 +19,12 @@ import mammoth  # type: ignore
 from ingestion_pipeline.src.services.cos_service import DocumentMetadata
 from ingestion_pipeline.src.services.opensearch_service import OpenSearchService, DocumentChunk
 from ingestion_pipeline.src.services.document_registry_service import document_registry_service
+from shared.chunking import CHUNK_OVERLAP as _CHUNK_OVERLAP, CHUNK_SIZE as _CHUNK_SIZE, split_text
 from shared.watsonx import client as wx
 from shared.logging import get_logger
 
 logger = get_logger(__name__)
 
-# ibm/slate-30m-english-rtrvr-v2 — 512 token hard limit.
-# Stay safely under by capping at 400 characters (~320 tokens).
-_CHUNK_SIZE = 400
-_CHUNK_OVERLAP = 50
 _BATCH_SIZE = 10  # chunks per embedding API call
 
 
@@ -152,50 +149,31 @@ class DocumentProcessorService:
         """Stream-process text into chunks, embed them in batches, and index."""
         from datetime import datetime, timezone
 
-        chunk_index = 0
-        start = 0
         batch: list[DocumentChunk] = []
         total_indexed = 0
 
-        while start < len(text):
-            end = min(start + _CHUNK_SIZE, len(text))
-            chunk_text = text[start:end]
-
-            # Prefer sentence boundary
-            if end < len(text):
-                last_period = chunk_text.rfind(".")
-                last_nl = chunk_text.rfind("\n")
-                break_at = max(last_period, last_nl)
-                if break_at > _CHUNK_SIZE * 0.7:
-                    end = start + break_at + 1
-                    chunk_text = text[start:end]
-
-            content = chunk_text.strip()
-            if content:
-                chunk_id = document_registry_service.generate_chunk_id(doc_id, chunk_index)
-                batch.append(
-                    DocumentChunk(
-                        id=chunk_id,
-                        document_id=doc_id,
-                        file_name=file_name,
-                        chunk_index=chunk_index,
-                        content=content,
-                        metadata={
-                            "assetnum": metadata.asset_num,
-                            "category": metadata.category,
-                            "version": metadata.version,
-                            "tags": metadata.tags,
-                        },
-                        timestamp=datetime.now(timezone.utc).isoformat(),
-                    )
+        for chunk_index, content in enumerate(split_text(text, _CHUNK_SIZE, _CHUNK_OVERLAP)):
+            chunk_id = document_registry_service.generate_chunk_id(doc_id, chunk_index)
+            batch.append(
+                DocumentChunk(
+                    id=chunk_id,
+                    document_id=doc_id,
+                    file_name=file_name,
+                    chunk_index=chunk_index,
+                    content=content,
+                    metadata={
+                        "assetnum": metadata.asset_num,
+                        "category": metadata.category,
+                        "version": metadata.version,
+                        "tags": metadata.tags,
+                    },
+                    timestamp=datetime.now(timezone.utc).isoformat(),
                 )
-                chunk_index += 1
+            )
 
             if len(batch) >= _BATCH_SIZE:
                 total_indexed += self._flush_batch(batch)
                 batch = []
-
-            start = end - _CHUNK_OVERLAP
 
         if batch:
             total_indexed += self._flush_batch(batch)

@@ -1,0 +1,10 @@
+node_modules
+dist
+data
+tests
+coverage
+*.log
+.env
+.env.*
+Dockerfile
+.dockerignore

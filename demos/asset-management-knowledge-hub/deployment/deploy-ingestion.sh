@@ -52,8 +52,8 @@
 #   export IBMCLOUD_API_KEY=your-api-key
 #   export OPENSEARCH_HOST=https://opensearch.example.com:9200
 #   export OPENSEARCH_USERNAME=admin
-#   export OPENSEARCH_PASSWORD=<password>
-#   export WATSONX_API_KEY=<your-wx-key>
+#   export OPENSEARCH_PASSWORD=secret
+#   export WATSONX_API_KEY=your-wx-key
 #   export WATSONX_PROJECT_ID=your-project-id
 #   export COS_API_KEY=your-cos-key
 #   export COS_BUCKET_NAME=maximo-docs
@@ -147,6 +147,13 @@ COS_HMAC_ACCESS_KEY_ID="${COS_HMAC_ACCESS_KEY_ID:-}"
 COS_HMAC_SECRET_ACCESS_KEY="${COS_HMAC_SECRET_ACCESS_KEY:-}"
 BACKEND_PORT="${BACKEND_PORT:-8080}"
 CORS_ORIGIN="${CORS_ORIGIN:-}"
+# Shared secret every request must present (X-API-Key). Same value as the UI + MCP server.
+API_KEY="${API_KEY:-}"
+# Second secret required for routes that start ingestion or delete documents. The UI's
+# nginx forwards it only for the administrator login (same value as the UI's ADMIN_API_KEY).
+ADMIN_API_KEY="${ADMIN_API_KEY:-}"
+# Approved web-crawl domains (comma-separated, *. wildcards). Blank = *.ibm.com,*.maximosecrets.com
+CRAWL_ALLOWED_HOSTS="${CRAWL_ALLOWED_HOSTS:-}"
 # Confluent / Apache Kafka (optional — leave blank to disable Kafka ingestion)
 KAFKA_BOOTSTRAP_SERVERS="${KAFKA_BOOTSTRAP_SERVERS:-}"
 KAFKA_SECURITY_PROTOCOL="${KAFKA_SECURITY_PROTOCOL:-SASL_SSL}"
@@ -287,6 +294,9 @@ run_local() {
     -e COS_HMAC_SECRET_ACCESS_KEY="${COS_HMAC_SECRET_ACCESS_KEY:-}" \
     -e BACKEND_PORT="${BACKEND_PORT}" \
     -e CORS_ORIGIN="${CORS_ORIGIN:-http://localhost:3002}" \
+    -e API_KEY="${API_KEY:-}" \
+    -e ADMIN_API_KEY="${ADMIN_API_KEY:-}" \
+    -e CRAWL_ALLOWED_HOSTS="${CRAWL_ALLOWED_HOSTS:-}" \
     -e KAFKA_BOOTSTRAP_SERVERS="${KAFKA_BOOTSTRAP_SERVERS:-}" \
     -e KAFKA_SECURITY_PROTOCOL="${KAFKA_SECURITY_PROTOCOL}" \
     -e KAFKA_SASL_MECHANISM="${KAFKA_SASL_MECHANISM}" \
@@ -394,6 +404,8 @@ deploy_to_ce() {
   require_var "COS_ENDPOINT"           "${COS_ENDPOINT}"
   require_var "COS_BUCKET_INSTANCE_CRN" "${COS_BUCKET_INSTANCE_CRN}"
   require_var "CORS_ORIGIN"            "${CORS_ORIGIN}"
+  require_var "API_KEY"                "${API_KEY}"
+  require_var "ADMIN_API_KEY"          "${ADMIN_API_KEY}"
 
   local full_image="${ICR_REGISTRY}/${ICR_NAMESPACE}/${ICR_IMAGE_NAME}:${IMAGE_TAG}"
 
@@ -455,6 +467,9 @@ deploy_to_ce() {
     --from-literal "COS_HMAC_SECRET_ACCESS_KEY=${COS_HMAC_SECRET_ACCESS_KEY}" \
     --from-literal "BACKEND_PORT=${BACKEND_PORT}" \
     --from-literal "CORS_ORIGIN=${CORS_ORIGIN}" \
+    --from-literal "API_KEY=${API_KEY}" \
+    --from-literal "ADMIN_API_KEY=${ADMIN_API_KEY}" \
+    --from-literal "CRAWL_ALLOWED_HOSTS=${CRAWL_ALLOWED_HOSTS}" \
     --from-literal "KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS}" \
     --from-literal "KAFKA_SECURITY_PROTOCOL=${KAFKA_SECURITY_PROTOCOL}" \
     --from-literal "KAFKA_SASL_MECHANISM=${KAFKA_SASL_MECHANISM}" \

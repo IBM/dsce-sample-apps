@@ -1,0 +1,459 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 980" width="100%" height="100%" style="background-color: #121212; font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f62fe" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#002d9c" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#161616" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <linearGradient id="blueCardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#262626"/>
+      <stop offset="100%" stop-color="#1e1e1e"/>
+    </linearGradient>
+
+    <linearGradient id="activeAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f62fe"/>
+      <stop offset="100%" stop-color="#0043ce"/>
+    </linearGradient>
+
+    <linearGradient id="mcpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1c21b" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#262626"/>
+    </linearGradient>
+
+    <linearGradient id="instanaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0043ce" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#262626"/>
+    </linearGradient>
+
+    <!-- Drop Shadows & Glow Filters -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="glowYellow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#4589ff"/>
+    </marker>
+
+    <marker id="arrowYellow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#f1c21b"/>
+    </marker>
+
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#42be65"/>
+    </marker>
+
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#1192e8"/>
+    </marker>
+
+    <style>
+      .layer-title { font-size: 15px; font-weight: 700; fill: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; }
+      .layer-subtitle { font-size: 11px; font-weight: 400; fill: #a8a8a8; }
+      .card-title { font-size: 13px; font-weight: 600; fill: #f4f4f4; }
+      .card-body { font-size: 11px; font-weight: 400; fill: #c6c6c6; }
+      .code-text { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: #78a9ff; }
+      .tag-text { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; font-weight: 600; }
+      .conn-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; fill: #c6c6c6; }
+    </style>
+  </defs>
+
+  <!-- Background Grid Pattern -->
+  <g opacity="0.04">
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="1"/>
+    </pattern>
+    <rect width="1440" height="980" fill="url(#grid)" />
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- TOP TITLE BANNER                                                          -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="1360" height="64" rx="4" fill="url(#headerGrad)" stroke="#393939" stroke-width="1" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="4" height="64" rx="2" fill="#0f62fe"/>
+    
+    <!-- Title and Badges -->
+    <text x="24" y="32" font-size="18" font-weight="700" fill="#ffffff">IBM Instana Autonomous SRE Platform</text>
+    <text x="365" y="32" font-size="18" font-weight="300" fill="#78a9ff">| System &amp; Protocol Architecture</text>
+    <text x="24" y="50" font-size="11.5" font-weight="400" fill="#c6c6c6">End-to-End Topology: React 18 Carbon Client • Express MCP Bridge • IBM Bob LLM Agent Loop • Live Instana Observability</text>
+    
+    <!-- Live Mode Badges -->
+    <g transform="translate(1080, 18)">
+      <rect x="0" y="0" width="125" height="28" rx="14" fill="#071908" stroke="#0e4e2a" stroke-width="1"/>
+      <circle cx="14" cy="14" r="4.5" fill="#42be65"/>
+      <text x="26" y="18" class="tag-text" fill="#42be65">REALTIME (MCP)</text>
+    </g>
+    <g transform="translate(1215, 18)">
+      <rect x="0" y="0" width="125" height="28" rx="14" fill="#2d1f00" stroke="#8e6a00" stroke-width="1"/>
+      <circle cx="14" cy="14" r="4.5" fill="#f1c21b"/>
+      <text x="26" y="18" class="tag-text" fill="#f1c21b">MOCK (5 SCENARIOS)</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 1. FRONTEND CLIENT LAYER (REACT 18 / VITE 6 / CARBON V11 G100)            -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 114)">
+    <rect x="0" y="0" width="1360" height="240" rx="6" fill="#161616" stroke="#0f62fe" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Section Header -->
+    <path d="M 0 6 Q 0 0 6 0 L 1354 0 Q 1360 0 1360 6 L 1360 38 L 0 38 Z" fill="#262626"/>
+    <circle cx="20" cy="19" r="6" fill="#0f62fe"/>
+    <text x="36" y="24" class="layer-title">1. Frontend Client Layer</text>
+    <text x="255" y="24" class="layer-subtitle">(React 18.3 • Vite 6 • IBM Carbon Design System v11 Gray 100 • Fixed 100vh Shell)</text>
+    <rect x="1220" y="8" width="120" height="22" rx="3" fill="#001141" stroke="#0f62fe" stroke-width="1"/>
+    <text x="1232" y="23" class="tag-text" fill="#78a9ff">PORT 5173 / 8080</text>
+
+    <!-- Sub-Panels -->
+    <!-- Shell Structure -->
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="280" height="170" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="280" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">UI Shell &amp; Layout Framework</text>
+      
+      <rect x="12" y="38" width="256" height="26" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="55" class="code-text">Header.jsx (48px)</text>
+      <text x="145" y="55" font-size="10" fill="#a8a8a8">Mode Pills &amp; Bob Toggle</text>
+
+      <rect x="12" y="70" width="256" height="26" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="87" class="code-text">Sidebar.jsx (260px)</text>
+      <text x="155" y="87" font-size="10" fill="#a8a8a8">Sessions &amp; Quick Chips</text>
+
+      <rect x="12" y="102" width="256" height="26" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="119" class="code-text">StatusBar.jsx (22px)</text>
+      <text x="160" y="119" font-size="10" fill="#a8a8a8">Host / Model / SSE Dot</text>
+
+      <rect x="12" y="134" width="256" height="26" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="151" class="code-text">index.css</text>
+      <text x="85" y="151" font-size="10" fill="#a8a8a8">Carbon g100 Tokens (--cds-*)</text>
+    </g>
+
+    <!-- Viewport 1: Digital Twin -->
+    <g transform="translate(320, 50)">
+      <rect x="0" y="0" width="310" height="170" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="310" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">☸️ Infrastructure Insights</text>
+      <text x="12" y="48" class="code-text">DigitalTwinPanel.jsx</text>
+      
+      <circle cx="20" cy="72" r="4" fill="#0f62fe"/>
+      <text x="32" y="76" class="card-body">Interactive SVG Cluster Topology</text>
+      
+      <circle cx="20" cy="94" r="4" fill="#0f62fe"/>
+      <text x="32" y="98" class="card-body">Animated Bézier Connection Splines</text>
+      
+      <circle cx="20" cy="116" r="4" fill="#24a148"/>
+      <text x="32" y="120" class="card-body">80px Circular Resource Gauges (CPU/Mem)</text>
+
+      <circle cx="20" cy="138" r="4" fill="#f1c21b"/>
+      <text x="32" y="142" class="card-body">Worker Node Telemetry &amp; Diagnostic CTA</text>
+
+      <rect x="12" y="148" width="286" height="14" rx="2" fill="#1e1e1e"/>
+      <text x="20" y="159" class="code-text" font-size="9.5">Cluster Hub ➔ 3 Worker Nodes ➔ Microservice Pods</text>
+    </g>
+
+    <!-- Viewport 2: Insights Dashboard -->
+    <g transform="translate(650, 50)">
+      <rect x="0" y="0" width="320" height="170" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="320" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">📊 Application Insights</text>
+      <text x="12" y="48" class="code-text">InsightsDashboard.jsx</text>
+      
+      <circle cx="20" cy="72" r="4" fill="#0f62fe"/>
+      <text x="32" y="76" class="card-body">6 Top KPI Cards (Calls, Errors, Latency, etc.)</text>
+      
+      <circle cx="20" cy="94" r="4" fill="#0f62fe"/>
+      <text x="32" y="98" class="card-body">5-Tier Time Selector Strip (5m ➔ 24h)</text>
+      
+      <circle cx="20" cy="116" r="4" fill="#da1e28"/>
+      <text x="32" y="120" class="card-body">ServiceTable.jsx with Live MiniBar Sparklines</text>
+
+      <circle cx="20" cy="138" r="4" fill="#f1c21b"/>
+      <text x="32" y="142" class="card-body">Split Incidents &amp; Issues Incident Feeds</text>
+
+      <rect x="12" y="148" width="296" height="14" rx="2" fill="#1e1e1e"/>
+      <text x="20" y="159" class="code-text" font-size="9.5">30s TTL Client Caching • Auto Cooldown Guard</text>
+    </g>
+
+    <!-- Viewport 3: SRE Chat & Headless Bob -->
+    <g transform="translate(990, 50)">
+      <rect x="0" y="0" width="350" height="170" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="350" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">🤖 Autonomous SRE Chat</text>
+      <text x="12" y="48" class="code-text">ChatPanel.jsx &amp; HeadlessBobPanel.jsx</text>
+      
+      <circle cx="20" cy="72" r="4" fill="#0f62fe"/>
+      <text x="32" y="76" class="card-body">Real-Time Markdown SSE Message Stream</text>
+      
+      <circle cx="20" cy="94" r="4" fill="#f1c21b"/>
+      <text x="32" y="98" class="card-body">ToolCallsBadge: Collapsible MCP JSON Inspector</text>
+      
+      <circle cx="20" cy="116" r="4" fill="#24a148"/>
+      <text x="32" y="120" class="card-body">120px SVG HealthRing &amp; Live SSE Alert Cards</text>
+
+      <circle cx="20" cy="138" r="4" fill="#0f62fe"/>
+      <text x="32" y="142" class="card-body">ScenarioControl.jsx Drawer (5 Anomaly Injections)</text>
+
+      <rect x="12" y="148" width="326" height="14" rx="2" fill="#1e1e1e"/>
+      <text x="20" y="159" class="code-text" font-size="9.5">Autonomous RCA Reports • Zero-State Welcome Chips</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- PROTOCOL BUS 1: FRONTEND TO EXPRESS BRIDGE                                -->
+  <!-- ========================================================================= -->
+  <g transform="translate(0, 354)">
+    <path d="M 720 0 L 720 40" stroke="#4589ff" stroke-width="2.5" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowBlue)"/>
+    <rect x="470" y="8" width="500" height="24" rx="12" fill="#001141" stroke="#0f62fe" stroke-width="1" filter="url(#shadow)"/>
+    <text x="485" y="24" class="conn-label" fill="#78a9ff">HTTP REST &amp; Server-Sent Events (SSE) · /api/* · /hb/* (Vite Proxy :3001)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 2. EXPRESS BRIDGE SERVER LAYER (NODE.JS 20 ESM)                           -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 395)">
+    <rect x="0" y="0" width="1360" height="230" rx="6" fill="#1e1e1e" stroke="#4589ff" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Section Header -->
+    <path d="M 0 6 Q 0 0 6 0 L 1354 0 Q 1360 0 1360 6 L 1360 38 L 0 38 Z" fill="#262626"/>
+    <circle cx="20" cy="19" r="6" fill="#4589ff"/>
+    <text x="36" y="24" class="layer-title">2. Express Bridge Server Layer</text>
+    <text x="290" y="24" class="layer-subtitle">(Node.js 20 LTS • ES Modules .mjs • Express 4.21 • Port 3001 / Container 8080)</text>
+    <rect x="1230" y="8" width="110" height="22" rx="3" fill="#001141" stroke="#4589ff" stroke-width="1"/>
+    <text x="1242" y="23" class="tag-text" fill="#78a9ff">SERVER / BRIDGE</text>
+
+    <!-- Modules Container -->
+    <!-- Mode Coordinator -->
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="280" height="160" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="280" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">Stream Mode Coordinator</text>
+      <text x="12" y="48" class="code-text">server/index.mjs</text>
+      
+      <rect x="12" y="58" width="256" height="42" rx="3" fill="#161616" stroke="#393939"/>
+      <text x="20" y="74" class="code-text" fill="#f1c21b">STREAM_MODE=mock</text>
+      <text x="20" y="90" font-size="10" fill="#c6c6c6">Routes to mockRoutes.mjs (Zero Auth)</text>
+
+      <rect x="12" y="106" width="256" height="42" rx="3" fill="#161616" stroke="#393939"/>
+      <text x="20" y="122" class="code-text" fill="#42be65">STREAM_MODE=realtime</text>
+      <text x="20" y="138" font-size="10" fill="#c6c6c6">Spawns mcp-instana STDIO &amp; Bob LLM</text>
+    </g>
+
+    <!-- Mock Simulation Engine -->
+    <g transform="translate(320, 50)">
+      <rect x="0" y="0" width="340" height="160" rx="4" fill="#262626" stroke="#8e6a00" stroke-width="1"/>
+      <rect x="0" y="0" width="340" height="28" fill="#2d1f00" rx="4"/>
+      <text x="12" y="19" class="card-title" fill="#f1c21b">Offline Simulation Engine</text>
+      <text x="12" y="48" class="code-text" fill="#f1c21b">server/mockData.mjs &amp; mockRoutes.mjs</text>
+      
+      <text x="12" y="68" font-size="10.5" font-weight="600" fill="#ffffff">5 Injectable SRE Anomaly Scenarios:</text>
+      <text x="12" y="86" font-size="10" fill="#c6c6c6">1. 🐘 DB Connection Pool Exhaustion (shipping-service)</text>
+      <text x="12" y="102" font-size="10" fill="#c6c6c6">2. ☕ JVM Memory Leak &amp; STW GC (payment-service)</text>
+      <text x="12" y="118" font-size="10" fill="#c6c6c6">3. ⚡ Redis Cache Stampede Herd (cart-service)</text>
+      <text x="12" y="134" font-size="10" fill="#c6c6c6">4. 💳 Banking Gateway Rate Limit (payment-service)</text>
+      <text x="12" y="150" font-size="10" fill="#c6c6c6">5. ☸️ Linux CFS CPU Throttling (order-service)</text>
+    </g>
+
+    <!-- Autonomous SRE Agent Loop -->
+    <g transform="translate(680, 50)">
+      <rect x="0" y="0" width="380" height="160" rx="4" fill="#262626" stroke="#0f62fe" stroke-width="1"/>
+      <rect x="0" y="0" width="380" height="28" fill="#001141" rx="4"/>
+      <text x="12" y="19" class="card-title" fill="#78a9ff">Autonomous LLM Agent Loop</text>
+      <text x="12" y="48" class="code-text">runAgentLoop() · OpenAI SDK Protocol</text>
+      
+      <circle cx="20" cy="70" r="4" fill="#4589ff"/>
+      <text x="32" y="74" class="card-body">Multi-turn tool execution loop (max 10 iterations)</text>
+      
+      <circle cx="20" cy="90" r="4" fill="#4589ff"/>
+      <text x="32" y="94" class="card-body">Automatic schema conversion: MCP ➔ OpenAI Function</text>
+      
+      <circle cx="20" cy="110" r="4" fill="#42be65"/>
+      <text x="32" y="114" class="card-body">Strict Tenant Scoping: application.name = 'Retail Application'</text>
+
+      <circle cx="20" cy="130" r="4" fill="#f1c21b"/>
+      <text x="32" y="134" class="card-body">Proactive 60s autonomous monitor cycle (/api/monitor/stream)</text>
+
+      <rect x="12" y="142" width="356" height="14" rx="2" fill="#161616"/>
+      <text x="20" y="153" class="code-text" font-size="9.5">Streaming text chunks + &lt;!--STATUS:{...}--&gt; parsing</text>
+    </g>
+
+    <!-- Middleware, Caching & Proxy -->
+    <g transform="translate(1080, 50)">
+      <rect x="0" y="0" width="260" height="160" rx="4" fill="#262626" stroke="#393939" stroke-width="1"/>
+      <rect x="0" y="0" width="260" height="28" fill="#333333" rx="4"/>
+      <text x="12" y="19" class="card-title">Caches &amp; Subsystems</text>
+      
+      <rect x="12" y="38" width="236" height="34" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="52" class="code-text">INSIGHTS_CACHE_TTL_MS</text>
+      <text x="20" y="66" font-size="9.5" fill="#a8a8a8">30-second in-memory KPI cache</text>
+
+      <rect x="12" y="78" width="236" height="34" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="92" class="code-text">http-proxy-middleware</text>
+      <text x="20" y="106" font-size="9.5" fill="#a8a8a8">Reverse proxy for /hb/* daemon</text>
+
+      <rect x="12" y="118" width="236" height="34" rx="2" fill="#1e1e1e" stroke="#393939"/>
+      <text x="20" y="132" class="code-text">X-Accel-Buffering: no</text>
+      <text x="20" y="146" font-size="9.5" fill="#a8a8a8">Unbuffered SSE stream flushes</text>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- PROTOCOL BUS 2: BRIDGE TO MCP & AI INFERENCE                              -->
+  <!-- ========================================================================= -->
+  <g transform="translate(0, 625)">
+    <!-- Branch Left to MCP -->
+    <path d="M 460 0 L 460 40" stroke="#f1c21b" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowYellow)"/>
+    <rect x="250" y="8" width="420" height="24" rx="12" fill="#2d1f00" stroke="#8e6a00" stroke-width="1" filter="url(#shadow)"/>
+    <text x="265" y="24" class="conn-label" fill="#f1c21b">STDIO JSON-RPC Protocol (@modelcontextprotocol/sdk)</text>
+
+    <!-- Branch Right to Bob AI -->
+    <path d="M 980 0 L 980 40" stroke="#4589ff" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowBlue)"/>
+    <rect x="790" y="8" width="380" height="24" rx="12" fill="#001141" stroke="#0f62fe" stroke-width="1" filter="url(#shadow)"/>
+    <text x="805" y="24" class="conn-label" fill="#78a9ff">HTTPS REST /inference/v1 (Model: claude-opus-4-5)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 3. PROTOCOL & INFERENCE LAYER                                             -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 665)">
+    <!-- Section Container Left: MCP Subsystem -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="760" height="150" rx="6" fill="#1e1e1e" stroke="#f1c21b" stroke-width="1.5" filter="url(#shadow)"/>
+      <path d="M 0 6 Q 0 0 6 0 L 754 0 Q 760 0 760 6 L 760 36 L 0 36 Z" fill="#262626"/>
+      <circle cx="20" cy="18" r="6" fill="#f1c21b"/>
+      <text x="36" y="23" class="layer-title">3A. Model Context Protocol (MCP) Subprocess</text>
+      <text x="430" y="23" class="layer-subtitle">(mcp-instana • Python 3.11 • Executed via uv/uvx)</text>
+
+      <!-- 11 MCP Tools Grid -->
+      <g transform="translate(20, 48)">
+        <text x="0" y="12" font-size="11" font-weight="600" fill="#ffffff">Discovered &amp; Mapped Instana MCP APM Tools (11 Tools):</text>
+        
+        <rect x="0" y="22" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="8" y="37" class="code-text" font-size="9.5">manage_applications</text>
+
+        <rect x="180" y="22" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="188" y="37" class="code-text" font-size="9.5">manage_events</text>
+
+        <rect x="360" y="22" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="368" y="37" class="code-text" font-size="9.5">manage_infrastructure</text>
+
+        <rect x="540" y="22" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="548" y="37" class="code-text" font-size="9.5">manage_releases</text>
+
+        <rect x="0" y="48" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="8" y="63" class="code-text" font-size="9.5">manage_slo</text>
+
+        <rect x="180" y="48" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="188" y="63" class="code-text" font-size="9.5">manage_synthetics</text>
+
+        <rect x="360" y="48" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="368" y="63" class="code-text" font-size="9.5">manage_websites</text>
+
+        <rect x="540" y="48" width="170" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="548" y="63" class="code-text" font-size="9.5">manage_automation</text>
+
+        <rect x="0" y="74" width="220" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="8" y="89" class="code-text" font-size="9.5">manage_custom_dashboards</text>
+
+        <rect x="230" y="74" width="240" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="238" y="89" class="code-text" font-size="9.5">manage_maintenance_windows</text>
+
+        <rect x="480" y="74" width="230" height="22" rx="2" fill="#262626" stroke="#393939"/>
+        <text x="488" y="89" class="code-text" font-size="9.5">manage_mobile_apps</text>
+      </g>
+    </g>
+
+    <!-- Section Container Right: IBM Bob AI Inference -->
+    <g transform="translate(780, 0)">
+      <rect x="0" y="0" width="580" height="150" rx="6" fill="#1e1e1e" stroke="#0f62fe" stroke-width="1.5" filter="url(#shadow)"/>
+      <path d="M 0 6 Q 0 0 6 0 L 574 0 Q 580 0 580 6 L 580 36 L 0 36 Z" fill="#262626"/>
+      <circle cx="20" cy="18" r="6" fill="#0f62fe"/>
+      <text x="36" y="23" class="layer-title">3B. IBM Bob LLM Inference Engine</text>
+      <text x="330" y="23" class="layer-subtitle">(Foundation Model: claude-opus-4-5)</text>
+
+      <g transform="translate(20, 48)">
+        <rect x="0" y="0" width="540" height="90" rx="4" fill="#161616" stroke="#393939"/>
+        <text x="14" y="22" class="code-text" font-weight="600">POST ${BOB_API_BASE_URL}/chat/completions</text>
+        
+        <circle cx="22" cy="42" r="3.5" fill="#4589ff"/>
+        <text x="34" y="46" font-size="10.5" fill="#c6c6c6">Autonomous Tool Invocation Loop (OpenAI Format Function Calling)</text>
+
+        <circle cx="22" cy="60" r="3.5" fill="#4589ff"/>
+        <text x="34" y="64" font-size="10.5" fill="#c6c6c6">Zero-Shot Root Cause Analysis (RCA) &amp; Remediation Guidance</text>
+
+        <circle cx="22" cy="78" r="3.5" fill="#42be65"/>
+        <text x="34" y="82" font-size="10.5" fill="#c6c6c6">Proactive Incident Evaluation &amp; Structured Markdown Generation</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- PROTOCOL BUS 3: MCP TO INSTANA & OBSERVABILITY TARGET                     -->
+  <!-- ========================================================================= -->
+  <g transform="translate(0, 815)">
+    <path d="M 420 0 L 420 30" stroke="#42be65" stroke-width="2" stroke-dasharray="4,4" fill="none" marker-end="url(#arrowGreen)"/>
+    <rect x="250" y="4" width="340" height="22" rx="11" fill="#071908" stroke="#0e4e2a" stroke-width="1" filter="url(#shadow)"/>
+    <text x="262" y="19" class="conn-label" fill="#42be65">HTTPS REST API (Bearer API-Token Auth)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- 4. OBSERVABILITY & TARGET CLUSTER LAYER                                   -->
+  <!-- ========================================================================= -->
+  <g transform="translate(40, 845)">
+    <rect x="0" y="0" width="1360" height="105" rx="6" fill="#161616" stroke="#24a148" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- Section Header -->
+    <path d="M 0 6 Q 0 0 6 0 L 1354 0 Q 1360 0 1360 6 L 1360 32 L 0 32 Z" fill="#262626"/>
+    <circle cx="20" cy="16" r="6" fill="#24a148"/>
+    <text x="36" y="21" class="layer-title">4. Enterprise Observability &amp; Monitored Target Infrastructure</text>
+    <text x="610" y="21" class="layer-subtitle">(IBM Instana APM Enterprise Tenant • Red Hat OpenShift / Kubernetes Cluster)</text>
+
+    <!-- Sub-Elements -->
+    <g transform="translate(20, 42)">
+      <!-- Instana APM Tenant Card -->
+      <rect x="0" y="0" width="460" height="52" rx="4" fill="#262626" stroke="#393939"/>
+      <text x="14" y="22" class="card-title">IBM Instana APM Enterprise Tenant</text>
+      <text x="14" y="40" class="code-text" font-size="10">INSTANA_BASE_URL: https://*.instana.io (App: Retail Application)</text>
+
+      <!-- Monitored Microservices -->
+      <g transform="translate(480, 0)">
+        <rect x="0" y="0" width="840" height="52" rx="4" fill="#262626" stroke="#393939"/>
+        <text x="14" y="20" class="card-title">Target OpenShift Cluster: ocp-production-us-south (Namespace: retail-app)</text>
+        
+        <rect x="14" y="28" width="115" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="20" y="41" class="code-text" font-size="9">cart-service</text>
+
+        <rect x="135" y="28" width="125" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="141" y="41" class="code-text" font-size="9">payment-service</text>
+
+        <rect x="266" y="28" width="125" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="272" y="41" class="code-text" font-size="9">shipping-service</text>
+
+        <rect x="397" y="28" width="115" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="403" y="41" class="code-text" font-size="9">order-service</text>
+
+        <rect x="518" y="28" width="120" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="524" y="41" class="code-text" font-size="9">catalog-service</text>
+
+        <rect x="644" y="28" width="85" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="650" y="41" class="code-text" font-size="9">Postgres RDS</text>
+
+        <rect x="735" y="28" width="90" height="18" rx="2" fill="#1e1e1e" stroke="#393939"/>
+        <text x="741" y="41" class="code-text" font-size="9">Redis Cache</text>
+      </g>
+    </g>
+  </g>
+
+</svg>

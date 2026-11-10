@@ -86,7 +86,7 @@
 # EXAMPLES
 #   # Full deploy (provision storage + mirror image + deploy CE + create indexes)
 #   export IBMCLOUD_API_KEY=your-api-key
-#   export OPENSEARCH_PASSWORD=<password>
+#   export OPENSEARCH_PASSWORD='MyStr0ng!Pass'
 #   ./deployment/deploy-opensearch.sh
 #
 #   # Re-deploy CE app only (image already in ICR, storage already bound)
@@ -95,7 +95,7 @@
 #   # Create / update indexes only (CE app already running)
 #   export OPENSEARCH_HOST=https://maximo-opensearch.<project>.eu-de.codeengine.appdomain.cloud
 #   export OPENSEARCH_USERNAME=admin
-#   export OPENSEARCH_PASSWORD=<password>
+#   export OPENSEARCH_PASSWORD='MyStr0ng!Pass'
 #   ./deployment/deploy-opensearch.sh --indexes-only
 #
 #   # Wipe and recreate indexes (DESTROYS ALL DATA)
