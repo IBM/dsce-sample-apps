@@ -10,6 +10,11 @@ const SECTION_RULES: Array<{ key: SectionKey; test: RegExp }> = [
   { key: 'conclusion', test: /conclusion|takeaway/i }
 ];
 
+/** Escapes a value for a Markdown table cell. The backslash goes first so a trailing "\" cannot cancel the "|" escape. */
+export function escapeTableCell(value: string): string {
+  return value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|');
+}
+
 export function classifyHeading(title: string): SectionKey {
   const t = title.replace(/^[\d.\s)-]+/, '').trim();
   // "Execution Artifacts"/"Execution Details" are rendered from backend data, not classified.
@@ -161,7 +166,7 @@ export class ReportService {
       ['Completed', e.finishedAt ?? 'n/a'],
       ['Report source', `${source} (${detail})`]
     ];
-    out.push('| Field | Value |', '| --- | --- |', ...rows.map(([k, v]) => `| ${k} | ${v.replace(/\|/g, '\\|')} |`));
+    out.push('| Field | Value |', '| --- | --- |', ...rows.map(([k, v]) => `| ${k} | ${escapeTableCell(v)} |`));
     out.push('', '## User Objective', '', e.prompt.trim().split('\n').map((l) => `> ${l}`).join('\n'));
     if (bob) out.push('', '---', '', '# Report from Headless Bob', '', bob.trim());
     else out.push('', '---', '', '## Report from Headless Bob', '', '_Headless Bob did not return report content for this execution._');

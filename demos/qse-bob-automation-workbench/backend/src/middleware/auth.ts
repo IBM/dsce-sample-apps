@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 import type { NextFunction, Request, Response } from 'express';
 import type { AppConfig } from '../config/env.js';
 import type { Role } from '../models/types.js';
-import type { SessionRepository, UserRepository } from '../repositories/auth.repository.js';
+import type { SessionRecord, SessionRepository, UserRepository } from '../repositories/auth.repository.js';
 import { AppError, forbidden, unauthorized } from '../utils/errors.js';
 import { ROLE_RANK } from './context.js';
 
@@ -40,14 +40,42 @@ function originAllowed(req: Request, config: AppConfig): boolean {
   }
 }
 
+function sessionExpired(config: AppConfig, session: SessionRecord, now: number): boolean {
+  return Date.parse(session.expiresAt) < now || Date.parse(session.lastSeenAt) + config.sessionIdleMinutes * 60_000 < now;
+}
+
+/** The error to return when a state-changing request fails the same-origin or CSRF-token check; null when it passes. */
+function csrfFailure(req: Request, config: AppConfig, csrfToken: string): AppError | null {
+  if (SAFE_METHODS.has(req.method)) return null;
+  if (!originAllowed(req, config)) return forbidden('Cross-origin request rejected');
+  const sent = req.header('x-csrf-token');
+  if (!sent || !sameToken(sent, csrfToken)) return new AppError(403, 'csrf_invalid', 'CSRF token missing or invalid');
+  return null;
+}
+
+/**
+ * CSRF protection for the cookie-authenticated API. It is installed right after the cookie parser, so every
+ * state-changing request that carries a live session must pass the same-origin and X-CSRF-Token checks, whichever
+ * route it reaches. Requests without a live session are left to `authenticate` (401), and sign-in is exempt
+ * because it has no session or token yet. `authenticate` repeats the check as defence in depth.
+ */
+export function csrfProtection(config: AppConfig, sessions: SessionRepository) {
+  return (req: Request, _res: Response, next: NextFunction) => {
+    if (SAFE_METHODS.has(req.method) || req.path === '/auth/login') return next();
+    const sid = req.cookies?.[SESSION_COOKIE] as string | undefined;
+    const session = sid ? sessions.find(sid) : undefined;
+    if (!session || sessionExpired(config, session, Date.now())) return next();
+    next(csrfFailure(req, config, session.csrfToken) ?? undefined);
+  };
+}
+
 export function authenticate(config: AppConfig, users: UserRepository, sessions: SessionRepository) {
   return (req: Request, _res: Response, next: NextFunction) => {
     const sid = req.cookies?.[SESSION_COOKIE] as string | undefined;
     if (!sid) return next(unauthorized());
     const session = sessions.find(sid);
     if (!session) return next(unauthorized('Session is invalid or has expired'));
-    const now = Date.now();
-    if (Date.parse(session.expiresAt) < now || Date.parse(session.lastSeenAt) + config.sessionIdleMinutes * 60_000 < now) {
+    if (sessionExpired(config, session, Date.now())) {
       sessions.delete(sid);
       return next(unauthorized('Session has expired. Please sign in again.'));
     }
@@ -56,11 +84,8 @@ export function authenticate(config: AppConfig, users: UserRepository, sessions:
       sessions.delete(sid);
       return next(unauthorized());
     }
-    if (!SAFE_METHODS.has(req.method)) {
-      if (!originAllowed(req, config)) return next(forbidden('Cross-origin request rejected'));
-      const sent = req.header('x-csrf-token');
-      if (!sent || !sameToken(sent, session.csrfToken)) return next(new AppError(403, 'csrf_invalid', 'CSRF token missing or invalid'));
-    }
+    const failure = csrfFailure(req, config, session.csrfToken);
+    if (failure) return next(failure);
     sessions.touch(sid);
     req.auth = { user, sessionId: sid, csrfToken: session.csrfToken };
     next();

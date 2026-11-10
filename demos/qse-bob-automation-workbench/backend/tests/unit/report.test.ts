@@ -1,8 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { classifyHeading, parseSections } from '../../src/services/report.service.js';
+import { classifyHeading, escapeTableCell, parseSections } from '../../src/services/report.service.js';
 import { markdownToPdf } from '../../src/services/pdf.service.js';
 import { buildPrompt } from '../../src/orchestrators/prompt-builder.js';
 import { LineBuffer, outputText, statusOf } from '../../src/integrations/headless-bob/events.js';
+
+describe('Markdown table cell escaping', () => {
+  it('escapes pipes and backslashes so a value cannot break out of its cell', () => {
+    expect(escapeTableCell('a|b')).toBe('a\\|b');
+    expect(escapeTableCell('a\\b')).toBe('a\\\\b');
+    // Without escaping the backslash first, "x\|" would render as an escaped backslash followed by a live column separator.
+    expect(escapeTableCell('x\\|y')).toBe('x\\\\\\|y');
+    expect(escapeTableCell('plain')).toBe('plain');
+  });
+});
 
 describe('report section parsing', () => {
   it('classifies headings and keeps fenced code intact', () => {

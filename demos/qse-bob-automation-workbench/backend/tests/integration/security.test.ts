@@ -45,6 +45,21 @@ describe('authentication, sessions and CSRF', () => {
     expect(ok.status).toBe(200);
   });
 
+  it('rejects a state-changing request without a CSRF token before it reaches routing', async () => {
+    h = await createHarness();
+    // A route that does not exist: 403 (not 404) proves the app-level guard ran ahead of the router.
+    const noToken = await h.agent.post('/api/does-not-exist');
+    expect(noToken.status).toBe(403);
+    expect(noToken.body.error.code).toBe('csrf_invalid');
+    const crossOrigin = await h.agent.delete('/api/repositories/x').set('x-csrf-token', h.csrf).set('origin', 'https://evil.example');
+    expect(crossOrigin.status).toBe(403);
+    // Safe methods and sign-in are not affected.
+    expect((await h.agent.get('/api/bob/status')).status).toBe(200);
+    expect((await h.agent.post('/api/auth/login').send({ username: 'admin', password: ADMIN_PASSWORD })).status).toBe(200);
+    // Without a session the request is still an ordinary 401.
+    expect((await request(h.app).post('/api/bob/disconnect')).status).toBe(401);
+  });
+
   it('invalidates the session on logout', async () => {
     h = await createHarness();
     expect((await h.api('post', '/api/auth/logout')).status).toBe(204);

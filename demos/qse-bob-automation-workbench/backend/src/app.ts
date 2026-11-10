@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import express, { type Express } from 'express';
 import type { AppContext } from './app-context.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
+import { csrfProtection } from './middleware/auth.js';
 import { requestContext } from './middleware/context.js';
 import { apiRateLimit, corsPolicy, securityHeaders } from './middleware/security.js';
 import { apiRouter } from './routes/index.js';
@@ -43,7 +44,7 @@ export function createApp(ctx: AppContext, state: AppState = { shuttingDown: fal
     res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'not_ready', checks });
   });
 
-  app.use('/api', corsPolicy(ctx.config), apiRateLimit(ctx.config), cookieParser(), express.json({ limit: '64kb', strict: true }), (_req, res, next) => {
+  app.use('/api', corsPolicy(ctx.config), apiRateLimit(ctx.config), cookieParser(), csrfProtection(ctx.config, ctx.sessions), express.json({ limit: '64kb', strict: true }), (_req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
     next();
   });
