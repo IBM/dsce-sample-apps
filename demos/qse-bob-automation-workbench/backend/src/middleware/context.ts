@@ -2,12 +2,15 @@ import crypto from 'node:crypto';
 import type { NextFunction, Request, Response } from 'express';
 import type { Logger } from '../utils/logger.js';
 import type { Role, User } from '../models/types.js';
+import type { SessionRecord } from '../repositories/auth.repository.js';
 
 declare module 'express-serve-static-core' {
   interface Request {
     id: string;
     log: Logger;
     auth?: { user: User; sessionId: string; csrfToken: string };
+    /** The live session behind the request's cookie; set by the CSRF middleware for state-changing requests. */
+    session?: SessionRecord;
   }
 }
 

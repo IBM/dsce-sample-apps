@@ -45,7 +45,7 @@ function sessionExpired(config: AppConfig, session: SessionRecord, now: number):
 }
 
 /** The error to return when a state-changing request fails the same-origin or CSRF-token check; null when it passes. */
-function csrfFailure(req: Request, config: AppConfig, sentToken: string | undefined, sessionToken: string): AppError | null {
+function verifyCsrf(req: Request, config: AppConfig, sentToken: string | undefined, sessionToken: string): AppError | null {
   if (SAFE_METHODS.has(req.method)) return null;
   if (!originAllowed(req, config)) return forbidden('Cross-origin request rejected');
   if (!sentToken || !sameToken(sentToken, sessionToken)) return new AppError(403, 'csrf_invalid', 'CSRF token missing or invalid');
@@ -64,8 +64,9 @@ export function csrfProtection(config: AppConfig, sessions: SessionRepository) {
     const sid = req.cookies?.[SESSION_COOKIE] as string | undefined;
     const session = sid ? sessions.find(sid) : undefined;
     if (!session || sessionExpired(config, session, Date.now())) return next();
-    const csrfToken = req.header('x-csrf-token');
-    next(csrfFailure(req, config, csrfToken, session.csrfToken) ?? undefined);
+    // Expose the live session on the request so the token comparison reads it from there.
+    req.session = session;
+    next(verifyCsrf(req, config, req.header('x-csrf-token'), req.session.csrfToken) ?? undefined);
   };
 }
 
@@ -84,7 +85,7 @@ export function authenticate(config: AppConfig, users: UserRepository, sessions:
       sessions.delete(sid);
       return next(unauthorized());
     }
-    const failure = csrfFailure(req, config, req.header('x-csrf-token'), session.csrfToken);
+    const failure = verifyCsrf(req, config, req.header('x-csrf-token'), session.csrfToken);
     if (failure) return next(failure);
     sessions.touch(sid);
     req.auth = { user, sessionId: sid, csrfToken: session.csrfToken };
