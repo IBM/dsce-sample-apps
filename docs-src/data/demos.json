@@ -595,6 +595,83 @@
       "extrasBoxUrl": "",
       "isLive": true,
       "release_date": "2026-11-06"
+    },
+    {
+      "name": "Autonomous RFP Response with Box Content Cloud and Headless Bob",
+      "slug": "autonomous-rfp-response-with-box-and-headless-bob",
+      "products": [
+        "IBM Bob",
+        "IBM watsonx.ai"
+      ],
+      "buildingBlocks": [
+        "ai.agents",
+        "ai.engineering",
+        "ai.govern"
+      ],
+      "skills": [
+        "agent-builder"
+      ],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/bob-box-rfp-demo",
+      "workingDemoURL": "https://rfp-demo.2gfppzsd2sff.us-east.codeengine.appdomain.cloud",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [
+        {
+          "cosFileName": "box_rfp_demo_final.mp4"
+        }
+      ],
+      "screenshots": [
+        "screenshot-1.png",
+        "screenshot-2.png",
+        "screenshot-3.png",
+        "screenshot-4.png",
+        "screenshot-5.png"
+      ],
+      "longDescription": "Enterprise sales engineering and proposal teams spend weeks manually triaging complex RFPs because essential customer context is scattered across disparate files throughout Box. Early discovery notes often conflict with formal technical spreadsheets, while late-breaking security addenda remain buried in unstructured folders. Conventional search and vector-based RAG pipelines often struggle with this complexity, as simple chunking can fragment intricate data tables, obscure sequential requirement hierarchies, and detach content from native permission boundaries. Overlooking these subtle discrepancies leads to inaccurate proposals, compliance exposure, and costly deal delays.\n\nThis solution positions IBM Bob as an autonomous intelligence layer directly on top of Box Content Cloud using the Model Context Protocol (MCP), enabling deep, live interaction with documents under native governance and access controls. Communicating over the Agent Communication Protocol (ACP) through a local Headless Bob runtime, the application holistically evaluates customer workspaces to surface requirement gaps and flag explicit open items rather than fabricating assumptions. Technical sellers collaborate in a version-controlled workspace to co-create grounded proposal drafts and presentation decks with speaker notes, complete with direct Box source citations and round-trip export into native Office formats. While demonstrated here for RFP acceleration, this decoupled MCP-and-agent architecture serves as a repeatable blueprint for any enterprise workflow requiring deep document synthesis, from contract analysis and compliance audits to technical discovery and executive briefings.",
+      "shortDescription": "Autonomously synthesize evidence-grounded RFP responses, gap analyses, and tailored presentation decks using enterprise documents in Box Content Cloud and headless IBM Bob. Replaces weeks of manual RFP triage with real-time, bi-directional document intelligence.",
+      "architecture_description": "The demo has four parts: a React 19 + TypeScript browser UI, a Node app server, Headless Bob, and Box Content Cloud.\nBrowser UI: The browser holds the Workspace Studio (Context tab, Ask Bob chat, artifact panel). It builds the RFP response .docx and presentation .pptx itself from the generated content.\nApp server: The server runs inside Vite, in vite.config.ts. It exposes /api/* routes that validate the request, cap its size and return generic errors. A basic-auth gate turns on for hosted deployments when APP_PASSWORD is set.\nHeadless Bob: For analysis, drafting and chat, the server sends a grounded prompt plus Box document text to Headless Bob (POST /runs) and parses the JSON that comes back. Bob reads Box content through box-mcp-runner.mjs, a stdio-to-HTTPS bridge to Box's hosted MCP server at mcp.box.com.\nBox: The server also reads folders and file text straight from the Box MCP server, and falls back to local sample content if Box is unreachable. Finished deliverables go back to a \"Generated RFP Responses\" folder in Box through the Box REST upload API.",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-11-10"
+    },
+    {
+      "name": "IBM Quantum Safe Explorer Bob Automation Workbench",
+      "slug": "ibm-quantum-safe-explorer-bob-automation-workbench",
+      "products": [
+        "IBM Bob",
+        "IBM Quantum Safe Explorer (QSE)"
+      ],
+      "buildingBlocks": [
+        "ai.engineering",
+        "automation.secure"
+      ],
+      "skills": [
+        "qse-bob-automation-workbench"
+      ],
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/qse-bob-automation-workbench",
+      "workingDemoURL": "https://qse-workbench-frontend.2gzj1q7cimpp.us-south.codeengine.appdomain.cloud/",
+      "architecture": "architecture.png",
+      "specificationsRepo": "",
+      "specificationsFlow": "",
+      "videos": [
+        {
+          "youTubeURL": "https://youtu.be/IeK6vadEa2E"
+        }
+      ],
+      "screenshots": [
+        "home_page.png",
+        "screenshot-01.png",
+        "screenshot-02.png",
+        "screenshot-03.png",
+        "screenshot-04.png"
+      ],
+      "longDescription": "The IBM Quantum Safe Explorer Bob Automation Workbench is a web application that orchestrates quantum-safe analysis through Headless Bob, an IBM Bob Shell HTTP service. It connects three things: Bob, a GitHub repository, and the Quantum Safe Explorer (QSE) CLI.\n\nHow it works\n\n1. Connect Bob. Point the Workbench at Headless Bob and check the connection.\n2. Clone a repository. The Workbench clones a GitHub repository into an isolated workspace.\n3. Configure the QSE CLI. Locate and validate the CLI that Bob will run.\n4. Describe the task. Write the analysis you want in natural language.\n5. Watch it run. Follow the pipeline steps, Bob's log output and the run status in real time.\n6. Read the report. Bob's end-to-end report is retrieved, rendered and kept in an execution history. Download it as Markdown, PDF or JSON, together with the scan artifacts.",
+      "shortDescription": "A web app that runs quantum-safe cryptography analysis on a GitHub repository through Headless Bob and the Quantum Safe Explorer CLI, with live streaming and downloadable reports.",
+      "architecture_description": "The Workbench is a React single-page app served by NGINX, which also proxies /api requests to a Node.js and Express backend, with live updates streamed unbuffered over Server-Sent Events. The backend is layered into routes and controllers with zod validation, middleware for authentication, CSRF, roles and rate limiting, and services for Bob, repositories, the QSE CLI and reports, with all state kept in SQLite. An execution orchestrator drives each run through fixed steps: it validates the configuration, confirms the git checkout, runs the QSE CLI version check, builds the prompt, and then submits it to Headless Bob. Headless Bob runs in its own container and shares the workspaces volume and a read-only QSE CLI volume with the backend. The orchestrator talks to Bob through swappable adapters (REST threads or ACP), so another agent or CLI can be added without changing it. The final report comes only from files and answers that Bob returns, with the backend adding just factual execution details.",
+      "extrasBoxUrl": "",
+      "isLive": true,
+      "release_date": "2026-11-10"
     }
   ]
 }

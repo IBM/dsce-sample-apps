@@ -1,0 +1,24 @@
+ACME CORP - ENTERPRISE CONTENT PLATFORM TECHNICAL REQUIREMENTS MATRIX
+Version: 1.4 | Updated: Sept 22, 2024
+Owner: David Chen (Acme Solutions Architect)
+Folder: All Files / Customers / Acme Corp / Architecture & Tech
+Box ID: BOX-FILE-8839211
+
+REQUIREMENT SPECIFICATIONS:
+[REQ-01] Identity & Authentication:
+- Single Sign-On (SSO) required for all corporate users.
+- Protocol: SAML 2.0 / OpenID Connect.
+- Note: Identity provider decision currently evaluating Okta vs. Azure AD (Pending final CISO review).
+
+[REQ-02] Application Programmability:
+- Comprehensive REST API availability required for programmatic file uploads, metadata extraction, and workflow status queries.
+- Webhook support for asynchronous document event notifications.
+
+[REQ-03] Access Control & Governance:
+- Granular Role-Based Access Controls (RBAC) required to separate Front-Office Intake Staff, Underwriting Approvers, and Compliance Auditors.
+
+[REQ-04] Data Residency & Location:
+- Strict US Data Residency requirement. All stored content and processing pipelines must remain within continental US data centers.
+
+[REQ-05] Cryptography & Transport:
+- Encryption in transit (TLS 1.2+ mandatory, TLS 1.3 preferred) and at rest (AES-256).

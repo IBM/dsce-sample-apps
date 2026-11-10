@@ -1,0 +1,14 @@
+ACME CORP - ARCHITECTURE WORKSHOP NOTES: ONBOARDING CONTENT INTEGRATION
+Date: September 28, 2024
+Lead: David Chen (Acme), Elena Rostova (Lead SE)
+Folder: All Files / Customers / Acme Corp / Architecture & Tech
+Box ID: BOX-FILE-8839213
+
+SYSTEM BOUNDARIES & INTEGRATION TOPOLOGY:
+- Core CRM: Salesforce Sales Cloud (Opportunity & Account records).
+- Pain: Operations team currently copies customer onboarding files and manually types metadata fields into custom Salesforce objects.
+- Integration Target: When a customer uploads onboarding documents, the content platform must auto-extract key metadata and link the document preview directly inside the Salesforce Account record.
+
+OPEN ARCHITECTURAL QUESTIONS:
+1. System of Record for Metadata: Architecture team is debating whether Salesforce or Box should act as the master system of record for custom document metadata (e.g., Customer Tax ID, Verification Status, Expiration Date).
+2. Identity Provider: Evaluating if single sign-on should originate from Okta enterprise directory or Azure AD.

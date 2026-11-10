@@ -1,0 +1,67 @@
+import assert from 'node:assert/strict';
+import { mkdtempSync, readFileSync, existsSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { setTimeout as delay } from 'node:timers/promises';
+import { createApp } from '../src/app.js';
+import { loadConfig } from '../src/config.js';
+import { BobClientRuntime } from '../src/runtime/client.js';
+
+if (!process.env.BOB_API_KEY) throw new Error('Set BOB_API_KEY in .env before running this live test');
+const dataDir = mkdtempSync(join(tmpdir(), 'headlessbob-client-bridge-'));
+const config = loadConfig({ ...process.env, DATA_DIR: dataDir, PORT: '0', HOST: '127.0.0.1', AUTH_TOKENS: '{}', BOB_ENABLE_CONTINUATION: 'true', RUN_TIMEOUT_MS: '90000' });
+const observations: { method: string; detail: unknown }[] = [];
+const runtime = new BobClientRuntime(config, event => observations.push(event));
+const app = await createApp(config, runtime);
+try {
+  await app.listen();
+  const base = `http://127.0.0.1:${(app.server.address() as { port: number }).port}`;
+  const request = async (path: string, value?: unknown) => {
+    const response = await fetch(base + path, { method: value === undefined ? 'GET' : 'POST', headers: { 'content-type': 'application/json' }, ...(value === undefined ? {} : { body: JSON.stringify(value) }) });
+    assert.ok(response.ok, `HTTP ${response.status}`); return response;
+  };
+  const input = (content: string, extra = {}) => ({ agent_name: 'headlessbob', input: [{ role: 'user', parts: [{ content_type: 'text/plain', content }] }], ...extra });
+  assert.ok((await (await request('/agents')).json() as any).agents.length);
+  console.log('PASS Agent Communication Protocol discovery');
+  const first = await (await request('/runs', input('Create bridge.txt containing exactly BRIDGE_OK. Do not inspect other files. Remember the codeword ORCHID_739 for the next turn. Reply FIRST_DONE.'))).json() as any;
+  assert.equal(first.status, 'completed', JSON.stringify(first.error));
+  const session = app.store.session(first.session_id, 'local')!;
+  assert.equal(readFileSync(join(session.workspace, 'bridge.txt'), 'utf8').trim(), 'BRIDGE_OK');
+  assert.match(first.output[0].parts[0].content, /FIRST_DONE/);
+  console.log('PASS HTTP sync run → Bob Agent Client Protocol → tool permission → real file creation');
+  const response = await request('/runs', input('Without reading any files, reply with the codeword I asked you to remember, and nothing else.', { session_id: first.session_id, mode: 'stream' }));
+  assert.match(response.headers.get('content-type')!, /text\/event-stream/);
+  const events = (await response.text()).split('\n').filter(line => line.startsWith('data:')).map(line => JSON.parse(line.slice(5)));
+  const completed = events.find(event => event.type === 'run.completed');
+  assert.ok(completed, JSON.stringify(events.filter(e => e.type === 'run.failed')));
+  assert.match(completed.run.output[0].parts[0].content, /ORCHID_739/);
+  assert.doesNotMatch(completed.run.output[0].parts[0].content, /FIRST_DONE/);
+  assert.ok(events.some(event => event.type === 'message.part'));
+  assert.equal(app.store.session(first.session_id, 'local')!.taskId, session.taskId);
+  console.log('PASS new Bob process resumes prior session; conversation recall and HTTP SSE translation');
+  const thread = await (await request('/api/v1/threads', {})).json() as any;
+  const rest = await (await request(`/api/v1/threads/${thread.id}/messages`, { content: 'Reply exactly REST_CLIENT_OK. Do not use tools.' })).json() as any;
+  const restRun = await app.manager.wait(rest.run.run_id, 'local');
+  assert.equal(restRun.status, 'completed', JSON.stringify(restRun.error));
+  assert.match(restRun.output[0].parts[0].content, /REST_CLIENT_OK/);
+  const messages = await (await request(`/api/v1/threads/${thread.id}/messages`)).json() as any;
+  assert.ok(messages.items.some((m: any) => m.role === 'assistant' && m.content.includes('REST_CLIENT_OK')));
+  console.log('PASS REST thread message → shared Agent Client Protocol runtime → persisted assistant reply');
+  const slow = await (await request('/runs', input('Run this exact shell command once: echo $$ > command.pid; touch cancellation-started; sleep 60; touch cancellation-finished. Wait for it to finish.', { mode: 'async' }))).json() as any;
+  const slowSession = app.store.session(slow.session_id, 'local')!;
+  for (let i = 0; i < 450 && !existsSync(join(slowSession.workspace, 'cancellation-started')); i++) await delay(100);
+  assert.ok(existsSync(join(slowSession.workspace, 'cancellation-started')), 'Bob started the command');
+  await request(`/runs/${slow.run_id}/cancel`, {});
+  const cancelled = await app.manager.wait(slow.run_id, 'local');
+  assert.equal(cancelled.status, 'cancelled');
+  assert.ok(!existsSync(join(slowSession.workspace, 'cancellation-finished')));
+  const pid = Number(readFileSync(join(slowSession.workspace, 'command.pid'), 'utf8').trim());
+  assert.ok(Number.isSafeInteger(pid) && pid > 0);
+  let gone = false;
+  for (let i = 0; i < 30; i++) { try { process.kill(pid, 0); } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ESRCH') { gone = true; break; } } await delay(100); }
+  assert.ok(gone, 'Tool shell process is no longer running');
+  console.log('PASS async execution and HTTP cancellation with process-group cleanup');
+  const methods = observations.filter(o => o.method !== 'session/update');
+  console.log('Observed handshake and lifecycle:', JSON.stringify(methods, null, 2));
+  console.log('Observed update types:', [...new Set(observations.filter(o => o.method === 'session/update').map(o => o.detail))].join(', '));
+} finally { await app.close(); rmSync(dataDir, { recursive: true, force: true }); }

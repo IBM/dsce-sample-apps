@@ -1,0 +1,164 @@
+'use client'
+
+import { useState } from 'react'
+import { Download, Loader2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { PresentationRenderer } from '@/components/PresentationRenderer'
+import { SlideDeckViewer } from '@/components/SlideDeckViewer'
+import { buildSlides, buildSlideContext } from '@/components/slideDeckData'
+import { createDeckPptxBlob } from '@/services/slideDeckExport'
+import { SYNTHETIC_BOX_DOCUMENTS } from '@/data/syntheticDocuments'
+import { SYNTHETIC_FINDINGS } from '@/data/syntheticFindings'
+import pptxgen from 'pptxgenjs'
+import type { PresentationSlideData } from '@/services/workspaceArtifacts'
+
+export function SlideDeck({
+  slides,
+  title = 'Acme Bank - AI-Powered Document Intelligence Presentation',
+}: {
+  slides?: Array<{ title: string; subtitle?: string; bullets?: string[]; speakerNotes?: string; notes?: string }>
+  title?: string
+  companyName?: string
+}) {
+  const [exporting, setExporting] = useState(false)
+
+  const normalizedSlides: PresentationSlideData[] | null =
+    Array.isArray(slides) && slides.length > 0
+      ? slides.map((s, idx) => ({
+          id: idx + 1,
+          title: s.title || `Slide ${idx + 1}`,
+          subtitle: s.subtitle,
+          bullets: Array.isArray(s.bullets) ? s.bullets : [],
+          notes: s.speakerNotes || s.notes || '',
+        }))
+      : null
+
+  async function exportPptx() {
+    setExporting(true)
+    try {
+      if (normalizedSlides && normalizedSlides.length > 0) {
+        const pptx = new pptxgen()
+        pptx.layout = 'LAYOUT_16x9'
+        pptx.author = 'IBM Bob'
+        pptx.company = 'IBM / Box'
+        pptx.title = title
+
+        for (const s of normalizedSlides) {
+          const slide = pptx.addSlide()
+          const isDark = s.id === 1
+          slide.background = { color: isDark ? '161616' : 'FFFFFF' }
+
+          // Header line
+          if (!isDark) {
+            slide.addShape(pptx.ShapeType.rect, {
+              x: 0.8,
+              y: 0.6,
+              w: 0.15,
+              h: 0.5,
+              fill: { color: '0F62FE' },
+            })
+          }
+
+          if (isDark) {
+            slide.addText('RFP RESPONSE', {
+              x: 0.8, y: 0.7, w: 8.5, h: 0.4,
+              fontSize: 12, bold: true, color: '0F62FE', charSpacing: 3, fontFace: 'Arial',
+            })
+          }
+
+          // Slide Title
+          slide.addText(s.title, {
+            x: isDark ? 0.8 : 1.1,
+            y: isDark ? 1.5 : 0.6,
+            w: 8.5,
+            h: 0.8,
+            fontSize: isDark ? 28 : 22,
+            bold: true,
+            color: isDark ? 'FFFFFF' : '161616',
+            fontFace: 'Arial',
+          })
+
+          // Subtitle
+          if (s.subtitle) {
+            slide.addText(s.subtitle, {
+              x: isDark ? 0.8 : 1.1,
+              y: isDark ? 2.4 : 1.4,
+              w: 8.5,
+              h: 0.5,
+              fontSize: 13,
+              color: isDark ? 'A8A8A8' : '525252',
+              fontFace: 'Arial',
+            })
+          }
+
+          // Bullets
+          if (s.bullets && s.bullets.length > 0) {
+            const items = s.bullets.map((b) => ({
+              text: b,
+              options: {
+                bullet: true,
+                fontSize: 14,
+                color: isDark ? 'E0E0E0' : '161616',
+                breakLine: true,
+              },
+            }))
+            slide.addText(items, {
+              x: 0.8,
+              y: isDark ? 3.2 : s.subtitle ? 2.1 : 1.7,
+              w: 8.5,
+              h: 3.8,
+              fontFace: 'Arial',
+              lineSpacing: 24,
+            })
+          }
+
+          // Notes
+          if (s.notes) {
+            slide.addNotes(s.notes)
+          }
+        }
+
+        const blob = (await pptx.write({ outputType: 'blob' })) as Blob
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.pptx`
+        a.click()
+        URL.revokeObjectURL(url)
+      } else {
+        const legacySlides = buildSlides(buildSlideContext(SYNTHETIC_BOX_DOCUMENTS, SYNTHETIC_FINDINGS))
+        const blob = await createDeckPptxBlob(legacySlides, title)
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.pptx`
+        a.click()
+        URL.revokeObjectURL(url)
+      }
+    } catch (err) {
+      console.error('PPTX export error:', err)
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between gap-2 px-1">
+        <span className="text-xs text-muted-foreground font-mono">
+          {normalizedSlides ? `${normalizedSlides.length} Slides Generated by Bob` : '6 Slides'}
+        </span>
+        <Button size="sm" variant="outline" onClick={exportPptx} disabled={exporting}>
+          {exporting ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : <Download className="size-4" aria-hidden="true" />}
+          Export to PowerPoint
+        </Button>
+      </div>
+
+      {normalizedSlides ? (
+        <PresentationRenderer slides={normalizedSlides} />
+      ) : (
+        <SlideDeckViewer documents={SYNTHETIC_BOX_DOCUMENTS} findings={SYNTHETIC_FINDINGS} />
+      )}
+    </div>
+  )
+}

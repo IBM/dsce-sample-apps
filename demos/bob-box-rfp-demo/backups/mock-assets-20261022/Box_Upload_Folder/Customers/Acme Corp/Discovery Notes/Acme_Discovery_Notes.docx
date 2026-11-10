@@ -1,0 +1,20 @@
+ACME CORP - CUSTOMER ONBOARDING DISCOVERY SESSION
+Date: September 18, 2024
+Participants: Sarah Jenkins (AE), Marcus Vance (SE), David Chen (Acme VP Ops), Rachel Green (Acme IT Director)
+Folder: All Files / Customers / Acme Corp / Discovery Notes
+Box ID: BOX-FILE-8839210
+
+EXECUTIVE SUMMARY:
+Acme Corp processes hundreds of new commercial accounts every month. The current onboarding workflow suffers from acute friction due to fragmented content repositories and manual document handling.
+
+KEY PAIN POINTS DISCUSSED:
+1. Manual Document Classification: Operations staff manually inspect uploaded PDF/DOCX tax records, certificates of insurance, and contracts to tag them by account and document type. This introduces human error and creates a 48-hour backlog.
+2. Disconnected Content Repositories: Onboarding specialists search across three legacy file shares and shared network drives, complaining that "finding historical customer documentation takes 15+ minutes per case."
+3. Manual Data Re-entry into Salesforce: Once files are reviewed, ops personnel manually re-type client metadata and validation timestamps into Salesforce account records.
+4. Slow Approvals: Approval requests are circulated via email chains without standardized routing rules.
+
+STATED GOALS FOR NEW SOLUTION:
+- Implement automated document classification upon intake.
+- Enable direct synchronization with Salesforce Sales Cloud to eliminate manual data entry.
+- Centralize search across all customer onboarding documentation.
+- Provide real-time workflow status visibility.

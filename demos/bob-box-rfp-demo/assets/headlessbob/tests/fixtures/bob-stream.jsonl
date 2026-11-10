@@ -1,0 +1,7 @@
+{"type":"message","timestamp":"2026-09-11T12:00:00.000Z","role":"user","content":"Say hello"}
+{"type":"message","timestamp":"2026-09-11T12:00:00.001Z","role":"assistant","isReasoning":true,"content":"private reasoning"}
+{"type":"message","timestamp":"2026-09-11T12:00:00.002Z","role":"assistant","isReasoning":false,"content":"Hello "}
+{"type":"tool_use","timestamp":"2026-09-11T12:00:00.003Z","tool_name":"read_file","tool_id":"tool-1","parameters":{"path":"example.txt"}}
+{"type":"tool_result","timestamp":"2026-09-11T12:00:00.004Z","tool_id":"tool-1","status":"success","output":"example"}
+{"type":"message","timestamp":"2026-09-11T12:00:00.005Z","role":"assistant","isReasoning":false,"content":"🌍"}
+{"type":"result","timestamp":"2026-09-11T12:00:00.006Z","status":"success","stats":{"task_id":"fixture-task","duration_ms":6,"session_costs":0,"max_cost":1,"tool_calls":1}}

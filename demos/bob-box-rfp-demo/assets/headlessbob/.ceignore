@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.env
+.env.*
+!.env.example
+*key*.json
+.headlessbob
+data
+tests
+**/__pycache__

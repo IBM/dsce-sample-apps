@@ -1,0 +1,9 @@
+CUSTOMER ONBOARDING WORKFLOW ANALYSIS & PAIN POINTS
+Documented by Rachel Green, IT Director
+Folder: All Files / Customers / Acme Corp / Discovery Notes
+Box ID: BOX-FILE-8839217
+
+OPERATIONAL WORKFLOW BOTTLENECKS:
+1. Approval Inconsistencies: Document approvals are sent through ad-hoc Outlook email threads. If a reviewer is out of office, onboarding applications stall for days with zero automated escalation.
+2. Lack of Status Visibility: Business users and account managers have no centralized dashboard to check whether a customer's compliance package is pending review, approved, or rejected.
+3. Stated Need: A streamlined, automated approval workflow with clear status indicators at every stage of the document lifecycle.

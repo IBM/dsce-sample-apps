@@ -133,5 +133,9 @@
     "IBM Environmental Intelligence Suite" : {
         "url" : "https://www.ibm.com/docs/en/environmental-intel-suite?topic=product-overview",
         "image" : ""
+    },
+    "IBM Quantum Safe Explorer (QSE)" : {
+        "url" : "https://www.ibm.com/quantum/safe",
+        "image" : "ibm-quantum-safe-explorer.svg"
     }
 }

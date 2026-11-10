@@ -1,0 +1,12 @@
+{
+  "agent_name": "headlessbob",
+  "mode": "sync",
+  "input": [
+    {
+      "role": "user",
+      "parts": [
+        { "content_type": "text/plain", "content": "Create hello.txt containing Hello from HeadlessBob. Then report what you created." }
+      ]
+    }
+  ]
+}
