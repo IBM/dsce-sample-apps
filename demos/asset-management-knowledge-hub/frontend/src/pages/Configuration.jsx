@@ -176,7 +176,7 @@ export default function Configuration() {
   const [osIndex,         setOsIndex]         = useState('maximo-documents');
   const [webIndex,        setWebIndex]        = useState('maximo_web_knowledge');
   const [verifySSL,       setVerifySSL]       = useState(false);
-  // OpenSearch direct connection test (proxied through /opensearch-api in dev)
+  // OpenSearch connection test (via the MCP server's /api/opensearch/status)
   const [osTestState,     setOsTestState]     = useState(null); // null | 'loading' | 'ok' | 'error'
   const [osTestMsg,       setOsTestMsg]       = useState('');
   const [osMaskedHost,    setOsMaskedHost]    = useState('');
@@ -736,12 +736,12 @@ export default function Configuration() {
               <h4 className="subsection-heading">Crawl defaults</h4>
               <div className="field-list">
                 <div className="field-row">
-                  <NumberInput id="web-cfg-depth" label="Max link depth" min={0} max={5}
+                  <NumberInput id="web-cfg-depth" label="Max link depth" min={0} max={2}
                     value={ingestSources.web.maxDepth}
                     onChange={(_, { value }) => updateIngest('web', { maxDepth: value })} />
                 </div>
                 <div className="field-row">
-                  <NumberInput id="web-cfg-pages" label="Max pages" min={1} max={200}
+                  <NumberInput id="web-cfg-pages" label="Max pages" min={1} max={50}
                     value={ingestSources.web.maxPages}
                     onChange={(_, { value }) => updateIngest('web', { maxPages: value })} />
                 </div>

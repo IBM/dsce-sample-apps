@@ -1,0 +1,508 @@
+@use '@carbon/react/scss/config' with (
+  $font-path: '@ibm/plex',
+  $css--font-face: false
+);
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme' with (
+  $theme: themes.$g100
+);
+@use '@carbon/react';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type';
+
+@import '@ibm/plex-sans/css/ibm-plex-sans-default.min.css';
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #161616;
+  color: #f4f4f4;
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+code,
+pre,
+.mono {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.app-main {
+  padding: $spacing-07;
+  min-height: calc(100vh - 3rem);
+  max-width: 1584px;
+  margin: 0 auto;
+}
+
+.page-title {
+  @include type.type-style('heading-05');
+  margin-bottom: $spacing-02;
+}
+
+.page-subtitle {
+  @include type.type-style('body-compact-01');
+  color: var(--cds-text-secondary);
+  margin-bottom: $spacing-07;
+  max-width: 60rem;
+}
+
+.section {
+  margin-bottom: $spacing-07;
+}
+
+.card {
+  background: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  padding: $spacing-06;
+}
+
+.card + .card {
+  margin-top: $spacing-05;
+}
+
+.card-title {
+  @include type.type-style('heading-03');
+  margin-bottom: $spacing-03;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.card-help {
+  @include type.type-style('helper-text-01');
+  color: var(--cds-text-secondary);
+  margin-bottom: $spacing-05;
+}
+
+.form-stack > * + * {
+  margin-top: $spacing-05;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  margin-top: $spacing-06;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  gap: $spacing-05;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: $spacing-05;
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) 1fr;
+  gap: $spacing-03 $spacing-05;
+  @include type.type-style('body-compact-01');
+}
+
+.kv dt {
+  color: var(--cds-text-secondary);
+}
+
+.kv dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.stat {
+  background: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  border-left: 3px solid var(--cds-border-strong-01);
+  padding: $spacing-05;
+}
+
+.stat.ok {
+  border-left-color: var(--cds-support-success);
+}
+
+.stat.bad {
+  border-left-color: var(--cds-support-error);
+}
+
+.stat.warn {
+  border-left-color: var(--cds-support-warning);
+}
+
+.stat.info {
+  border-left-color: var(--cds-support-info);
+}
+
+.stat .label {
+  @include type.type-style('label-01');
+  color: var(--cds-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+}
+
+.stat .value {
+  @include type.type-style('heading-03');
+  margin-top: $spacing-02;
+  overflow-wrap: anywhere;
+}
+
+.stat .sub {
+  @include type.type-style('helper-text-01');
+  color: var(--cds-text-secondary);
+  margin-top: $spacing-02;
+  overflow-wrap: anywhere;
+}
+
+.log-view {
+  background: #0b0b0b;
+  border: 1px solid var(--cds-border-subtle-01);
+  height: 26rem;
+  overflow: auto;
+  padding: $spacing-04;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.log-line {
+  display: grid;
+  grid-template-columns: 5.5rem 6.5rem 1fr;
+  gap: $spacing-03;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.log-line .ts {
+  color: #6f6f6f;
+}
+
+.log-line .src-backend {
+  color: #78a9ff;
+}
+
+.log-line .src-headless-bob {
+  color: #be95ff;
+}
+
+.log-line .src-system {
+  color: #a8a8a8;
+}
+
+.log-line.warn .msg {
+  color: #f1c21b;
+}
+
+.log-line.error .msg {
+  color: #ff8389;
+}
+
+.markdown {
+  @include type.type-style('body-02');
+  max-width: 62rem;
+  overflow-wrap: anywhere;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  margin: $spacing-06 0 $spacing-03;
+}
+
+.markdown h1 {
+  @include type.type-style('heading-05');
+}
+
+.markdown h2 {
+  @include type.type-style('heading-04');
+}
+
+.markdown h3 {
+  @include type.type-style('heading-03');
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol {
+  margin-bottom: $spacing-04;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: $spacing-06;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown code {
+  background: #262626;
+  padding: 0 0.25rem;
+  font-size: 0.875em;
+}
+
+.markdown pre {
+  background: #0b0b0b;
+  padding: $spacing-04;
+  overflow: auto;
+  margin-bottom: $spacing-04;
+}
+
+.markdown pre code {
+  background: none;
+  padding: 0;
+}
+
+.markdown table {
+  border-collapse: collapse;
+  margin-bottom: $spacing-05;
+  display: block;
+  overflow-x: auto;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid var(--cds-border-subtle-01);
+  padding: $spacing-03 $spacing-04;
+  text-align: left;
+}
+
+.markdown blockquote {
+  border-left: 3px solid var(--cds-border-strong-01);
+  padding-left: $spacing-05;
+  color: var(--cds-text-secondary);
+  margin-bottom: $spacing-04;
+}
+
+.login-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: $spacing-06;
+  background: radial-gradient(circle at 20% 10%, #1c2a44 0%, #161616 55%);
+}
+
+.login-card {
+  width: min(100%, 26rem);
+  background: var(--cds-layer-01);
+  border: 1px solid var(--cds-border-subtle-01);
+  padding: $spacing-07;
+}
+
+.login-card h1 {
+  @include type.type-style('heading-04');
+  margin-bottom: $spacing-02;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  margin-left: auto;
+  padding-right: $spacing-04;
+  @include type.type-style('label-01');
+  color: #c6c6c6;
+}
+
+.header-status .item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  white-space: nowrap;
+}
+
+.header-status .repo {
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1056px) {
+  .header-status .hide-md {
+    display: none;
+  }
+}
+
+@media (max-width: 672px) {
+  .header-status {
+    display: none;
+  }
+
+  .app-main {
+    padding: $spacing-05;
+  }
+
+  .kv {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prompt-area textarea {
+  min-height: 14rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.step-source {
+  @include type.type-style('helper-text-01');
+  color: var(--cds-text-secondary);
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.row {
+  display: flex;
+  gap: $spacing-04;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.progress-lines {
+  background: #0b0b0b;
+  padding: $spacing-04;
+  max-height: 10rem;
+  overflow: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  margin-top: $spacing-04;
+}
+
+.step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.step-list li {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  gap: $spacing-04;
+  padding: $spacing-04 0;
+  border-bottom: 1px solid var(--cds-border-subtle-01);
+  align-items: start;
+}
+
+.step-list .msg {
+  @include type.type-style('helper-text-01');
+  color: var(--cds-text-secondary);
+}
+
+// ---- Pipeline digital twin -------------------------------------------------------------------
+// Carbon g100 values, defined here because the app never applies the .cds--g100 theme class,
+// so the --cds-* tokens are undefined and SVG falls back to black fill / no stroke.
+.twin {
+  --twin-layer: #262626;
+  --twin-border: #6f6f6f;
+  --twin-text: #f4f4f4;
+  --twin-text-2: #c6c6c6;
+  --twin-success: #42be65;
+  --twin-info: #4589ff;
+  --twin-error: #fa4d56;
+  --twin-warning: #f1c21b;
+  overflow-x: auto;
+}
+
+.twin-svg {
+  display: block;
+  width: 100%;
+  min-width: 1000px;
+  height: auto;
+}
+
+.twin-rect {
+  fill: var(--twin-layer);
+  stroke: var(--twin-border);
+  stroke-width: 1;
+}
+
+.twin-bar {
+  fill: var(--twin-border);
+}
+
+.twin-title {
+  fill: var(--twin-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.twin-sub,
+.twin-src {
+  fill: var(--twin-text-2);
+  font-size: 10px;
+}
+
+.twin-state {
+  fill: var(--twin-text-2);
+  font-size: 11px;
+}
+
+.twin-flow,
+.twin-link {
+  stroke: var(--twin-border);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.twin-link {
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.twin-arrowhead {
+  fill: var(--twin-border);
+}
+
+.twin-flow--done {
+  stroke: var(--twin-success);
+}
+
+.twin-link--live {
+  stroke: var(--twin-info);
+  stroke-width: 2;
+}
+
+.twin-node--ok {
+  .twin-bar { fill: var(--twin-success); }
+  .twin-rect { stroke: var(--twin-success); }
+}
+
+.twin-node--active {
+  .twin-bar { fill: var(--twin-info); }
+  .twin-rect { stroke: var(--twin-info); stroke-width: 2; }
+}
+
+.twin-node--error {
+  .twin-bar { fill: var(--twin-error); }
+  .twin-rect { stroke: var(--twin-error); stroke-width: 2; }
+}
+
+.twin-node--warn {
+  .twin-bar { fill: var(--twin-warning); }
+  .twin-rect { stroke: var(--twin-warning); }
+}
+
+.twin-note {
+  margin-top: $spacing-03;
+}
+

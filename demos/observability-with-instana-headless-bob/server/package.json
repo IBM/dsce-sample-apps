@@ -1,0 +1,27 @@
+{
+  "name": "instana-bob-bridge-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "http-proxy-middleware": "^4.2.1",
+    "openai": "^4.78.0"
+  },
+  "overrides": {
+    "@modelcontextprotocol/sdk": {
+      "express": {
+        "body-parser": "2.4.0"
+      }
+    },
+    "express": {
+      "body-parser": "1.20.9"
+    }
+  }
+}

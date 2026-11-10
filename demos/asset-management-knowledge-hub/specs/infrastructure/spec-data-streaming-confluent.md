@@ -41,7 +41,7 @@
 | `KAFKA_SECURITY_PROTOCOL` | Security protocol | `SASL_SSL` |
 | `KAFKA_SASL_MECHANISM` | SASL mechanism | `PLAIN` |
 
-If `KAFKA_BOOTSTRAP_SERVERS` is not set, the [`KafkaService`](../backend/mcp_server/src/services/kafka_service.py) returns `configured: false` for all calls.
+If `KAFKA_BOOTSTRAP_SERVERS` is not set, the [`KafkaService`](../../backend/mcp_server/src/services/kafka_service.py) returns `configured: false` for all calls.
 
 ---
 

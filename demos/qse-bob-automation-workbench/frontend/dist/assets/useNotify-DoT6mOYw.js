@@ -1,0 +1,1 @@
+import{h as e}from"./format-C2z-B_Dq.js";import{t}from"./notifications-BL4BgtQC.js";function n(){let n=t(e=>e.push);return{success:(e,t)=>n({kind:`success`,title:e,subtitle:t}),info:(e,t)=>n({kind:`info`,title:e,subtitle:t}),error:(t,r=`Something went wrong`)=>{let i=t instanceof e||t instanceof Error?t.message:String(t);n({kind:`error`,title:r,subtitle:i})}}}export{n as t};

@@ -1,0 +1,100 @@
+# TLS variant: terminates HTTPS on 8443 and redirects HTTP (8080) to it.
+# Certificates are mounted at /etc/nginx/certs/{tls.crt,tls.key} by docker-compose.tls.yml.
+# ${BACKEND_UPSTREAM}: e.g. http://backend:8080
+# ${PUBLIC_HOST}: host name used in the HTTP->HTTPS redirect
+
+server {
+    listen 8080;
+    server_name _;
+    location = /nginx-health { access_log off; default_type text/plain; return 200 "ok\n"; }
+    location / { return 308 https://${PUBLIC_HOST}:${PUBLIC_HTTPS_PORT}$request_uri; }
+}
+
+server {
+    listen 8443 ssl;
+    http2 on;
+    ssl_certificate /etc/nginx/certs/tls.crt;
+    ssl_certificate_key /etc/nginx/certs/tls.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_tickets off;
+    server_name _;
+    server_tokens off;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Request size: API payloads are small JSON documents.
+    client_max_body_size 256k;
+
+    # Security headers (the backend adds its own for /api responses).
+    add_header Strict-Transport-Security "max-age=31536000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" always;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+
+    location = /nginx-health {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    # Liveness/readiness of the backend are exposed for external probes only.
+    # HTTP/1.1 is required: NGINX proxies with HTTP/1.0 by default, which some ingresses reject with 426.
+    location = /healthz { proxy_pass ${BACKEND_UPSTREAM}/healthz; proxy_http_version 1.1; proxy_set_header Connection ""; access_log off; }
+    location = /readyz  { proxy_pass ${BACKEND_UPSTREAM}/readyz;  proxy_http_version 1.1; proxy_set_header Connection ""; access_log off; }
+
+    # Server-Sent Events: live execution stream. Buffering must be off so events are delivered immediately.
+    location ~ ^/api/executions/[^/]+/stream$ {
+        proxy_pass ${BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        proxy_cache off;
+        gzip off;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+        add_header X-Accel-Buffering "no" always;
+    }
+
+    location /api/ {
+        proxy_pass ${BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+
+    # Hashed build assets are immutable.
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
+        try_files $uri =404;
+    }
+
+    # SPA fallback; never cache the shell.
+    location / {
+        add_header Cache-Control "no-store";
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Frame-Options "DENY" always;
+        add_header Referrer-Policy "no-referrer" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" always;
+        try_files $uri /index.html;
+    }
+}

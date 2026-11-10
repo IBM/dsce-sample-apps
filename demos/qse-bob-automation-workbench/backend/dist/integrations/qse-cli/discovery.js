@@ -1,0 +1,87 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { isInside } from '../../utils/paths.js';
+export function isExecutableFile(p) {
+    try {
+        const st = fs.statSync(p);
+        if (!st.isFile())
+            return false;
+        fs.accessSync(p, fs.constants.X_OK);
+        return true;
+    }
+    catch {
+        return false;
+    }
+}
+/** True when the real path of `p` is inside one of the permitted installation directories. */
+export function isAllowedLocation(p, allowedDirs) {
+    let real;
+    try {
+        real = fs.realpathSync(p);
+    }
+    catch {
+        return false;
+    }
+    return allowedDirs.some((dir) => {
+        try {
+            return isInside(fs.realpathSync(dir), real);
+        }
+        catch {
+            return false;
+        }
+    });
+}
+export function isAllowedName(p, names) {
+    return names.includes(path.basename(p));
+}
+/**
+ * Safe executable discovery: only inspects the filesystem (no execution) and only
+ * looks in configured locations, QSE_CLI_PATH and PATH.
+ */
+export function discoverCandidates(cfg, pathEnv = process.env.PATH ?? '') {
+    const seen = new Set();
+    const out = [];
+    const add = (p, source) => {
+        if (!path.isAbsolute(p))
+            return;
+        let real = p;
+        try {
+            real = fs.realpathSync(p);
+        }
+        catch {
+            return;
+        }
+        if (seen.has(real))
+            return;
+        seen.add(real);
+        out.push({
+            path: real,
+            source,
+            executable: isExecutableFile(real),
+            allowed: isAllowedLocation(real, cfg.allowedDirs) && isAllowedName(real, cfg.executableNames)
+        });
+    };
+    if (cfg.envPath) {
+        const p = cfg.envPath;
+        try {
+            if (fs.statSync(p).isDirectory())
+                for (const name of cfg.executableNames)
+                    add(path.join(p, name), 'QSE_CLI_PATH');
+            else
+                add(p, 'QSE_CLI_PATH');
+        }
+        catch {
+            /* missing */
+        }
+    }
+    for (const dir of pathEnv.split(path.delimiter).filter(Boolean)) {
+        for (const name of cfg.executableNames)
+            add(path.join(dir, name), 'PATH');
+    }
+    for (const dir of cfg.searchDirs) {
+        for (const name of cfg.executableNames)
+            add(path.join(dir, name), 'search-dir');
+    }
+    return out;
+}
+//# sourceMappingURL=discovery.js.map

@@ -4,10 +4,10 @@
     {
       "id": "env-default",
       "name": "Production Maximo",
-      "url": "<url>",
-      "api_key": "<api_key>",
-      "username": "<username>",
-      "password": "<password>",
+      "url": "CHANGE_ME",
+      "api_key": "CHANGE_ME",
+      "username": "CHANGE_ME",
+      "password": "CHANGE_ME",
       "version": "9.1",
       "status": "unknown",
       "primary": true

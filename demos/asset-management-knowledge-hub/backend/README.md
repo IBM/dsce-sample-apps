@@ -1,5 +1,13 @@
 # Asset Management Knowledge Hub — Python Refactor
 
+> **Demonstration application — not security-hardened for production.**
+> The backends authenticate with shared secrets (`API_KEY`, plus `ADMIN_API_KEY` for
+> ingestion and delete routes), restrict web crawling to approved domains, block
+> internal and metadata addresses, rate-limit job submissions and log ingestion and
+> denied requests. There is still no per-user identity, the rate limiter is in memory,
+> and network isolation is yours to configure. See
+> [Security notes and known limits](../README.md#security-notes-and-known-limits).
+
 > **Note:** The original JavaScript/TypeScript code is preserved in `../old_code/`.
 > This directory contains the fully refactored Python implementation.
 

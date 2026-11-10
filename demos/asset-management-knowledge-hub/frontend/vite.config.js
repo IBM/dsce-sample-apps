@@ -49,11 +49,14 @@ export default defineConfig(({ mode }) => {
       // All /api/* requests go to the MCP server (6868).
       // All /ingest-api/* requests are stripped of the prefix and forwarded
       // to the ingestion pipeline (8080) — keeps everything same-origin in dev.
+      // The backends require a shared API key. The dev proxy adds it so the
+      // browser bundle never contains it (EventSource cannot set headers anyway).
       proxy: {
         '/api': {
           target: env.VITE_MCP_SERVER_URL || 'http://localhost:6868',
           changeOrigin: true,
           secure: false,
+          headers: { 'X-API-Key': env.API_KEY || '' },
         },
         '/health': {
           target: env.VITE_MCP_SERVER_URL || 'http://localhost:6868',
@@ -64,16 +67,12 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_INGESTION_URL || 'http://localhost:8080',
           changeOrigin: true,
           secure: false,
+          // Local dev runs as the administrator, so the admin key is added too.
+          headers: { 'X-API-Key': env.API_KEY || '', 'X-Admin-Key': env.ADMIN_API_KEY || '' },
           rewrite: (path) => path.replace(/^\/ingest-api/, ''),
         },
-        // Proxy OpenSearch requests so the browser never has to trust the
-        // self-signed cert from the local Podman container.
-        '/opensearch-api': {
-          target: env.VITE_OPENSEARCH_URL || 'https://localhost:9200',
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/opensearch-api/, ''),
-        },
+        // /whoami is answered by nginx in production; the dev server falls back
+        // to a local user name in the app (see App.jsx), so nothing to proxy here.
       },
     },
     css: {
@@ -108,22 +107,8 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.VITE_INGESTION_URL': JSON.stringify(
         mode === 'production' ? (env.VITE_INGESTION_URL || '/ingest-api') : '/ingest-api'
       ),
-      // OpenSearch — use the /opensearch-api proxy prefix in dev so the
-      // browser never has to handle the self-signed certificate from the
-      // local Podman container.  In production set VITE_OPENSEARCH_URL to
-      // the real cluster URL (or keep empty to skip direct UI health checks).
-      'import.meta.env.VITE_OPENSEARCH_URL': JSON.stringify(
-        env.VITE_OPENSEARCH_URL ? env.VITE_OPENSEARCH_URL : '/opensearch-api'
-      ),
-      // Expose the OpenSearch credentials to the UI for the health-check button.
-      // Reads OPENSEARCH_USERNAME / OPENSEARCH_PASSWORD from the root .env so
-      // the password never needs to be hardcoded in source.
-      'import.meta.env.VITE_OPENSEARCH_USERNAME': JSON.stringify(
-        env.OPENSEARCH_USERNAME || 'admin'
-      ),
-      'import.meta.env.VITE_OPENSEARCH_PASSWORD': JSON.stringify(
-        env.OPENSEARCH_PASSWORD || 'admin'
-      ),
+      // Deliberately no OpenSearch URL or credentials here: anything defined in
+      // this block is compiled into the public JavaScript bundle.
     },
   };
 });

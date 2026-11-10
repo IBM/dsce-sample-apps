@@ -1,0 +1,5 @@
+
+# Build output (the Docker build regenerates it; never commit bundles)
+frontend/dist/
+.env
+deployment/.env.deploy

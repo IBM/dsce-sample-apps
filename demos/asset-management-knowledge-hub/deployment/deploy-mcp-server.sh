@@ -46,7 +46,7 @@
 #   export IBMCLOUD_API_KEY=your-api-key
 #   export OPENSEARCH_HOST=https://opensearch.example.com:9200
 #   export OPENSEARCH_USERNAME=admin
-#   export OPENSEARCH_PASSWORD=<password>
+#   export OPENSEARCH_PASSWORD=secret
 #   export WATSONX_API_KEY=your-wx-key
 #   export WATSONX_PROJECT_ID=your-project-id
 #   export CORS_ORIGIN=https://maximo-knowledge-hub.<project>.eu-de.codeengine.appdomain.cloud
@@ -128,6 +128,8 @@ WATSONX_URL="${WATSONX_URL:-https://us-south.ml.cloud.ibm.com}"
 WATSONX_MODEL_ID="${WATSONX_MODEL_ID:-meta-llama/llama-3-3-70b-instruct}"
 WATSONX_EMBEDDING_MODEL_ID="${WATSONX_EMBEDDING_MODEL_ID:-ibm/slate-30m-english-rtrvr-v2}"
 CORS_ORIGIN="${CORS_ORIGIN:-}"
+# Shared secret every request must present (X-API-Key). Same value as the UI + ingestion service.
+API_KEY="${API_KEY:-}"
 # Maximo Manage connection (optional — leave blank to disable live Maximo queries)
 MAXIMO_URL="${MAXIMO_URL:-}"
 MAXIMO_API_KEY="${MAXIMO_API_KEY:-}"
@@ -274,6 +276,7 @@ run_local() {
     -e WATSONX_MODEL_ID="${WATSONX_MODEL_ID}" \
     -e WATSONX_EMBEDDING_MODEL_ID="${WATSONX_EMBEDDING_MODEL_ID}" \
     -e CORS_ORIGIN="${CORS_ORIGIN:-http://localhost:3002}" \
+    -e API_KEY="${API_KEY:-}" \
     -e SERVICENOW_INSTANCE_URL="${SERVICENOW_INSTANCE_URL:-}" \
     -e SERVICENOW_USERNAME="${SERVICENOW_USERNAME:-}" \
     -e SERVICENOW_PASSWORD="${SERVICENOW_PASSWORD:-}" \
@@ -382,6 +385,7 @@ deploy_to_ce() {
   require_var "WATSONX_API_KEY"        "${WATSONX_API_KEY}"
   require_var "WATSONX_PROJECT_ID"     "${WATSONX_PROJECT_ID}"
   require_var "CORS_ORIGIN"            "${CORS_ORIGIN}"
+  require_var "API_KEY"                "${API_KEY}"
 
   local full_image="${ICR_REGISTRY}/${ICR_NAMESPACE}/${ICR_IMAGE_NAME}:${IMAGE_TAG}"
 
@@ -435,6 +439,7 @@ deploy_to_ce() {
     --from-literal "WATSONX_MODEL_ID=${WATSONX_MODEL_ID}" \
     --from-literal "WATSONX_EMBEDDING_MODEL_ID=${WATSONX_EMBEDDING_MODEL_ID}" \
     --from-literal "CORS_ORIGIN=${CORS_ORIGIN}" \
+    --from-literal "API_KEY=${API_KEY}" \
     --from-literal "SERVICENOW_INSTANCE_URL=${SERVICENOW_INSTANCE_URL}" \
     --from-literal "SERVICENOW_USERNAME=${SERVICENOW_USERNAME}" \
     --from-literal "SERVICENOW_PASSWORD=${SERVICENOW_PASSWORD}" \

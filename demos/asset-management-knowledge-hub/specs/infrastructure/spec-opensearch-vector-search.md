@@ -174,7 +174,7 @@ def hybrid_search(query: str, embedding: list[float] | None, filters: dict, limi
 
 ## 5. Client Configuration
 
-The [`build_client()`](../backend/shared/opensearch/__init__.py) function constructs an OpenSearch client from environment variables:
+The [`build_client()`](../../backend/shared/opensearch/__init__.py) function constructs an OpenSearch client from environment variables:
 
 | Variable | Description |
 |----------|-------------|

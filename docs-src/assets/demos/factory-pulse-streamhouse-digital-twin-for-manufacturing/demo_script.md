@@ -8,9 +8,10 @@
 
 **Step 1 — Set the Scene: Command Center (1 min)**
 
-1. Open the app. It starts on **Command center**.
-2. Point out the four live KPIs: **Total throughput**, **Network OEE**, **Active incidents** and **Telemetry rate**.
-3. Point to the **US factory network** map: six plants, 36 robots, all streaming.
+1. Open the app and log in with **User ID:** `admin` and **Password:** `factorypulse`.
+2. The app starts on **Command center**.
+3. Point out the four live KPIs: **Total throughput**, **Network OEE**, **Active incidents** and **Telemetry rate**.
+4. Point to the **US factory network** map: six plants, 36 robots, all streaming.
 
 **Say:** "Every robot in these six plants streams temperature, vibration, quality and throughput. Each reading is checked against a schema before it lands on an IBM Confluent Kafka topic, so this view is the current state of the business, not last night's batch."
 

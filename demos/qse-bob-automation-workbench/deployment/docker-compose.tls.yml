@@ -1,0 +1,17 @@
+# HTTPS override: terminates TLS in NGINX on :8443 and redirects :8080 to it.
+#   Place tls.crt and tls.key in deployment/certs/ (PEM), then:
+#   docker compose -f docker-compose.yml -f docker-compose.tls.yml up -d --build
+# Set COOKIE_SECURE=true in .env (production mode already forces secure cookies).
+services:
+  frontend:
+    environment:
+      BACKEND_UPSTREAM: http://backend:8080
+      PUBLIC_HOST: ${PUBLIC_HOST:-localhost}
+      PUBLIC_HTTPS_PORT: ${HTTPS_PORT:-8443}
+    ports:
+      - "${HTTPS_PORT:-8443}:8443"
+    volumes:
+      - ./nginx/default.tls.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./certs:/etc/nginx/certs:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/nginx-health"]
