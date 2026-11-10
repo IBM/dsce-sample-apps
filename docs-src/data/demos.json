@@ -502,7 +502,7 @@
         "ai.govern"
       ],
       "skills": ["agent-builder"],
-      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/bob-box-rfp-demo",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/contract-review",
       "workingDemoURL": "",
       "architecture": "architecture.png",
       "specificationsRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/contract-review-specs",
@@ -649,7 +649,7 @@
       "skills": [
         "qse-bob-automation-workbench"
       ],
-      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/qse-bob-automation-workbench/demos/qse-bob-automation-workbench",
+      "codeRepo": "https://github.com/IBM/dsce-sample-apps/tree/main/demos/qse-bob-automation-workbench",
       "workingDemoURL": "https://qse-workbench-frontend.2gzj1q7cimpp.us-south.codeengine.appdomain.cloud/",
       "architecture": "architecture.png",
       "specificationsRepo": "",
