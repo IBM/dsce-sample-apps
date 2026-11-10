@@ -1,0 +1,82 @@
+# Rendered by the nginx image entrypoint (envsubst only substitutes variables present in the environment).
+# ${BACKEND_UPSTREAM}: e.g. http://backend:8080
+
+server {
+    listen 8080;
+    server_name _;
+    server_tokens off;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Request size: API payloads are small JSON documents.
+    client_max_body_size 256k;
+
+    # Security headers (the backend adds its own for /api responses).
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" always;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+
+    location = /nginx-health {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok\n";
+    }
+
+    # Liveness/readiness of the backend are exposed for external probes only.
+    # HTTP/1.1 is required: NGINX proxies with HTTP/1.0 by default, which the Code Engine ingress rejects with 426.
+    location = /healthz { proxy_pass ${BACKEND_UPSTREAM}/healthz; proxy_http_version 1.1; proxy_set_header Connection ""; access_log off; }
+    location = /readyz  { proxy_pass ${BACKEND_UPSTREAM}/readyz;  proxy_http_version 1.1; proxy_set_header Connection ""; access_log off; }
+
+    # Server-Sent Events: live execution stream. Buffering must be off so events are delivered immediately.
+    location ~ ^/api/executions/[^/]+/stream$ {
+        proxy_pass ${BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        proxy_cache off;
+        gzip off;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+        add_header X-Accel-Buffering "no" always;
+    }
+
+    location /api/ {
+        proxy_pass ${BACKEND_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+
+    # Hashed build assets are immutable.
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options "nosniff" always;
+        try_files $uri =404;
+    }
+
+    # SPA fallback; never cache the shell.
+    location / {
+        add_header Cache-Control "no-store";
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Frame-Options "DENY" always;
+        add_header Referrer-Policy "no-referrer" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" always;
+        try_files $uri /index.html;
+    }
+}

@@ -1,0 +1,1 @@
+var e=(e,t,n,r)=>{if(t===void 0)return null;let i=t-e;return i<=10&&i>0?r(n.remaining,{count:i,maxCount:t}):i<=0?r(n.maxReached,{count:t,maxCount:t}):null};export{e as t};

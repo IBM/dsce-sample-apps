@@ -1,0 +1,1 @@
+var e=(...e)=>t=>{e.forEach(e=>{e&&(typeof e==`function`?e(t):typeof e==`object`&&`current`in e&&(e.current=t))})};export{e as t};
