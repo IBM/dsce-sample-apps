@@ -13,14 +13,14 @@
 
 ## 2. Pre-Demo Setup & Checklist
 
-1. **Start the Application:**
-   * Run the web server: `npm run dev` (running locally on `http://127.0.0.1:5190`).
-   * *(Optional live LLM mode)* Start Headless Bob: `npm run bob:start` (running on `http://127.0.0.1:8000`).
+1. **Access the Demo:**
+   * Open the demo on IBM Cloud Code Engine: [https://rfp-demo.2gfppzsd2sff.us-east.codeengine.appdomain.cloud]([text](https://rfp-demo.2gfppzsd2sff.us-east.codeengine.appdomain.cloud))
 2. **Verify Box Connection:**
-   * Check that `.env` contains either Box Client Credentials or a fresh `BOX_DEV_TOKEN`.
-   * The app includes automatic fallback to local high-fidelity synthetic data if Box tokens expire on stage.
-3. **Open Browser:**
-   * Navigate to `http://127.0.0.1:5190` in full-screen mode.
+   * Confirm the Box workspace badge in the upper navigation bar shows as connected.
+   * If live Box tokens ever expire, the application includes automatic zero-downtime fallback to high-fidelity grounded context.
+3. **Local Fallback (Optional / Offline):**
+   * If running locally or presenting offline:
+     * Run `npm run bob:start` to start the local UI on `http://127.0.0.1:5190`.
 
 ---
 
