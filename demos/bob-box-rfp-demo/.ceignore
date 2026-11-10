@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-ssr
+.git
+.bob
+.vscode
+.env
+.env.*
+!.env.example
+assets/headlessbob
+backups
+.backups
+docs
+synthetic_demo_content
+*.local

@@ -1,0 +1,13 @@
+PRE-DEMO ALIGNMENT EMAIL SUMMARY - ACME CORP
+Compiled by: Sarah Jenkins, Account Executive
+Folder: All Files / Customers / Acme Corp / Sales Alignment
+Box ID: BOX-FILE-8839221
+
+EMAIL THREAD SYNOPSIS (Oct 8-9, 2024):
+From: David Chen (Acme IT Lead)
+To: Sarah Jenkins (AE), Marcus Vance (SE)
+
+"Hi Sarah and team,
+For tomorrow's demonstration, our leadership team wants to ensure we cover the Salesforce integration thoroughly. We'd like to see how an onboarding document uploaded by our intake team is indexed, searched, and seamlessly surfaced in Salesforce without manual intervention.
+
+Please keep the presentation crisp (under 20 minutes) and make sure we have at least 15 minutes left for our security architect and IT leads to ask questions on RBAC and encryption."

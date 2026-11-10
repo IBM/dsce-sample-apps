@@ -1,0 +1,10 @@
+SALESFORCE INTEGRATION SPECIFICATION & FIELD MAPPINGS
+Document Owner: David Chen | Acme Corp Integration Engineering
+Folder: All Files / Customers / Acme Corp / Architecture & Tech
+Box ID: BOX-FILE-8839218
+
+INTEGRATION CAPABILITIES REQUIRED:
+- Salesforce Canvas / Embedded Preview for customer documentation.
+- Bidirectional Metadata Sync: Account Number, Verification Status, Ingestion Timestamp.
+- REST API Requirements: Standard JSON payloads, OAuth 2.0 JWT bearer token authentication, rate limit minimum 100 requests/sec.
+- Webhook Subscriptions: Document Classified, Document Approved, Document Flagged.

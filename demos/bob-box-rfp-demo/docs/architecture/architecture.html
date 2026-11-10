@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Bob + Box RFP Demo - Architecture</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ffffff; }
+  svg { display: block; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .title { font-size: 28px; font-weight: 700; fill: #161616; }
+  .sub { font-size: 14px; fill: #525252; }
+  .lane { font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+  .nt { font-size: 14px; font-weight: 700; fill: #161616; }
+  .nl { font-size: 12px; fill: #525252; }
+  .node { fill: #ffffff; stroke-width: 1.5; }
+  .badge { fill: #161616; }
+  .bt { font-size: 12px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+  .al { font-size: 11px; fill: #161616; text-anchor: middle; }
+  .lg { font-size: 12.5px; fill: #161616; }
+  .lgh { font-size: 13px; font-weight: 700; fill: #161616; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#161616"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text class="title" x="40" y="46">From Customer Context to Customer Demo</text>
+  <text class="sub" x="40" y="70">IBM Bob + Box Content Cloud - RFP response workspace architecture (as implemented)</text>
+  <image href="bob.png" x="1440" y="14" width="56" height="56"/>
+  <image href="box.png" x="1510" y="28" width="50" height="20"/>
+
+  <!-- Lane containers -->
+  <rect x="40"   y="95" width="300" height="590" rx="8" fill="#f4f4f4" stroke="#c6c6c6"/>
+  <rect x="420"  y="95" width="400" height="590" rx="8" fill="#edf5ff" stroke="#a6c8ff"/>
+  <rect x="920"  y="95" width="300" height="410" rx="8" fill="#f6f2ff" stroke="#d4bbff"/>
+  <rect x="1320" y="95" width="240" height="600" rx="8" fill="#e5f0fc" stroke="#78a9ff"/>
+
+  <text class="lane" x="56"   y="118" fill="#525252">PRESENTER BROWSER</text>
+  <text class="lane" x="436"  y="118" fill="#0f62fe">APP SERVER (NODE / VITE)</text>
+  <text class="lane" x="936"  y="118" fill="#6929c4">HEADLESS BOB</text>
+  <text class="lane" x="1336" y="118" fill="#0061d5">BOX CONTENT CLOUD</text>
+
+  <g transform="translate(0,20)">
+    <!-- Browser column -->
+    <rect class="node" x="60" y="130" width="260" height="45" rx="6" stroke="#8d8d8d"/>
+    <text class="nt" x="74" y="150">Presenter / Sales Engineer</text>
+    <text class="nl" x="74" y="167">127.0.0.1:5190 or HTTPS on Code Engine</text>
+
+    <rect class="node" x="60" y="190" width="260" height="140" rx="6" stroke="#8d8d8d"/>
+    <text class="nt" x="74" y="212">Workspace Studio</text>
+    <text class="nl" x="74" y="232">React 19 + TypeScript + Tailwind</text>
+    <text class="nl" x="74" y="252">Context tab, Ask Bob chat</text>
+    <text class="nl" x="74" y="272">Artifact panel, source preview</text>
+    <text class="nl" x="74" y="292">useWorkspaceContext / useWorkspaceChat</text>
+    <text class="nl" x="74" y="312">services/headlessBobService.ts</text>
+
+    <rect class="node" x="60" y="345" width="260" height="120" rx="6" stroke="#8d8d8d"/>
+    <text class="nt" x="74" y="367">Client-side document export</text>
+    <text class="nl" x="74" y="387">rfpDocxExport.ts - RFP response .docx</text>
+    <text class="nl" x="74" y="407">deckPptxExport.ts - presentation .pptx</text>
+    <text class="nl" x="74" y="427">Files are built in the browser from the</text>
+    <text class="nl" x="74" y="445">generated artifact, not by the server</text>
+
+    <rect class="node" x="60" y="580" width="260" height="60" rx="6" stroke="#8d8d8d"/>
+    <text class="nt" x="74" y="602">Export to Box modal</text>
+    <text class="nl" x="74" y="622">multipart/form-data upload</text>
+
+    <!-- API column -->
+    <rect class="node" x="440" y="130" width="360" height="45" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="150">Basic-auth gate (hosted only)</text>
+    <text class="nl" x="454" y="167">Active when APP_PASSWORD is set; TLS at Code Engine</text>
+
+    <rect class="node" x="440" y="190" width="360" height="140" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="212">API middleware - vite.config.ts</text>
+    <text class="nl" x="454" y="232">GET  /api/box/documents</text>
+    <text class="nl" x="454" y="250">POST /api/headless-bob/context | generate | chat | analyze</text>
+    <text class="nl" x="454" y="268">GET  /api/headless-bob/status</text>
+    <text class="nl" x="454" y="286">POST /api/export-to-box</text>
+    <text class="nl" x="454" y="310">Size limits, schema validation, generic errors</text>
+
+    <rect class="node" x="440" y="345" width="360" height="60" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="367">headless-bob-client.mjs</text>
+    <text class="nl" x="454" y="387">Builds grounded prompts, POST /runs, parses JSON</text>
+
+    <rect class="node" x="440" y="420" width="360" height="60" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="442">box-auth.mjs</text>
+    <text class="nl" x="454" y="462">Box token: Client Credentials or Developer Token (.env)</text>
+
+    <rect class="node" x="440" y="500" width="360" height="60" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="522">box-live-documents.mjs</text>
+    <text class="nl" x="454" y="542">Reads folder + file text; local fallback if Box is down</text>
+
+    <rect class="node" x="440" y="580" width="360" height="60" rx="6" stroke="#0f62fe"/>
+    <text class="nt" x="454" y="602">export-assets-to-box.mjs</text>
+    <text class="nl" x="454" y="622">Resolves target folder via MCP, uploads via REST</text>
+
+    <!-- Headless Bob column -->
+    <rect class="node" x="940" y="130" width="260" height="100" rx="6" stroke="#8a3ffc"/>
+    <image href="bob.png" x="1150" y="136" width="40" height="40"/>
+    <text class="nt" x="954" y="152">IBM Bob agent runtime</text>
+    <text class="nl" x="954" y="172">Reasons over Box content</text>
+    <text class="nl" x="954" y="190">Extracts requirements and gaps</text>
+    <text class="nl" x="954" y="208">Drafts RFP response, deck, email</text>
+
+    <rect class="node" x="940" y="250" width="260" height="90" rx="6" stroke="#8a3ffc"/>
+    <text class="nt" x="954" y="272">Headless Bob service</text>
+    <text class="nl" x="954" y="292">ACP REST API on 127.0.0.1:8000</text>
+    <text class="nl" x="954" y="310">POST /runs (sync), GET /ping</text>
+    <text class="nl" x="954" y="328">Bearer token auth</text>
+
+    <rect class="node" x="940" y="360" width="260" height="90" rx="6" stroke="#8a3ffc"/>
+    <text class="nt" x="954" y="382">box-mcp-runner.mjs</text>
+    <text class="nl" x="954" y="402">stdio-to-HTTPS MCP bridge</text>
+    <text class="nl" x="954" y="420">Registered in .bob/mcp.json as "box"</text>
+    <text class="nl" x="954" y="438">Adds fresh Box token to each call</text>
+
+    <!-- Box column -->
+    <rect class="node" x="1340" y="130" width="200" height="160" rx="6" stroke="#0061d5"/>
+    <image href="box.png" x="1352" y="140" width="56" height="23"/>
+    <text class="nt" x="1352" y="186">Enterprise content</text>
+    <text class="nl" x="1352" y="206">IBM Enterprise Content</text>
+    <text class="nl" x="1352" y="224">RFPs, past responses,</text>
+    <text class="nl" x="1352" y="242">security, methodology</text>
+    <text class="nl" x="1352" y="266">Generated RFP Responses</text>
+
+    <rect class="node" x="1340" y="330" width="200" height="230" rx="6" stroke="#0061d5"/>
+    <text class="nt" x="1352" y="352">Box hosted MCP server</text>
+    <text class="nl" x="1352" y="372">https://mcp.box.com</text>
+    <text class="nl" x="1352" y="400">Tools used:</text>
+    <text class="nl" x="1352" y="420">search_folders_by_name</text>
+    <text class="nl" x="1352" y="438">list_folder_content_by_folder_id</text>
+    <text class="nl" x="1352" y="456">get_file_content</text>
+    <text class="nl" x="1352" y="474">create_folder</text>
+
+    <rect class="node" x="1340" y="580" width="200" height="80" rx="6" stroke="#0061d5"/>
+    <text class="nt" x="1352" y="602">Box REST upload API</text>
+    <text class="nl" x="1352" y="622">upload.box.com</text>
+    <text class="nl" x="1352" y="640">Binary .docx / .pptx files</text>
+
+    <!-- Arrows -->
+    <!-- 1: browser <-> API -->
+    <line x1="320" y1="260" x2="440" y2="260" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <line x1="320" y1="610" x2="440" y2="610" stroke="#161616" stroke-width="2" marker-end="url(#ah)"/>
+    <!-- 2: API client <-> Headless Bob service -->
+    <line x1="800" y1="375" x2="940" y2="295" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <!-- Bob runtime <-> service -->
+    <line x1="1070" y1="230" x2="1070" y2="250" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <!-- service -> runner -->
+    <line x1="1070" y1="340" x2="1070" y2="360" stroke="#161616" stroke-width="2" marker-end="url(#ah)"/>
+    <!-- 3: runner <-> Box MCP -->
+    <line x1="1200" y1="405" x2="1340" y2="405" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <!-- 4: box-live-documents <-> Box MCP (passes under Headless Bob lane) -->
+    <line x1="800" y1="530" x2="1340" y2="530" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <!-- 5: export -> REST -->
+    <line x1="800" y1="610" x2="1340" y2="610" stroke="#161616" stroke-width="2" marker-end="url(#ah)"/>
+    <!-- MCP <-> content folder -->
+    <line x1="1440" y1="330" x2="1440" y2="290" stroke="#161616" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <!-- REST -> folder (routed along right edge) -->
+    <path d="M1540,620 L1552,620 L1552,210 L1540,210" fill="none" stroke="#161616" stroke-width="2" marker-end="url(#ah)"/>
+    <!-- API gate/ middleware / client / auth / box-live internal links -->
+    <line x1="620" y1="330" x2="620" y2="345" stroke="#0f62fe" stroke-width="1.5" marker-end="url(#ah)"/>
+
+    <!-- Badges -->
+    <circle class="badge" cx="380" cy="260" r="11"/><text class="bt" x="380" y="264">1</text>
+    <circle class="badge" cx="380" cy="610" r="11"/><text class="bt" x="380" y="614">1</text>
+    <circle class="badge" cx="870" cy="335" r="11"/><text class="bt" x="870" y="339">2</text>
+    <circle class="badge" cx="1270" cy="405" r="11"/><text class="bt" x="1270" y="409">3</text>
+    <circle class="badge" cx="1070" cy="530" r="11"/><text class="bt" x="1070" y="534">4</text>
+    <circle class="badge" cx="1070" cy="610" r="11"/><text class="bt" x="1070" y="614">5</text>
+
+    <!-- Arrow labels -->
+    <text class="al" x="380" y="240">JSON</text>
+    <text class="al" x="380" y="590">files</text>
+    <text class="al" x="1270" y="385">MCP</text>
+    <text class="al" x="1070" y="510">MCP over HTTPS (read files)</text>
+    <text class="al" x="1070" y="590">REST (upload outputs)</text>
+  </g>
+
+  <!-- Legend -->
+  <line x1="40" y1="722" x2="1560" y2="722" stroke="#e0e0e0"/>
+  <text class="lgh" x="40" y="746">Request flow</text>
+  <text class="lg" x="40"  y="770">1  The browser calls /api/* on the app server; exported .docx/.pptx are posted back as multipart form data.</text>
+  <text class="lg" x="40"  y="792">2  The server sends the prompt plus Box document text to Headless Bob (POST /runs) and parses the JSON reply.</text>
+  <text class="lg" x="40"  y="814">3  Bob calls the Box MCP tools through box-mcp-runner.mjs (stdio bridge to the hosted MCP server).</text>
+  <text class="lg" x="40"  y="836">4  The server also reads folder listings and file text straight from Box MCP, falling back to local sample content.</text>
+  <text class="lg" x="40"  y="858">5  Generated deliverables are uploaded to the Generated RFP Responses folder using the Box REST upload API.</text>
+  <text class="lg" x="40"  y="882" fill="#525252">Dev server binds to 127.0.0.1; the container runs as non-root UID 1001 on UBI 9 Node 24 (port 8080).</text>
+</svg>
+</body>
+</html>

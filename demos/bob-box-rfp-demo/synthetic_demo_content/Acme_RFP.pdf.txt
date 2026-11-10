@@ -1,0 +1,16 @@
+REQUEST FOR PROPOSAL (RFP) - ACME CORP CLOUD CONTENT PLATFORM
+RFP Reference: RFP-2024-CONTENT-09
+Owner: Rachel Green (Director of Procurement & IT)
+Folder: All Files / Customers / Acme Corp / Commercial & RFP
+Box ID: BOX-FILE-8839214
+
+SECTION 3: MANDATORY FUNCTIONAL REQUIREMENTS:
+3.1 Automated Classification: The platform must automatically classify ingested onboarding collateral (W-9s, Certificate of Incorporation, KYC filings) without manual human labeling.
+3.2 Salesforce Integration: Seamless integration with Salesforce CRM, allowing account executives to trigger intake requests and view synchronized document records.
+3.3 Approval Workflows: Out-of-the-box streamlined approval workflows with configurable multi-stage escalation and status tracking.
+3.4 Role-Based Access Controls: Tiered permissions for Admins, Reviewers, and Viewers.
+3.5 Search: Comprehensive full-text search across all indexed customer documents.
+
+SECTION 4: COMPLIANCE & LEGAL:
+4.1 Audit Logs: Tamper-evident logging of all user activities.
+4.2 Records Retention: Vendor must provide automated document lifecycle and retention scheduling. Note: Acme legal team is currently reviewing corporate records-retention schedules (3 years vs. 7 years).

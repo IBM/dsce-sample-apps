@@ -1,0 +1,18 @@
+ACME CORP - INFORMATION SECURITY & COMPLIANCE MANDATE
+Document ID: SEC-POL-2024-89 | Approved by: Marcus Vance, CISO
+Folder: All Files / Customers / Acme Corp / Compliance & Security
+Box ID: BOX-FILE-8839212
+
+SECURITY REQUIREMENTS:
+1. Encryption Standards:
+   - Data at Rest: All files, blobs, and metadata indices must be encrypted using AES-256.
+   - Data in Transit: Mandatory TLS 1.2 or higher for all client-to-server and server-to-server API endpoints.
+
+2. Audit Logging & Traceability:
+   - Comprehensive immutable audit logging is mandatory. System must log document creation, view, metadata modification, permission changes, and download events with timestamp and user ID.
+
+3. Role-Based Permissions & Isolation:
+   - Security reviewers require clear, granular role-based access control (RBAC). Document reviewers must only access files within their assigned territory and clearance tier.
+
+4. Data Sovereignty:
+   - Zero international data egress. All tenant storage and ingestion services must reside in US-based cloud infrastructure.

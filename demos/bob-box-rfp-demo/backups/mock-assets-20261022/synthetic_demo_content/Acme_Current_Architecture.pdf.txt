@@ -1,0 +1,11 @@
+CURRENT STATE SYSTEMS TOPOLOGY - ACME CORP ONBOARDING
+Author: David Chen, Solutions Architect
+Folder: All Files / Customers / Acme Corp / Architecture & Tech
+Box ID: BOX-FILE-8839216
+
+CURRENT APPLICATION LANDSCAPE:
+1. Ingestion Point: Customer portal uploads land on legacy on-premise Windows SMB file shares.
+2. CRM: Salesforce Sales Cloud (Enterprise Edition) used for lead management and account records.
+3. Pain: No native bridge exists between SMB file storage and Salesforce; ops reps spend 2-3 hours daily manually locating files and retyping metadata.
+4. Search: Windows indexer fails across network shares, creating search friction across onboarding cases.
+5. SSO: Moving towards centralized federated authentication across all corporate cloud services.

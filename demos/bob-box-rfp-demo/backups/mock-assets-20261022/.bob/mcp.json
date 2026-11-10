@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "box": {
+      "command": "node",
+      "args": ["./scripts/box-mcp-runner.mjs"]
+    }
+  }
+}

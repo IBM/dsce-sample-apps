@@ -1,0 +1,12 @@
+SE DEMO BRIEFING - ACME CORP DEMONSTRATION
+Date of Demo: Tomorrow, 10:00 AM EST
+Audience: David Chen (IT Lead), Rachel Green (IT Director), Ops Team Leads
+Owner: Sarah Jenkins (AE)
+Folder: All Files / Customers / Acme Corp / Sales Alignment
+Box ID: BOX-FILE-8839215
+
+RECENT CUSTOMER REQUESTS FOR TOMORROW'S SESSION:
+1. Show the Salesforce Handoff: The team wants to see a live demonstration of how an uploaded customer document automatically populates Salesforce and provides seamless access.
+2. Demonstrate Role-Specific Permissions: Explicitly show how the interface changes when logged in as an Intake Clerk vs. Underwriting Approver vs. Auditor.
+3. Live Classification & Approval Routing: Walk through an actual document being classified and automatically routed to the next reviewer.
+4. Leave Adequate Time for Technical Q&A: Reserve at least 15 minutes at the end for architecture, security, and SSO questions.

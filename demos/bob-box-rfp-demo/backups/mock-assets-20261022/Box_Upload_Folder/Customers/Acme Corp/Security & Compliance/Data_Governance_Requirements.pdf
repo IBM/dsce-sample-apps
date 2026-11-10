@@ -1,0 +1,12 @@
+ACME CORP DATA GOVERNANCE & COMPLIANCE FRAMEWORK
+Approved: October 4, 2024 | Version 2.1
+Owner: Marcus Vance (CISO)
+Folder: All Files / Customers / Acme Corp / Compliance & Security
+Box ID: BOX-FILE-8839220
+
+GOVERNANCE MANDATES:
+1. Audit Logs: Mandatory retention of administrative and access audit logs for a minimum of 365 days.
+2. US Data Residency: Strict restriction that data must never leave US regional borders.
+3. Open Policy Questions:
+   - Corporate Records Retention Schedule: Legal and Compliance teams are evaluating whether onboarding files should be retained for 3 years or 7 years post-account closure.
+   - Monthly Ingestion Document Volume: Total monthly ingestion volume across all branches is currently unmetered and pending operational audit.

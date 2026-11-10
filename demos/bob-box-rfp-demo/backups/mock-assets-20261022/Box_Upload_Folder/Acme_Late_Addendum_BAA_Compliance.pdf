@@ -1,0 +1,20 @@
+ACME CORP - LATE ADDENDUM & COMPLIANCE MANDATE
+Document ID: ACME-ADDENDUM-2024-Q3-09
+Date: September 29, 2024
+Author: Marcus Vance (CISO Office, Acme Commercial Corp)
+Classification: Urgent / Executive Mandate
+
+CRITICAL NEW REQUIREMENT FOR TOMORROW'S DEMO:
+Due to Acme's expansion into commercial healthcare and life sciences client onboarding, the prospective solution MUST satisfy the following immediate compliance prerequisites:
+
+1. Business Associate Agreement (BAA) Support:
+The content platform and AI agent pipeline must be fully HIPAA-compliant with formal BAA execution capabilities.
+
+2. PHI Automated Redaction / Masking:
+Any ingested tax packets or identity documentation containing Protected Health Information (PHI) or patient identifiers must be flagged and masked before indexing into general workflow streams.
+
+3. Dedicated US-East Healthcare Vaulting:
+All healthcare commercial onboarding assets must be cryptographically pinned to US-East data centers with customer-managed encryption keys (CMEK).
+
+ACTION FOR DEMO TEAM:
+Please ensure tomorrow's demonstration includes a dedicated walkthrough of Box Governance classification tags for HIPAA/PHI and demonstrates automated BAA contract generation.
