@@ -2,7 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ .Title }}</title>
+
+  {{- $slug := .Params.slug -}}
+  {{- $demo := cond (ne $slug nil) (index (where hugo.Data.demos.demos "slug" $slug) 0) nil -}}
+  {{- if $demo -}}
+    {{- $title := $demo.name -}}
+    {{- $description := $demo.shortDescription -}}
+    {{- $firstImage := cond (gt (len $demo.screenshots) 0) (index $demo.screenshots 0) "" -}}
+    {{- $imgRes := cond (ne $firstImage "") (resources.Get (printf "demos/%s/%s" $demo.slug $firstImage)) nil -}}
+    <meta name="description" content="{{ $description }}">
+    <meta property="og:title" content="{{ $title }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{- if $imgRes }}
+    <meta property="og:image" content="{{ $imgRes.Permalink }}">
+    <meta name="twitter:image" content="{{ $imgRes.Permalink }}">
+    {{- end }}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title }}">
+    <meta name="twitter:description" content="{{ $description }}">
+  {{- else -}}
+    <meta name="description" content="{{ .Site.Params.description | default .Site.Title }}">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ .Site.Params.description | default .Site.Title }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ .Title }}">
+  {{- end -}}
+
   {{ $styles := resources.Get "css/styles.css" | fingerprint }}
   <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous">
 
