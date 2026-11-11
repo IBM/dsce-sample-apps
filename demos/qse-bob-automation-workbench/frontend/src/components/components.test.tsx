@@ -18,11 +18,17 @@ describe('StatusTag', () => {
 });
 
 describe('Markdown', () => {
-  it('does not render raw HTML or javascript: links from untrusted report content', () => {
-    const { container } = render(<Markdown>{'<script>alert(1)</script>\n\n[x](javascript:alert(1)) [ok](https://example.com)'}</Markdown>);
+  it('does not render raw HTML or script-capable links from untrusted report content', () => {
+    const { container } = render(
+      <Markdown>
+        {'<script>alert(1)</script>\n\n[x](javascript:alert(1)) [d](data:text/html,hi) [v](vbscript:msgbox(1)) [ok](https://example.com)'}
+      </Markdown>,
+    );
     expect(container.querySelector('script')).toBeNull();
     const links = Array.from(container.querySelectorAll('a'));
-    expect(links.every((a) => !(a.getAttribute('href') ?? '').startsWith('javascript:'))).toBe(true);
+    expect(
+      links.every((a) => !/^\s*(javascript|data|vbscript):/i.test(a.getAttribute('href') ?? '')),
+    ).toBe(true);
     const ok = screen.getByText('ok');
     expect(ok).toHaveAttribute('rel', expect.stringContaining('noopener'));
   });
@@ -43,3 +49,4 @@ describe('LogViewer', () => {
     expect(screen.getByText(/2 lines · live/)).toBeInTheDocument();
   });
 });
+
